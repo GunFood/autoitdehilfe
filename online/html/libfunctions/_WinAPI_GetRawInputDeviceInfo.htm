@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinAPI_GetRawInputDeviceInfo</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1>_WinAPI_GetRawInputDeviceInfo</h1>
+<p class="funcdesc">Retrieves information about the raw input device<br /></p>
+<p class="codeheader">
+#include &lt;WinAPISys.au3&gt;<br />
+_WinAPI_GetRawInputDeviceInfo ( $hDevice, $pBuffer, $iLength, $iFlag )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$hDevice</td>
+<td style="width:85%">A handle to the raw input device. This comes from the "lParam" of the WM_INPUT message, from the<br />
+"$hDevice" member of the $tagRAWINPUTHEADER structure, or from the <a href="_WinAPI_EnumRawInputDevices.htm">_WinAPI_EnumRawInputDevices()</a> function.</td>
+</tr>
+<tr>
+<td>$pBuffer</td>
+<td>A pointer to the buffer that receives an information specified by a command flag (see below).<br />
+If this parameter is 0, the function returns the required size of the buffer, in bytes or characters.</td>
+</tr>
+<tr>
+<td>$iLength</td>
+<td>The size of the buffer, in bytes. For $RIDI_DEVICENAME only, this value is the character count,<br />
+including null-terminating character (not the byte count).</td>
+</tr>
+<tr>
+<td>$iFlag</td>
+<td>The command flag that specifies what information will be returned.<br />
+This parameter can be one of the following values.<br />
+&nbsp;&nbsp;&nbsp; $RIDI_DEVICENAME<br />
+&nbsp;&nbsp;&nbsp; $RIDI_DEVICEINFO<br />
+&nbsp;&nbsp;&nbsp; $RIDI_PREPARSEDDATA</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">The number of bytes or characters required or copied into the buffer.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>0 and sets the @error flag to non-zero, call <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> to get extended error information.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>None.<br />
+</p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(GetRawInputDeviceInfo);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">GetRawInputDeviceInfo</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_EnumRawInputDevices.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;APISysConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPISys.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tText</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_EnumRawInputDevices.htm"><span class="S15">_WinAPI_EnumRawInputDevices</span></a><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/IsArray.htm"><span class="S4">IsArray</span></a><span class="S8">(</span><span class="S9">$aData</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ReDim.htm"><span class="S5">ReDim</span></a><span class="S0"> </span><span class="S9">$aData</span><span class="S8">[</span><span class="S9">$aData</span><span class="S8">[</span><span class="S3">0</span><span class="S8">][</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S3">1</span><span class="S8">][</span><span class="S3">3</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$tText</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">'wchar[256]'</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S9">$aData</span><span class="S8">[</span><span class="S3">0</span><span class="S8">][</span><span class="S3">0</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetRawInputDeviceInfo.htm"><span class="S15">_WinAPI_GetRawInputDeviceInfo</span></a><span class="S8">(</span><span class="S9">$aData</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">][</span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$tText</span><span class="S8">,</span><span class="S0"> </span><span class="S3">256</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$RIDI_DEVICENAME</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aData</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">][</span><span class="S3">2</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$tText</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aData</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">][</span><span class="S3">2</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">''</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aData</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'_WinAPI_EnumRawInputDevices'</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

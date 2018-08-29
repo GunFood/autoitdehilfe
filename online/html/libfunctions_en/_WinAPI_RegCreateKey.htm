@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _WinAPI_RegCreateKey</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1>_WinAPI_RegCreateKey</h1>
+<p class="funcdesc">Creates the specified registry key<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIReg.au3&gt;<br />
+_WinAPI_RegCreateKey ( $hKey [, $sSubKey = '' [, $iAccess = $KEY_ALL_ACCESS [, $iOptions = 0 [, $tSecurity = 0]]]] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$hKey</td>
+<td style="width:85%">Handle to an open registry key. If the key already exists, the function opens it. The calling process<br />
+must have $KEY_CREATE_SUB_KEY access to the key. This handle is returned by the <a href="_WinAPI_RegCreateKey.htm">_WinAPI_RegCreateKey()</a><br />
+or <a href="_WinAPI_RegOpenKey.htm">_WinAPI_RegOpenKey()</a> function, or it can be one of the following predefined keys.<br />
+$HKEY_CLASSES_ROOT<br />
+$HKEY_CURRENT_CONFIG<br />
+$HKEY_CURRENT_USER<br />
+$HKEY_LOCAL_MACHINE<br />
+$HKEY_USERS</td>
+</tr>
+<tr>
+<td>$sSubKey</td>
+<td><strong>[optional]</strong> The name of a subkey that this function opens or creates. The subkey specified must be a subkey of<br />
+the key identified by the $hKey parameter; it can be up to 32 levels deep in the registry tree.<br />
+If an empty string (Default), the return is a new handle to the key specified by $hKey.</td>
+</tr>
+<tr>
+<td>$iAccess</td>
+<td><strong>[optional]</strong> The mask that specifies the access rights for the key.<br />
+This parameter can be one or more of the following values.<br />
+$KEY_ALL_ACCESS<br />
+$KEY_CREATE_LINK<br />
+$KEY_CREATE_SUB_KEY<br />
+$KEY_ENUMERATE_SUB_KEYS<br />
+$KEY_EXECUTE<br />
+$KEY_NOTIFY<br />
+$KEY_QUERY_VALUE<br />
+$KEY_READ<br />
+$KEY_SET_VALUE<br />
+$KEY_WOW64_32KEY<br />
+$KEY_WOW64_64KEY<br />
+$KEY_WRITE</td>
+</tr>
+<tr>
+<td>$iOptions</td>
+<td><strong>[optional]</strong> This parameter can be one of the following values.<br />
+$REG_OPTION_BACKUP_RESTORE<br />
+$REG_OPTION_CREATE_LINK<br />
+$REG_OPTION_NON_VOLATILE (Default)<br />
+$REG_OPTION_VOLATILE</td>
+</tr>
+<tr>
+<td>$tSecurity</td>
+<td><strong>[optional]</strong> $tagSECURITY_ATTRIBUTES structure that determines whether the returned handle can be inherited by<br />
+child processes. If this parameter is 0 (Default), the handle cannot be inherited.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">Handle to the opened or created key, @extended flag will contain one of the following<br />
+disposition values:<br />
+0 (False) - The key existed and was simply opened without being changed.<br />
+1 (True) - The key did not exist and was created.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>Sets the @error flag to non-zero, @extended flag may contain the system error code.</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>An application cannot create a key that is a direct child of HKEY_USERS or HKEY_LOCAL_MACHINE. An application<br />
+can create subkeys in lower levels of the HKEY_USERS or HKEY_LOCAL_MACHINE trees.<br />
+<br />
+If the key is not one of the predefined registry keys ($HKEY_*) you must call the <a href="_WinAPI_RegCloseKey.htm">_WinAPI_RegCloseKey()</a><br />
+function after finished using the handle.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="_WinAPI_RegOpenKey.htm">_WinAPI_RegOpenKey</a></p>
+
+<h2>See Also</h2>
+<p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(RegCreateKeyEx);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">RegCreateKeyEx</a> in MSDN  Library.
+</p>
+
+</body>
+</html>

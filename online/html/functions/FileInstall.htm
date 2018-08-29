@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion FileInstall</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">FileInstall</h1><br />
+<a href="../functions_en/FileInstall.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Bindet eine Datei in das kompilierte Skript ein und kopiert sie in das angegebene Verzeichnis.<br /></p>
+<p class="codeheader">
+FileInstall ( "source", "dest" [, flag = 0] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">source</td>
+<td style="width:85%">Der Quellpfad der Datei, die eingebunden und kompiliert werden soll. <strong>Dieser muss ein reiner String sein; er kann keine Variable oder das Ergebnis eines Funktionsaufrufes sein.</strong> Es kann ein relativer Pfad (man verwendet .\ oder ..\ in dem Pfad) zu der Quelldatei (.au3) sein.</td>
+</tr>
+<tr>
+<td>dest</td>
+<td>Der Zielpfad (mit abschlie&szlig;endem "Backslash", falls nur das Verzeichnis angegeben wird). Das kann eine Variable sein.</td>
+</tr>
+<tr>
+<td>flag</td>
+<td><strong>[optional]</strong> Das Flag bestimmt, ob existierende Dateien &uuml;berschrieben werden sollen:<br />
+&nbsp;&nbsp;&nbsp;  $FC_NOOVERWRITE (0) = (Standard) &Uuml;berschreibt bestehende Dateien nicht<br />
+&nbsp;&nbsp;&nbsp;  $FC_OVERWRITE (1) = &Uuml;berschreibt bestehende Dateien<br />
+<br />
+Die Konstanten sind in FileConstants.au3 definiert.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">1.</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>0.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Die Funktion <a href="FileInstall.htm">FileInstall()</a> ist dazu gedacht, Dateien in kompilierte AutoIt-Skripte einzubinden. <br />
+Diese eingebundenen Dateien werden dann w&auml;hrend der Befehlsausf&uuml;hrung im kompilierten Skript "entpackt". Man beachte, dass Dateien wie z.B. Bilder das kompilierte Skript stark vergr&ouml;&szlig;ern k&ouml;nnen! <br />
+Die Quelldatei muss ein reiner String sein, darf also <strong>keine</strong> Variable oder das Ergebnis eines Funktionsaufrufes sein.<br />
+Die Datei muss w&auml;hrend dem kompilieren gefunden werden. Variablen, Berechnungen und Funktionsaufrufe k&ouml;nnen jedoch nicht ermittelt werden, w&auml;hrend des Skript selbst l&auml;uft.<br />
+Sie k&ouml;nnen erst nach dem kompilieren ermittelt werden, jedoch ist dies dann zu sp&auml;t. Die Quellenangabe darf auch keine Wildcards enthalten.<br />
+<br />
+Die einzige Ausnahme dazu ist, dass die Quelldatei @ScriptFullPath enthalten darf. Dies erm&ouml;glicht es einem das Quellskript einzubinden.<br />
+    <br />
+Wenn diese Funktion aus einem nicht-kompilierten Skript aufgerufen wird, dann wird stattdessen eine Kopie erstellt (um das Testen zu vereinfachen).<br />
+Dateien behalten ihre urspr&uuml;nglichen Zeitstempel zu Erstellung und letzter Ver&auml;nderung, wenn sie installiert werden.<br />
+<br />
+Das Zielverzeichnis muss bereits bestehen bevor diese Funktion aufgerufen wird. Ansonsten schl&auml;gt <a href="FileInstall.htm">FileInstall()</a> fehl, gibt 0 zur&uuml;ck und erstellt die Datei oder den Pfad nicht.<br />
+Siehe <a href="DirCreate.htm">DirCreate()</a> f&uuml;r Informationen &uuml;ber das erstellen des Verzeichnisses.<br />
+<br />
+Die Dateiattribute einer bereits existierenden Datei k&ouml;nnten ein &uuml;berschreiben der Datei verhindern.<br />
+Es ist <a href="FileDelete.htm">FileDelete()</a> oder <a href="FileSetAttrib.htm">FileSetAttrib()</a> zu verwenden, um sicherzustellen, dass die Datei ohne Probleme installiert werden kann.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="DirCreate.htm">DirCreate</a>, <a href="FileDelete.htm">FileDelete</a>, <a href="FileSetAttrib.htm">FileSetAttrib</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\FileInstall.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$bFileInstall</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a><span class="S0"> </span><span class="S1">; Auf True &auml;ndern und die Pfade unten anpassen.</span>
+
+<span class="S1">; Dies installiert die Datei C:\Test.bmp in den Skriptordner.</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$bFileInstall</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileInstall.htm"><span class="S4">FileInstall</span></a><span class="S8">(</span><span class="S7">"C:\Test.bmp"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@ScriptDir"><span class="S6">@ScriptDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"\Test.bmp"</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

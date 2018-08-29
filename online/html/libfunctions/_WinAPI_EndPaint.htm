@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinAPI_EndPaint</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_WinAPI_EndPaint</h1><br />
+<a href="../libfunctions_en/_WinAPI_EndPaint.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Markiert das Ende des Zeichnens in einem gegebenen Fenster<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIGdi.au3&gt;<br />
+_WinAPI_EndPaint ( $hWnd, ByRef $tPAINTSTRUCT )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$hWnd</td>
+<td style="width:85%">Das Handle eines Fensters welches neugezeichnet wurde.</td>
+</tr>
+<tr>
+<td>$tPAINTSTRUCT</td>
+<td>Die $tagPAINTSTRUCT Struktur welche die Zeichneninformationen beinhaltet welche von <a href="_WinAPI_BeginPaint.htm">_WinAPI_BeginPaint()</a> zur&uuml;ckgegeben wurden.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+Gibt immer True zur&uuml;ck.<br />
+
+
+<h2>Bemerkungen</h2>
+<p>Diese Funktion ist notwendig f&uuml;r jeden Aufruf zu der <a href="_WinAPI_BeginPaint.htm">_WinAPI_BeginPaint()</a> Funktion aber nur nachdem das Zeichnen abgeschlossen ist.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="_WinAPI_BeginPaint.htm">_WinAPI_BeginPaint</a></p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(EndPaint);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">EndPaint</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_EndPaint.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;SendMessage.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;StaticConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIGdi.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIGdiDC.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIHObj.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIShellEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPISysWin.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WindowsConstants.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">'MouseCoordMode'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_iCount</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+
+<a class="codeSnippetLink" href="../functions/OnAutoItExitRegister.htm"><span class="S4">OnAutoItExitRegister</span></a><span class="S8">(</span><span class="S7">'OnAutoItExit'</span><span class="S8">)</span>
+
+<span class="S1">; Create GUI</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hForm</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">'Test '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringReplace.htm"><span class="S4">StringReplace</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@ScriptName"><span class="S6">@ScriptName</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">'.au3'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'()'</span><span class="S8">),</span><span class="S0"> </span><span class="S3">400</span><span class="S8">,</span><span class="S0"> </span><span class="S3">400</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idPic</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreatePic.htm"><span class="S4">GUICtrlCreatePic</span></a><span class="S8">(</span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">400</span><span class="S8">,</span><span class="S0"> </span><span class="S3">400</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUICtrlSetCursor.htm"><span class="S4">GUICtrlSetCursor</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hPic</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlGetHandle.htm"><span class="S4">GUICtrlGetHandle</span></a><span class="S8">(</span><span class="S9">$idPic</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idLabel</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateLabel.htm"><span class="S4">GUICtrlCreateLabel</span></a><span class="S8">(</span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S3">176</span><span class="S8">,</span><span class="S0"> </span><span class="S3">176</span><span class="S8">,</span><span class="S0"> </span><span class="S3">48</span><span class="S8">,</span><span class="S0"> </span><span class="S3">48</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUICtrlSetBkColor.htm"><span class="S4">GUICtrlSetBkColor</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_BKCOLOR_TRANSPARENT</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_hLabel</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlGetHandle.htm"><span class="S4">GUICtrlGetHandle</span></a><span class="S8">(</span><span class="S9">$idLabel</span><span class="S8">)</span>
+
+<span class="S1">; Extract icon</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_hIcon</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_ShellExtractIcon.htm"><span class="S15">_WinAPI_ShellExtractIcon</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SystemDir"><span class="S6">@SystemDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'\shell32.dll'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">130</span><span class="S8">,</span><span class="S0"> </span><span class="S3">48</span><span class="S8">,</span><span class="S0"> </span><span class="S3">48</span><span class="S8">)</span>
+
+<span class="S1">; Register label window proc</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_hDll</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllCallbackRegister.htm"><span class="S4">DllCallbackRegister</span></a><span class="S8">(</span><span class="S7">'_WinProc'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'ptr'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'hwnd;uint;wparam;lparam'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$pDll</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllCallbackGetPtr.htm"><span class="S4">DllCallbackGetPtr</span></a><span class="S8">(</span><span class="S9">$g_hDll</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_hProc</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetWindowLong.htm"><span class="S15">_WinAPI_SetWindowLong</span></a><span class="S8">(</span><span class="S9">$g_hLabel</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GWL_WNDPROC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$pDll</span><span class="S8">)</span>
+
+<span class="S1">; Create gradient</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hDC</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetDC.htm"><span class="S15">_WinAPI_GetDC</span></a><span class="S8">(</span><span class="S9">$hPic</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hDestDC</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateCompatibleDC.htm"><span class="S15">_WinAPI_CreateCompatibleDC</span></a><span class="S8">(</span><span class="S9">$hDC</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hBitmap</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateCompatibleBitmap.htm"><span class="S15">_WinAPI_CreateCompatibleBitmap</span></a><span class="S8">(</span><span class="S9">$hDC</span><span class="S8">,</span><span class="S0"> </span><span class="S3">400</span><span class="S8">,</span><span class="S0"> </span><span class="S3">400</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hDestSv</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SelectObject.htm"><span class="S15">_WinAPI_SelectObject</span></a><span class="S8">(</span><span class="S9">$hDestDC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hBitmap</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aVertex</span><span class="S8">[</span><span class="S3">2</span><span class="S8">][</span><span class="S3">3</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[[</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xAA00FF</span><span class="S8">],</span><span class="S0"> </span><span class="S8">[</span><span class="S3">400</span><span class="S8">,</span><span class="S0"> </span><span class="S3">400</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0x33004D</span><span class="S8">]]</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_GradientFill.htm"><span class="S15">_WinAPI_GradientFill</span></a><span class="S8">(</span><span class="S9">$hDestDC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aVertex</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_ReleaseDC.htm"><span class="S15">_WinAPI_ReleaseDC</span></a><span class="S8">(</span><span class="S9">$hPic</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hDC</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_SelectObject.htm"><span class="S15">_WinAPI_SelectObject</span></a><span class="S8">(</span><span class="S9">$hDestDC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hDestSv</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_DeleteDC.htm"><span class="S15">_WinAPI_DeleteDC</span></a><span class="S8">(</span><span class="S9">$hDestDC</span><span class="S8">)</span>
+
+<span class="S1">; Set gradient to control</span>
+<a class="codeSnippetLink" href="../libfunctions/_SendMessage.htm"><span class="S15">_SendMessage</span></a><span class="S8">(</span><span class="S9">$hPic</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$STM_SETIMAGE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hBitmap</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hObj</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_SendMessage.htm"><span class="S15">_SendMessage</span></a><span class="S8">(</span><span class="S9">$hPic</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$STM_GETIMAGE</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$hObj</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S9">$hBitmap</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_DeleteObject.htm"><span class="S15">_WinAPI_DeleteObject</span></a><span class="S8">(</span><span class="S9">$hBitmap</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aPos</span>
+<a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_PRIMARYDOWN</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aPos</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/MouseGetPos.htm"><span class="S4">MouseGetPos</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_PtInRectEx.htm"><span class="S15">_WinAPI_PtInRectEx</span></a><span class="S8">(</span><span class="S9">$aPos</span><span class="S8">[</span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$aPos</span><span class="S8">[</span><span class="S3">1</span><span class="S8">],</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">400</span><span class="S8">,</span><span class="S0"> </span><span class="S3">400</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetPos.htm"><span class="S4">GUICtrlSetPos</span></a><span class="S8">(</span><span class="S9">$idLabel</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aPos</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">24</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aPos</span><span class="S8">[</span><span class="S3">1</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">24</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+<a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _WinProc</span><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iMsg</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$wParam</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$lParam</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><span class="S9">$iMsg</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$WM_PAINT</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$g_iCount</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tPAINTSTRUCT</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hDC</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$g_iCount</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+=</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$hDC</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_BeginPaint.htm"><span class="S15">_WinAPI_BeginPaint</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tPAINTSTRUCT</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_DrawIconEx.htm"><span class="S15">_WinAPI_DrawIconEx</span></a><span class="S8">(</span><span class="S9">$hDC</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hIcon</span><span class="S8">,</span><span class="S0"> </span><span class="S3">48</span><span class="S8">,</span><span class="S0"> </span><span class="S3">48</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_EndPaint.htm"><span class="S15">_WinAPI_EndPaint</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tPAINTSTRUCT</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$g_iCount</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-=</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S3">0</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CallWindowProc.htm"><span class="S15">_WinAPI_CallWindowProc</span></a><span class="S8">(</span><span class="S9">$g_hProc</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iMsg</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$wParam</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$lParam</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_WinProc</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> OnAutoItExit</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetWindowLong.htm"><span class="S15">_WinAPI_SetWindowLong</span></a><span class="S8">(</span><span class="S9">$g_hLabel</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GWL_WNDPROC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hProc</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllCallbackFree.htm"><span class="S4">DllCallbackFree</span></a><span class="S8">(</span><span class="S9">$g_hDll</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;OnAutoItExit</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

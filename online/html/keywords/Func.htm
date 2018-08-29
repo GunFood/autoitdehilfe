@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Schl&uuml;sselwort Func...Return...EndFunc</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Schl&uuml;sselwortreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">Func...Return...EndFunc</h1><br />
+<a href="../keywords_en/Func.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Definiert eine Benutzerfunktion, die Null oder mehr Argumente aufnimmt und optional ein Ergebnis zur&uuml;ckgibt.<br /></p>
+<p class="codeheader">
+<strong>Func</strong> functioname ( [<strong>Const</strong>] [<strong>ByRef</strong>] $param1, ..., [<strong>Const</strong>] [<strong>ByRef</strong>] $paramN, $optionalpar1 = value, ...)<br />
+	...<br />
+	[<strong>Return</strong> [<em>value</em>]]<br />
+<strong>EndFunc</strong><br />
+</p>
+
+<h2>Parameter</h2>
+Die Parameter werden vom Benutzer selbst gew&auml;hlt. Sp&auml;ter werden sie genau wie die eingebauten Funktionen aufgerufen.<br />
+<br />
+
+
+<h2>Bemerkungen</h2>
+<p>Bei Variablen und Funktionen wird die Gro&szlig;- und Kleinschreibung ignoriert. Dies bedeutet, dass SomeFunc() das gleiche ist wie SoMEFunC() und umgekehrt.<br />
+<br />
+Das Schl&uuml;sselwort <strong>Const</strong> ist optional und zeigt an, dass sich der Wert des Parameters w&auml;hrend der Ausf&uuml;hrung der Funktion nicht &auml;ndert. Es wird automatisch eine neue lokale Variable deklariert, wenn man die Parameter-Variable nicht als Konstante deklariert bzw. weiter gibt.<br />
+<br />
+Das Schl&uuml;sselwort <strong>ByRef</strong> zeigt an, dass der Parameter als Referenz zu dem Originalobjekt behandelt werden soll. Standardm&auml;&szlig;ig wird der Parameter in eine neue Variable kopiert. Jedoch verkn&uuml;pft ByRef die neue Variable auf den Originalparameter. Es ist zu beachten, dass nicht nur eine benannte Variable als ByRef Parameter &uuml;bergeben werden kann; unbenannte tempor&auml;re Variablen, wie zum Beispiel R&uuml;ckgabewerte von Funktionen, k&ouml;nnen genauso als ByRef Parameter &uuml;bergeben werden. Literale (z. B: "Peter" oder 123) k&ouml;nnen jedoch nicht als ByRef-Parameter &uuml;bergeben werden. ByRef ist zu bevorzugen wenn eine Variable gro&szlig;e Mengen an Daten beinhaltet wie zum Beispiel den Inhalt einer Datei. Wird dies nicht getan, so erweist sich das kopieren aller Daten als Bremsklotz. Ein anderer Vorteil des &uuml;bergebens eines Parameters durch ByRef ist, dass wenn die Funktion beabsichtigt den Inhalt des Parameters zu &auml;ndern jegliche Notwendigkeit von Return ent&auml;llt, da der Wert im Original direkt ge&auml;ndert wird. <br />
+<br />
+Das Deklarieren von Parametern als ByRef und Const ist n&uuml;tzlich, wenn die gro&szlig;e urspr&uuml;ngliche Variable unver&auml;ndert bleiben muss, da AutoIt einen Fehler zur&uuml;ckgibt, wenn die Funktion versucht, sie versehentlich zu &auml;ndern. Die Reihenfolge der Schl&uuml;sselw&ouml;rter ist nicht wichtig, solange sie sich vor dem Parameter befinden, den sie &auml;ndern.<br />
+<br />
+Komplette Arrays k&ouml;nnen an Funktionen &uuml;ber- und von ihnen zur&uuml;ckgegeben werden, indem einfach der Arrayname ohne Klammern angegeben wird. Arrays sollten an eine benutzerdefinierte Funktion nur mit dem Schl&uuml;sselwort <strong>ByRef</strong> &uuml;bergeben werden, da somit das unn&ouml;tige und langwierige Kopieren der kompletten Daten des Arrays vermieden wird. Es ist zu beachten, dass AutoIt nur einen Array-Parameter kopiert wenn sich der Inhalt &auml;ndert. Dies ist nur der Fall wenn ByRef einen Vorteil bringt, obwohl es zu empfehlen ist es in allen F&auml;llen zu verwenden.<br />
+<br />
+Optionale Parameter werden definiert, indem man ihnen einen Standardwert zuweist. Das kann eine globale Variable, ein Makro oder Literal sein.<br />
+Optionale Parameter erscheinen immer am Ende der Funktionsdeklaration. Wurde ein Parameter als optional deklariert, m&uuml;ssen alle folgenden Parameter ebenfalls optional sein und Standardwerte erhalten.<br />
+Innerhalb der Funktion kann die Anzahl der beim Aufruf angegebenen Parameter &uuml;ber das Makro <strong>@NumParams</strong> in Erfahrung gebracht werden. (siehe Beispiel 2)<br />
+<br />
+Verwenden Sie das Schl&uuml;sselwort <strong>Return</strong>, um die Funktion zu verlassen. Im Gegensatz zu integrierten Funktionen geben benutzerdefinierte Funktionen 0 zur&uuml;ck, sofern kein anderer R&uuml;ckgabewert angegeben wird. Wird Return mit  <a href="../functions/SetError.htm">SetError()</a> verwendet, k&ouml;nnen @error- und @extended-Werte sowie ein Wert zur&uuml;ckgegeben werden.<br />
+<br />
+Es ist zu beachten, dass Funktionsdeklarationen nicht innerhalb anderer Funktionsdeklarationen stattfinden d&uuml;rfen. <br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="Dim.htm">Const</a>, <a href="Dim.htm">Global/Local</a>, <a href="include.htm">#include</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<h3>Beispiel 1</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\Func.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Date.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Math.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Beispielskript mit drei benutzerdefinierten Funktionen</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Beachten sie die Nutzung von Variablen, ByRef und Return</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iFoo</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">2</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iBar</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">5</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Heute ist der "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> Today</span><span class="S8">()</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"$iFoo hat den Wert "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iFoo</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; Swap</span><span class="S8">(</span><span class="S9">$iFoo</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iBar</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Nach dem Tausch von $iFoo und $iBar"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"enth&auml;lt $iFoo jetzt "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iFoo</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Zum Schluss"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Der gr&ouml;&szlig;ere Wert von 3 und 4 ist "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_Max.htm"><span class="S15">_Max</span></a><span class="S8">(</span><span class="S3">3</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Swap</span><span class="S8">(</span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">ByRef</span></a><span class="S0"> </span><span class="S9">$vVar1</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">ByRef</span></a><span class="S0"> </span><span class="S9">$vVar2</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Vertauscht den Inhalt zweier Variablen</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$vTemp</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$vVar1</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$vVar1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$vVar2</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$vVar2</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$vTemp</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Swap</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Today</span><span class="S8">()</span><span class="S0"> </span><span class="S1">; Gibt das aktuelle Datum in der Form Tag.Monat.Jahr zur&uuml;ck.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@MDAY"><span class="S6">@MDAY</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"."</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@MON"><span class="S6">@MON</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"."</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@YEAR"><span class="S6">@YEAR</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Today</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 2</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\Func[02].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Beispielskript, welches das @NumParams Makro verwendet</span>
+<span class="S0">&nbsp; &nbsp; Test_Numparams</span><span class="S8">(</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">,</span><span class="S0"> </span><span class="S3">5</span><span class="S8">,</span><span class="S0"> </span><span class="S3">6</span><span class="S8">,</span><span class="S0"> </span><span class="S3">7</span><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">,</span><span class="S0"> </span><span class="S3">9</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">11</span><span class="S8">,</span><span class="S0"> </span><span class="S3">12</span><span class="S8">,</span><span class="S0"> </span><span class="S3">13</span><span class="S8">,</span><span class="S0"> </span><span class="S3">14</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Test_Numparams</span><span class="S8">(</span><span class="S9">$vVar1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$vVar2</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$vVar3</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$vVar4</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$vVar5</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$vVar6</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$vVar7</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$vVar8</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$vVar9</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$vVar10</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$vVar11</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$vVar12</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$vVar13</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$vVar14</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$vVar15</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$vVar16</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$vVar17</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$vVar18</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$vVar19</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S12">#forceref $vVar1, $vVar2, $vVar3, $vVar4, $vVar5, $vVar6, $vVar7, $vVar8, $vVar9, $vVar10</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S12">#forceref $vVar11, $vVar12, $vVar13, $vVar14, $vVar15, $vVar16, $vVar17, $vVar18, $vVar19</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sVal</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">""</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@NumParams"><span class="S6">@NumParams</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sVal</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Eval.htm"><span class="S4">Eval</span></a><span class="S8">(</span><span class="S7">"vVar"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$i</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" "</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"@NumParams = "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@NumParams"><span class="S6">@NumParams</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sVal</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Test_Numparams</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

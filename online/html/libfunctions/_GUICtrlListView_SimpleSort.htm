@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _GUICtrlListView_SimpleSort</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_GUICtrlListView_SimpleSort</h1><br />
+<a href="../libfunctions_en/_GUICtrlListView_SimpleSort.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Sortiert ein ListView-Control (begrenzt)<br /></p>
+<p class="codeheader">
+#include &lt;GuiListView.au3&gt;<br />
+_GUICtrlListView_SimpleSort ( $hWnd, ByRef $vSortSense, $iCol [, $bToggleSense = True] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$hWnd</td>
+<td style="width:85%">Control-ID / Handle des Controls</td>
+</tr>
+<tr>
+<td>$vSortSense</td>
+<td>Setzt eine definiere Sortierfolge:<br />
+&nbsp;&nbsp;&nbsp;  True - Sortiert absteigend (Descending)<br />
+&nbsp;&nbsp;&nbsp;  False - Sortiert aufsteigend (Ascending)<br />
+Einspalten-Listview: einfache Variable verwenden	<br />
+Mehrzeilen-Listview: Array verwenden:<br />
+&nbsp;&nbsp;&nbsp; $aArray[0] - Sortierung der ersten Spalte<br />
+&nbsp;&nbsp;&nbsp; $aArray[1] - Sortierung der zweiten Spalte<br />
+&nbsp;&nbsp;&nbsp; $aArray[n] - Sortierung der letzten Spalte</td>
+</tr>
+<tr>
+<td>$iCol</td>
+<td>Spaltennummer<br />
+bToggleSense 	<br />
+<strong>[optional]</strong> Wechsel die Sortierart<br />
+&nbsp;&nbsp;&nbsp; True - Wechslet die Sortierart nach dem Sortieren (Standard)<br />
+&nbsp;&nbsp;&nbsp; False - Die Sortierart wird nicht dem Sortieren nicht gewechselt</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+Keine.<br />
+
+
+<h2>Bemerkungen</h2>
+<p>Dies ist eine Grundlagensortierfunktion. F&uuml;r ein erweitertes Sortieren siehe <a href="../functions/GUICtrlRegisterListViewSort.htm">GUICtrlRegisterListViewSort()</a>.<br />
+<br />
+Das Wechseln der Sortierart ist ein normales Verhalten wenn das Sortieren durch einen Klickt auf den Spaltenkopf eingeleitet wird.<br />
+Der Benutzer kann dieses Verhalten durch das setzen von $bToggleSense auf False verhindern wenn die Funktion von anderswo aufgerufen wird.<br />
+Wird die Funktion innerhalb mehrere Funktionen aufgerunfen und die Sortierreihenfolge wird dabei ge&auml;ndert ist es wichtig, dass $vSortSense als Global deklariert wurde.<br />
+Andernsfalls wird der Status jedesmal resetet wenn $vSortSense erstellt wird und das umschalten wird unwirksam.<br />
+<br />
+<a href="../guiref/GUIRef.htm">- - - - - - - - Erkl&auml;rung der Controls - - - - - - - -</a><br />
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_GUICtrlListView_SimpleSort.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIListView.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WindowsConstants.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_idListView</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_bSortSense</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a><span class="S0"> </span><span class="S1">; Setzt die aufsteigende Sortierung</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"SimpleSort"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">300</span><span class="S8">,</span><span class="S0"> </span><span class="S3">300</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_idListView</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateListView.htm"><span class="S4">GUICtrlCreateListView</span></a><span class="S8">(</span><span class="S7">"Item"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">280</span><span class="S8">,</span><span class="S0"> </span><span class="S3">240</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_SetColumnWidth.htm"><span class="S15">_GUICtrlListView_SetColumnWidth</span></a><span class="S8">(</span><span class="S9">$g_idListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">260</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idButton_Add</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateButton.htm"><span class="S4">GUICtrlCreateButton</span></a><span class="S8">(</span><span class="S7">"Item hinzuf&uuml;gen"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">260</span><span class="S8">,</span><span class="S0"> </span><span class="S3">80</span><span class="S8">,</span><span class="S0"> </span><span class="S3">30</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idButton_Set</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateButton.htm"><span class="S4">GUICtrlCreateButton</span></a><span class="S8">(</span><span class="S7">"Setzt die aufsteigende Reihenfolge zur&uuml;ck"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">110</span><span class="S8">,</span><span class="S0"> </span><span class="S3">260</span><span class="S8">,</span><span class="S0"> </span><span class="S3">180</span><span class="S8">,</span><span class="S0"> </span><span class="S3">30</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIRegisterMsg.htm"><span class="S4">GUIRegisterMsg</span></a><span class="S8">(</span><span class="S9">$WM_NOTIFY</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"_WM_NOTIFY"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$idButton_Add</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Chr.htm"><span class="S4">Chr</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/Random.htm"><span class="S4">Random</span></a><span class="S8">(</span><span class="S3">65</span><span class="S8">,</span><span class="S0"> </span><span class="S3">90</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateListViewItem.htm"><span class="S4">GUICtrlCreateListViewItem</span></a><span class="S8">(</span><span class="S9">$sData</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_idListView</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_SimpleSort.htm"><span class="S15">_GUICtrlListView_SimpleSort</span></a><span class="S8">(</span><span class="S9">$g_idListView</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_bSortSense</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">; vermeidet, dass beim n&auml;chsten einf&uuml;gen die Sortierrichtung umgedreht wird</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$idButton_Set</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$g_bSortSense</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a><span class="S0"> </span><span class="S1">; Zur&uuml;cksetzen f&uuml;r eine aufsteigende Sortierung beim n&auml;chsten sortieren</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _WM_NOTIFY</span><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iMsg</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$wParam</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$lParam</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S12">#forceref $hWnd, $iMsg, $wParam</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hWndListView</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$g_idListView</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/IsHWnd.htm"><span class="S4">IsHWnd</span></a><span class="S8">(</span><span class="S9">$g_idListView</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><span class="S9">$hWndListView</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlGetHandle.htm"><span class="S4">GUICtrlGetHandle</span></a><span class="S8">(</span><span class="S9">$g_idListView</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tNMHDR</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><a class="codeSnippetLink" href="$tagNMLISTVIEW.htm"><span class="S9">$tagNMLISTVIEW</span></a><span class="S8">,</span><span class="S0"> </span><span class="S9">$lParam</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hWndFrom</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/HWnd.htm"><span class="S4">HWnd</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$tNMHDR</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"hWndFrom"</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iCode</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$tNMHDR</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Code"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><span class="S9">$hWndFrom</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$hWndListView</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><span class="S9">$iCode</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$LVN_COLUMNCLICK</span><span class="S0"> </span><span class="S1">; Eien Spalte wurde angeklickt</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_SimpleSort.htm"><span class="S15">_GUICtrlListView_SimpleSort</span></a><span class="S8">(</span><span class="S9">$hWndListView</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_bSortSense</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$tNMHDR</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"SubItem"</span><span class="S8">))</span><span class="S0"> </span><span class="S1">; Die Sortierrichtung wird standardm&auml;&szlig;ig f&uuml;r ide n&auml;chste Sortierung umgedreht</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S9">$GUI_RUNDEFMSG</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_WM_NOTIFY</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

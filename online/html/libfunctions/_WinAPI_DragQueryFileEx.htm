@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinAPI_DragQueryFileEx</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_WinAPI_DragQueryFileEx</h1><br />
+<a href="../libfunctions_en/_WinAPI_DragQueryFileEx.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Gibt den Namen der Dropdateien einer erfolgreichen Drag-und-Drop Operation zur&uuml;ck<br /></p>
+<p class="codeheader">
+#include &lt;WinAPISysWin.au3&gt;<br />
+_WinAPI_DragQueryFileEx ( $hDrop [, $iFlag = 0] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$hDrop</td>
+<td style="width:85%">Das Handle zur Dropstruktur welche die Dropdatei beschreibt.<br />
+Dieser Parameter wird zur WM_DROPFILES Nachricht im WPARAM Parameter &uuml;bergeben.</td>
+</tr>
+<tr>
+<td>$iFlag</td>
+<td><strong>[optional]</strong> Dieser Flag gibt an ob Dateien, Verzeichnisse oder beides zur&uuml;ckgegeben werden soll. G&uuml;ltige Werte sind:<br />
+0 - Gibt sowohl Dateien als auch Verzeichnisse zur&uuml;ck (Standard).<br />
+1 - Gibt nur Dateien zur&uuml;ck.<br />
+2 - Gibt nur Verzeichnisse zur&uuml;ck.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">Das Array der Namen der Dropdateien. Das nullte Arrayelement beinhaltet die Anzahl der Dateinamen.<br />
+Wenn keine Dateien die Bedingung ($iFlag) erf&uuml;llen, so schl&auml;gt die Funktion fehl.</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>Setzt @error auf ungleich 0.</td>
+</tr>
+</table>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(DragQueryFile);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">DragQueryFile</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_DragAcceptFiles.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPI.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPISys.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WindowsConstants.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../functions/OnAutoItExitRegister.htm"><span class="S4">OnAutoItExitRegister</span></a><span class="S8">(</span><span class="S7">'OnAutoItExit'</span><span class="S8">)</span>
+
+<span class="S1">; Create GUI</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hForm</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">'Test '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringReplace.htm"><span class="S4">StringReplace</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@ScriptName"><span class="S6">@ScriptName</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">'.au3'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'()'</span><span class="S8">),</span><span class="S0"> </span><span class="S3">400</span><span class="S8">,</span><span class="S0"> </span><span class="S3">400</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idCheck</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateCheckbox.htm"><span class="S4">GUICtrlCreateCheckbox</span></a><span class="S8">(</span><span class="S7">'Enable Drag &amp;&amp; Drop'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">370</span><span class="S8">,</span><span class="S0"> </span><span class="S3">120</span><span class="S8">,</span><span class="S0"> </span><span class="S3">19</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idLabel</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateLabel.htm"><span class="S4">GUICtrlCreateLabel</span></a><span class="S8">(</span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_hLabel</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlGetHandle.htm"><span class="S4">GUICtrlGetHandle</span></a><span class="S8">(</span><span class="S9">$idLabel</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUICtrlSetBkColor.htm"><span class="S4">GUICtrlSetBkColor</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xD3D8EF</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUICtrlCreateLabel.htm"><span class="S4">GUICtrlCreateLabel</span></a><span class="S8">(</span><span class="S7">'Drop here'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">175</span><span class="S8">,</span><span class="S0"> </span><span class="S3">193</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">,</span><span class="S0"> </span><span class="S3">14</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUICtrlSetBkColor.htm"><span class="S4">GUICtrlSetBkColor</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_BKCOLOR_TRANSPARENT</span><span class="S8">)</span>
+
+<span class="S1">; Allow WM_DROPFILES to be received from lower privileged processes (Windows Vista or later)</span>
+<span class="S2">#cs</span>
+<span class="S2">If IsAdmin() Then</span>
+<span class="S2">&nbsp; &nbsp; _WinAPI_ChangeWindowMessageFilterEx($g_hLabel, $WM_COPYGLOBALDATA, $MSGFLT_ALLOW)</span>
+<span class="S2">&nbsp; &nbsp; _WinAPI_ChangeWindowMessageFilterEx($g_hLabel, $WM_DROPFILES, $MSGFLT_ALLOW)</span>
+<span class="S2">EndIf</span>
+<span class="S2">#ce</span>
+
+<span class="S1">; Register label window proc</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_hDll</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllCallbackRegister.htm"><span class="S4">DllCallbackRegister</span></a><span class="S8">(</span><span class="S7">'_WinProc'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'ptr'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'hwnd;uint;wparam;lparam'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_pDll</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllCallbackGetPtr.htm"><span class="S4">DllCallbackGetPtr</span></a><span class="S8">(</span><span class="S9">$g_hDll</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_hProc</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetWindowLong.htm"><span class="S15">_WinAPI_SetWindowLong</span></a><span class="S8">(</span><span class="S9">$g_hLabel</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GWL_WNDPROC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_pDll</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$idCheck</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_DragAcceptFiles.htm"><span class="S15">_WinAPI_DragAcceptFiles</span></a><span class="S8">(</span><span class="S9">$g_hLabel</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlRead.htm"><span class="S4">GUICtrlRead</span></a><span class="S8">(</span><span class="S9">$idCheck</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$GUI_CHECKED</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+<a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _WinProc</span><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iMsg</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$wParam</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$lParam</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><span class="S9">$iMsg</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$WM_DROPFILES</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aFileList</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_DragQueryFileEx.htm"><span class="S15">_WinAPI_DragQueryFileEx</span></a><span class="S8">(</span><span class="S9">$wParam</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'--------------------------------------------------'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S9">$aFileList</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S9">$aFileList</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">]</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_DragFinish.htm"><span class="S15">_WinAPI_DragFinish</span></a><span class="S8">(</span><span class="S9">$wParam</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S3">0</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CallWindowProc.htm"><span class="S15">_WinAPI_CallWindowProc</span></a><span class="S8">(</span><span class="S9">$g_hProc</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iMsg</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$wParam</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$lParam</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_WinProc</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> OnAutoItExit</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetWindowLong.htm"><span class="S15">_WinAPI_SetWindowLong</span></a><span class="S8">(</span><span class="S9">$g_hLabel</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GWL_WNDPROC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hProc</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllCallbackFree.htm"><span class="S4">DllCallbackFree</span></a><span class="S8">(</span><span class="S9">$g_hDll</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;OnAutoItExit</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

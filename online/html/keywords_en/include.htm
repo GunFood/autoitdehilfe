@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Keyword #include</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Keyword Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">#include</h1><br />
+<a href="../keywords/include.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Includes a file in the current script.<br /></p>
+<p class="codeheader">
+<strong>#include</strong> "[path\]filename"<br />
+<strong>#include</strong> &lt;filename&gt;<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">filename</td>
+<td style="width:85%">The filename of the current script to include. Path is optional. <strong>This must be a string--it cannot be a variable.</strong><br />
+If <strong>"..."</strong> is used, the filename is taken to be relative to the current script.<br />
+If <strong>&lt;...&gt;</strong> is used the filename is taken to be relative to include library directory (usually C:\Program Files\AutoIt3\Include). The include library contains many pre-written user-functions for you to use!</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>Other scripts can be included into an Autoit script using the #include command - these can be in either .au3 or .a3x format. The content of the included file is inserted into the script at the point of the #include command - in most cases this is the beginning of the script so that any variable or constant declarations within the included text are available to the rest of the script.<br />
+<br />
+If you include the same file containing a user defined function more than once you will get a "Duplicate function" error. When writing an include file that may be used in this way, make sure that the firstline contains <strong>#include-once</strong> to prevent that file from being included more than once.<br />
+<br />
+There is a special registry value that can be created at "HKEY_CURRENT_USER\Software\AutoIt v3\AutoIt" called "Include". It should be a REG_SZ (string) value. The contents of this value are a semi-colon delimited list of directories that should be searched for files when resolving #include's in addition to the standard locations.<br />
+<br />
+The search order used by AutoIt depends on which form of #include you use. The tables below show the order directories are searched using both forms.<br />
+<br />
+Using #include &lt;&gt;<table>
+<tr>
+<td style="width:15%">Standard library</td>
+<td style="width:85%">The path of the currently running interpreter with "\Include" appended is searched.</td>
+</tr>
+<tr>
+<td>User-defined libraries</td>
+<td>The registry value mentioned above is read and each directory is searched in the order they appear in.</td>
+</tr>
+<tr>
+<td>Script directory</td>
+<td>The directory of the currently executing script.</td>
+</tr>
+</table><br />
+Using #include "" (This is the reverse of #include &lt;&gt;).<table>
+<tr>
+<td style="width:15%">Script directory</td>
+<td style="width:85%">The directory of the currently executing script.</td>
+</tr>
+<tr>
+<td>User-defined libraries</td>
+<td>The registry value mentioned above is read and each directory is searched in the reverse order they appear in.</td>
+</tr>
+<tr>
+<td>Standard library</td>
+<td>The path of the currently running interpreter with "\Include" appended is searched.</td>
+</tr>
+</table><br />
+A note about using the /AutoIt3ExecuteScript option. Since the standard library is searched for in the current interpreter's directory, the standard library functions will not be found; that library will only be found when run through AutoIt3.exe. It's recommended that you compile a script to the .a3x format before attempting to run it with /AutoIt3ExecuteScript.<br />
+<br />
+Aut2Exe uses the same algorithm as AutoIt3.exe with the only difference being it looks for the Include sub-directory as being in a sibling directory to itself (..\Include).<br />
+<br />
+If <a href="../functions/AutoItSetOption.htm#TrayIconDebug">Opt</a>("TrayIconDebug",1) only 64 include files name can be displayed in the traytooltip. for the other no filename will be displayed.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="include-once.htm">#include-once</a></p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\include.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">"include-TIME.au3"</span>
+
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Example"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a>
+
+<span class="S1">; Running script.au3 will output two message boxes:</span>
+<span class="S1">; one with 'Example', followed by one with the time.</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

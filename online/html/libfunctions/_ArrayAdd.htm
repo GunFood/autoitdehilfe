@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _ArrayAdd</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_ArrayAdd</h1><br />
+<a href="../libfunctions_en/_ArrayAdd.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">F&uuml;gt den angegeben Wert an dem Ende des angegebenen Arrays hinzu<br /></p>
+<p class="codeheader">
+#include &lt;Array.au3&gt;<br />
+_ArrayAdd ( ByRef $aArray, $vValue [, $iStart = 0 [, $sDelim_Item = "|" [, $sDelim_Row = @CRLF [, $iForce = $ARRAYFILL_FORCE_DEFAULT]]]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$aArray</td>
+<td style="width:85%">Das zu ver&auml;ndernde Array.</td>
+</tr>
+<tr>
+<td>$vValue</td>
+<td>Der Wert, der hinzugef&uuml;gt werden soll. Dies kan ein einzelnes Item, ein String mit Trennzeichen oder ein Array sein</td>
+</tr>
+<tr>
+<td>$iStart</td>
+<td><strong>[optional]</strong> Spalte bei der die Addition beginnt (nur 2D Array)</td>
+</tr>
+<tr>
+<td>$sDelim_Item</td>
+<td><strong>[optional]</strong> verwendetes Trennzeichen, falls ein String in einzelne Items getrennt werden soll</td>
+</tr>
+<tr>
+<td>$sDelim_Row</td>
+<td><strong>[optional]</strong> verwendetes Trennzeichen, falls ein String in einzelne Zeilen getrennt werden soll (nur 2D)</td>
+</tr>
+<tr>
+<td>$iForce</td>
+<td><strong>[optional]</strong> Beh&auml;lt das Standardverhalten,<br />
+&nbsp;&nbsp;&nbsp; $ARRAYFILL_FORCE_DEFAULT (0)<br />
+Erzwingt, dass $vValue als einzelnes Item hinzugef&uuml;gt wird,<br />
+&nbsp;&nbsp;&nbsp; $ARRAYFILL_FORCE_SINGLEITEM (1)<br />
+oder erzwingt den Datentyp f&uuml;r alle hinzugef&uuml;gten Items<br />
+&nbsp;&nbsp;&nbsp; $ARRAYFILL_FORCE_INT (2)<br />
+&nbsp;&nbsp;&nbsp; $ARRAYFILL_FORCE_NUMBER (3)<br />
+&nbsp;&nbsp;&nbsp; $ARRAYFILL_FORCE_PTR (4)<br />
+&nbsp;&nbsp;&nbsp; $ARRAYFILL_FORCE_HWND (5)<br />
+&nbsp;&nbsp;&nbsp; $ARRAYFILL_FORCE_STRING (6)<br />
+&nbsp;&nbsp;&nbsp; $ARRAYFILL_FORCE_BOOLEAN (7)<br />
+Siehe Bemerkungen f&uuml;r mehr Details </td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">der Index des letzten hinzugef&uuml;gten Objekts</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>-1 und setzt @error auf ungleich 0</td>
+</tr>
+<tr>
+<td class="valign-top">@error:</td>
+<td>1 - $aArray ist kein Array<br />
+2 - $aArray ist kein 1D oder 2D Array<br />
+3 - $vValue hat zu viele Spalten die nicht in $aArray reinpassen<br />
+4 - $iStart au&szlig;erhalb der Arraygrenzen (nur 2D)<br />
+5 - Anzahl der Array-Dimensionen f&uuml;r $aArray und $vValue passen nicht</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Der Additionsmodusist abh&auml;ngig vom $vValue Typ. $iForce kann dies jedoch beeinflussen. Es gibt die folgenden Standardverhalten:<br />
+<br />
+1D Arrays:<br />
+&nbsp;&nbsp;&nbsp; Einzelnes Item - f&uuml;gt 1 Element hinzu<br />
+&nbsp;&nbsp;&nbsp; $sDelim_Item getrennter String - f&uuml;gt so viele Elemente wie Items hinzu<br />
+&nbsp;&nbsp;&nbsp; 0-based 1D array - f&uuml;gt so viele Elemente wie Items hinzu<br />
+<br />
+2D Arrays:<br />
+&nbsp;&nbsp;&nbsp; $sDelim_Item getrennter String - f&uuml;gt 1 Zeilen hinzu. Die Spalten werden gef&uuml;llt, wenn genug Items vorhanden sind<br />
+&nbsp;&nbsp;&nbsp; $sDelim_Row getrennter String - f&uuml;gt so viele Zeile wie Items hinzu. Es wird nur 1 Spalte gef&uuml;llt<br />
+&nbsp;&nbsp;&nbsp; $sDelim_Item & Row getrennter String - f&uuml;gt Zeilen und Items hinzu, abh&auml;ngig von den Trennstellen<br />
+&nbsp;&nbsp;&nbsp; 0-basierendes 2D Array - f&uuml;gt so vielen Zeilen bzw. Spalten wie im Array hinzu<br />
+<br />
+Ein leerer String ("") wird hinzuf&uuml;gt, wenn in $vValue unzureichend viele Items festgelegt wurden. &Uuml;berfl&uuml;ssige Items werden ignoriert. <br />
+<br />
+Wird der $iForce Parameter verwendet, so kann sich das Standardverhalten oder der Datentyp f&uuml;r hinzuge&uuml;fgt Items &auml;ndern. Dies kann wie folgt gesetzt werden:<br />
+&nbsp;&nbsp;&nbsp; - $ARRAYFILL_FORCE_DEFAULT (Standard):<br />
+ - Items werden wie oben beschrieben getrennt. Einzelne Items und Arrayelemente behalten ihren Datentyp. Getrennte String werden als Strings hinzuf&uuml;gt.<br />
+&nbsp;&nbsp;&nbsp; - $ARRAYFILL_FORCE_SINGLEITEM:<br />
+ - Wenn $aArray ein 1D-Array ist, so wird $vValue als einzelnes Elemenet hinzugef&uuml;gt.<br />
+ - Wenn $aArray ein 2D-Array ist, wird der Parameter ignoriert.<br />
+&nbsp;&nbsp;&nbsp; - $ARRAYFILL_FORCE_INT, $ARRAYFILL_FORCE_NUMBER, $ARRAYFILL_FORCE_PTR, $ARRAYFILL_FORCE_HWND, $ARRAYFILL_FORCE_STRING, $ARRAYFILL_FORCE_BOOLEAN<br />
+ - Wenn $vValue ein einzelnes Items ist, wird standardm&auml;&szlig;ig der definierte Datentyp verwendet. Standardm&auml;&szlig;ig wird dessen existierender Datentyp verwendet.<br />
+ - Wenn $vValue ein getrennter String ist, wird standardm&auml;&szlig;ig der definierte Datentyp verwendet. Standardm&auml;&szlig;ig werden die als String dem Array hinzugef&uuml;gt. Wenn verschiedene Datentyp f&uuml;r die Items notwendig sind, so m&uuml;ssen dies als Array &uuml;bergeben werden.<br />
+ - Wenn $vValue ein Array ist, wird der Parameter ignoriert und die Arrayelemente werden unter Beibehaltung ihrer existierenden Datentyp hinzugef&uuml;gt.<br />
+<br />
+Wenn $iForce auf einen anderen Wert gesetzt wurde, wird dieser ignoriert.<br />
+<br />
+Es ist zu beachten, dass $ARRAYFILL_FORCE_BOOLEAN w&ouml;rtliche Strings wie folgt betrachtet:<br />
+ - "True" und "1" als True<br />
+ - "False", "0" und "" (leerer String) als False <br />
+<br />
+Diese Funktion &auml;ndert keine Z&auml;hler innherhalb des Arrays. Jedoch wird durch die Funktion, falls diese erfolgreich war, der neue h&ouml;chste Zeilenindex des Array zur&uuml;ckgegeben.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="_ArrayConcatenate.htm">_ArrayConcatenate</a>, <a href="_ArrayDelete.htm">_ArrayDelete</a>, <a href="_ArrayInsert.htm">_ArrayInsert</a>, <a href="_ArrayPop.htm">_ArrayPop</a>, <a href="_ArrayPush.htm">_ArrayPush</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<h3>Beispiel 1</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_ArrayAdd.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span><span class="S8">[</span><span class="S3">2</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[</span><span class="S7">"Original Item 0"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Original Item 1"</span><span class="S8">]</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray_Base</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"1D - Basis Array"</span><span class="S8">)</span>
+
+<span class="S1">; F&uuml;gt ein einzelnes Item hinzu</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sSingleFill</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Neues Item 2"</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayAdd.htm"><span class="S15">_ArrayAdd</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sSingleFill</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"1D - Einzeln"</span><span class="S8">)</span>
+
+<span class="S1">; F&uuml;gt einen String mit einem Trennzeichen ein. Jedes Item f&uuml;gt ein neues Element hinzu</span>
+<span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sFill</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">""</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">5</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$sFill</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><span class="S7">"Neues Item "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"|"</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S9">$sFill</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringTrimRight.htm"><span class="S4">StringTrimRight</span></a><span class="S8">(</span><span class="S9">$sFill</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"String mit einem Trennzeichen zu hinzuf&uuml;gen"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFill</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayAdd.htm"><span class="S15">_ArrayAdd</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFill</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"1D - String mit einem Trennzeichen"</span><span class="S8">)</span>
+
+<span class="S1">; F&uuml;gt ein 1D Array hinzu. Jedes Item f&uuml;gt ein neues Element hinzu</span>
+<span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aFill</span><span class="S8">[</span><span class="S3">5</span><span class="S8">]</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">4</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aFill</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Neues Item "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S3">2</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aFill</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"hinzuzuf&uuml;gendes Array"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayAdd.htm"><span class="S15">_ArrayAdd</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aFill</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"1D - 1D Array"</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 2</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_ArrayAdd[02].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFill</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span><span class="S8">[</span><span class="S3">2</span><span class="S8">][</span><span class="S3">2</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[[</span><span class="S7">"Item 0 - 0"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Item 0 - 1"</span><span class="S8">],</span><span class="S0"> </span><span class="S8">[</span><span class="S7">"Item 1 - 0"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Item 1 - 1"</span><span class="S8">]]</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray_Base</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2D - Grundarray"</span><span class="S8">)</span>
+
+<span class="S1">; F&uuml;gt einen durch ein Trennzeichen getrennten String hinzu</span>
+<span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span>
+<span class="S9">$sFill</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Neues Item 2 - 0|Neues Item 2 - 1"</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayAdd.htm"><span class="S15">_ArrayAdd</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFill</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2D - Item getrennt"</span><span class="S8">)</span>
+
+<span class="S1">; F&uuml;gt einen durch ein Zeilentrennzeichen getrennten String hinzu - eingetragen in Spalte 1</span>
+<span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span>
+<span class="S9">$sFill</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Neues Item 2 - 1"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Neues Item 3 - 1"</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayAdd.htm"><span class="S15">_ArrayAdd</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFill</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2D - Zeile getrennt"</span><span class="S8">)</span>
+
+<span class="S1">; F&uuml;gt ein Item und ein Zeilentrennzeichen getrennten String hinzu</span>
+<span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span>
+<span class="S9">$sFill</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Neues Item 2 - 0|Neues Item 2 - 1"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Neues Item 3 - 0|Neues Item 3 - 1"</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayAdd.htm"><span class="S15">_ArrayAdd</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFill</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2D - Item und Zeile getrennt"</span><span class="S8">)</span>
+
+<span class="S1">; F&uuml;gt ein 2D Array hinzu</span>
+<span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aFill</span><span class="S8">[</span><span class="S3">2</span><span class="S8">][</span><span class="S3">2</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[[</span><span class="S7">"Neues Item 2 - 1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Neues Item 2 - 2"</span><span class="S8">],</span><span class="S0"> </span><span class="S8">[</span><span class="S7">"Neues Item 3 - 1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Neues Item 3 - 2"</span><span class="S8">]]</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayAdd.htm"><span class="S15">_ArrayAdd</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aFill</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2D - 2D Array"</span><span class="S8">)</span>
+
+<span class="S1">; F&uuml;gt ein 2D Array hinzu - Einzelnes Item bzw. Spalte - eingetragen in Spalte 1</span>
+<span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aFill</span><span class="S8">[</span><span class="S3">2</span><span class="S8">][</span><span class="S3">1</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[[</span><span class="S7">"Neues Item 2 - 1"</span><span class="S8">],</span><span class="S0"> </span><span class="S8">[</span><span class="S7">"Neues Item 3 - 1"</span><span class="S8">]]</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayAdd.htm"><span class="S15">_ArrayAdd</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aFill</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2D - 2D Array"</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 3</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_ArrayAdd[03].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext3\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext3">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span><span class="S8">[</span><span class="S3">2</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[</span><span class="S7">"Original Item 0"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Original Item 1"</span><span class="S8">]</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sFill</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">""</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">2</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">6</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$sFill</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"|"</span><span class="S0"> </span><span class="S1">; Es ist zu beachten, dass Variablen hier als Zahl-Datentyp hinzugef&uuml;gt werden</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S9">$sFill</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringTrimRight.htm"><span class="S4">StringTrimRight</span></a><span class="S8">(</span><span class="S9">$sFill</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Hinzuzuf&uuml;gender getrennter String"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFill</span><span class="S8">)</span>
+
+<span class="S1">; F&uuml;gt Items durch einen getrennten String hinzu</span>
+<span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayAdd.htm"><span class="S15">_ArrayAdd</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFill</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Umgeandelt in einen String"</span><span class="S8">)</span>
+<span class="S1">; Wird jedoch beim Einf&uuml;gen in einen String-Datentyp konvertiert</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Ergebnis"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Daten:"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$aArray</span><span class="S8">[</span><span class="S3">6</span><span class="S8">]</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Datentyp:"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/VarGetType.htm"><span class="S4">VarGetType</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">[</span><span class="S3">6</span><span class="S8">]))</span>
+
+<span class="S1">; F&uuml;gt Items durch einen getrennten String hinzu</span>
+<span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span>
+<span class="S1">; Es wird der Datentyp Zahl erzwungen</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayAdd.htm"><span class="S15">_ArrayAdd</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFill</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S9">$ARRAYFILL_FORCE_NUMBER</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Datentyp Zahl erzwungen"</span><span class="S8">)</span>
+<span class="S1">; Der Datentyp wird zum erforderlichen Typ gezwungen</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Ergebnis"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Daten:"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$aArray</span><span class="S8">[</span><span class="S3">6</span><span class="S8">]</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"typ:"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/VarGetType.htm"><span class="S4">VarGetType</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">[</span><span class="S3">6</span><span class="S8">]))</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

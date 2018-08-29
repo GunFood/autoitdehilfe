@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinAPI_VerQueryValue</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1>_WinAPI_VerQueryValue</h1>
+<p class="funcdesc">Retrieves the non-fixed (strings) version information from the specified version-information resource<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIRes.au3&gt;<br />
+_WinAPI_VerQueryValue ( $pData [, $sValues = ''] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$pData</td>
+<td style="width:85%">A pointer to the buffer that contains the version-information resource returned by the<br />
+<a href="_WinAPI_GetFileVersionInfo.htm">_WinAPI_GetFileVersionInfo()</a> function.</td>
+</tr>
+<tr>
+<td>$sValues</td>
+<td><strong>[optional]</strong> The string containing the field names for which you want to get values. The names must be separated by a "|".<br />
+For example, "name1|name2|...|namei". If some fields do not exist, the corresponding array elements is an empty string.<br />
+If this parameter is not specified (empty string), uses the reserved names (12) in the following sequence:<br />
+&nbsp;&nbsp;&nbsp; $FV_COMMENTS ("Comments")<br />
+&nbsp;&nbsp;&nbsp; $FV_COMPANYNAME ("CompanyName")<br />
+&nbsp;&nbsp;&nbsp; $FV_FILEDESCRIPTION ("FileDescription")<br />
+&nbsp;&nbsp;&nbsp; $FV_FILEVERSION ("FileVersion")<br />
+&nbsp;&nbsp;&nbsp; $FV_INTERNALNAME ("InternalName")<br />
+&nbsp;&nbsp;&nbsp; $FV_LEGALCOPYRIGHT ("LegalCopyright")<br />
+&nbsp;&nbsp;&nbsp; $FV_LEGALTRADEMARKS ("LegalTrademarks")<br />
+&nbsp;&nbsp;&nbsp; $FV_ORIGINALFILENAME ("OriginalFilename")<br />
+&nbsp;&nbsp;&nbsp; $FV_PRODUCTNAME ("ProductName")<br />
+&nbsp;&nbsp;&nbsp; $FV_PRODUCTVERSION ("ProductVersion")<br />
+&nbsp;&nbsp;&nbsp; $FV_PRIVATEBUILD ("PrivateBuild")<br />
+&nbsp;&nbsp;&nbsp; $FV_SPECIALBUILD ("SpecialBuild")<br />
+<br />
+Constants are defined in FileConstants.au3.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">The 2D array of the string values that specified by $sValues parameter for each language.<br />
+The zeroth array element [0][0] contains the number of languages of the resource.<br />
+The array dimension (i) equal to the number specified parameters + 1.<br />
+The zeroth array element [n][0] contains the language identifier (ID).<br />
+[0][0] - Number of languages (n)<br />
+[0][i] - Unused<br />
+[n][0] - ID<br />
+[n][i] - Value</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>Sets the @error flag to non-zero.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>None.<br />
+</p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(VerQueryValue);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">VerQueryValue</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_VerQueryValue.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIMem.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIRes.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$pData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetFileVersionInfo.htm"><span class="S15">_WinAPI_GetFileVersionInfo</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SystemDir"><span class="S6">@SystemDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'\shell32.dll'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$pData</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_VerQueryValue.htm"><span class="S15">_WinAPI_VerQueryValue</span></a><span class="S8">(</span><span class="S9">$pData</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aData</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'_WinAPI_VerQueryValue'</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_FreeMemory.htm"><span class="S15">_WinAPI_FreeMemory</span></a><span class="S8">(</span><span class="S9">$pData</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinAPI_GetDCEx</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1>_WinAPI_GetDCEx</h1>
+<p class="funcdesc">Retrieves a handle to a device context (DC) for the client area of a specified window<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIGdiDC.au3&gt;<br />
+_WinAPI_GetDCEx ( $hWnd, $hRgn, $iFlags )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$hWnd</td>
+<td style="width:85%">Handle to the window whose DC is to be retrieved.<br />
+If this value is 0, <a href="_WinAPI_GetDCEx.htm">_WinAPI_GetDCEx()</a> retrieves the DC for the entire screen.<br />
+If the value of $iFlags parameter is $DCX_INTERSECTRGN or DCX_EXCLUDERGN, then the operating system assumes ownership of the region and will automatically delete it when it is no longer needed.<br />
+In this case, the application should not use or delete the region after a successful call to <a href="_WinAPI_GetDCEx.htm">_WinAPI_GetDCEx()</a>.</td>
+</tr>
+<tr>
+<td>$hRgn</td>
+<td>A clipping region that may be combined with the visible region of the DC.</td>
+</tr>
+<tr>
+<td>$iFlags</td>
+<td>Flags that specifies how the DC is created.<br />
+This parameter can be one or more of the following values:<br />
+&nbsp;&nbsp;&nbsp; $DCX_WINDOW<br />
+&nbsp;&nbsp;&nbsp; $DCX_CACHE<br />
+&nbsp;&nbsp;&nbsp; $DCX_PARENTCLIP<br />
+&nbsp;&nbsp;&nbsp; $DCX_CLIPSIBLINGS<br />
+&nbsp;&nbsp;&nbsp; $DCX_CLIPCHILDREN<br />
+&nbsp;&nbsp;&nbsp; $DCX_NORESETATTRS<br />
+&nbsp;&nbsp;&nbsp; $DCX_LOCKWINDOWUPDATE<br />
+&nbsp;&nbsp;&nbsp; $DCX_EXCLUDERGN<br />
+&nbsp;&nbsp;&nbsp; $DCX_INTERSECTRGN<br />
+&nbsp;&nbsp;&nbsp; $DCX_INTERSECTUPDATE<br />
+&nbsp;&nbsp;&nbsp; $DCX_VALIDATE</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">Handle to the DC for the specified window.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>0.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Unless the display DC belongs to a window class, the <a href="_WinAPI_ReleaseDC.htm">_WinAPI_ReleaseDC()</a> function must be called to release the DC after painting.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="_WinAPI_ReleaseDC.htm">_WinAPI_ReleaseDC</a></p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(GetDCEx);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">GetDCEx</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_GetDCEx.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;APIGdiConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;FontConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIGdi.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIGdiDC.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIHObj.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPISys.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPISysWin.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WindowsConstants.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_hFont</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateFont.htm"><span class="S15">_WinAPI_CreateFont</span></a><span class="S8">(</span><span class="S3">16</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$FW_BOLD</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$DEFAULT_CHARSET</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$OUT_DEFAULT_PRECIS</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$CLIP_DEFAULT_PRECIS</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$DEFAULT_PITCH</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$ANTIALIASED_QUALITY</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Arial'</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_bDwm</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S8">(</span><a class="codeSnippetLink" href="../functions/Number.htm"><span class="S4">Number</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetVersion.htm"><span class="S15">_WinAPI_GetVersion</span></a><span class="S8">())</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&gt;</span></a><span class="S0"> </span><span class="S3">5.2</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">And</span></a><span class="S0"> </span><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_DwmIsCompositionEnabled.htm"><span class="S15">_WinAPI_DwmIsCompositionEnabled</span></a><span class="S8">())</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$MB_YESNOCANCEL</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MB_ICONQUESTION</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">),</span><span class="S0"> </span><span class="S7">'DWM'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'This example works only if a Desktop Window Manager (DWM) composition is disabled.'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'Do you want to disable DWM?'</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">6</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_DwmEnableComposition.htm"><span class="S15">_WinAPI_DwmEnableComposition</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$g_bDwm</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<a class="codeSnippetLink" href="../functions/OnAutoItExitRegister.htm"><span class="S4">OnAutoItExitRegister</span></a><span class="S8">(</span><span class="S7">'OnAutoItExit'</span><span class="S8">)</span>
+
+<span class="S1">; Create GUI</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_hForm</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">'Test '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringReplace.htm"><span class="S4">StringReplace</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@ScriptName"><span class="S6">@ScriptName</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">'.au3'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'()'</span><span class="S8">),</span><span class="S0"> </span><span class="S3">400</span><span class="S8">,</span><span class="S0"> </span><span class="S3">400</span><span class="S8">)</span>
+
+<span class="S1">; Register window proc</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_hDll</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllCallbackRegister.htm"><span class="S4">DllCallbackRegister</span></a><span class="S8">(</span><span class="S7">'_WinProc'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'ptr'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'hwnd;uint;long;ptr'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$pDll</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllCallbackGetPtr.htm"><span class="S4">DllCallbackGetPtr</span></a><span class="S8">(</span><span class="S9">$g_hDll</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_hProc</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetWindowLong.htm"><span class="S15">_WinAPI_SetWindowLong</span></a><span class="S8">(</span><span class="S9">$g_hForm</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GWL_WNDPROC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$pDll</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Do</span></a>
+<a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Until</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _WinProc</span><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iMsg</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$wParam</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$lParam</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$vRes</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CallWindowProc.htm"><span class="S15">_WinAPI_CallWindowProc</span></a><span class="S8">(</span><span class="S9">$g_hProc</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iMsg</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$wParam</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$lParam</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><span class="S9">$iMsg</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$WM_NCACTIVATE</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$WM_NCPAINT</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hDC</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><span class="S9">$iMsg</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$WM_NCACTIVATE</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$hDC</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetWindowDC.htm"><span class="S15">_WinAPI_GetWindowDC</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$WM_NCPAINT</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$hDC</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetDCEx.htm"><span class="S15">_WinAPI_GetDCEx</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$wParam</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$DCX_WINDOW</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$DCX_INTERSECTRGN</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hSv</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SelectObject.htm"><span class="S15">_WinAPI_SelectObject</span></a><span class="S8">(</span><span class="S9">$hDC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hFont</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetTextColor.htm"><span class="S15">_WinAPI_SetTextColor</span></a><span class="S8">(</span><span class="S9">$hDC</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0x00FFFF</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetBkMode.htm"><span class="S15">_WinAPI_SetBkMode</span></a><span class="S8">(</span><span class="S9">$hDC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$TRANSPARENT</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_TextOut.htm"><span class="S15">_WinAPI_TextOut</span></a><span class="S8">(</span><span class="S9">$hDC</span><span class="S8">,</span><span class="S0"> </span><span class="S3">25</span><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Test '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringReplace.htm"><span class="S4">StringReplace</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@ScriptName"><span class="S6">@ScriptName</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">'.au3'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'()'</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SelectObject.htm"><span class="S15">_WinAPI_SelectObject</span></a><span class="S8">(</span><span class="S9">$hDC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hSv</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_ReleaseDC.htm"><span class="S15">_WinAPI_ReleaseDC</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hDC</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S9">$vRes</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_WinProc</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> OnAutoItExit</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetWindowLong.htm"><span class="S15">_WinAPI_SetWindowLong</span></a><span class="S8">(</span><span class="S9">$g_hForm</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GWL_WNDPROC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hProc</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllCallbackFree.htm"><span class="S4">DllCallbackFree</span></a><span class="S8">(</span><span class="S9">$g_hDll</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$g_bDwm</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_DwmEnableComposition.htm"><span class="S15">_WinAPI_DwmEnableComposition</span></a><span class="S8">(</span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;OnAutoItExit</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

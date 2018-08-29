@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function RunAsWait</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">RunAsWait</h1><br />
+<a href="../functions/RunAsWait.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Runs an external program under the context of a different user and pauses script execution until the program finishes.<br /></p>
+<p class="codeheader">
+RunAsWait ( "username", "domain", "password", logon_flag, "program" [, "workingdir" [, show_flag [, opt_flag]]] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">username</td>
+<td style="width:85%">The username to log on with.</td>
+</tr>
+<tr>
+<td>domain</td>
+<td>The domain to authenticate against.</td>
+</tr>
+<tr>
+<td>password</td>
+<td>The password for the user.</td>
+</tr>
+<tr>
+<td>logon_flag</td>
+<td>&nbsp;&nbsp;&nbsp; $RUN_LOGON_NOPROFILE (0) - Interactive logon with no profile.<br />
+&nbsp;&nbsp;&nbsp; $RUN_LOGON_PROFILE (1) - Interactive logon with profile.<br />
+&nbsp;&nbsp;&nbsp; $RUN_LOGON_NETWORK (2) - Network credentials only.<br />
+&nbsp;&nbsp;&nbsp; $RUN_LOGON_INHERIT (4) - Inherit the calling process's environment instead of the user's environment.<br />
+<br />
+Constants are defined in "AutoItConstants.au3".</td>
+</tr>
+<tr>
+<td>program</td>
+<td>The full path of the program (EXE, BAT, COM, or PIF) to run (see remarks).</td>
+</tr>
+<tr>
+<td>workingdir</td>
+<td><strong>[optional]</strong> The working directory. If not specified, then the value of @SystemDir will be used. This is not the path to the program.</td>
+</tr>
+<tr>
+<td>show_flag</td>
+<td><strong>[optional]</strong> The "show" flag of the executed program:<br />
+&nbsp;&nbsp;&nbsp; @SW_HIDE = Hidden window (or Default keyword)<br />
+&nbsp;&nbsp;&nbsp; @SW_MINIMIZE = Minimized window<br />
+&nbsp;&nbsp;&nbsp; @SW_MAXIMIZE = Maximized window</td>
+</tr>
+<tr>
+<td>opt_flag</td>
+<td><strong>[optional]</strong> Controls various options related to how the parent and child process interact.<br />
+&nbsp;&nbsp;&nbsp; $RUN_CREATE_NEW_CONSOLE (0x10000) = The child console process should be created with its own window instead of using the parent's window. This flag is only useful when the parent is compiled as a Console application.<br />
+<br />
+Constant is defined in AutoItConstants.au3</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">the exit code of the program that was run.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>sets the @error flag to non-zero.</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>Paths with spaces need to be enclosed in quotation marks.<br />
+<br />
+It is important to specify a working directory the user you are running as has access to, otherwise the function will fail.<br />
+<br />
+It is recommended that you only load the user's profile is you are sure you need it. There is a small chance a profile can be stuck in memory under the right conditions. If a script using <a href="RunAs.htm">RunAs()</a> happens to be running as the SYSTEM account (for example, if the script is running as a service) and the user's profile is loaded, then you must take care that the script remains running until the child process closes.<br />
+<br />
+When running as an administrator, the Secondary Logon (<a href="RunAs.htm">RunAs()</a>) service must be enabled or this function will fail. This does not apply when running as the SYSTEM account.<br />
+<br />
+After running the requested program the script pauses until the program terminates. To run a program and then immediately continue script execution use the <a href="RunAs.htm">RunAs()</a> function instead.<br />
+<br />
+Some programs will appear to return immediately even though they are still running; these programs spawn another process - you may be able to use the <a href="ProcessWaitClose.htm">ProcessWaitClose()</a> function to handle these cases.<br />
+<br />
+The "load profile" and "network credentials only" options are incompatible. Using both will produce undefined results.<br />
+<br />
+There is an issue in the Windows XP generation of Windows which prevents STDIO redirection and the show flag from working. See Microsoft Knowledge Base article KB818858 for more information about which versions are affected as well as a hotfix for the issue. Users running Windows XP SP2 or later, or <strong>Windows Vista or later</strong> are not affected.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="ProcessWait.htm">ProcessWait</a>, <a href="ProcessWaitClose.htm">ProcessWaitClose</a>, <a href="Run.htm">Run</a>, <a href="RunAs.htm">RunAs</a>, <a href="RunWait.htm">RunWait</a>, <a href="ShellExecute.htm">ShellExecute</a>, <a href="ShellExecuteWait.htm">ShellExecuteWait</a></p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\RunAsWait.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;AutoItConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIError.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Change the username and password to the appropriate values for your system.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sUserName</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Username"</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sPassword</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Password"</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Run Notepad and wait for the Notepad process to close. Notepad is run under the user previously specified.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iReturn</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/RunAsWait.htm"><span class="S4">RunAsWait</span></a><span class="S8">(</span><span class="S9">$sUserName</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@ComputerName"><span class="S6">@ComputerName</span></a><span class="S8">,</span><span class="S0"> </span><span class="S9">$sPassword</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$RUN_LOGON_NOPROFILE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"notepad.exe"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sLastError</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetLastErrorMessage.htm"><span class="S15">_WinAPI_GetLastErrorMessage</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S9">$MB_ICONERROR</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Error"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Notepad has not Run :"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sLastError</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Display the return code of the Notepad process.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"The return code from Notepad was: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iReturn</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

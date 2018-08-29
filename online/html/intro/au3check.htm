@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Au3check syntax Tool</title>
+	<meta charset="utf-8">
+	<link href="../css/default.css" rel="stylesheet">
+</head>
+<body>
+	<h1>AutoIt Syntax-Pr&uuml;f-Tool (Au3check)</h1>
+	<p>&Uuml;berpr&uuml;ft die Syntax des kompletten Sprachumfangs.<br>
+	Alle benutzten Symbole werden ebenfalls &uuml;berpr&uuml;ft:<br>
+	<br></p>
+	<ul>
+		<li><strong>Makros</strong> :</li>
+	</ul>
+	<div class="indent">
+		Die Benutzung undefinierter Makros wird als Fehler gemeldet.
+	</div><br>
+	<ul>
+		<li><strong>Variablen</strong> :</li>
+	</ul>
+	<div class="indent">
+		Au3Check gibt eine Warnung aus, wenn Variablen benutzt werden, bevor sie deklariert sind.<br>
+		Es ist jedoch m&ouml;glich, dass das Skript korrekt arbeitet, wie im folgenden Beispiel:
+@@SyntaxHighlighting@@
+#include <MsgBoxConstants.au3>
+
+For $i = 1 To 2
+	If $i = 2 Then MsgBox($MB_OK, "OK", $sHello)
+	Global $sHello = "Goodbye"
+Next
+@@End@@    
+		Jedoch ist es schlechter Programmierstil und Au3Check wird eine Warnung erzeugen, falls $sHello vor der Deklaration verwendet wird.<br>
+		Gleichfalls sollten globale Variablen niemals in Funktionen deklariert werden, sondern immer am Anfang des Skripts.<br>
+		Wird eine Variable im Code vor der Funktion benutzt, erscheint eine Warnung.<br>
+		Au&szlig;erdem meldet Au3Check einen Fehler, wenn eine Variable benutzt wird, aber nie explizit oder implizit deklariert wurde.<br>
+	</div><br>
+	<ul>
+		<li><strong>Funktionen</strong> :</li>
+	</ul>
+	<div class="indent">
+		Funktionen k&ouml;nnen aufgerufen werden, obwohl sie erst sp&auml;ter definiert werden. Au3Check &uuml;berpr&uuml;ft, ob alle Funktionen mit der korrekten Anzahl an Parametern aufgerufen werden.<br>
+		Es &uuml;berpr&uuml;ft auch, ob ByRef-Parameter mit Variablen aufgerufen werden (also keine Leerwerte oder Ausdr&uuml;cke).<br>
+		Schlie&szlig;lich werden undefinierte Funktionen gemeldet.<br>
+	</div><br>
+	Es k&ouml;nnen bestimmte Richtlinien in das Skript eingef&uuml;gt werden, um einige Warnungen bzw. Fehler zu verhindern.<br>
+	<br>
+	<strong>Richtlinien</strong><br>
+	--------------<br>
+  Diese Richtlinien verhindern, dass Au3Check Fehler meldet, wenn der Code korrekt ist, aber zu komplex f&uuml;r den Parser des Werkzeugs ist. Wie in den folgenden Beispielen gezeigt, werden sie &uuml;blicherweise verwendet, wenn Variablen implizit deklariert werden - wie z.B. in einer Funktionsdefinition oder durch einen String-Parameter - und sonst nicht erkannt werden. Insbesondere kann #forceref verwendet werden, um Warnungen zu verhindern, wo Parameter obligatorisch sind (z. B. in Windows Message Handler), aber nicht innerhalb der Funktion verwendet werden.<br>  
+	<p class="codeheader">#ignorefunc funcname [, ...]</p>
+	<div class="indent">
+    #ignorefunc kann f&uuml;r Plugin-Funktionen wie die folgenden verwendet werden:<br />
+@@SyntaxHighlighting@@
+#include <MsgBoxConstants.au3>
+#ignorefunc Not_Defined_Func
+
+Local $vCallRet = Call('Not_Defined_Func')
+Local $iError = @error
+Local $iExtended = @extended
+MsgBox($MB_OK, 'Beispiel: Nicht definierte Funktion', '$vCallRet = ' & $vCallRet & _
+		'   @error = 0x' & Hex($iError) & ' @extended = 0x' & Hex($iExtended) & @CRLF)
+@@End@@
+
+	</div><br>
+	<p class="codeheader">#forceref $varname [, ...]</p>
+	<div class="indent">
+    #forceref kann innehralb von Funktionen wie folgt verwendet werden:<br />
+@@SyntaxHighlighting@@
+#include <MsgBoxConstants.au3>
+
+Func Test_NumParams($v1 = 0, $v2 = 0, $v3 = 0, $v4 = 0, $v5 = 0, $v6 = 0, $v7 = 0, $v8 = 0, $v9 = 0)
+	#forceref $v1, $v2, $v3, $v4, $v5, $v6, $v7, $v8, $v9
+
+	Local $iVal = 0
+
+	For $i = 1 To @NumParams
+		$iVal &= Eval("v" & $i) & " "
+	Next
+	MsgBox($MB_OK, "Beispiel: @NumParams", "@NumParams = " & @NumParams & @CRLF & @CRLF & $iVal)
+EndFunc   ;==>Test_NumParams
+@@End@@
+
+  </div><br />
+  <p class="codeheader">#forcedef $varname [, ...]</p>
+  <div class="indent">
+    #forcedef kann nach Assign() Funktionen wie folgt verwendet werden:<br />
+@@SyntaxHighlighting@@
+#include <AutoItConstants.au3>
+#include <MsgBoxConstants.au3>
+
+Local $n = Assign("y",BitOR($ASSIGN_FORCEGLOBAL, $ASSIGN_FORCELOCAL))
+#forcedef $y
+MsgBox($MB_SYSTEMMODAL, "", "Ist $n gleich $y? " & ($n = $y)) ; $y ist identisch zu 3
+@@End@@
+
+  </div><br />
+
+
+
+	Dieses Kommandozeilenprogramm kann durch ein Editor Add-On aktiviert werden. Es liegt im gleichen Verzeichnis wie die AutoIt3.exe.<br>
+	Der <a class="ext" href="http://www.autoitscript.com/site/autoit-script-editor/" target="_blank">SciTE4AutoIt3</a> Editor stellt diese Umgebung zur Verf&uuml;gung.<br>
+	<br>
+	<strong>Benutzung</strong><br>
+	--------<br>
+	<p class="codeheader">Au3Check [-q] [-d] [-w[-] n].. [-v[-] n].. [-I Include-Verzeichnis].. file.au3</p>
+	<div class="indent">
+		-q : Still, nur Fehler/Warnungen ausgeben<br>
+		-d : Wie Opt("MustDeclareVars", 1)<br>
+		-w 1: Bereits eingebundene Datei {ein)<br>
+		-w 2: Fehlendes #comments-end bzw. #ce {ein)<br>
+		-w 3: Bereits deklarierte Variable {aus}<br>
+		-w 4: Lokale Variablen werden in einem globalen Bereich verwende (aus)<br>
+		-w 5: Lokale Variablen sind deklariert, werden aber nicht verwendet (aus)<br>
+		-w 6: Warnung falls Dim verwendet wird (aus)<br>
+		-w 7: Warnung falls Const oder Ausdr&uuml;cke an ByRef Parameter &uuml;bergeben werden (ein)<br>
+		-I Include-Verzeichnis: zus&auml;tzliches Richtlinien in denen nach Include-Dateien gesucht werden soll<br>
+		<br>
+		-v 1: Zeige Include-Pfade/-Dateien {aus}<br>
+		-v 2: Zeige Lexer-Token {aus}<br>
+		-v 3: zeige nicht dokumentierte UDFs und globale Variablen (aus)
+	</div>Fehlercodes:
+	<div class="indent">
+		0: Erfolg (keine Fehler oder Warnungen)<br>
+		1: nur Warnungen<br>
+		2: Syntaxfehler<br>
+		3: Verwendungs- oder Eingabefehler
+	</div><br>
+	<strong>Was wird nicht &uuml;berpr&uuml;ft?</strong><br>
+	--------------------------
+	<div class="indent">
+		Im Wesentlichen Laufzeit-Informationen:<br>
+		- Keine &Uuml;berpr&uuml;fungen werden f&uuml;rArray-Dimensionen oder -Indizes durchgef&uuml;hrt. Diese k&ouml;nnen nur w&auml;hrend der Laufzeit &uuml;berpr&uuml;ft werden.<br>
+		- Logische Fehler, ung&uuml;ltige Funktionsparameter und Division durch Null.<br>
+	</div>
+</body>
+</html>

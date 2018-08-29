@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _GDIPlus_ImageSaveToStream</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1>_GDIPlus_ImageSaveToStream</h1>
+<p class="funcdesc">Saves an Image object to a stream<br /></p>
+<p class="codeheader">
+#include &lt;GDIPlus.au3&gt;<br />
+_GDIPlus_ImageSaveToStream ( $hImage, $pStream, $tEncoder [, $tParams = 0] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$hImage</td>
+<td style="width:85%">Pointer to an Image object</td>
+</tr>
+<tr>
+<td>$pStream</td>
+<td>Pointer to an IStream interface</td>
+</tr>
+<tr>
+<td>$tEncoder</td>
+<td>a $tagGUID structure that defines the image encoder GUID</td>
+</tr>
+<tr>
+<td>$tParams</td>
+<td><strong>[optional]</strong> a $tagGDIPENCODERPARAMS structure or a pointer to it</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">True.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>False and sets the @error flag to non-zero, @extended may contain GPSTATUS error code ($GPID_ERR*).</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>Use this function to save selected frames from a multiple-frame image to another multiple-frame image.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="$tagGDIPENCODERPARAMS.htm">$tagGDIPENCODERPARAMS</a>, <a href="_GDIPlus_EncodersGetCLSID.htm">_GDIPlus_EncodersGetCLSID</a>, <a href="_GDIPlus_ImageLoadFromStream.htm">_GDIPlus_ImageLoadFromStream</a>, <a href="_GDIPlus_ImageSaveToFile.htm">_GDIPlus_ImageSaveToFile</a></p>
+
+<h2>See Also</h2>
+<p>Search <a href="http://search.msdn.microsoft.com/search/Default.aspx?brand=msdn&query=GdipSaveImageToStream">GdipSaveImageToStream</a> in MSDN  Library.
+</p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_GDIPlus_ImageSaveToStream.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GDIPlus.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;ScreenCapture.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPICom.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIConv.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIHObj.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Startup.htm"><span class="S15">_GDIPlus_Startup</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$iW</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@DesktopWidth"><span class="S6">@DesktopWidth</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">/</span></a><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iH</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@DesktopHeight"><span class="S6">@DesktopHeight</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">/</span></a><span class="S0"> </span><span class="S3">2</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGUI</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"GDI+ test"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iW</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iH</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hHBmp</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_ScreenCapture_Capture.htm"><span class="S15">_ScreenCapture_Capture</span></a><span class="S8">(</span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@DesktopWidth"><span class="S6">@DesktopWidth</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">/</span></a><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@DesktopHeight"><span class="S6">@DesktopHeight</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">/</span></a><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;create a GDI bitmap by capturing 1/4 of desktop</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hBitmap</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BitmapCreateFromHBITMAP.htm"><span class="S15">_GDIPlus_BitmapCreateFromHBITMAP</span></a><span class="S8">(</span><span class="S9">$hHBmp</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;convert GDI bitmap to GDI+ bitmap</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_DeleteObject.htm"><span class="S15">_WinAPI_DeleteObject</span></a><span class="S8">(</span><span class="S9">$hHBmp</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;release GDI bitmap resource because not needed anymore</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sImgCLSID</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_EncodersGetCLSID.htm"><span class="S15">_GDIPlus_EncodersGetCLSID</span></a><span class="S8">(</span><span class="S7">"jpg"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;create CLSID for a JPG image file type</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tGUID</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GUIDFromString.htm"><span class="S15">_WinAPI_GUIDFromString</span></a><span class="S8">(</span><span class="S9">$sImgCLSID</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;convert CLSID GUID to binary form and returns $tagGUID structure</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tParams</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ParamInit.htm"><span class="S15">_GDIPlus_ParamInit</span></a><span class="S8">(</span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;initialize an encoder parameter list and return $tagGDIPENCODERPARAMS structure</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">"int Quality"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;create struct to set JPG quality setting</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tData</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Quality"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;quality 0-100 (0: lowest, 100: highest)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$pData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetPtr.htm"><span class="S4">DllStructGetPtr</span></a><span class="S8">(</span><span class="S9">$tData</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;get pointer from quality struct</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ParamAdd.htm"><span class="S15">_GDIPlus_ParamAdd</span></a><span class="S8">(</span><span class="S9">$tParams</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GDIP_EPGQUALITY</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GDIP_EPTLONG</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$pData</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;add a value to an encoder parameter list</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$pStream</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateStreamOnHGlobal.htm"><span class="S15">_WinAPI_CreateStreamOnHGlobal</span></a><span class="S8">()</span><span class="S0"> </span><span class="S1">;create stream</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageSaveToStream.htm"><span class="S15">_GDIPlus_ImageSaveToStream</span></a><span class="S8">(</span><span class="S9">$hBitmap</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$pStream</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tGUID</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tParams</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;save the bitmap in JPG format in memory</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hBitmapFromStream</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BitmapCreateFromStream.htm"><span class="S15">_GDIPlus_BitmapCreateFromStream</span></a><span class="S8">(</span><span class="S9">$pStream</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;create bitmap from a stream (here from the JPG in memory)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGraphics</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsCreateFromHWND.htm"><span class="S15">_GDIPlus_GraphicsCreateFromHWND</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;create a graphics object from a window handle</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDrawImage.htm"><span class="S15">_GDIPlus_GraphicsDrawImage</span></a><span class="S8">(</span><span class="S9">$hGraphics</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hBitmapFromStream</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;display streamed image</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">;cleanup resources</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDispose.htm"><span class="S15">_GDIPlus_GraphicsDispose</span></a><span class="S8">(</span><span class="S9">$hGraphics</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BitmapDispose.htm"><span class="S15">_GDIPlus_BitmapDispose</span></a><span class="S8">(</span><span class="S9">$hBitmap</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BitmapDispose.htm"><span class="S15">_GDIPlus_BitmapDispose</span></a><span class="S8">(</span><span class="S9">$hBitmapFromStream</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Shutdown.htm"><span class="S15">_GDIPlus_Shutdown</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIDelete.htm"><span class="S4">GUIDelete</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

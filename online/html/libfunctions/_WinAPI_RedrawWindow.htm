@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinAPI_RedrawWindow</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_WinAPI_RedrawWindow</h1><br />
+<a href="../libfunctions_en/_WinAPI_RedrawWindow.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Aktualisiert das angegebene Rechteck oder Region im Anwendungsbereich eines Fensters<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIGdi.au3&gt;<br />
+_WinAPI_RedrawWindow ( $hWnd [, $tRECT = 0 [, $hRegion = 0 [, $iFlags = 5]]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$hWnd</td>
+<td style="width:85%">Handle zu einem Fenster</td>
+</tr>
+<tr>
+<td>$tRECT</td>
+<td><strong>[optional]</strong> $tagRECT Struktur welche die Koordinaten des zu aktualisierenden Rechtecks enth&auml;lt. Dieser Parameter wird<br />
+ignoriert, wenn der $hRegion Parameter eine Region identifiziert.</td>
+</tr>
+<tr>
+<td>$hRegion</td>
+<td><strong>[optional]</strong> Identifiziert die zu aktualisierende Region. Wenn die $hRegion und $tRECT Parameter 0 sind, wird der gesamte<br />
+Anwendungsbereich des Fensters aktualisiert.</td>
+</tr>
+<tr>
+<td>$iFlags</td>
+<td><strong>[optional]</strong> Legt die Flags f&uuml;rs Neuzeichnen fest. Dieser Parameter kann eine Kombination von Flags sein welche den Fensterinhalt f&uuml;r g&uuml;ltig oder ung&uuml;ltig erkl&auml;ren, das Neuzeichnen regeln und welche Fenster davon betroffen sind:<br />
+$RDW_ERASE - Veranlasst, dem Fenster eine WM_ERASEBKGND Nachricht zu senden, wenn es neugezeichnet wird<br />
+$RDW_FRAME - Veranlasst, dem Fenster eine WM_NCPAINT Nachricht zu senden, sollten Teile des Nicht-Anwendungsbereichs sich mit der zu aktualisierenden Region &uuml;berschneiden.<br />
+$RDW_INTERNALPAINT - Veranlasst eine WM_PAINT Nachricht an das Fenster zu senden unabh&auml;ngig davon, ob ein Bereich des Fensters ung&uuml;ltig ist.<br />
+$RDW_INVALIDATE - Annulliert DllStructGetData($tRECT oder $hRegion, ""). Sind beide 0, wird das gesamte Fenster f&uuml;r ung&uuml;ltig erkl&auml;rt.<br />
+$RDW_NOERASE - Unterdr&uuml;ckt jede bevorstehende $WM_ERASEBKGND Nachricht<br />
+$RDW_NOFRAME - Unterdr&uuml;ckt jede bevorstehende $WM_NCPAINT Nachricht<br />
+$RDW_NOINTERNALPAINT - Unterdr&uuml;ckt jede bevorstehende interne $WM_PAINT Nachricht<br />
+$RDW_VALIDATE - Erkl&auml;rt $tRECT oder $hRegion f&uuml;r g&uuml;ltig<br />
+$RDW_ERASENOW - Veranlasst das betroffene Fenster eine $WM_NCPAINT und $WM_ERASEBKGND Nachricht zu erhalten, wenn n&ouml;tig, bevor die Funktion zur&uuml;ckkehrt<br />
+$RDW_UPDATENOW - Veranlasst das betroffene Fenster eine $WM_NCPAINT, $WM_ERASEBKGND, und $WM_PAINT zu erhalten, wenn n&ouml;tig, bevor die Funktion zur&uuml;ckkehrt<br />
+$RDW_ALLCHILDREN - Bezieht Child-Fenster in die Zeichenoperation mit ein<br />
+$RDW_NOCHILDREN - Schlie&szlig;t Child-Fenster von der Zeichenoperation aus</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">True</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>False</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Wenn RedrawWindow benutzt wird, um Teile des Desktop-Fensters f&uuml;r ung&uuml;ltig zu erkl&auml;ren, erh&auml;lt dieses keine $WM_PAINT Nachricht.<br />
+Um den Desktop neuzuzeichnen benutzt eine Anwendung das $RDW_ERASE Flag, um eine $WM_ERASEBKGND Nachricht zu erzeugen, welche dann ein neuzeichnen des Desktop-Fensters nach sich zieht.<br />
+<br />
+Oben genannte Konstanten ben&ouml;tigen #include &lt;WindowsConstants.au3&gt;<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="$tagRECT.htm">$tagRECT</a></p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(RedrawWindow);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">RedrawWindow</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_CreatePen.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIGdi.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIGdiDC.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIHObj.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPISysWin.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WindowsConstants.au3&gt;</span>
+
+<span class="S0">ShowCross</span><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@DesktopWidth"><span class="S6">@DesktopWidth</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">/</span></a><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@DesktopHeight"><span class="S6">@DesktopHeight</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">/</span></a><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xFF</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3000</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> ShowCross</span><span class="S8">(</span><span class="S9">$iStart_x</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iStart_y</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iLength</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iWidth</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iColor</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iTime</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hDC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hPen</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$o_Orig</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hDC</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetWindowDC.htm"><span class="S15">_WinAPI_GetWindowDC</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Ger&auml;tekontext (DC) des gesamten Bildschirms (Desktop)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hPen</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreatePen.htm"><span class="S15">_WinAPI_CreatePen</span></a><span class="S8">(</span><span class="S9">$PS_SOLID</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iWidth</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iColor</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$o_Orig</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SelectObject.htm"><span class="S15">_WinAPI_SelectObject</span></a><span class="S8">(</span><span class="S9">$hDC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hPen</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_DrawLine.htm"><span class="S15">_WinAPI_DrawLine</span></a><span class="S8">(</span><span class="S9">$hDC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iStart_x</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S9">$iLength</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iStart_y</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iStart_x</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">5</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iStart_y</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Horizontal links</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_DrawLine.htm"><span class="S15">_WinAPI_DrawLine</span></a><span class="S8">(</span><span class="S9">$hDC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iStart_x</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S9">$iLength</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iStart_y</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iStart_x</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S3">5</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iStart_y</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Horizontal rechts</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_DrawLine.htm"><span class="S15">_WinAPI_DrawLine</span></a><span class="S8">(</span><span class="S9">$hDC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iStart_x</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iStart_y</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S9">$iLength</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iStart_x</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iStart_y</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">5</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Vertikal oben</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; _WinAPI_DrawLine($hDC, $iStart_x, $iStart_y + $iLength, $iStart_x, $iStart_y + 5) ; &nbsp;Vertikal unten</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_MoveTo.htm"><span class="S15">_WinAPI_MoveTo</span></a><span class="S8">(</span><span class="S9">$hDC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iStart_x</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iStart_y</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S9">$iLength</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_LineTo.htm"><span class="S15">_WinAPI_LineTo</span></a><span class="S8">(</span><span class="S9">$hDC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iStart_x</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iStart_y</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S3">5</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S9">$iTime</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Zeigt das Kreuz f&uuml;r die im Funktionsaufruf angegebene Zeit (in ms)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Desktop neu zeichnen (l&ouml;sche das Kreuz)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_RedrawWindow.htm"><span class="S15">_WinAPI_RedrawWindow</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetDesktopWindow.htm"><span class="S15">_WinAPI_GetDesktopWindow</span></a><span class="S8">(),</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$RDW_INVALIDATE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S9">$RDW_ALLCHILDREN</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Ressourcen freigeben</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SelectObject.htm"><span class="S15">_WinAPI_SelectObject</span></a><span class="S8">(</span><span class="S9">$hDC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$o_Orig</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_DeleteObject.htm"><span class="S15">_WinAPI_DeleteObject</span></a><span class="S8">(</span><span class="S9">$hPen</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_ReleaseDC.htm"><span class="S15">_WinAPI_ReleaseDC</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hDC</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;ShowCross</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

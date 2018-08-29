@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _INetSmtpMail</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_INetSmtpMail</h1><br />
+<a href="../libfunctions_en/_INetSmtpMail.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Sendet eine Email, ohne ein externes Emailprogramm zu benutzen<br /></p>
+<p class="codeheader">
+#include &lt;INet.au3&gt;<br />
+_INetSmtpMail ( $sSMTPServer, $sFromName, $sFromAddress, $sToAddress [, $sSubject = "" [, $aBody = "" [, $sEHLO = "" [, $sFirst = "" [, $bTrace = 0]]]]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$sSMTPServer</td>
+<td style="width:85%">SMTP Server, &uuml;ber den die Email gesendet werden soll. Kann eine alphabetische oder numerische IP Adresse sein. Um Spam zu bek&auml;mpfen, ben&ouml;tigen viele ISPs diese Angabe, um als Server zu dienen. <br />
+z.B. "smtp.ispdomain.com", "mail.ispdomain.com" oder "192.168.1.1"</td>
+</tr>
+<tr>
+<td>$sFromName</td>
+<td>Der Name, der als Absender erscheinen soll.<br />
+z.B. "Bob Smith"</td>
+</tr>
+<tr>
+<td>$sFromAddress</td>
+<td>Die Email-Adresse, die als Absender erscheinen soll.<br />
+z.B. "bob.smith@mydomain.com".</td>
+</tr>
+<tr>
+<td>$sToAddress</td>
+<td>Die Email-Adresse, an welche die Mail geschickt werden soll. <br />
+z.B. "jane.brown@yourdomain.com"</td>
+</tr>
+<tr>
+<td>$sSubject</td>
+<td><strong>[optional]</strong> Der Betreff der Email.</td>
+</tr>
+<tr>
+<td>$aBody</td>
+<td><strong>[optional]</strong> Baut den Inhalt der Email als 1D Array aus Strings auf. Jeder Wert innerhalb des Arrays wird in der Email mit @CRLF beendet.</td>
+</tr>
+<tr>
+<td>$sEHLO</td>
+<td><strong>[optional]</strong> Identifizierung f&uuml;r die SMTP Serververbindung (Standard @ComputerName). Wenn der SMTP Server einen "EHLO" String (Extended HELO) ben&ouml;tigt, ist der String einfach auf "EHLO " & @ComputerName zu setzen.</td>
+</tr>
+<tr>
+<td>$sFirst</td>
+<td><strong>[optional]</strong> String, der vor "helo" f&uuml;r die SMTP Serververbindung gesendet werden soll (Standard {SPACE}). Um kein Zeichen zu senden, muss dieser Parameter -1 sein. Manche SMTP Server ben&ouml;tigen dies.</td>
+</tr>
+<tr>
+<td>$bTrace</td>
+<td><strong>[optional]</strong> Verfolgt eine &Uuml;bertragung in einem extra Fenster.<br />
+</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">1</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>0 und setzt @error auf ungleich 0</td>
+</tr>
+<tr>
+<td class="valign-top">@error:</td>
+<td>1<br />
+2	- Kann TCP nicht starten<br />
+3	- Kann die IP Adresse nicht aufl&ouml;sen<br />
+4	- Kann keinen Socket erstellen<br />
+5x - Kann keine SMTP Session er&ouml;ffnen. x zeigt die Indexnummer des letzen Befehls, der an den SMTP Server &uuml;bertragen wurde.<br />
+50x - Kann "body" nicht senden. x zeigt die Zeilennummer von $as_Body (erste Zeile ist 0).<br />
+5000 - Kann die SMTP Session nicht schlie&szlig;en.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Diese Funktion sendet eine Email direkt &uuml;ber einen SMTP Server, ohne auf ein externes Mailprogramm zugreifen zu m&uuml;ssen.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="_INetMail.htm">_INetMail</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_INetSmtpMail.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Inet.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$s_SmtpServer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"mysmtpserver.com.au"</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$s_FromName</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Mein Name"</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$s_FromAddress</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Absender E-Mail Adresse"</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$s_ToAddress</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Empf&auml;nger E-Mail Adresse"</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$s_Subject</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Meine Test UDF"</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$as_Body</span><span class="S8">[</span><span class="S3">2</span><span class="S8">]</span>
+<span class="S9">$as_Body</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Die neue E-Mail UDF wird getestet"</span>
+<span class="S9">$as_Body</span><span class="S8">[</span><span class="S3">1</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Zweite Zeile"</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iResponse</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_INetSmtpMail.htm"><span class="S15">_INetSmtpMail</span></a><span class="S8">(</span><span class="S9">$s_SmtpServer</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$s_FromName</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$s_FromAddress</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$s_ToAddress</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$s_Subject</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$as_Body</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iErr</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$iResponse</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Erfolg!"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Die E-Mail wurde versandt"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Fehler!"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Das versenden der E-Mail schlug fehl. Fehlercode: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iErr</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

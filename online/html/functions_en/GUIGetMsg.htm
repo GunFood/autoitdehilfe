@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function GUIGetMsg</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">GUIGetMsg</h1><br />
+<a href="../functions/GUIGetMsg.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Polls the GUI to see if any events have occurred.<br /></p>
+<p class="codeheader">
+GUIGetMsg ( [advanced = 0] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">advanced</td>
+<td style="width:85%"><strong>[optional]</strong> return extended information in an array.<br />
+&nbsp;&nbsp;&nbsp; $GUI_EVENT_SINGLE (0) = (default) Returns a single event.<br />
+&nbsp;&nbsp;&nbsp; $GUI_EVENT_ARRAY (1) = returns an array containing the event and extended information.<br />
+<br />
+Constants are defined in GUIConstantsEx.au3.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+Returns an event, or an array depending on the "advanced" parameter.<br />
+<br />
+The "event" returned is the control ID of the control sending the message, or it is a special event (like the window is closing, minimizing). Or if there is no message, the event is 0.<br />
+<br /><br />
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top"><strong>Event ID</strong>:</td>
+<td style="width:90%"><strong>the ID of the control sending the message</strong></td>
+</tr>
+<tr>
+<td class="valign-top">$GUI_EVENT_NONE (0):</td>
+<td>No event</td>
+</tr>
+<tr>
+<td class="valign-top">$GUI_EVENT_CLOSE:</td>
+<td>dialog box being closed (either by defined button or system menu).</td>
+</tr>
+<tr>
+<td class="valign-top">$GUI_EVENT_MINIMIZE:</td>
+<td>dialog box minimized with Windows title bar button.</td>
+</tr>
+<tr>
+<td class="valign-top">$GUI_EVENT_RESTORE:</td>
+<td>dialog box restored by click on task bar icon.</td>
+</tr>
+<tr>
+<td class="valign-top">$GUI_EVENT_MAXIMIZE:</td>
+<td>dialog box maximized with Windows title bar button.</td>
+</tr>
+<tr>
+<td class="valign-top">$GUI_EVENT_MOUSEMOVE:</td>
+<td>the mouse cursor has moved.</td>
+</tr>
+<tr>
+<td class="valign-top">$GUI_EVENT_PRIMARYDOWN:</td>
+<td>the primary mouse button was pressed.</td>
+</tr>
+<tr>
+<td class="valign-top">$GUI_EVENT_PRIMARYUP:</td>
+<td>the primary mouse button was released.</td>
+</tr>
+<tr>
+<td class="valign-top">$GUI_EVENT_SECONDARYDOWN:</td>
+<td>the secondary mouse button was pressed.</td>
+</tr>
+<tr>
+<td class="valign-top">$GUI_EVENT_SECONDARYUP:</td>
+<td>the secondary mouse button was released.</td>
+</tr>
+<tr>
+<td class="valign-top">$GUI_EVENT_RESIZED:</td>
+<td>dialog box has been resized.</td>
+</tr>
+<tr>
+<td class="valign-top">$GUI_EVENT_DROPPED:</td>
+<td>End of a Drag&Drop action @GUI_DragId, @GUI_DragFile and @GUI_DropId will be used to retrieve the ID's/file corresponding to the involve control.</td>
+</tr>
+</table><br />
+Constants are defined in GUIConstantsEx.au3.<br />
+<br /><br />
+When using the "advanced" parameter the information is returned in an array with extended information:<br />
+<br />
+$aArray[0] = 0 or Event ID or Control ID<br />
+$aArray[1] = The window handle the event is from<br />
+$aArray[2] = The control handle the event is from (if applicable)<br />
+$aArray[3] = The current X position of the mouse cursor (relative to the GUI window)<br />
+$aArray[4] = The current Y position of the mouse cursor (relative to the GUI window)<br />
+<br /><br />
+If the GUIOnEventMode option is set to 1 then the return from GUIGetMsg is always 0 and the @error is set to 1.<br />
+<br />
+If the option GUIEventOptions is set to 1 the minimize, restore and maximize button will not do any action on the window just a simple notification.<br />
+
+
+<h2>Remarks</h2>
+<p>This function automatically idles the CPU when required so that it can be safely used in tight loops without hogging all the CPU.<br />
+<br />
+Information about the mouse position and the hovering control can be retrieved with <a href="GUIGetCursorInfo.htm">GUIGetCursorInfo()</a>. No event is fired when the mouse is over a control so <a href="GUIGetCursorInfo.htm">GUIGetCursorInfo()</a> must be called to retrieve the controlID.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="GUICreate.htm">GUICreate</a>, <a href="GUICtrlCreate%20Management.htm">GUICtrlCreate...</a>, <a href="GUICtrlRead.htm">GUICtrlRead</a>, <a href="GUICtrlSendMsg.htm">GUICtrlSendMsg</a>, <a href="GUICtrlSetOnEvent.htm">GUICtrlSetOnEvent</a>, <a href="AutoItSetOption.htm#GUIEventOptions ">GUIEventOptions (Option)</a>, <a href="GUIGetCursorInfo.htm">GUIGetCursorInfo</a>, <a href="AutoItSetOption.htm#GUIOnEventMode ">GUIOnEventMode (Option)</a></p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<h3>Example 1</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\GUIGetMsg.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<span class="S1">; -------------------------------------------------------------------------------------</span>
+<span class="S1">; Example - Press the button to see the value of the radio boxes</span>
+<span class="S1">; The script also detects state changes (closed/minimized/timeouts, etc).</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"GUICoordMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"Radio Box Demo"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">400</span><span class="S8">,</span><span class="S0"> </span><span class="S3">280</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Create the controls</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idButton_1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateButton.htm"><span class="S4">GUICtrlCreateButton</span></a><span class="S8">(</span><span class="S7">"B&amp;utton 1"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">30</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><span class="S3">120</span><span class="S8">,</span><span class="S0"> </span><span class="S3">40</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateGroup.htm"><span class="S4">GUICtrlCreateGroup</span></a><span class="S8">(</span><span class="S7">"Group 1"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">30</span><span class="S8">,</span><span class="S0"> </span><span class="S3">90</span><span class="S8">,</span><span class="S0"> </span><span class="S3">165</span><span class="S8">,</span><span class="S0"> </span><span class="S3">160</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIStartGroup.htm"><span class="S4">GUIStartGroup</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idRadio_1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateRadio.htm"><span class="S4">GUICtrlCreateRadio</span></a><span class="S8">(</span><span class="S7">"Radio &amp;0"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">,</span><span class="S0"> </span><span class="S3">120</span><span class="S8">,</span><span class="S0"> </span><span class="S3">70</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateRadio.htm"><span class="S4">GUICtrlCreateRadio</span></a><span class="S8">(</span><span class="S7">"Radio &amp;1"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">,</span><span class="S0"> </span><span class="S3">150</span><span class="S8">,</span><span class="S0"> </span><span class="S3">60</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idRadio_3</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateRadio.htm"><span class="S4">GUICtrlCreateRadio</span></a><span class="S8">(</span><span class="S7">"Radio &amp;2"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">,</span><span class="S0"> </span><span class="S3">180</span><span class="S8">,</span><span class="S0"> </span><span class="S3">60</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Init our vars that we will use to keep track of GUI events</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iRadioVal1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><span class="S1">; We will assume 0 = first radio button selected, 2 = last button</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Show the GUI</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idMsg</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; In this message loop we use variables to keep track of changes to the radios, another</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; way would be to use GUICtrlRead() at the end to read in the state of each control</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$idMsg</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Select.htm"><span class="S5">Select</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$idMsg</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Dialog was closed"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$idMsg</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_MINIMIZE</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Dialog minimized"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$idMsg</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_MAXIMIZE</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Dialog restored"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$idMsg</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$idButton_1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Default button clicked:"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Radio "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iRadioVal1</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$idMsg</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&gt;=</span></a><span class="S0"> </span><span class="S9">$idRadio_1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">And</span></a><span class="S0"> </span><span class="S9">$idMsg</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;=</span></a><span class="S0"> </span><span class="S9">$idRadio_3</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$iRadioVal1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$idMsg</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S9">$idRadio_1</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Select.htm"><span class="S5">EndSelect</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIDelete.htm"><span class="S4">GUIDelete</span></a><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Example 2</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\GUIGetMsg[2].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Create a GUI.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGUI1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"Example GUI1"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Create a button.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idButton1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateButton.htm"><span class="S4">GUICtrlCreateButton</span></a><span class="S8">(</span><span class="S7">"Button1"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">80</span><span class="S8">,</span><span class="S0"> </span><span class="S3">22</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Display the GUI</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">,</span><span class="S0"> </span><span class="S9">$hGUI1</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Create a GUI.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGUI2</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"Example GUI2"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">300</span><span class="S8">,</span><span class="S0"> </span><span class="S3">300</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Create a button.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idButton2</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateButton.htm"><span class="S4">GUICtrlCreateButton</span></a><span class="S8">(</span><span class="S7">"Button2"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">80</span><span class="S8">,</span><span class="S0"> </span><span class="S3">22</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Display the GUI</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">,</span><span class="S0"> </span><span class="S9">$hGUI2</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Initialize a Local variable.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aMsg</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Assign to $aMsg the advanced GUI messages.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aMsg</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">(</span><span class="S9">$GUI_EVENT_ARRAY</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Switch from GUIs</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><span class="S9">$aMsg</span><span class="S8">[</span><span class="S3">1</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$hGUI1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; The event comes from the GUI1</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Switch from event ID</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><span class="S9">$aMsg</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$idButton1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Button1 clicked."</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$hGUI2</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; The event comes from the GUI2</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Switch from event ID</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><span class="S9">$aMsg</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIDelete.htm"><span class="S4">GUIDelete</span></a><span class="S8">(</span><span class="S9">$hGUI2</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$idButton2</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Button2 clicked."</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Delete the previous GUIs and all controls.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIDelete.htm"><span class="S4">GUIDelete</span></a><span class="S8">(</span><span class="S9">$hGUI1</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

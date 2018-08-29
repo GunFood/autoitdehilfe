@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _WinAPI_EncryptFile</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_WinAPI_EncryptFile</h1><br />
+<a href="../libfunctions/_WinAPI_EncryptFile.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Encrypts a file or directory<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIFiles.au3&gt;<br />
+_WinAPI_EncryptFile ( $sFilePath )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$sFilePath</td>
+<td style="width:85%">The name of the file or directory to be encrypted.<br />
+If $sFilePath specifies a read-only file, the function fails and the last error code is ERROR_FILE_READ_ONLY (6009).<br />
+If $sFilePath specifies a directory that contains a read-only file, the functions succeeds but the directory is not encrypted.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">True.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>False, call <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> to get extended error information</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>The <a href="_WinAPI_EncryptFile.htm">_WinAPI_EncryptFile()</a> function requires exclusive access to the file being encrypted, and will fail if another process is using the file.<br />
+<br />
+If the file is already encrypted, the function simply returns a nonzero value, which indicates success.<br />
+If the file is compressed, the function will decompress the file before encrypting it.<br />
+<br />
+To decrypt an encrypted file, use the <a href="_WinAPI_DecryptFile.htm">_WinAPI_DecryptFile()</a> function.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="_WinAPI_DecryptFile.htm">_WinAPI_DecryptFile</a></p>
+
+<h2>See Also</h2>
+<p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(EncryptFile);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">EncryptFile</a> in MSDN  Library.
+</p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_EncryptFile.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;APIFilesConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIFiles.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sFile</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileOpenDialog.htm"><span class="S4">FileOpenDialog</span></a><span class="S8">(</span><span class="S7">'Select File'</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@ScriptDir"><span class="S6">@ScriptDir</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">'All Files (*.*)'</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$FD_FILEMUSTEXIST</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$FD_PATHMUSTEXIST</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a>
+
+<a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_FileEncryptionStatus.htm"><span class="S15">_WinAPI_FileEncryptionStatus</span></a><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$FILE_ENCRYPTABLE</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_EncryptFile.htm"><span class="S15">_WinAPI_EncryptFile</span></a><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$MB_ICONINFORMATION</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">),</span><span class="S0"> </span><span class="S7">'Encryption File'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'The file encrypted is successfully.'</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$MB_ICONERROR</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">),</span><span class="S0"> </span><span class="S7">'Encryption File'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Unable to encrypt file.'</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$FILE_IS_ENCRYPTED</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$MB_YESNO</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MB_ICONQUESTION</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">),</span><span class="S0"> </span><span class="S7">'Encryption File'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'The file is already encrypted.'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'Decrypt?'</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">6</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_DecryptFile.htm"><span class="S15">_WinAPI_DecryptFile</span></a><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$MB_ICONINFORMATION</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">),</span><span class="S0"> </span><span class="S7">'Encryption File'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'The file decrypted is successfully.'</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$MB_ICONERROR</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">),</span><span class="S0"> </span><span class="S7">'Encryption File'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Unable to decrypt file.'</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$MB_ICONERROR</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">),</span><span class="S0"> </span><span class="S7">'Encryption File'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Unable to perform operation.'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

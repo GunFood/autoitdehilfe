@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinAPI_WriteFile</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_WinAPI_WriteFile</h1><br />
+<a href="../libfunctions_en/_WinAPI_WriteFile.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Schreibt Daten in eine bestimmte Datei oder Eingabe/Ausgabe (I/O) Ger&auml;t, an eine Position, festgelegt durch den Datei-Zeiger<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIFiles.au3&gt;<br />
+_WinAPI_WriteFile ( $hFile, $pBuffer, $iToWrite, ByRef $iWritten [, $tOverlapped = 0] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$hFile</td>
+<td style="width:85%">Handle zu der zu schreibenden Datei</td>
+</tr>
+<tr>
+<td>$pBuffer</td>
+<td>Zeiger auf den Puffer der die zu schreibenden Daten enth&auml;lt</td>
+</tr>
+<tr>
+<td>$iToWrite</td>
+<td>Anzahl von Bytes die in die Datei geschrieben werden sollen</td>
+</tr>
+<tr>
+<td>$iWritten</td>
+<td>Die Anzahl von zu schreibenden Bytes</td>
+</tr>
+<tr>
+<td>$tOverlapped</td>
+<td><strong>[optional]</strong> Eine $tagOVERLAPPED Struktur oder ein Pointer zu dieser</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">True</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>False. Es ist <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> aufzurufen um erweiterte Fehlerinformationen zu erhalten.</td>
+</tr>
+</table>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="$tagOVERLAPPED.htm">$tagOVERLAPPED</a>, <a href="_WinAPI_CloseHandle.htm">_WinAPI_CloseHandle</a>, <a href="_WinAPI_CreateFile.htm">_WinAPI_CreateFile</a>, <a href="_WinAPI_FlushFileBuffers.htm">_WinAPI_FlushFileBuffers</a>, <a href="_WinAPI_GetFileSizeEx.htm">_WinAPI_GetFileSizeEx</a>, <a href="_WinAPI_ReadFile.htm">_WinAPI_ReadFile</a>, <a href="_WinAPI_SetEndOfFile.htm">_WinAPI_SetEndOfFile</a>, <a href="_WinAPI_SetFilePointer.htm">_WinAPI_SetFilePointer</a></p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(WriteFile);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">WriteFile</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_CreateFile.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIFiles.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIHObj.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$sTempFile</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hFile</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sText</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$nBytes</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tBuffer</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iSize</span>
+
+<span class="S1">; 1) Erstellt eine Datei und schreibt Daten hinein</span>
+<span class="S9">$sTempFile</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@ScriptDir"><span class="S6">@ScriptDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'\test.txt'</span>
+<span class="S9">$sText</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">'abcdefghijklmnopqrstuvwxyz'</span>
+<span class="S9">$tBuffer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">"byte["</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringLen.htm"><span class="S4">StringLen</span></a><span class="S8">(</span><span class="S9">$sText</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"]"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tBuffer</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sText</span><span class="S8">)</span>
+<span class="S9">$hFile</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateFile.htm"><span class="S15">_WinAPI_CreateFile</span></a><span class="S8">(</span><span class="S9">$sTempFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_WriteFile.htm"><span class="S15">_WinAPI_WriteFile</span></a><span class="S8">(</span><span class="S9">$hFile</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetPtr.htm"><span class="S4">DllStructGetPtr</span></a><span class="S8">(</span><span class="S9">$tBuffer</span><span class="S8">),</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringLen.htm"><span class="S4">StringLen</span></a><span class="S8">(</span><span class="S9">$sText</span><span class="S8">),</span><span class="S0"> </span><span class="S9">$nBytes</span><span class="S8">)</span>
+<span class="S9">$iSize</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetFileSizeEx.htm"><span class="S15">_WinAPI_GetFileSizeEx</span></a><span class="S8">(</span><span class="S9">$hFile</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_CloseHandle.htm"><span class="S15">_WinAPI_CloseHandle</span></a><span class="S8">(</span><span class="S9">$hFile</span><span class="S8">)</span>
+<span class="S1">; Ausgabe in die Konsole</span>
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'1):'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iSize</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">' '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileRead.htm"><span class="S4">FileRead</span></a><span class="S8">(</span><span class="S9">$sTempFile</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+
+<span class="S1">; 2) liest 6 Bytes ab Position 3</span>
+<span class="S9">$tBuffer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">"byte[6]"</span><span class="S8">)</span>
+<span class="S9">$hFile</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateFile.htm"><span class="S15">_WinAPI_CreateFile</span></a><span class="S8">(</span><span class="S9">$sTempFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+<span class="S9">$iSize</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetFileSizeEx.htm"><span class="S15">_WinAPI_GetFileSizeEx</span></a><span class="S8">(</span><span class="S9">$hFile</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetFilePointer.htm"><span class="S15">_WinAPI_SetFilePointer</span></a><span class="S8">(</span><span class="S9">$hFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_ReadFile.htm"><span class="S15">_WinAPI_ReadFile</span></a><span class="S8">(</span><span class="S9">$hFile</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetPtr.htm"><span class="S4">DllStructGetPtr</span></a><span class="S8">(</span><span class="S9">$tBuffer</span><span class="S8">),</span><span class="S0"> </span><span class="S3">6</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$nBytes</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_CloseHandle.htm"><span class="S15">_WinAPI_CloseHandle</span></a><span class="S8">(</span><span class="S9">$hFile</span><span class="S8">)</span>
+<span class="S9">$sText</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BinaryToString.htm"><span class="S4">BinaryToString</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$tBuffer</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">))</span>
+<span class="S1">; Ausgabe in die Konsole</span>
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'2):'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iSize</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">' '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sText</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+
+<span class="S1">; 3) Schreibt die vorher gelesenen 6 Bytes an die gleiche Position, aber in Gro&szlig;buchstaben</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tBuffer</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringUpper.htm"><span class="S4">StringUpper</span></a><span class="S8">(</span><span class="S9">$sText</span><span class="S8">))</span>
+<span class="S9">$hFile</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateFile.htm"><span class="S15">_WinAPI_CreateFile</span></a><span class="S8">(</span><span class="S9">$sTempFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">)</span>
+<span class="S9">$iSize</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetFileSizeEx.htm"><span class="S15">_WinAPI_GetFileSizeEx</span></a><span class="S8">(</span><span class="S9">$hFile</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetFilePointer.htm"><span class="S15">_WinAPI_SetFilePointer</span></a><span class="S8">(</span><span class="S9">$hFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_WriteFile.htm"><span class="S15">_WinAPI_WriteFile</span></a><span class="S8">(</span><span class="S9">$hFile</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetPtr.htm"><span class="S4">DllStructGetPtr</span></a><span class="S8">(</span><span class="S9">$tBuffer</span><span class="S8">),</span><span class="S0"> </span><span class="S3">6</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$nBytes</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_CloseHandle.htm"><span class="S15">_WinAPI_CloseHandle</span></a><span class="S8">(</span><span class="S9">$hFile</span><span class="S8">)</span>
+<span class="S9">$tBuffer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+<span class="S1">; Ausgabe in die Konsole</span>
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'3):'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iSize</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">' '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileRead.htm"><span class="S4">FileRead</span></a><span class="S8">(</span><span class="S9">$sTempFile</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+
+<span class="S1">; 4) k&uuml;rze die Dateigr&ouml;&szlig;e auf 12 Bytes</span>
+<span class="S9">$hFile</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateFile.htm"><span class="S15">_WinAPI_CreateFile</span></a><span class="S8">(</span><span class="S9">$sTempFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetFilePointer.htm"><span class="S15">_WinAPI_SetFilePointer</span></a><span class="S8">(</span><span class="S9">$hFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">12</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetEndOfFile.htm"><span class="S15">_WinAPI_SetEndOfFile</span></a><span class="S8">(</span><span class="S9">$hFile</span><span class="S8">)</span>
+<span class="S9">$iSize</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetFileSizeEx.htm"><span class="S15">_WinAPI_GetFileSizeEx</span></a><span class="S8">(</span><span class="S9">$hFile</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_CloseHandle.htm"><span class="S15">_WinAPI_CloseHandle</span></a><span class="S8">(</span><span class="S9">$hFile</span><span class="S8">)</span>
+<span class="S1">; Ausgabe in die Konsole</span>
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'4):'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iSize</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">' '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileRead.htm"><span class="S4">FileRead</span></a><span class="S8">(</span><span class="S9">$sTempFile</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/FileDelete.htm"><span class="S4">FileDelete</span></a><span class="S8">(</span><span class="S9">$sTempFile</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

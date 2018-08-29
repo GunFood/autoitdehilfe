@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function RunAs</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">RunAs</h1><br />
+<a href="../functions/RunAs.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Runs an external program under the context of a different user.<br /></p>
+<p class="codeheader">
+RunAs ( "username", "domain", "password", logon_flag, "program" [, "workingdir" [, show_flag [, opt_flag]]] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">username</td>
+<td style="width:85%">The username to log on with.</td>
+</tr>
+<tr>
+<td>domain</td>
+<td>The domain to authenticate against.</td>
+</tr>
+<tr>
+<td>password</td>
+<td>The password for the user.</td>
+</tr>
+<tr>
+<td>logon_flag</td>
+<td>&nbsp;&nbsp;&nbsp; $RUN_LOGON_NOPROFILE (0) - Interactive logon with no profile.<br />
+&nbsp;&nbsp;&nbsp; $RUN_LOGON_PROFILE (1) - Interactive logon with profile.<br />
+&nbsp;&nbsp;&nbsp; $RUN_LOGON_NETWORK (2) - Network credentials only.<br />
+&nbsp;&nbsp;&nbsp; $RUN_LOGON_INHERIT (4) - Inherit the calling process's environment instead of the user's environment.<br />
+<br />
+Constants are defined in "AutoItConstants.au3".</td>
+</tr>
+<tr>
+<td>program</td>
+<td>The full path of the program (EXE, BAT, COM, or PIF) to run (see remarks).</td>
+</tr>
+<tr>
+<td>workingdir</td>
+<td><strong>[optional]</strong> The working directory. If not specified, then the value of @SystemDir will be used. This is not the path to the program.</td>
+</tr>
+<tr>
+<td>show_flag</td>
+<td><strong>[optional]</strong> The "show" flag of the executed program:<br />
+&nbsp;&nbsp;&nbsp; @SW_HIDE = Hidden window (or Default keyword)<br />
+&nbsp;&nbsp;&nbsp; @SW_MINIMIZE = Minimized window<br />
+&nbsp;&nbsp;&nbsp; @SW_MAXIMIZE = Maximized window</td>
+</tr>
+<tr>
+<td>opt_flag</td>
+<td><strong>[optional]</strong> Controls various options related to how the parent and child process interact.<br />
+&nbsp;&nbsp;&nbsp; $STDIN_CHILD (0x1) = Provide a handle to the child's STDIN stream<br />
+&nbsp;&nbsp;&nbsp; $STDOUT_CHILD (0x2) = Provide a handle to the child's STDOUT stream<br />
+&nbsp;&nbsp;&nbsp; $STDERR_CHILD (0x4) = Provide a handle to the child's STDERR stream<br />
+&nbsp;&nbsp;&nbsp; $STDERR_MERGED (0x8) = Provides the same handle for STDOUT and STDERR. Implies both $STDOUT_CHILD and $STDERR_CHILD.<br />
+&nbsp;&nbsp;&nbsp; $STDIO_INHERIT_PARENT (0x10) = Provide the child with the parent's STDIO streams. This flag can not be combined with any other STDIO flag. This flag is only useful when the parent is compiled as a Console application.<br />
+&nbsp;&nbsp;&nbsp; $RUN_CREATE_NEW_CONSOLE (0x10000) = The child console process should be created with it's own window instead of using the parent's window. This flag is only useful when the parent is compiled as a Console application.<br />
+<br />
+Constants are defined in AutoItConstants.au3</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">the PID of the process that was launched.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>0 and sets the @error flag to non-zero.</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>Paths with spaces need to be enclosed in quotation marks.<br />
+<br />
+It is important to specify a working directory the user you are running as has access to, otherwise the function will fail.<br />
+<br />
+It is recommended that you only load the user's profile is you are sure you need it. There is a small chance a profile can be stuck in memory under the right conditions. If a script using <a href="RunAs.htm">RunAs()</a> happens to be running as the SYSTEM account (for example, if the script is running as a service) and the user's profile is loaded, then you must take care that the script remains running until the child process closes.<br />
+<br />
+When running as an administrator, the Secondary Logon (<a href="RunAs.htm">RunAs()</a>) service must be enabled or this function will fail. This does not apply when running as the SYSTEM account.<br />
+<br />
+After running the requested program the script continues. To pause execution of the script until the spawned program has finished use the <a href="RunAsWait.htm">RunAsWait()</a> function instead.<br />
+<br />
+Providing the Standard I/O parameter with the proper values permits interaction with the child process through the <a href="StderrRead.htm">StderrRead()</a>, <a href="StdinWrite.htm">StdinWrite()</a> and <a href="StdoutRead.htm">StdoutRead()</a> functions. Combine the flag values (or use $STDERR_CHILD, $STDIN_CHILD & $STDOUT_CHILD) to manage more than one stream.<br />
+<br />
+In order for the streams to close, the following conditions must be met:<br />
+1) The child process has closed its end of the stream (this happens when the child closes).<br />
+2) AutoIt must read any captured streams until there is no more data.<br />
+3) If STDIN is provided for the child, <a href="StdinWrite.htm">StdinWrite()</a> must be called to close the stream. Once all streams are detected as no longer needed, all internal resources will automatically be freed.<br />
+<br />
+<a href="StdioClose.htm">StdioClose()</a> can be used to force the STDIO streams closed.<br />
+<br />
+The "load profile" and "network credentials only" options are incompatible. Using both will produce undefined results.<br />
+<br />
+There is an issue in the Windows XP generation of Windows which prevents STDIO redirection and the show flag from working. See Microsoft Knowledge Base article KB818858 for more information about which versions are affected as well as a hotfix for the issue. Users running Windows XP SP2 or later, or <strong>Windows Vista or later</strong> are not affected.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="ProcessClose.htm">ProcessClose</a>, <a href="Run.htm">Run</a>, <a href="RunAsWait.htm">RunAsWait</a>, <a href="RunWait.htm">RunWait</a>, <a href="ShellExecute.htm">ShellExecute</a>, <a href="ShellExecuteWait.htm">ShellExecuteWait</a>, <a href="StderrRead.htm">StderrRead</a>, <a href="StdinWrite.htm">StdinWrite</a>, <a href="StdioClose.htm">StdioClose</a>, <a href="StdoutRead.htm">StdoutRead</a></p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\RunAs.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;AutoItConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Change the username and password to the appropriate values for your system.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sUserName</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Username"</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sPassword</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Password"</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Run Notepad with the window maximized. Notepad is run under the user previously specified.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iPID</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/RunAs.htm"><span class="S4">RunAs</span></a><span class="S8">(</span><span class="S9">$sUserName</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@ComputerName"><span class="S6">@ComputerName</span></a><span class="S8">,</span><span class="S0"> </span><span class="S9">$sPassword</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$RUN_LOGON_NOPROFILE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"notepad.exe"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOWMAXIMIZED"><span class="S6">@SW_SHOWMAXIMIZED</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Wait 10 seconds for the Notepad window to appear.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinWait.htm"><span class="S4">WinWait</span></a><span class="S8">(</span><span class="S7">"[CLASS:Notepad]"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Wait for 2 seconds.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">2000</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Close the Notepad process using the PID returned by RunAs.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ProcessClose.htm"><span class="S4">ProcessClose</span></a><span class="S8">(</span><span class="S9">$iPID</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

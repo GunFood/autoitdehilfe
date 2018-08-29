@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion GUICtrlRegisterListViewSort</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">GUICtrlRegisterListViewSort</h1><br />
+<a href="../functions_en/GUICtrlRegisterListViewSort.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Registriert eine benutzerdefinierte Funktion f&uuml;r eine interne ListView Sortierungs-R&uuml;ckruffunktion.<br /></p>
+<p class="codeheader">
+GUICtrlRegisterListViewSort ( controlID, "function" )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">controlID</td>
+<td style="width:85%">Der ListView-Control-Identifizierer (Control-ID), f&uuml;r den die Benutzerfunktion ausgef&uuml;hrt werden soll.</td>
+</tr>
+<tr>
+<td>function</td>
+<td>Der Name der aufzurufenden Benutzerfunktion, wenn die Sortierungs-R&uuml;ckruffunktion(sorting callback) l&auml;uft.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">1.</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>0.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>!!! Um die Benutzerfunktion ausf&uuml;hrbar zu machen, darf sie nur mit <em>maximal 4 Funktionsparametern</strong> definiert werden, andernfalls wird die Funktion nicht aufgerufen !!!<br />
+z.B:<br />
+Func MySortFunktion($nListViewID, $LParam1, $LParam2, $nColumn)<br />
+...<br />
+EndFunc<br />
+<br />
+Oder:<br />
+<br />
+Func MySortFunktion($nListViewID, $LParam1, $LParam2)<br />
+...<br />
+EndFunc<br />
+<br />
+<br />
+Wenn die Benutzerfunktion aufgerufen wird, haben diese 4 Parameter folgende Werte:<br />
+<table>
+<tr>
+<th><strong>Position</strong></th>
+<th><strong>Parameter</strong></th>
+<th><strong>Bedeutung</strong></th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>Control-ID</td>
+<td>Der ListView-Control-Identifizierer (Control-ID), f&uuml;r den die Benutzerfunktion ausgef&uuml;hrt werden soll.</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>lParam1</td>
+<td>Der lParam-Wert des ersten Items (standardm&auml;ssig die Control-ID des Items).</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>lParam2</td>
+<td>Der lParam-Wert des zweiten Items (standardm&auml;ssig die Control-ID des Items).</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>column</td>
+<td>Die Spalte, die zum Sortieren angeklickt wurde (die erste Spaltennummer ist 0).</td>
+</tr>
+</table><br />
+Die folgenden Werte m&uuml;ssen <em>return</strong>ed werden, um das Verhalten der Sortierungs-R&uuml;ckruffunktion zu &auml;ndern:<br />
+<br />
+<table>
+<tr>
+<th><strong>R&uuml;ckgabewert</strong></th>
+<th><strong>Bedeutung</strong></th>
+</tr>
+
+<tr>
+<td>-1</td>
+<td>Das erste Item soll VOR dem zweiten stehen.</td>
+</tr>
+
+<tr>
+<td>0</td>
+<td>Keine &Auml;nderung.</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>Das erste Item soll NACH dem zweiten stehen.</td>
+</tr>
+</table><br />
+Siehe auch das Beispiel zum Sortieren von selbsterstellten GUI ListView-Items.<br />
+<br />
+<a href="../guiref/GUIRef.htm">- - - - - - - - Erkl&auml;rung der Controls - - - - - - - -</a><br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="GUICtrlCreateListView.htm">GUICtrlCreateListView</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<h3>Beispiel 1</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\GUICtrlRegisterListViewSort.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;ListViewConstants.au3&gt;</span>
+
+<span class="S1">;Sortiert Unterschiede in 3 Spalten</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_iCurCol</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_iSortDir</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_bSet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_iCol</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"Test"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">300</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idLv</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateListView.htm"><span class="S4">GUICtrlCreateListView</span></a><span class="S8">(</span><span class="S7">"Spalte1|Spalte2|Spalte3"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">280</span><span class="S8">,</span><span class="S0"> </span><span class="S3">180</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlRegisterListViewSort.htm"><span class="S4">GUICtrlRegisterListViewSort</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"LVSort"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Registriere die Funktion "LVSort" f&uuml;r das Sortier-Callback</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateListViewItem.htm"><span class="S4">GUICtrlCreateListViewItem</span></a><span class="S8">(</span><span class="S7">"ABC|666|10.05.2004"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$idLv</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetImage.htm"><span class="S4">GUICtrlSetImage</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"shell32.dll"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">7</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateListViewItem.htm"><span class="S4">GUICtrlCreateListViewItem</span></a><span class="S8">(</span><span class="S7">"DEF|444|11.05.2005"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$idLv</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetImage.htm"><span class="S4">GUICtrlSetImage</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"shell32.dll"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">12</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateListViewItem.htm"><span class="S4">GUICtrlCreateListViewItem</span></a><span class="S8">(</span><span class="S7">"CDE|444|12.05.2004"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$idLv</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetImage.htm"><span class="S4">GUICtrlSetImage</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"shell32.dll"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idMsg</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI ausl&ouml;s</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$idMsg</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><span class="S9">$idMsg</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$idLv</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$g_bSet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$g_iCurCol</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$g_iCol</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSendMsg.htm"><span class="S4">GUICtrlSendMsg</span></a><span class="S8">(</span><span class="S9">$idLv</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$LVM_SETSELECTEDCOLUMN</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlGetState.htm"><span class="S4">GUICtrlGetState</span></a><span class="S8">(</span><span class="S9">$idLv</span><span class="S8">),</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIDelete.htm"><span class="S4">GUIDelete</span></a><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+
+
+<span class="S1">; Unsere Sortier-Callback-Funktionen</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> LVSort</span><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$nItem1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$nItem2</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iColumn</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sVal1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sVal2</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iResult</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Schaltet die Sortierrichtung um</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$iColumn</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$g_iCurCol</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><span class="S9">$g_bSet</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$g_iSortDir</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$g_iSortDir</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$g_bSet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$g_iSortDir</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_iCol</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$iColumn</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$sVal1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> GetSubItemText</span><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$nItem1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iColumn</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$sVal2</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> GetSubItemText</span><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$nItem2</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iColumn</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Wenn es die dritte Spalte ist (startet bei 0), dann vergleiche die Daten</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$iColumn</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">2</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sVal1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringRight.htm"><span class="S4">StringRight</span></a><span class="S8">(</span><span class="S9">$sVal1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringMid.htm"><span class="S4">StringMid</span></a><span class="S8">(</span><span class="S9">$sVal1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringLeft.htm"><span class="S4">StringLeft</span></a><span class="S8">(</span><span class="S9">$sVal1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sVal2</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringRight.htm"><span class="S4">StringRight</span></a><span class="S8">(</span><span class="S9">$sVal2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringMid.htm"><span class="S4">StringMid</span></a><span class="S8">(</span><span class="S9">$sVal2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringLeft.htm"><span class="S4">StringLeft</span></a><span class="S8">(</span><span class="S9">$sVal2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$iResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><span class="S1">; Keine &Auml;nderung in item1 und item2 Positionen</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$sVal1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;</span></a><span class="S0"> </span><span class="S9">$sVal2</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$iResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S0"> </span><span class="S1">; Setzt item2 vor item1</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">ElseIf</span></a><span class="S0"> </span><span class="S9">$sVal1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&gt;</span></a><span class="S0"> </span><span class="S9">$sVal2</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$iResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><span class="S1">; Setzt item2 hinter item1</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$iResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$iResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*</span></a><span class="S0"> </span><span class="S9">$g_iSortDir</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S9">$iResult</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;LVSort</span>
+
+
+<span class="S1">; Text eines Treeview-Items in einer bestimmten Spalte abrufen</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> GetSubItemText</span><span class="S8">(</span><span class="S9">$idCtrl</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$idItem</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iColumn</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tLvfi</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">"uint;ptr;int;int[2];int"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tLvfi</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$LVFI_PARAM</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tLvfi</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$idItem</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$stBuffer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">"char[260]"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$nIndex</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlSendMsg.htm"><span class="S4">GUICtrlSendMsg</span></a><span class="S8">(</span><span class="S9">$idCtrl</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$LVM_FINDITEM</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetPtr.htm"><span class="S4">DllStructGetPtr</span></a><span class="S8">(</span><span class="S9">$tLvfi</span><span class="S8">))</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tLvi</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">"uint;int;int;uint;uint;ptr;int;int;int;int"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tLvi</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$LVIF_TEXT</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tLvi</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$nIndex</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tLvi</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iColumn</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tLvi</span><span class="S8">,</span><span class="S0"> </span><span class="S3">6</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetPtr.htm"><span class="S4">DllStructGetPtr</span></a><span class="S8">(</span><span class="S9">$stBuffer</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tLvi</span><span class="S8">,</span><span class="S0"> </span><span class="S3">7</span><span class="S8">,</span><span class="S0"> </span><span class="S3">260</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSendMsg.htm"><span class="S4">GUICtrlSendMsg</span></a><span class="S8">(</span><span class="S9">$idCtrl</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$LVM_GETITEMA</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetPtr.htm"><span class="S4">DllStructGetPtr</span></a><span class="S8">(</span><span class="S9">$tLvi</span><span class="S8">))</span><span class="S0"> </span><span class="S1">;</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sItemText</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$stBuffer</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S9">$sItemText</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;GetSubItemText</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 2</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\GUICtrlRegisterListViewSort[02].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;ListViewConstants.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_iCurCol</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_iSortDir</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_bSet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_iCol</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span>
+
+<span class="S1">;Sortierung mit selbsterzeugten Items per DllCall</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_iCurCol</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_iSortDir</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_bSet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_iCol</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGUI</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"Test"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">300</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idLv</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateListView.htm"><span class="S4">GUICtrlCreateListView</span></a><span class="S8">(</span><span class="S7">"Spalte1|Spalte2|Spalte3"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">280</span><span class="S8">,</span><span class="S0"> </span><span class="S3">180</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlRegisterListViewSort.htm"><span class="S4">GUICtrlRegisterListViewSort</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"LVSort"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Registriere die Funktion "SortLV" f&uuml;r das Sortier-Callback</span>
+
+<span class="S0">&nbsp; &nbsp; MyGUICtrlCreateListViewItem</span><span class="S8">(</span><span class="S7">"ABC|666|10.05.2004"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$idLv</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; MyGUICtrlCreateListViewItem</span><span class="S8">(</span><span class="S7">"DEF|444|11.05.2005"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$idLv</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; MyGUICtrlCreateListViewItem</span><span class="S8">(</span><span class="S7">"CDE|444|12.05.2004"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$idLv</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idMsg</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI ausl&ouml;st</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$idMsg</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><span class="S9">$idMsg</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$idLv</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$g_bSet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$g_iCurCol</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$g_iCol</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSendMsg.htm"><span class="S4">GUICtrlSendMsg</span></a><span class="S8">(</span><span class="S9">$idLv</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$LVM_SETSELECTEDCOLUMN</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlGetState.htm"><span class="S4">GUICtrlGetState</span></a><span class="S8">(</span><span class="S9">$idLv</span><span class="S8">),</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllCall.htm"><span class="S4">DllCall</span></a><span class="S8">(</span><span class="S7">"user32.dll"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"int"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"InvalidateRect"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"hwnd"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/ControlGetHandle.htm"><span class="S4">ControlGetHandle</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$idLv</span><span class="S8">),</span><span class="S0"> </span><span class="S7">"int"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"int"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+
+<span class="S1">; Unsere Sortier-Callback-Funktionen</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> LVSort2</span><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$nItem1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$nItem2</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_iColumn</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sVal1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sVal2</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iResult</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Wechselt die Sortierrichtung</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$g_iColumn</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$g_iCurCol</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><span class="S9">$g_bSet</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$g_iSortDir</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$g_iSortDir</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$g_bSet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$g_iSortDir</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_iCol</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$g_iColumn</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$sVal1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> GetSubItemText</span><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$nItem1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_iColumn</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$sVal2</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> GetSubItemText</span><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$nItem2</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_iColumn</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Wenn es die dritte Spalte ist (startet bei 0), dann vergleiche die Daten</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$g_iColumn</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">2</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sVal1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringRight.htm"><span class="S4">StringRight</span></a><span class="S8">(</span><span class="S9">$sVal1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringMid.htm"><span class="S4">StringMid</span></a><span class="S8">(</span><span class="S9">$sVal1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringLeft.htm"><span class="S4">StringLeft</span></a><span class="S8">(</span><span class="S9">$sVal1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sVal2</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringRight.htm"><span class="S4">StringRight</span></a><span class="S8">(</span><span class="S9">$sVal2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringMid.htm"><span class="S4">StringMid</span></a><span class="S8">(</span><span class="S9">$sVal2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringLeft.htm"><span class="S4">StringLeft</span></a><span class="S8">(</span><span class="S9">$sVal2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$iResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><span class="S1">; Keine &Auml;nderung der Position von item1 und item2</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$sVal1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;</span></a><span class="S0"> </span><span class="S9">$sVal2</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$iResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S0"> </span><span class="S1">; Setzt item2 vor item1</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">ElseIf</span></a><span class="S0"> </span><span class="S9">$sVal1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&gt;</span></a><span class="S0"> </span><span class="S9">$sVal2</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$iResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><span class="S1">; Setzt item2 hinter item1</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$iResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$iResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*</span></a><span class="S0"> </span><span class="S9">$g_iSortDir</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S9">$iResult</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;LVSort2</span>
+
+<span class="S1">; Erzeugt und f&uuml;gt Items direkt in Treeview ein</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> MyGUICtrlCreateListViewItem</span><span class="S8">(</span><span class="S9">$sText</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$idCtrl</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iIndex</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tLvitem</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">"uint;int;int;uint;uint;ptr;int;int;int;int;"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tText</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">"char[260]"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aText</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringSplit.htm"><span class="S4">StringSplit</span></a><span class="S8">(</span><span class="S9">$sText</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"|"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$iIndex</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><span class="S9">$iIndex</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlSendMsg.htm"><span class="S4">GUICtrlSendMsg</span></a><span class="S8">(</span><span class="S9">$idCtrl</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$LVM_GETITEMCOUNT</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tText</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aText</span><span class="S8">[</span><span class="S3">1</span><span class="S8">])</span><span class="S0"> </span><span class="S1">; Speichere Text in die Struktur</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tLvitem</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$LVIF_TEXT</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$LVIF_PARAM</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tLvitem</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iIndex</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tLvitem</span><span class="S8">,</span><span class="S0"> </span><span class="S3">6</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetPtr.htm"><span class="S4">DllStructGetPtr</span></a><span class="S8">(</span><span class="S9">$tText</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Setzt den lParam der Struktur zu dem Zeilenindex - einmalig in die Treeview</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tLvitem</span><span class="S8">,</span><span class="S0"> </span><span class="S3">9</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iIndex</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$iIndex</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlSendMsg.htm"><span class="S4">GUICtrlSendMsg</span></a><span class="S8">(</span><span class="S9">$idCtrl</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$LVM_INSERTITEMA</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetPtr.htm"><span class="S4">DllStructGetPtr</span></a><span class="S8">(</span><span class="S9">$tLvitem</span><span class="S8">))</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$iIndex</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&gt;</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; F&uuml;gt nun den Rest des Spaltentextes ein</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">2</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S9">$aText</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tText</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aText</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">])</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tLvitem</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Speichere den Subitem-Index</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSendMsg.htm"><span class="S4">GUICtrlSendMsg</span></a><span class="S8">(</span><span class="S9">$idCtrl</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$LVM_SETITEMTEXTA</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iIndex</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetPtr.htm"><span class="S4">DllStructGetPtr</span></a><span class="S8">(</span><span class="S9">$tLvitem</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Passe die Spaltenbreite dem Text an</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">2</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSendMsg.htm"><span class="S4">GUICtrlSendMsg</span></a><span class="S8">(</span><span class="S9">$idCtrl</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$LVM_SETCOLUMNWIDTH</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$i</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSendMsg.htm"><span class="S4">GUICtrlSendMsg</span></a><span class="S8">(</span><span class="S9">$idCtrl</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$LVM_SETCOLUMNWIDTH</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$i</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">2</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;MyGUICtrlCreateListViewItem</span>
+
+<span class="S1">; Text eines Treeview-Items in einer bestimmten Spalte abrufen</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> GetSubItemText</span><span class="S8">(</span><span class="S9">$idCtrl</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$idItem</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iColumn</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$stLvfi</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">"uint;ptr;int;int[2];int"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tBuffer</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iIndex</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tLvi</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sItemText</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$stLvfi</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$LVFI_PARAM</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Finde das Item durch unseren gespeicherten Index</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$stLvfi</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$idItem</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tBuffer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">"char[260]"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iIndex</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlSendMsg.htm"><span class="S4">GUICtrlSendMsg</span></a><span class="S8">(</span><span class="S9">$idCtrl</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$LVM_FINDITEM</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetPtr.htm"><span class="S4">DllStructGetPtr</span></a><span class="S8">(</span><span class="S9">$stLvfi</span><span class="S8">))</span><span class="S0"> </span><span class="S1">;</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tLvi</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">"uint;int;int;uint;uint;ptr;int;int;int;int"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tLvi</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$LVIF_TEXT</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tLvi</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iIndex</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tLvi</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iColumn</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tLvi</span><span class="S8">,</span><span class="S0"> </span><span class="S3">6</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetPtr.htm"><span class="S4">DllStructGetPtr</span></a><span class="S8">(</span><span class="S9">$tBuffer</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tLvi</span><span class="S8">,</span><span class="S0"> </span><span class="S3">7</span><span class="S8">,</span><span class="S0"> </span><span class="S3">260</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSendMsg.htm"><span class="S4">GUICtrlSendMsg</span></a><span class="S8">(</span><span class="S9">$idCtrl</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$LVM_GETITEMA</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetPtr.htm"><span class="S4">DllStructGetPtr</span></a><span class="S8">(</span><span class="S9">$tLvi</span><span class="S8">))</span><span class="S0"> </span><span class="S1">;</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sItemText</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$tBuffer</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S9">$sItemText</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;GetSubItemText</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

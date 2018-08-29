@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function FileFindNextFile</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">FileFindNextFile</h1><br />
+<a href="../functions/FileFindNextFile.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Returns the next filename defined by the search handle.<br /></p>
+<p class="codeheader">
+FileFindNextFile ( search [, flag = 0])<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">search</td>
+<td style="width:85%">The search handle, as returned by <a href="FileFindFirstFile.htm">FileFindFirstFile()</a>.</td>
+</tr>
+<tr>
+<td>flag</td>
+<td><strong>[optional]</strong> this flag determines whether to return detailed file attribute information in @extended.<br />
+&nbsp;&nbsp;&nbsp; 0 = (default) use @extended to return 1 or 0 if search item is a directory.<br />
+&nbsp;&nbsp;&nbsp; 1 = Return a string in @extended in the same format as <a href="FileGetAttrib.htm">FileGetAttrib()</a>.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">a filename according to a previous call to <a href="FileFindFirstFile.htm">FileFindFirstFile()</a>, @extended set as per the flag option.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>sets the @error flag to 1 if no more files/directories match the search.</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>A previous call to <a href="FileFindFirstFile.htm">FileFindFirstFile()</a> is necessary to setup the search and get a search handle. Every subsequent call to <a href="FileFindNextFile.htm">FileFindNextFile()</a> will return the next file found according to the search handle supplied to <a href="FileFindFirstFile.htm">FileFindFirstFile()</a>. When @error = 1, no more files found matching the original search handle.<br />
+<br />
+When you have finished searching with the FileFind... functions you must call <a href="FileClose.htm">FileClose()</a> to release the search handle.<br />
+<br />
+Due to the underlying Windows API used (FindFirstFile), this function actually searches both the long and short filenames when looking for matches. If you get unexepected results<br />
+then verfiy that it's not the short filename that is being matched.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="FileClose.htm">FileClose</a>, <a href="FileFindFirstFile.htm">FileFindFirstFile</a></p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\FileFindFirstFile.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Assign a Local variable the search handle of all files in the current directory.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hSearch</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileFindFirstFile.htm"><span class="S4">FileFindFirstFile</span></a><span class="S8">(</span><span class="S7">"*.*"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Check if the search was successful, if not display a message and return False.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$hSearch</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Error: No files/directories matched the search pattern."</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Assign a Local variable the empty string which will contain the files names found.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sFileName</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sFileName</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileFindNextFile.htm"><span class="S4">FileFindNextFile</span></a><span class="S8">(</span><span class="S9">$hSearch</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; If there is no more file matching the search.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Display the file name.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$iResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MB_OKCANCEL</span><span class="S8">),</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"File: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sFileName</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$iResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S9">$IDOK</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a><span class="S0"> </span><span class="S1">; If the user clicks on the cancel/close button.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Close the search handle.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/FileClose.htm"><span class="S4">FileClose</span></a><span class="S8">(</span><span class="S9">$hSearch</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

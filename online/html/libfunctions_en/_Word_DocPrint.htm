@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _Word_DocPrint</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_Word_DocPrint</h1><br />
+<a href="../libfunctions/_Word_DocPrint.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Prints all or parts of the specified document<br /></p>
+<p class="codeheader">
+#include &lt;Word.au3&gt;<br />
+_Word_DocPrint ( $oDoc [, $bBackground = False [, $iCopies = 1 [, $iOrientation = -1 [, $bCollate = True [, $sPrinter = "" [, $iRange = $WdPrintAllDocument [, $vFrom = 0 [, $vTo = 0 [, $sPages = "" [, $iPageType = $WdPrintAllPages [, $iItem = $WdPrintDocumentContent]]]]]]]]]]] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$oDoc</td>
+<td style="width:85%">Word document object</td>
+</tr>
+<tr>
+<td>$bBackground</td>
+<td><strong>[optional]</strong> True lets the script continue while the document is printed (default = False)</td>
+</tr>
+<tr>
+<td>$iCopies</td>
+<td><strong>[optional]</strong> The number of copies to be printed (default = 1)</td>
+</tr>
+<tr>
+<td>$iOrientation</td>
+<td><strong>[optional]</strong> Sets the orientation of the page:<br />
+&nbsp;&nbsp;&nbsp; -1 - Use current document orientation (default)<br />
+&nbsp;&nbsp;&nbsp;  0 - Portrait ($WdOrientPortrait of the WdOrientation enumeration)<br />
+&nbsp;&nbsp;&nbsp;  1 - Landscape ($WdOrientLandscape of the WdOrientation enumeration)</td>
+</tr>
+<tr>
+<td>$bCollate</td>
+<td><strong>[optional]</strong> True prints all pages of the document before printing the next copy (default = True)</td>
+</tr>
+<tr>
+<td>$sPrinter</td>
+<td><strong>[optional]</strong> Sets the name of the printer (default = "" = Active printer)</td>
+</tr>
+<tr>
+<td>$iRange</td>
+<td><strong>[optional]</strong> Specifies the page range to print.<br />
+Can be any of the WdPrintOutRange enumeration.<br />
+(default = $WdPrintAllDocument = print the entire document)</td>
+</tr>
+<tr>
+<td>$vFrom</td>
+<td><strong>[optional]</strong> The starting page number (integer) when $iRange is set to $WdPrintFromTo</td>
+</tr>
+<tr>
+<td>$vTo</td>
+<td><strong>[optional]</strong> The ending page number (integer) when $iRange is set to $WdPrintFromTo</td>
+</tr>
+<tr>
+<td>$sPages</td>
+<td><strong>[optional]</strong> The page numbers and page ranges to be printed, separated by commas when $iRange is set to 4.<br />
+For example, "2, 6-10" prints page 2 and pages 6 through 10 (default = "")</td>
+</tr>
+<tr>
+<td>$iPageType</td>
+<td><strong>[optional]</strong> The type of pages to be printed. Can be any of the WdPrintOutPages enumeration<br />
+(default = $WdPrintAllPages = print all pages)</td>
+</tr>
+<tr>
+<td>$iItem</td>
+<td><strong>[optional]</strong> The item to be printed. Can be any of the WdPrintOutItem enumeration<br />
+(default = $WdPrintDocumentContent = document content)</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">1.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>0 and sets the @error flag to non-zero.</td>
+</tr>
+<tr>
+<td class="valign-top">@error:</td>
+<td>1 - $oDoc is not an object<br />
+2 - Error setting page orientation. @extended is set to the COM error code<br />
+3 - @error returned when setting the active printer to $sPrinter<br />
+4 - Error occurred when printing the file. @extended is set to the COM error code</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>Specifying $bBackground does NOT pause the script until the document is finished printing, it only pauses<br />
+until Microsoft Word finishes sending the document to the printer.<br />
+If you specify a printer note that the \\servername\printer seems to be case sensitive.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="_Word_DocExport.htm">_Word_DocExport</a></p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_Word_DocPrint.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Word.au3&gt;</span>
+
+<span class="S1">; Create application object</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oWord</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_Word_Create.htm"><span class="S15">_Word_Create</span></a><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Word UDF: _Word_DocPrint Example"</span><span class="S8">,</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Error creating a new Word application object."</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"@error = "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">", @extended = "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S8">)</span>
+<span class="S1">; Open the test document</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oDoc</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_Word_DocOpen.htm"><span class="S15">_Word_DocOpen</span></a><span class="S8">(</span><span class="S9">$oWord</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@ScriptDir"><span class="S6">@ScriptDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"\Extras\Test.doc"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Word UDF: _Word_DocPrint Example"</span><span class="S8">,</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Error opening '.\Extras\Test.doc'."</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"@error = "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">", @extended = "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S8">)</span>
+
+<span class="S1">; Print the complete document with default values</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sActivePrinter</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$oDoc</span><span class="S8">.</span><span class="S14">Application</span><span class="S8">.</span><span class="S14">ActivePrinter</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"The name of the active printer is: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sActivePrinter</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_Word_DocPrint.htm"><span class="S15">_Word_DocPrint</span></a><span class="S8">(</span><span class="S9">$oDoc</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Word UDF: _Word_DocPrint Example"</span><span class="S8">,</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Error printing the document."</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"@error = "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">", @extended = "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Word UDF: _Word_DocPrint Example"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"The document has successfully been printed to: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sActivePrinter</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

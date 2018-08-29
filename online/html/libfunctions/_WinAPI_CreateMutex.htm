@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinAPI_CreateMutex</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_WinAPI_CreateMutex</h1><br />
+<a href="../libfunctions_en/_WinAPI_CreateMutex.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Erzeugt oder &ouml;ffnet ein benanntes oder unbenanntes Mutex-Objekt.<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIProc.au3&gt;<br />
+_WinAPI_CreateMutex ( $sMutex [, $bInitial = True [, $tSecurity = 0]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$sMutex</td>
+<td style="width:85%">Der Name des Mutex-Objektes. Gro&szlig;-/ Kleinschreibung wird bei dem Namensvergleich beachtet.</td>
+</tr>
+<tr>
+<td>$bInitial</td>
+<td><strong>[optional]</strong> Gibt an, ob der aufrufende Prozess die urspr&uuml;nglichen Besitzrechte des Mutex-Objektes erh&auml;lt. G&uuml;ltige Werte sind:<br />
+&nbsp;&nbsp;&nbsp; True	 - Der aufrufende Thread erh&auml;lt die urspr&uuml;nglichen Besitzrechte des Mutex-Objektes (Standard).<br />
+&nbsp;&nbsp;&nbsp; False	 - Der aufrufende Thread erh&auml;lt nicht die urspr&uuml;nglichen Besitzrechte des Mutex-Objektes.</td>
+</tr>
+<tr>
+<td>$tSecurity</td>
+<td><strong>[optional]</strong> Die $tagSECURITY_ATTRIBUTES Struktur welche den Sicherheitsdeskriptor f&uuml;r das Mutex-Objekt angibt.<br />
+Wenn dieser Parameter 0 ist (Standard), so erh&auml;lt das Mutex-Objekt einen Standardsicherheitsdeskriptor.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">Das Handle zu dem neu erstellten Mutex-Objekt.</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>0. Es ist <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> aufzurufen um erweiterte Fehlerinformationen zu erhalten.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Wenn das Mutex-Objekt ein benanntes Mutex-Objekt ist und das Objekt vor dem Aufruf dieser Funktion bereits existiert, so ist das Handle im R&uuml;ckgabewert das des bereits existierenden Mutex-Objektes und <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> gibt ERROR_ACCESS_EXISTS (183) zur&uuml;ck. Des Weiteren wird $bInitial ignoriert und der aufrufende Thread erh&auml;lt keine Besitzrechte.<br />
+Sollte der Aufrufer aber limitierte Zugriffsrechte haben, so wird die Funktion fehlschlagen mit ERROR_ACCESS_DENIED (5) und der Aufrufer sollte die <a href="_WinAPI_OpenMutex.htm">_WinAPI_OpenMutex()</a> Funktion verwenden.<br />
+<br />
+Jeder Prozess kann das Mutex-Objekthandle in einem Aufruf der Wartefunktionen angeben.<br />
+Die Einzel-Objekt-Wartefunktionen beenden sich, wenn der Status des angegebenen Objektes signalisiert wurde.<br />
+Die Mehrere-Objekt-Wartefunktionen k&ouml;nnen angewiesen werden entweder entweder einer der Objekte oder alle signalisiert wurden.<br />
+Wenn eine Wartefunktionen sich beendet, dann wird der Wartethread freigegeben um mit der Ausf&uuml;hrung fortzufahren.<br />
+<br />
+Zwei oder mehrere Prozess k&ouml;nnen die <a href="_WinAPI_CreateMutex.htm">_WinAPI_CreateMutex()</a> Funktion aufrufen um ein gleich benanntes Mutex zu erzeugen.<br />
+Der erste Prozess erzeugt das Mutex-Objekt und nachfolgende Prozesse, mit gen&uuml;genden Zugriffsrechten, &ouml;ffnen das Handle zum bereits existierenden Mutex.<br />
+Das erlaubt mehreren Prozessen das Handle zum gemeinsamen Mutex zu erhalten w&auml;hrend dem Nutzer die Verantwortung erleichtert und zugesichert wird, dass der erzeugende Prozess zuerst gestartet wird.<br />
+Mit dieser Technik sollte der $bInitial Parameter auf False gesetzt werden; anderenfalls kann es schwierig werden zu entscheiden welcher Prozess die urspr&uuml;nglichen Besitzrechte hat.<br />
+<br />
+Mit der <a href="_WinAPI_CloseHandle.htm">_WinAPI_CloseHandle()</a> Funktion kann man das Handle schlie&szlig;en.<br />
+Das System schlie&szlig;t das Handle automatisch wenn der Prozess terminiert.<br />
+Das Mutex-Objekt wird zerst&ouml;rt wenn der letzte Handle geschlossen wird.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="_WinAPI_CloseHandle.htm">_WinAPI_CloseHandle</a>, <a href="_WinAPI_OpenMutex.htm">_WinAPI_OpenMutex</a></p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(CreateMutex);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">CreateMutex</a> in der MSDN Bibliothek.
+</p>
+
+</body>
+</html>

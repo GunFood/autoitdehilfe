@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinAPI_RegNotifyChangeKeyValue</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1>_WinAPI_RegNotifyChangeKeyValue</h1>
+<p class="funcdesc">Notifies the caller about changes to the attributes or contents of a specified registry key<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIReg.au3&gt;<br />
+_WinAPI_RegNotifyChangeKeyValue ( $hKey, $iFilter [, $bSubtree = False [, $bAsync = False [, $hEvent = 0]]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$hKey</td>
+<td style="width:85%">Handle to an open registry key. The key must have been opened with the KEY_NOTIFY access right.<br />
+This handle is returned by the <a href="_WinAPI_RegCreateKey.htm">_WinAPI_RegCreateKey()</a> or <a href="_WinAPI_RegOpenKey.htm">_WinAPI_RegOpenKey()</a> function. It can also<br />
+be one of the following predefined keys.<br />
+$HKEY_CLASSES_ROOT<br />
+$HKEY_CURRENT_CONFIG<br />
+$HKEY_CURRENT_USER<br />
+$HKEY_LOCAL_MACHINE<br />
+$HKEY_USERS</td>
+</tr>
+<tr>
+<td>$iFilter</td>
+<td>Indicates the changes that should be reported. This parameter can be one or more of the following values.<br />
+$REG_NOTIFY_CHANGE_NAME<br />
+$REG_NOTIFY_CHANGE_ATTRIBUTES<br />
+$REG_NOTIFY_CHANGE_LAST_SET<br />
+$REG_NOTIFY_CHANGE_SECURITY</td>
+</tr>
+<tr>
+<td>$bSubtree</td>
+<td><strong>[optional]</strong> Specifies whether report changes in the subkeys of the specified key, valid values:<br />
+&nbsp;&nbsp;&nbsp; True	 - The function reports changes in the specified key and all its subkeys.<br />
+&nbsp;&nbsp;&nbsp; False	- The function reports changes only in the specified key (Default).</td>
+</tr>
+<tr>
+<td>$bAsync</td>
+<td><strong>[optional]</strong> Specifies whether return immediately, valid values:<br />
+&nbsp;&nbsp;&nbsp; True	 - The function returns immediately and reports changes by signaling the specified event.<br />
+&nbsp;&nbsp;&nbsp; False	- The function does not return until a change has occurred (Default).</td>
+</tr>
+<tr>
+<td>$hEvent</td>
+<td><strong>[optional]</strong> Handle to an event. If the $fAsync parameter is True, the function returns immediately and changes are<br />
+reported by signaling this event, otherwise this parameter is ignored (Default).</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">1.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>0 and sets the @error flag to non-zero, @extended flag may contain the system error code.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>If the specified key is closed, the event is signaled. This means that an application should not depend on the<br />
+key being open after returning from a wait operation on the event.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="_WinAPI_RegCreateKey.htm">_WinAPI_RegCreateKey</a>, <a href="_WinAPI_RegOpenKey.htm">_WinAPI_RegOpenKey</a></p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(RegNotifyChangeKeyValue);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">RegNotifyChangeKeyValue</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_RegNotifyChangeKeyValue.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;APIRegConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIError.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIHObj.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIProc.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIReg.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">'TrayAutoPause'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_RegOpenKey.htm"><span class="S15">_WinAPI_RegOpenKey</span></a><span class="S8">(</span><span class="S9">$HKEY_CURRENT_USER</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Software\Microsoft\Windows\CurrentVersion\Run'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$KEY_NOTIFY</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$MB_ICONERROR</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">),</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetErrorMessage.htm"><span class="S15">_WinAPI_GetErrorMessage</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hEvent</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateEvent.htm"><span class="S15">_WinAPI_CreateEvent</span></a><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_RegNotifyChangeKeyValue.htm"><span class="S15">_WinAPI_RegNotifyChangeKeyValue</span></a><span class="S8">(</span><span class="S9">$hKey</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$REG_NOTIFY_CHANGE_LAST_SET</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hEvent</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_WaitForSingleObject.htm"><span class="S15">_WinAPI_WaitForSingleObject</span></a><span class="S8">(</span><span class="S9">$hEvent</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Run.htm"><span class="S4">Run</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@AutoItExe"><span class="S6">@AutoItExe</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">' /AutoIt3ExecuteLine "MsgBox(4096, ''Registry'', ''Die Regsitry wurde ver&auml;ndert.'' &amp; @CRLF &amp; @CRLF &amp; ''HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run'', 5)"'</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_RegNotifyChangeKeyValue.htm"><span class="S15">_WinAPI_RegNotifyChangeKeyValue</span></a><span class="S8">(</span><span class="S9">$hKey</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$REG_NOTIFY_CHANGE_LAST_SET</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hEvent</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">100</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_CloseHandle.htm"><span class="S15">_WinAPI_CloseHandle</span></a><span class="S8">(</span><span class="S9">$hEvent</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_RegCloseKey.htm"><span class="S15">_WinAPI_RegCloseKey</span></a><span class="S8">(</span><span class="S9">$hKey</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _viSetAttribute</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_viSetAttribute</h1><br />
+<a href="../libfunctions_en/_viSetAttribute.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Setzt VISA Attribute. Diese Funktion, welche durch _viSetTimeout aufgerufen wird, kann auch verwendet werden um die anderen VISA-spezifischen Attribute zu setzenF&uuml;r mehr Information und eine Liste der VISA-Attribute, sowie deren entsprechender Werte, lesen Sie die VISA Dokumentation.<br /></p>
+<p class="codeheader">
+#include &lt;Visa.au3&gt;<br />
+_viSetAttribute ( $hSession, $iAttribute, $iValue )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$hSession</td>
+<td style="width:85%">Ein VISA Deskriptor (String) oder ein VISA Session Handle (Ganzzahl, Integer).<br />
+F&uuml;r mehr Informationen, siehe die Bemerkungen zu <a href="_viExecCommand.htm">_viExecCommand()</a>.</td>
+</tr>
+<tr>
+<td>$iAttribute</td>
+<td>Der Index des Attributes welches ge&auml;ndert werden soll.<br />
+Die Attribute sind in der VISA Bibliothek definiert.<br />
+Diese AutoIt Bibliothek verwendet nur eine Konstante f&uuml;r das TIMEOUT Attribut ($VI_ATTR_TMO_VALUE) und f&uuml;r die Serial Interface Attribute und Werte (siehe Bemerkungen).<br />
+Aber man kann jeden anderen g&uuml;ltigen Index (als ein Integer) &uuml;bergeben falls man m&ouml;chte.</td>
+</tr>
+<tr>
+<td>$iValue</td>
+<td>Der Wert des Attributes. Es muss ein Integer sein und die m&ouml;glichen Werte sind abh&auml;ngig von den Attributtypen und in der VISA Dokumentation definiert.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">Gibt 0 zur&uuml;ck.</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>Gibt -1 zur&uuml;ck, falls die VISA-DLL nicht ge&ouml;ffnet werden konnte<br />
+oder ein ungleich 0 Wert den VISA Fehlercode darstellt (siehe VISA Programmierhandbuch).</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Es folgt eine List mit den aktuell vordefinierten Attributen und Werte.<br />
+Jedoch kann jedes(r) andere g&uuml;ltige Attribute/Wert, durch das &Uuml;bergeben des entsprechenden Integerindexes (so wie in dem VISA Programmierhandbuch definiert) an diese Funktion, verwendet werden.<br />
+<br />
+* Attribute: $VI_ATTR_TMO_VALUE -> Setzt das Timeout<br />
+* Werte:<br />
+          Ein Timeout in Millisekunden oder<br />
+          $VI_TMO_IMMEDIATE (oder 0) f&uuml;r "Sofort zur&uuml;ckkehren"<br />
+          VI_TMO_INFINITE (oder "INF") f&uuml;r "Kein Timeout"<br />
+        <br />
+* Attribute: $VI_ATTR_ASRL_BAUD<br />
+* Werte:<br />
+          Jede g&uuml;ltige Baudrate (9600, 115200, etc)<br />
+<br />
+* Attribute: $VI_ATTR_ASRL_DATA_BITS<br />
+* Werte: <br />
+          Von 5 zu 8<br />
+<br />
+* Attribute: $VI_ATTR_ASRL_PARITY<br />
+* Werte:<br />
+          $VI_ASRL_PAR_NONE<br />
+          $VI_ASRL_PAR_ODD<br />
+          $VI_ASRL_PAR_EVEN<br />
+          $VI_ASRL_PAR_MARK<br />
+          $VI_ASRL_PAR_SPACE<br />
+<br />
+* Attribute: $VI_ATTR_ASRL_STOP_BITS<br />
+* Werte:<br />
+          $VI_ASRL_STOP_ONE <br />
+          $VI_ASRL_STOP_ONE5<br />
+          $VI_ASRL_STOP_TWO <br />
+          <br />
+* Attribute: $VI_ATTR_ASRL_FLOW_CNTRL<br />
+* Werte:<br />
+          $VI_ASRL_FLOW_NONE<br />
+          $VI_ASRL_FLOW_XON_XOFF<br />
+          $VI_ASRL_FLOW_RTS_CTS<br />
+          $VI_ASRL_FLOW_DTR_DSR<br />
+<br />
+Wie f&uuml;r alle VISA Funktionen m&uuml;ssen die VISA Bibliotheken installiert sein (es muss die visa32.dll in {WINDOWS}\system32 vorhanden sein)<br />
+und eine GPIB Karte (wie z.B. National Instruments NI PCI-GPIB Karte oder die Agilent 82350B PCI High-Performance GPIB Karte) installiert sein.<br />
+<br />
+* Eine detaillierte Beschreibung der bekanntesten VISA Deskriptoren ist in den Bemerkungen zu der Funktion <a href="_viExecCommand.htm">_viExecCommand()</a> zu finden.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="_viClose.htm">_viClose</a>, <a href="_viExecCommand.htm">_viExecCommand</a>, <a href="_viOpen.htm">_viOpen</a>, <a href="_viSetTimeout.htm">_viSetTimeout</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_viSetAttribute.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><span class="S1">; Hier nehmen wir an, dass das Ger&auml;t an die GPIB-Adresse 3 gesetzt ist.</span>
+<span class="S1">; Wenn man ein Ger&auml;t in einer anderen Adresse hat, so ist "GPIB::3::0" auf die</span>
+<span class="S1">; Entsprechende Beschreibung zu &auml;ndern. Das Gleiche ist f&uuml;r den Aufruf von _viOpen zu erledigen.</span>
+<span class="S1">; Es zeigt, wie man _viSetAttribute verwendet. In diesem Beispiel verwenden wir _viSetAttribute</span>
+<span class="S1">; Anstelle von _viSetTimeout, um den GPIB-Timeout eines _viExecCommand-Vorgangs zu setzen.</span>
+
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Visa.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$h_Session</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+
+<span class="S1">; Die ID des Ger&auml;ts an GPIB-Adresse 3 abfragen</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Schritt 1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Einfache GPIB-Abfrage mit einem explizit gesetzten TIMEOUT"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$s_Answer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_viExecCommand.htm"><span class="S15">_viExecCommand</span></a><span class="S8">(</span><span class="S7">"GPIB::3::0"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"*IDN?"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10000</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; 10 Sekunden Timeout</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"GPIB QUERY Ergebnis"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$s_Answer</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Antwort anzeigen</span>
+
+<span class="S1">; Dies ist das Gleiche, als wenn man zuerst die _viSetTimeout-Funktion nutzen w&uuml;rde:</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Schritt 2"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"_vOpen + Timeout durch Verwenden der _viSetTimeout + GPIB Abfrage"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$h_Instr</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_viOpen.htm"><span class="S15">_viOpen</span></a><span class="S8">(</span><span class="S3">3</span><span class="S8">)</span>
+<span class="S1">; Folgendes ist zu beachten - Dies ist das Gleiche wie: _viSetTimeout($h_Instr, 10000)</span>
+<a class="codeSnippetLink" href="../libfunctions/_viSetAttribute.htm"><span class="S15">_viSetAttribute</span></a><span class="S8">(</span><span class="S9">$h_Instr</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$VI_ATTR_TMO_VALUE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10000</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; 10000 ms = 10 s</span>
+
+<span class="S9">$s_Answer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_viExecCommand.htm"><span class="S15">_viExecCommand</span></a><span class="S8">(</span><span class="S9">$h_Instr</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"*IDN?"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Der Timeout muss nun nicht gesetzt werden</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"GPIB QUERY Ergebnis"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$s_Answer</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Antwort anzeigen</span>
+
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Schritt 3"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Schlie&szlig;t die Ger&auml;teverbindung durch Verwenden von _viClose"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_viClose.htm"><span class="S15">_viClose</span></a><span class="S8">(</span><span class="S9">$h_Instr</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Schlie&szlig;t die Ger&auml;teverbindung</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

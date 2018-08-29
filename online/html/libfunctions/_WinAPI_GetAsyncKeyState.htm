@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinAPI_GetAsyncKeyState</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_WinAPI_GetAsyncKeyState</h1><br />
+<a href="../libfunctions_en/_WinAPI_GetAsyncKeyState.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Ermittelt ob eine Tastaturtaste zur Zeit des Funktionsaufrufs gedr&uuml;ckt ist oder nicht<br /></p>
+<p class="codeheader">
+#include &lt;WinAPISys.au3&gt;<br />
+_WinAPI_GetAsyncKeyState ( $iKey )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$iKey</td>
+<td style="width:85%">Taste die gepr&uuml;ft werden soll</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">Ist das h&ouml;chste und das niedrigste Bit gesetzt (-32767=0x8001), ist die Taste nach vorigem Aufruf der Funktion <a href="_WinAPI_GetAsyncKeyState.htm">_WinAPI_GetAsyncKeyState()</a> gedr&uuml;ckt worden. Man sollte sich aber nicht auf dieses letzte Verhalten verlassen. F&uuml;r weitere Informationen siehe in den Bemerkungen.</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>Der R&uuml;ckgabewert ist 0 wenn die Taste nicht gedr&uuml;ckt ist oder in den folgenden F&auml;llen:<br />
+Der aktuelle Desktop ist nicht der aktive Desktop<br />
+Der Vordergrund-Thread geh&ouml;rt zu einem anderen Prozess und der Desktop erlaubt den Hook oder die Journal-Aufnahme nicht.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Die Konstanten die f&uuml;r $iKey verwendet werden k&ouml;nnen stehen in der WinAPIvkeysConstants.au3<br />
+<br />
+Die Funktion GetAsyncKeyState funktioniert mit Maustasten. Allerdings &uuml;berpr&uuml;ft es den Zustand der physischen Maustasten, nicht jedoch auf die logischen Maustasten, auf die die physischen Tasten abgebildet sind. Zum Beispiel gibt der Aufruf _WinAPI_GetAsyncKeyState ($VK_LBUTTON) immer den Zustand der linken physikalischen Maustaste zur&uuml;ck, unabh&auml;ngig davon, ob er auf die linke oder rechte logische Maustaste abgebildet ist. Man kann die aktuelle Zuordnung der physikalischen Maustasten des Systems zu logischen Maustasten bestimmen, indem man <a href="_WinAPI_GetSystemMetrics.htm"> _WinAPI_GetSystemMetrics </a> ($ SM_SWAPBUTTON) aufruft. Dies gibt TRUE zur&uuml;ck, wenn die Maustasten getauscht wurden.<br />
+<br />
+Obwohl das niedrigstwertige Bit des R&uuml;ckgabewertes anzeigt, ob die Taste seit der letzten Abfrage gedr&uuml;ckt wurde, kann aufgrund des pr&auml;ventiven Multitasking-Verhaltens von Windows eine andere Anwendung GetAsyncKeyState aufrufen und das "k&uuml;rzlich gedrpckte" Bit anstelle der Anwendung empfangen. Das Verhalten des niedrigstwertigen Bits des R&uuml;ckgabewertes wird f&uuml;r die Kompatibilit&auml;t mit 16-Bit-Windows-Anwendungen (die nicht pr&auml;ventiv sind) strikt beibehalten und worauf man sich jedoch nicht verlassen sollte.<br />
+<br />
+Man kann die virtuellen Tastencode-Konstanten $VK_SHIFT, $VK_CONTROL und $VK_MENU als Werte f&uuml;r den vKey-Parameter verwenden. Dies gibt den Zustand der SHIFT-, CTRL- oder ALT-Tasten an, ohne zwischen links und rechts zu unterscheiden.<br />
+</p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(GetAsyncKeyState);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">GetAsyncKeyState</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_GetAsyncKeyState.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPISys.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIvkeysConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGUI</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"_WinAPI_GetAsyncKeyState Demo"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">500</span><span class="S8">,</span><span class="S0"> </span><span class="S3">300</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateLabel.htm"><span class="S4">GUICtrlCreateLabel</span></a><span class="S8">(</span><span class="S7">"Press the number to select the task you wish to use from list below"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">30</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateLabel.htm"><span class="S4">GUICtrlCreateLabel</span></a><span class="S8">(</span><span class="S7">"Press 1 key for task 1"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Press 2 key for task 2"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Press 3 key for task 3"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Press the ESCAPE key, or click the close button, to exit"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">60</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$iBitMask</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0x8000</span><span class="S0"> </span><span class="S1">; a bit mask to strip the high word bits from the return of the function.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitAND.htm"><span class="S4">BitAND</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetAsyncKeyState.htm"><span class="S15">_WinAPI_GetAsyncKeyState</span></a><span class="S8">(</span><span class="S9">$VK_1</span><span class="S8">),</span><span class="S0"> </span><span class="S9">$iBitMask</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Or</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitAND.htm"><span class="S4">BitAND</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetAsyncKeyState.htm"><span class="S15">_WinAPI_GetAsyncKeyState</span></a><span class="S8">(</span><span class="S9">$VK_NUMPAD1</span><span class="S8">),</span><span class="S0"> </span><span class="S9">$iBitMask</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"_WinAPI_GetAsyncKeyState"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Task 1"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">ElseIf</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitAND.htm"><span class="S4">BitAND</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetAsyncKeyState.htm"><span class="S15">_WinAPI_GetAsyncKeyState</span></a><span class="S8">(</span><span class="S9">$VK_2</span><span class="S8">),</span><span class="S0"> </span><span class="S9">$iBitMask</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Or</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitAND.htm"><span class="S4">BitAND</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetAsyncKeyState.htm"><span class="S15">_WinAPI_GetAsyncKeyState</span></a><span class="S8">(</span><span class="S9">$VK_NUMPAD2</span><span class="S8">),</span><span class="S0"> </span><span class="S9">$iBitMask</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"_WinAPI_GetAsyncKeyState"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Task 2"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">ElseIf</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitAND.htm"><span class="S4">BitAND</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetAsyncKeyState.htm"><span class="S15">_WinAPI_GetAsyncKeyState</span></a><span class="S8">(</span><span class="S9">$VK_3</span><span class="S8">),</span><span class="S0"> </span><span class="S9">$iBitMask</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Or</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitAND.htm"><span class="S4">BitAND</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetAsyncKeyState.htm"><span class="S15">_WinAPI_GetAsyncKeyState</span></a><span class="S8">(</span><span class="S9">$VK_NUMPAD3</span><span class="S8">),</span><span class="S0"> </span><span class="S9">$iBitMask</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"_WinAPI_GetAsyncKeyState"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Task 3"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">ElseIf</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitAND.htm"><span class="S4">BitAND</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetAsyncKeyState.htm"><span class="S15">_WinAPI_GetAsyncKeyState</span></a><span class="S8">(</span><span class="S9">$VK_ESCAPE</span><span class="S8">),</span><span class="S0"> </span><span class="S9">$iBitMask</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"_WinAPI_GetAsyncKeyState"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"The Esc Key was pressed, exiting."</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIDelete.htm"><span class="S4">GUIDelete</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

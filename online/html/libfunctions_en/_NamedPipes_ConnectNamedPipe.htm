@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _NamedPipes_ConnectNamedPipe</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_NamedPipes_ConnectNamedPipe</h1><br />
+<a href="../libfunctions/_NamedPipes_ConnectNamedPipe.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Enables a named pipe server process to wait for a client process to connect<br /></p>
+<p class="codeheader">
+#include &lt;NamedPipes.au3&gt;<br />
+_NamedPipes_ConnectNamedPipe ( $hNamedPipe [, $tOverlapped = 0] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$hNamedPipe</td>
+<td style="width:85%">Handle to the server end of a named pipe instance</td>
+</tr>
+<tr>
+<td>$tOverlapped</td>
+<td><strong>[optional]</strong> a $tagOVERLAPPED structure.<br />
+&nbsp;&nbsp;&nbsp; If $hNamedPipe was opened with $PIPE_FLAG_OVERLAPPED, $pOverlapped must not be 0.<br />
+&nbsp;&nbsp;&nbsp; If $hNamedPipe was created with $PIPE_FLAG_OVERLAPPED and $pOverlapped is not 0, the $tagOVERLAPPED structure should contain a handle to a manual reset event object.<br />
+&nbsp;&nbsp;&nbsp; If $hNamedPipe was not opened with $PIPE_FLAG_OVERLAPPED, the function does not return until a client is connected or an error occurs.<br />
+Successful synchronous operations result in the function returning a nonzero value if a client connects after the function is called.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">True.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>False.</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>If a client connects before the function is called, the function returns zero and _WinAPI_GetLastError() will return $ERROR_PIPE_CONNECTED (defined in APIErrorsConstants.au3).<br />
+This can happen if a client connects in the interval between the call to _NamedPipes_CreateNamedPipe() and the call to _NamedPipes_ConnectNamedPipe().<br />
+In this situation, there is a good connection between client and server even though the function returns zero.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="$tagOVERLAPPED.htm">$tagOVERLAPPED</a>, <a href="_NamedPipes_CreateNamedPipe.htm">_NamedPipes_CreateNamedPipe</a></p>
+
+<h2>See Also</h2>
+<p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(ConnectNamedPipe);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">ConnectNamedPipe</a> in MSDN  Library.
+</p>
+
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TESTTest-IE6.au3</title>
+  <meta charset="utf-8">
+  <link href="../css/default.css" rel="stylesheet">
+</head>
+<body>
+@@SyntaxHighlighting@@
+; Beispielskript f&uuml;r die Verwendung der COM-Ereignisfunktionen.
+;
+; Siehe auch: http://msdn.microsoft.com/en-us/library/aa768400.aspx
+
+; Wir verwenden ein sehr einfaches GUI, um die Ergebnisse unserer Ereignisse anzuzeigen.
+
+#include <GUIConstantsEx.au3>
+#include <MsgBoxConstants.au3>
+
+Global $g_idGUIEdit, $g_idGUIProg
+
+Example()
+Exit ; End of our Demo.
+
+Func Example()
+	Local $hGUIMain = GUICreate("Ereignistest", 600, 500)
+	$g_idGUIEdit = GUICtrlCreateEdit("Test Log:" & @CRLF, 10, 20, 580, 400)
+	$g_idGUIProg = GUICtrlCreateProgress(10, 5, 580, 10)
+	Local $idGUIExit = GUICtrlCreateButton(" Schliessen ", 250, 450, 80, 30)
+	GUISetState() ;Zeigt die GUI
+
+	; Internet Explorer als Testsubjekt vorbereiten
+	Local $oIE = ObjCreate("InternetExplorer.Application.1")
+	With $oIE
+		.Visible = 1
+		.Top = (@DesktopHeight - 400) / 2
+		.Height = 400 ; IE-Fenster ein wenig kleiner als unser GUI machen
+		.Width = 600
+		.Silent = 1 ; Keine IE-Dialogboxen anzeigen
+		Local $hIEWnd = HWnd(.hWnd) ; Fenster merken, falls der Benutzer es schlie&szlig;en will
+	EndWith
+
+	; Wir verwenden ein besonderes IE-Interface (DWebBrowserEvents), weil der IE von anderen Applikationen
+	; wie z.B. Visual Studio oder Adobe Acrobat Reader modifiziert werden kann. Wenn IE-Plugins installiert sind,
+	; kann AutoIt unter Umst&auml;nden das richtige Interface nicht automatisch feststellen.
+	Local $oEventObject = ObjEvent($oIE, "IEEvent_", "DWebBrowserEvents")
+	If @error Then
+		MsgBox($MB_OK, "AutoIt COM Test", _
+				"ObjEvent: Kann das 'DWebBrowserEvents'-Interface nicht verwenden. Fehlercode: " & Hex(@error, 8))
+		Exit
+	EndIf
+
+	; Jetzt wird eine Beispielseite geladen
+	Local $sURL = "http://www.AutoItScript.com/"
+	$oIE.Navigate($sURL)
+	Sleep(1000) ; Etwas warten, um die Webseite zu laden
+
+	GUISwitch($hGUIMain) ; Zur&uuml;ck zu unserer GUI, falls uns der IE den Fokus geklaut hat
+
+	;  Warten, bis der Benutzer die GUI schlie&szlig;t.
+	Local $iMsg
+	While 1
+		$iMsg = GUIGetMsg()
+		If $iMsg = $GUI_EVENT_CLOSE Or $iMsg = $idGUIExit Then ExitLoop
+	WEnd
+
+	$oEventObject.Stop ; Teile dem IE mit, dass wir keine Ereignisse empfangen wollen.
+	$oEventObject = 0 ; Zerst&ouml;re das Ereignisobjekt
+	If WinExists($hIEWnd) Then $oIE.Quit ; IE-Fenster schlie&szlig;en
+	$oIE = 0 ; IE aus dem Speicher entfernen (eigentlich nicht n&ouml;tig).
+
+	GUIDelete() ; Entferne GUI
+EndFunc   ;==>Example
+
+; Einige InternetExplorer-Ereignisfunktionen
+; Siehe auch: http://msdn.microsoft.com/en-us/library/aa768400.aspx
+Func IEEvent_BeforeNavigate($sURL, $iFlags, $sTargetFrameName, $dPostData, $sHeaders, $bCancel)
+	;   Beachte: Die Deklaration weicht von der im MSDN ab.
+	GUICtrlSetData($g_idGUIEdit, "BeforeNavigate: " & $sURL & " Flags: " & $iFlags & " tgframe: " & $sTargetFrameName & " Postdat: " & $dPostData & " Hdrs: " & $sHeaders & " canc: " & $bCancel & @CRLF, "append")
+EndFunc   ;==>IEEvent_BeforeNavigate
+
+Func IEEvent_ProgressChange($iProgress, $iProgressMax)
+	If $iProgressMax > 0 Then
+		GUICtrlSetData($g_idGUIProg, ($iProgress * 100) / $iProgressMax)
+	EndIf
+EndFunc   ;==>IEEvent_ProgressChange
+
+Func IEEvent_StatusTextChange($sText)
+	GUICtrlSetData($g_idGUIEdit, "Der IE Statustext &auml;nderte sich ebenfalls: " & $sText & @CRLF, "append")
+EndFunc   ;==>IEEvent_StatusTextChange
+
+Func IEEvent_PropertyChange($szProperty)
+	GUICtrlSetData($g_idGUIEdit, "Der IE &auml;nderte den Wert der Eigenschaft: " & $szProperty & @CRLF, "append")
+EndFunc   ;==>IEEvent_PropertyChange
+
+Func IEEvent_DownloadComplete()
+	GUICtrlSetData($g_idGUIEdit, "Der IE hat die Navigationsoperation beendet" & @CRLF, "append")
+EndFunc   ;==>IEEvent_DownloadComplete
+
+Func IEEvent_NavigateComplete($sURL)
+	;   Beachte: Die Deklaration weicht von der im MSDN ab.
+	GUICtrlSetData($g_idGUIEdit, "IE has finished loading URL: " & $sURL & @CRLF, "append")
+EndFunc   ;==>IEEvent_NavigateComplete
+
+Func IEEvent_($sEventName)
+	; Optionale Ereignisfunktion zum Abfangen nichtdefinierter Ereignisse.
+	; Der Parameter enth&auml;lt den Namen des aufgerufenen Ereignisses.
+	GUICtrlSetData($g_idGUIEdit, "Uncatched event: " & $sEventName & @CRLF, "append")
+EndFunc   ;==>IEEvent_
+@@End@@
+
+</body>
+</html>

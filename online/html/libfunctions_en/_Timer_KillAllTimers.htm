@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _Timer_KillAllTimers</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_Timer_KillAllTimers</h1><br />
+<a href="../libfunctions/_Timer_KillAllTimers.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Destroys all the timers<br /></p>
+<p class="codeheader">
+#include &lt;Timers.au3&gt;<br />
+_Timer_KillAllTimers ( $hWnd )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$hWnd</td>
+<td style="width:85%">Handle to the window associated with the timers.<br />
+This value must be the same as the $hWnd value passed to the <a href="_Timer_SetTimer.htm">_Timer_SetTimer()</a> function that created the timer</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">True</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>False</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>The <a href="_Timer_KillAllTimers.htm">_Timer_KillAllTimers()</a> function does not remove WM_TIMER messages already posted to the message queue.<br />
+<br />
+This function must not be used in the callback function set by <a href="_Time_SetTimer.htm">_Time_SetTimer()</a>.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="_Timer_KillTimer.htm">_Timer_KillTimer</a>, <a href="_Timer_SetTimer.htm">_Timer_SetTimer</a></p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<h3>Example 1</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_Timer_SetTimer.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GuiStatusBar.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;ProgressConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Timers.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WindowsConstants.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_idMemo</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hStatus</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_idProgress</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_iPercent</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_iDirection</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span>
+
+<span class="S0">_Example_CallBack</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _Example_CallBack</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGUI</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iTimerProgress</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$idChange</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iWait</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$idState</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aParts</span><span class="S8">[</span><span class="S3">3</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[</span><span class="S3">75</span><span class="S8">,</span><span class="S0"> </span><span class="S3">330</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">]</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hGUI</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"Timers Using CallBack Function(s)"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">400</span><span class="S8">,</span><span class="S0"> </span><span class="S3">320</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_idMemo</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateEdit.htm"><span class="S4">GUICtrlCreateEdit</span></a><span class="S8">(</span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">32</span><span class="S8">,</span><span class="S0"> </span><span class="S3">396</span><span class="S8">,</span><span class="S0"> </span><span class="S3">226</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$WS_HSCROLL</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$WS_VSCROLL</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetFont.htm"><span class="S4">GUICtrlSetFont</span></a><span class="S8">(</span><span class="S9">$g_idMemo</span><span class="S8">,</span><span class="S0"> </span><span class="S3">9</span><span class="S8">,</span><span class="S0"> </span><span class="S3">400</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Courier New"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$idState</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateButton.htm"><span class="S4">GUICtrlCreateButton</span></a><span class="S8">(</span><span class="S7">"Start Progress Bar"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">70</span><span class="S8">,</span><span class="S0"> </span><span class="S3">270</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">,</span><span class="S0"> </span><span class="S3">25</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$idChange</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateButton.htm"><span class="S4">GUICtrlCreateButton</span></a><span class="S8">(</span><span class="S7">"Change"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">215</span><span class="S8">,</span><span class="S0"> </span><span class="S3">270</span><span class="S8">,</span><span class="S0"> </span><span class="S3">90</span><span class="S8">,</span><span class="S0"> </span><span class="S3">25</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetState.htm"><span class="S4">GUICtrlSetState</span></a><span class="S8">(</span><span class="S9">$idChange</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_DISABLE</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_hStatus</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlStatusBar_Create.htm"><span class="S15">_GUICtrlStatusBar_Create</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aParts</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlStatusBar_SetText.htm"><span class="S15">_GUICtrlStatusBar_SetText</span></a><span class="S8">(</span><span class="S9">$g_hStatus</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Timers"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlStatusBar_SetText.htm"><span class="S15">_GUICtrlStatusBar_SetText</span></a><span class="S8">(</span><span class="S9">$g_hStatus</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringFormat.htm"><span class="S4">StringFormat</span></a><span class="S8">(</span><span class="S7">"%02d:%02d:%02d"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@HOUR"><span class="S6">@HOUR</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@MIN"><span class="S6">@MIN</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@SEC"><span class="S6">@SEC</span></a><span class="S8">),</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_idProgress</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateProgress.htm"><span class="S4">GUICtrlCreateProgress</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$PBS_SMOOTH</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetColor.htm"><span class="S4">GUICtrlSetColor</span></a><span class="S8">(</span><span class="S9">$g_idProgress</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xff0000</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlStatusBar_EmbedControl.htm"><span class="S15">_GUICtrlStatusBar_EmbedControl</span></a><span class="S8">(</span><span class="S9">$g_hStatus</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlGetHandle.htm"><span class="S4">GUICtrlGetHandle</span></a><span class="S8">(</span><span class="S9">$g_idProgress</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_Timer_SetTimer.htm"><span class="S15">_Timer_SetTimer</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1000</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"_UpdateStatusBarClock"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; create timer</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$idState</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlRead.htm"><span class="S4">GUICtrlRead</span></a><span class="S8">(</span><span class="S9">$idState</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Start Progress Bar"</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$iTimerProgress</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_Timer_SetTimer.htm"><span class="S15">_Timer_SetTimer</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iWait</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"_UpdateProgressBar"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; create timer</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Or</span></a><span class="S0"> </span><span class="S9">$iTimerProgress</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/ContinueLoop.htm"><span class="S5">ContinueLoop</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetData.htm"><span class="S4">GUICtrlSetData</span></a><span class="S8">(</span><span class="S9">$idState</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Stop Progress Bar"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetState.htm"><span class="S4">GUICtrlSetState</span></a><span class="S8">(</span><span class="S9">$idChange</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_ENABLE</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetState.htm"><span class="S4">GUICtrlSetState</span></a><span class="S8">(</span><span class="S9">$idChange</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_DISABLE</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_Timer_KillTimer.htm"><span class="S15">_Timer_KillTimer</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iTimerProgress</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetData.htm"><span class="S4">GUICtrlSetData</span></a><span class="S8">(</span><span class="S9">$idState</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Start Progress Bar"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$idChange</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$iWait</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">10</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$iWait</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">250</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$iWait</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">10</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; MemoWrite</span><span class="S8">(</span><span class="S7">"Timer for _UpdateProgressBar set at: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iWait</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" milliseconds"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$iTimerProgress</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_Timer_SetTimer.htm"><span class="S15">_Timer_SetTimer</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iWait</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iTimerProgress</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; reuse timer with different interval</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"Killed All Timers? "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_Timer_KillAllTimers.htm"><span class="S15">_Timer_KillAllTimers</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">; must be True as the timer to "_UpdateStatusBarClock" have not been killed</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIDelete.htm"><span class="S4">GUIDelete</span></a><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_Example_CallBack</span>
+
+<span class="S1">; call back function</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _UpdateStatusBarClock</span><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iMsg</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iIDTimer</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iTime</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S12">#forceref $hWnd, $iMsg, $iIDTimer, $iTime</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlStatusBar_SetText.htm"><span class="S15">_GUICtrlStatusBar_SetText</span></a><span class="S8">(</span><span class="S9">$g_hStatus</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringFormat.htm"><span class="S4">StringFormat</span></a><span class="S8">(</span><span class="S7">"%02d:%02d:%02d"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@HOUR"><span class="S6">@HOUR</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@MIN"><span class="S6">@MIN</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@SEC"><span class="S6">@SEC</span></a><span class="S8">),</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_UpdateStatusBarClock</span>
+
+<span class="S1">; call back function</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _UpdateProgressBar</span><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iMsg</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iIDTimer</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iTime</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S12">#forceref $hWnd, $iMsg, $iIDTimer, $iTime</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_iPercent</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+=</span></a><span class="S0"> </span><span class="S3">5</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*</span></a><span class="S0"> </span><span class="S9">$g_iDirection</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetData.htm"><span class="S4">GUICtrlSetData</span></a><span class="S8">(</span><span class="S9">$g_idProgress</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_iPercent</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$g_iPercent</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">100</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Or</span></a><span class="S0"> </span><span class="S9">$g_iPercent</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><span class="S9">$g_iDirection</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$g_iPercent</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">100</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetColor.htm"><span class="S4">GUICtrlSetColor</span></a><span class="S8">(</span><span class="S9">$g_idProgress</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xff0000</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">ElseIf</span></a><span class="S0"> </span><span class="S9">$g_iPercent</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetColor.htm"><span class="S4">GUICtrlSetColor</span></a><span class="S8">(</span><span class="S9">$g_idProgress</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0x0000ff</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_UpdateProgressBar</span>
+
+<span class="S1">; Write a line to the memo control</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> MemoWrite</span><span class="S8">(</span><span class="S9">$sMessage</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetData.htm"><span class="S4">GUICtrlSetData</span></a><span class="S8">(</span><span class="S9">$g_idMemo</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sMessage</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;MemoWrite</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Example 2</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_Timer_SetTimer[2].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Timers.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_iMsecs</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_sResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_sCDdrv</span>
+
+<span class="S0">_Example_TimeOut</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _Example_TimeOut</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_sCDdrv</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DriveGetDrive.htm"><span class="S4">DriveGetDrive</span></a><span class="S8">(</span><span class="S7">"CDROM"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_sCDdrv</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$g_sCDdrv</span><span class="S8">[</span><span class="S3">1</span><span class="S8">]</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGUI</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">140</span><span class="S8">,</span><span class="S0"> </span><span class="S3">64</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateLabel.htm"><span class="S4">GUICtrlCreateLabel</span></a><span class="S8">(</span><span class="S7">"Insert a CD into the tray"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">,</span><span class="S0"> </span><span class="S3">115</span><span class="S8">,</span><span class="S0"> </span><span class="S3">17</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iIDtimer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_Timer_SetTimer.htm"><span class="S15">_Timer_SetTimer</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1000</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Check_mounted"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; create timer</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S9">$g_sResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">''</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">200</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_Timer_KillTimer.htm"><span class="S15">_Timer_KillTimer</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iIDtimer</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_sResult</span><span class="S8">,</span><span class="S0"> </span><span class="S3">5</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"Killed All Timers? "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_Timer_KillAllTimers.htm"><span class="S15">_Timer_KillAllTimers</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">; must be False as all timer have already been killed</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIDelete.htm"><span class="S4">GUIDelete</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_Example_TimeOut</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Check_mounted</span><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iMsg</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iIDtimer</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iTime</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S12">#forceref $hWnd, $iMsg, $iIDTimer,$iTime</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_sResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">''</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileExists.htm"><span class="S4">FileExists</span></a><span class="S8">(</span><span class="S9">$g_sCDdrv</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'\'</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$g_sResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DriveGetLabel.htm"><span class="S4">DriveGetLabel</span></a><span class="S8">(</span><span class="S9">$g_sCDdrv</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">' inserted'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$g_sResult</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><span class="S7">'on drive '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$g_sCDdrv</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$g_iMsecs</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+=</span></a><span class="S0"> </span><span class="S3">1000</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$g_iMsecs</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">10000</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$g_sResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">'timed out'</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Check_mounted</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

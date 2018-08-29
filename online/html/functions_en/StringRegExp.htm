@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function StringRegExp</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">StringRegExp</h1><br />
+<a href="../functions/StringRegExp.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Check if a string fits a given regular expression pattern.<br /></p>
+<p class="codeheader">
+StringRegExp ( "test", "pattern" [, flag = 0 [, offset = 1]] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">test</td>
+<td style="width:85%">The subject string to check</td>
+</tr>
+<tr>
+<td>pattern</td>
+<td>The regular expression to match.</td>
+</tr>
+<tr>
+<td>flag</td>
+<td><strong>[optional]</strong> A number to indicate how the function behaves. See below for details. The default is 0.</td>
+</tr>
+<tr>
+<td>offset</td>
+<td><strong>[optional]</strong> The string position to start the match (starts at 1). The default is 1.</td>
+</tr>
+</table><br /><br />
+<table>
+<tr>
+<td style="width:15%"><strong>Flag</strong></td>
+<td style="width:85%"><strong>Values</strong></td>
+</tr>
+<tr>
+<td>$STR_REGEXPMATCH (0)</td>
+<td>Returns 1 (match) or 0 (no match). (Default).</td>
+</tr>
+<tr>
+<td>$STR_REGEXPARRAYMATCH (1)</td>
+<td>Return array of matches.</td>
+</tr>
+<tr>
+<td>$STR_REGEXPARRAYFULLMATCH (2)</td>
+<td>Return array of matches including the full match (Perl / PHP style).</td>
+</tr>
+<tr>
+<td>$STR_REGEXPARRAYGLOBALMATCH (3)</td>
+<td>Return array of global matches.</td>
+</tr>
+<tr>
+<td>$STR_REGEXPARRAYGLOBALFULLMATCH (4)</td>
+<td>Return an array of arrays containing global matches including the full match (Perl / PHP style).</td>
+</tr>
+</table>Constants are defined in StringConstants.au3.<br />
+<br />
+
+
+<h2>Return Value</h2>
+<em>Flag = $STR_REGEXPMATCH (0) :</em><br />
+<br />
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">@error:</td>
+<td style="width:90%">Meaning</td>
+</tr>
+<tr>
+<td class="valign-top"> 2:</td>
+<td>Bad pattern. @extended = offset of error in pattern.</td>
+</tr>
+</table><br />
+<br /><br />
+<em>Flag = $STR_REGEXPARRAYMATCH (1) or $STR_REGEXPARRAYFULLMATCH (2) :</em><br />
+<br />
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">@error:</td>
+<td style="width:90%">Meaning</td>
+</tr>
+<tr>
+<td class="valign-top"> 0:</td>
+<td>Array is valid. Check @extended for next offset</td>
+</tr>
+<tr>
+<td class="valign-top"> 1:</td>
+<td>Array is invalid. No matches.</td>
+</tr>
+<tr>
+<td class="valign-top"> 2:</td>
+<td>Bad pattern, array is invalid. @extended = offset of error in pattern.</td>
+</tr>
+</table><br />
+<br /><br />
+<em>Flag = $STR_REGEXPARRAYGLOBALMATCH (3) or $STR_REGEXPARRAYGLOBALFULLMATCH (4) :</em><br />
+<br />
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">@error:</td>
+<td style="width:90%">Meaning</td>
+</tr>
+<tr>
+<td class="valign-top"> 0:</td>
+<td>Array is valid.</td>
+</tr>
+<tr>
+<td class="valign-top"> 1:</td>
+<td>Array is invalid. No matches.</td>
+</tr>
+<tr>
+<td class="valign-top"> 2:</td>
+<td>Bad pattern, array is invalid. @extended = offset of error in pattern.</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>The flag parameter can have one of 5 values ($STR_REGEXPMATCH (0) through $STR_REGEXPARRAYGLOBALFULLMATCH (4)).<br />
+<table>
+<tr>
+<td style="width:15%">$STR_REGEXPMATCH (0)</td>
+<td style="width:85%">returns 1 (true) or 0 (false) if the pattern was found or not.</td>
+</tr>
+<tr>
+<td>$STR_REGEXPARRAYMATCH (1)<br \>$STR_REGEXPARRAYFULLMATCH (2)</td>
+<td>find the first match and return captured groups in an array; when the pattern has no capturing groups, the first match is returned in the array.</td>
+</tr>
+<tr>
+<td>$STR_REGEXPARRAYGLOBALMATCH (3)<br \>$STR_REGEXPARRAYGLOBALFULLMATCH (4)</td>
+<td>fill the array with all matching instances.</td>
+</tr>
+</table><br />
+$STR_REGEXPARRAYFULLMATCH (2) and $STR_REGEXPARRAYGLOBALFULLMATCH (4) include the full matching text as the first element of the return array, not just the captured groups as with flag $STR_REGEXPARRAYMATCH (1) and $STR_REGEXPARRAYGLOBALMATCH (3).<br />
+<br />
+Regular expression notation is a compact way of specifying a pattern for subject strings that can be searched and from which specific parts can be extracted by <a href="StringRegExp.htm">StringRegExp()</a> or replaced when using <a href="StringRegExpReplace.htm">StringRegExpReplace()</a>.<br />
+<br />
+More precisely, the regular expression engine tries to match a pattern (a kind of programmatic format) with a subject string, both from left to right. Should a mismatch occur, the engines tries to backtrack (return to successively previous states) as much as needed, expecting that the rest of the pattern will match as well.<br />
+<br />
+Backtracking is a fundamental feature of regular expression engines and one that every novice programmer already understand and uses daily. It is like leaving a specific mark on every fork in the road and going back to the last untried path when the choosen path turns out to be a dead end: you backtrack as needed until you find the right point (match success) or explore every path without reaching your goal (match failure). Searching a given filename with optional wildcards inside a directory tree is no different.<br />
+<br />
+AutoIt uses the PCRE engine. PCRE means "Perl-Compatible Regular Expressions" and is the most comprehensive open-source engine available. This implementation includes Unicode Category Properties (UCP) support, which allows fine-grain processing of most human languages.<br />
+However to maintain compatibility with previous versions and keep matching speed at its best, <strong>the UCP support is not enabled by default</strong>. You can enable it by prepending the string <strong>(*UCP)</strong> at the very start of your pattern. When enabled, the UCP setting changes the extend of a number of regular expression elements, as documented below where applicable.<br />
+<br />
+This page is only a summary for the most used pattern elements. For full in-depth discussion of regular expressions as implemented in AutoIt, refer to the <strong><a href="../pcrepattern.html">complete description of PCRE patterns</a></strong>.<br />
+Unless you are already familiar with regular expressions you will probably need to read several parts of this summary more than once to grasp how they work and inter-relate.<br />
+<br />
+<strong>Caution</strong>: bad regular expressions can produce a quasi-infinite loop hogging the CPU, and can even cause a crash.<br />
+<br />
+<h3><u>Global settings</u></h3><br />
+These settings are only recognized at the start of the pattern and affect it globally.<br />
+<br />
+<strong>Newline conventions</strong><br />
+<br />
+Newline sequences affect where the <strong>^</strong> and <strong>$</strong> anchors match and what <strong>\N</strong> and <strong>.</strong> do not match. By default the newline sequence is @CRLF as an unbreakable sequence or lone @CR or @LF.<br />
+The default can be changed by prepending one of the following sequence at the start of a pattern.<table>
+<tr>
+<td style="width:15%"><strong>(*CR)</strong></td>
+<td style="width:85%">Carriage return (@CR).</td>
+</tr>
+<tr>
+<td><strong>(*LF)</strong></td>
+<td>Line feed (@LF).</td>
+</tr>
+<tr>
+<td><strong>(*CRLF)</strong></td>
+<td>Carriage return immediately followed by linefeed (@CRLF).</td>
+</tr>
+<tr>
+<td><strong>(*ANYCRLF)</strong></td>
+<td>Any of @CRLF, @CR or @LF. This is the default newline convention.</td>
+</tr>
+<tr>
+<td><strong>(*ANY)</strong></td>
+<td>Any Unicode newline sequence: @CRLF, @LF, VT, FF, @CR or \x85.</td>
+</tr>
+</table><br />
+<strong>What \R matches</strong><br />
+<table>
+<tr>
+<td style="width:15%"><strong>(*BSR_ANYCRLF)</strong></td>
+<td style="width:85%">By default <strong>\R</strong> matches @CRLF, @CR or @LF only.</td>
+</tr>
+<tr>
+<td><strong>(*BSR_UNICODE)</strong></td>
+<td>Changes <strong>\R</strong> to match any Unicode newline sequence: @CRLF, @LF, VT, FF, @CR or \x85.</td>
+</tr>
+</table><br />
+PCRE patterns may contain options, which are enclosed in <strong>(? )</strong> sequences. Options can be grouped together: "(?imx)". Options following an hyphen are negated: "(?im-sx)".<br />
+Options appearing outside a group affect the remaining of the pattern from that point onwards. Options appearing inside a group affect that group only. Options loose their special meaning inside a character class, where they are treated literally.<br />
+<table>
+<tr>
+<td style="width:15%"><strong>(?i)</strong></td>
+<td style="width:85%">Caseless: matching becomes case-insensitive from that point on. By default, matching is case-sensitive. When UCP is enabled casing applies to the entire Unicode plane 0, else applies by default to ASCII letters A-Z and a-z only.</td>
+</tr>
+<tr>
+<td><strong>(?m)</strong></td>
+<td>Multiline: <strong>^</strong> and <strong>$</strong> match at newline sequences within data. By default, multiline is off.</td>
+</tr>
+<tr>
+<td><strong>(?s)</strong></td>
+<td>Single-line or <em>DotAll</em>: <strong>.</strong> matches anything including a newline sequence. By default, DotAll is off hence <strong>.</strong> does not match a newline sequence.</td>
+</tr>
+<tr>
+<td><strong>(?U)</strong></td>
+<td>Ungreedy: quantifiers become lazy (non-greedy) from that point on. By default, matching is greedy - see below for further explanation.</td>
+</tr>
+<tr>
+<td><strong>(?x)</strong></td>
+<td>eXtended: whitespaces outside character classes are ignored and <strong>#</strong> starts a comment up to the next solid newline in pattern. Meaningless whitespaces between components make regular expressions much more readable. By default, whitespaces match themselves and <strong>#</strong> is a literal character.</td>
+</tr>
+</table><br />
+<strong>Characters</strong><br />
+<br />
+Regular expressions patterns consist of literal Unicode text parts which match themselves, intermixed with regular expression specifiers or options. Specifiers and options use a few <u>metacharacters</u> which have a special meaning by themselves or introduce special pattern elements described in the tables below.<br />
+In literal parts, alphanumeric characters always stand for themselves: the pattern "literal part with 中国文字" matches exactly the string "literal part with 中国文字" ("中国文字" means "chinese text".)<br />
+Some non-alphanumeric characters called <u>metacharacters</u> have special behavior, discussed thereafter.<br />
+<br />
+<strong>Representing some characters literally</strong><br />
+<br />
+The special sequences below are used to represent certain characters literally.<br />
+<table>
+<tr>
+<td style="width:15%"><strong>\a</strong></td>
+<td style="width:85%">Represents "alarm", the BEL character (Chr(7)).</td>
+</tr>
+<tr>
+<td><strong>\c</strong><em>X</em></td>
+<td>Represents "control-<em>X</em>", where <em>X</em> is any 7-bit ASCII character. For example, "\cM" represents ctrl-M, same as \x0D or \r (Chr(13)).</td>
+</tr>
+<tr>
+<td><strong>\e</strong></td>
+<td>Represents the "escape" control character (Chr(27)). <em>Not to be confused with the escaping of a character!</em></td>
+</tr>
+<tr>
+<td><strong>\f</strong></td>
+<td>Represents "formfeed" (Chr(12)).</td>
+</tr>
+<tr>
+<td><strong>\n</strong></td>
+<td>Represents "linefeed" (@LF, Chr(10)).</td>
+</tr>
+<tr>
+<td><strong>\r</strong></td>
+<td>Represents "carriage return" (@CR, Chr(13)).</td>
+</tr>
+<tr>
+<td><strong>\t</strong></td>
+<td>Represents "tab" (@TAB, Chr(9)).</td>
+</tr>
+<tr>
+<td><strong>\</strong><em>ddd</em></td>
+<td>Represents character with octal code <em>ddd</em>, OR backreference to capturing group number <em>ddd</em> in decimal. For example, <strong>([a-z])\1</strong> would match a doubled letter.<br />
+<strong>Best avoided</strong> as it can be ambiguous! Favor the hex representations below.</td>
+</tr>
+<tr>
+<td><strong>\x</strong><em>hh</em></td>
+<td>Represents Unicode character with hex codepoint <em>hh</em>: "\x7E" represents a tilde, "~".</td>
+</tr>
+<tr>
+<td><strong>\x{</strong><em>hhhh</em><strong>}</strong></td>
+<td>Represents Unicode character with hex codepoint <em>hhhh</em>: "\x{20AC}" represents the Euro symbol, "&#x20ac;" (ChrW(0x20AC)).</td>
+</tr>
+<tr>
+<td><strong>\</strong><em>x</em></td>
+<td>where <em>x</em> is non-alphanumeric, stands for a literal <em>x</em>. Used to represent metacharacters literally: "\.\[" represents a dot followed by a left square bracket, ".[".</td>
+</tr>
+<tr>
+<td><strong>\Q</strong> ... <strong>\E</strong></td>
+<td>Verbatim sequence: metacharacters loose their special meaning between <strong>\Q</strong> and <strong>\E</strong>: "\Q(.)\E" matches "(.)" and is equivalent to, but more readable than, "\(\.\)".</td>
+</tr>
+</table><br />
+<strong>Metacharacters</strong><br />
+<br />
+PCRE metacharacters are <strong>\ . ^ $ | [ ( { * + ? #</strong> which have one or more special meaning, depending on context.<br />
+To insert a literal metacharacter, precede it by adding a backslash (this is called <strong>escaping (or quoting) a character</strong>): "\$" means the dollar character.<br />
+Metacharacters will be discussed in separate sections where their behavior or meaning belong.<br />
+<br />
+<h3><u>Character types</u></h3><table>
+<tr>
+<td style="width:15%"><strong>.</strong></td>
+<td style="width:85%">Matches any single character except, by default, a newline sequence. Matches newlines as well when option <strong>(?s)</strong> is active.</td>
+</tr>
+<tr>
+<td><strong>\d</strong></td>
+<td>Matches any decimal digit (any Unicode decimal digit in any language when UCP is enabled).</td>
+</tr>
+<tr>
+<td><strong>\D</strong></td>
+<td>Matches any non-digit.</td>
+</tr>
+<tr>
+<td><strong>\h</strong></td>
+<td>Matches any horizontal whitespace character (see table below).</td>
+</tr>
+<tr>
+<td><strong>\H</strong></td>
+<td>Matches any character that is not a horizontal whitespace character.</td>
+</tr>
+<tr>
+<td><strong>\N</strong></td>
+<td>Matches any character except a newline sequence regardless of option <strong>(?s)</strong>.</td>
+</tr>
+<tr>
+<td><strong>\p{</strong><em>ppp</em><strong>}</strong></td>
+<td>Only when UCP is enabled: matches any Unicode character having the property <em>ppp</em>. E.g. "\b\p{Cyrillic}+" matches any cyrillic word; "\p{Sc}" matches any currency symbol. See reference documentation for details.</td>
+</tr>
+<tr>
+<td><strong>\P{</strong><em>ppp</em><strong>}</strong></td>
+<td>Only when UCP is enabled: matches any Unicode character not having the property <em>ppp</em>.</td>
+</tr>
+<tr>
+<td><strong>\R</strong></td>
+<td>Matches any Unicode newline sequence by default, or the currently active (*BSR_...) setting. By default <strong>\R</strong> matches "(?>\r\n|\n|\r)" where "(?>...)" is an atomic group, making the sequence "\r\n" (@CRLF) unbreakable.</td>
+</tr>
+<tr>
+<td><strong>\s</strong></td>
+<td>Matches any whitespace character (see table below).</td>
+</tr>
+<tr>
+<td><strong>\S</strong></td>
+<td>Matches any non-whitespace character.</td>
+</tr>
+<tr>
+<td><strong>\v</strong></td>
+<td>Matches any vertical whitespace character (see table below).</td>
+</tr>
+<tr>
+<td><strong>\V</strong></td>
+<td>Matches any character that is not a vertical whitespace character.</td>
+</tr>
+<tr>
+<td><strong>\w</strong></td>
+<td>Matches any "word" character: any digit, any letter or underscore "_" (any Unicode digit, any Unicode letter in any language or underscore "_" when UCP is enabled).</td>
+</tr>
+<tr>
+<td><strong>\W</strong></td>
+<td>Matches any non-word character.</td>
+</tr>
+<tr>
+<td><strong>\X</strong></td>
+<td>Only when UCP is enabled: matches any Unicode extended grapheme cluster - an unbreakable sequence of codepoints which represent a single character for the user. As a consequence <strong>\X</strong> may match more than one character in the subject string, contrary to all other sequences in this table.</td>
+</tr>
+</table><br />
+<strong>Horizontal whitespace characters matched by \h</strong><br />
+<br />
+<strong>\h</strong> is equivalent to "[\x09 \xA0]" by default (or "[\x09 \xA0\x{1680}\x{180E}\x{2000}-\x{200A}\x{202F}\x{205F}\x{3000}]" when UCP is enabled.)<br />
+This set is: Horizontal tab (HT), Space, Non-break space (adding: Ogham space mark, Mongolian vowel separator, En quad, Em quad, En space, Em space, Three-per-em space, Four-per-em space, Six-per-em space, Figure space, Punctuation space, Thin space, Hair space, Narrow no-break space, Medium mathematical space, Ideographic space when UCP is enabled.)<br />
+<br />
+<strong>Vertical whitespace characters matched by \v</strong><br />
+<br />
+<strong>\v</strong> is equivalent to "[\x0A-\x0D]" by default (or "[\x0A-\x0D\x{0085}\x{2028}\x{2029}]" when UCP is enabled.)<br />
+This set is: Linefeed (LF), Vertical tab (VT), Form feed (FF), Carriage return (CR) (adding: Next line (NEL), Line separator, Paragraph separator when UCP is enabled.)<br />
+<br />
+<strong>Whitespace characters matched by \s</strong><br />
+<br />
+<strong>\s</strong> is equivalent to "[\h\x0A\x0C\x0D]" (excluding \xA0 from \h when UCP is enabled)<br />
+This set is: all characters in <strong>\h</strong> plus Linefeed (LF), Form feed (FF), Carriage return (CR).<br />
+<br />
+<strong>Whitespace characters matched by [[:space:]]</strong><br />
+<br />
+<strong>[[:space:]]</strong> is equivalent to "\s".<br />
+This set is: all characters in <strong>\s</strong> plus Vertical tab (VT).<br />
+<h3><u>Character classes and POSIX classes</u></h3><br />
+<strong>Character classes</strong><br />
+<br />
+A character classes defines a set of allowed (resp. disallowed) characters, which the next character in subject is expected to match (resp. not to match).<br />
+Inside a character classes, most metacharacters loose their meaning (like $ . or *) or mean something else (like ^).<br />
+<table>
+<tr>
+<td style="width:15%"><strong>[</strong> ... <strong>]</strong></td>
+<td style="width:85%">Matches any character in the explicit set: "[aeiou]" matches any lowercase vowel. A contiguous (in Unicode codepoint increasing order) set can be defined by putting an hyphen between the starting and ending characters: "[a-z]" matches any lowercase ASCII letter. To include a hyphen (-) in a set, put it as the first or last character of the set or escape it (\-).<br />
+Notice that the pattern "[A-z]" is not the same as "[A-Za-z]": the former is equivalent to "[A-Z\[\\\]^_`a-z]".<br />
+To include a closing bracket in a set, use it as the first character of the set or escape it: "[][]" and "[\[\]]" will both match either "[" or "]".<br />
+Note that in a character class, only <strong>\d</strong>, <strong>\D</strong>, <strong>\h</strong>, <strong>\H</strong>, <strong>\p{}</strong>, <strong>\P{}</strong>, <strong>\s</strong>, <strong>\Q</strong>...<strong>\E</strong>, <strong>\S</strong>, <strong>\v</strong>, <strong>\V</strong>, <strong>\w</strong>, <strong>\W</strong>, and <strong>\x</strong> sequences retain their special meaning, while <strong>\b</strong> means the backspace character (Chr(8)).</td>
+</tr>
+<tr>
+<td><strong>[^</strong> ... <strong>]</strong></td>
+<td>Matches any character <strong>not</strong> in the set: "[^0-9]" matches any non-digit. To include a caret (^) in a set, put it after the beginning of the set or escape it (\^).</td>
+</tr>
+</table><br />
+<strong>POSIX classes</strong><br />
+<br />
+These are named sets specifications to be used themselves within a character class: "[z[:digit:]w-y]" is the same as "[w-z0-9]". To negate a POSIX character class, put a caret (^) after the first colon: "[[:^digit:]]".<br />
+When UCP is enabled, several POSIX classes extend to some Unicode character subset, else they are by default restricted to 7-bit ASCII.<br />
+<table>
+<tr>
+<td style="width:15%"><strong>[:alnum:]</strong></td>
+<td style="width:85%">ASCII letters and digits (same as [^\W_] or [A-Za-z0-9]).<br />
+When UCP is enabled: Unicode letters and digits (same as [^\W_] or \p{Xan}).</td>
+</tr>
+<tr>
+<td><strong>[:alpha:]</strong></td>
+<td>ASCII letters (same as [^\W\d_] or [A-Za-z]).<br />
+When UCP is enabled: Unicode letters (same as [^\W\d_] or \p{L}).</td>
+</tr>
+<tr>
+<td><strong>[:ascii:]</strong></td>
+<td>ASCII characters (same as [\x00-\x7F]).</td>
+</tr>
+<tr>
+<td><strong>[:blank:]</strong></td>
+<td>Space or Tab (@TAB) (same as \h or [\x09\x20]).<br />
+When UCP is enabled: Unicode horizontal whitespaces (same as \h).</td>
+</tr>
+<tr>
+<td><strong>[:cntrl:]</strong></td>
+<td>ASCII control characters (same as Chr(0) ... Chr(31) and Chr(127)).</td>
+</tr>
+<tr>
+<td><strong>[:digit:]</strong></td>
+<td>ASCII decimal digits (same as \d or [0-9]).<br />
+When UCP is enabled: Unicode decimal digits (same as \d or \p{Nd}).</td>
+</tr>
+<tr>
+<td><strong>[:graph:]</strong></td>
+<td>ASCII printing characters, excluding space (same as Chr(33) ... Chr(126)).</td>
+</tr>
+<tr>
+<td><strong>[:lower:]</strong></td>
+<td>ASCII lowercase letters (same as [a-z]).<br />
+When UCP is enabled: Unicode lowercase letters (same as \p{Ll}).</td>
+</tr>
+<tr>
+<td><strong>[:print:]</strong></td>
+<td>ASCII printing characters, including space (same as Chr(32) ... Chr(126)).</td>
+</tr>
+<tr>
+<td><strong>[:punct:]</strong></td>
+<td>ASCII punctuation characters, [:print:] excluding [:alnum:] and space, (33-47, 58-64, 91-96, 123-126).</td>
+</tr>
+<tr>
+<td><strong>[:space:]</strong></td>
+<td>ASCII white space (same as [\h\x0A-\x0D]). <strong>[:space:]</strong> is not quite the same as <strong>\s</strong>: it includes VT, Chr(11)).</td>
+</tr>
+<tr>
+<td><strong>[:upper:]</strong></td>
+<td>ASCII uppercase letters (same as [A-Z]).<br />
+When UCP is enabled: Unicode uppercase letters (same as \p{Lu}).</td>
+</tr>
+<tr>
+<td><strong>[:word:]</strong></td>
+<td>ASCII "Word" characters (same as \w or [[:alnum:]_]).<br />
+When UCP is enabled: Unicode "word" characters (same as \w or [[:alnum:]_] or \p{Xwd}).</td>
+</tr>
+<tr>
+<td><strong>[:xdigit:]</strong></td>
+<td>Hexadecimal digits (same as [0-9A-Fa-f]).</td>
+</tr>
+</table><br />
+Groups are used to delimit subpatterns and are the building blocks of powerful expressions. Groups can be either capturing or not and may be nested irrespective of their nature, except comments groups. A regular expression can contain up to 65535 capturing groups.<br />
+Option letters (discussed above) can be conveniently inserted between the "?" and the ":" of non-capturing groups: "(?-i:[aeiou]{5})" matches 5 lowercase vowels. In this case options are local to the group.<br />
+<table>
+<tr>
+<td style="width:15%"><strong>(</strong> ... <strong>)</strong></td>
+<td style="width:85%">Capturing group. The elements in the group are treated in order and can be repeated as a block. E.g. "(ab)+c" will match "abc" or "ababc", but not "abac".<br />
+Capturing groups remember the text they matched for use in backreferences and they populate the optionally returned array. They are numbered starting from 1 in the order of appearance of their opening parenthesis.<br />
+Capturing groups may also be treated as subroutines elsewhere in the pattern, possibly recursively.</td>
+</tr>
+<tr>
+<td><strong>(?&lt;</strong><em>name</em><strong>&gt;</strong> ... <strong>)</strong></td>
+<td>Named capturing group. Can be later referenced by name as well as by number. Avoid using the name "DEFINE" (see "conditional patterns").</td>
+</tr>
+<tr>
+<td><strong>(?:</strong> ... <strong>)</strong></td>
+<td>Non-capturing group. Does not record the matching characters in the array and cannot be re-used as backreference.</td>
+</tr>
+<tr>
+<td><strong>(?|</strong> ... <strong>)</strong></td>
+<td>Non-capturing group with reset. Resets capturing group numbers in each top-level alternative it contains: "(?|(Mon)|(Tue)s|(Wed)nes|(Thu)rs|(Fri)|(Sat)ur|(Sun))day" matches a weekday name and captures its abbreviation in group number 1.</td>
+</tr>
+<tr>
+<td><strong>(?></strong> ... <strong>)</strong></td>
+<td>Atomic non-capturing group: locks and never backtracks into (gives back from) what has been matched (see also Quantifiers and greediness below). Atomic groups, like possessive quantifiers, are always greedy.</td>
+</tr>
+<tr>
+<td><strong>(?#</strong> ... <strong>)</strong></td>
+<td>Comment group: always ignored (but may not contain a closing parenthesis, hence comment groups are not nestable).</td>
+</tr>
+</table><br />
+Quantifiers (or repetition specifiers) specify how many of the preceding character, class, reference or group are expected to match. Optional greediness qualifiers denote how aggressively the repetition will behave. For instance "\d{3,5}" will match at least 3 and no more than 5 decimal digits.<br />
+By default, patterns are "<u>greedy</u>", which means that quantifiers <strong>* + ? {</strong>...<strong>}</strong> will match the longest string which doesn't cause the rest of the pattern to fail. Greediness can be inverted for the entire pattern by giving option (?U) at the head of the pattern, or locally by placing a question mark following a quantifier.<br />
+Non-greedy (<u>lazy</u>) repetitions will match the smallest string that still allows the rest of the pattern to match. E.g. given the subject "aaab", the pattern "(a*)([ab]+)" will capture "aaa" then "b", but "(?U)(a*)([ab]+)" will capture "" then "a": indeed, capturing an empty string is good enough to satisfy the lazy "(a*)" and capturing "a" matches the lazy "([ab]+)" subpattern.<br />
+Possessive quantifiers are atomic and greedy. In fact they are a short notation for simple atomic groups. "\d++" is a shorthand notation for "(?>\d+)" and its behavior is "match a complete sequence of one or more digits, but never give back any". As a consequence "\d++<strong>(\d</strong>)" can never match since the last digit (in bold) is already matched and locked by "\d++". This is in contrast with simple greediness, where "\d+(\d)" will first match a complete sequence of digits with "\d+", but then backtrack the last one to allow "<strong>(\d)</strong>" to capture it.<br />
+There are two reasons for using an atomic group or a possessive quantifier: either for matching a sequence of characters that may also appear individually (e.g. "\r\n" in the definition of <strong>\R</strong>), or for forcing a quick failure in certain situations involving unbounded repetitions, where the engine would normally spend a very long time trying a huge number of grouping combinations before failing.<br />
+<table>
+<tr>
+<td style="width:15%"><strong>?</strong></td>
+<td style="width:85%">0 or 1, greedy.</td>
+</tr>
+<tr>
+<td><strong>?+</strong></td>
+<td>0 or 1, possessive.</td>
+</tr>
+<tr>
+<td><strong>??</strong></td>
+<td>0 or 1, lazy.</td>
+</tr>
+<tr>
+<td><strong>*</strong></td>
+<td>0 or more, greedy.</td>
+</tr>
+<tr>
+<td><strong>*+</strong></td>
+<td>0 or more, possessive.</td>
+</tr>
+<tr>
+<td><strong>*?</strong></td>
+<td>0 or more, lazy.</td>
+</tr>
+<tr>
+<td><strong>+</strong></td>
+<td>1 or more, greedy.</td>
+</tr>
+<tr>
+<td><strong>++</strong></td>
+<td>1 or more, possessive.</td>
+</tr>
+<tr>
+<td><strong>+?</strong></td>
+<td>1 or more, lazy.</td>
+</tr>
+<tr>
+<td><strong>{</strong><em>x</em><strong>}</strong></td>
+<td>exactly <em>x</em>.</td>
+</tr>
+<tr>
+<td><strong>{</strong><em>x</em><strong>,</strong><em>y</em><strong>}</strong></td>
+<td>at least <em>x</em> and no more than <em>y</em>, greedy.</td>
+</tr>
+<tr>
+<td><strong>{</strong><em>x</em><strong>,</strong><em>y</em><strong>}+</strong></td>
+<td>at least <em>x</em> and no more than <em>y</em>, possessive.</td>
+</tr>
+<tr>
+<td><strong>{</strong><em>x</em><strong>,</strong><em>y</em><strong>}?</strong></td>
+<td>at least <em>x</em> and no more than <em>y</em>, lazy.</td>
+</tr>
+<tr>
+<td><strong>{</strong><em>x</em><strong>,}</strong></td>
+<td><em>x</em> or more, greedy.</td>
+</tr>
+<tr>
+<td><strong>{</strong><em>x</em><strong>,}+</strong></td>
+<td><em>x</em> or more, possessive.</td>
+</tr>
+<tr>
+<td><strong>{</strong><em>x</em><strong>,}?</strong></td>
+<td><em>x</em> or more, lazy.</td>
+</tr>
+</table><table>
+<tr>
+<td style="width:15%"><em>X</em><strong>|</strong><em>Y</em></td>
+<td style="width:85%">Matches either subpattern <em>X</em> or <em>Y</em>: "ac|dc|ground" matches "ac" or "dc" or "ground".</td>
+</tr>
+</table><br />
+<strong>Backreferences</strong> permit reuse of the content of a previously captured group.<br />
+<table>
+<tr>
+<td style="width:15%"><strong>\</strong><em>n</em></td>
+<td style="width:85%">References a previous capturing group by its absolute number. WARNING: if no group number <em>n</em> exists, it evaluates as the character with value <em>n</em> provided <em>n</em> is a valid octal value, else errors out.<br />
+Due to this ambiguity, this form is not recommended. Favor the next forms for a safe semantic.</td>
+</tr>
+<tr>
+<td><strong>\g</strong><em>n</em></td>
+<td>References a previous capturing group by its absolute number.</td>
+</tr>
+<tr>
+<td><strong>\g{</strong><em>n</em><strong>}</strong></td>
+<td>References a previous capturing group by its absolute number. Similar to above but clearly delimits where <em>n</em> ends: useful when the following character(s) is(are) digits.</td>
+</tr>
+<tr>
+<td><strong>\g-</strong><em>n</em></td>
+<td>References a previous capturing group by its relative number.</td>
+</tr>
+<tr>
+<td><strong>\k&lt;</strong><em>name</em><strong>&gt;</strong></td>
+<td>References a previous capturing group by its name.</td>
+</tr>
+</table><br />
+<strong>References to subroutines</strong><br />
+<br />
+Capturing groups are subpatterns that can be invoked (possibly recursively) exactly like subroutines in a programming language. The subpattern is simply re-run at the current matching point. See reference documentation for details and examples.<br />
+<table>
+<tr>
+<td style="width:15%"><strong>(?R)</strong> or <strong>(?0)</strong></td>
+<td style="width:85%">Recurses into the entire regular expression.</td>
+</tr>
+<tr>
+<td><strong>(?</strong><em>n</em><strong>)</strong></td>
+<td>Calls subpattern by absolute number.</td>
+</tr>
+<tr>
+<td><strong>(?+</strong><em>n</em><strong>)</strong></td>
+<td>Calls subpattern by relative number.</td>
+</tr>
+<tr>
+<td><strong>(?-</strong><em>n</em><strong>)</strong></td>
+<td>Calls subpattern by relative number.</td>
+</tr>
+<tr>
+<td><strong>(?&amp;</strong><em>name</em><strong>)</strong></td>
+<td>Calls subpattern by name.</td>
+</tr>
+</table><br />
+Anchors and assertions are tests that do not change the matching position and therefore do not consume nor capture anything.<br />
+<br />
+<strong>Anchors</strong> test the position of the current matching point.<br />
+<table>
+<tr>
+<td style="width:15%"><strong>^</strong></td>
+<td style="width:85%">Outside a character class, the caret matches at the start of the subject text, and also just after a non-final newline sequence if option <strong>(?m)</strong> is active. By default the newline sequence is @CRLF.<br />
+Inside a character class, a leading <strong>^</strong> complements the class (excludes the characters listed there).</td>
+</tr>
+<tr>
+<td><strong>$</strong></td>
+<td>Outside a character class, the dollar matches at the end of the subject text, and also just before a newline sequence if option <strong>(?m)</strong> is active.<br />
+Inside a character class, <strong>$</strong> means itself, a dollar sign.</td>
+</tr>
+<tr>
+<td><strong>\A</strong></td>
+<td>Matches only at the absolute beginning of subject string, irrespective of the multiline option <strong>(?m)</strong>. Will never match if offset is not 1.</td>
+</tr>
+<tr>
+<td><strong>\G</strong></td>
+<td>Matches when the current position is the first matching position in subject.</td>
+</tr>
+<tr>
+<td><strong>\z</strong></td>
+<td>Matches only at end of subject string, irrespective of the multiline option <strong>(?m)</strong>.</td>
+</tr>
+<tr>
+<td><strong>\Z</strong></td>
+<td>Matches only at end of subject string, or before a newline sequence at the end, irrespective of the multiline option <strong>(?m)</strong>.</td>
+</tr>
+</table><br />
+<strong>Assertions</strong> test the character(s) preceding (look-behind), at (word boundary) or following (look-ahead) the current matching point.<br />
+<table>
+<tr>
+<td style="width:15%"><strong>\b</strong></td>
+<td style="width:85%">Matches at a "word" boundary, i.e. between characters not both <strong>\w</strong> or <strong>\W</strong>. See <strong>\w</strong> for the meaning of "word". Inside a character class, <strong>\b</strong> means "backspace" (Chr(8)).</td>
+</tr>
+<tr>
+<td><strong>\B</strong></td>
+<td>Matches when not at a word boundary.</td>
+</tr>
+<tr>
+<td><strong>(?=</strong><em>X</em><strong>)</strong></td>
+<td>Positive look-ahead: matches when the subpattern <em>X</em> matches starting at the current position.</td>
+</tr>
+<tr>
+<td><strong>(?!</strong><em>X</em><strong>)</strong></td>
+<td>Negative look-ahead: matches when the subpattern <em>X</em> does not match starting at the current position.</td>
+</tr>
+<tr>
+<td><strong>(?&lt;=</strong><em>X</em><strong>)</strong></td>
+<td>Positive look-behind: matches when the subpattern <em>X</em> matches characters preceding the current position. Pattern <em>X</em> must match a fixed-length string, i.e. may not use any undefinite quantifier <strong>* + or ?</strong>.</td>
+</tr>
+<tr>
+<td><strong>(?&lt;!</strong><em>X</em><strong>)</strong></td>
+<td>Negative look-behind: matches when the subpattern <em>X</em> does not match characters preceding the current position. Pattern <em>X</em> must match a fixed-length string, i.e. may not use any undefinite quantifier <strong>* + or ?</strong>.</td>
+</tr>
+</table><br />
+There are situations where it is necessary to "forget" that something has matched so far, in order to match more pertinent data later in the subject string.<br />
+<table>
+<tr>
+<td style="width:15%"><strong>\K</strong></td>
+<td style="width:85%">Resets start of match at the current point in subject string. Note that groups already captured are left alone and still populate the returned array; it is therefore always possible to backreference to them later on. Action of <strong>\K</strong> is similar but not identical to a look-behind, in that <strong>\K</strong> can work on alternations of varying lengths.</td>
+</tr>
+</table><br />
+These constructs are similar to <strong><em>If...EndIf</em></strong> and <strong><em>If...Else...EndIf</em></strong> blocks.<br />
+<table>
+<tr>
+<td style="width:15%"><strong>(?</strong><em>(condition)yes-pattern</em><strong>)</strong></td>
+<td style="width:85%">Allows conditional execution of pattern.</td>
+</tr>
+<tr>
+<td><strong>(?</strong><em>(condition)yes-pattern</em><strong>|</strong><em>no-pattern</em><strong>)</strong></td>
+<td>Chooses between distinct patterns depending on the result of <em>(condition)</em>.</td>
+</tr>
+</table><table>
+<tr>
+<td style="width:15%"><strong>(</strong><em>n</em><strong>)</strong></td>
+<td style="width:85%">Tests whether the capturing group with absolute number <em>n</em> matched.</td>
+</tr>
+<tr>
+<td><strong>(+</strong><em>n</em><strong>)</strong></td>
+<td>Tests whether the capturing group with relative number <em>+n</em> matched.</td>
+</tr>
+<tr>
+<td><strong>(-</strong><em>n</em><strong>)</strong></td>
+<td>Tests whether the capturing group with relative number <em>-n</em> matched.</td>
+</tr>
+<tr>
+<td><strong>(&lt;</strong><em>name</em><strong>&gt;)</strong></td>
+<td>Tests whether the capturing group with name <em>name</em> matched.</td>
+</tr>
+<tr>
+<td><strong>(R)</strong></td>
+<td>Tests whether any kind of recursion occured.</td>
+</tr>
+<tr>
+<td><strong>(R</strong><em>n</em><strong>)</strong></td>
+<td>Tests whether the most recent recursion was for capturing group with absolute number <em>n</em>.</td>
+</tr>
+<tr>
+<td><strong>(R&amp;</strong><em>name</em><strong>)</strong></td>
+<td>Tests whether the most recent recursion was for capturing group with name <em>name</em>.</td>
+</tr>
+<tr>
+<td><strong>(DEFINE)</strong></td>
+<td>Used without <em>no-pattern</em>, permits definition of a subroutine useable from elsewhere. "(?x) (?(DEFINE) (?&lt;byte&gt; 2[0-4]\d | 25[0-5] | 1\d\d | [1-9]?\d) )" defines a subroutine named "byte" which matches any component of an IPv4 address. Then an actual address can be matched by "\b (?&amp;byte) (\.(?&amp;byte)){3} \b".</td>
+</tr>
+<tr>
+<td><strong>(</strong><em>assertion</em><strong>)</strong></td>
+<td>Here <em>assertion</em> is one of positive or negative, look-ahead or look-behind assertion.</td>
+</tr>
+</table><br />
+These options, escapes and constructs are simply mentioned here; see reference documentation for detail on why, when and how to use them, if at all.<br />
+<br />
+<strong>Uncommon settings and options</strong><br />
+<table>
+<tr>
+<td style="width:15%"><strong>(?J)</strong></td>
+<td style="width:85%">Enables duplicate group or subroutine names (not discussed further here).</td>
+</tr>
+<tr>
+<td><strong>(?X)</strong></td>
+<td>Causes some out-of-context sequences to raise an error, instead of being benign.</td>
+</tr>
+<tr>
+<td><strong>(*J)</strong></td>
+<td>Enables Javascript compatibility (not discussed further here).</td>
+</tr>
+<tr>
+<td><strong>(*LIMIT_MATCH=</strong><em>n</em><strong>)</strong></td>
+<td>Limits number of matches to <em>n</em>.</td>
+</tr>
+<tr>
+<td><strong>(*LIMIT_RECURSION=</strong><em>n</em><strong>)</strong></td>
+<td>Limits recursion to <em>n</em> levels.</td>
+</tr>
+<tr>
+<td><strong>(*NO_START_OPT)</strong></td>
+<td>Disables several optimizations (not discussed further here).</td>
+</tr>
+</table><br />
+<strong>Backtracking control</strong><br />
+<table>
+<tr>
+<td style="width:15%"><strong>(*ACCEPT)</strong></td>
+<td style="width:85%">Forces an immediate match success in the current subroutine or top-level pattern.</td>
+</tr>
+<tr>
+<td><strong>(*FAIL)</strong> or <strong>(*F)</strong></td>
+<td>Forces an immediate match failure.</td>
+</tr>
+<tr>
+<td><strong>(*MARK:</strong><em>name</em><strong>)</strong> or <strong>(*:</strong><em>name</em><strong>)</strong></td>
+<td><em>(See reference documentation.)</em></td>
+</tr>
+<tr>
+<td><strong>(*COMMIT)</strong></td>
+<td><em>(See reference documentation.)</em></td>
+</tr>
+<tr>
+<td><strong>(*PRUNE)</strong></td>
+<td><em>(See reference documentation.)</em></td>
+</tr>
+<tr>
+<td><strong>(*PRUNE:</strong><em>name</em><strong>)</strong></td>
+<td><em>(See reference documentation.)</em></td>
+</tr>
+<tr>
+<td><strong>(*SKIP)</strong></td>
+<td><em>(See reference documentation.)</em></td>
+</tr>
+<tr>
+<td><strong>(*SKIP:</strong><em>name</em><strong>)</strong></td>
+<td><em>(See reference documentation.)</em></td>
+</tr>
+<tr>
+<td><strong>(*THEN)</strong></td>
+<td><em>(See reference documentation.)</em></td>
+</tr>
+<tr>
+<td><strong>(*THEN:</strong><em>name</em><strong>)</strong></td>
+<td><em>(See reference documentation.)</em></td>
+</tr>
+</table><br />
+&nbsp;&nbsp;&nbsp; 1. When UCP is active, case sense matching applies to the full Unicode plane 0. There are also a small number of many-to-one mappings in Unicode, like the Greek lowercase letter sigma; these are supported by PCRE with UCP enabled.<br />
+<br />
+&nbsp;&nbsp;&nbsp; 2. Alternate forms of several escapes exist for compatibility with Perl, Ruby, Python, JavaScript, .NET and other engines. Do not use constructs not listed here: some will simply not work, some will supply wrong results, some will cause severe issues or merely crash.<br />
+<br />
+&nbsp;&nbsp;&nbsp; 3. The default newline convention is the unbreakable sequence @CRLF or a separate @CR or @LF. Similarly \R matches the same set. Know your data! If you know that your subjects use separate @LF or @CR to mean something else than a newline, you may have to change the newline convention and/or the matching of \R (see "Settings").<br />
+<br />
+See also the <a href="../tutorials/regexp/regexp.htm">Regular Expression</a> tutorial, in which you can run a script to test your regular expression(s).<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="StringInStr.htm">StringInStr</a>, <a href="StringRegExpReplace.htm">StringRegExpReplace</a></p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<h3>Option 1, using offset parameter</h3><div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\StringRegExp.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;StringConstants.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$iOffset</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span>
+<a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringRegExp.htm"><span class="S4">StringRegExp</span></a><span class="S8">(</span><span class="S7">'&lt;test&gt;a&lt;/test&gt; &lt;test&gt;b&lt;/test&gt; &lt;test&gt;c&lt;/Test&gt;'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'(?i)&lt;test&gt;(.*?)&lt;/test&gt;'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$STR_REGEXPARRAYMATCH</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iOffset</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$iOffset</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"RegExp Test with Option 1 - "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$i</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aArray</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">])</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Option 2, single return, php/preg_match() style</h3><div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\StringRegExp[2].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;StringConstants.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringRegExp.htm"><span class="S4">StringRegExp</span></a><span class="S8">(</span><span class="S7">'&lt;test&gt;a&lt;/test&gt; &lt;test&gt;b&lt;/test&gt; &lt;test&gt;c&lt;/Test&gt;'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'(?i)&lt;test&gt;(.*?)&lt;/test&gt;'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$STR_REGEXPARRAYFULLMATCH</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"RegExp Test with Option 2 - "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$i</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aArray</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">])</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Option 3, global return, old AutoIt style</h3><div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\StringRegExp[3].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext3\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext3">
+<pre>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;StringConstants.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringRegExp.htm"><span class="S4">StringRegExp</span></a><span class="S8">(</span><span class="S7">'&lt;test&gt;a&lt;/test&gt; &lt;test&gt;b&lt;/test&gt; &lt;test&gt;c&lt;/Test&gt;'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'(?i)&lt;test&gt;(.*?)&lt;/test&gt;'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$STR_REGEXPARRAYGLOBALMATCH</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"RegExp Test with Option 3 - "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$i</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aArray</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">])</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Option 4, global return, php/preg_match_all() style</h3><div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\StringRegExp[4].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext4\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext4">
+<pre>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;StringConstants.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringRegExp.htm"><span class="S4">StringRegExp</span></a><span class="S8">(</span><span class="S7">'F1oF2oF3o'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'(F.o)*?'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$STR_REGEXPARRAYGLOBALFULLMATCH</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aMatch</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aMatch</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aArray</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$j</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aMatch</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"RegExp Test with Option 4 - "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">','</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$j</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aMatch</span><span class="S8">[</span><span class="S9">$j</span><span class="S8">])</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

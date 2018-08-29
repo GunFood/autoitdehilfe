@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _WinAPI_SetFileShortName</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1>_WinAPI_SetFileShortName</h1>
+<p class="funcdesc">Sets the short name for the specified file<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIFiles.au3&gt;<br />
+_WinAPI_SetFileShortName ( $hFile, $sShortName )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$hFile</td>
+<td style="width:85%">A handle to the file. The file must be on an NTFS file system volume. Also, the file must be<br />
+opened with either the $GENERIC_ALL access right or $GENERIC_WRITE|$DELETE, and with the<br />
+$FILE_FLAG_BACKUP_SEMANTICS file attribute.</td>
+</tr>
+<tr>
+<td>$sShortName</td>
+<td>The valid short name for the file. If the specified short name already exists, the function<br />
+fails and the last error code is ERROR_ALREADY_EXISTS (183).</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">True</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>False</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>The caller of this function must have the $SE_RESTORE_NAME privilege.<br />
+</p>
+
+<h2>See Also</h2>
+<p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(SetFileShortName);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">SetFileShortName</a> in MSDN  Library.
+</p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_SetFileShortName.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;APIFilesConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIFiles.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIHObj.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIProc.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIShPath.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$sTemp</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'\Temporary File.txt'</span>
+
+<span class="S1">; Check NTFS file system</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringCompare.htm"><span class="S4">StringCompare</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/DriveGetFileSystem.htm"><span class="S4">DriveGetFileSystem</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_PathStripToRoot.htm"><span class="S15">_WinAPI_PathStripToRoot</span></a><span class="S8">(</span><span class="S9">$sTemp</span><span class="S8">)),</span><span class="S0"> </span><span class="S7">'NTFS'</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$MB_ICONERROR</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">),</span><span class="S0"> </span><span class="S7">'Error'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'The file must be on an NTFS file system volume.'</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S1">; Enable "SeRestorePrivilege" privilege to perform renaming operation</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hToken</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_OpenProcessToken.htm"><span class="S15">_WinAPI_OpenProcessToken</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$TOKEN_ADJUST_PRIVILEGES</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$TOKEN_QUERY</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aAdjust</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_AdjustTokenPrivileges.htm"><span class="S15">_WinAPI_AdjustTokenPrivileges</span></a><span class="S8">(</span><span class="S9">$hToken</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$SE_RESTORE_NAME</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$SE_PRIVILEGE_ENABLED</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aAdjust</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Or</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$MB_ICONERROR</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">),</span><span class="S0"> </span><span class="S7">'Error'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'You do not have the required privileges.'</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S1">; Create temporary file</span>
+<a class="codeSnippetLink" href="../functions/FileWrite.htm"><span class="S4">FileWrite</span></a><span class="S8">(</span><span class="S9">$sTemp</span><span class="S8">,</span><span class="S0"> </span><span class="S7">''</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'Old short name: '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_PathStripPath.htm"><span class="S15">_WinAPI_PathStripPath</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/FileGetShortName.htm"><span class="S4">FileGetShortName</span></a><span class="S8">(</span><span class="S9">$sTemp</span><span class="S8">))</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+
+<span class="S1">; Set "TEMP.TXT" short name for the file</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hFile</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateFileEx.htm"><span class="S15">_WinAPI_CreateFileEx</span></a><span class="S8">(</span><span class="S9">$sTemp</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$OPEN_EXISTING</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$GENERIC_WRITE</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$RIGHTS_DELETE</span><span class="S8">),</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$FILE_FLAG_BACKUP_SEMANTICS</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetFileShortName.htm"><span class="S15">_WinAPI_SetFileShortName</span></a><span class="S8">(</span><span class="S9">$hFile</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'TEMP.TXT'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_CloseHandle.htm"><span class="S15">_WinAPI_CloseHandle</span></a><span class="S8">(</span><span class="S9">$hFile</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'New short name: '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_PathStripPath.htm"><span class="S15">_WinAPI_PathStripPath</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/FileGetShortName.htm"><span class="S4">FileGetShortName</span></a><span class="S8">(</span><span class="S9">$sTemp</span><span class="S8">))</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+
+<span class="S1">; Delete temporary file</span>
+<a class="codeSnippetLink" href="../functions/FileDelete.htm"><span class="S4">FileDelete</span></a><span class="S8">(</span><span class="S9">$sTemp</span><span class="S8">)</span>
+
+<span class="S1">; Restore "SeRestorePrivilege" privilege by default</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_AdjustTokenPrivileges.htm"><span class="S15">_WinAPI_AdjustTokenPrivileges</span></a><span class="S8">(</span><span class="S9">$hToken</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aAdjust</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aAdjust</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_CloseHandle.htm"><span class="S15">_WinAPI_CloseHandle</span></a><span class="S8">(</span><span class="S9">$hToken</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

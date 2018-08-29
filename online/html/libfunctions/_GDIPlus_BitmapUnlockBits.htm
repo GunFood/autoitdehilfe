@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _GDIPlus_BitmapUnlockBits</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_GDIPlus_BitmapUnlockBits</h1><br />
+<a href="../libfunctions_en/_GDIPlus_BitmapUnlockBits.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Gibt einen Teil einer Bitmap frei, die mit _GDIPlus_BitmapLockBits gesperrt wurde<br /></p>
+<p class="codeheader">
+#include &lt;GDIPlus.au3&gt;<br />
+_GDIPlus_BitmapUnlockBits ( $hBitmap, $tBitmapData )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$hBitmap</td>
+<td style="width:85%">Handle auf ein Bitmap-Objekt</td>
+</tr>
+<tr>
+<td>$tBitmapData</td>
+<td>$tagGDIPBITMAPDATA-Struktur, die vorher mit <a href="_GDIPlus_BitmapLockBits.htm">_GDIPlus_BitmapLockBits()</a> erzeugt wurde.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">True</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>False und setzt @error auf ungleich 0, @extended kann den GPSTATUS Fehlercode ($GPID_ERR*) enthalten.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Wenn keine Notwendigkeit der Sperrung des Bitmap-Bereichs mehr besteht, sollte<br />
+durch Aufruf von <a href="_GDIPlus_BitmapUnlockBits.htm">_GDIPlus_BitmapUnlockBits()</a> der Bereich freigegeben werden.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="_WinAPI_DeleteObject.htm">_WinAPI_DeleteObject</a></p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://search.msdn.microsoft.com/search/Default.aspx?brand=msdn&query=GdipBitmapUnlockBits">GdipBitmapUnlockBits</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<h3>Beispiel 1</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_GDIPlus_BitmapUnlockBits.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GDIPlus.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; X64 running support</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sWow64</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">""</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@AutoItX64"><span class="S6">@AutoItX64</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><span class="S9">$sWow64</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"\Wow6432Node"</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">;get AutoIt install dir</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sRegPath</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"HKLM\SOFTWARE"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sWow64</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"\AutoIt v3\AutoIt"</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sFile</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/RegRead.htm"><span class="S4">RegRead</span></a><span class="S8">(</span><span class="S9">$sRegPath</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"InstallDir"</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"\Examples\GUI\logo4.gif"</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileExists.htm"><span class="S4">FileExists</span></a><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MB_ICONHAND</span><span class="S8">),</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFile</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" not found!"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">30</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Startup.htm"><span class="S15">_GDIPlus_Startup</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hImage</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageLoadFromFile.htm"><span class="S15">_GDIPlus_ImageLoadFromFile</span></a><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;create an image object based on a file</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Shutdown.htm"><span class="S15">_GDIPlus_Shutdown</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MB_ICONHAND</span><span class="S8">),</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"An error has occured - unable to load image!"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">30</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iW</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageGetWidth.htm"><span class="S15">_GDIPlus_ImageGetWidth</span></a><span class="S8">(</span><span class="S9">$hImage</span><span class="S8">),</span><span class="S0"> </span><span class="S9">$iH</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageGetHeight.htm"><span class="S15">_GDIPlus_ImageGetHeight</span></a><span class="S8">(</span><span class="S9">$hImage</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;get width and height of the image</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hBitmap</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BitmapCreateFromScan0.htm"><span class="S15">_GDIPlus_BitmapCreateFromScan0</span></a><span class="S8">(</span><span class="S9">$iW</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iH</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hContext</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageGetGraphicsContext.htm"><span class="S15">_GDIPlus_ImageGetGraphicsContext</span></a><span class="S8">(</span><span class="S9">$hBitmap</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDrawImageRect.htm"><span class="S15">_GDIPlus_GraphicsDrawImageRect</span></a><span class="S8">(</span><span class="S9">$hContext</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hImage</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iW</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iH</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tBitmapData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BitmapLockBits.htm"><span class="S15">_GDIPlus_BitmapLockBits</span></a><span class="S8">(</span><span class="S9">$hBitmap</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iW</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iH</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$GDIP_ILMWRITE</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GDIP_ILMREAD</span><span class="S8">),</span><span class="S0"> </span><span class="S9">$GDIP_PXF32ARGB</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;locks a portion of a bitmap for reading and writing. More infor at http://msdn.microsoft.com/en-us/library/windows/desktop/ms536298(v=vs.85).aspx</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iScan0</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$tBitmapData</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Scan0"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;get scan0 (pixel data) from locked bitmap</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iSearchPixel</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Int.htm"><span class="S4">Int</span></a><span class="S8">(</span><span class="S3">0xFF000080</span><span class="S8">),</span><span class="S0"> </span><span class="S9">$iReplaceColor</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0xFF000000</span><span class="S0"> </span><span class="S1">;color format 0xAARRGGBB</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tPixel</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">"int["</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iW</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*</span></a><span class="S0"> </span><span class="S9">$iH</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"];"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iScan0</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iPixel</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iRowOffset</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$iY</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S9">$iH</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$iRowOffset</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$iY</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*</span></a><span class="S0"> </span><span class="S9">$iW</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$iX</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S9">$iW</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><span class="S1">;get each pixel in each line and row</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$iPixel</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$tPixel</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iRowOffset</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S9">$iX</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;get pixel color</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$iPixel</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$iSearchPixel</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tPixel</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iReplaceColor</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iRowOffset</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S9">$iX</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;compare and replace pixel color (blue with black color)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BitmapUnlockBits.htm"><span class="S15">_GDIPlus_BitmapUnlockBits</span></a><span class="S8">(</span><span class="S9">$hBitmap</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tBitmapData</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;unlocks a portion of a bitmap that was locked by _GDIPlus_BitmapLockBits</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">;to save manipulated image just use _GDIPlus_ImageSaveToFile()</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ShellExecute.htm"><span class="S4">ShellExecute</span></a><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;display original image just to compare with manipulated one</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">;display manipulated image</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGUI</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"_GDIPlus_BitmapLockBits Demo"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iW</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iH</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGraphic</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsCreateFromHWND.htm"><span class="S15">_GDIPlus_GraphicsCreateFromHWND</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;create a Graphics object from a window handle</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDrawImageRect.htm"><span class="S15">_GDIPlus_GraphicsDrawImageRect</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hBitmap</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iW</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iH</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;copy manipulated image to graphics handle</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Do</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Until</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">;cleanup resources</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageDispose.htm"><span class="S15">_GDIPlus_ImageDispose</span></a><span class="S8">(</span><span class="S9">$hImage</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDispose.htm"><span class="S15">_GDIPlus_GraphicsDispose</span></a><span class="S8">(</span><span class="S9">$hContext</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BitmapDispose.htm"><span class="S15">_GDIPlus_BitmapDispose</span></a><span class="S8">(</span><span class="S9">$hBitmap</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDispose.htm"><span class="S15">_GDIPlus_GraphicsDispose</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Shutdown.htm"><span class="S15">_GDIPlus_Shutdown</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIDelete.htm"><span class="S4">GUIDelete</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 2</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_GDIPlus_BitmapUnlockBits[02].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;ScreenCapture.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Color.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Startup.htm"><span class="S15">_GDIPlus_Startup</span></a><span class="S8">()</span>
+
+<span class="S9">$hBmp</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_ScreenCapture_Capture.htm"><span class="S15">_ScreenCapture_Capture</span></a><span class="S8">(</span><span class="S7">""</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; erstelle Screenshot</span>
+<span class="S9">$hBitmap</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BitmapCreateFromHBITMAP.htm"><span class="S15">_GDIPlus_BitmapCreateFromHBITMAP</span></a><span class="S8">(</span><span class="S9">$hBmp</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; erstelle ein Bitmap aus Screenshot zur Verwendung mit GDI+</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_DeleteObject.htm"><span class="S15">_WinAPI_DeleteObject</span></a><span class="S8">(</span><span class="S9">$hBmp</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; l&ouml;sche Screenshot aus Speicher</span>
+
+<span class="S0">_GreyScale</span><span class="S8">(</span><span class="S9">$hBitmap</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">,</span><span class="S0"> </span><span class="S3">300</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Bereich wird in Graustufen umberechnet</span>
+
+<span class="S9">$hGraphics</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageGetGraphicsContext.htm"><span class="S15">_GDIPlus_ImageGetGraphicsContext</span></a><span class="S8">(</span><span class="S9">$hBitmap</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; erstelle Grafikhandle um auf dem Bitmap zu zeichnen</span>
+<a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDrawRect.htm"><span class="S15">_GDIPlus_GraphicsDrawRect</span></a><span class="S8">(</span><span class="S9">$hGraphics</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">,</span><span class="S0"> </span><span class="S3">300</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; zeichne Umrandung des ergrauten Bereiches</span>
+<a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDispose.htm"><span class="S15">_GDIPlus_GraphicsDispose</span></a><span class="S8">(</span><span class="S9">$hGraphics</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; gibt Grafikhandle wieder frei</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageSaveToFile.htm"><span class="S15">_GDIPlus_ImageSaveToFile</span></a><span class="S8">(</span><span class="S9">$hBitmap</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@MyDocumentsDir"><span class="S6">@MyDocumentsDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"\_GDIPlus_BitmapLockBits.jpg"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; speichere fertiges Bild</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BitmapDispose.htm"><span class="S15">_GDIPlus_BitmapDispose</span></a><span class="S8">(</span><span class="S9">$hBitmap</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; l&ouml;sche Bild aus dem Speicher</span>
+<a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Shutdown.htm"><span class="S15">_GDIPlus_Shutdown</span></a><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _GreyScale</span><span class="S8">(</span><span class="S9">$hBitmap</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iX</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iY</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iW</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iH</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$BitmapData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BitmapLockBits.htm"><span class="S15">_GDIPlus_BitmapLockBits</span></a><span class="S8">(</span><span class="S9">$hBitmap</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iX</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iY</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iW</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iH</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$GDIP_ILMREAD</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GDIP_ILMWRITE</span><span class="S8">),</span><span class="S0"> </span><span class="S9">$GDIP_PXF32RGB</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$Stride</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$BitmapData</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Stride"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Stride ist der Offset von einer Reihe zur n&auml;chsten</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$Width</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$BitmapData</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Width"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Anzahl der Spalten</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$Height</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$BitmapData</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Height"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Anzahl der Reihen</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$Scan0</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$BitmapData</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Scan0"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Die Bilddaten im Speicher</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$PixelData</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$Color</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$Luma</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$row</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S9">$Height</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><span class="S1">; Reihe f&uuml;r Reihe</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$col</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S9">$Width</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><span class="S1">; Spalte f&uuml;r Spalte</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; lese Farbinformation des aktuellen Pixels(Spalte,Reihe) aus</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$PixelData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">"dword"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$Scan0</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S8">(</span><span class="S9">$row</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*</span></a><span class="S0"> </span><span class="S9">$Stride</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S8">(</span><span class="S9">$col</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*</span></a><span class="S0"> </span><span class="S3">4</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$Color</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$PixelData</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; berechne Grauwert</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$Luma</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_ColorGetRed.htm"><span class="S15">_ColorGetRed</span></a><span class="S8">(</span><span class="S9">$Color</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*</span></a><span class="S0"> </span><span class="S3">0.3</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_ColorGetGreen.htm"><span class="S15">_ColorGetGreen</span></a><span class="S8">(</span><span class="S9">$Color</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*</span></a><span class="S0"> </span><span class="S3">0.59</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_ColorGetBlue.htm"><span class="S15">_ColorGetBlue</span></a><span class="S8">(</span><span class="S9">$Color</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*</span></a><span class="S0"> </span><span class="S3">0.11</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Rot Gr&uuml;n und Blau wert werden jeweils auf den berechneten Grauwert gesetzt</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$PixelData</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$Luma</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitShift.htm"><span class="S4">BitShift</span></a><span class="S8">(</span><span class="S9">$Luma</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">8</span><span class="S8">),</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitShift.htm"><span class="S4">BitShift</span></a><span class="S8">(</span><span class="S9">$Luma</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">16</span><span class="S8">)))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BitmapUnlockBits.htm"><span class="S15">_GDIPlus_BitmapUnlockBits</span></a><span class="S8">(</span><span class="S9">$hBitmap</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$BitmapData</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_GreyScale</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

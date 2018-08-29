@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _SQLite_Open</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_SQLite_Open</h1><br />
+<a href="../libfunctions_en/_SQLite_Open.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">&Ouml;ffnet/Erstellt eine SQLite-Datenbank<br /></p>
+<p class="codeheader">
+#include &lt;SQLite.au3&gt;<br />
+_SQLite_Open ( [$sDatabase_Filename = ":memory:" [, $iAccessMode = Default [, $iEncoding = $SQLITE_ENCODING_UTF8]]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$sDatabase_Filename</td>
+<td style="width:85%"><strong>[optional]</strong> Dateiname der Datenbank. Bei Standard wird eine Datenbank im Arbeitsspeicher ge&ouml;ffnet.</td>
+</tr>
+<tr>
+<td>$iAccessMode</td>
+<td><strong>[optional]</strong> Zugriffsmodusflags. Standard sind: $SQLITE_OPEN_READWRITE + $SQLITE_OPEN_CREATE  </td>
+</tr>
+<tr>
+<td>$iEncoding</td>
+<td><strong>[optional]</strong> encoding Modusflag, wird nur am Anfang verwendet. Standard sind: $SQLITE_ENCODING_UTF8</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">das Datenbank-Handle</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>0</td>
+</tr>
+<tr>
+<td class="valign-top">@error:</td>
+<td>-1 - SQLite hat einen Fehler festgestellt (&uuml;berpr&uuml;fe @extended-Wert)<br />
+1 - Fehler beim Aufrufen von SQLite API 'sqlite3_open_v2'<br />
+2 - Fehler beim konvertieren das Dateinamens in UTF-8<br />
+3 - <a href="_SQLite_Startup.htm">_SQLite_Startup()</a> wurde zuvor nicht aufgerufen</td>
+</tr>
+<tr>
+<td class="valign-top">@extended:</td>
+<td>Der Wert kann mit den $SQLITE_* Konstanten verglichen werden</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Es ist nicht notwendig das Datenbanken-Handle zu speichern, au&szlig;er wenn mehr als eine Datenbank in derselben Session benutzt werden. Funktionen, die das Handle benutzen, rufen bei Standard die zuletzt ge&ouml;ffnete Datenbank auf.<br />
+<br />
+Um eine in UFT16 kodierte Datenbank zu erstellen, muss beim Erstellen nur $iEncoding = $SQLITE_ENCODING_UTF16 verwendet werden.<br />
+<br />
+In-Memory, tempor&auml;re und permanente Datenbanken k&ouml;nnen wie folgt ge&ouml;ffnet werden:<br />
+     $hDb = <a href="_SQLite_Open.htm">_SQLite_Open()</a> ; &ouml;ffnet eine tempor&auml;re private In-Memory-Datenbank.<br />
+     $hDb = <a href="_SQLite_Open.htm">_SQLite_Open</a>(Default, ...) ; dito<br />
+     $hDb = <a href="_SQLite_Open.htm">_SQLite_Open</a>(':memory:', ...) ; dito<br />
+<br />
+     $hDb = <a href="_SQLite_Open.htm">_SQLite_Open</a>('', ...) ; &ouml;ffnet eine tempor&auml;re private On-Disk-Datenbank.<br />
+<br />
+     $hDb = <a href="_SQLite_Open.htm">_SQLite_Open</a>('abc.db', ...) ; &ouml;ffnet oder erstellt eine permanente gemeinsam nutzbare On-Disk-Datenbank namens 'abc.db'<br />
+<br />
+   F&uuml;r Selbstverwirrung:<br />
+     $hDb = <a href="_SQLite_Open.htm">_SQLite_Open</a>('./:memory:', ...) ; &ouml;ffnet oder errstellt eine permanente gemeinsam nutzbare On-Disk-Datenbank namens ':memory:'<br />
+<br />
+Im Gegensatz zu permanenten disk-basierten Datenbanken k&ouml;nnen In-Memory und tempor&auml;re Datenbanken weder gemeinsam, noch f&uuml;r IPC (Interprozesskommunikation) benutzt werden. Sie werden nach Verbindungsende gel&ouml;scht.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="_SQLite_Close.htm">_SQLite_Close</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_SQLite_Open.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;File.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;SQLite.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;SQLite.dll.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_SQLite_Startup.htm"><span class="S15">_SQLite_Startup</span></a><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"SQLite Error"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"SQLite3.dll kann nicht geladen werden!"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"_SQLite_LibVersion="</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_SQLite_LibVersion.htm"><span class="S15">_SQLite_LibVersion</span></a><span class="S8">()</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_SQLite_Open.htm"><span class="S15">_SQLite_Open</span></a><span class="S8">()</span><span class="S0"> </span><span class="S1">; Erstellt eine :memory: Datenbank im Arbeitsspeicher ohne ihr Handle zu verwenden</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"SQLite Error"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Kann keine Datenbank im Speicher erstellen!"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<a class="codeSnippetLink" href="../libfunctions/_SQLite_Close.htm"><span class="S15">_SQLite_Close</span></a><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hMemDb</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_SQLite_Open.htm"><span class="S15">_SQLite_Open</span></a><span class="S8">()</span><span class="S0"> </span><span class="S1">; Erstellt eine :memory: Datenbank im Arbeitsspeicher</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"SQLite Error"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Kann keine Datenbank im Speicher erstellen!"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hTmpDb</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_SQLite_Open.htm"><span class="S15">_SQLite_Open</span></a><span class="S8">(</span><span class="S7">''</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Erstellt eine tempor&auml;re Datenbank auf der Festplatte</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"SQLite Error"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Kann keine tempor&auml;re Datenbank erstellen!"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sDbName</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_TempFile.htm"><span class="S15">_TempFile</span></a><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hDskDb</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_SQLite_Open.htm"><span class="S15">_SQLite_Open</span></a><span class="S8">(</span><span class="S9">$sDbName</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Erstellt eine permanente Datenbank auf der Festplatten</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"SQLite Error"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Kann keine permanente Datenbank erstellen!"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S1">; Es ist auch m&ouml;glich die 3 Datenbanken nach Bedarf &uuml;ber ihr Handle zu benutzen</span>
+
+<span class="S1">; Schlie&szlig;t die erstellten Datenbanken, in beliebiger Reihenfolge</span>
+<a class="codeSnippetLink" href="../libfunctions/_SQLite_Close.htm"><span class="S15">_SQLite_Close</span></a><span class="S8">(</span><span class="S9">$hTmpDb</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Tempor&auml;re Datenbanken werden automatisch durch Close gel&ouml;scht</span>
+<a class="codeSnippetLink" href="../libfunctions/_SQLite_Close.htm"><span class="S15">_SQLite_Close</span></a><span class="S8">(</span><span class="S9">$hDskDb</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Die Datenbank ist eine gew&ouml;hnliche Datei die jederzeit wieder ge&ouml;ffnet werden kann</span>
+<a class="codeSnippetLink" href="../libfunctions/_SQLite_Close.htm"><span class="S15">_SQLite_Close</span></a><span class="S8">(</span><span class="S9">$hMemDb</span><span class="S8">)</span>
+
+<span class="S1">; Diese Datenbank wird nicht mehr gebraucht</span>
+<a class="codeSnippetLink" href="../functions/FileDelete.htm"><span class="S4">FileDelete</span></a><span class="S8">(</span><span class="S9">$sDbName</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_SQLite_Shutdown.htm"><span class="S15">_SQLite_Shutdown</span></a><span class="S8">()</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

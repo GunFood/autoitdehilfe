@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinAPI_GetDeviceGammaRamp</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1>_WinAPI_GetDeviceGammaRamp</h1>
+<p class="funcdesc">Gets the gamma ramp on direct color display boards that support downloadable gamma ramps in hardware<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIGdi.au3&gt;<br />
+_WinAPI_GetDeviceGammaRamp ( $hDC, ByRef $aRamp )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$hDC</td>
+<td style="width:85%">Handle to a device context of the direct color display board in question.</td>
+</tr>
+<tr>
+<td>$aRamp</td>
+<td>Returns the 2D array ([r1, g1, b1], [r2, g2, b2], ... [r256, g256, b256]) that is created by this function, and where the function place the current gamma ramp of the color display board.<br />
+Each element in this array is an integer value with a range from 0 to 65535 which is a mapping between RGB values in the frame buffer and digital-analog-converter (DAC) values.<br />
+(See MSDN for more information)</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">1.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>0.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Direct color display modes do not use color lookup tables and are usually 16, 24, or 32 bit.<br />
+Not all direct color video boards support loadable gamma ramps.<br />
+The <a href="_WinAPI_GetDeviceGammaRamp.htm">_WinAPI_GetDeviceGammaRamp()</a> succeeds only for devices with drivers that support downloadable gamma ramps in hardware.<br />
+</p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(GetDeviceGammaRamp);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">GetDeviceGammaRamp</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_GetDeviceGammaRamp.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;APIGdiConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;SendMessage.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;StaticConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIGdi.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIGdiDC.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIHObj.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aRamp</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iRgb</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0xFF0000</span>
+
+<span class="S1">; Create GUI</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hForm</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">'Test '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringReplace.htm"><span class="S4">StringReplace</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@ScriptName"><span class="S6">@ScriptName</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">'.au3'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'()'</span><span class="S8">),</span><span class="S0"> </span><span class="S3">256</span><span class="S8">,</span><span class="S0"> </span><span class="S3">256</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUICtrlCreatePic.htm"><span class="S4">GUICtrlCreatePic</span></a><span class="S8">(</span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">256</span><span class="S8">,</span><span class="S0"> </span><span class="S3">256</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hPic</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlGetHandle.htm"><span class="S4">GUICtrlGetHandle</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">)</span>
+
+<span class="S1">; Retrieve current gamma ramp and create graph of lookup table (LUT)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hDC</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetDC.htm"><span class="S15">_WinAPI_GetDC</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hMemDC</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateCompatibleDC.htm"><span class="S15">_WinAPI_CreateCompatibleDC</span></a><span class="S8">(</span><span class="S9">$hDC</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hBitmap</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateCompatibleBitmapEx.htm"><span class="S15">_WinAPI_CreateCompatibleBitmapEx</span></a><span class="S8">(</span><span class="S9">$hDC</span><span class="S8">,</span><span class="S0"> </span><span class="S3">256</span><span class="S8">,</span><span class="S0"> </span><span class="S3">256</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hSv1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SelectObject.htm"><span class="S15">_WinAPI_SelectObject</span></a><span class="S8">(</span><span class="S9">$hMemDC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hBitmap</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hPen</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetStockObject.htm"><span class="S15">_WinAPI_GetStockObject</span></a><span class="S8">(</span><span class="S9">$DC_PEN</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hSv2</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SelectObject.htm"><span class="S15">_WinAPI_SelectObject</span></a><span class="S8">(</span><span class="S9">$hMemDC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hPen</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetROP2.htm"><span class="S15">_WinAPI_SetROP2</span></a><span class="S8">(</span><span class="S9">$hMemDC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$R2_XORPEN</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetDeviceGammaRamp.htm"><span class="S15">_WinAPI_GetDeviceGammaRamp</span></a><span class="S8">(</span><span class="S9">$hDC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aRamp</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_ReleaseDC.htm"><span class="S15">_WinAPI_ReleaseDC</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hDC</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/IsArray.htm"><span class="S4">IsArray</span></a><span class="S8">(</span><span class="S9">$aRamp</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">2</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetDCPenColor.htm"><span class="S15">_WinAPI_SetDCPenColor</span></a><span class="S8">(</span><span class="S9">$hMemDC</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitShift.htm"><span class="S4">BitShift</span></a><span class="S8">(</span><span class="S9">$iRgb</span><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$j</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">255</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$j</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_LineTo.htm"><span class="S15">_WinAPI_LineTo</span></a><span class="S8">(</span><span class="S9">$hMemDC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$j</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Round.htm"><span class="S4">Round</span></a><span class="S8">(</span><span class="S3">255</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*</span></a><span class="S0"> </span><span class="S8">(</span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S9">$aRamp</span><span class="S8">[</span><span class="S9">$j</span><span class="S8">][</span><span class="S9">$i</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">/</span></a><span class="S0"> </span><span class="S3">65280</span><span class="S8">))</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_MoveTo.htm"><span class="S15">_WinAPI_MoveTo</span></a><span class="S8">(</span><span class="S9">$hMemDC</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Round.htm"><span class="S4">Round</span></a><span class="S8">(</span><span class="S3">255</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*</span></a><span class="S0"> </span><span class="S8">(</span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S9">$aRamp</span><span class="S8">[</span><span class="S9">$j</span><span class="S8">][</span><span class="S9">$i</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">/</span></a><span class="S0"> </span><span class="S3">65280</span><span class="S8">)))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetDCPenColor.htm"><span class="S15">_WinAPI_SetDCPenColor</span></a><span class="S8">(</span><span class="S9">$hMemDC</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0x404040</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetROP2.htm"><span class="S15">_WinAPI_SetROP2</span></a><span class="S8">(</span><span class="S9">$hMemDC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$R2_MERGEPEN</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">64</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">192</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Step</span></a><span class="S0"> </span><span class="S3">64</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_DrawLine.htm"><span class="S15">_WinAPI_DrawLine</span></a><span class="S8">(</span><span class="S9">$hMemDC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">256</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_DrawLine.htm"><span class="S15">_WinAPI_DrawLine</span></a><span class="S8">(</span><span class="S9">$hMemDC</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$i</span><span class="S8">,</span><span class="S0"> </span><span class="S3">256</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$i</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_SelectObject.htm"><span class="S15">_WinAPI_SelectObject</span></a><span class="S8">(</span><span class="S9">$hMemDC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hSv1</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_SelectObject.htm"><span class="S15">_WinAPI_SelectObject</span></a><span class="S8">(</span><span class="S9">$hMemDC</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hSv2</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_DeleteObject.htm"><span class="S15">_WinAPI_DeleteObject</span></a><span class="S8">(</span><span class="S9">$hPen</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_DeleteDC.htm"><span class="S15">_WinAPI_DeleteDC</span></a><span class="S8">(</span><span class="S9">$hMemDC</span><span class="S8">)</span>
+
+<span class="S1">; Set bitmap to control</span>
+<a class="codeSnippetLink" href="../libfunctions/_SendMessage.htm"><span class="S15">_SendMessage</span></a><span class="S8">(</span><span class="S9">$hPic</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$STM_SETIMAGE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hBitmap</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hObj</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_SendMessage.htm"><span class="S15">_SendMessage</span></a><span class="S8">(</span><span class="S9">$hPic</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$STM_GETIMAGE</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$hObj</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S9">$hBitmap</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_DeleteObject.htm"><span class="S15">_WinAPI_DeleteObject</span></a><span class="S8">(</span><span class="S9">$hBitmap</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/IsArray.htm"><span class="S4">IsArray</span></a><span class="S8">(</span><span class="S9">$aRamp</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aRamp</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'_WinAPI_GetDeviceGammaRamp'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$MB_ICONERROR</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">),</span><span class="S0"> </span><span class="S7">'Error'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Your video board do not support loadable gamma ramps.'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hForm</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Do</span></a>
+<a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Until</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

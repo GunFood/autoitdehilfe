@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion RegWrite</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">RegWrite</h1><br />
+<a href="../functions_en/RegWrite.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Erzeugt einen Schl&uuml;ssel oder Wert in der Registrierung.<br /></p>
+<p class="codeheader">
+RegWrite ( "keyname" [, "valuename", "type", value] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">keyname</td>
+<td style="width:85%">Der Registrierungsschl&uuml;ssel, der geschrieben wird. Wenn keine weiteren Parameter angegeben werden, wird nur der Schl&uuml;ssel angelegt.</td>
+</tr>
+<tr>
+<td>valuename</td>
+<td><strong>[optional]</strong> Der Name des Werts, der geschrieben wird.</td>
+</tr>
+<tr>
+<td>type</td>
+<td><strong>[optional]</strong> Typ des Schl&uuml;ssels, der geschrieben wird: "REG_SZ", "REG_MULTI_SZ", "REG_EXPAND_SZ", "REG_DWORD", "REG_QWORD" oder "REG_BINARY".</td>
+</tr>
+<tr>
+<td>value</td>
+<td><strong>[optional]</strong> Der Wert, der geschrieben wird.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">1.</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>0 und setzt @error auf ungleich 0, wenn ein Fehler beim Schreiben des Schl&uuml;ssels oder Wertes auftritt.</td>
+</tr>
+<tr>
+<td class="valign-top">@error:</td>
+<td>  1 = der angegebene Schl&uuml;ssel kann nicht ge&ouml;ffnet werden<br />
+&nbsp;2 = der angegebene Hauptschl&uuml;ssel kann nicht ge&ouml;ffnet werden<br />
+&nbsp;3 = es kann keine Verbindung per Netzwerk zur Registrierung hergestellt werden<br />
+-1 = der angegebene Wert kann nicht ge&ouml;ffnet werden<br />
+-2 = der Wertetyp wird nicht unterst&uuml;tzt</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Ein Registrierungsschl&uuml;ssel muss beginnen mit: "HKEY_LOCAL_MACHINE" ("HKLM") oder "HKEY_USERS" ("HKU") oder "HKEY_CURRENT_USER" ("HKCU") oder "HKEY_CLASSES_ROOT" ("HKCR") oder "HKEY_CURRENT_CONFIG" ("HKCC").<br />
+<br />
+Wenn bei einer 64-bit Windows-Version ein 64-bit spezifischer Wert oder Schl&uuml;ssel geschrieben werden soll, muss dem Hauptschl&uuml;ssel HK... ein 64 angeh&auml;ngt werden, z.B. HKLM64.<br />
+<br />
+AutoIt unterst&uuml;tzt Registrierungsschl&uuml;ssel der Typen REG_BINARY, REG_SZ, REG_MULTI_SZ, REG_EXPAND_SZ, REG_QWORD und REG_DWORD.<br />
+<br />
+Um auf den <strong>(Standard)</strong> Wert zuzugreifen, muss der Wertname (Valuename) <strong>""</strong> (ein Leerstring) sein.<br />
+<br />
+Wenn ein Schl&uuml;ssel vom Typ REG_MULTI_SZ geschrieben wird, m&uuml;ssen die Werte mit @LF getrennt werden. Der Schl&uuml;sselwert darf nicht mit einem @LF enden, es sei denn, man m&ouml;chte einen leeren Teilstring (siehe das Beispiel).<br />
+<br />
+Es ist m&ouml;glich, auf Netzwerkregistrierungen zuzugreifen, indem man Schl&uuml;sselnamen in der Form "\\Computername\Schl&uuml;sselname" verwendet. Um diese M&ouml;glichkeit zu nutzen, muss man die richtigen Zugriffsrechte besitzen.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="RegDelete.htm">RegDelete</a>, <a href="RegEnumKey.htm">RegEnumKey</a>, <a href="RegEnumVal.htm">RegEnumVal</a>, <a href="RegRead.htm">RegRead</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\RegWrite.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Pr&uuml;ft, ob der Registryschl&uuml;ssel bereits existiert, damit das System es Benutzers nicht besch&auml;digt wird.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/RegRead.htm"><span class="S4">RegRead</span></a><span class="S8">(</span><span class="S7">"HKEY_CURRENT_USER\Software\AutoIt_Example"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Key1"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; @error wird auf ungleich 0 gesetzt, wenn ein Registryschl&uuml;ssel gelesen wird der nicht existiert.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Ein Fehler ist aufgetreten, dass der tempor&auml;re Registryschl&uuml;ssel ""AutoIt_Example"" bereits existiert."</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Schreibt einen einzelnen REG_SZ Wert in den Schl&uuml;ssel "Key1".</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/RegWrite.htm"><span class="S4">RegWrite</span></a><span class="S8">(</span><span class="S7">"HKEY_CURRENT_USER\Software\AutoIt_Example"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Key1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"REG_SZ"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Dies ist ein Beispiel von RegWrite"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Schreibt den REG_MULTI_SZ Wert von "Zeile 1" und "Zeile 2". Es iwrd immer ein Zeilenvoschubzeichen angeh&auml;ngt wenn ein REG_MULTI_SZ Wert geschrieben wird.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/RegWrite.htm"><span class="S4">RegWrite</span></a><span class="S8">(</span><span class="S7">"HKEY_CURRENT_USER\Software\AutoIt_Example"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Key2"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"REG_MULTI_SZ"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Zeile 1"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@LF"><span class="S6">@LF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Zeile 2"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@LF"><span class="S6">@LF</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Schreibt den REG_MULTI_SZ Wert von "Zeile 1". Es iwrd immer ein Zeilenvoschubzeichen angeh&auml;ngt wenn ein REG_MULTI_SZ Wert geschrieben wird.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/RegWrite.htm"><span class="S4">RegWrite</span></a><span class="S8">(</span><span class="S7">"HKEY_CURRENT_USER\Software\AutoIt_Example"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Key3"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"REG_MULTI_SZ"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Zeile 1"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@LF"><span class="S6">@LF</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Zeigt eine Nachricht um manuell zu dem Registryschl&uuml;ssel zu navigieren.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Es ist RegEdit.exe zu &ouml;ffnen und zu dem Registryschl&uuml;ssel ""HKEY_CURRENT_USER\Software\AutoIt_Example"" zu navigieren."</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; L&ouml;scht den tempor&auml;ren Registryschl&uuml;ssel.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/RegDelete.htm"><span class="S4">RegDelete</span></a><span class="S8">(</span><span class="S7">"HKEY_CURRENT_USER\Software\AutoIt_Example"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

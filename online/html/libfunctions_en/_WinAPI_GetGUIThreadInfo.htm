@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _WinAPI_GetGUIThreadInfo</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1>_WinAPI_GetGUIThreadInfo</h1>
+<p class="funcdesc">Retrieves information about the active window or a specified GUI thread<br /></p>
+<p class="codeheader">
+#include &lt;WinAPISysWin.au3&gt;<br />
+_WinAPI_GetGUIThreadInfo ( $iThreadId )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$iThreadId</td>
+<td style="width:85%">The identifier for the thread for which information is to be retrieved.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">The array that contains the following information:<br />
+[0] - The thread state. It can be one or more of the $GUI_* values.<br />
+[1] - A handle to the active window within the thread.<br />
+[2] - A handle to the window that has the keyboard focus.<br />
+[3] - A handle to the window that has captured the mouse.<br />
+[4] - A handle to the window that owns any active menus.<br />
+[5] - A handle to the window in a move or size loop.<br />
+[6] - A handle to the window that is displaying the caret.<br />
+[7] - The x-coordinate of the upper-left corner of the caret's bounding rectangle, in client coordinates.<br />
+[8] - The y-coordinate of the upper-left corner of the caret's bounding rectangle, in client coordinates.<br />
+[9] - The width of the caret's bounding rectangle.<br />
+[10] - The height of the caret's bounding rectangle.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>Sets the @error flag to non-zero, call <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> to get extended error information.</td>
+</tr>
+</table>
+
+<h2>See Also</h2>
+<p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(GetGUIThreadInfo);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">GetGUIThreadInfo</a> in MSDN  Library.
+</p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_GetGUIThreadInfo.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPISysWin.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WindowsConstants.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hForm</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S3">240</span><span class="S8">,</span><span class="S0"> </span><span class="S3">268</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$WS_CAPTION</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$WS_POPUP</span><span class="S8">),</span><span class="S0"> </span><span class="S9">$WS_EX_TOPMOST</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUICtrlCreateLabel.htm"><span class="S4">GUICtrlCreateLabel</span></a><span class="S8">(</span><span class="S7">'Thread state:'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><span class="S3">18</span><span class="S8">,</span><span class="S0"> </span><span class="S3">90</span><span class="S8">,</span><span class="S0"> </span><span class="S3">14</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUICtrlCreateLabel.htm"><span class="S4">GUICtrlCreateLabel</span></a><span class="S8">(</span><span class="S7">'Active window:'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><span class="S3">40</span><span class="S8">,</span><span class="S0"> </span><span class="S3">90</span><span class="S8">,</span><span class="S0"> </span><span class="S3">14</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUICtrlCreateLabel.htm"><span class="S4">GUICtrlCreateLabel</span></a><span class="S8">(</span><span class="S7">'Keyboard focus:'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><span class="S3">62</span><span class="S8">,</span><span class="S0"> </span><span class="S3">90</span><span class="S8">,</span><span class="S0"> </span><span class="S3">14</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUICtrlCreateLabel.htm"><span class="S4">GUICtrlCreateLabel</span></a><span class="S8">(</span><span class="S7">'Mouse capture:'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><span class="S3">84</span><span class="S8">,</span><span class="S0"> </span><span class="S3">90</span><span class="S8">,</span><span class="S0"> </span><span class="S3">14</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUICtrlCreateLabel.htm"><span class="S4">GUICtrlCreateLabel</span></a><span class="S8">(</span><span class="S7">'Active menu:'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><span class="S3">106</span><span class="S8">,</span><span class="S0"> </span><span class="S3">90</span><span class="S8">,</span><span class="S0"> </span><span class="S3">14</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUICtrlCreateLabel.htm"><span class="S4">GUICtrlCreateLabel</span></a><span class="S8">(</span><span class="S7">'Move or size loop:'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><span class="S3">128</span><span class="S8">,</span><span class="S0"> </span><span class="S3">90</span><span class="S8">,</span><span class="S0"> </span><span class="S3">14</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUICtrlCreateLabel.htm"><span class="S4">GUICtrlCreateLabel</span></a><span class="S8">(</span><span class="S7">'Caret:'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><span class="S3">150</span><span class="S8">,</span><span class="S0"> </span><span class="S3">90</span><span class="S8">,</span><span class="S0"> </span><span class="S3">14</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUICtrlCreateLabel.htm"><span class="S4">GUICtrlCreateLabel</span></a><span class="S8">(</span><span class="S7">'Left:'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><span class="S3">172</span><span class="S8">,</span><span class="S0"> </span><span class="S3">90</span><span class="S8">,</span><span class="S0"> </span><span class="S3">14</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUICtrlCreateLabel.htm"><span class="S4">GUICtrlCreateLabel</span></a><span class="S8">(</span><span class="S7">'Top:'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><span class="S3">194</span><span class="S8">,</span><span class="S0"> </span><span class="S3">90</span><span class="S8">,</span><span class="S0"> </span><span class="S3">14</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUICtrlCreateLabel.htm"><span class="S4">GUICtrlCreateLabel</span></a><span class="S8">(</span><span class="S7">'Width:'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><span class="S3">216</span><span class="S8">,</span><span class="S0"> </span><span class="S3">90</span><span class="S8">,</span><span class="S0"> </span><span class="S3">14</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUICtrlCreateLabel.htm"><span class="S4">GUICtrlCreateLabel</span></a><span class="S8">(</span><span class="S7">'Height:'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><span class="S3">238</span><span class="S8">,</span><span class="S0"> </span><span class="S3">90</span><span class="S8">,</span><span class="S0"> </span><span class="S3">14</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$a_idInput</span><span class="S8">[</span><span class="S3">11</span><span class="S8">]</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">10</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$a_idInput</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateLabel.htm"><span class="S4">GUICtrlCreateLabel</span></a><span class="S8">(</span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S3">114</span><span class="S8">,</span><span class="S0"> </span><span class="S3">18</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S3">22</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S8">,</span><span class="S0"> </span><span class="S3">116</span><span class="S8">,</span><span class="S0"> </span><span class="S3">14</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOWNOACTIVATE"><span class="S6">@SW_SHOWNOACTIVATE</span></a><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aInfo</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iPID</span>
+<a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Do</span></a>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hWnd</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/WinGetHandle.htm"><span class="S4">WinGetHandle</span></a><span class="S8">(</span><span class="S7">'[ACTIVE]'</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aInfo</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetGUIThreadInfo.htm"><span class="S15">_WinAPI_GetGUIThreadInfo</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetWindowThreadProcessId.htm"><span class="S15">_WinAPI_GetWindowThreadProcessId</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iPID</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinSetTitle.htm"><span class="S4">WinSetTitle</span></a><span class="S8">(</span><span class="S9">$hForm</span><span class="S8">,</span><span class="S0"> </span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/WinGetTitle.htm"><span class="S4">WinGetTitle</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aInfo</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">'0x'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Hex.htm"><span class="S4">Hex</span></a><span class="S8">(</span><span class="S9">$aInfo</span><span class="S8">[</span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S3">8</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinSetTitle.htm"><span class="S4">WinSetTitle</span></a><span class="S8">(</span><span class="S9">$hForm</span><span class="S8">,</span><span class="S0"> </span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S7">''</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Dim</span></a><span class="S0"> </span><span class="S9">$aInfo</span><span class="S8">[</span><span class="S3">11</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">10</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aInfo</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">''</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$hWnd</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">10</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringCompare.htm"><span class="S4">StringCompare</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/GUICtrlRead.htm"><span class="S4">GUICtrlRead</span></a><span class="S8">(</span><span class="S9">$a_idInput</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">]),</span><span class="S0"> </span><span class="S9">$aInfo</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">])</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetData.htm"><span class="S4">GUICtrlSetData</span></a><span class="S8">(</span><span class="S9">$a_idInput</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$aInfo</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">])</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Until</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

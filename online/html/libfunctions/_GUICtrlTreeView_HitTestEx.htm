@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _GUICtrlTreeView_HitTestEx</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_GUICtrlTreeView_HitTestEx</h1><br />
+<a href="../libfunctions_en/_GUICtrlTreeView_HitTestEx.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Gibt Informationen &uuml;ber den Ort eines Punktes relativ zum Control zur&uuml;ck<br /></p>
+<p class="codeheader">
+#include &lt;GuiTreeView.au3&gt;<br />
+_GUICtrlTreeView_HitTestEx ( $hWnd, $iX, $iY )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$hWnd</td>
+<td style="width:85%">Control-ID / Handle des Controls</td>
+</tr>
+<tr>
+<td>$iX</td>
+<td>zu testende X Position</td>
+</tr>
+<tr>
+<td>$iY</td>
+<td>zu testende Y Position</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+Gibt eine $tagTVHITTESTINFO Struktur zur&uuml;ck<br />
+
+
+<h2>Bemerkungen</h2>
+<p><a href="../guiref/GUIRef.htm">- - - - - - - - Erkl&auml;rung der Controls - - - - - - - -</a><br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="$tagTVHITTESTINFO.htm">$tagTVHITTESTINFO</a>, <a href="_GUICtrlTreeView_HitTest.htm">_GUICtrlTreeView_HitTest</a>, <a href="_GUICtrlTreeView_HitTestItem.htm">_GUICtrlTreeView_HitTestItem</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_GUICtrlTreeView_HitTestEx.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GuiImageList.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GuiTreeView.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WindowsConstants.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_hImage</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hStateImage</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$ahItem</span><span class="S8">[</span><span class="S3">10</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$aidChildItem</span><span class="S8">[</span><span class="S3">30</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$iYItem</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iYRand</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iXRand</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$idTreeView</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iStyle</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$TVS_EDITLABELS</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$TVS_HASBUTTONS</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$TVS_HASLINES</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$TVS_LINESATROOT</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$TVS_DISABLEDRAGDROP</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$TVS_SHOWSELALWAYS</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"TreeView: Gibt Informationen &uuml;ber den Ort eines Punktes"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">600</span><span class="S8">,</span><span class="S0"> </span><span class="S3">300</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$idTreeView</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateTreeView.htm"><span class="S4">GUICtrlCreateTreeView</span></a><span class="S8">(</span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">396</span><span class="S8">,</span><span class="S0"> </span><span class="S3">268</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iStyle</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$WS_EX_CLIENTEDGE</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; _CreateNormalImageList</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlTreeView_SetNormalImageList.htm"><span class="S15">_GUICtrlTreeView_SetNormalImageList</span></a><span class="S8">(</span><span class="S9">$idTreeView</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hImage</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; _CreateStateImageList</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlTreeView_SetStateImageList.htm"><span class="S15">_GUICtrlTreeView_SetStateImageList</span></a><span class="S8">(</span><span class="S9">$idTreeView</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hStateImage</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlTreeView_BeginUpdate.htm"><span class="S15">_GUICtrlTreeView_BeginUpdate</span></a><span class="S8">(</span><span class="S9">$idTreeView</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$x</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">9</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$ahItem</span><span class="S8">[</span><span class="S9">$x</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlTreeView_Add.htm"><span class="S15">_GUICtrlTreeView_Add</span></a><span class="S8">(</span><span class="S9">$idTreeView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringFormat.htm"><span class="S4">StringFormat</span></a><span class="S8">(</span><span class="S7">"[%02d] Neues Item"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$x</span><span class="S8">),</span><span class="S0"> </span><span class="S3">4</span><span class="S8">,</span><span class="S0"> </span><span class="S3">5</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlTreeView_SetStateImageIndex.htm"><span class="S15">_GUICtrlTreeView_SetStateImageIndex</span></a><span class="S8">(</span><span class="S9">$idTreeView</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$ahItem</span><span class="S8">[</span><span class="S9">$x</span><span class="S8">],</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$y</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">3</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aidChildItem</span><span class="S8">[</span><span class="S9">$iYItem</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlTreeView_AddChild.htm"><span class="S15">_GUICtrlTreeView_AddChild</span></a><span class="S8">(</span><span class="S9">$idTreeView</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$ahItem</span><span class="S8">[</span><span class="S9">$x</span><span class="S8">],</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringFormat.htm"><span class="S4">StringFormat</span></a><span class="S8">(</span><span class="S7">"[%02d] Neues Child"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$y</span><span class="S8">),</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlTreeView_SetStateImageIndex.htm"><span class="S15">_GUICtrlTreeView_SetStateImageIndex</span></a><span class="S8">(</span><span class="S9">$idTreeView</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aidChildItem</span><span class="S8">[</span><span class="S9">$iYItem</span><span class="S8">],</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$iYItem</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+=</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlTreeView_EndUpdate.htm"><span class="S15">_GUICtrlTreeView_EndUpdate</span></a><span class="S8">(</span><span class="S9">$idTreeView</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlTreeView_SelectItem.htm"><span class="S15">_GUICtrlTreeView_SelectItem</span></a><span class="S8">(</span><span class="S9">$idTreeView</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$ahItem</span><span class="S8">[</span><span class="S3">0</span><span class="S8">])</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlTreeView_SetStateImageIndex.htm"><span class="S15">_GUICtrlTreeView_SetStateImageIndex</span></a><span class="S8">(</span><span class="S9">$idTreeView</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$ahItem</span><span class="S8">[</span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$iYRand</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Random.htm"><span class="S4">Random</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">268</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$iXRand</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Random.htm"><span class="S4">Random</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">396</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Information"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringFormat.htm"><span class="S4">StringFormat</span></a><span class="S8">(</span><span class="S7">"Hit TestEx (%d, %d): %s"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iXRand</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iYRand</span><span class="S8">,</span><span class="S0"> _GetHitString</span><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlTreeView_HitTestEx.htm"><span class="S15">_GUICtrlTreeView_HitTestEx</span></a><span class="S8">(</span><span class="S9">$idTreeView</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iXRand</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iYRand</span><span class="S8">))))</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI ausl&ouml;st</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Do</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Until</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIDelete.htm"><span class="S4">GUIDelete</span></a><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _GetHitString</span><span class="S8">(</span><span class="S9">$tHitTest</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iFlags</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$tHitTest</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Flags"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Select.htm"><span class="S5">Select</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitAND.htm"><span class="S4">BitAND</span></a><span class="S8">(</span><span class="S9">$iFlags</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$TVHT_NOWHERE</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S3">0</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S7">"Im Anwendungsbereich, aber unterhalb des letzten Items"</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitAND.htm"><span class="S4">BitAND</span></a><span class="S8">(</span><span class="S9">$iFlags</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$TVHT_ONITEMICON</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S3">0</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S7">"&Uuml;ber dem Bild, das mit einem Item verkn&uuml;pft ist"</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitAND.htm"><span class="S4">BitAND</span></a><span class="S8">(</span><span class="S9">$iFlags</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$TVHT_ONITEMLABEL</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S3">0</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S7">"&Uuml;ber dem Text, der mit einem Item verkn&uuml;pft ist"</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitAND.htm"><span class="S4">BitAND</span></a><span class="S8">(</span><span class="S9">$iFlags</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$TVHT_ONITEMINDENT</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S3">0</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S7">"&Uuml;ber der Einr&uuml;ckung, die mit einem Item verkn&uuml;pft ist"</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitAND.htm"><span class="S4">BitAND</span></a><span class="S8">(</span><span class="S9">$iFlags</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$TVHT_ONITEMBUTTON</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S3">0</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S7">"&Uuml;ber dem Button, der mit einem Item verkn&uuml;pft ist"</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitAND.htm"><span class="S4">BitAND</span></a><span class="S8">(</span><span class="S9">$iFlags</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$TVHT_ONITEMRIGHT</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S3">0</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S7">"Im Bereich rechts neben einem Item"</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitAND.htm"><span class="S4">BitAND</span></a><span class="S8">(</span><span class="S9">$iFlags</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$TVHT_ONITEMSTATEICON</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S3">0</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S7">"&Uuml;ber dem Status-Icon eines Items, das sich in einem benutzerdefinierten Zustand befindet"</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitAND.htm"><span class="S4">BitAND</span></a><span class="S8">(</span><span class="S9">$iFlags</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$TVHT_ABOVE</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S3">0</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S7">"Oberhalb des Anwendungsbereichs"</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitAND.htm"><span class="S4">BitAND</span></a><span class="S8">(</span><span class="S9">$iFlags</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$TVHT_BELOW</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S3">0</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S7">"Unterhalb des Anwendungsbereichs"</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitAND.htm"><span class="S4">BitAND</span></a><span class="S8">(</span><span class="S9">$iFlags</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$TVHT_TORIGHT</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S3">0</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S7">"Links neben dem Anwendungsbereich"</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitAND.htm"><span class="S4">BitAND</span></a><span class="S8">(</span><span class="S9">$iFlags</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$TVHT_TOLEFT</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S3">0</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S7">"Rechts neben dem Anwendungsbereich"</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Select.htm"><span class="S5">EndSelect</span></a>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_GetHitString</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _CreateNormalImageList</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_hImage</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GUIImageList_Create.htm"><span class="S15">_GUIImageList_Create</span></a><span class="S8">(</span><span class="S3">16</span><span class="S8">,</span><span class="S0"> </span><span class="S3">16</span><span class="S8">,</span><span class="S0"> </span><span class="S3">5</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUIImageList_AddIcon.htm"><span class="S15">_GUIImageList_AddIcon</span></a><span class="S8">(</span><span class="S9">$g_hImage</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"shell32.dll"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">110</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUIImageList_AddIcon.htm"><span class="S15">_GUIImageList_AddIcon</span></a><span class="S8">(</span><span class="S9">$g_hImage</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"shell32.dll"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">131</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUIImageList_AddIcon.htm"><span class="S15">_GUIImageList_AddIcon</span></a><span class="S8">(</span><span class="S9">$g_hImage</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"shell32.dll"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">165</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUIImageList_AddIcon.htm"><span class="S15">_GUIImageList_AddIcon</span></a><span class="S8">(</span><span class="S9">$g_hImage</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"shell32.dll"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">168</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUIImageList_AddIcon.htm"><span class="S15">_GUIImageList_AddIcon</span></a><span class="S8">(</span><span class="S9">$g_hImage</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"shell32.dll"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">137</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUIImageList_AddIcon.htm"><span class="S15">_GUIImageList_AddIcon</span></a><span class="S8">(</span><span class="S9">$g_hImage</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"shell32.dll"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">146</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_CreateNormalImageList</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _CreateStateImageList</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_hStateImage</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GUIImageList_Create.htm"><span class="S15">_GUIImageList_Create</span></a><span class="S8">(</span><span class="S3">16</span><span class="S8">,</span><span class="S0"> </span><span class="S3">16</span><span class="S8">,</span><span class="S0"> </span><span class="S3">5</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUIImageList_AddIcon.htm"><span class="S15">_GUIImageList_AddIcon</span></a><span class="S8">(</span><span class="S9">$g_hStateImage</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"shell32.dll"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUIImageList_AddIcon.htm"><span class="S15">_GUIImageList_AddIcon</span></a><span class="S8">(</span><span class="S9">$g_hStateImage</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"shell32.dll"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_CreateStateImageList</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

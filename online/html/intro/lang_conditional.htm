@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sprachreferenz - Konditionelle Ausdr&uuml;cke</title>
+	<meta charset="utf-8">
+	<link href="../css/default.css" rel="stylesheet">
+</head>
+<body>
+	<h1>Sprachreferenz - Konditionelle Ausdr&uuml;cke</h1>
+	<p>Oft ist erw&uuml;nscht, dass ein Skript abh&auml;ngig vom Ergebnis einer oder mehrerer Bedingungen unterschiedlich reagiert. Ist eine Zahl gr&ouml;&szlig;er als eine andere? Beinhaltet ein String einen bestimmten Teil-String?</p>
+	<p>Bedingungen (Konditionen) werden als <strong>True</strong> (wahr, non-zero, nicht-null) oder <strong>False</strong> (falsch, zero, Null) ausgewertet. Bedingungen nutzen im Allgemeinen <a href="lang_operators.htm">Vergleichsoperatoren</a> wie z.B. <strong>==</strong>, <strong>&lt;&gt;</strong>, <strong>&gt;=</strong>.</p>
+	<p></p>
+	<p>Folgende konditionelle Ausdr&uuml;cke sind in AutoIt verf&uuml;gbar:</p>
+	<ul>
+		<li>
+			<a href="../keywords/IfElseEndIf.htm">If...Then...Else</a>
+		</li>
+		<li>
+			<a href="../keywords/Select.htm">Select...Case</a>
+		</li>
+		<li>
+			<a href="../keywords/Switch.htm">Switch...Case</a>
+		</li>
+		<li>
+			<a href="../keywords/Ternary.htm">Ternary</a>
+		</li>
+	</ul>
+	<p>Alle diese vier Ausdr&uuml;cke sind &auml;hnlich und entscheiden welcher Code abh&auml;ngig von den Bedingungnen ausgef&uuml;hrt wird . Hier im Beispiel eine <a href="../keywords/IfElseEndIf.htm">If-Abfrage</a>, die eine <a href="../functions/MsgBox.htm">Message Box</a> abh&auml;ngig vom Wert einer Variable zeigt</p>
+@@SyntaxHighlighting@@
+#include <MsgBoxConstants.au3>
+
+Local $iNumber = -20
+
+If $iNumber > 0 Then
+	MsgBox($MB_SYSTEMMODAL, "Beispiel", "$iNumber war positiv!")
+ElseIf $iNumber < 0 Then
+	MsgBox($MB_SYSTEMMODAL, "Beispiel", "$iNumber war negativ!")
+Else
+	MsgBox($MB_SYSTEMMODAL, "Beispiel", "$iNumber war null.")
+EndIf
+@@End@@
+
+  <p>&nbsp;</p>
+	<p>Eine <a href="../keywords/Select.htm">Select</a>-Abfrage ist sehr &auml;hnlich, aber wird normalerweise nur benutzt, wenn man eine gro&szlig;e Anzahl von Bedingungen testen m&ouml;chten. Diese Abfrage ist meist k&uuml;rzer als eine entsprechende If/Else-Konstruktion, z.B.:</p>
+@@SyntaxHighlighting@@
+#include <MsgBoxConstants.au3>
+
+Local $iNumber = 30
+
+Select
+	Case $iNumber > 1 And $iNumber <= 10
+		MsgBox($MB_SYSTEMMODAL, "Beispiel", "$iNumber war gr&ouml;&szlig;er als 1")
+
+	Case $iNumber > 10 And $iNumber <= 20
+		MsgBox($MB_SYSTEMMODAL, "Beispiel", "$iNumber war gr&ouml;&szlig;er als 10")
+
+	Case $iNumber > 20 And $iNumber <= 30
+		MsgBox($MB_SYSTEMMODAL, "Beispiel", "$iNumber war gr&ouml;&szlig;er als 20")
+
+	Case $iNumber > 30 And $iNumber <= 40
+		MsgBox($MB_SYSTEMMODAL, "Beispiel", "$iNumber war gr&ouml;&szlig;er als 30")
+
+	Case $iNumber > 40
+		MsgBox($MB_SYSTEMMODAL, "Beispiel", "$iNumber war gr&ouml;&szlig;er als 40")
+EndSelect
+@@End@@
+
+  <p>&nbsp;</p>
+	<p>Eine <a href="../keywords/Switch.htm">Switch</a>-Anweisung ist einer Select-Anweisung recht &auml;hnlich, wird aber meist dann verwendet, wenn man den gleichen Ausdruck gegen viele verschiedene Werte testen will.</p>
+@@SyntaxHighlighting@@
+#include <MsgBoxConstants.au3>
+
+Local $iNumber = 30
+
+Switch Int($iNumber)
+	Case 1 To 10
+		MsgBox($MB_SYSTEMMODAL, "Beispiel", "$iNumber war gr&ouml;&szlig;er als 1")
+
+	Case 11 To 20
+		MsgBox($MB_SYSTEMMODAL, "Beispiel", "$iNumber war gr&ouml;&szlig;er als 10")
+
+	Case 21 To 30
+		MsgBox($MB_SYSTEMMODAL, "Beispiel", "$iNumber war gr&ouml;&szlig;er als20")
+
+	Case 31 To 40
+		MsgBox($MB_SYSTEMMODAL, "Beispiel", "$iNumber war gr&ouml;&szlig;er als 30")
+
+	Case Else
+		MsgBox($MB_SYSTEMMODAL, "Beispiel", "$iNumber war gr&ouml;&szlig;er als 40 oder kleiner gleich 0")
+
+EndSwitch
+@@End@@
+
+
+
+	<p>Bei jeder dieser Strukturen wird der erste Ausdruck der wahr ist dessen Befehle ausgef&uuml;hrt. Alle folgenden Bedingungen und deren zugeh&ouml;rigen Befehle werden ignoriert.</p>
+  <p>&nbsp;</p>
+  <p>Eine <a href="../keywords/Ternary.htm">Ternary</a>-Anweisung kann verwendet werden, wess es eine einfache bin&auml;re Wahl geben soll. Dies vermeidet unn&ouml;tige Skriptzeilen die bei den anderen obigen Anweisungen notwendig sind.</p>
+@@SyntaxHighlighting@@
+#include <MsgBoxConstants.au3>
+
+MsgBox($MB_SYSTEMMODAL, "Ergebnis: 1=1", (1 = 1) ? "True!" : "False!")
+MsgBox($MB_SYSTEMMODAL, "Ergebnis: 1=2", (1 = 2) ? "True!" : "False!")
+@@End@@
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinAPI_CompareString</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1>_WinAPI_CompareString</h1>
+<p class="funcdesc">Compares two character strings for a specified locale<br /></p>
+<p class="codeheader">
+#include &lt;WinAPILocale.au3&gt;<br />
+_WinAPI_CompareString ( $iLCID, $sString1, $sString2 [, $iFlags = 0] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$iLCID</td>
+<td style="width:85%">The locale identifier (LCID) that specifies the locale or one of the following predefined values:<br />
+&nbsp;&nbsp;&nbsp; $LOCALE_INVARIANT<br />
+&nbsp;&nbsp;&nbsp; $LOCALE_SYSTEM_DEFAULT<br />
+&nbsp;&nbsp;&nbsp; $LOCALE_USER_DEFAULT<br />
+<strong>Windows Vista or later</strong><br />
+&nbsp;&nbsp;&nbsp; $LOCALE_CUSTOM_DEFAULT<br />
+&nbsp;&nbsp;&nbsp; $LOCALE_CUSTOM_UI_DEFAULT<br />
+&nbsp;&nbsp;&nbsp; $LOCALE_CUSTOM_UNSPECIFIED</td>
+</tr>
+<tr>
+<td>$sString1</td>
+<td>The first string to compare.</td>
+</tr>
+<tr>
+<td>$sString2</td>
+<td>The second string to compare.</td>
+</tr>
+<tr>
+<td>$iFlags</td>
+<td><strong>[optional]</strong> The flags that indicate how the function compares the two strings. This parameter can be 0 or combination of the following values:<br />
+&nbsp;&nbsp;&nbsp; $LINGUISTIC_IGNORECASE<br />
+&nbsp;&nbsp;&nbsp; $LINGUISTIC_IGNOREDIACRITIC<br />
+<br />
+&nbsp;&nbsp;&nbsp; $NORM_IGNORECASE<br />
+&nbsp;&nbsp;&nbsp; $NORM_IGNOREKANATYPE<br />
+&nbsp;&nbsp;&nbsp; $NORM_IGNORENONSPACE<br />
+&nbsp;&nbsp;&nbsp; $NORM_IGNORESYMBOLS<br />
+&nbsp;&nbsp;&nbsp; $NORM_IGNOREWIDTH<br />
+&nbsp;&nbsp;&nbsp; $NORM_LINGUISTIC_CASING<br />
+<br />
+&nbsp;&nbsp;&nbsp; $SORT_STRINGSORT<br />
+<br />
+<strong>Windows 7 or later</strong><br />
+&nbsp;&nbsp;&nbsp; $SORT_DIGITSASNUMBERS</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">The one of the following values that indicates a result of the comparison strings.<br />
+&nbsp;&nbsp;&nbsp; $CSTR_LESS_THAN<br />
+&nbsp;&nbsp;&nbsp; $CSTR_EQUAL<br />
+&nbsp;&nbsp;&nbsp; $CSTR_GREATER_THAN</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>0, call <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> to get extended error information.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Normally, for case-insensitive comparisons, <a href="_WinAPI_CompareString.htm">_WinAPI_CompareString()</a> maps the lowercase "i" to the uppercase "I", even when the locale is Turkish or Azeri.<br />
+The $NORM_LINGUISTIC_CASING flag overrides this behavior for Turkish or Azeri.<br />
+If this flag is specified in conjunction with Turkish or Azeri, LATIN SMALL LETTER DOTLESS I (U+0131) is the lowercase form of LATIN CAPITAL LETTER I (U+0049) and LATIN SMALL LETTER I (U+0069) is the lowercase form of LATIN CAPITAL LETTER I WITH DOT ABOVE (U+0130).<br />
+</p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(CompareString);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">CompareString</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_CompareString.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;APILocaleConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPILocale.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPISys.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Number.htm"><span class="S4">Number</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetVersion.htm"><span class="S15">_WinAPI_GetVersion</span></a><span class="S8">())</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;</span></a><span class="S0"> </span><span class="S3">6.1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$MB_ICONERROR</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">),</span><span class="S0"> </span><span class="S7">'Error'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Require Windows 7 or later.'</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S1">; Create array of strings ("Item*")</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aItem</span><span class="S8">[</span><span class="S3">100</span><span class="S8">]</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aItem</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aItem</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">'Item'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Random.htm"><span class="S4">Random</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aItem</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Initial array'</span><span class="S8">)</span>
+
+<span class="S1">; Simple array sorting</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArraySort.htm"><span class="S15">_ArraySort</span></a><span class="S8">(</span><span class="S9">$aItem</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aItem</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Simple sorting'</span><span class="S8">)</span>
+
+<span class="S1">; Sort array (bubble sort) ignoring case sensitive and according to the digits</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sTemp</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aItem</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">2</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$j</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aItem</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CompareString.htm"><span class="S15">_WinAPI_CompareString</span></a><span class="S8">(</span><span class="S9">$LOCALE_INVARIANT</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aItem</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$aItem</span><span class="S8">[</span><span class="S9">$j</span><span class="S8">],</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$NORM_IGNORECASE</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$SORT_DIGITSASNUMBERS</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$CSTR_GREATER_THAN</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sTemp</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aItem</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aItem</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aItem</span><span class="S8">[</span><span class="S9">$j</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aItem</span><span class="S8">[</span><span class="S9">$j</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$sTemp</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aItem</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'bubble sort case insensitive'</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

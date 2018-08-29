@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function RegWrite</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">RegWrite</h1><br />
+<a href="../functions/RegWrite.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Creates a key or value in the registry.<br /></p>
+<p class="codeheader">
+RegWrite ( "keyname" [, "valuename", "type", value] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">keyname</td>
+<td style="width:85%">The registry key to write to. If no other parameters are specified this key will simply be created.</td>
+</tr>
+<tr>
+<td>valuename</td>
+<td><strong>[optional]</strong> The valuename to write to.</td>
+</tr>
+<tr>
+<td>type</td>
+<td><strong>[optional]</strong> Type of key to write: "REG_SZ", "REG_MULTI_SZ", "REG_EXPAND_SZ", "REG_DWORD", "REG_QWORD", or "REG_BINARY".</td>
+</tr>
+<tr>
+<td>value</td>
+<td><strong>[optional]</strong> The value to write.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">1.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>0 and sets the @error flag to non-zero if error writing registry key or value.</td>
+</tr>
+<tr>
+<td class="valign-top">@error:</td>
+<td> 1 = unable to open requested key<br />
+&nbsp;2 = unable to open requested main key<br />
+&nbsp;3 = unable to remote connect to the registry<br />
+-1 = unable to open requested value<br />
+-2 = value type not supported</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>A registry key must start with "HKEY_LOCAL_MACHINE" ("HKLM") or "HKEY_USERS" ("HKU") or "HKEY_CURRENT_USER" ("HKCU") or "HKEY_CLASSES_ROOT" ("HKCR") or "HKEY_CURRENT_CONFIG" ("HKCC").<br />
+<br />
+When running on 64-bit Windows if you want to write a key or value specific to the 64-bit environment you have to suffix the HK... with 64 i.e. HKLM64.<br />
+<br />
+AutoIt supports registry keys of type REG_BINARY, REG_SZ, REG_MULTI_SZ, REG_EXPAND_SZ, REG_QWORD, and REG_DWORD.<br />
+<br />
+To access the <strong>(Default)</strong> value use <strong>""</strong> (an empty string) for the valuename.<br />
+<br />
+When writing a REG_MULTI_SZ key you must separate each value with @LF. The value must NOT end with @LF unless you want an empty substring (see example).<br />
+<br />
+It is possible to access remote registries by using a keyname in the form "\\computername\keyname". To use this feature you must have the correct access rights.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="RegDelete.htm">RegDelete</a>, <a href="RegEnumKey.htm">RegEnumKey</a>, <a href="RegEnumVal.htm">RegEnumVal</a>, <a href="RegRead.htm">RegRead</a></p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\RegWrite.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Check if the registry key is already existing, so as not to damage the user's system.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/RegRead.htm"><span class="S4">RegRead</span></a><span class="S8">(</span><span class="S7">"HKEY_CURRENT_USER\Software\AutoIt_Example"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Key1"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; @error is set to non-zero when reading a registry key that doesn't exist.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"An error occurred whilst the temporary registry key. ""AutoIt_Example"" appears to already exist."</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Write a single REG_SZ value to the key "Key1".</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/RegWrite.htm"><span class="S4">RegWrite</span></a><span class="S8">(</span><span class="S7">"HKEY_CURRENT_USER\Software\AutoIt_Example"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Key1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"REG_SZ"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"This is an example of RegWrite"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Write the REG_MULTI_SZ value of "Line 1" and "Line 2". Always append an extra line-feed character when writing a REG_MULTI_SZ value.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/RegWrite.htm"><span class="S4">RegWrite</span></a><span class="S8">(</span><span class="S7">"HKEY_CURRENT_USER\Software\AutoIt_Example"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Key2"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"REG_MULTI_SZ"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Line 1"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@LF"><span class="S6">@LF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Line 2"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@LF"><span class="S6">@LF</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Write the REG_MULTI_SZ value of "Line 1". Always append an extra line-feed character when writing a REG_MULTI_SZ value.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/RegWrite.htm"><span class="S4">RegWrite</span></a><span class="S8">(</span><span class="S7">"HKEY_CURRENT_USER\Software\AutoIt_Example"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Key3"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"REG_MULTI_SZ"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Line 1"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@LF"><span class="S6">@LF</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Display a message to navigate to RegEdit.exe manually.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Open RegEdit.exe and navigate the the registry key ""HKEY_CURRENT_USER\Software\AutoIt_Example""."</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Delete the temporary registry key.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/RegDelete.htm"><span class="S4">RegDelete</span></a><span class="S8">(</span><span class="S7">"HKEY_CURRENT_USER\Software\AutoIt_Example"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

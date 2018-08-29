@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _NamedPipes_CreateNamedPipe</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_NamedPipes_CreateNamedPipe</h1><br />
+<a href="../libfunctions_en/_NamedPipes_CreateNamedPipe.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Erzeugt die Instanz einer Named Pipe (FIFO)<br /></p>
+<p class="codeheader">
+#include &lt;NamedPipes.au3&gt;<br />
+_NamedPipes_CreateNamedPipe ( $sName [, $iAccess = 2 [, $iFlags = 2 [, $iACL = 0 [, $iType = 1 [, $iRead = 1 [, $iWait = 0 [, $iMaxInst = 25 [, $iOutBufSize = 4096 [, $iInpBufSize = 4096 [, $iDefaultTimeout = 5000 [, $tSecurity = 0]]]]]]]]]]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$sName</td>
+<td style="width:85%">Pipe-Name mit folgendem Format: \.\pipe\pipename.<br />
+Der Namensteil der Pipe kann im Namen alle Zeichen beinhalten au&szlig;er dem Backslash (\), gefolgt von Zahlen und Sonderzeichen.<br />
+Der Pipe-Name kann bis zu 256 Zeichen lang sein.<br />
+Bei Pipe-Namen wird die Gro&szlig;- Kleinschreibung nicht ber&uuml;cksichtigt.</td>
+</tr>
+<tr>
+<td>$iAccess</td>
+<td><strong>[optional]</strong> Die Pipe Zugriffsart. Eine der folgenden ist Pflicht:<br />
+&nbsp;&nbsp;&nbsp; 0 - Die Daten der Pipe gehen nur vom Client zum Server (inbound)<br />
+&nbsp;&nbsp;&nbsp; 1 - Die Daten der Pipe gehen nur vom Server zum Client (outbound)<br />
+&nbsp;&nbsp;&nbsp; 2 - Die Pipe ist bio-direktional (duplex)</td>
+</tr>
+<tr>
+<td>$iFlags</td>
+<td><strong>[optional]</strong> Die Pipe Flags. Kann eine der folgenden Kombinationen sein:<br />
+&nbsp;&nbsp;&nbsp; 1 - Beim Versuch, mehrere Instanzen einer Pipe zu erstellen, wenn diese Option gesetzt ist, ist das Erzeugen der ersten Instanz erfolgreich, aber jeder weitere Versuch schl&auml;gt fehl.<br />
+&nbsp;&nbsp;&nbsp; 2 - Asynchroner (&uuml;berlappender) Modus ist aktiv. In diesem Modus k&ouml;nnen Funktionen, die l&auml;nger dauernde Lese-, Schreib- und Verbindungsoperationen ausf&uuml;hren, sofort zur&uuml;ckkehren.<br />
+&nbsp;&nbsp;&nbsp; 4 - Write-Through-Modus ist aktiv. Betrifft nur Schreiboperationen von Byte-Pipes und nur, wenn Client und Server auf unterschiedlichen Rechnern laufen.</td>
+</tr>
+<tr>
+<td>$iACL</td>
+<td><strong>[optional]</strong> Sicherheits-ACL Flags. Kann eine der folgenden Kombinationen sein:<br />
+&nbsp;&nbsp;&nbsp; 1 - Der Aufrufer hat Schreibzugriff auf die Benutzerzugriffssteuerung (DACL) der Pipe.<br />
+&nbsp;&nbsp;&nbsp; 2 - Der Aufrufer hat Schreibzugriff auf die Besitzer der Pipe.<br />
+&nbsp;&nbsp;&nbsp; 4 - Der Aufrufer hat Schreibzugriff auf die Systemzugriffssteuerung (SACL) der Pipe.</td>
+</tr>
+<tr>
+<td>$iType</td>
+<td><strong>[optional]</strong> Pipe-Typ. Muss einer der Folgenden sein:<br />
+&nbsp;&nbsp;&nbsp; 0 - Daten werden als Byte-Stream in die Pipe geschrieben.<br />
+&nbsp;&nbsp;&nbsp; 1 - Daten werden als Nachrichten-Stream in die Pipe geschrieben.</td>
+</tr>
+<tr>
+<td>$iRead</td>
+<td><strong>[optional]</strong> Pipe Lesemodus. Muss einer der Folgenden sein:<br />
+&nbsp;&nbsp;&nbsp; 0 - Daten werden als Byte-Stream aus der Pipe gelesen.<br />
+&nbsp;&nbsp;&nbsp; 1 - Daten werden als Nachrichten-Stream aus der Pipe gelesen.</td>
+</tr>
+<tr>
+<td>$iWait</td>
+<td><strong>[optional]</strong> Pipe Wartemodus. Muss einer der Folgenden sein:<br />
+&nbsp;&nbsp;&nbsp; 0 - Blockierender Modus. _WinAPI_ReadFile(), _WinAPI_WriteFile(), oder _NamedPipes_ConnectNamedPipe() kehren erst zur&uuml;ck, wenn die angesto&szlig;ene Operation abgeschlossen ist.<br />
+&nbsp;&nbsp;&nbsp; 1 - Nichtblockierender Modus. _WinAPI_ReadFile(), _WinAPI_WriteFile(), und _NamedPipes_ConnectNamedPipe() kehren immer sofort zur&uuml;ck.</td>
+</tr>
+<tr>
+<td>$iMaxInst</td>
+<td><strong>[optional]</strong> F&uuml;r diese Pipe kann die maximale Anzahl von Instanzen erstellt werden.</td>
+</tr>
+<tr>
+<td>$iOutBufSize</td>
+<td><strong>[optional]</strong> Anzahl der Bytes, die f&uuml;r den Ausgabepuffer reserviert werden.</td>
+</tr>
+<tr>
+<td>$iInpBufSize</td>
+<td><strong>[optional]</strong> Anzahl der Bytes, die f&uuml;r den Eingabepuffer reserviert werden.</td>
+</tr>
+<tr>
+<td>$iDefaultTimeOut</td>
+<td><strong>[optional]</strong> Der &uuml;bliche Timeout-Wert in Millisekunden.</td>
+</tr>
+<tr>
+<td>$tSecurity</td>
+<td><strong>[optional]</strong> eine $tagSECURITY_ATTRIBUTES Struktur, die Sicherheitsrichtlinien der neuen benannten Pipe festlegt und die Vererbung des Handles regelt. <br />
+Wenn $tSecurity 0 ist, erh&auml;lt die benannte Pipe die Standard-Sicherheitsrichtlinie und das Handle kann nicht vererbt werden.<br />
+Die Zugriffssteuerung (ACL) gew&auml;hrt den Administratoren des lokalen Systems und dem Prozesseigner vollen Zugriff.<br />
+Au&szlig;erdem erh&auml;lt jeder andere Benutzer Lesezugriff.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">Ein Handle zur Serverseite der Pipe-Instanz.</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>-1</td>
+</tr>
+</table>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="$tagSECURITY_ATTRIBUTES.htm">$tagSECURITY_ATTRIBUTES</a>, <a href="_NamedPipes_ConnectNamedPipe.htm">_NamedPipes_ConnectNamedPipe</a>, <a href="_NamedPipes_CreatePipe.htm">_NamedPipes_CreatePipe</a></p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(CreateNamedPipe);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">CreateNamedPipe</a> in der MSDN Bibliothek.
+</p>
+
+</body>
+</html>

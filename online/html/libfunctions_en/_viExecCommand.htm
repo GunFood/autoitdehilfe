@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _viExecCommand</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_viExecCommand</h1><br />
+<a href="../libfunctions/_viExecCommand.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Send a Command/Query to an Instrument/Device through the VISA interface (GPIB / TCP)<br /></p>
+<p class="codeheader">
+#include &lt;Visa.au3&gt;<br />
+_viExecCommand ( $hSession, $sCommand [, $iTimeoutMS = -1 [, $sMode = @LF]] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$hSession</td>
+<td style="width:85%">A VISA descriptor (STRING) OR a VISA session handle (INTEGER)<br />
+This it can be a string or an integer (a handle):<br />
+* STRING -&gr; A VISA DESCRIPTOR is a string which specifies the resource with which to establish a communication session.<br />
+An example descriptor is "GPIB::20::0".<br />
+This function supports all valid VISA descriptors, including GPIB, TCP, VXI and Serial Interface instruments (ASRL).<br />
+A detailed explanation of VISA descriptors is shown in the Remarks section of this function.<br />
+As a SHORTCUT you can also use a STRING containing the address number (e.g. "20") of a GPIB instrument instead of typing the full descriptor (in that case, "GPIB::20::0")<br />
+* INTEGER -&gr; A VISA session handle is an integer value returned by <a href="_viOpen.htm">_viOpen()</a>.<br />
+It is recommended that instead you use <a href="_viOpen.htm">_viOpen()</a> and VISA session handles instead of descriptors if you plan to communicate repeteadly with an Instrument or Device, as otherwise each time that you contact the instrument you would incur the overhead of opening and closing the communication link.<br />
+Once you are done using the instrument you must remember to close the link with <a href="_viClose.htm">_viClose()</a>.</td>
+</tr>
+<tr>
+<td>$sCommand</td>
+<td>Command/Query to execute (e.g. "*IDN?" or "SOURCE:POWER -20 dBM")<br />
+A query MUST contain a QUESTION MARK (?)<br />
+When the command is a QUERY the function will automatically wait for the instrument's answer (or until the operation times out)</td>
+</tr>
+<tr>
+<td>$iTimeoutMS</td>
+<td><strong>[optional]</strong> The operation timeout in MILISECONDS.<br />
+This is mostly important for QUERIES only.<br />
+If it is not specified the last set timeout will be used. If it was never set before the default timeout (which depends on the VISA implementation) will be used.<br />
+Timeouts can also be set separatelly with the <a href="_viSetTimeout.htm">_viSetTimeout()</a> function.<br />
+Depending on the bus type (GPIB, TCP, etc) the timeout might not be set to the exact value that you request. Instead the closest valid timeout bigger than the one that you requested will be used.</td>
+</tr>
+<tr>
+<td>$sMode</td>
+<td><strong>[optional]</strong> Control the mode in which the VISA viPrintf is called when $sCommand is not a query.<br />
+Default is @LF, which means "attach @LF mode".<br />
+Some instruments and in particular many GPIB cards do not honor the terminator character attribute in those cases an @LF terminator needs to be added.<br />
+As this is the most common case, by default the mode is set to @LF, which appends @LF to the SCPI command you can also set this mode to @CR and @CRLF if your card uses those terminators.<br />
+If you do not want to use a terminator, set this parameter to an empty string ("")<br />
+Also, some cards support the execution of a "sprintf" on the SCPI string prior to sending it through the VISA interface.<br />
+For those who do, it is possible, by setting this parameter to "str" to "protect" the VISa interface from accidentally applying an escape sequence when a "/" is found within the VISA command string.<br />
+This is normally NOT necessary and should only be set if your GPIB card or instrument require it.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+Returns a value which depends on whether the command is a QUERY or not and in whether the operation was successful or not.<br />
+<br />
+* Command, NON QUERY:<br />
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">0.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>-1 if the VISA DLL could not be open<br />
+or a NON ZERO value representing the VISA error code (see the VISA programmer's guide)</td>
+</tr>
+</table><br />
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">the answer of the instrument to the QUERY</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>-1 if the VISA DLL could not be open<br />
+-3 if the VISA DLL returned an unexpected number of results<br />
+or a NON ZERO value representing the VISA error code (see the VISA programmer's guide)</td>
+</tr>
+</table><br />
+
+
+<h2>Remarks</h2>
+<p>* The VISA queries only return the 1st line of the device answer.<br />
+This is not a problem in most cases, as most devices will always answer with a single line.<br />
+<br />
+* The following is a description of the MOST COMMON VISA DESCRIPTORS<br />
+Note that there are some more types. For more info please refer to a VISA programmer's guide (available at www.ni.com).<br />
+Optional segments are shown in square brackets ([]).<br />
+Required segments that must be filled in are denoted by angle brackets (&lt;&gr;).<br />
+<br />
+Interface&nbsp;&nbsp;&nbsp; Syntax<br />
+------------------------------------------------------------<br />
+GPIB INSTR&nbsp;&nbsp;&nbsp; GPIB[board]::primary address<br />
+&nbsp;&nbsp;&nbsp; [::secondary address] [::INSTR]<br />
+GPIB INTFC&nbsp;&nbsp;&nbsp; GPIB[board]::INTFC<br />
+TCPIP SOCKET&nbsp;&nbsp;&nbsp; TCPIP[board]::host address::port::SOCKET<br />
+Serial INSTR&nbsp;&nbsp;&nbsp; ASRL[board][::INSTR]<br />
+PXI INSTR&nbsp;&nbsp;&nbsp; PXI[board]::device[::function][::INSTR]<br />
+VXI INSTR&nbsp;&nbsp;&nbsp; VXI[board]::VXI logical address[::INSTR]<br />
+GPIB-VXI INSTR&nbsp;&nbsp;&nbsp; GPIB-VXI[board]::VXI logical address[::INSTR]<br />
+TCPIP INSTR&nbsp;&nbsp;&nbsp; TCPIP[board]::host address[::LAN device name]<br />
+&nbsp;&nbsp;&nbsp; [::INSTR]<br />
+<br />
+The GPIB keyword is used for GPIB instruments.<br />
+The TCPIP keyword is used for TCP/IP communication.<br />
+The ASRL keyword is used for serial instruments.<br />
+The PXI keyword is used for PXI instruments.<br />
+The VXI keyword is used for VXI instruments via either embedded or MXIbus controllers.<br />
+The GPIB-VXI keyword is used for VXI instruments via a GPIB-VXI controller.<br />
+<br />
+The default values for optional parameters are shown below.<br />
+<br />
+Optional Segment&nbsp;&nbsp;&nbsp; Default Value<br />
+---------------------------------------<br />
+board&nbsp;&nbsp;&nbsp; 0<br />
+secondary address&nbsp;&nbsp;&nbsp; none<br />
+LAN device name&nbsp;&nbsp;&nbsp; inst0<br />
+<br />
+<br />
+Example Resource Strings:<br />
+--------------------------------------------------------------<br />
+GPIB::1::0::INSTR&nbsp;&nbsp;&nbsp; A GPIB device at primary address 1 and<br />
+&nbsp;&nbsp;&nbsp; secondary address 0 in GPIB interface 0.<br />
+<br />
+GPIB2::INTFC&nbsp;&nbsp;&nbsp; Interface or raw resource for GPIB<br />
+&nbsp;&nbsp;&nbsp; interface 2.<br />
+<br />
+TCPIP0::1.2.3.4::999::SOCKET&nbsp;&nbsp;&nbsp; Raw TCP/IP access to port 999<br />
+&nbsp;&nbsp;&nbsp; at the specified IP address.<br />
+<br />
+ASRL1::INSTR&nbsp;&nbsp;&nbsp; A serial device attached to interface<br />
+&nbsp;&nbsp;&nbsp; ASRL1.&nbsp;&nbsp;&nbsp; VXI::MEMACC Board-level register<br />
+&nbsp;&nbsp;&nbsp; access to the VXI interface.<br />
+<br />
+PXI::15::INSTR&nbsp;&nbsp;&nbsp; PXI device number 15 on bus 0.<br />
+<br />
+VXI0::1::INSTR&nbsp;&nbsp;&nbsp; A VXI device at logical address 1 in VXI<br />
+&nbsp;&nbsp;&nbsp; interface VXI0.<br />
+<br />
+GPIB-VXI::9::INSTR&nbsp;&nbsp;&nbsp; A VXI device at logical address 9 in a<br />
+&nbsp;&nbsp;&nbsp; GPIB-VXI controlled system.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="_viClose.htm">_viClose</a>, <a href="_viFindGpib.htm">_viFindGpib</a>, <a href="_viGpibBusReset.htm">_viGpibBusReset</a>, <a href="_viGTL.htm">_viGTL</a>, <a href="_viOpen.htm">_viOpen</a>, <a href="_viSetAttribute.htm">_viSetAttribute</a>, <a href="_viSetTimeout.htm">_viSetTimeout</a></p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_viExecCommand.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><span class="S1">; - This assumes that you have instrument set to GPIB address 3</span>
+<span class="S1">; If you have an instrument in a different address change "GPIB::3::0" to the</span>
+<span class="S1">; corresponding descriptor. Do the same for the call to _viOpen</span>
+<span class="S1">; It shows how to use the _viExecCommand function in stand alone mode and combined</span>
+<span class="S1">; with _viOpen and _viClose.</span>
+<span class="S1">; It also shows the _viGTL function</span>
+
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Visa.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$h_Session</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+
+<span class="S1">; Query the ID of the instrument in GPIB address 3</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Simple GPIB query using a VISA Descriptor"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$s_Answer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_viExecCommand.htm"><span class="S15">_viExecCommand</span></a><span class="S8">(</span><span class="S7">"GPIB::3::0"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"*IDN?"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10000</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; 10 secs timeout</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"GPIB QUERY result"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$s_Answer</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Show the answer</span>
+
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 2"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Go to LOCAL using VISA Descriptor"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_viGTL.htm"><span class="S15">_viGTL</span></a><span class="S8">(</span><span class="S7">"GPIB::1::0"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Go to local (exit remote control mode)</span>
+
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 3"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Simple GPIB query using a VISA address shortcut"</span><span class="S8">)</span>
+<span class="S9">$s_Answer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_viExecCommand.htm"><span class="S15">_viExecCommand</span></a><span class="S8">(</span><span class="S7">"1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"*IDN?"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; The address MUST BE A STRING</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"GPIB QUERY result"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$s_Answer</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Show the answer</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Info"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Now let's use _viOpen and _viClose"</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 4"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Open the instrument connection with _viOpen"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$h_Instr</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_viOpen.htm"><span class="S15">_viOpen</span></a><span class="S8">(</span><span class="S3">3</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Instrument Handle obtained"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$h_Instr = "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$h_Instr</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Show the Session Handle</span>
+<span class="S1">; Query the instrument</span>
+
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 5"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Query the instrument using the VISA instrument handle"</span><span class="S8">)</span>
+<span class="S9">$s_Answer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_viExecCommand.htm"><span class="S15">_viExecCommand</span></a><span class="S8">(</span><span class="S9">$h_Instr</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"*IDN?"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; $h_Instr is NOT A STRING now!</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"GPIB QUERY result"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$s_Answer</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Show the answer</span>
+<span class="S1">; Query again. There is no need to OPEN the link again</span>
+
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 6"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Query again. There is no need to OPEN the link again"</span><span class="S8">)</span>
+<span class="S9">$s_Answer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_viExecCommand.htm"><span class="S15">_viExecCommand</span></a><span class="S8">(</span><span class="S9">$h_Instr</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"*IDN?"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"GPIB QUERY result"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$s_Answer</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Show the answer</span>
+
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 7"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Go to LOCAL using VISA instrument handle"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_viGTL.htm"><span class="S15">_viGTL</span></a><span class="S8">(</span><span class="S9">$h_Instr</span><span class="S8">)</span><span class="S1">; Go to local (this is optional)</span>
+
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 8"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Close the Instrument connection using _viClose"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_viClose.htm"><span class="S15">_viClose</span></a><span class="S8">(</span><span class="S9">$h_Instr</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Close the instrument connection</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

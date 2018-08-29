@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _GDIPlus_GraphicsFillRegion</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1>_GDIPlus_GraphicsFillRegion</h1>
+<p class="funcdesc">Uses a brush to fill a specified region<br /></p>
+<p class="codeheader">
+#include &lt;GDIPlus.au3&gt;<br />
+_GDIPlus_GraphicsFillRegion ( $hGraphics, $hRegion [, $hBrush = 0] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$hGraphics</td>
+<td style="width:85%">Pointer to a Graphics object</td>
+</tr>
+<tr>
+<td>$hRegion</td>
+<td>Pointer to a region to be filled</td>
+</tr>
+<tr>
+<td>$hBrush</td>
+<td><strong>[optional]</strong> Pointer to a brush that is used to paint the region. If 0, a black brush will be used.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">True.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>False and sets the @error flag to non-zero, @extended may contain GPSTATUS error code ($GPID_ERR*).</td>
+</tr>
+</table>
+
+<h2>Related</h2>
+<p><a href="_GDIPlus_RegionCreate.htm">_GDIPlus_RegionCreate</a></p>
+
+<h2>See Also</h2>
+<p>Search <a href="http://search.msdn.microsoft.com/search/Default.aspx?brand=msdn&query=GdipFillRegion">GdipFillRegion</a> in MSDN  Library.
+</p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_GDIPlus_GraphicsMeasureCharacterRanges.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GDIPlus.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Create GUI</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGUI</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"GDI+"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">640</span><span class="S8">,</span><span class="S0"> </span><span class="S3">220</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Startup.htm"><span class="S15">_GDIPlus_Startup</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGraphic</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsCreateFromHWND.htm"><span class="S15">_GDIPlus_GraphicsCreateFromHWND</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;Create a graphics object from a window handle</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsClear.htm"><span class="S15">_GDIPlus_GraphicsClear</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xFFFFFFFF</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hPen</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PenCreate.htm"><span class="S15">_GDIPlus_PenCreate</span></a><span class="S8">(</span><span class="S3">0xFF006600</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hBrush_Region</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BrushCreateSolid.htm"><span class="S15">_GDIPlus_BrushCreateSolid</span></a><span class="S8">(</span><span class="S3">0x44FF0000</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hBrush_Font</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BrushCreateSolid.htm"><span class="S15">_GDIPlus_BrushCreateSolid</span></a><span class="S8">(</span><span class="S3">0xFFFF0000</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hFormat</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_StringFormatCreate.htm"><span class="S15">_GDIPlus_StringFormatCreate</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hFamily</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_FontFamilyCreate.htm"><span class="S15">_GDIPlus_FontFamilyCreate</span></a><span class="S8">(</span><span class="S7">"Arial"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sString</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Measure Character Ranges"</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aRanges</span><span class="S8">[</span><span class="S3">4</span><span class="S8">][</span><span class="S3">2</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[[</span><span class="S3">3</span><span class="S8">]]</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aRanges</span><span class="S8">[</span><span class="S3">1</span><span class="S8">][</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><span class="S1">;Measure first char (0-based)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aRanges</span><span class="S8">[</span><span class="S3">1</span><span class="S8">][</span><span class="S3">1</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><span class="S1">;One char to measure</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aRanges</span><span class="S8">[</span><span class="S3">2</span><span class="S8">][</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">4</span><span class="S0"> </span><span class="S1">;5th char</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aRanges</span><span class="S8">[</span><span class="S3">2</span><span class="S8">][</span><span class="S3">1</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">5</span><span class="S0"> </span><span class="S1">;measure 5 chars</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aRanges</span><span class="S8">[</span><span class="S3">3</span><span class="S8">][</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">14</span><span class="S0"> </span><span class="S1">;15th char</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aRanges</span><span class="S8">[</span><span class="S3">3</span><span class="S8">][</span><span class="S3">1</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">7</span><span class="S0"> </span><span class="S1">;measure 7 chars</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_StringFormatSetMeasurableCharacterRanges.htm"><span class="S15">_GDIPlus_StringFormatSetMeasurableCharacterRanges</span></a><span class="S8">(</span><span class="S9">$hFormat</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aRanges</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;Set ranges</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">;Measure characters fontsize = 14</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hFont</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_FontCreate.htm"><span class="S15">_GDIPlus_FontCreate</span></a><span class="S8">(</span><span class="S9">$hFamily</span><span class="S8">,</span><span class="S0"> </span><span class="S3">14</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tLayout</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_RectFCreate.htm"><span class="S15">_GDIPlus_RectFCreate</span></a><span class="S8">(</span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDrawRect.htm"><span class="S15">_GDIPlus_GraphicsDrawRect</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hPen</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDrawStringEx.htm"><span class="S15">_GDIPlus_GraphicsDrawStringEx</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sString</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hFont</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tLayout</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hFormat</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hBrush_Font</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aRegions</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsMeasureCharacterRanges.htm"><span class="S15">_GDIPlus_GraphicsMeasureCharacterRanges</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sString</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hFont</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tLayout</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hFormat</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;get array of regions</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S9">$aRegions</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsFillRegion.htm"><span class="S15">_GDIPlus_GraphicsFillRegion</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aRegions</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$hBrush_Region</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_RegionDispose.htm"><span class="S15">_GDIPlus_RegionDispose</span></a><span class="S8">(</span><span class="S9">$aRegions</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">])</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_FontDispose.htm"><span class="S15">_GDIPlus_FontDispose</span></a><span class="S8">(</span><span class="S9">$hFont</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">;Measure characters fontsize = 28</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hFont</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_FontCreate.htm"><span class="S15">_GDIPlus_FontCreate</span></a><span class="S8">(</span><span class="S9">$hFamily</span><span class="S8">,</span><span class="S0"> </span><span class="S3">28</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$tLayout</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_RectFCreate.htm"><span class="S15">_GDIPlus_RectFCreate</span></a><span class="S8">(</span><span class="S3">220</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDrawRect.htm"><span class="S15">_GDIPlus_GraphicsDrawRect</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S3">220</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hPen</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDrawStringEx.htm"><span class="S15">_GDIPlus_GraphicsDrawStringEx</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sString</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hFont</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tLayout</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hFormat</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hBrush_Font</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aRegions</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsMeasureCharacterRanges.htm"><span class="S15">_GDIPlus_GraphicsMeasureCharacterRanges</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sString</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hFont</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tLayout</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hFormat</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S9">$aRegions</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsFillRegion.htm"><span class="S15">_GDIPlus_GraphicsFillRegion</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aRegions</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$hBrush_Region</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_RegionDispose.htm"><span class="S15">_GDIPlus_RegionDispose</span></a><span class="S8">(</span><span class="S9">$aRegions</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">])</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_FontDispose.htm"><span class="S15">_GDIPlus_FontDispose</span></a><span class="S8">(</span><span class="S9">$hFont</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">;Measure characters fontsize = 56</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hFont</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_FontCreate.htm"><span class="S15">_GDIPlus_FontCreate</span></a><span class="S8">(</span><span class="S9">$hFamily</span><span class="S8">,</span><span class="S0"> </span><span class="S3">56</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$tLayout</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_RectFCreate.htm"><span class="S15">_GDIPlus_RectFCreate</span></a><span class="S8">(</span><span class="S3">430</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDrawRect.htm"><span class="S15">_GDIPlus_GraphicsDrawRect</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S3">430</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hPen</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDrawStringEx.htm"><span class="S15">_GDIPlus_GraphicsDrawStringEx</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sString</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hFont</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tLayout</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hFormat</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hBrush_Font</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aRegions</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsMeasureCharacterRanges.htm"><span class="S15">_GDIPlus_GraphicsMeasureCharacterRanges</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sString</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hFont</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tLayout</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hFormat</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S9">$aRegions</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsFillRegion.htm"><span class="S15">_GDIPlus_GraphicsFillRegion</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aRegions</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$hBrush_Region</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_RegionDispose.htm"><span class="S15">_GDIPlus_RegionDispose</span></a><span class="S8">(</span><span class="S9">$aRegions</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">])</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_FontDispose.htm"><span class="S15">_GDIPlus_FontDispose</span></a><span class="S8">(</span><span class="S9">$hFont</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iCount</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_StringFormatGetMeasurableCharacterRangeCount.htm"><span class="S15">_GDIPlus_StringFormatGetMeasurableCharacterRangeCount</span></a><span class="S8">(</span><span class="S9">$hFormat</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"MeasurableCharacterRangeCount: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iCount</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Loop until the user exits.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Do</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Until</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Clean up resources</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_FontFamilyDispose.htm"><span class="S15">_GDIPlus_FontFamilyDispose</span></a><span class="S8">(</span><span class="S9">$hFamily</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_StringFormatDispose.htm"><span class="S15">_GDIPlus_StringFormatDispose</span></a><span class="S8">(</span><span class="S9">$hFormat</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BrushDispose.htm"><span class="S15">_GDIPlus_BrushDispose</span></a><span class="S8">(</span><span class="S9">$hBrush_Font</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BrushDispose.htm"><span class="S15">_GDIPlus_BrushDispose</span></a><span class="S8">(</span><span class="S9">$hBrush_Region</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PenDispose.htm"><span class="S15">_GDIPlus_PenDispose</span></a><span class="S8">(</span><span class="S9">$hPen</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDispose.htm"><span class="S15">_GDIPlus_GraphicsDispose</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Shutdown.htm"><span class="S15">_GDIPlus_Shutdown</span></a><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

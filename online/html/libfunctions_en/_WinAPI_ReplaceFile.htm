@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _WinAPI_ReplaceFile</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1>_WinAPI_ReplaceFile</h1>
+<p class="funcdesc">Replaces one file with another file, and creates a backup copy of the original file<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIFiles.au3&gt;<br />
+_WinAPI_ReplaceFile ( $sReplacedFile, $sReplacementFile [, $sBackupFile = '' [, $iFlags = 0]] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$sReplacedFile</td>
+<td style="width:85%">The name of the file to be replaced.</td>
+</tr>
+<tr>
+<td>$sReplacementFile</td>
+<td>The name of the file that will replace the $sReplacedFile file.</td>
+</tr>
+<tr>
+<td>$sBackupFile</td>
+<td><strong>[optional]</strong> The name of the file that will serve as a backup copy of the $sReplacedFile file. If this<br />
+parameter is empty string, no backup file is created.</td>
+</tr>
+<tr>
+<td>$iFlags</td>
+<td><strong>[optional]</strong> The replacement options. This parameter can be one or more of the following values.<br />
+$REPLACEFILE_WRITE_THROUGH<br />
+$REPLACEFILE_IGNORE_MERGE_ERRORS<br />
+$REPLACEFILE_IGNORE_ACL_ERRORS</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">True.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>False (see remarks).</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>If this function fails, call <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> function to get extended error information. The following<br />
+are possible error codes for this function.<br />
+<br />
+ERROR_UNABLE_TO_MOVE_REPLACEMENT (1176)<br />
+The replacement file could not be renamed. If $sBackupFile was specified, the replaced and replacement files<br />
+retain their original file names. Otherwise, the replaced file no longer exists and the replacement file exists<br />
+under its original name.<br />
+<br />
+ERROR_UNABLE_TO_MOVE_REPLACEMENT_2 (1177)<br />
+The replacement file could not be moved. The replacement file still exists under its original name; however,<br />
+it has inherited the file streams and attributes from the file it is replacing. The file to be replaced still<br />
+exists with the name specified by $sReplacedFile.<br />
+<br />
+ERROR_UNABLE_TO_REMOVE_REPLACED (1175)<br />
+The replaced file could not be deleted. The replaced and replacement files retain their original file names.<br />
+<br />
+If any other error is returned, such as ERROR_INVALID_PARAMETER (87), the replaced and replacement files will<br />
+retain their original file names. In this scenario, a backup file does not exist and it is not guaranteed<br />
+that the replacement file will have inherited all of the attributes and streams of the replaced file.<br />
+</p>
+
+<h2>See Also</h2>
+<p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(ReplaceFile);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">ReplaceFile</a> in MSDN  Library.
+</p>
+
+</body>
+</html>

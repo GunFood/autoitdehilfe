@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Keyword $tagGDIPENCODERPARAMS</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Keyword Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">$tagGDIPENCODERPARAMS</h1><br />
+<a href="../libfunctions/$tagGDIPENCODERPARAMS.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">$tagGDIPENCODERPARAMS structure<br /></p>
+<p class="codeheader">
+Global Const $tagGDIPENCODERPARAMS = "uint Count;" & $tagGDIPENCODERPARAM<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">Count</td>
+<td style="width:85%">Number of $tagGDIPENCODERPARAM structures in the array</td>
+</tr>
+<tr>
+<td>$tagGDIPENCODERPARAM</td>
+<td>First $tagGDIPENCODERPARAM structure of the array</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>Use such kind of code to $i entry being less than the $ibEntries in the $tagGDIPENCODERPARAMS (Count)<br />
+<br />
+; Just to calculate entry size to be OK under x86 or x64<br />
+Local $tParam = DllStructCreate($tagGDIPENCODERPARAM)<br />
+Local $iParamSize = DllStructGetSize($tParam)<br />
+<br />
+; allocate a $tagGDIPENCODERPARAMS structure with $ibEntries<br />
+Local $ibEntries = 3;<br />
+Local $tParams = DllStructCreate($tagGDIPENCODERPARAMS & "byte[$iEntrySize * ($ibEntries - 1))<br />
+DLLStructSetData($tParams, "Count", $ibEntries)<br />
+<br />
+; Reallocate entry structure to point to the desired $i entry (0-based)<br />
+Local $i = 1;<br />
+Local $tParamI = DllStructCreate($tagGDIPENCODERPARAM, DllStructGetPtr($tParams, "GUID") + ($i * $iParamSize))<br />
+<br />
+; we can access the $tagGDIPENCODERPARAM selected entry just using $tParam structure which has been reallocated<br />
+<br />
+; if we only use <strong>one entry</strong> the code is <strong>greatly simplified</strong><br />
+Local $tParams = DllStructCreate($tagGDIPENCODERPARAMS)<br />
+DLLStructSetData($tParams, "Count", 1)<br />
+<br />
+; the entry can be access directly thru $tParams structure<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="$tagGDIPENCODERPARAM.htm">$tagGDIPENCODERPARAM</a></p>
+
+</body>
+</html>

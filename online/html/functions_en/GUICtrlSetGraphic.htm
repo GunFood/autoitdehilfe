@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function GUICtrlSetGraphic</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">GUICtrlSetGraphic</h1><br />
+<a href="../functions/GUICtrlSetGraphic.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Modifies the data for a control.<br /></p>
+<p class="codeheader">
+GUICtrlSetGraphic ( controlID, type [, par1 [, ... par6]] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">controlID</td>
+<td style="width:85%">The control identifier (controlID) as returned by a <a href="GUICtrlCreateGraphic.htm">GUICtrlCreateGraphic()</a> function.</td>
+</tr>
+<tr>
+<td>type</td>
+<td>type of drawing : dot, line, bezier, rect, ellipse, pie.</td>
+</tr>
+<tr>
+<td>par1...par6</td>
+<td>See the <a href="GUICtrlSetGraphic.htm#Graphic Type table">Graphic Type table</a> below.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">1.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>0.<br />
+-1 in case of invalid data</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>The point position (x,y) is relative to the <a href="GUICtrlCreateGraphic.htm">GUICtrlCreateGraphic()</a> coordinates. It can be outside the graphic control but inside of the GUI window.<br />
+<br />
+<a id="Graphic Type table"></a><strong>Graphic Type table</strong><br />
+<br />
+<table>
+<tr>
+<th><strong>Type</strong></th>
+<th><strong>Parameters</strong></th>
+<th><strong>result</strong></th>
+</tr>
+
+<tr>
+<td>$GUI_GR_COLOR</td>
+<td>Color [,BkColor]</td>
+<td>Define the color of the next drawings. When BkColor is equal to $GUI_GR_NOBKCOLOR the drawing will not be filled. It is the default. For Color the default line color is black.</td>
+</tr>
+
+<tr>
+<td>$GUI_GR_MOVE</td>
+<td>x,y</td>
+<td>Move the current position without drawing.</td>
+</tr>
+
+<tr>
+<td>$GUI_GR_DOT</td>
+<td>x,y</td>
+<td>Draw a point(smallest square around the point), the next drawing will start from previous position.</td>
+</tr>
+
+<tr>
+<td>$GUI_GR_PIXEL</td>
+<td>x,y</td>
+<td>Draw a pixel, the next drawing will start from previous position.</td>
+</tr>
+
+<tr>
+<td>$GUI_GR_LINE</td>
+<td>x,y</td>
+<td>Draw a line.</td>
+</tr>
+
+<tr>
+<td>$GUI_GR_BEZIER</td>
+<td>x,y,x1,y1,x2,y2</td>
+<td>Draw a bezier curve with 2 control points.</td>
+</tr>
+
+<tr>
+<td>$GUI_GR_RECT</td>
+<td>x,y,w,h</td>
+<td>Draw a rectangle. If w=h it will be a square.</td>
+</tr>
+
+<tr>
+<td>$GUI_GR_ELLIPSE</td>
+<td>x,y,w,h</td>
+<td>Draw an ellipse. If w=h it will be a circle.</td>
+</tr>
+
+<tr>
+<td>$GUI_GR_PIE</td>
+<td>x,y,r,sa,wa</td>
+<td>Draw a pie radius=r startangle=sa sweepangle=wa. Angles are in degrees.</td>
+</tr>
+
+<tr>
+<td>$GUI_GR_CLOSE</td>
+<td>&nbsp;</td>
+<td>to close the current drawing. It has to be added to $GUI_GR_LINE or $GUI_GR_BEZIER to close current drawing. Use alone will be ignored.</td>
+</tr>
+
+<tr>
+<td>$GUI_GR_REFRESH</td>
+<td>&nbsp;</td>
+<td>to force refresh after dynamic update of graphics.</td>
+</tr>
+
+<tr>
+<td>$GUI_GR_HINT</td>
+<td>&nbsp;</td>
+<td>to display control point and end point of bezier/line curve.</td>
+</tr>
+
+<tr>
+<td>$GUI_GR_PENSIZE</td>
+<td>n</td>
+<td>set pensize for the next drawings. It has to be defined before $GUI_GR_COLOR to be taken in account.</td>
+</tr>
+
+<tr>
+<td>$GUI_GR_NOBKCOLOR</td>
+<td>&nbsp;</td>
+<td>is a dummy BkColor to force closed drawing not to be filled. Just line drawings.</td>
+</tr>
+</table><br />
+Due to design constraints RECT, ELLIPSE and PIE graphics are drawn first. For example, a LINE will always be drawn over a RECT. If the drawing order is important to the look of the graphic, then it is recommended that multiple graphic controls be used instead of using a single control to do all the drawing.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="GUICtrlCreateGraphic.htm">GUICtrlCreateGraphic</a></p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\GUICtrlSetGraphic.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;StaticConstants.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$g_MAXGr</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">6</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_aidGraphics</span><span class="S8">[</span><span class="S9">$g_MAXGr</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S3">1</span><span class="S8">]</span><span class="S0"> </span><span class="S1">; 0 and $g_MAXGr entries not used to allow GUICtrlDelete result</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_idDel</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hChild</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idMsg</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iInc</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$i</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"My Main"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idDel1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateButton.htm"><span class="S4">GUICtrlCreateButton</span></a><span class="S8">(</span><span class="S7">"ReCreate"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; CreateChild</span><span class="S8">()</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$iInc</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">;$i=5&nbsp; &nbsp;; uncomment to delete starting from last define Graphic control</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">;$iInc=-1</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Do</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$idMsg</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$idMsg</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$idDel1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> Create</span><span class="S8">(</span><span class="S9">$iInc</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$idMsg</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$g_idDel</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlDelete.htm"><span class="S4">GUICtrlDelete</span></a><span class="S8">(</span><span class="S9">$g_aidGraphics</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">])</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S9">$iInc</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Or</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&gt;</span></a><span class="S0"> </span><span class="S9">$g_MAXGr</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Until</span></a><span class="S0"> </span><span class="S9">$idMsg</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Create</span><span class="S8">(</span><span class="S9">$iInc</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIDelete.htm"><span class="S4">GUIDelete</span></a><span class="S8">(</span><span class="S9">$g_hChild</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; CreateChild</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$iInc</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S3">5</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S3">1</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Create</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> CreateChild</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_hChild</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"My Draw"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_idDel</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateButton.htm"><span class="S4">GUICtrlCreateButton</span></a><span class="S8">(</span><span class="S7">"Delete"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">,</span><span class="S0"> </span><span class="S3">165</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_aidGraphics</span><span class="S8">[</span><span class="S3">1</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateGraphic.htm"><span class="S4">GUICtrlCreateGraphic</span></a><span class="S8">(</span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetBkColor.htm"><span class="S4">GUICtrlSetBkColor</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xffffff</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetColor.htm"><span class="S4">GUICtrlSetColor</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_COLOR</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xff0000</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xff0000</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_PIE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">,</span><span class="S0"> </span><span class="S3">40</span><span class="S8">,</span><span class="S0"> </span><span class="S3">30</span><span class="S8">,</span><span class="S0"> </span><span class="S3">270</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_COLOR</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0x00ff00</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xffffff</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_PIE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">58</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">,</span><span class="S0"> </span><span class="S3">40</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">60</span><span class="S8">,</span><span class="S0"> </span><span class="S3">90</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_ELLIPSE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">,</span><span class="S0"> </span><span class="S3">80</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_COLOR</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0x00ff00</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xc0c0ff</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_RECT</span><span class="S8">,</span><span class="S0"> </span><span class="S3">350</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">,</span><span class="S0"> </span><span class="S3">80</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateLabel.htm"><span class="S4">GUICtrlCreateLabel</span></a><span class="S8">(</span><span class="S7">"label"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">65</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">,</span><span class="S0"> </span><span class="S3">30</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetColor.htm"><span class="S4">GUICtrlSetColor</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xff</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_aidGraphics</span><span class="S8">[</span><span class="S3">2</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateGraphic.htm"><span class="S4">GUICtrlCreateGraphic</span></a><span class="S8">(</span><span class="S3">220</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_COLOR</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xff</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_PIE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">,</span><span class="S0"> </span><span class="S3">40</span><span class="S8">,</span><span class="S0"> </span><span class="S3">30</span><span class="S8">,</span><span class="S0"> </span><span class="S3">270</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_COLOR</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0x00ff00</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xffffff</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_PIE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">58</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">,</span><span class="S0"> </span><span class="S3">40</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">60</span><span class="S8">,</span><span class="S0"> </span><span class="S3">90</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_aidGraphics</span><span class="S8">[</span><span class="S3">3</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateGraphic.htm"><span class="S4">GUICtrlCreateGraphic</span></a><span class="S8">(</span><span class="S3">220</span><span class="S8">,</span><span class="S0"> </span><span class="S3">110</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetBkColor.htm"><span class="S4">GUICtrlSetBkColor</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xf08080</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetColor.htm"><span class="S4">GUICtrlSetColor</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xff</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_HINT</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_COLOR</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xff00</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_RECT</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">,</span><span class="S0"> </span><span class="S3">80</span><span class="S8">,</span><span class="S0"> </span><span class="S3">80</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_aidGraphics</span><span class="S8">[</span><span class="S3">4</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateGraphic.htm"><span class="S4">GUICtrlCreateGraphic</span></a><span class="S8">(</span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">,</span><span class="S0"> </span><span class="S3">80</span><span class="S8">,</span><span class="S0"> </span><span class="S3">80</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetBkColor.htm"><span class="S4">GUICtrlSetBkColor</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xffffff</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_HINT</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_MOVE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_COLOR</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xff</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_LINE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">30</span><span class="S8">,</span><span class="S0"> </span><span class="S3">40</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_COLOR</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xff00</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_LINE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">70</span><span class="S8">,</span><span class="S0"> </span><span class="S3">70</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_COLOR</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xff0000</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_LINE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_COLOR</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xffff00</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_LINE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_aidGraphics</span><span class="S8">[</span><span class="S3">5</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateGraphic.htm"><span class="S4">GUICtrlCreateGraphic</span></a><span class="S8">(</span><span class="S3">150</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetBkColor.htm"><span class="S4">GUICtrlSetBkColor</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xa0ffa0</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_MOVE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; start point</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; it is better to draw line and after point</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; to avoid to switch color at each drawing</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_COLOR</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0x0000ff</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_DOT</span><span class="S8">,</span><span class="S0"> </span><span class="S3">30</span><span class="S8">,</span><span class="S0"> </span><span class="S3">30</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_COLOR</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_LINE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><span class="S3">40</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_COLOR</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xff0000</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_DOT</span><span class="S8">,</span><span class="S0"> </span><span class="S3">25</span><span class="S8">,</span><span class="S0"> </span><span class="S3">25</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_COLOR</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_LINE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">40</span><span class="S8">,</span><span class="S0"> </span><span class="S3">40</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_DOT</span><span class="S8">,</span><span class="S0"> </span><span class="S3">30</span><span class="S8">,</span><span class="S0"> </span><span class="S3">40</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_aidGraphics</span><span class="S8">[</span><span class="S3">6</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateGraphic.htm"><span class="S4">GUICtrlCreateGraphic</span></a><span class="S8">(</span><span class="S3">110</span><span class="S8">,</span><span class="S0"> </span><span class="S3">260</span><span class="S8">,</span><span class="S0"> </span><span class="S3">230</span><span class="S8">,</span><span class="S0"> </span><span class="S3">130</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetColor.htm"><span class="S4">GUICtrlSetColor</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; to display a black border line</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetBkColor.htm"><span class="S4">GUICtrlSetBkColor</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xc0c0ff</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_HINT</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; to display control lines and end points</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_COLOR</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xff</span><span class="S8">)</span><span class="S1">; fill in blue</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_MOVE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">120</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; start point</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_BEZIER</span><span class="S8">,</span><span class="S0"> </span><span class="S3">120</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_BEZIER</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S9">$GUI_GR_CLOSE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">,</span><span class="S0"> </span><span class="S3">40</span><span class="S8">,</span><span class="S0"> </span><span class="S3">40</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">,</span><span class="S0"> </span><span class="S3">40</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetGraphic.htm"><span class="S4">GUICtrlSetGraphic</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_GR_LINE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">60</span><span class="S8">,</span><span class="S0"> </span><span class="S3">30</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; start point</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;CreateChild</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

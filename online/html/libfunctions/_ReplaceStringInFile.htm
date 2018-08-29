@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _ReplaceStringInFile</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_ReplaceStringInFile</h1><br />
+<a href="../libfunctions_en/_ReplaceStringInFile.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Ersetzt einen Teilstring in einer Datei<br /></p>
+<p class="codeheader">
+#include &lt;File.au3&gt;<br />
+_ReplaceStringInFile ( $sFilePath, $sSearchString, $sReplaceString [, $iCaseSensitive = 0 [, $iOccurance = 1]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$sFilePath</td>
+<td style="width:85%">Vollst&auml;ndiger Pfad der Datei in der die Teilstrings ersetzt werden sollen.</td>
+</tr>
+<tr>
+<td>$sSearchString</td>
+<td>Der zu ersetzende String.</td>
+</tr>
+<tr>
+<td>$sReplaceString</td>
+<td>Der ersetzende String</td>
+</tr>
+<tr>
+<td>$iCaseSensitive</td>
+<td><strong>[optional]</strong> Flag um anzuzeigen, ob die Operation Gro&szlig;- und Kleinschreibung ber&uuml;cksichtigen soll.<br />
+&nbsp;&nbsp;&nbsp; $STR_NOCASESENSE (0) = Gro&szlig;- und Kleinschreibung wird nicht ber&uuml;cksichtigt, dabei wird die Standardsprache des Nutzers genutzt (Standard).<br />
+&nbsp;&nbsp;&nbsp; $STR_CASESENSE (1) = Gro&szlig;- und Kleinschreibung wird ber&uuml;cksichtigt.<br />
+&nbsp;&nbsp;&nbsp; $STR_NOCASESENSEBASIC (2) = Gro&szlig;- und Kleinschreibung wird nicht ber&uuml;cksichtigt, dabei wird ein einfacherer/schnellerer Vergleich genutzt.<br />
+<br />
+Die Konstanten sind in StringConstants.au3 definiert.</td>
+</tr>
+<tr>
+<td>$iOccurance</td>
+<td><strong>[optional]</strong> 0 = Nur die erste gefundene Stelle wird ersetzt oder 1 = Alle Vorkommnisse werden ersetzt (Standard)</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">die Anzahl Vorkommnisse</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>-1 und setzt @error zu ungleich 0</td>
+</tr>
+<tr>
+<td class="valign-top">@error:</td>
+<td>1 - Datei ist nur zum lesen<br />
+2 - Es ist nicht m&ouml;glich die Datei zu &ouml;ffnen<br />
+3 - Es ist nicht m&ouml;glich in die Datei zu schreiben</td>
+</tr>
+</table>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_ReplaceStringInFile.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;File.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sFind</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"VORHER"</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sReplace</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"NACHHER"</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sFileName</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"C:\_ReplaceStringInFile.test"</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iMsg</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Hallo Test "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sFind</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" Hallo Test"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a>
+<span class="S9">$iMsg</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><span class="S7">"Hallo Test"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a>
+<span class="S9">$iMsg</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a>
+<span class="S9">$iMsg</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><span class="S9">$sFind</span>
+
+<a class="codeSnippetLink" href="../functions/FileWrite.htm"><span class="S4">FileWrite</span></a><span class="S8">(</span><span class="S9">$sFileName</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iMsg</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"VORHER"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iMsg</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iRetval</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_ReplaceStringInFile.htm"><span class="S15">_ReplaceStringInFile</span></a><span class="S8">(</span><span class="S9">$sFileName</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFind</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sReplace</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$iRetval</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"FEHLER"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Das Suchmuster konnte nicht Ersetzt werden!"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" &amp; Datei: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sFileName</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" Fehlercode: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"INFO"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iRetval</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" &Uuml;bereinstimmungen mit dem Suchmuster: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sFind</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" in der Datei: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sFileName</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" gefunden."</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S9">$iMsg</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileRead.htm"><span class="S4">FileRead</span></a><span class="S8">(</span><span class="S9">$sFileName</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1000</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"NACHHER"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iMsg</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/FileDelete.htm"><span class="S4">FileDelete</span></a><span class="S8">(</span><span class="S9">$sFileName</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

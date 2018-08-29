@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _WinAPI_CreateIcon</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_WinAPI_CreateIcon</h1><br />
+<a href="../libfunctions/_WinAPI_CreateIcon.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Creates an icon that has the specified size, colors, and bit patterns<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIIcons.au3&gt;<br />
+_WinAPI_CreateIcon ( $hInstance, $iWidth, $iHeight, $iPlanes, $iBitsPixel, $pANDBits, $pXORBits )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$hInstance</td>
+<td style="width:85%">Handle to the instance of the module creating the icon.</td>
+</tr>
+<tr>
+<td>$iWidth</td>
+<td>The width, in pixels, of the icon.</td>
+</tr>
+<tr>
+<td>$iHeight</td>
+<td>The height, in pixels, of the icon.</td>
+</tr>
+<tr>
+<td>$iPlanes</td>
+<td>The number of planes in the XOR bitmask of the icon.</td>
+</tr>
+<tr>
+<td>$iBitsPixel</td>
+<td>The number of bits-per-pixel in the XOR bitmask of the icon.</td>
+</tr>
+<tr>
+<td>$pANDBits</td>
+<td>An array of bytes that contains the bit values for the AND bitmask of the icon. This bitmask describes a monochrome bitmap.</td>
+</tr>
+<tr>
+<td>$pXORBits</td>
+<td>An array of bytes that contains the bit values for the XOR bitmask of the icon. This bitmask describes a monochrome or device-dependent color bitmap.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">the handle to the icon that is created.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>0, call <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> to get extended error information.</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>When you are finished using the icon, destroy it using the <a href="_WinAPI_DestroyIcon.htm">_WinAPI_DestroyIcon()</a> function.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="_WinAPI_DestroyIcon.htm">_WinAPI_DestroyIcon</a></p>
+
+<h2>See Also</h2>
+<p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(CreateIcon);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">CreateIcon</a> in MSDN  Library.
+</p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_CreateIcon.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;StaticConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIIcons.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$sANDBits</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FF FF FF'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FF C3 FF'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FF 00 FF'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FE 00 7F'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FC 00 1F'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF F8 00 0F'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF F8 00 0F'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF F0 00 07'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF F0 00 03'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF E0 00 03'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF E0 00 01'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF E0 00 01'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF F0 00 01'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF F0 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF F8 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FC 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FF 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FF 80 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FF E0 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FF E0 01'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FF F0 01'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FF F0 01'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FF F0 03'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FF E0 03'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FF E0 07'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FF C0 0F'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FF C0 0F'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FF 80 1F'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FF 00 7F'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FC 00 FF'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF F8 03 FF'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FC 3F FF'</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$sXORBits</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 38 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 7C 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 7C 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 7C 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 38 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span>
+
+<span class="S1">; Create AND bitmask structure</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$bData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Binary.htm"><span class="S4">Binary</span></a><span class="S8">(</span><span class="S7">'0x'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringStripWS.htm"><span class="S4">StringStripWS</span></a><span class="S8">(</span><span class="S9">$sANDBits</span><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tANDBits</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">'byte['</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BinaryLen.htm"><span class="S4">BinaryLen</span></a><span class="S8">(</span><span class="S9">$bData</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">']'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tANDBits</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$bData</span><span class="S8">)</span>
+
+<span class="S1">; Create XOR bitmask structure</span>
+<span class="S9">$bData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Binary.htm"><span class="S4">Binary</span></a><span class="S8">(</span><span class="S7">'0x'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringStripWS.htm"><span class="S4">StringStripWS</span></a><span class="S8">(</span><span class="S9">$sXORBits</span><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tXORBits</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">'byte['</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BinaryLen.htm"><span class="S4">BinaryLen</span></a><span class="S8">(</span><span class="S9">$bData</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">']'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tXORBits</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$bData</span><span class="S8">)</span>
+
+<span class="S1">; Create monochrome icon (32x32)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hIcon</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateIcon.htm"><span class="S15">_WinAPI_CreateIcon</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">32</span><span class="S8">,</span><span class="S0"> </span><span class="S3">32</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tANDBits</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tXORBits</span><span class="S8">)</span>
+
+<span class="S1">; Create GUI</span>
+<a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">'Test '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringReplace.htm"><span class="S4">StringReplace</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@ScriptName"><span class="S6">@ScriptName</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">'.au3'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'()'</span><span class="S8">),</span><span class="S0"> </span><span class="S3">128</span><span class="S8">,</span><span class="S0"> </span><span class="S3">128</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUICtrlCreateIcon.htm"><span class="S4">GUICtrlCreateIcon</span></a><span class="S8">(</span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">48</span><span class="S8">,</span><span class="S0"> </span><span class="S3">48</span><span class="S8">,</span><span class="S0"> </span><span class="S3">32</span><span class="S8">,</span><span class="S0"> </span><span class="S3">32</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUICtrlSendMsg.htm"><span class="S4">GUICtrlSendMsg</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$STM_SETIMAGE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hIcon</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Do</span></a>
+<a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Until</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion FileOpen</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">FileOpen</h1><br />
+<a href="../functions_en/FileOpen.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">&Ouml;ffnet eine Datei zum Lesen oder Schreiben.<br /></p>
+<p class="codeheader">
+FileOpen ( "filename" [, mode = 0] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">filename</td>
+<td style="width:85%">Dateiname der zu &ouml;ffnenden Datei.</td>
+</tr>
+<tr>
+<td>mode</td>
+<td><strong>[optional]</strong> Modus in dem die Datei ge&ouml;ffnet werden soll.<br />
+Kann auch eine Kombination aus folgenden sein: <br />
+&nbsp;&nbsp;&nbsp; $FO_READ (0) = Lesemodus (Standard)<br />
+&nbsp;&nbsp;&nbsp; $FO_APPEND (1) = Schreibmodus (anh&auml;ngend an das Dateiende)<br />
+&nbsp;&nbsp;&nbsp; $FO_OVERWRITE (2) = Schreibmodus (l&ouml;schen des vorherigen Inhaltes)<br />
+&nbsp;&nbsp;&nbsp; $FO_CREATEPATH (8) = Anlegen der Verzeichnisstruktur, wenn sie nicht existiert (siehe Bemerkungen).<br />
+&nbsp;&nbsp;&nbsp; $FO_BINARY (16) = Erzwingt den Bin&auml;rmodus (Siehe Bemerkungen)<br />
+&nbsp;&nbsp;&nbsp; $FO_UNICODE or $FO_UTF16_LE (32) = Verwendet Unicode-UTF16 mit Little-Endian-Kodierung im Lese- und Schreibmodus<br />
+&nbsp;&nbsp;&nbsp; $FO_UTF16_BE (64) = Verwendet Unicode-UTF16 mit Big-Endian-Kodierung im Lese- und Schreibmodus.<br />
+&nbsp;&nbsp;&nbsp; $FO_UTF8 (128) = Verwendet Unicode-UTF8 Kodierung im Lese- und Schreibmodus.<br />
+&nbsp;&nbsp;&nbsp; $FO_UTF8_NOBOM (256) = Verwendet Unicode-UTF8 (ohne BOM) im Lese- und Schreibmodus.<br />
+&nbsp;&nbsp;&nbsp; $FO_ANSI (512) = Verwendet ANSI im Lese- und Schreibmodus.<br />
+&nbsp;&nbsp;&nbsp; $FO_UTF16_LE_NOBOM (1024) = Verwendet Unicode UTF16 Little Endian (ohne BOM) im Lese- und Schreibmodus.<br />
+&nbsp;&nbsp;&nbsp; $FO_UTF16_BE_NOBOM (2048) = Verwendet Unicode UTF16 Big Endian (ohne BOM) im Lese- und Schreibmodus.<br />
+&nbsp;&nbsp;&nbsp; $FO_UTF8_FULL (16384) = Wenn zum Lesen ge&ouml;ffnet wird und kein BOM verf&uuml;gbar ist, so wird auf die komplette Datei UTF8 oder UTF16 Erkennung angewendet. Falls dies nicht verwendet wird, so wird aus Performancegr&uuml;nden nur der Anfang der Datei (bis zu 64KB) untersucht.<br />
+Der Verzeichnispfad muss bereits vorhanden sein (au&szlig;er <em>mode</em> $FO_CREATEPATH wird verwendet - siehe Bemerkungen).<br />
+<br />
+Die Konstanten sind in FileConstants.au3 definiert.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">Ein Handle auf die Datei, das f&uuml;r die folgenden Funktionen ben&ouml;tigt wird.</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>-1, wenn ein Fehler aufgetaucht ist.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Das Dateihandle muss mit der <a href="FileClose.htm">FileClose()</a> Funktion wieder geschlossen werden.<br />
+Das &Ouml;ffnen einer Datei kann m&ouml;glicherweise fehlschlagen, durch fehlende Zugriffsrechte oder Attribute.<br />
+Der Standardmodus beim Schreiben von Text ist UTF8 (ohne BOM). Um dies zu &auml;ndern ist der Unicode-Mouds-Flag zu verwenden. Wenn Unicode-Dateien ohne ein explizites Unicode-Modus-Flag gelesen werden, so wird der Inhalt der Datei untersucht und geraten ob die Datei UTF8, UTF16 oder ANSI ist. Wenn eine existierende Datei ge&ouml;ffnet wird und diese Datei hat ein BOM so wird das BOM unabh&auml;ngig vom Unicode-Modus-Flag &uuml;bergeben.<br />
+Wird eine Datei im Schreibmodus (write mode) ge&ouml;ffnet, so wird die Datei erstellt, falls sie noch nicht existiert. Verzeichnisse werden nicht erstellt, au&szlig;er das entsprechende Flag wird verwendet.<br />
+Falls mit dem gleichen Dateihandle gelesen und geschrieben wird, so muss die <a href="FileSetPos.htm">FileSetPos()</a> Funktion verwendet werden um die aktuelle Dateiposition zu aktualisieren.<br />
+Eine Datei kann bin&auml;r (byteweise) ausgelesen werden wenn <a href="FileOpen.htm">FileOpen()</a> mit dem Bin&auml;rflag aufgerufen wird.<br />
+<br />
+Siehe <a href="../intro/unicode.htm">"Unicode Support"</a> f&uuml;r eine detailierte Beschreibung.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="FileClose.htm">FileClose</a>, <a href="FileFlush.htm">FileFlush</a>, <a href="FileGetPos.htm">FileGetPos</a>, <a href="FileRead.htm">FileRead</a>, <a href="FileReadLine.htm">FileReadLine</a>, <a href="FileSetPos.htm">FileSetPos</a>, <a href="FileWrite.htm">FileWrite</a>, <a href="FileWriteLine.htm">FileWriteLine</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<h3>Beispiel 1</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\FileOpen.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;FileConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIFiles.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erstellt eine konstante Variable im lokalen Bereich des Dateipfads der gelesen bzw. in den geschrieben werden soll.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$sFilePath</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetTempFileName.htm"><span class="S15">_WinAPI_GetTempFileName</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erstellt eine tempor&auml;re Datei von der Dateien gelesen werden sollen.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileWrite.htm"><span class="S4">FileWrite</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Dies ist ein Beispiel f&uuml;r die Verwendung von FileOpen."</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Es ist w&auml;hrend dem schreiben der tempor&auml;ren Datei ein Fehler aufgetreten."</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; &Ouml;ffnet die Datei zum lesen und speichert das Handle in einer Variable.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hFileOpen</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileOpen.htm"><span class="S4">FileOpen</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$FO_READ</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$hFileOpen</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Es ist w&auml;hrend dem lesen der Datei ein Fehler aufgetreten."</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Liest den Inhalt der Datei durch die Verwendung des von FileOpen zur&uuml;ckgegebenen Handles.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sFileRead</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileRead.htm"><span class="S4">FileRead</span></a><span class="S8">(</span><span class="S9">$hFileOpen</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Schlie&szlig;t das Handle welches von FileOpen zur&uuml;ckgegeben wurde.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/FileClose.htm"><span class="S4">FileClose</span></a><span class="S8">(</span><span class="S9">$hFileOpen</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Zeigt den Inhalt der Datei.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Inhalt der Datei:"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sFileRead</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; L&ouml;scht die tempor&auml;re Datei.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/FileDelete.htm"><span class="S4">FileDelete</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 2</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\FileOpen[02].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;FileConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIFiles.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erstellt eine konstante Variable im lokalen Bereich des Dateipfads der gelesen bzw. in den geschrieben werden soll.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$sFilePath</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetTempFileName.htm"><span class="S15">_WinAPI_GetTempFileName</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; &Ouml;ffnet eine Datei f&uuml;r den Lese/Schreib-Zugriff.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hFileOpen</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileOpen.htm"><span class="S4">FileOpen</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$FO_READ</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S9">$FO_OVERWRITE</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$hFileOpen</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Es ist w&auml;hrend des lesens der tempor&auml;ren Datei ein Fehler aufgetreten."</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Schreibt etwas Text.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/FileWrite.htm"><span class="S4">FileWrite</span></a><span class="S8">(</span><span class="S9">$hFileOpen</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Dies ist etwas Text um zu zeigen, dass das Handle mit Lese/Schreib-Zugriff ge&ouml;ffnet wurde."</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Ermittelt die aktuelle Position in der Datei.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iFilePos</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileGetPos.htm"><span class="S4">FileGetPos</span></a><span class="S8">(</span><span class="S9">$hFileOpen</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Nun wird die Position des Starts festgelegt.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/FileSetPos.htm"><span class="S4">FileSetPos</span></a><span class="S8">(</span><span class="S9">$hFileOpen</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$FILE_BEGIN</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Zeigt den Inhalt der Datei.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileRead.htm"><span class="S4">FileRead</span></a><span class="S8">(</span><span class="S9">$hFileOpen</span><span class="S8">))</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Die Position wird auf die voerherige Position gesetzt.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/FileSetPos.htm"><span class="S4">FileSetPos</span></a><span class="S8">(</span><span class="S9">$hFileOpen</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iFilePos</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Schreibt nochmals etwas Text.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/FileWrite.htm"><span class="S4">FileWrite</span></a><span class="S8">(</span><span class="S9">$hFileOpen</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Dies ist etwas zus&auml;tzlicher Text."</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Die Position wird auf die voerherige Position gesetzt.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/FileSetPos.htm"><span class="S4">FileSetPos</span></a><span class="S8">(</span><span class="S9">$hFileOpen</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$FILE_BEGIN</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Zeigt den Inhalt der Datei.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileRead.htm"><span class="S4">FileRead</span></a><span class="S8">(</span><span class="S9">$hFileOpen</span><span class="S8">))</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Schlie&szlig;t das Handle welches von FileOpen zur&uuml;ckgegeben wurde.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/FileClose.htm"><span class="S4">FileClose</span></a><span class="S8">(</span><span class="S9">$hFileOpen</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; L&ouml;scht die tempor&auml;re Datei.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/FileDelete.htm"><span class="S4">FileDelete</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

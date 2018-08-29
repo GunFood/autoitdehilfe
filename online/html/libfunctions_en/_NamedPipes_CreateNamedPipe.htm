@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _NamedPipes_CreateNamedPipe</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_NamedPipes_CreateNamedPipe</h1><br />
+<a href="../libfunctions/_NamedPipes_CreateNamedPipe.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Creates an instance of a named pipe<br /></p>
+<p class="codeheader">
+#include &lt;NamedPipes.au3&gt;<br />
+_NamedPipes_CreateNamedPipe ( $sName [, $iAccess = 2 [, $iFlags = 2 [, $iACL = 0 [, $iType = 1 [, $iRead = 1 [, $iWait = 0 [, $iMaxInst = 25 [, $iOutBufSize = 4096 [, $iInpBufSize = 4096 [, $iDefaultTimeout = 5000 [, $tSecurity = 0]]]]]]]]]]] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$sName</td>
+<td style="width:85%">Pipe name with the following format: \\.\pipe\pipename.<br />
+The pipename part of the name can include any character other than a backslash, including numbers and special characters.<br />
+The pipe name string can be up to 256 characters long.<br />
+Pipe names are not case sensitive.</td>
+</tr>
+<tr>
+<td>$iAccess</td>
+<td><strong>[optional]</strong> The pipe access mode. Must be one of the following:<br />
+&nbsp;&nbsp;&nbsp; 0 - The flow of data in the pipe goes from client to server only (inbound)<br />
+&nbsp;&nbsp;&nbsp; 1 - The flow of data in the pipe goes from server to client only (outbound)<br />
+&nbsp;&nbsp;&nbsp; 2 - The pipe is bi-directional (duplex)</td>
+</tr>
+<tr>
+<td>$iFlags</td>
+<td><strong>[optional]</strong> The pipe flags. Can be any combination of the following:<br />
+&nbsp;&nbsp;&nbsp; 1 - If you attempt to create multiple instances of a pipe with this flag, creation of the first instance succeeds, but creation of the next instance fails.<br />
+&nbsp;&nbsp;&nbsp; 2 - Overlapped mode is enabled. If this mode is enabled functions performing read, write, and connect operations that may take a significant time to be completed can return immediately.<br />
+&nbsp;&nbsp;&nbsp; 4 - Write-through mode is enabled. This mode affects only write operations on byte type pipes and only when the client and server are on different computers.</td>
+</tr>
+<tr>
+<td>$iACL</td>
+<td><strong>[optional]</strong> Security ACL flags. Can be any combination of the following:<br />
+&nbsp;&nbsp;&nbsp; 1 - The caller will have write access to the named pipe's discretionary ACL<br />
+&nbsp;&nbsp;&nbsp; 2 - The caller will have write access to the named pipe's owner<br />
+&nbsp;&nbsp;&nbsp; 4 - The caller will have write access to the named pipe's security ACL</td>
+</tr>
+<tr>
+<td>$iType</td>
+<td><strong>[optional]</strong> Pipe type mode. Must be one of the following:<br />
+&nbsp;&nbsp;&nbsp; 0 - Data is written to the pipe as a stream of bytes<br />
+&nbsp;&nbsp;&nbsp; 1 - Data is written to the pipe as a stream of messages</td>
+</tr>
+<tr>
+<td>$iRead</td>
+<td><strong>[optional]</strong> Pipe read mode. Must be one of the following:<br />
+&nbsp;&nbsp;&nbsp; 0 - Data is read from the pipe as a stream of bytes<br />
+&nbsp;&nbsp;&nbsp; 1 - Data is read from the pipe as a stream of messages</td>
+</tr>
+<tr>
+<td>$iWait</td>
+<td><strong>[optional]</strong> Pipe wait mode. Must be one of the following:<br />
+&nbsp;&nbsp;&nbsp; 0 - Blocking mode is enabled. When the pipe handle is specified in _WinAPI_ReadFile(), _WinAPI_WriteFile(), or _NamedPipes_ConnectNamedPipe(), the operation is not completed until there is data to read, all data is written, or a client is connected.<br />
+&nbsp;&nbsp;&nbsp; 1 - Nonblocking mode is enabled. _WinAPI_ReadFile(), _WinAPI_WriteFile(), and _NamedPipes_ConnectNamedPipe() always return immediately.</td>
+</tr>
+<tr>
+<td>$iMaxInst</td>
+<td><strong>[optional]</strong> The maximum number of instances that can be created for this pipe</td>
+</tr>
+<tr>
+<td>$iOutBufSize</td>
+<td><strong>[optional]</strong> The number of bytes to reserve for the output buffer</td>
+</tr>
+<tr>
+<td>$iInpBufSize</td>
+<td><strong>[optional]</strong> The number of bytes to reserve for the input buffer</td>
+</tr>
+<tr>
+<td>$iDefaultTimeOut</td>
+<td><strong>[optional]</strong> The default time out value, in milliseconds</td>
+</tr>
+<tr>
+<td>$tSecurity</td>
+<td><strong>[optional]</strong> a $tagSECURITY_ATTRIBUTES structure that specifies a security descriptor for the new named pipe and determines whether child processes can inherit the returned handle.<br />
+If $tSecurity is 0, the named pipe gets a default security descriptor and the handle cannot be inherited.<br />
+The ACLs in the default security descriptor for a named pipe grant full control to the LocalSystem account administrators, and the creator owner.<br />
+They also grant read access to members of the Everyone group and the anonymous account.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">a handle to the server end of a named pipe instance.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>-1.</td>
+</tr>
+</table>
+
+<h2>Related</h2>
+<p><a href="$tagSECURITY_ATTRIBUTES.htm">$tagSECURITY_ATTRIBUTES</a>, <a href="_NamedPipes_ConnectNamedPipe.htm">_NamedPipes_ConnectNamedPipe</a>, <a href="_NamedPipes_CreatePipe.htm">_NamedPipes_CreatePipe</a></p>
+
+<h2>See Also</h2>
+<p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(CreateNamedPipe);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">CreateNamedPipe</a> in MSDN  Library.
+</p>
+
+</body>
+</html>

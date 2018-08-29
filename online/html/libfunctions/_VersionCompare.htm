@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _VersionCompare</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_VersionCompare</h1><br />
+<a href="../libfunctions_en/_VersionCompare.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Vergleicht zwei Dateiversionen auf Gleichheit<br /></p>
+<p class="codeheader">
+#include &lt;Misc.au3&gt;<br />
+_VersionCompare ( $sVersion1, $sVersion2 )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$sVersion1</td>
+<td style="width:85%">Der erste Versionswert</td>
+</tr>
+<tr>
+<td>$sVersion2</td>
+<td>Der zweite Versionswert</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">Folgende Werte:<br />
+0 - Beide Versionen sind gleich<br />
+1 - Version 1 ist h&ouml;her<br />
+-1 - Version 2 ist h&ouml;her</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>@error wird im Falle eines katastrophalen Fehlers gesetzt</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Diese Funktion versucht zuerst einen numerischen Vergleich, danach einen lexikographischen.<br />
+Siehe @extended f&uuml;r Details welches Verfahren angewandt wurde.<br />
+Numerische Versionen k&ouml;nnen mit einem Buchstaben enden, wie z. B. "3.3.1c"<br />
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<h3>Beispiel 1</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_VersionCompare.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Misc.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_sResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">""</span>
+
+<span class="S0">Check_VersionCompare</span><span class="S8">(</span><span class="S7">"25.2.1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"5.2.1"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">Check_VersionCompare</span><span class="S8">(</span><span class="S7">"5.12.0"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"5.2.1"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">Check_VersionCompare</span><span class="S8">(</span><span class="S7">"10.0.0.0"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"12,0,0,0"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">)</span>
+
+<span class="S0">Check_VersionCompare</span><span class="S8">(</span><span class="S7">"1.2.1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"1.10"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">Check_VersionCompare</span><span class="S8">(</span><span class="S7">"1.11.1b"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"1.2"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">Check_VersionCompare</span><span class="S8">(</span><span class="S7">"1.1b"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"1.11c"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">Check_VersionCompare</span><span class="S8">(</span><span class="S7">"1.11b"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"1.1c"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">Check_VersionCompare</span><span class="S8">(</span><span class="S7">"5.2.1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"5.2.1a"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">Check_VersionCompare</span><span class="S8">(</span><span class="S7">"5.2.1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"5.2.1"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0">Check_VersionCompare</span><span class="S8">(</span><span class="S7">"5.2.1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"5.2.1.0"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0">Check_VersionCompare</span><span class="S8">(</span><span class="S7">"5.2.1a"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"5.2.1.0"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">Check_VersionCompare</span><span class="S8">(</span><span class="S7">"5.2.1a"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"5.2.1.1"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">Check_VersionCompare</span><span class="S8">(</span><span class="S7">"5.2.1b"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"5.2.1.1a"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">Check_VersionCompare</span><span class="S8">(</span><span class="S7">"5.2.1b"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"5.2.1a"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">Check_VersionCompare</span><span class="S8">(</span><span class="S7">"5.2.1a"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"5.2.1a"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0">Check_VersionCompare</span><span class="S8">(</span><span class="S7">"5.2.1a"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"5.2.1b"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'_VersionCompare Ergebnisse'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_sResult</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Check_VersionCompare</span><span class="S8">(</span><span class="S9">$sVersion1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sVersion2</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iReturn</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iRet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_VersionCompare.htm"><span class="S15">_VersionCompare</span></a><span class="S8">(</span><span class="S9">$sVersion1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sVersion2</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iExtended</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_sResult</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><span class="S7">'"'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sVersion1</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'" zu "'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sVersion2</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" R&uuml;ckgabewert "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iRet</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$iRet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S9">$iReturn</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><span class="S9">$g_sResult</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><span class="S7">" anstelle von "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iReturn</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_sResult</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"@extended = "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iExtended</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Check_VersionCompare</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 2</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_VersionCompare[02].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Misc.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$datei_1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"3.3.10.2"</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$datei_2</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"3.3.14.2"</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$vergleich</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_VersionCompare.htm"><span class="S15">_VersionCompare</span></a><span class="S8">(</span><span class="S9">$datei_1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$datei_2</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$vergleich</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S3">64</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Vergleich"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Datei 1 hat die neuere Versionsnummer"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">ElseIf</span></a><span class="S0"> </span><span class="S9">$vergleich</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S3">64</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Vergleich"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Datei 2 hat die neuere Versionsnummer"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S3">64</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Vergleich"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Beide Dateien haben die gleiche Versionsnummer"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

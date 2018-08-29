@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion FileRead</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">FileRead</h1><br />
+<a href="../functions_en/FileRead.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Liest eine bestimmte Anzahl von Zeichen aus einer zuvor ge&ouml;ffneten Datei.<br /></p>
+<p class="codeheader">
+FileRead ( "filehandle/filename" [, count] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">filehandle/filename</td>
+<td style="width:85%">Das Handle der Datei, wie es von einem fr&uuml;heren Aufruf von  <a href="FileOpen.htm">FileOpen()</a> zur&uuml;ckgegeben wurde. Alternativ kann ein String mit dem Dateinamen als erster Parameter verwendet werden.</td>
+</tr>
+<tr>
+<td>count</td>
+<td><strong>[optional]</strong> Die Anzahl der einzulesenden Zeichen - siehe Bemerkungen.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">Die eingelesenen Zeichen. @extended wird auf die zur&uuml;ckgegebenen Bytes/Zeichen gesetzt.</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>Setzt @error auf ungleich 0.</td>
+</tr>
+<tr>
+<td class="valign-top">@error:</td>
+<td> 1 = Die Datei wurde nicht im Lesemodus ge&ouml;ffnet.<br />
+-1 = Das Dateiende wurde erreicht</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Eine negative oder nicht definierte Anzahl der einzulesenen Zeichen liest die ganze Datei von der aktuellen Position ab.<br />
+<br />
+Wenn ein Dateiname statt eines Dateihandles angegeben wird, wird die Datei w&auml;hrend des Funktionsaufrufes ge&ouml;ffnet und geschlossen. F&uuml;r die Bearbeitung gro&szlig;er Dateien ist das viel langsamer als die Arbeit mit Handles.<br />
+Hinweis: Nicht die Verwendung von Dateihandles und -namen vermischen. So soll man zum Beispiel nicht eine Datei mit <a href="FileOpen.htm">FileOpen()</a> &ouml;ffnen und dann in dieser Funktion einen Dateinamen verwenden. Entweder Handles oder Dateinamen benutzen - nicht beides!<br />
+<br />
+Sowohl ANSI als auch UTF16/UTF8 Formate k&ouml;nnen gelesen werden - Siehe <a href="FileOpen.htm">FileOpen()</a> f&uuml;r Details.<br />
+<br />
+Eine Datei kann bin&auml;r (byteweise) ausgelesen werden wenn <a href="FileOpen.htm">FileOpen()</a> mit dem Bin&auml;rflag aufgerufen wird. In diesem Fall gibt count die Anzahl der Bytes an, nicht die der Zeichen.<br />
+Ein zu gro&szlig;er Wert f&uuml;r Anzahl kann dazu f&uuml;hren, dass AutoIt mit einem Speicherzugriffsfehler beendet wird.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="FileGetPos.htm">FileGetPos</a>, <a href="FileOpen.htm">FileOpen</a>, <a href="FileReadLine.htm">FileReadLine</a>, <a href="FileSetPos.htm">FileSetPos</a>, <a href="FileWrite.htm">FileWrite</a>, <a href="FileWriteLine.htm">FileWriteLine</a>, <a href="String.htm">String</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\FileRead.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;FileConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIFiles.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erstellt eine konstante Variable im lokalen Bereich des Dateipfads der gelesen bzw. in den geschrieben werden soll.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$sFilePath</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetTempFileName.htm"><span class="S15">_WinAPI_GetTempFileName</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erstellt eine tempor&auml;re Datei von der Dateien gelesen werden sollen.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileWrite.htm"><span class="S4">FileWrite</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Dies ist ein Beispiel f&uuml;r die Verwendung von FileRead."</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Es ist w&auml;hrend dem schreiben der tempor&auml;ren Datei ein Fehler aufgetreten."</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; &Ouml;ffnet die Datei zum schreiben und speichert das Handle in einer Variable.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hFileOpen</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileOpen.htm"><span class="S4">FileOpen</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$FO_READ</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$hFileOpen</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Es ist w&auml;hrend dem lesen der Datei ein Fehler aufgetreten."</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Liest den Inhalt der Datei durch die Verwendung des durch FileOpen zur&uuml;ckgegebenen Handles.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sFileRead</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileRead.htm"><span class="S4">FileRead</span></a><span class="S8">(</span><span class="S9">$hFileOpen</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Schlie&szlig;t das Handle welches von FileOpen zur&uuml;ckgegeben wurde.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/FileClose.htm"><span class="S4">FileClose</span></a><span class="S8">(</span><span class="S9">$hFileOpen</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Zeigt den Inhalt der Datei.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Inhalt der Datei:"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sFileRead</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; L&ouml;scht die tempor&auml;ren Datei.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/FileDelete.htm"><span class="S4">FileDelete</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

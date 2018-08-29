@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _WinAPI_UniqueHardwareID</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1>_WinAPI_UniqueHardwareID</h1>
+<p class="funcdesc">Generates a unique hardware identifier (ID) for local computer<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIDiag.au3&gt;<br />
+_WinAPI_UniqueHardwareID ( [$iFlags = 0] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$iFlags</td>
+<td style="width:85%"><strong>[optional]</strong> The flags that specifies what information would be used to generate ID. This parameter can be one or more of the following values.<br />
+$UHID_MB - Uses information about your motherboard. This flag is used by default regardless of whether specified or not.<br />
+$UHID_BIOS - Uses information from BIOS.<br />
+$UHID_CPU - Uses information about your processor(s). Note that $UHID_CPU flag reduces the function speed.<br />
+$UHID_HDD - Uses information about the installed hard drives. Any change in the configuration disks will change ID returned by this function. Taken into account only non-removable disks with an ATA or SATA interfaces.<br />
+$UHID_All - The sum of all the previous flags.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">The string representation of the ID. @extended returns the value that contains a combination of flags<br />
+specified in the $iFlags parameter. If flag is set, appropriate information is received successfully,<br />
+otherwise fails. The function checks only flags that were specified in the $iFlags parameter.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>Empty string and sets the @error flag to non-zero.</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>This function uses the Windows Management Instrumentation (WMI).<br />
+</p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_UniqueHardwareID.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;APIDiagConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIDiag.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'Hardware1: '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_UniqueHardwareID.htm"><span class="S15">_WinAPI_UniqueHardwareID</span></a><span class="S8">()</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'Hardware2: '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_UniqueHardwareID.htm"><span class="S15">_WinAPI_UniqueHardwareID</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$UHID_MB</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$UHID_BIOS</span><span class="S8">))</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'Hardware3: '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_UniqueHardwareID.htm"><span class="S15">_WinAPI_UniqueHardwareID</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$UHID_MB</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$UHID_BIOS</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$UHID_CPU</span><span class="S8">))</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'Hardware4: '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_UniqueHardwareID.htm"><span class="S15">_WinAPI_UniqueHardwareID</span></a><span class="S8">(</span><span class="S9">$UHID_All</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

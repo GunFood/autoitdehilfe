@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fenstertitel und -text (erweitert)</title>
+	<meta charset="utf-8">
+	<link href="../css/default.css" rel="stylesheet">
+</head>
+<body>
+	<h1>Fenstertitel und -text (erweitert)</h1>
+	<p>AutoIt arbeitet in einem von drei "Fenster-bezogenen" Modi. Diese Modi werden mit der Funktion <a href="../functions/AutoItSetOption.htm#WinTitleMatchMode">AutoItSetOption</a> sowie der Option <a href="../functions/AutoItSetOption.htm#WinTitleMatchMode">WinTitleMatchMode</a> gesetzt.</p>
+	<p></p>
+	<p><strong>Modus 1 (Standard)</strong></p>
+	<p>&Uuml;bereinstimmung von Titel-Teilen (beginnend am Anfang).</p>
+	<p>In diesem Modus w&uuml;rde ein mit <strong>Unbenannt - Editor</strong> betiteltes Fenster eine &Uuml;bereinstimmung mit "Unbenannt - Editor", "Unbenannt", "Un", etc. erzielen,</p>
+	<p>z.B.</p>  
+@@SyntaxHighlighting@@
+WinWait("Unbekannt")
+@@End@@
+
+  <p>&nbsp;</p>
+	<p><strong>Modus 2</strong></p>
+	<p>&Uuml;bereinstimmung einer beliebigen Teilzeichenfolge des Titels.</p>
+	<p>In diesem Modus w&uuml;rde ein mit <strong>Unbenannt - Editor</strong> betiteltes Fenster eine &Uuml;bereinstimmung mit "Unbenannt - Editor", "Unbenannt", "Editor", "tor", etc. erzielen,</p>
+	<p>z.B.</p>  
+@@SyntaxHighlighting@@
+WinWait("Editor")
+@@End@@  
+  
+  <p>&nbsp;</p>
+	<p><strong>Modus 3</strong></p>
+	<p>Exakte Titel-&Uuml;bereinstimmung.</p>
+	<p>In diesem Modus w&uuml;rde ein mit <strong>Unbenannt - Editor</strong> betiteltes Fenster nur mit "Unbenannt - Editor" eine &Uuml;bereinstimmung erzielen.</p>
+  <p>&nbsp;</p>  
+	<p><strong>Modus 4</strong> (beibehalten f&uuml;r die Abw&auml;rtskompatibilit&auml;t)</p>
+	<p>Erweiterter Modus</p>
+	<p>Ersetzt durch die erweiterten Fensterbeschreibungen, welche in jedem Modus funktionieren.</p>
+  <p>&nbsp;</p>
+	<p><strong>Modi -1 bis -3</strong></p>
+	<p>Die Gro&szlig;- und Kleinschreibung wird ignoriert, abh&auml;ngig von den anderen &Uuml;bereinstimmungsmodi</p>
+	<h2>Erweiterte Fensterbeschreibungen</h2>
+	<p>Eine spezielle Beschreibung kann als Fenster <strong>Titel</strong> Parameter genutzt werden. Diese Beschreibung kann mit Hilfe der folgenden <em>Eigenschaften</em><em></em> dazu genutzt werden, ein Fenster zu identifizieren:</p>
+	<ul>
+		<li><strong>TITLE -</strong> Fenstertitel</li>
+		<li><strong>CLASS -</strong> Der interne Klassenname des Fensters</li>
+		<li>
+			<strong>REGEXPTITLE -</strong> Fenstertitel, der eine <a href="../functions/StringRegExp.htm">regular expression</a> benutzt (ist der regul&auml;re Ausdruck falsch, wird @error auf 2 gesetzt)
+		</li>
+		<li>
+			<strong>REGEXPCLASS -</strong> Fenster Klassenname, der eine <a href="../functions/StringRegExp.htm">regular expression</a> benutzt (ist der regul&auml;re Ausdruck falsch, wird @error auf 2 gesetzt)
+		</li>
+		<li><strong>LAST -</strong> Das zuletzt in einer AutoIt-Funktion genutzte Fenster (siehe Fenster Funktionsreferenz)</li>
+		<li><strong>ACTIVE -</strong> Das momentan aktive Fenster</li>
+		<li><strong>X</strong> \ <strong>Y</strong> \ <strong>W</strong> \ <strong>H</strong> - Die Position und Gr&ouml;&szlig;e eines Fensters</li>
+		<li><strong>INSTANCE -</strong> Die 1-basierte Instanz, wenn alle gegebenen Eigenschaften &uuml;berein stimmen</li>
+	</ul>
+	<p>Eine oder mehrere Eigenschaften des <em>Title</em> Parameters eines Fensters werden im folgenden Format benutzt:</p>
+@@SyntaxHighlighting@@
+[EIGENSCHAFT1: Wert1; EIGENSCHAFT2:Wert2]
+@@End@@
+
+  <p>&nbsp;</p>  
+	<p><strong>Es ist folgendes zu beachten</strong> : falls ein Wert ein ";" enthalten muss, so muss dieses verdoppelt werden.</p>
+	<p>z.B. Warte auf ein Fenster mit dem Klassennamen "Editor"</p>
+@@SyntaxHighlighting@@
+WinWaitActive("[CLASS:Editor]", "")
+@@End@@
+
+  <p>&nbsp;</p>  
+	<p>z.B. Schlie&szlig;t das momentan aktive Fenster</p>
+@@SyntaxHighlighting@@
+WinClose("[ACTIVE]", "")
+@@End@@  
+  
+  <p>&nbsp;</p>
+	<p>z.B. Warte auf die zweite Instanz eines Fensters mit dem Titel "Mein Fenster" <strong>und</strong> dem Klassennamen "Meine Klasse"</p>
+@@SyntaxHighlighting@@
+WinWaitActive("[TITLE:Mein Fenster; CLASS:Meine Klasse; INSTANCE:2]", "")
+@@End@@
+  
+  <p>&nbsp;</p>
+	<p>z. B. Listet die Fenster welche auf einen Klasssennamen passen der durch einen regul&auml;ren Ausdruck definiert wurde</p>
+@@SyntaxHighlighting@@
+WinList("[REGEXPTITLE:(?i)(.*SciTE.*|.*Internet Explorer.*)]")
+@@End@@
+  
+	<h2>Fenster Handles / HWNDs</h2>
+	<p>Der Datentyp 'Variant' in AutoIt unterst&uuml;tzt von Haus aus Fenster-Handles (HWNDs). Ein Fenster-Handle ist ein spezieller Wert, den Windows jedesmal dann einem Fenster zuordnet, sobald eines erstellt wird. Kennt man ein Fenster-Handle, kann man es an Stelle des <em>Titel</em> Parameters in jedem Funktionsaufruf nutzen, der die Titel/Text Vereinbarungen erf&uuml;llt. Der Vorteil bei der Nutzung der Fenster-Handles ist der, dass wenn man mehrere Kopien einer Applikation ge&ouml;ffnet hat, -die alle den selben Titel/Text haben- man diese eindeutig &uuml;ber ihre Fenster-Handles identifizieren kann. <strong>Wenn man ein Fenster-Handle als Titel-Parameter nutzt, dann wird der <em>T</em><em>ext</em> Parameter vollst&auml;ndig ignoriert.</strong></p>
+	<p>Verschiedene Funktionen wie z.B. <a href="../functions/WinGetHandle.htm">WinGetHandle</a>, <a href="../functions/WinList.htm">WinList</a> und <a href="../functions/GUICreate.htm">GUICreate</a> geben diese Handles zur&uuml;ck. Es ist wichtig zu wissen, dass ein Fenster-Handle <strong>nicht</strong> als Zahl oder Zeichenfolge (String) klassifiziert ist. - Er ist ein eigener, spezieller Typ.</p>
+	<p><strong>Es ist folgendes zu beachten: Fenster-Handles funktionieren immer, egal welcher WinTitleMatchMode gerade in Benutzung ist.</strong></p>
+	<p><strong>Beispiel</strong></p>
+@@SyntaxHighlighting@@
+Local $hWnd = WinGetHandle("Unbenannt - Editor", "")
+WinClose($hWnd)
+@@End@@
+
+</body>
+</html>

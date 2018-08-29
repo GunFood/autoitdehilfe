@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinAPI_GetFontResourceInfo</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1>_WinAPI_GetFontResourceInfo</h1>
+<p class="funcdesc">Retrieves the fontname from the specified font resource file<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIGdi.au3&gt;<br />
+_WinAPI_GetFontResourceInfo ( $sFont [, $bForce = False [, $iFlag = Default]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$sFont</td>
+<td style="width:85%">String that names a font resource file.<br />
+To retrieve a fontname whose information comes from several resource files, they must be separated by a "|" .<br />
+For example, abcxxxxx.pfm | abcxxxxx.pfb.</td>
+</tr>
+<tr>
+<td>$bForce</td>
+<td><strong>[optional]</strong> Specifies whether adds a file to the font table, valid values:<br />
+&nbsp;&nbsp;&nbsp; True - Forced add the specified file to the system font table and remove it after retrieving the fontname.<br />
+&nbsp;&nbsp;&nbsp; False - Don't add and remove (Default).</td>
+</tr>
+<tr>
+<td>$iFlag</td>
+<td><strong>[optional]</strong> An integer value. See <a href="_WinAPI_GetFontMemoryResourceInfo.htm">_WinAPI_GetFontMemoryResourceInfo()</a> for value definition.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">The name of the font or Font information according to $iFlag.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>Empty string and sets the @error flag to non-zero, call <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> to get extended error information.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>not documented in MSDN<br />
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<h3>Beispiel 1</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_GetFontResourceInfo.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;File.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIGdi.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIShellEx.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aFileList</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_FileListToArray.htm"><span class="S15">_FileListToArray</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_ShellGetSpecialFolderPath.htm"><span class="S15">_WinAPI_ShellGetSpecialFolderPath</span></a><span class="S8">(</span><span class="S9">$CSIDL_FONTS</span><span class="S8">),</span><span class="S0"> </span><span class="S7">'*.ttf'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aFontList</span><span class="S8">[</span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aFileList</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span><span class="S8">][</span><span class="S3">2</span><span class="S8">]</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S9">$aFileList</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aFontList</span><span class="S8">[</span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span><span class="S8">][</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aFileList</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aFontList</span><span class="S8">[</span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span><span class="S8">][</span><span class="S3">1</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetFontResourceInfo.htm"><span class="S15">_WinAPI_GetFontResourceInfo</span></a><span class="S8">(</span><span class="S9">$aFileList</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">],</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aFontList</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'_WinAPI_GetFontResourceInfo'</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 2</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_GetFontResourceInfo[02].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;File.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIGdi.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIShellEx.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aFileList</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_FileListToArray.htm"><span class="S15">_FileListToArray</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_ShellGetSpecialFolderPath.htm"><span class="S15">_WinAPI_ShellGetSpecialFolderPath</span></a><span class="S8">(</span><span class="S9">$CSIDL_FONTS</span><span class="S8">),</span><span class="S0"> </span><span class="S7">'*.ttf'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aFontList</span><span class="S8">[</span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aFileList</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span><span class="S8">][</span><span class="S3">2</span><span class="S8">]</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S9">$aFileList</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aFontList</span><span class="S8">[</span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span><span class="S8">][</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aFileList</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aFontList</span><span class="S8">[</span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span><span class="S8">][</span><span class="S3">1</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetFontResourceInfo.htm"><span class="S15">_WinAPI_GetFontResourceInfo</span></a><span class="S8">(</span><span class="S9">$aFileList</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">],</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aFontList</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'_WinAPI_GetFontResourceInfo (Name der Schriftfamilie)'</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 3</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_GetFontResourceInfo[03].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext3\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext3">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIGdi.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sFile</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Extras\SF Square Head Bold.ttf"</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetFontResourceInfo.htm"><span class="S15">_WinAPI_GetFontResourceInfo</span></a><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; FontGetInfoFromFile</span><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Copyright"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; FontGetInfoFromFile</span><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Font Family name"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; FontGetInfoFromFile</span><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Font SubFamily name"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; FontGetInfoFromFile</span><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Unique font identifier"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; FontGetInfoFromFile</span><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Font full name"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; FontGetInfoFromFile</span><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">5</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Version string"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; FontGetInfoFromFile</span><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">6</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Postscript name"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; FontGetInfoFromFile</span><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">7</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Trademark"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; FontGetInfoFromFile</span><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Manufacturer Name"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; FontGetInfoFromFile</span><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">9</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Designer"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; FontGetInfoFromFile</span><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Description"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; FontGetInfoFromFile</span><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">11</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"URL Vendor"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; FontGetInfoFromFile</span><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">16</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Preferred Family (Windows only)"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; FontGetInfoFromFile</span><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">17</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Preferred SubFamily (Windows only)"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; FontGetInfoFromFile</span><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">18</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Compatible Full (Mac OS only)"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; FontGetInfoFromFile</span><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">19</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Sample text"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; FontGetInfoFromFile</span><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"PostScript CID findfont name"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; FontGetInfoFromFile</span><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">256</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Font-specific names"</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> FontGetInfoFromFile</span><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$n</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sElement</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$s</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetFontResourceInfo.htm"><span class="S15">_WinAPI_GetFontResourceInfo</span></a><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S9">$n</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">And</span></a><span class="S0"> </span><span class="S9">$s</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S9">$sElement</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" = "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$s</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;FontGetInfoFromFile</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

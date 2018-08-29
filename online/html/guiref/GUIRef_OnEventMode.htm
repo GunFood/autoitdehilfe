@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>GUI-Referenz - OnEvent Modus</title>
+	<meta charset="utf-8">
+	<link href="../css/default.css" rel="stylesheet">
+</head>
+<body>
+	<h1>GUI-Referenz - OnEvent Modus</h1>
+	<p>Anstatt die GUI st&auml;ndig abzufragen, um herauszufinden ob etwas passiert ist, l&auml;sst du im OnEvent Modus die GUI zeitweise dein Skript anhalten und eine vordefinierte Funktion aufrufen, um das Ereignis zu behandeln. Wenn zum Beispiel ein Nutzer auf Button1 klickt, h&auml;lt die GUI dein Hauptskript an und ruft eine vorher von dir definierte Funktion auf, die f&uuml;r Button1 zust&auml;ndig ist. Wenn diese Funktion abgearbeitet ist, wird das Hauptskript fortgesetzt. Dieser Modus ist &auml;hnlich wie die Visual Basic Formular-Methode.</p>
+	<p>W&auml;hrend die GUI ausgef&uuml;hrt wird, kann dein Hauptskript jede normale Skriptaufgabe ausf&uuml;hren, aber um das Beispiel m&ouml;glichst einfach zu machen, lassen wir das Hauptskript einfach eine endlose While-Schleife ausf&uuml;hren.</p>
+	<p>Der voreingestellte Modus ist der MessageLoop Modus, deshalb m&uuml;ssen wir vor dem Benutzen des OnEvent Modus <a href="../functions/AutoItSetOption.htm#GUIOnEventMode">Opt("GUIOnEventMode", 1)</a> verwenden.</p>
+	<p></p>
+	<h2>Grundlegendes OnEvent Format</h2>
+	<p>Der allgemeine OnEvent Code sieht so aus:</p>
+@@SyntaxHighlighting@@
+While 1
+	Sleep(100) ; Im Leerlauf bummeln
+WEnd
+
+Func Event1()
+	; Code zur Ereignis-Behandlung kommt hier hin
+EndFunc   ;==>Event1
+
+Func Event2()
+	; Code zur Ereignis-Behandlung kommt hier hin<br>Code to handle event goes here
+EndFunc   ;==>Event2
+@@End@@  
+  
+	<h2>GUI Ereignisse</h2>
+	<p>Im OnEvent Modus produziert deine GUI die folgenden "Ereignisse":</p>
+	<ul>
+		<li>Control-Ereignis</li>
+		<li>System-Ereignis</li>
+	</ul>
+	<p>Beide Ereignistypen rufen eine nutzerdefinierte Funktion auf, wenn eine f&uuml;r die GUI definiert wurde (<a href="../functions/GUISetOnEvent.htm">GUISetOnEvent</a>) oder wenn sie f&uuml;r ein Control definiert wurde (<a href="../functions/GUICtrlSetOnEvent.htm">GUICtrlSetOnEvent</a>). Wenn keine Funktion f&uuml;r ein Ereignis definiert wurde, dann wird dieses Ereignis einfach ignoriert. Innerhalb dieser aufgerufenen Funktion werden verschiedene Makros als Werte verwendet um die Ereignisbehandlung zu vereinfachen.</p>
+  <table>
+    <tr>
+      <th>Makro</th>
+      <th>Details</th>
+    </tr>
+    <tr>
+      <td>@GUI_CtrlId</td>
+      <td>Die Control-ID des Controls, das die Nachricht gesendet hat <strong>ODER</strong> die System-Ereignis-ID</td>
+    </tr>
+    <tr>
+      <td>@GUI_WinHandle</td>
+      <td>Der Handle der GUI, die die Nachricht gesendet hat</td>
+    </tr>
+    <tr>
+      <td>@GUI_CtrlHandle</td>
+      <td>Der Handle des Controls, das die Nachricht gesendet hat (falls anwendbar)</td>
+    </tr>
+  </table>
+	<p><strong>Beachte:</strong> Es ist v&ouml;llig legal, die gleiche Funktion f&uuml;r mehrere Ereignisse zu verwenden; alles, was du in diesen F&auml;llen tun musst, ist das @GUI_CTRLID Makro zu verwenden. Zum Beispiel k&ouml;nntest du alle System-Ereignisse der gleichen Funktion zuordnen.</p>
+	<p></p>
+	<p><strong>Control-Ereignis</strong></p>
+	<p>Wenn ein Control angeklickt wird oder sich ver&auml;ndert wird ein Control-Event gesendet. Das Ereignis wird an die Funktion gesendet, die mit <a href="../functions/GUICtrlSetOnEvent.htm">GUICtrlSetOnEvent</a> definiert wurde. Innerhalb der nutzerdefinierten Funktion wird @GUI_CTRLID auf die <strong>Control-ID</strong> gesetzt, die man beim anlegen des Controls mit <a href="GUICtrlCreate.htm">GUICtrlCreate...</a> als R&uuml;ckgabewert erhalten hat.</p>
+	<p></p>
+	<p><strong>System-Ereignis</strong></p>
+	<p>System-Ereignisse - wie das Schlie&szlig;en der GUI - werden auf &auml;hnliche Weise wie Control-Ereignisse geschickt, aber der Ereignistyp wird durch @GUI_CTRLID definiert. Das Ereignis wird an die Funktion geschickt, die mit <a href="../functions/GUISetOnEvent.htm">GUISetOnEvent</a> definiert wurde. Die m&ouml;glichen System-Ereignisse sind hier aufgelistet:</p>
+@@SyntaxHighlighting@@
+$GUI_EVENT_CLOSE
+$GUI_EVENT_MINIMIZE
+$GUI_EVENT_RESTORE
+$GUI_EVENT_MAXIMIZE
+$GUI_EVENT_PRIMARYDOWN
+$GUI_EVENT_PRIMARYUP
+$GUI_EVENT_SECONDARYDOWN
+$GUI_EVENT_SECONDARYUP
+$GUI_EVENT_MOUSEMOVE
+$GUI_EVENT_RESIZED
+$GUI_EVENT_DROPPED
+@@End@@
+
+	<h2>Beispiel-GUI</h2>
+	<p>Auf der Hauptseite der <a href="GUIRef.htm">GUI Referenz</a> haben wir mit einem einfachen "Hallo Welt!" Beispiel angefangen, das so aussah:</p>
+@@SyntaxHighlighting@@
+#include <GUIConstantsEx.au3>
+
+GUICreate("Hallo Welt", 200, 100)
+GUICtrlCreateLabel("Hallo Welt! Wie geht's?", 30, 10)
+GUICtrlCreateButton("OK", 70, 50, 60)
+GUISetState(@SW_SHOW)
+Sleep(2000)
+@@End@@
+
+  <p>&nbsp;</p>
+	<p>Jetzt vervollst&auml;ndigen wir den Code mit OnEvents und einigen der oben beschriebenen Ereignis-Nachrichten.</p>
+@@SyntaxHighlighting@@
+#include <GUIConstantsEx.au3>
+#include <MsgBoxConstants.au3>
+
+Opt("GUIOnEventMode", 1) ; Wechsle in den OnEvent Modus
+
+Local $hMainGUI = GUICreate("Hallo Welt", 200, 100)
+GUISetOnEvent($GUI_EVENT_CLOSE, "CLOSEButton")
+GUICtrlCreateLabel("Hallo Welt! Wie geht's?", 30, 10)
+Local $iOKButton = GUICtrlCreateButton("OK", 70, 50, 60)
+GUICtrlSetOnEvent($iOKButton, "OKButton")
+GUISetState(@SW_SHOW, $hMainGUI)
+
+While 1
+	Sleep(100) ; Im Leerlauf bummeln
+WEnd
+
+Func OKButton()
+	; Beachte: an diesem Punkt w&auml;re @GUI_CtrlId gleich $iOKButton,
+	; und @GUI_WinHandle w&auml;re gleich $hMainGUI
+	MsgBox($MB_OK, "GUI Event", "Du hast auf OK geklickt!")
+EndFunc   ;==>OKButton
+
+Func CLOSEButton()
+	; Beachte: an diesem Punkt w&auml;re @GUI_CtrlId gleich $GUI_EVENT_CLOSE,
+	; und @GUI_WinHandle w&auml;re gleich $hMainGUI
+	MsgBox($MB_OK, "GUI Event", "Du hast auf CLOSE geklickt! Programm wird beendet...")
+	Exit
+EndFunc   ;==>CLOSEButton
+@@End@@
+
+	<p>So einfach ist es. Offensichtlich wird es umso komplizierter, je mehr Fenster und Controls du anlegst, aber das Beispiel zeigt dir die Grundlagen.</p>
+	<h2>Fortgeschrittene Operationen und mehrere Fenster</h2>
+	<p>Control-IDs sind eindeutig, auch wenn du mehrere Fenster hast, aber wie gehen wir mit mehreren Fenstern um?</p>
+	<p>Hier ist ein &auml;hnliches Beispiel wie das oben, aber mit einem weiteren "dummy"-Fenster.</p>
+@@SyntaxHighlighting@@
+#include <GUIConstantsEx.au3>
+#include <MsgBoxConstants.au3>
+
+Opt("GUIOnEventMode", 1) ; Wechsle in den OnEvent Modus
+
+Global $hMainGUI = GUICreate("Hallo Welt", 200, 100)
+GUISetOnEvent($GUI_EVENT_CLOSE, "CLOSEButton")
+GUICtrlCreateLabel("Hallo Welt! Wie geht's?", 30, 10)
+Local $iOKButton = GUICtrlCreateButton("OK", 70, 50, 60)
+GUICtrlSetOnEvent($iOKButton, "OKButton")
+
+Global $hDummyGUI = GUICreate("Dummy-Fenster zum Testen", 200, 100)
+GUISetOnEvent($GUI_EVENT_CLOSE, "CLOSEButton")
+
+GUISwitch($hMainGUI)
+GUISetState(@SW_SHOW)
+
+While 1
+	Sleep(100) ; Im Leerlauf bummeln
+WEnd
+
+Func OKButton()
+	; Beachte: an diesem Punkt w&auml;re @GUI_CtrlId gleich $iOKButton
+	MsgBox($MB_OK, "GUI Event", "Du hast auf OK geklickt!")
+EndFunc   ;==>OKButton
+
+Func CLOSEButton()
+	; Beachte: an diesem Punkt w&auml;re @GUI_CtrlId gleich $GUI_EVENT_CLOSE,
+	; @GUI_WinHandle ist entweder gleich $hMainGUI oder $hDummyGUI
+	If @GUI_WinHandle = $hMainGUI Then
+		MsgBox($MB_OK, "GUI Event", "Du hast auf CLOSE geklickt! Programm wird beendet...")
+		Exit
+	EndIf
+EndFunc   ;==>CLOSEButton
+@@End@@
+
+  <p>&nbsp;</p>
+
+	<p>Die erste wesentliche &Auml;nderung ist der Aufruf der <a href="../functions/GUISwitch.htm">GUISwitch</a>Funktion - wenn ein neues Fenster angelegt wird, wird es zum "default"-Fenster f&uuml;r zuk&uuml;nftige GUI-Operationen (einschlie&szlig;lich dem Anlegen von Controls). In unserem Fall wollen wir mit dem Hauptfenster "Hallo Welt" arbeiten, nicht mit dem Testfenster, deshalb schalten wir um ("switch". ). Einige GUI-Funktionen erlauben dir, den Fenster-Handle im Funktionsaufruf selbst zu verwenden - diese Funktionen werden automatisch umschalten. In unserem Beispiel h&auml;tten wir das so machen k&ouml;nnen:</p>
+@@SyntaxHighlighting@@
+GUISetState(@SW_SHOW, $hMainGUI)
+@@End@@
+
+  <p>&nbsp;</p>
+	<p>Beachte auch, dass wir die gleiche OnEvent-Funktion benutzt haben, um den "close" Button f&uuml;r beide Fenster zu behandeln und wir dann @GUI_WinHandle verwendet haben um zu bestimmen, welches Fenster die Nachricht gesendet hat - dann schlie&szlig;en wir die GUI nur, wenn der close-Button angeklickt wurde <strong>und</strong> die Nachricht vom Hauptfenster kam. Du kannst genausogut f&uuml;r jedes Fenster eine eigene Funktion verwenden, wenn du das willst.</p>
+</body>
+</html>

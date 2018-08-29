@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinAPI_CreateEvent</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_WinAPI_CreateEvent</h1><br />
+<a href="../libfunctions_en/_WinAPI_CreateEvent.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Erzeugt oder &ouml;ffnet ein benanntes oder unbenanntes Ereignis-Objekt<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIProc.au3&gt;<br />
+_WinAPI_CreateEvent ( [$tAttributes = 0 [, $bManualReset = True [, $bInitialState = True [, $sName = ""]]]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$tAttributes</td>
+<td style="width:85%"><strong>[optional]</strong> eine $tagSECURITY_ATTRIBUTES Struktur oder ein Zeiger auf diese. Falls NULL (0), kann das Handle nicht von Child-Prozessen geerbt/&uuml;bernommen werden.<br />
+Das "Descriptor"-Mitglied der Struktur legt den "Security Descriptor" des neuen Ereignisses fest.<br />
+Falls $tAttributes 0 ist, erh&auml;lt das Ereignis den Standard-Security Descriptor.<br />
+Die  ACLs im Standard-Security Descriptor eines Ereignisses gehen von den prim&auml;ren oder personifizierten Tokens des Erzeugers aus (primary, bzw. impersonate  token).</td>
+</tr>
+<tr>
+<td>$bManualReset</td>
+<td><strong>[optional]</strong> Falls TRUE, erzeugt die Funktion ein manuell zur&uuml;cksetzbares Ereignis-Objekt, welches die Benutzung der ResetEvent Funktion anfordert, um den Ereignisstatus auf unsignalisiert zu setzen.<br />
+Falls FALSE, erzeugt die Funktion ein automatisch zur&uuml;ckgesetztes Ereignis-Objekt und das System setzt den Ereignisstatus wieder zur&uuml;ck, nachdem ein wartender Einzel-Thread freigegeben wurde.</td>
+</tr>
+<tr>
+<td>$bInitialState</td>
+<td><strong>[optional]</strong> Falls TRUE, ist der Anfangsstatus des Ereignis-Objekts auf signalisiert gesetzt; andernfalls auf unsignalisiert</td>
+</tr>
+<tr>
+<td>$sName</td>
+<td><strong>[optional]</strong> Der Name des Ereignis-Objekts (Gro&szlig;-/Kleinschreibung ist zu beachten).<br />
+Falls $sName dem Namen eines bereits existierenden Ereignis-Objekts entspricht, erfordert diese Funktion das EVENT_ALL_ACCESS-Zugriffsrecht.<br />
+In diesem Falle werden die Parameter $bManualReset und $bInitialState ignoriert, da sie schon vom erzeugenden Prozess gesetzt wurden.<br />
+Falls der Parameter $tAttributes mit 0 angegeben wird, bestimmt er, ob das Handle geerbt/&uuml;bernommen werden kann, au&szlig;er sein Security Descriptor-Mitglied wird ignoriert.<br />
+Falls $sName weggelassen wird, wird das Ereignis-Objekt ohne Namen erzeugt.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">Das Handle zu dem Ereignis-Objekt.<br />
+Falls das angegebene Ereignis-Objekt bereits vor dem Funktionsaufruf existiert, wird ein Handle zu dem existierenden Objekt zur&uuml;ckgegeben und GetLastError gibt RROR_ALREADY_EXISTS zur&uuml;ck.</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>0. Es ist <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> aufzurufen um erweiterte Fehlerinformationen zu erhalten.</td>
+</tr>
+</table>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="$tagSECURITY_ATTRIBUTES.htm">$tagSECURITY_ATTRIBUTES</a></p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(CreateEvent);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">CreateEvent</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<h3>Beispiel 1</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_WaitForMultipleObjects.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIHObj.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIProc.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_tEvents</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">"handle Event[3];"</span><span class="S8">)</span>
+<span class="S9">$g_tEvents</span><span class="S8">.</span><span class="S14">Event</span><span class="S8">(</span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateEvent.htm"><span class="S15">_WinAPI_CreateEvent</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a><span class="S8">)</span>
+<span class="S9">$g_tEvents</span><span class="S8">.</span><span class="S14">Event</span><span class="S8">(</span><span class="S3">2</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateEvent.htm"><span class="S15">_WinAPI_CreateEvent</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a><span class="S8">)</span>
+<span class="S9">$g_tEvents</span><span class="S8">.</span><span class="S14">Event</span><span class="S8">(</span><span class="S3">3</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateEvent.htm"><span class="S15">_WinAPI_CreateEvent</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/HotKeySet.htm"><span class="S4">HotKeySet</span></a><span class="S8">(</span><span class="S7">"</span><span class="S10">{ESC}</span><span class="S7">"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"_Exit"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/AdlibRegister.htm"><span class="S4">AdlibRegister</span></a><span class="S8">(</span><span class="S7">"_FireEvent_1"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">500</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/AdlibRegister.htm"><span class="S4">AdlibRegister</span></a><span class="S8">(</span><span class="S7">"_FireEvent_2"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">800</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iEvent</span>
+<a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$iEvent</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_WaitForMultipleObjects.htm"><span class="S15">_WinAPI_WaitForMultipleObjects</span></a><span class="S8">(</span><span class="S3">3</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_tEvents</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><span class="S9">$iEvent</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S3">0</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"+ Erstes Event"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_ResetEvent.htm"><span class="S15">_WinAPI_ResetEvent</span></a><span class="S8">(</span><span class="S9">$g_tEvents</span><span class="S8">.</span><span class="S14">Event</span><span class="S8">(</span><span class="S3">1</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"&gt; Zweites Event"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_ResetEvent.htm"><span class="S15">_WinAPI_ResetEvent</span></a><span class="S8">(</span><span class="S9">$g_tEvents</span><span class="S8">.</span><span class="S14">Event</span><span class="S8">(</span><span class="S3">2</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S3">2</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"! Beenden Event"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/AdlibUnRegister.htm"><span class="S4">AdlibUnRegister</span></a><span class="S8">(</span><span class="S7">"_FireEvent_1"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/AdlibUnRegister.htm"><span class="S4">AdlibUnRegister</span></a><span class="S8">(</span><span class="S7">"_FireEvent_2"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CloseHandle.htm"><span class="S15">_WinAPI_CloseHandle</span></a><span class="S8">(</span><span class="S9">$g_tEvents</span><span class="S8">.</span><span class="S14">Event</span><span class="S8">(</span><span class="S3">1</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CloseHandle.htm"><span class="S15">_WinAPI_CloseHandle</span></a><span class="S8">(</span><span class="S9">$g_tEvents</span><span class="S8">.</span><span class="S14">Event</span><span class="S8">(</span><span class="S3">2</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CloseHandle.htm"><span class="S15">_WinAPI_CloseHandle</span></a><span class="S8">(</span><span class="S9">$g_tEvents</span><span class="S8">.</span><span class="S14">Event</span><span class="S8">(</span><span class="S3">3</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S0"> </span><span class="S1">;Error</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+<a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _Exit</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetEvent.htm"><span class="S15">_WinAPI_SetEvent</span></a><span class="S8">(</span><span class="S9">$g_tEvents</span><span class="S8">.</span><span class="S14">Event</span><span class="S8">(</span><span class="S3">3</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_Exit</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _FireEvent_1</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetEvent.htm"><span class="S15">_WinAPI_SetEvent</span></a><span class="S8">(</span><span class="S9">$g_tEvents</span><span class="S8">.</span><span class="S14">Event</span><span class="S8">(</span><span class="S3">1</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_FireEvent_1</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _FireEvent_2</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetEvent.htm"><span class="S15">_WinAPI_SetEvent</span></a><span class="S8">(</span><span class="S9">$g_tEvents</span><span class="S8">.</span><span class="S14">Event</span><span class="S8">(</span><span class="S3">2</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_FireEvent_2</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 2</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_WaitForMultipleObjects[02].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPI.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIProc.au3&gt;</span><span class="S0"> </span><span class="S1">;needed for _WinAPI_ResetEvent</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$tEvents</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">"handle Event[3];"</span><span class="S8">)</span>
+<span class="S9">$tEvents</span><span class="S8">.</span><span class="S14">Event</span><span class="S8">(</span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateEvent.htm"><span class="S15">_WinAPI_CreateEvent</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a><span class="S8">)</span>
+<span class="S9">$tEvents</span><span class="S8">.</span><span class="S14">Event</span><span class="S8">(</span><span class="S3">2</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateEvent.htm"><span class="S15">_WinAPI_CreateEvent</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a><span class="S8">)</span>
+<span class="S9">$tEvents</span><span class="S8">.</span><span class="S14">Event</span><span class="S8">(</span><span class="S3">3</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateEvent.htm"><span class="S15">_WinAPI_CreateEvent</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/HotKeySet.htm"><span class="S4">HotKeySet</span></a><span class="S8">(</span><span class="S7">"</span><span class="S10">{ESC}</span><span class="S7">"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"_Exit"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/AdlibRegister.htm"><span class="S4">AdlibRegister</span></a><span class="S8">(</span><span class="S7">"_FireEvent_1"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">500</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/AdlibRegister.htm"><span class="S4">AdlibRegister</span></a><span class="S8">(</span><span class="S7">"_FireEvent_2"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">800</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$iEvent</span>
+<a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">;$iEvent = _WinAPI_WaitForMultipleObjects(3, $tEvents, False, 100) ;Maybe future version</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$iEvent</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_WaitForMultipleObjects.htm"><span class="S15">_WinAPI_WaitForMultipleObjects</span></a><span class="S8">(</span><span class="S3">3</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetPtr.htm"><span class="S4">DllStructGetPtr</span></a><span class="S8">(</span><span class="S9">$tEvents</span><span class="S8">),</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><span class="S9">$iEvent</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S3">0</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"+ First Event"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_ResetEvent.htm"><span class="S15">_WinAPI_ResetEvent</span></a><span class="S8">(</span><span class="S9">$tEvents</span><span class="S8">.</span><span class="S14">Event</span><span class="S8">(</span><span class="S3">1</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"&gt; Second Event"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_ResetEvent.htm"><span class="S15">_WinAPI_ResetEvent</span></a><span class="S8">(</span><span class="S9">$tEvents</span><span class="S8">.</span><span class="S14">Event</span><span class="S8">(</span><span class="S3">2</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S3">2</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"! Exit Event"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/AdlibUnRegister.htm"><span class="S4">AdlibUnRegister</span></a><span class="S8">(</span><span class="S7">"_FireEvent_1"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/AdlibUnRegister.htm"><span class="S4">AdlibUnRegister</span></a><span class="S8">(</span><span class="S7">"_FireEvent_2"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CloseHandle.htm"><span class="S15">_WinAPI_CloseHandle</span></a><span class="S8">(</span><span class="S9">$tEvents</span><span class="S8">.</span><span class="S14">Event</span><span class="S8">(</span><span class="S3">1</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CloseHandle.htm"><span class="S15">_WinAPI_CloseHandle</span></a><span class="S8">(</span><span class="S9">$tEvents</span><span class="S8">.</span><span class="S14">Event</span><span class="S8">(</span><span class="S3">2</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CloseHandle.htm"><span class="S15">_WinAPI_CloseHandle</span></a><span class="S8">(</span><span class="S9">$tEvents</span><span class="S8">.</span><span class="S14">Event</span><span class="S8">(</span><span class="S3">3</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S0"> </span><span class="S1">;Error</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+<a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _Exit</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetEvent.htm"><span class="S15">_WinAPI_SetEvent</span></a><span class="S8">(</span><span class="S9">$tEvents</span><span class="S8">.</span><span class="S14">Event</span><span class="S8">(</span><span class="S3">3</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_Exit</span>
+
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _FireEvent_1</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetEvent.htm"><span class="S15">_WinAPI_SetEvent</span></a><span class="S8">(</span><span class="S9">$tEvents</span><span class="S8">.</span><span class="S14">Event</span><span class="S8">(</span><span class="S3">1</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_FireEvent_1</span>
+
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _FireEvent_2</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetEvent.htm"><span class="S15">_WinAPI_SetEvent</span></a><span class="S8">(</span><span class="S9">$tEvents</span><span class="S8">.</span><span class="S14">Event</span><span class="S8">(</span><span class="S3">2</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_FireEvent_2</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

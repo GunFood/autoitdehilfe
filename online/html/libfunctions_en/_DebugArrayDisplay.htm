@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _DebugArrayDisplay</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_DebugArrayDisplay</h1><br />
+<a href="../libfunctions/_DebugArrayDisplay.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Displays a 1D or 2D array in a ListView to aid debugging<br /></p>
+<p class="codeheader">
+#include &lt;Debug.au3&gt;<br />
+_DebugArrayDisplay ( Const ByRef $aArray [, $sTitle = "DebugArray" [, $sArrayRange = "" [, $iFlags = 0 [, $vUser_Separator = Default [, $sHeader = Default [, $iMax_ColWidth = Default [, $hUser_Function = ""]]]]]]] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$aArray</td>
+<td style="width:85%">Array to display</td>
+</tr>
+<tr>
+<td>$sTitle</td>
+<td><strong>[optional]</strong> Title for dialog. Default = "DebugArray".</td>
+</tr>
+<tr>
+<td>$sArrayRange</td>
+<td><strong>[optional]</strong> Range of rows/columns to display. Default ("") = entire array. (See below for details)</td>
+</tr>
+<tr>
+<td>$iFlags</td>
+<td><strong>[optional]</strong> Determine UDF options. Add required values together<br />
+&nbsp;&nbsp;&nbsp; $ARRAYDISPLAY_COLALIGNLEFT (0) = (default) Column text alignment - left<br />
+&nbsp;&nbsp;&nbsp; $ARRAYDISPLAY_TRANSPOSE (1) = Transposes the array (2D only)<br />
+&nbsp;&nbsp;&nbsp; $ARRAYDISPLAY_COLALIGNRIGHT (2) = Column text alignment - right<br />
+&nbsp;&nbsp;&nbsp; $ARRAYDISPLAY_COLALIGNCENTER (4) = Column text alignment - center<br />
+&nbsp;&nbsp;&nbsp; $ARRAYDISPLAY_VERBOSE (8) = Verbose - display MsgBox on error and splash screens during processing of large arrays<br />
+&nbsp;&nbsp;&nbsp; $ARRAYDISPLAY_NOROW (64) = No 'Row' column displayed</td>
+</tr>
+<tr>
+<td>$vUser_Separator</td>
+<td><strong>[optional]</strong> Sets column display option when copying data to clipboard.<br />
+&nbsp;&nbsp;&nbsp; Character = Delimiter between columns.<br />
+&nbsp;&nbsp;&nbsp; Number	= Fixed column width - longer items will be truncated.<br />
+&nbsp;&nbsp;&nbsp; Default = Current separator character (usually "|").</td>
+</tr>
+<tr>
+<td>$sHeader</td>
+<td><strong>[optional]</strong> Column names in header (string of names separated by current separator character - usually "|"). Default see Remarks.</td>
+</tr>
+<tr>
+<td>$iMax_Colwidth</td>
+<td><strong>[optional]</strong> Max width to which a ListView column will expand to show content. Default = 350 pixels.</td>
+</tr>
+<tr>
+<td>$hUser_Function</td>
+<td><strong>[optional]</strong> A variable assigned to the user defined function to run. Default = none. See remarks.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">1</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>0 and @error flag set as follows:</td>
+</tr>
+<tr>
+<td class="valign-top">@error:</td>
+<td>1 - $aArray is not an array<br />
+2 - $aArray has too many dimensions (only 1D and 2D supported)</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>If the function is passed a non-array variable or an array of more than 2 dimensions the function returns an error and the script continues. If the "verbose" parameter is set in $iFlags a MsgBox will be displayed which offers the chance to exit the script immediately or to continue the script with the normal error return.<br />
+<br />
+Although there are no limits on the size of the array to be displayed, there is a Windows control limitation which means that the LitView headers and columns do not align if there are more than approximately 600.<br />
+<br />
+The $sArrayRange parameter syntax is as follows:<table>
+<tr>
+<td>"7"</td>
+<td>Show rows 0-7 with all columns</td>
+</tr>
+
+<tr>
+<td>"7:"</td>
+<td>Show rows 7-end with all columns</td>
+</tr>
+
+<tr>
+<td>"|7"</td>
+<td>Show all rows with columns 0-7</td>
+</tr>
+
+<tr>
+<td>"|7:"</td>
+<td>Show all rows with columns 7-end</td>
+</tr>
+
+<tr>
+<td>"7|7"</td>
+<td>Show rows 0-7 with columns 0-7</td>
+</tr>
+
+<tr>
+<td>"5:7"</td>
+<td>Show rows 5-7 with all columns</td>
+</tr>
+
+<tr>
+<td>"|5:7"</td>
+<td>Show all rows with columns 5-7</td>
+</tr>
+
+<tr>
+<td>"7|5:7"</td>
+<td>Show rows 0-7 with columns 5-7</td>
+</tr>
+
+<tr>
+<td>"5:7|7"</td>
+<td>Show rows 5-7 with columns 0-7</td>
+</tr>
+
+<tr>
+<td>"5:7|5:7"</td>
+<td>Show rows 5-7 with columns 5-7</td>
+</tr>
+</table><br />
+Any column values are ignored for 1D arrays.<br />
+<br />
+$sHeader names (separated by the current separator character) will be used for as many columns as there are names. If no, or not enough, custom names are specified then the default header of "Row|Col0" for 1D arrays or "Row|Col0|Col1|...|Col n" for 2D is substituted. If the array is displayed transposed, the header is ignored.<br />
+<br />
+The 4 buttons at the bottom of the dialog have the following functions:<table>
+<tr>
+<td>Copy Data & Hdr/Row</td>
+<td>Copy the array or the selected row(s) to the clipboard adding full header and row identification.</td>
+</tr>
+
+<tr>
+<td>Copy Data Only</td>
+<td>Copy the array or the selected row(s) to the clipboard with no header or row identification.</td>
+</tr>
+
+<tr>
+<td>Run User Func</td>
+<td>Run the user-defined function passed in $sUser_Function. This function is entirely separate from the UDF and must be created and coded by the user to accept 2 (and only 2) parameters which will be provided by the UDF itself: the full array being displayed and a 1D array holding the selected rows indices with a count in the [0] element. These parameters can then be used inside the user function as required. The button is not displayed if no function is specified.</td>
+</tr>
+
+<tr>
+<td>Exit script</td>
+<td>Exit the script immediately.</td>
+</tr>
+</table><br />
+The array dimensions are displayed at lower left. They are in red text if the array is transposed or only a range of elements is displayed - a tooltip displays the particular occurence(s).<br />
+<br />
+If the "verbose" parameter is set in $iFlags a splash dialog is displayed during initial processing when the array to display has more than 10000 elements. A similar dialog is displayed when the "Copy Data" buttons are used on a 10000+ element display - if this is likely to occur consideration should be given to using a "User Function" to store the array for later processing.<br />
+<br />
+An array element containing another array is displayed as {Array}.<br />
+<br />
+Clicking on a column header sort it.<br />
+</p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_DebugArrayDisplay.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Debug.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Create 1D array to display</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray_1D</span><span class="S8">[</span><span class="S3">5</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[</span><span class="S7">"Item 0"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Item 1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"A longer Item 2 to show column expansion"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Item 3"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Item 4"</span><span class="S8">]</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugArrayDisplay.htm"><span class="S15">_DebugArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray_1D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"1D display"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Create 2D array to display</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray_2D</span><span class="S8">[</span><span class="S3">25</span><span class="S8">][</span><span class="S3">15</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aArray_2D</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$j</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aArray_2D</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aArray_2D</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">][</span><span class="S9">$j</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Item "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringFormat.htm"><span class="S4">StringFormat</span></a><span class="S8">(</span><span class="S7">"%02i"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$i</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringFormat.htm"><span class="S4">StringFormat</span></a><span class="S8">(</span><span class="S7">"%02i"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$j</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugArrayDisplay.htm"><span class="S15">_DebugArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray_2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2D display"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aArray_2D</span><span class="S8">[</span><span class="S3">5</span><span class="S8">][</span><span class="S3">5</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"A longer item to show column expansion"</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugArrayDisplay.htm"><span class="S15">_DebugArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray_2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Expanded column - custom titles - no buttons or 'Row' column"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">32</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S3">64</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">"AA|BB|CC|DD|EE|FF|GG|HH|II|JJ"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Assign the user function to a variable to pass as a parameter</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hUserFunction</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> _UserFunc</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aArray_2D</span><span class="S8">[</span><span class="S3">5</span><span class="S8">][</span><span class="S3">5</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Column alignment set to right"</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugArrayDisplay.htm"><span class="S15">_DebugArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray_2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Range set - right align - copy column width - user function"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"3:7|4:9"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">15</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"AA|BB|CC|DD|EE|FF"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S9">$hUserFunction</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugArrayDisplay.htm"><span class="S15">_DebugArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray_2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Range set - transposed"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"3:7|4:9"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">"AA|BB|CC|DD|EE|FF"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Note no col names as transposed</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aArray_2D</span><span class="S8">[</span><span class="S3">5</span><span class="S8">][</span><span class="S3">5</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Column alignment set to left"</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"GUIDataSeparatorChar"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"!"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugArrayDisplay.htm"><span class="S15">_DebugArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray_2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"! Header separator"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"3:7|4:9"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">"AA!BB!CC!DD!EE!FF"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Create non-array variable to force error - MsgBox displayed as $iFlags set</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$vVar</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iRet</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iError</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$iRet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_DebugArrayDisplay.htm"><span class="S15">_DebugArrayDisplay</span></a><span class="S8">(</span><span class="S9">$vVar</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"No MsgBox on Error"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$iError</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"_DebugArrayDisplay() Error"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"return without internal Msgbox $iret ="</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iRet</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" @error="</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iError</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$iRet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_DebugArrayDisplay.htm"><span class="S15">_DebugArrayDisplay</span></a><span class="S8">(</span><span class="S9">$vVar</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"MsgBox on Error"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$iError</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"_DebugArrayDisplay() Error"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"return internal Msgbox with no force Exit $iret ="</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iRet</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" @error="</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iError</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+
+<span class="S1">; Note that the user function MUST have TWO parameters even if you do not intend to use both of them</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _UserFunc</span><span class="S8">(</span><span class="S9">$aArray_2D</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aSelected</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; But if a parameter is not used do this to prevent an Au3Check warning</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S12">#forceref $aArray_2D</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugArrayDisplay.htm"><span class="S15">_DebugArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aSelected</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Selected cols"</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;&nbsp;</span><span class="S1">;==&gt;_UserFunc</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

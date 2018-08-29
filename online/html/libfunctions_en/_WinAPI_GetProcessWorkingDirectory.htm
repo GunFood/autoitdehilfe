@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _WinAPI_GetProcessWorkingDirectory</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1>_WinAPI_GetProcessWorkingDirectory</h1>
+<p class="funcdesc">Retrieves the current working directory for the specified process<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIProc.au3&gt;<br />
+_WinAPI_GetProcessWorkingDirectory ( [$iPID = 0] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$iPID</td>
+<td style="width:85%"><strong>[optional]</strong> The PID of the process. Default (0) is the current process.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">The path to the working directory.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>Empty string and sets the @error flag to non-zero.</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>This function uses undocumented API functions and may stop working properly in future versions of Windows.<br />
+<br />
+Using this function for some processes may require full access rights. Use <a href="_WinAPI_AdjustTokenPrivileges.htm">_WinAPI_AdjustTokenPrivileges()</a><br />
+function to enable $SE_DEBUG_NAME privilege before calling this function.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="_WinAPI_AdjustTokenPrivileges.htm">_WinAPI_AdjustTokenPrivileges</a></p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_GetProcessWorkingDirectory.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/RequireAdmin.htm"><span class="S11">#RequireAdmin</span></a>
+
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIHObj.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIProc.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aAdjust</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aList</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+
+<span class="S1">; Enable "SeDebugPrivilege" privilege for obtain full access rights to another processes</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hToken</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_OpenProcessToken.htm"><span class="S15">_WinAPI_OpenProcessToken</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$TOKEN_ADJUST_PRIVILEGES</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$TOKEN_QUERY</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_AdjustTokenPrivileges.htm"><span class="S15">_WinAPI_AdjustTokenPrivileges</span></a><span class="S8">(</span><span class="S9">$hToken</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$SE_DEBUG_NAME</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$SE_PRIVILEGE_ENABLED</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aAdjust</span><span class="S8">)</span>
+
+<span class="S1">; Retrieve working directories for all processes the system</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Or</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aList</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/ProcessList.htm"><span class="S4">ProcessList</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S9">$aList</span><span class="S8">[</span><span class="S3">0</span><span class="S8">][</span><span class="S3">0</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aList</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">][</span><span class="S3">1</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetProcessWorkingDirectory.htm"><span class="S15">_WinAPI_GetProcessWorkingDirectory</span></a><span class="S8">(</span><span class="S9">$aList</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">][</span><span class="S3">1</span><span class="S8">])</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S1">; Restore "SeDebugPrivilege" privilege by default</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_AdjustTokenPrivileges.htm"><span class="S15">_WinAPI_AdjustTokenPrivileges</span></a><span class="S8">(</span><span class="S9">$hToken</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aAdjust</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aAdjust</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_CloseHandle.htm"><span class="S15">_WinAPI_CloseHandle</span></a><span class="S8">(</span><span class="S9">$hToken</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aList</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'_WinAPI_GetProcessCommandLine'</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

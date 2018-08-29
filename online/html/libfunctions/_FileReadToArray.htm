@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _FileReadToArray</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_FileReadToArray</h1><br />
+<a href="../libfunctions_en/_FileReadToArray.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Liest die angegebene Datei in ein 1D oder 2D Array ein<br /></p>
+<p class="codeheader">
+#include &lt;File.au3&gt;<br />
+_FileReadToArray ( $sFilePath, ByRef $vReturn [, $iFlags = $FRTA_COUNT [, $sDelimiter = ""]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$sFilePath</td>
+<td style="width:85%">Pfad und Name der einzulesenden Datei.</td>
+</tr>
+<tr>
+<td>$vReturn</td>
+<td>Variable um die zur&uuml;ckgegebenen Daten zu speichern - muss kein Array sein</td>
+</tr>
+<tr>
+<td>$iFlags</td>
+<td><strong>[optional]</strong> Falls notwendig k&ouml;nnen mehrere Werte addiert werden<br />
+$FRTA_NOCOUNT (0) - Array ist 0-basierend. Um die Gr&ouml;&szlig;e zu ermitteln ist <a href="../functions/UBound.htm">UBound()</a> zu verwenden<br />
+$FRTA_COUNT (1) - Arrayanzahl im ersten Element. (Standard)<br />
+$FRTA_INTARRAYS (2) - Erstellt ein "Array von Arrays" - Siehe Bemerkungen<br />
+$FRTA_ENTIRESPLIT (4) - Verwendet den kompletten Trennzeichen-String als Trennzeichen (Standard ist, dass jedes Zeichen eine Trennstelle erzeugt)</td>
+</tr>
+<tr>
+<td>$sDelimiter</td>
+<td><strong>[optional]</strong><br />
+Wird verwendet um jede Zeile weiter zu teilen - z. B. das einlesen von CSV-Dateien in ein 2D-Array</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">1 und $vReturn enth&auml;lt ein Array</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>0, setzt @error auf ungleich 0 und $vReturn wird auf 0 gesetzt.</td>
+</tr>
+<tr>
+<td class="valign-top">@Error:</td>
+<td>1 - Fehler beim &Ouml;ffnen der angegebenen Datei<br />
+2 - unm&ouml;glich die Datei zu splitten<br />
+3 - die Zeilen der Datei haben eine unterschiedliche Anzahl von Feldern (nur wenn das $FRTA_INTARRAYS Flag nicht gesetzt wurde)<br />
+4 - kein Trennzeichen gefunden (nur wenn das $FRTA_INTARRAYS Flag nicht gesetzt wurde)</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Wenn ein Trennzeichen nicht angegeben ist, gibt die Funktion ein 1D-Array zur&uuml;ck, wobei jedes Element eine Zeile der Datei enth&auml;lt. Zeilenendungen k&ouml;nnen beliebige Mischungen von @CR, @LF und @CRLF sein.<br />
+<br />
+Wenn ein Trennzeichen angegeben ist, versucht die Funktion, jede Zeile der Datei weiter zu teilen. Wie dies geschieht, h&auml;ngt von der Einstellung des Flags $FRTA_INTARRAYS ab. Wenn das Flag nicht gesetzt ist und jede Zeile die gleiche Anzahl von Feldern hat, die durch das Trennzeichen aufgeteilt werden, dann wird ein 2D-Array erstellt, aber wenn dies nicht der Fall ist, dann ist @error auf 3 gesetzt und kein Array wird zur&uuml;ckgegeben. Wenn das Flag $FRTA_INTARRAYS gesetzt ist, erzeugt die Funktion ein 1D-Array, bei dem jedes Element ein weiteres Array ist, das die Felder der Zeile bei dem Trennzeichen aufteilt. Die Zeilen m&uuml;ssen nicht die gleiche Anzahl von Feldern haben. Siehe Beispiel unten.<br />
+<br />
+Wenn das Trennzeichen mehr als ein einzelnes Zeichen ist, bestimmt die Variable $FRTA_ENTIRESPLIT die Trennmethode.<br />
+               <br />
+<br />
+Im Zusammenspiel mit der Funktion IniRead kann man auch die url einer mit dem Internet Explorer gespeicherten Internetseite herausfinden.<br />
+Dies geht so:<br />
+IniRead(C:\test.url, "InternetShortcut", "URL", "")<br />
+Es lassen sich noch mehr Infos auslesen.<br />
+Welche Infos die gespeicherte url enth&auml;lt kann man &uuml;ber _FileReadToArray ermitteln.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="_FileWriteFromArray.htm">_FileWriteFromArray</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<h3>Beispiel 1</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_FileReadToArray.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;File.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aRetArray</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFilePath</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"\Test.txt"</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erstellt ein &nbsp;1D Array</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray</span><span class="S8">[]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[</span><span class="S7">"0"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"3"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"4"</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Schreibt es in die Datei</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_FileWriteFromArray.htm"><span class="S15">_FileWriteFromArray</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">1000</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erneutes lesen, dismal mit der Anzahl</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_FileReadToArray.htm"><span class="S15">_FileReadToArray</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aRetArray</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aRetArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"1D Array - Anzahl"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erneutes lesen, dismal ohne die Anzahl</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_FileReadToArray.htm"><span class="S15">_FileReadToArray</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aRetArray</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$FRTA_NOCOUNT</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aRetArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"1D Array - keine Anzahl"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; erstellt ein "quadratisches" 2D Array</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray</span><span class="S8">[][]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">"00"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"01"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"02"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"03"</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">"10"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"11"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"12"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"13"</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">"20"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"21"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"22"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"23"</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">"30"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"31"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"32"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"33"</span><span class="S8">]]</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Original"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Schreibt es in die Datei</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_FileWriteFromArray.htm"><span class="S15">_FileWriteFromArray</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">","</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">1000</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erneutes lesen, dismal mit der Anzahl</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_FileReadToArray.htm"><span class="S15">_FileReadToArray</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aRetArray</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">","</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aRetArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2D Array - Anzahl"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erneutes lesen, dismal ohne die Anzahl</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_FileReadToArray.htm"><span class="S15">_FileReadToArray</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aRetArray</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$FRTA_NOCOUNT</span><span class="S8">,</span><span class="S0"> </span><span class="S7">","</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aRetArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2D Array - keine Anzahl"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Lesen in "Array von Arrays" mit der Anzahk</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_FileReadToArray.htm"><span class="S15">_FileReadToArray</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aRetArray</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$FRTA_COUNT</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S9">$FRTA_INTARRAYS</span><span class="S8">,</span><span class="S0"> </span><span class="S7">","</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aRetArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Array von Arrays - Anzahl"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Nun wird in die Arrays innerhalb des zur&uuml;ckgegebenen Arrays geschaut</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aRetArray</span><span class="S8">[</span><span class="S3">1</span><span class="S8">],</span><span class="S0"> </span><span class="S7">"Array 1 innerhalb RetArray - Anzahl"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erneutes schreiben des 2D Arrays mit mehreren Trennzeichen</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_FileWriteFromArray.htm"><span class="S15">_FileWriteFromArray</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">":|"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">1000</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erneutes lesen, diesmal fungiert jedes Trennzeichen als Trennpunkt</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_FileReadToArray.htm"><span class="S15">_FileReadToArray</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aRetArray</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$FRTA_NOCOUNT</span><span class="S8">,</span><span class="S0"> </span><span class="S7">":|"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aRetArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Trennen bei jedem Zeichen"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erneutes lesen, diesmal fungiert der komplette String des Trennzeichens als Trennpunkt</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_FileReadToArray.htm"><span class="S15">_FileReadToArray</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aRetArray</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$FRTA_NOCOUNT</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S9">$FRTA_ENTIRESPLIT</span><span class="S8">,</span><span class="S0"> </span><span class="S7">":|"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aRetArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Trennzeichen beim kompletten Trennzeichen"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/FileDelete.htm"><span class="S4">FileDelete</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 2</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_FileReadToArray[02].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;File.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Definiert eine Variable um diese an _FileReadToArray zu &uuml;bergeben.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Liest die aktuelle Skriptdatei in ein Array ein. Dabei wird die zuvor definierte Variable verwendet.</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; $iFlag wird mit 0 festgelegt, so dass die Arrayanzahl nicht angezeigt wird. Es ist UBound() zu verwenden um die Gr&ouml;&szlig;e des Arrays zu ermitteln.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_FileReadToArray.htm"><span class="S15">_FileReadToArray</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@ScriptFullPath"><span class="S6">@ScriptFullPath</span></a><span class="S8">,</span><span class="S0"> </span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Beim lesen der Datei ist ein Fehler aufgetreten. @error: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">; Beim lesen der aktuellen Skriptdatei ist ein Fehler aufgetreten.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Zeigt das Array in _ArrayDisplay.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

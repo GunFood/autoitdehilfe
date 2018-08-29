@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _WinAPI_SetVolumeMountPoint</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1>_WinAPI_SetVolumeMountPoint</h1>
+<p class="funcdesc">Associates a volume with a drive letter or a directory on another volume<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIFiles.au3&gt;<br />
+_WinAPI_SetVolumeMountPoint ( $sFilePath, $sGUID )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$sFilePath</td>
+<td style="width:85%">The user-mode path to be associated with the volume. This may be a drive letter (for example, X:\)<br />
+or a directory on another volume (for example, Y:\MountX).</td>
+</tr>
+<tr>
+<td>$sGUID</td>
+<td>The volume GUID path for the volume. This string must be of the form "\\?\Volume{GUID}\" where<br />
+GUID is a GUID that identifies the volume. The \\?\ turns off path parsing and is ignored as part<br />
+of the path.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">True</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>False</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>It is an error to associate a volume with a directory that has any files or subdirectories in it. This error<br />
+occurs for system and hidden directories as well as other directories, and it occurs for system and hidden<br />
+files.<br />
+</p>
+
+<h2>See Also</h2>
+<p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(SetVolumeMountPoint);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">SetVolumeMountPoint</a> in MSDN  Library.
+</p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_SetVolumeMountPoint.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIFiles.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$sPath</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'\Mount\'</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sGUID</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetVolumeNameForVolumeMountPoint.htm"><span class="S15">_WinAPI_GetVolumeNameForVolumeMountPoint</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@HomeDrive"><span class="S6">@HomeDrive</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'\'</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/DirCreate.htm"><span class="S4">DirCreate</span></a><span class="S8">(</span><span class="S9">$sPath</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetVolumeMountPoint.htm"><span class="S15">_WinAPI_SetVolumeMountPoint</span></a><span class="S8">(</span><span class="S9">$sPath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sGUID</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'The drive ('</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringUpper.htm"><span class="S4">StringUpper</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@HomeDrive"><span class="S6">@HomeDrive</span></a><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">') has been associated with "'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sPath</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'".'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_DeleteVolumeMountPoint.htm"><span class="S15">_WinAPI_DeleteVolumeMountPoint</span></a><span class="S8">(</span><span class="S9">$sPath</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DirRemove.htm"><span class="S4">DirRemove</span></a><span class="S8">(</span><span class="S9">$sPath</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

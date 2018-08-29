@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _WinAPI_EnumDllProc</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1>_WinAPI_EnumDllProc</h1>
+<p class="funcdesc">Enumerates an exported functions of the specified dynamic-link library (DLL)<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIDiag.au3&gt;<br />
+_WinAPI_EnumDllProc ( $sFilePath [, $sMask = '' [, $iFlags = 0]] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$sFilePath</td>
+<td style="width:85%">The path to the library.<br />
+Although this function searches for a file path when it specified as the relative path or the name without a path, will better to specify a fully qualified path to the library for an unequivocal result.</td>
+</tr>
+<tr>
+<td>$sMask</td>
+<td><strong>[optional]</strong> A wildcard string that indicates the function names to be enumerated.<br />
+This string can optionally contain the wildcards, "*" and "?". If this parameter is an empty string or omitted (Default), all the exported functions will be enumerated.</td>
+</tr>
+<tr>
+<td>$iFlags</td>
+<td><strong>[optional]</strong> The optional flags. This parameter can be one or more of the following values:<br />
+&nbsp;&nbsp;&nbsp; $SYMOPT_CASE_INSENSITIVE<br />
+&nbsp;&nbsp;&nbsp; $SYMOPT_UNDNAME</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">The 2D array containing the following information, @extended flag will contain one of the $IMAGE_FILE_MACHINE_* constants.<br />
+&nbsp;&nbsp;&nbsp; [0][0] - Number of rows in array (n)<br />
+&nbsp;&nbsp;&nbsp; [0][1] - Unused<br />
+&nbsp;&nbsp;&nbsp; [n][0] - The function address relative to the library base address (UINT64).<br />
+&nbsp;&nbsp;&nbsp; [n][1] - The function name.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>Sets the @error flag to non-zero.</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>This function works with 32- and 64-bit DLLs regardless of the system (32- or 64-bit), although 64-bit executables cannot load 32-bit DLLs and vice-versa.<br />
+<br />
+Call <a href="_WinAPI_GetExtended.htm">_WinAPI_GetExtended()</a> to retrieve a fully qualified path to the found DLL that was loaded for enumerating functions.<br />
+<br />
+Note, use the fully qualified path to be sure that the <a href="_WinAPI_EnumDllProc.htm">_WinAPI_EnumDllProc()</a> loads the DLL that is of interest.<br />
+In addition, this function does not use the file system redirection.<br />
+<br />
+This function requires dbghelp.dll version 5.1 or later.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="_WinAPI_GetExtended.htm">_WinAPI_GetExtended</a></p>
+
+<h2>See Also</h2>
+<p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(SymEnumSymbols);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">SymEnumSymbols</a> in MSDN  Library.
+</p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_EnumDllProc.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;APIDiagConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIDiag.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIMisc.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_EnumDllProc.htm"><span class="S15">_WinAPI_EnumDllProc</span></a><span class="S8">(</span><span class="S7">'ntdll.dll'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Rtl*'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$SYMOPT_CASE_INSENSITIVE</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/IsArray.htm"><span class="S4">IsArray</span></a><span class="S8">(</span><span class="S9">$aData</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S9">$aData</span><span class="S8">[</span><span class="S3">0</span><span class="S8">][</span><span class="S3">0</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aData</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">][</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">'0x'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Hex.htm"><span class="S4">Hex</span></a><span class="S8">(</span><span class="S9">$aData</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">][</span><span class="S3">0</span><span class="S8">])</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aData</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetExtended.htm"><span class="S15">_WinAPI_GetExtended</span></a><span class="S8">())</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

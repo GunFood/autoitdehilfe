@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinAPI_OpenFileById</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1>_WinAPI_OpenFileById</h1>
+<p class="funcdesc">Opens the file that matches the specified object identifier<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIFiles.au3&gt;<br />
+_WinAPI_OpenFileById ( $hFile, $vID [, $iAccess = 0 [, $iShare = 0 [, $iFlags = 0]]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$hFile</td>
+<td style="width:85%">The path or handle to any file on a volume or share on which the file to be opened is stored.</td>
+</tr>
+<tr>
+<td>$vID</td>
+<td>The file identifier (FileID), or $tagGUID structure (ObjectID), or GUID's string representation in the<br />
+form "{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}" that identifies the file to open.</td>
+</tr>
+<tr>
+<td>$iAccess</td>
+<td><strong>[optional]</strong> The access to the object. Access can be read, write, or both. If this parameter is 0 (Default), the<br />
+application can query file and device attributes without accessing a device.<br />
+$GENERIC_READ<br />
+$GENERIC_WRITE<br />
+(See MSDN for more information)</td>
+</tr>
+<tr>
+<td>$iShare</td>
+<td><strong>[optional]</strong> The sharing mode of an object, which can be read, write, both, or none. If this parameter is 0 (Default) and<br />
+function succeeds, the object cannot be shared and cannot be opened again until the handle is closed.<br />
+$FILE_SHARE_DELETE<br />
+$FILE_SHARE_READ<br />
+$FILE_SHARE_WRITE</td>
+</tr>
+<tr>
+<td>$iFlags</td>
+<td><strong>[optional]</strong> The file flags. When <a href="_WinAPI_OpenFileById.htm">_WinAPI_OpenFileById()</a> opens a file, it combines the file flags with existing<br />
+file attributes, and ignores any supplied file attributes. This parameter can include any<br />
+combination of the following values.<br />
+$FILE_FLAG_BACKUP_SEMANTICS<br />
+$FILE_FLAG_NO_BUFFERING<br />
+$FILE_FLAG_OPEN_NO_RECALL<br />
+$FILE_FLAG_OPEN_REPARSE_POINT<br />
+$FILE_FLAG_OVERLAPPED<br />
+$FILE_FLAG_RANDOM_ACCESS<br />
+$FILE_FLAG_SEQUENTIAL_SCAN<br />
+$FILE_FLAG_WRITE_THROUGH</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">Handle to a specified file.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>0 and sets the @error flag to non-zero, call <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> to get extended error information.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>When an application is finished using the object handle returned by this function, use the <a href="_WinAPI_CloseHandle.htm">_WinAPI_CloseHandle()</a><br />
+function to close the handle. This not only frees up system resources, but can have wider influence on things<br />
+like sharing the file or device and committing data to disk.<br />
+<br />
+This function requires <strong>Windows Vista or later</strong>.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="_WinAPI_CloseHandle.htm">_WinAPI_CloseHandle</a></p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(OpenFileById);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">OpenFileById</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_OpenFileById.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIConv.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIFiles.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIHObj.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIShPath.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPISys.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Number.htm"><span class="S4">Number</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetVersion.htm"><span class="S15">_WinAPI_GetVersion</span></a><span class="S8">())</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;</span></a><span class="S0"> </span><span class="S3">6.0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$MB_ICONERROR</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">),</span><span class="S0"> </span><span class="S7">'Error'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Require Windows Vista or later.'</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S1">; Create temporary file</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sFile</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetTempFileName.htm"><span class="S15">_WinAPI_GetTempFileName</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S8">)</span>
+
+<span class="S1">; Create unique object ID for a file</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tGUID</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateObjectID.htm"><span class="S15">_WinAPI_CreateObjectID</span></a><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'GUID: '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_StringFromGUID.htm"><span class="S15">_WinAPI_StringFromGUID</span></a><span class="S8">(</span><span class="S9">$tGUID</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+
+<span class="S1">; Open file by object ID and retrieve its full path</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hFile</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_OpenFileById.htm"><span class="S15">_WinAPI_OpenFileById</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_PathStripToRoot.htm"><span class="S15">_WinAPI_PathStripToRoot</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S8">),</span><span class="S0"> </span><span class="S9">$tGUID</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$FILE_SHARE_DELETE</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$FILE_SHARE_READ</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$FILE_SHARE_WRITE</span><span class="S8">))</span>
+<span class="S9">$sFile</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetFinalPathNameByHandleEx.htm"><span class="S15">_WinAPI_GetFinalPathNameByHandleEx</span></a><span class="S8">(</span><span class="S9">$hFile</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_CloseHandle.htm"><span class="S15">_WinAPI_CloseHandle</span></a><span class="S8">(</span><span class="S9">$hFile</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'Path: '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringRegExpReplace.htm"><span class="S4">StringRegExpReplace</span></a><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'\\+.\\'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">''</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+
+<span class="S1">; Delete file</span>
+<a class="codeSnippetLink" href="../functions/FileDelete.htm"><span class="S4">FileDelete</span></a><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

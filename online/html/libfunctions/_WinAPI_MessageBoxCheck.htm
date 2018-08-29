@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinAPI_MessageBoxCheck</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1>_WinAPI_MessageBoxCheck</h1>
+<p class="funcdesc">Displays a message box that gives the user the option of suppressing further occurrences<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIDlg.au3&gt;<br />
+_WinAPI_MessageBoxCheck ( $iType, $sTitle, $sText, $sRegVal [, $iDefault = -1 [, $hParent = 0]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$iType</td>
+<td style="width:85%">The flags that specify the contents and behavior of the message box.<br />
+<br />
+You must specify the buttons to be displayed by setting one and only one of the following flags.<br />
+$MB_OK<br />
+$MB_OKCANCEL<br />
+$MB_YESNO<br />
+<br />
+You can display an optional icon by setting one and only one of the following flags.<br />
+$MB_ICONEXCLAMATION<br />
+$MB_ICONHAND<br />
+$MB_ICONINFORMATION<br />
+$MB_ICONQUESTION</td>
+</tr>
+<tr>
+<td>$sTitle</td>
+<td>The string that contains the title of the message box.</td>
+</tr>
+<tr>
+<td>$sText</td>
+<td>The string that contains the message to be displayed.</td>
+</tr>
+<tr>
+<td>$sRegVal</td>
+<td>The string that contains a unique string value to associate with this message.</td>
+</tr>
+<tr>
+<td>$iDefault</td>
+<td><strong>[optional]</strong> The value that the function returns when the user has opted not to have the message box displayed<br />
+again. If the user has not opted to suppress the message box, the message box is displayed and<br />
+the function ignores $iDefault.</td>
+</tr>
+<tr>
+<td>$hParent</td>
+<td><strong>[optional]</strong> The window handle to the message box's owner.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">If the user has already chosen to suppress the message box, the function immediately returns the<br />
+value assigned to $iDefault, otherwise, returns one of the $ID_* constants.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>(-1).</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>This function records the message boxes that the user has chosen to suppress under the following registry key.<br />
+<br />
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\LowRegistry\DontShowMeThisDialogAgain<br />
+</p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(SHMessageBoxCheck);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">SHMessageBoxCheck</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_MessageBoxCheck.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIDlg.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_MessageBoxCheck.htm"><span class="S15">_WinAPI_MessageBoxCheck</span></a><span class="S8">(</span><span class="S9">$MB_ICONINFORMATION</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'MyProg'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'_WinAPI_MessageBoxCheck()'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'MyProg'</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'R&uuml;ckgabe: '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iResult</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

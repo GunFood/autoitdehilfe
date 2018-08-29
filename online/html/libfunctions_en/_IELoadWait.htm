@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _IELoadWait</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_IELoadWait</h1><br />
+<a href="../libfunctions/_IELoadWait.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Wait for a browser page load to complete before returning<br /></p>
+<p class="codeheader">
+#include &lt;IE.au3&gt;<br />
+_IELoadWait ( ByRef $oObject [, $iDelay = 0 [, $iTimeout = -1]] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$oObject</td>
+<td style="width:85%">Object variable of an InternetExplorer.Application or DOM element</td>
+</tr>
+<tr>
+<td>$iDelay</td>
+<td><strong>[optional]</strong> Milliseconds to wait before checking status</td>
+</tr>
+<tr>
+<td>$iTimeout</td>
+<td><strong>[optional]</strong> Period of time to wait before exiting function (default = 300000 ms aka 5 min)</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">1.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>0 and sets the @error flag to non-zero.</td>
+</tr>
+<tr>
+<td class="valign-top">@error:</td>
+<td>1 ($_IEStatus_GeneralError) - General Error<br />
+3 ($_IEStatus_InvalidDataType) - Invalid Data Type<br />
+4 ($_IEStatus_InvalidObjectType) - Invalid Object Type<br />
+6 ($_IEStatus_LoadWaitTimeout) - Load Wait Timeout<br />
+8 ($_IEStatus_AccessIsDenied) - Access Is Denied<br />
+9 ($_IEStatus_ClientDisconnected) - Client Disconnected</td>
+</tr>
+<tr>
+<td class="valign-top">@extended:</td>
+<td>Contains invalid parameter number</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>Several IE.au3 functions call <a href="_IELoadWait.htm">_IELoadWait()</a> automatically (e.g. <a href="_IECreate.htm">_IECreate()</a>, <a href="_IENavigate.htm">_IENavigate()</a> etc.).<br />
+Most functions that do this also allow you to turn this off with a $fWait parameter if you do not want the wait or if you want to call it yourself.<br />
+<br />
+When document objects or DOM elements are passed to <a href="_IELoadWait.htm">_IELoadWait()</a>, it will check the readyState of the container elements up to and including the parentWindow.<br />
+<br />
+Browser scripting security restrictions may sometimes prevent <a href="_IELoadWait.htm">_IELoadWait()</a> from guaranteeing that a page is fully loaded and can occasionally result in untrapped errors.<br />
+In these cases you may need to avoid calling <a href="_IELoadWait.htm">_IELoadWait()</a> and attempt to employ other methods of insuring that the page load has completed.<br />
+These methods might include using a Sleep command, examining browser status bar text and other methods. When using functions that call <a href="_IELoadWait.htm">_IELoadWait()</a> for objects other than the InternetExplorer (browser) object, you may also be successful by calling <a href="_IELoadWait.htm">_IELoadWait()</a> for the browser yourself (e.g. <a href="_IELoadWait.htm">_IELoadWait</a>($oIE)).<br />
+<br />
+The most common causes of trouble are page redirects and cross-site scripting security restrictions associated with frames. Page re-writing techniques employed by some applications (e.g. Gmail) can also cause trouble here.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="_IEAction.htm">_IEAction</a>, <a href="_IEBodyWriteHTML.htm">_IEBodyWriteHTML</a>, <a href="_IECreate.htm">_IECreate</a>, <a href="_IEDocWriteHTML.htm">_IEDocWriteHTML</a>, <a href="_IEFormImageClick.htm">_IEFormImageClick</a>, <a href="_IEFormSubmit.htm">_IEFormSubmit</a>, <a href="_IEImgClick.htm">_IEImgClick</a>, <a href="_IELinkClickByIndex.htm">_IELinkClickByIndex</a>, <a href="_IELinkClickByText.htm">_IELinkClickByText</a>, <a href="_IELoadWaitTimeout.htm">_IELoadWaitTimeout</a>, <a href="_IENavigate.htm">_IENavigate</a></p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_IELoadWait.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><span class="S1">; Open the AutoIt forum page, tab to the "View new posts"</span>
+<span class="S1">; link and activate the link with the enter key.</span>
+<span class="S1">; Then wait for the page load to complete&nbsp; &nbsp;before moving on.</span>
+
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IECreate.htm"><span class="S15">_IECreate</span></a><span class="S8">(</span><span class="S7">"http://www.autoitscript.com/forum/index.php"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/Send.htm"><span class="S4">Send</span></a><span class="S8">(</span><span class="S7">"</span><span class="S10">{TAB 12}</span><span class="S7">"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/Send.htm"><span class="S4">Send</span></a><span class="S8">(</span><span class="S7">"</span><span class="S10">{ENTER}</span><span class="S7">"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_IELoadWait.htm"><span class="S15">_IELoadWait</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

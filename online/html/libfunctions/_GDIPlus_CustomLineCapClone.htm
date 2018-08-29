@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _GDIPlus_CustomLineCapClone</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1>_GDIPlus_CustomLineCapClone</h1>
+<p class="funcdesc">Clones a CustomLineCap object<br /></p>
+<p class="codeheader">
+#include &lt;GDIPlus.au3&gt;<br />
+_GDIPlus_CustomLineCapClone ( $hCustomLineCap )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$hCustomLineCap</td>
+<td style="width:85%">Pointer to a CustomLineCap object</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">a handle to the cloned CustomLineCap object.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>0 and sets the @error flag to non-zero, @extended may contain GPSTATUS error code ($GPID_ERR*).</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>When you are done with the CustomLineCap object, call <a href="_GDIPlus_CustomLineCapDispose.htm">_GDIPlus_CustomLineCapDispose()</a> to release the resources.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="_GDIPlus_CustomLineCapDispose.htm">_GDIPlus_CustomLineCapDispose</a></p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://search.msdn.microsoft.com/search/Default.aspx?brand=msdn&query=GdipCloneCustomLineCap">GdipCloneCustomLineCap</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_GDIPlus_PathAddLine2.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GDIPlus.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGUI</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hGraphics</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hPath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hCustomLineCap</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hClonedLineCap</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hPen</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$avPoints</span><span class="S8">[</span><span class="S3">4</span><span class="S8">][</span><span class="S3">2</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[[</span><span class="S3">3</span><span class="S8">],</span><span class="S0"> </span><span class="S8">[-</span><span class="S3">15</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">15</span><span class="S8">],</span><span class="S0"> </span><span class="S8">[</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">[</span><span class="S3">15</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">15</span><span class="S8">]]</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Initialize GDI+</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Startup.htm"><span class="S15">_GDIPlus_Startup</span></a><span class="S8">()</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">;create a Graphics object from a window handle</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hGUI</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"_GDIPlus_CustomLineCapCreate Example"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">400</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hGraphics</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsCreateFromHWND.htm"><span class="S15">_GDIPlus_GraphicsCreateFromHWND</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">;sets the graphics object rendering quality (antialiasing)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsSetSmoothingMode.htm"><span class="S15">_GDIPlus_GraphicsSetSmoothingMode</span></a><span class="S8">(</span><span class="S9">$hGraphics</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GDIP_SMOOTHINGMODE_HIGHQUALITY</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Create GraphicsPath and add two lines to it.</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hPath</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PathCreate.htm"><span class="S15">_GDIPlus_PathCreate</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PathAddLine2.htm"><span class="S15">_GDIPlus_PathAddLine2</span></a><span class="S8">(</span><span class="S9">$hPath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$avPoints</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Create a CustomLineCap object.</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hCustomLineCap</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_CustomLineCapCreate.htm"><span class="S15">_GDIPlus_CustomLineCapCreate</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hPath</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Create a clone CustomLineCap object.</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hClonedLineCap</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_CustomLineCapClone.htm"><span class="S15">_GDIPlus_CustomLineCapClone</span></a><span class="S8">(</span><span class="S9">$hCustomLineCap</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Create a Pen object, assign cloned cap as the custom end cap, and draw a line.</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hPen</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PenCreate.htm"><span class="S15">_GDIPlus_PenCreate</span></a><span class="S8">(</span><span class="S3">0xFFFF0000</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PenSetCustomEndCap.htm"><span class="S15">_GDIPlus_PenSetCustomEndCap</span></a><span class="S8">(</span><span class="S9">$hPen</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hClonedLineCap</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDrawLine.htm"><span class="S15">_GDIPlus_GraphicsDrawLine</span></a><span class="S8">(</span><span class="S9">$hGraphics</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">,</span><span class="S0"> </span><span class="S3">350</span><span class="S8">,</span><span class="S0"> </span><span class="S3">150</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hPen</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Do</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Until</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Clean up</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PenDispose.htm"><span class="S15">_GDIPlus_PenDispose</span></a><span class="S8">(</span><span class="S9">$hPen</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_CustomLineCapDispose.htm"><span class="S15">_GDIPlus_CustomLineCapDispose</span></a><span class="S8">(</span><span class="S9">$hClonedLineCap</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_CustomLineCapDispose.htm"><span class="S15">_GDIPlus_CustomLineCapDispose</span></a><span class="S8">(</span><span class="S9">$hCustomLineCap</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PathDispose.htm"><span class="S15">_GDIPlus_PathDispose</span></a><span class="S8">(</span><span class="S9">$hPath</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDispose.htm"><span class="S15">_GDIPlus_GraphicsDispose</span></a><span class="S8">(</span><span class="S9">$hGraphics</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Uninitialize GDI+</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Shutdown.htm"><span class="S15">_GDIPlus_Shutdown</span></a><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

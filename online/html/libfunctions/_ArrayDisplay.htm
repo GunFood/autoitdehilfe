@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _ArrayDisplay</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_ArrayDisplay</h1><br />
+<a href="../libfunctions_en/_ArrayDisplay.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Zeigt ein 1D oder 2D Array in einem ListView<br /></p>
+<p class="codeheader">
+#include &lt;Array.au3&gt;<br />
+_ArrayDisplay ( Const ByRef $aArray [, $sTitle = "ArrayDisplay" [, $sArrayRange = "" [, $iFlags = 0 [, $vUser_Separator = Default [, $sHeader = Default [, $iMax_ColWidth = Default]]]]]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$aArray</td>
+<td style="width:85%">Name des anzuzeigenden Arrays</td>
+</tr>
+<tr>
+<td>$sTitle</td>
+<td><strong>[optional]</strong> Titel f&uuml;r den Dialog. Standard = "ArrayDisplay"</td>
+</tr>
+<tr>
+<td>$sArrayRange</td>
+<td><strong>[optional]</strong> Bereich der darzustellenden Zeilen/Spalten. Standard ("") = komplettes Array (siehe unten f&uuml;r Details)</td>
+</tr>
+<tr>
+<td>$iFlags</td>
+<td><strong>[optional]</strong> legt die UDF Optionen fest. Ben&ouml;tigte Werte sind zu addieren<br />
+&nbsp;&nbsp;&nbsp; $ARRAYDISPLAY_COLALIGNLEFT (0) = (Standard) Ausrichtung Spaltentext - links<br />
+&nbsp;&nbsp;&nbsp; $ARRAYDISPLAY_TRANSPOSE (1) = transponiert das Array (Zeile und Spalten tauschen) (nur 2D))<br />
+&nbsp;&nbsp;&nbsp; $ARRAYDISPLAY_COLALIGNRIGHT (2) = Ausrichtung Spaltentext - rechts<br />
+&nbsp;&nbsp;&nbsp; $ARRAYDISPLAY_COLALIGNCENTER (4) = Ausrichtung Spaltentext - mittig<br />
+&nbsp;&nbsp;&nbsp; $ARRAYDISPLAY_VERBOSE (8) = erweitert - zeigt bei einem Fehler eine MsgBox bzw. Splashscrees w&auml;hrend gro&szlig;e Arrays verarbeitet werden<br />
+&nbsp;&nbsp;&nbsp; 16 = veraltet<br />
+&nbsp;&nbsp;&nbsp; 32 = veraltet<br />
+&nbsp;&nbsp;&nbsp; $ARRAYDISPLAY_NOROW (64) = Keine Spalte mit "Row" anzeigen</td>
+</tr>
+<tr>
+<td>$vUser_Separator</td>
+<td><strong>[optional]</strong> veraltet. Wegen Skriptkompatibilit&auml;t nicht entfernt</td>
+</tr>
+<tr>
+<td>$sHeader</td>
+<td><strong>[optional]</strong> Spaltennamen (Namen getrennt durch das aktuelle Trennzeichen - gew&ouml;hnlich "|"). Standard siehe Bemerkungen.</td>
+</tr>
+<tr>
+<td>$iMax_Colwidth</td>
+<td><strong>[optional]</strong> Maximale Breite auf die eine ListView-Spalte vergr&ouml;&szlig;ert werden kann, um deren Inhalt zu sehen. Standard = 350 Pixel.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">1</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>0 und setzt @error wie folgt:</td>
+</tr>
+<tr>
+<td class="valign-top">@error:</td>
+<td>1 - $aArray ist kein Array<br />
+2 - $aArray hat zu viele Dimensionen. Es werden nur 1D und 2D Arrays unterst&uuml;tzt</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Falls der Funktion kein Array aks Variable oder ein Array mit mehr als zwei Dimensionen &uuml;bergeben wird, so gibt die Funktion einen Fehler zur&uuml;ck und das Skript wird fortgesetzt.<br />
+Falls der "verbose" Parameter in $iFlags gesetzt wird, so wird eine MsgBox dargestellt, welche die M&ouml;glichkeit bietet das Skript sofort zu beenden oder das Skript mit der R&uuml;ckgabe des normalen Fehlercodes weiterzuf&uuml;hren.<br />
+<br />
+Obwohl die Gr&ouml;&szlig;e des Arrays, das angezeigt werden soll, nicht begrenzt ist, gibt es eine Windows-Controlbeschr&auml;nkung, was bedeutet, dass der ListView-Header und -Spalten nicht ausgerichtet sind, wenn mehr als etwa 600 vorhanden sind.<br />
+<br />
+Es werden nur 65525 Zeilen eines Arrays dargestellt. Die ist in AutoIt eine Begrenzung der Gesamtzahl von in einer GUI darstellbarer Controls. Au&szlig;erdem k&ouml;nnen maximal 250 Spalten dargestellt werden.<br />
+Wenn der User versucht ein Array gr&ouml;&szlig;er als diese Begrenzungen darzustellen, so wird diesen Begrenzungen ein "*" an die abgeschnittene Dimension angeh&auml;ngt und in rot dargestellt.<br />
+Es ist zu beachten, dass die Verwendung von $iArrayRange (anzuzeigende Elemente bestimmen) es erm&ouml;glicht Arrays gr&ouml;&szlig;er als die Anzeigebegrenzungen darzustellen. <br />
+<br />
+Der $sArrayRange Parameter-Syntax lautet wie folgt:<table>
+<tr>
+<td>"7"</td>
+<td>- zeigt die Zeilen 0-7 mit allen Spalten</td>
+</tr>
+
+<tr>
+<td>"7:"</td>
+<td>- zeigt die Zeilen die auf 7 enden mit allen Spalten</td>
+</tr>
+
+<tr>
+<td>"|7"</td>
+<td>- zeigt alle Zeilen mit den Spalten 0-7</td>
+</tr>
+
+<tr>
+<td>"|7:"</td>
+<td>- zeigt alle Zeilen mit den Spalten die auf 7 enden</td>
+</tr>
+
+<tr>
+<td>"7|7"</td>
+<td>- zeigt die Zeilen 0-7 mit den Spalten 0-7</td>
+</tr>
+
+<tr>
+<td>"5:7"</td>
+<td>- zeigt die Zeilen 5-7 mit allen Spalten</td>
+</tr>
+
+<tr>
+<td>"|5:7"</td>
+<td>- zeigt alle Zeilen mit den Spalten 5-7</td>
+</tr>
+
+<tr>
+<td>"7|5:7"</td>
+<td>- zeigt die Zeilen 0-7 mit den Spalten 5-7</td>
+</tr>
+
+<tr>
+<td>"5:7|7"</td>
+<td>- zeigt die Zeilen 5-7 mit den Spalten 0-7</td>
+</tr>
+
+<tr>
+<td>"5:7|5:7"</td>
+<td>- zeigt die Zeilen 5-7 mit den Spalten 5-7</td>
+</tr>
+</table><br />
+Alle Spaltenwerte werden f&uuml;r 1D-Arrays ignoriert.<br />
+   <br />
+$sHeader Namen (getrennt durch das aktuelle Trennzeichen) werden f&uuml;r die vielen Spalten verwendet wie es Namen gibt. Wenn keine oder nicht genug eigene Namen festgelegt werden, so wird der Standardname von "Row|Col0" f&uuml;r 1D-Arrays oder "Row|Col0|Col1|...|Col n" f&uuml;r 2D-Arrays ausgetauscht. Wenn das Array transponiert angezeigt wird, wird der Header ignoriert.<br />
+<br />
+Die Array-Dimensionen werden links unter dem Array angezeigt. Sie sind in rotem Text, wenn das Array transponiert ist oder nur eine Reihe von Elementen angezeigt wird - ein Tooltip zeigt das / die jeweilige(n) Ereignis(e) an.<br />
+<br />
+Falls der "verbose" Parameter in $iFlags gesetzt ist, so wird ein Splashdialog dargestellt w&auml;hrend das Array versucht ein Array mit mehr als 10000 Elementen darzustellen.<br />
+<br />
+Ein Arrayelement, das ein anderes Array enth&auml;lt, wird als {Array} angezeigt.<br />
+<br />
+Ein Klick auf den Spalten-Header sortiert dieses.<br />
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<h3>Beispiel 1</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_ArrayDisplay.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erstellt ein 1D Array zum anzeigen</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray_1D</span><span class="S8">[</span><span class="S3">5</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[</span><span class="S7">"Item 0"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Item 1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Ein breites Item 2 um die Spaltenanpassung zu zeigen"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Item 3"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Item 4"</span><span class="S8">]</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray_1D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"1D Anzeige"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erstellt ein 2D Array zum anzeigen</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray_2D</span><span class="S8">[</span><span class="S3">20</span><span class="S8">][</span><span class="S3">15</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aArray_2D</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$j</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aArray_2D</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aArray_2D</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">][</span><span class="S9">$j</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Item "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringFormat.htm"><span class="S4">StringFormat</span></a><span class="S8">(</span><span class="S7">"%02i"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$i</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringFormat.htm"><span class="S4">StringFormat</span></a><span class="S8">(</span><span class="S7">"%02i"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$j</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray_2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2D Anzeige"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray_2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2D Anzeige gedreht"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ReDim.htm"><span class="S5">ReDim</span></a><span class="S0"> </span><span class="S9">$aArray_2D</span><span class="S8">[</span><span class="S3">20</span><span class="S8">][</span><span class="S3">10</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aArray_2D</span><span class="S8">[</span><span class="S3">5</span><span class="S8">][</span><span class="S3">5</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Ein breites Item um die Spaltenanpassung zu zeigen"</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray_2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Angepasste Spalte - eigene Spaltennamens - alternative Zeilenfarben - keine 'Zeilen bzw. Spalten"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">64</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">"AA|BB|CC|DD|EE|FF|GG|HH|II|JJ"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aArray_2D</span><span class="S8">[</span><span class="S3">5</span><span class="S8">][</span><span class="S3">5</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"rechtsb&uuml;ndige Spaltenausrichtung"</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray_2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Bereich gesetzt - rechtsb&uuml;ndig"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"3:7|4:9"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">"AA|BB|CC|DD|EE|FF"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aArray_2D</span><span class="S8">[</span><span class="S3">5</span><span class="S8">][</span><span class="S3">5</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"linksb&uuml;ndige Spaltenausrichtung"</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"GUIDataSeparatorChar"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"!"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray_2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"! Trennzeichen"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"3:7|4:9"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">"AA!BB!CC!DD!EE!FF"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erstellt eine nicht-Array Variable um einen Fehler zu erzwingen - eine MsgBox wird angezeigt, da $iFlags gesetzt ist</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$vVar</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iRet</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iError</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$iRet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$vVar</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"MsgBox bei einem Fehler"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$iError</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"_ArrayDisplay() Fehler"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Return ohne interne Msgbox $iret ="</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iRet</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" @error="</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iError</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$iRet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$vVar</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"MsgBox bei einem Fehler"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$iError</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"_ArrayDisplay() Fehler"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Return ohne interne Msgbox ohne Erzwingen von Exit $iret ="</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iRet</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" @error="</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iError</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 2</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_ArrayDisplay[02].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+
+<span class="S1">;verwendet ein selbst definiertes Array)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$avArray</span><span class="S8">[</span><span class="S3">10</span><span class="S8">]</span>
+
+<span class="S9">$avArray</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"JPM"</span>
+<span class="S9">$avArray</span><span class="S8">[</span><span class="S3">1</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Holger"</span>
+<span class="S9">$avArray</span><span class="S8">[</span><span class="S3">2</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Jon"</span>
+<span class="S9">$avArray</span><span class="S8">[</span><span class="S3">3</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Larry"</span>
+<span class="S9">$avArray</span><span class="S8">[</span><span class="S3">4</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Jeremy"</span>
+<span class="S9">$avArray</span><span class="S8">[</span><span class="S3">5</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Valik"</span>
+<span class="S9">$avArray</span><span class="S8">[</span><span class="S3">6</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Cyberslug"</span>
+<span class="S9">$avArray</span><span class="S8">[</span><span class="S3">7</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Nutster"</span>
+<span class="S9">$avArray</span><span class="S8">[</span><span class="S3">8</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"JdeB"</span>
+<span class="S9">$avArray</span><span class="S8">[</span><span class="S3">9</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Tylo"</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$avArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$avArray wird manuell auf 1D gesetzt"</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 3</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_ArrayDisplay[03].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext3\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext3">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+
+<span class="S1">;verwendet ein Array welches durch StringSplit() zur&uuml;ckgegeben wurde)</span>
+<span class="S9">$avArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringSplit.htm"><span class="S4">StringSplit</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/WinGetClassList.htm"><span class="S4">WinGetClassList</span></a><span class="S8">(</span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">),</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@LF"><span class="S6">@LF</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$avArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$avArray mit allen Klassen in den Fenstern"</span><span class="S8">)</span>
+
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 4</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_ArrayDisplay[04].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext4\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext4">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+
+<span class="S1">;ein 2D Array)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$avArray</span><span class="S8">[</span><span class="S3">2</span><span class="S8">][</span><span class="S3">5</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[[</span><span class="S7">"JPM"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Holger"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Jon"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Larry"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Jeremy"</span><span class="S8">],[</span><span class="S7">"Valik"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Cyberslug"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Nutster"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"JdeB"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Tylo"</span><span class="S8">]]</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$avArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$avArray als 2D Array"</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 5</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_ArrayDisplay[05].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext5\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext5">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$asControls</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringSplit.htm"><span class="S4">StringSplit</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/WinGetClassList.htm"><span class="S4">WinGetClassList</span></a><span class="S8">(</span><span class="S7">"[active]"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">),</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@LF"><span class="S6">@LF</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$asControls</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Klassenliste des aktiven Fensters"</span><span class="S8">)</span>
+
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

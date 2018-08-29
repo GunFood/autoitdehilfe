@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion RegEnumVal</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">RegEnumVal</h1><br />
+<a href="../functions_en/RegEnumVal.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Liest den Namen eines Wertes aus der Registry.<br /></p>
+<p class="codeheader">
+RegEnumVal ( "keyname", instance )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">keyname</td>
+<td style="width:85%">Der Registry-Schl&uuml;ssel, in dem gelesen werden soll.</td>
+</tr>
+<tr>
+<td>instance</td>
+<td>Die Instanz, die ermittelt werden soll (basierend auf 1).</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">Den angeforderten Wertnamen. In @EXTENDED wird der Typ der Wertes geschrieben.</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>Setzt @error auf ungleich 0.</td>
+</tr>
+<tr>
+<td class="valign-top">@error:</td>
+<td>  1 = der angegebene Schl&uuml;ssel kann nicht ge&ouml;ffnet werden<br />
+&nbsp;2 = es ist nicht m&ouml;glich auf den Hauptschl&uuml;ssel zuzugreifen<br />
+&nbsp;3 = es kann von extern (remote) nicht auf die Registry zugegriffen werden<br />
+-1 = der angefrage Wert kann nicht ermittelt werden (Instanzwert au&szlig;erhalb des zul&auml;ssigen Bereichs)</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Ein Registry-Schl&uuml;ssel muss mit "HKEY_LOCAL_MACHINE" ("HKLM"), "HKEY_USERS" ("HKU"), "HKEY_CURRENT_USER" ("HKCU"), "HKEY_CLASSES_ROOT" ("HKCR") oder "HKEY_CURRENT_CONFIG" ("HKCC") beginnen.<br />
+<br />
+Falls bei einem 64-Bit Windows auf die speziellen Eintr&auml;ge des 64-Bit Systems zugegriffen werden soll, muss dem Begriff HK... das Suffix 64 angeh&auml;ngt werden (z. B. HKLM64).<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="RegDelete.htm">RegDelete</a>, <a href="RegEnumKey.htm">RegEnumKey</a>, <a href="RegWrite.htm">RegWrite</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\RegEnumVal.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sVar</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sWow64</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sEnumVal</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Unter dem AutoIt3 Schl&uuml;ssel."</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aRegValueType</span><span class="S8">[</span><span class="S3">12</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[</span><span class="S7">"REG_NONE"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"REG_SZ"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"REG_EXPAND_SZ"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"REG_BINARY"</span><span class="S8">,</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"REG_DWORD_LITTLE_ENDIAN"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"REG_DWORD_BIG_ENDIAN"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"REG_LINK"</span><span class="S8">,</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"REG_MULTI_SZ"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"REG_RESOURCE_LIST"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"REG_FULL_RESOURCE_DESCRIPTOR"</span><span class="S8">,</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"REG_RESOURCE_REQUIREMENTS_LIST"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"REG_QWORD_LITTLE_ENDIAN"</span><span class="S8">]</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; X64 Unterst&uuml;tzung</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@AutoItX64"><span class="S6">@AutoItX64</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><span class="S9">$sWow64</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"\Wow6432Node"</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">100</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sVar</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/RegEnumVal.htm"><span class="S4">RegEnumVal</span></a><span class="S8">(</span><span class="S7">"HKEY_LOCAL_MACHINE\SOFTWARE"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sWow64</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"\AutoIt v3\AutoIt"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$i</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sEnumVal</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><span class="S7">"# "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">":"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringLeft.htm"><span class="S4">StringLeft</span></a><span class="S8">(</span><span class="S9">$aRegValueType</span><span class="S8">[</span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S8">]</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">31</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sVar</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"RegEnumVal Beispiel"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sEnumVal</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

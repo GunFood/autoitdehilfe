@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion StringSplit</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">StringSplit</h1><br />
+<a href="../functions_en/StringSplit.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Teilt einen String, abh&auml;ngig von den/dem gew&auml;hlten Trennzeichen (delimiters), in Stringfolgen auf und gibt diese in einem Array zur&uuml;ck.<br /></p>
+<p class="codeheader">
+StringSplit ( "string", "delimiters" [, flag = 0] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">string</td>
+<td style="width:85%">Der zu bearbeitende String.</td>
+</tr>
+<tr>
+<td>delimiters</td>
+<td>Ein oder mehrere Trennzeichen. Die Gro&szlig;- und Kleinschreibung wird ber&uuml;cksichtigt.</td>
+</tr>
+<tr>
+<td>flag</td>
+<td><strong>[optional]</strong> &auml;ndert wie das Teilen des Strings funktionieren soll. Es k&ouml;nnen mehrere Flags zusammen verwendet werden:<br />
+&nbsp;&nbsp;&nbsp; $STR_CHRSPLIT (0) = es fungiert jedes in den Trennzeichen enthaltene Zeichen als Trennmarkierung (Standardwert)<br />
+&nbsp;&nbsp;&nbsp; $STR_ENTIRESPLIT (1) = es wird der gesamte Trennzeichenstring als Trennmarkierung genutzt<br />
+&nbsp;&nbsp;&nbsp; $STR_NOCOUNT (2) = deaktiviert die R&uuml;ckgabe der Anzahl im ersten Element. Dadurch wird das Array 0-basierend. Man muss nun mit <a href="UBound.htm">UBound()</a> die Gr&ouml;&szlig;e des Arrays feststellen.<br />
+<br />
+Die Konstanten sind in StringConstants.au3 definiert.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+Gibt ein Array zur&uuml;ck. Standardm&auml;&szlig;ig enth&auml;lt das erste Element ($aArray[0]) die Anzahl der zur&uuml;ckgegebenen Teilstrings. Die weiteren Elemente ($aArray[1], $aArray[2], etc.) enthalten die Teilstrings des aufgeteilten Strings.<br />
+Falls der flag parameter auf $STR_NOCOUNT (2) gesetzt, wird die Anzahl nicht in dem ersten Element enthalten sein.<br />
+<br />
+Wird kein Trennzeichen gefunden, wird @error auf 1 gesetzt<br />
+	die Anzahl ist gleich 1 ($aArray[0]), und der gesamte String wird zur&uuml;ckgegeben ($aArray[1]).<br />
+  <br />
+  <br />
+	Falls das Flag ungleich $STR_NOCOUNT ist, so wird $aArray[0] auf 1 gesetzt und der komplette Strijng wird in $aArray[1] zur&uuml;ckgegeben.<br />
+	Falls das Flag gleich $STR_NOCOUNT ist, so wird der komplette String in $aArray[0] zur&uuml;ckgegeben.<br />
+
+
+<h2>Bemerkungen</h2>
+<p>Wird als Tennzeichen ein Leerstring "" angegeben, so wird jedes Zeichen des Strings im Array als Element zur&uuml;ckgegeben.<br />
+<br />
+Falls das Trennzeichen mehrere Zeicben enth&auml;lt ist das Verhalten der Funktion abh&auml;ngig von den Flag-Eionstellungen.<br />
+Falls $STR_CHRSPLIT eingestellt st, so wird der String bei jedem einzelnen Zeichen des Trennzeichen-Strings getrennt.<br />
+Falls $STR_ENTIRESPLIT eingestellt st, so wird der String nur getrennt wenn der komplette Trennzeichen-String vorkommt. Siehe zweites Beispiel unten. <br />
+<br />
+Es ist zu beachten, dass das Makro @CRLF momentan ein 2-Zeichen-String ist. Wenn der Flag-Parameter nicht auf $STR_ENTIRESPLIT steht, so wird eine zus&auml;tzliche Leerzeile erzeugt, da der String in @CR und @LF getrennt wird. <br />
+<a href="StringSplit.htm">StringSplit()</a> ist sehr brauchbar als Alternative zu <a href="StringInStr.htm">StringInStr()</a> und zum Bef&uuml;llen eines Arrays.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="StringInStr.htm">StringInStr</a>, <a href="StringLeft.htm">StringLeft</a>, <a href="StringLen.htm">StringLen</a>, <a href="StringLower.htm">StringLower</a>, <a href="StringMid.htm">StringMid</a>, <a href="StringRight.htm">StringRight</a>, <a href="StringTrimLeft.htm">StringTrimLeft</a>, <a href="StringTrimRight.htm">StringTrimRight</a>, <a href="StringUpper.htm">StringUpper</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<h3>Beispiel 1</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\StringSplit.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aDays</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringSplit.htm"><span class="S4">StringSplit</span></a><span class="S8">(</span><span class="S7">"Mo,Di,Mi,Do,Fr,Sa,So"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">","</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Trennt den String mit den Tagen durch das Trennzeichen ",".</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S2">#cs</span>
+<span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; Das Array gibt folgende Werte zur&uuml;ck:</span>
+<span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; $aDays[1] = "Mo"</span>
+<span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; $aDays[2] = "Di"</span>
+<span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; $aDays[3] = "Mi"</span>
+<span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; ...</span>
+<span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; $aDays[7] = "So"</span>
+<span class="S2">&nbsp; &nbsp; #ce</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S9">$aDays</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><span class="S1">; Durchl&auml;uft das Array, welches durch StringSplit zur&uuml;ckgegeben wurde und stellt die Werte dar.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$aDays["</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"] - "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$aDays</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">])</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 2</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\StringSplit[02].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;StringConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sText</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Diese\nZeile\nenth&auml;lt\nC-style Trennungen."</span><span class="S0"> </span><span class="S1">; Definiert eine Variable mit Text.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringSplit.htm"><span class="S4">StringSplit</span></a><span class="S8">(</span><span class="S9">$sText</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'\n'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$STR_ENTIRESPLIT</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; &Uuml;bergibt die Variable an StringSplit und verwendet das Trennzeichen "\n".</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Es ist zu beachten, dass der flag Parameter auf $STR_ENTIRESPLIT (1) gesetzt ist. Sonst wird es bei jedem \ bzw n getrennt und nicht nur wenn beide Zeichen zusammen auftreten.</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S2">#cs</span>
+<span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; Das zur&uuml;ckgegebene Array wird folgende Werte enthalten:</span>
+<span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; $aArray[1] = "Diese"</span>
+<span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; $aArray[2] = "Zeile"</span>
+<span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; ...</span>
+<span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; $aArray[4] = "C-style Trennungen."</span>
+<span class="S2">&nbsp; &nbsp; #ce</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S9">$aArray</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><span class="S1">; Durchl&auml;uft das Array welches von StringSplit zur&uuml;ckgegeben wurde. Es werden die individuellen Werte dargestellt.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$aArray["</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"] - "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$aArray</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">])</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 3</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\StringSplit[03].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext3\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext3">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;StringConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sText</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Diese\nZeile\nenth&auml;lt\nC-style Trennungen."</span><span class="S0"> </span><span class="S1">; Definiert eine Variable mit Text.</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; &Uuml;bergibt die Variable an StringSplit und verwendet das Trennzeichen "\n".</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Es ist zu beachten, dass der flag Parameter auf $STR_ENTIRESPLIT (1) gesetzt ist. Sonst wird es bei jedem \ bzw n getrennt und nicht nur wenn beide Zeichen zusammen auftreten.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringSplit.htm"><span class="S4">StringSplit</span></a><span class="S8">(</span><span class="S9">$sText</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'\n'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$STR_ENTIRESPLIT</span><span class="S8">)[</span><span class="S3">2</span><span class="S8">])</span><span class="S0"> </span><span class="S1">; Direkter Zugriff auf den Arrayindex durch die Verwendung des Arrayzugriffs auf den Ausdruck.</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S2">#cs</span>
+<span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; Ein internes tempor&auml;res Array wird verwendet um einen String zur&uuml;ckzugeben, der die folgenden Werte enthalten sollte.:</span>
+<span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; $aArray[1] = "Diese"</span>
+<span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; $aArray[2] = "Zeile"</span>
+<span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; ...</span>
+<span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; $aArray[4] = "C-style Trennungen."</span>
+<span class="S2">&nbsp; &nbsp; #ce</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

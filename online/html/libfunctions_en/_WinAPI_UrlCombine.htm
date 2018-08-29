@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _WinAPI_UrlCombine</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1>_WinAPI_UrlCombine</h1>
+<p class="funcdesc">Combines the base an relative URLs in canonical form<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIShPath.au3&gt;<br />
+_WinAPI_UrlCombine ( $sUrl, $sPart [, $iFlags = 0] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$sUrl</td>
+<td style="width:85%">The base URL.</td>
+</tr>
+<tr>
+<td>$sPart</td>
+<td>The relative URL.</td>
+</tr>
+<tr>
+<td>$iFlags</td>
+<td><strong>[optional]</strong> The flags that specify how the URL is to be converted. It can be a combination of the following values.<br />
+&nbsp;&nbsp;&nbsp; $URL_DONT_SIMPLIFY<br />
+&nbsp;&nbsp;&nbsp; $URL_ESCAPE_PERCENT<br />
+&nbsp;&nbsp;&nbsp; $URL_ESCAPE_SPACES_ONLY<br />
+&nbsp;&nbsp;&nbsp; $URL_ESCAPE_UNSAFE<br />
+&nbsp;&nbsp;&nbsp; $URL_NO_META<br />
+&nbsp;&nbsp;&nbsp; $URL_PLUGGABLE_PROTOCOL<br />
+&nbsp;&nbsp;&nbsp; $URL_UNESCAPE<br />
+<br />
+<strong>Windows 7 or later</strong><br />
+&nbsp;&nbsp;&nbsp; $URL_ESCAPE_AS_UTF8</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">The combined URL.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>Sets the @error flag to non-zero, @extended flag may contain the HRESULT error code.</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>Items between slashes are treated as hierarchical identifiers; the last item specifies the document itself.<br />
+You must enter a slash ("/" ) after the document name to append more items; otherwise, the function exchanges<br />
+one document for another.<br />
+<br />
+If a URL string contains "/../" or "/./", <a href="_WinAPI_UrlCombine.htm">_WinAPI_UrlCombine()</a> usually treats the characters as if they<br />
+indicated navigation in the URL hierarchy. The function simplifies the URLs before combining them. For instance,<br />
+"/hello/cruel/../world" is simplified to "/hello/world". If the $URL_DONT_SIMPLIFY flag is set, the function<br />
+does not simplify URLs. In this case, "/hello/cruel/../world" is left as it is.<br />
+</p>
+
+<h2>See Also</h2>
+<p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(UrlCombine);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">UrlCombine</a> in MSDN  Library.
+</p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_UrlCombine.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIShPath.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sUrl1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">'http://xyz/abc/'</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sUrl2</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">'http://xyz/abc'</span>
+
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_UrlCombine.htm"><span class="S15">_WinAPI_UrlCombine</span></a><span class="S8">(</span><span class="S9">$sUrl1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'bar'</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_UrlCombine.htm"><span class="S15">_WinAPI_UrlCombine</span></a><span class="S8">(</span><span class="S9">$sUrl2</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'bar'</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

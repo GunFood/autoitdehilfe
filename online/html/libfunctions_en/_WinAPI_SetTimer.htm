@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _WinAPI_SetTimer</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1>_WinAPI_SetTimer</h1>
+<p class="funcdesc">Creates a timer with the specified time-out value<br /></p>
+<p class="codeheader">
+#include &lt;WinAPISysWin.au3&gt;<br />
+_WinAPI_SetTimer ( $hWnd, $iTimerID, $iElapse, $pTimerFunc )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$hWnd</td>
+<td style="width:85%">Handle to the window to be associated with the timer. This window must be owned by the calling<br />
+process. If a 0 value for $hWnd is passed in along with an $iTimerID of an existing timer, that<br />
+timer will be replaced in the same way that an existing non-zero $hWnd timer will be.</td>
+</tr>
+<tr>
+<td>$iTimerID</td>
+<td>The timer identifier. If the $hWnd parameter is 0, and the $iTimerID does not match an existing<br />
+timer then it is ignored and a new timer ID is generated. If the $hWnd parameter is not 0 and<br />
+the window specified by $hWnd already has a timer with the value $iTimerID, then the existing<br />
+timer is replaced by the new timer. When <a href="_WinAPI_SetTimer.htm">_WinAPI_SetTimer()</a> replaces a timer, the timer is reset.<br />
+Therefore, a message will be sent after the current time-out value elapses, but the previously<br />
+set time-out value is ignored. If the call is not intended to replace an existing timer,<br />
+$iTimerID should be 0 if the $hWnd is 0.</td>
+</tr>
+<tr>
+<td>$iElapse</td>
+<td>The time-out value, in milliseconds.</td>
+</tr>
+<tr>
+<td>$pTimerFunc</td>
+<td>The address of a callback function to be notified when the time-out value elapses. If this<br />
+parameter is 0, the system posts a WM_TIMER message to the application queue.<br />
+(See MSDN for more information)</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">The timer identifier. An application can pass this value to the <a href="_WinAPI_KillTimer.htm">_WinAPI_KillTimer()</a> function to<br />
+destroy the timer.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>0.</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>The timer identifier, $iTimerID, is specific to the associated window. Another window can have its own timer<br />
+which has the same identifier as a timer owned by another window. The timers are distinct.<br />
+</p>
+
+<h2>See Also</h2>
+<p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(SetTimer);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">SetTimer</a> in MSDN  Library.
+</p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_SetTimer.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Misc.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPISysWin.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">'TrayAutoPause'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hTimerProc</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllCallbackRegister.htm"><span class="S4">DllCallbackRegister</span></a><span class="S8">(</span><span class="S7">'_TimerProc'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'none'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'hwnd;uint;uint_ptr;dword'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_iCount</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iTimerID</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetTimer.htm"><span class="S15">_WinAPI_SetTimer</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1000</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllCallbackGetPtr.htm"><span class="S4">DllCallbackGetPtr</span></a><span class="S8">(</span><span class="S9">$hTimerProc</span><span class="S8">))</span>
+
+<a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Do</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">100</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Until</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IsPressed.htm"><span class="S15">_IsPressed</span></a><span class="S8">(</span><span class="S7">'1B'</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_KillTimer.htm"><span class="S15">_WinAPI_KillTimer</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iTimerID</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllCallbackFree.htm"><span class="S4">DllCallbackFree</span></a><span class="S8">(</span><span class="S9">$hTimerProc</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _TimerProc</span><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iMsg</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iTimerID</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iTime</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S12">#forceref $hWnd, $iMsg, $iTimerId, $iTime</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S9">$g_iCount</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_iCount</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+=</span></a><span class="S0"> </span><span class="S3">1</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_TimerProc</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

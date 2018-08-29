@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinAPI_DisplayStruct</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_WinAPI_DisplayStruct</h1><br />
+<a href="../libfunctions_en/_WinAPI_DisplayStruct.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Zeigt die Daten einer gegebenen Struktur oder Speicheradresse als Liste an<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIDiag.au3&gt;<br />
+_WinAPI_DisplayStruct ( $tStruct [, $sStruct = '' [, $sTitle = '' [, $iItem = 0 [, $iSubItem = 0 [, $iFlags = 0 [, $bTop = True [, $hParent = 0]]]]]]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$tStruct</td>
+<td style="width:85%">Eine Struktur welche mittels DllStructCreate() erstellt wurde oder eine Speicheradresse um ihre Daten anzuzeigen.</td>
+</tr>
+<tr>
+<td>$sStruct</td>
+<td><strong>[optional]</strong> Einen String welcher die Struktur repr&auml;sentiert.<br />
+Wenn $tStruct eine Struktur ist, so kann dieser Parameter &uuml;bersprungen werden oder ein leerer String sein. In diesem Fall wird die Struktur als "byte[n]" Struktur angezeigt.<br />
+Wenn $tStruct eine Speicheradresse ist, so sollte $sStruct ein String sein welcher die Struktur repr&auml;sentiert, anderenfalls schl&auml;gt diese Funktion fehl und @error wird auf 10 gesetzt.</td>
+</tr>
+<tr>
+<td>$sTitle</td>
+<td><strong>[optional]</strong> Der Titel des Fensters. Standardm&auml;&szlig;ig lautet dieser "Structure: ListView Display".</td>
+</tr>
+<tr>
+<td>$iItem</td>
+<td><strong>[optional]</strong> Der 1-basierte Index oder der Name des Strukturmitglieds welcher in der Liste ausgew&auml;hlt werden soll.<br />
+Wenn dieser Parameter 0 ist (Standard), oder ein ung&uuml;ltiger Index oder Name, so wird das erste Element der Struktur ausgew&auml;hlt.</td>
+</tr>
+<tr>
+<td>$iSubItem</td>
+<td><strong>[optional]</strong> Der 1-basierte Index des Arrays im Strukturmitglied, welcher auf den vom $iItem Parameter gezeigt wird, der ausgew&auml;hlt werden soll.<br />
+Wenn $iItem nicht als Array in $sStruct definiert wurde, ein ein ung&uuml;ltiger Arrayindex ist, so wird das Element ausgew&auml;hlt auf welches der $iItem Parameter zeigt.the $iItem parameter will be selected.</td>
+</tr>
+<tr>
+<td>$iFlags</td>
+<td><strong>[optional]</strong> Eine Menge von Bitflags die zus&auml;tzliche Anzeigeoptionen angeben.<br />
+Dieser Parameter kann entweder 0 oder irgendeine Kombinatino der folgenden Werte sein:<br />
+&nbsp;&nbsp;&nbsp; 1 - Verhindert das Anzeigen von "<struct>" und "<endstruct>" Feldern am Anfang und am Ende der Liste.<br />
+&nbsp;&nbsp;&nbsp; 2 - Verhindert das Anzeigen von "<alignment>" Feldern.<br />
+&nbsp;&nbsp;&nbsp; 4 - Verhindert das Anzeigen von "<unnamed>" in der "Member" Spalte der Liste wenn das Strukturelement keinen Namen hat.<br />
+&nbsp;&nbsp;&nbsp; 8 - Verhindert das Hervorheben von Strukturelementen welche als Array definiert sind.<br />
+&nbsp;&nbsp;&nbsp; 16 - Verhindert das Wahrnehmen von Strukturelementen welche "Reserved*" genannt wurden als unbenutzte Elemente.<br />
+&nbsp;&nbsp;&nbsp; 32 - Verhindert das Kopieren mittels Doppeklick der Strukturelemente in die Zwischenablage.<br />
+&nbsp;&nbsp;&nbsp; 64 - Erzwingt das Erweitern von Strukturelementen mit den Typen BYTE[n] und BOOLEAN[n]. (Elemente mit den Typen CHAR[n] und WCHAR[n] werden immer als String angezeigt.)<br />
+&nbsp;&nbsp;&nbsp; 128 - Erzwingt das Anzeigen der Werte von Strukturelementen in hexadezimaler Repr&auml;sentation sofern m&ouml;glich.<br />
+&nbsp;&nbsp;&nbsp; 256 - Erzwingt die R&uuml;ckgabe eines Fehlercodes statt dem Anzeigen einer MessageBox wenn ein Speicherzugriffsfehler auftrat.<br />
+&nbsp;&nbsp;&nbsp; 512 - Erzwingt die Abschaltung der &Uuml;berpr&uuml;fung des Lesezugriffsspeichers welcher der gegebenen Struktur zugewiesen wurde.</td>
+</tr>
+<tr>
+<td>$bTop</td>
+<td><strong>[optional]</strong> Gibt an, ob das zu erstellende Fenster mit dem "immer ganz oben" (Always On Top) Attribut erzeugt werden soll. G&uuml;ltige Werte sind:<br />
+&nbsp;&nbsp;&nbsp; True	- Das Fenster wird mit dem erweiterten Stil $WS_EX_TOPMOST erzeugt (Standard).<br />
+&nbsp;&nbsp;&nbsp; False	- Das Fenster wird nicht das "TOPMOST" Flag gesetzt haben.</td>
+</tr>
+<tr>
+<td>$hParent</td>
+<td><strong>[optional]</strong> Das Handle zum Parentfenster.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg: </td>
+<td style="width:90%">1.</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler: </td>
+<td>0 und setzt @error auf ungleich 0.</td>
+</tr>
+<tr>
+<td class="valign-top">@error:</td>
+<td>2 - Es wurde ein unbekannter Typ im String &uuml;bergeben.<br />
+3 - Die Zuweisung des Speichers, welcher f&uuml;r die Struktur ben&ouml;tigt wird, schlug fehl oder es wurde ein ung&uuml;ltiger Zeiger &uuml;bergeben.<br />
+4 - Die Zuweisung des Speichers, welcher f&uuml;r den &uuml;bergebenen String ben&ouml;tigt wird schlug fehl.<br />
+10 - Der $sStruct Parameter ist kein String.<br />
+15 - Fehler beim Zugriff des Speichers um Daten zu lesen.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Diese Funktion ist haupts&auml;chlich f&uuml;r das Debugging gedacht und sollte im finalen Script nicht verwendet werden, da er keine brauchbaren Informationen f&uuml;r die Endnutzer bereitstellt.<br />
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_DisplayStruct.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIDiag.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sStruct</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">'dword Length;short State;uint Flags;handle hBitmap;hwnd hDC;long Rect[4];byte[14];int Reserved[10];wchar Text[80]'</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tStruct</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S9">$sStruct</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tStruct</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">80</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tStruct</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">6</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tStruct</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tStruct</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0x00010014</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tStruct</span><span class="S8">,</span><span class="S0"> </span><span class="S3">5</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0x01010057</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tStruct</span><span class="S8">,</span><span class="S0"> </span><span class="S3">6</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tStruct</span><span class="S8">,</span><span class="S0"> </span><span class="S3">6</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tStruct</span><span class="S8">,</span><span class="S0"> </span><span class="S3">6</span><span class="S8">,</span><span class="S0"> </span><span class="S3">60</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tStruct</span><span class="S8">,</span><span class="S0"> </span><span class="S3">6</span><span class="S8">,</span><span class="S0"> </span><span class="S3">80</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tStruct</span><span class="S8">,</span><span class="S0"> </span><span class="S3">7</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Binary.htm"><span class="S4">Binary</span></a><span class="S8">(</span><span class="S7">'0x656A6D633835206C6A6764206200'</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tStruct</span><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tStruct</span><span class="S8">,</span><span class="S0"> </span><span class="S3">9</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Einfacher Text'</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_DisplayStruct.htm"><span class="S15">_WinAPI_DisplayStruct</span></a><span class="S8">(</span><span class="S9">$tStruct</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sStruct</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

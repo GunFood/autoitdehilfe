@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _WinAPI_GetPwrCapabilities</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1>_WinAPI_GetPwrCapabilities</h1>
+<p class="funcdesc">Retrieves information about the system power capabilities<br /></p>
+<p class="codeheader">
+#include &lt;WinAPISys.au3&gt;<br />
+_WinAPI_GetPwrCapabilities (  )<br />
+</p>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">The array that contains the following information:<br />
+[0] - If True, there is a system power button.<br />
+[1] - If True, there is a system sleep button.<br />
+[2] - If True, there is a lid switch.<br />
+[3] - If True, the operating system supports sleep state S1.<br />
+[4] - If True, the operating system supports sleep state S2.<br />
+[5] - If True, the operating system supports sleep state S3.<br />
+[6] - If True, the operating system supports sleep state S4 (hibernation).<br />
+[7] - If True, the operating system supports power off state S5 (soft off).<br />
+[8] - If True, the system hibernation file is present.<br />
+[9] - If True, the system supports wake capabilities.<br />
+[10] - If True, the system supports video display dimming capabilities.<br />
+[11] - If True, the system supports APM BIOS power management features.<br />
+[12] - If True, there is an uninterruptible power supply (UPS).<br />
+[13] - If True, the system supports thermal zones.<br />
+[14] - If True, the system supports processor throttling.<br />
+[15] - The minimum level of system processor throttling supported, expressed as a percentage.<br />
+[16] - The maximum level of system processor throttling supported, expressed as a percentage.<br />
+[17] - If True, the system supports the hybrid sleep state.<br />
+[18] - If True, the system supports allowing the removal of power to fixed disk devices.<br />
+[19] - If True, there are one or more batteries in the system.<br />
+[20] - If True, the system batteries are short-term. Short-term batteries are used in uninterruptible power supplies (UPS).<br />
+[21] - The lowest system sleep state (Sx) that will generate a wake event when the system is on AC power.<br />
+[22] - The lowest system sleep state (Sx) that will generate a wake event via the lid switch.<br />
+[23] - The lowest system sleep state (Sx) supported by hardware that will generate a wake event via the RTC.<br />
+[24] - The minimum allowable system power state supporting wake events.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>Sets the @error flag to non-zero, call <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> to get extended error information.</td>
+</tr>
+</table>
+
+<h2>See Also</h2>
+<p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(GetPwrCapabilities);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">GetPwrCapabilities</a> in MSDN  Library.
+</p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_GetPwrCapabilities.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPISys.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aInfo</span><span class="S8">[</span><span class="S3">25</span><span class="S8">][</span><span class="S3">2</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[[</span><span class="S7">'Power button'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">'Sleep button'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">'Lid switch'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">'S1'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">'S2'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">'S3'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">'S4'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">'S5'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">'HIBERFIL.SYS'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">'Wake'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">'Video display dimming'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">'APM BIOS'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">'UPS'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">'Thermal zones'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">'Throttling'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">'Throttling min level'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">'Throttling max level'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">'Hibernation'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">'HDD power down'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">'Batteries'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">'Batteries short-term'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">'AC lowest wake state'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">'Lid lowest wake state'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">'RTC lowest wake state'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S8">[</span><span class="S7">'Minimum device wake state'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">]]</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetPwrCapabilities.htm"><span class="S15">_WinAPI_GetPwrCapabilities</span></a><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aInfo</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aInfo</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">][</span><span class="S3">1</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aData</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aInfo</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'_WinAPI_GetPwrCapabilities'</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

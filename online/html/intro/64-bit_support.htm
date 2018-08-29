@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>AutoIt unter Windows 64-Bit Edition</title>
+	<meta charset="utf-8">
+	<link href="../css/default.css" rel="stylesheet">
+</head>
+<body>
+	<h1>AutoIt unter Windows 64-Bit Edition</h1>
+	<p>AutoIt war immer eine traditionelle 32-Bit Anwendung. Seit dem v3.2.10.0 Release wurden einige Komponenten mit ausschlie&szlig;lich x64-Versionen hinzugef&uuml;gt, unter anderem:</p>
+	<ul>
+		<li>AutoIt (AutoIt3_x64.exe)</li>
+		<li>Aut2Exe (Aut2Exe_x64.exe)</li>
+		<li>Au3Info (Au3Info_x64.exe)</li>
+		<li>AutoItX (AutoItX3_x64.dll)</li>
+	</ul>
+	<p>W&auml;hrend der Installation, sofern sie auf einem x64-System l&auml;uft, wird angeboten, diese x64-Versionen zu installieren und zu konfigurieren. Diese Versionen sind voll x64 kompatibel, obwohl einige Skripte, die <a href="../functions/DllCall.htm">DllCall</a>/<a href="../functions/DllStructCreate.htm">DllStruct</a> mit eigenen Benutzerstrukturen benutzen, Werte benutzen k&ouml;nnen, die die 64-Bit Kompatibilit&auml;t durchbrechen (wenn z.B. 32-Bit Integerzahlen als Zeiger genutzt werden).</p>
+	<p>Man kann die x86-Version von AutoIt mit einem Rechtsklick auf ein Skript und Auswahl von "Run Script (x86)" starten.</p>
+	<p>Um zu erkennen, ob ein System unter einer x64 Edition von Windows l&auml;uft, verwendet man das Makro @OSArch. Um zu erkennen, ob man eine 32 oder 64-Bit Version von AutoIt nutzt, verwendet man das Makro @AutoItX64.</p>
+	<h2>Ausf&uuml;hrung der 32-Bit Version von AutoIt auf einem x64 System</h2>
+	<p>Windows hat einen speziellen Mechanismus f&uuml;r das Festlegen von einigen System-Verzeichnissen:</p>
+	<table>
+		<tbody>
+			<tr>
+				<th>Verzeichnisse</th>
+				<th>32-Bit Wert</th>
+				<th>64-Bit Wert</th>
+			</tr>
+			<tr>
+				<td>@SystemDir</td>
+				<td>@WindowsDir &amp; "\System32"</td>
+				<td>@WindowsDir &amp; "\SYSWOW64"</td>
+			</tr>
+			<tr>
+				<td>@ProgramFilesDir</td>
+				<td>{SystemDrive} &amp; "\Program Files (x86)"</td>
+				<td>{SystemDrive} &amp; "\Program Files"</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p>Durch das deaktivieren dieses 'Umleitungsmechanismus' ist es m&ouml;glich, auf die 64-Bit Versionen dieser Verzeichnisse zuzugreifen.</p>
+@@SyntaxHighlighting@@
+#include <WinAPIFiles.au3>
+
+_WinAPI_Wow64EnableWow64FsRedirection(True)
+@@End@@
+
+	<p>Mehr Informationen findet man bei <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/winprog64/winprog64/file_system_redirector.asp"><u>MSDN</u></a>.</p>
+	<p>F&uuml;r die Registry nutzt man HKCR64 oder HKLM64, um den Umleitungsmechanismus zu umgehen. Siehe Registry Funktionsdokumentation.</p>
+</body>
+</html>

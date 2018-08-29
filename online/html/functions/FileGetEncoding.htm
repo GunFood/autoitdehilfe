@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion FileGetEncoding</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">FileGetEncoding</h1><br />
+<a href="../functions_en/FileGetEncoding.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Ermittelt die Text-Kodierung einer Datei.<br /></p>
+<p class="codeheader">
+FileGetEncoding ( "filehandle/filename" [, mode = 1] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">filehandle/filename</td>
+<td style="width:85%">Das Handle einer Datei, wie es durch einen vorherigen Aufruf von <a href="FileOpen.htm">FileOpen()</a> zur&uuml;ckgegeben wurde. Alternativ kann als erster Parameter auch ein Dateiname als Zeichenfolge verwendet werden.</td>
+</tr>
+<tr>
+<td>mode</td>
+<td><strong>[optional]</strong> Der zu nutzende UTF8 Erkennungsmodus.<br />
+&nbsp;&nbsp;&nbsp; $FE_ENTIRE_UTF8 (1) = Untersucht ganze Dateien nach UTF8 Sequenzen. (Standard)<br />
+&nbsp;&nbsp;&nbsp; $FE_PARTIALFIRST_UTF8 (2) = Untersucht den ersten Teil einer Datei nach UTF8 Sequenzen. (Der Gleiche, den <a href="FileOpen.htm">FileOpen()</a> standardm&auml;&szlig;ig nutzt)<br />
+<br />
+Die Konstanten sind in FileConstants.au3 definiert.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">Die Dateikodierung unter Verwendung der gleichen Werte wie die <a href="FileOpen.htm">FileOpen()</a> Funktion.<br />
+&nbsp;&nbsp;&nbsp; $FO_UTF16_LE (32) = UTF16 Little Endian.<br />
+&nbsp;&nbsp;&nbsp; $FO_UTF16_BE (64) = UTF16 Big Endian.<br />
+&nbsp;&nbsp;&nbsp; $FO_UTF8 (128) = UTF8 (mit BOM).<br />
+&nbsp;&nbsp;&nbsp; $FO_UTF8_NOBOM (256) = UTF8 (ohne BOM).<br />
+&nbsp;&nbsp;&nbsp; $FO_ANSI (512) = ANSI (enth&auml;lt die Zeichen &gt; 127 und &lt; 255)</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>-1.</td>
+</tr>
+</table><br />
+Die Konstanten sind in FileConstants.au3 definiert.<br />
+
+
+<h2>Bemerkungen</h2>
+<p>Wenn der Dateiname anstatt eines Dateihandles angegeben wird, wird die Datei w&auml;hrend des Funktionsaufrufes nur ge&ouml;ffnet und geschlossen.<br />
+Achtung: Dateihandles und Dateinamen nicht gleichzeitig verwenden! Beispielsweise &ouml;ffnet man die Datei nicht mit <a href="FileOpen.htm">FileOpen()</a> und benutzt dann den Dateinamen in dieser Funktion. Entweder man verwendet Dateihandles oder Dateinamen in den eigenen Routinen, nicht beides zusammen!<br />
+<br />
+Wird ein Dateihandle verwendet, hat der "mode" Parameter keinen Effekt - der <a href="FileOpen.htm">FileOpen()</a> Modus ist vorrangig.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="FileOpen.htm">FileOpen</a>, <a href="FileRead.htm">FileRead</a>, <a href="FileReadLine.htm">FileReadLine</a>, <a href="FileWrite.htm">FileWrite</a>, <a href="FileWriteLine.htm">FileWriteLine</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\FileGetEncoding.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iEncoding</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileGetEncoding.htm"><span class="S4">FileGetEncoding</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@ScriptFullPath"><span class="S6">@ScriptFullPath</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">; Liest die Zeichenkodierung der Scriptdatei aus</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Error"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Konnte keine Kodierung auslesen."</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"FileGetEncoding"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Der zur&uuml;ckgegebene Wert ist: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iEncoding</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Der zur&uuml;ckgegebene Wert f&uuml;r dieses Beispiel sollte 0 bzw. $FO_ANSI sein.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

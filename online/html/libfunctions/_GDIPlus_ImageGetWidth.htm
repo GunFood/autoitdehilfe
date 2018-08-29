@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _GDIPlus_ImageGetWidth</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_GDIPlus_ImageGetWidth</h1><br />
+<a href="../libfunctions_en/_GDIPlus_ImageGetWidth.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Ermittelt die Bildbreite<br /></p>
+<p class="codeheader">
+#include &lt;GDIPlus.au3&gt;<br />
+_GDIPlus_ImageGetWidth ( $hImage )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$hImage</td>
+<td style="width:85%">Handle zu dem Bild</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">eine Bildbreite in Pixel</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>-1 und setzt @error auf ungleich 0. @extended kann den GPSTATUS Fehlercode ($GPID_ERR*) enthalten.</td>
+</tr>
+</table>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="_GDIPlus_ImageGetHeight.htm">_GDIPlus_ImageGetHeight</a></p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://search.msdn.microsoft.com/search/Default.aspx?brand=msdn&query=GdipGetImageWidth">GdipGetImageWidth</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_GDIPlus_ImageGetWidth.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GDIPlus.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;ScreenCapture.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIHObj.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hBitmap</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hClone</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hImage</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iX</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iY</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Initialisiert (startet) Microsoft Windows GDI+</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Startup.htm"><span class="S15">_GDIPlus_Startup</span></a><span class="S8">()</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erstellt vom kompletten Bildschirm einen Screenshot und erzeugt daraus eine 32 bit Bitmap</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hBitmap</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_ScreenCapture_Capture.htm"><span class="S15">_ScreenCapture_Capture</span></a><span class="S8">(</span><span class="S7">""</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hImage</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BitmapCreateFromHBITMAP.htm"><span class="S15">_GDIPlus_BitmapCreateFromHBITMAP</span></a><span class="S8">(</span><span class="S9">$hBitmap</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erzeugt eine Kopie einer 24 bit Bitmap</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$iX</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageGetWidth.htm"><span class="S15">_GDIPlus_ImageGetWidth</span></a><span class="S8">(</span><span class="S9">$hImage</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$iY</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageGetHeight.htm"><span class="S15">_GDIPlus_ImageGetHeight</span></a><span class="S8">(</span><span class="S9">$hImage</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hClone</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BitmapCloneArea.htm"><span class="S15">_GDIPlus_BitmapCloneArea</span></a><span class="S8">(</span><span class="S9">$hImage</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iX</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iY</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GDIP_PXF24RGB</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Speichert das Bild in eine Datei</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageSaveToFile.htm"><span class="S15">_GDIPlus_ImageSaveToFile</span></a><span class="S8">(</span><span class="S9">$hClone</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@MyDocumentsDir"><span class="S6">@MyDocumentsDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"\GDIPlus_Image.bmp"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Ressourcen freigeben</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageDispose.htm"><span class="S15">_GDIPlus_ImageDispose</span></a><span class="S8">(</span><span class="S9">$hClone</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageDispose.htm"><span class="S15">_GDIPlus_ImageDispose</span></a><span class="S8">(</span><span class="S9">$hImage</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_DeleteObject.htm"><span class="S15">_WinAPI_DeleteObject</span></a><span class="S8">(</span><span class="S9">$hBitmap</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Gibt die durch Microsoft Windows GDI+ verwendeten Ressourcen wieder frei</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Shutdown.htm"><span class="S15">_GDIPlus_Shutdown</span></a><span class="S8">()</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ShellExecute.htm"><span class="S4">ShellExecute</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@MyDocumentsDir"><span class="S6">@MyDocumentsDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"\GDIPlus_Image.bmp"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

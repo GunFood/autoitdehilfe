@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _WinAPI_EnumDisplaySettings</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1>_WinAPI_EnumDisplaySettings</h1>
+<p class="funcdesc">Retrieves information about one of the graphics modes for a display device<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIGdi.au3&gt;<br />
+_WinAPI_EnumDisplaySettings ( $sDevice, $iMode )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$sDevice</td>
+<td style="width:85%">The display device about whose graphics mode the function will obtain information.<br />
+An empty string specifies the current display device on the computer on which the calling process is running.</td>
+</tr>
+<tr>
+<td>$iMode</td>
+<td>The type of information to be retrieved. This value can be a graphics mode index or one of the following values:<br />
+&nbsp;&nbsp;&nbsp; $ENUM_CURRENT_SETTINGS<br />
+&nbsp;&nbsp;&nbsp; $ENUM_REGISTRY_SETTINGS<br />
+The graphics mode indexes start at zero.<br />
+To obtain information for all of a display device's graphics modes, make a series of calls to <a href="_WinAPI_EnumDisplaySettings.htm">_WinAPI_EnumDisplaySettings()</a>.<br />
+Set $iMode to zero for the first call, and increment $iMode by one for each subsequent call.<br />
+Continue calling the function until the return value is zero.<br />
+When you call <a href="_WinAPI_EnumDisplaySettings.htm">_WinAPI_EnumDisplaySettings()</a> with $iMode set to zero, the operating system initializes and caches information about the display device.<br />
+When you call <a href="_WinAPI_EnumDisplaySettings.htm">_WinAPI_EnumDisplaySettings()</a> with $iMode set to a non-zero value, the function returns the information that was cached the last time the function was called with $iMode set to zero.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">The array containing the following information:<br />
+&nbsp;&nbsp;&nbsp; [0] - The width, in pixels, of the visible device surface.<br />
+&nbsp;&nbsp;&nbsp; [1] - The height, in pixels, of the visible device surface.<br />
+&nbsp;&nbsp;&nbsp; [2] - The color resolution, in bits per pixel, of the display device.<br />
+&nbsp;&nbsp;&nbsp; [3] - The frequency, in hertz (cycles per second), of the display device in a particular mode.<br />
+&nbsp;&nbsp;&nbsp; [4] - The device's display mode ($DM_*).</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>Sets the @error flag to non-zero.</td>
+</tr>
+</table>
+
+<h2>See Also</h2>
+<p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(EnumDisplaySettings);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">EnumDisplaySettings</a> in MSDN  Library.
+</p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_EnumDisplaySettings.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;APIGdiConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIGdi.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aData</span>
+
+<a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_EnumDisplaySettings.htm"><span class="S15">_WinAPI_EnumDisplaySettings</span></a><span class="S8">(</span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$i</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/IsArray.htm"><span class="S4">IsArray</span></a><span class="S8">(</span><span class="S9">$aData</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S9">$aData</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">' x '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$aData</span><span class="S8">[</span><span class="S3">1</span><span class="S8">]</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">' x '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$aData</span><span class="S8">[</span><span class="S3">2</span><span class="S8">]</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">' bit'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+=</span></a><span class="S0"> </span><span class="S3">1</span>
+<a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+
+<span class="S9">$aData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_EnumDisplaySettings.htm"><span class="S15">_WinAPI_EnumDisplaySettings</span></a><span class="S8">(</span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$ENUM_CURRENT_SETTINGS</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'-------------------------------'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'Current settings: '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$aData</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">' x '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$aData</span><span class="S8">[</span><span class="S3">1</span><span class="S8">]</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">' x '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$aData</span><span class="S8">[</span><span class="S3">2</span><span class="S8">]</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">' bit'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

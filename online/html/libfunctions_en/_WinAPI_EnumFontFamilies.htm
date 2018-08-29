@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _WinAPI_EnumFontFamilies</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1>_WinAPI_EnumFontFamilies</h1>
+<p class="funcdesc">Enumerates all uniquely-named fonts in the system that match the specified font characteristics<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIGdi.au3&gt;<br />
+_WinAPI_EnumFontFamilies ( [$hDC = 0 [, $sFaceName = '' [, $iCharSet = 1 [, $iFontType = 0x07 [, $sPattern = '' [, $bExclude = False]]]]]] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$hDC</td>
+<td style="width:85%"><strong>[optional]</strong> A handle to the device context from which to enumerate the fonts.<br />
+If this parameter is 0, the function uses a DC for the application's current screen.</td>
+</tr>
+<tr>
+<td>$sFaceName</td>
+<td><strong>[optional]</strong> The typeface name of the font.<br />
+If this parameter is an empty string (Default), the function enumerates one font is each available typeface name.<br />
+If this parameter is a valid typeface name, the function enumerates all fonts with the specified name.</td>
+</tr>
+<tr>
+<td>$iCharSet</td>
+<td><strong>[optional]</strong> The character set. It can be one of the following predefined values.<br />
+If this parameter is set to $DEFAULT_CHARSET (Default), the function enumerates all uniquely-named fonts in all character sets.<br />
+If there are two fonts with the same name, only one is enumerated.<br />
+If this parameter is set to a valid character set value, the function enumerates only fonts in the specified character set.<br />
+&nbsp;&nbsp;&nbsp; $ANSI_CHARSET<br />
+&nbsp;&nbsp;&nbsp; $BALTIC_CHARSET<br />
+&nbsp;&nbsp;&nbsp; $CHINESEBIG5_CHARSET<br />
+&nbsp;&nbsp;&nbsp; $DEFAULT_CHARSET (Default)<br />
+&nbsp;&nbsp;&nbsp; $EASTEUROPE_CHARSET<br />
+&nbsp;&nbsp;&nbsp; $GB2312_CHARSET<br />
+&nbsp;&nbsp;&nbsp; $GREEK_CHARSET<br />
+&nbsp;&nbsp;&nbsp; $HANGEUL_CHARSET<br />
+&nbsp;&nbsp;&nbsp; $MAC_CHARSET<br />
+&nbsp;&nbsp;&nbsp; $OEM_CHARSET<br />
+&nbsp;&nbsp;&nbsp; $RUSSIAN_CHARSET<br />
+&nbsp;&nbsp;&nbsp; $SHIFTJIS_CHARSET<br />
+&nbsp;&nbsp;&nbsp; $SYMBOL_CHARSET<br />
+&nbsp;&nbsp;&nbsp; $TURKISH_CHARSET<br />
+&nbsp;&nbsp;&nbsp; $VIETNAMESE_CHARSET<br />
+Korean language edition of Windows:<br />
+&nbsp;&nbsp;&nbsp; $JOHAB_CHARSET<br />
+Middle East language edition of Windows:<br />
+&nbsp;&nbsp;&nbsp; $ARABIC_CHARSET<br />
+&nbsp;&nbsp;&nbsp; $HEBREW_CHARSET<br />
+Thai language edition of Windows:<br />
+&nbsp;&nbsp;&nbsp; $THAI_CHARSET</td>
+</tr>
+<tr>
+<td>$iFontType</td>
+<td><strong>[optional]</strong> The type of the fonts to enumerating. This parameter can be 0 (vector fonts), (-1) (all fonts), or any combination of the following values.<br />
+&nbsp;&nbsp;&nbsp; $DEVICE_FONTTYPE (Default)<br />
+&nbsp;&nbsp;&nbsp; $RASTER_FONTTYPE (Default)<br />
+&nbsp;&nbsp;&nbsp; $TRUETYPE_FONTTYPE (Default)</td>
+</tr>
+<tr>
+<td>$sPattern</td>
+<td><strong>[optional]</strong> The pattern string to include (exclude) the fonts in (from) the enumerating.<br />
+This makes sense only if the typeface name is not specified. This string can contain wildcard characters.<br />
+The pattern will be ignored if this parameter is omitted or an empty string.</td>
+</tr>
+<tr>
+<td>$bExclude</td>
+<td><strong>[optional]</strong> Specifies whether to use the pattern to exclude the fonts, valid values:<br />
+&nbsp;&nbsp;&nbsp; True - Exclude the matching fonts.<br />
+&nbsp;&nbsp;&nbsp; False - Include the matching fonts (Default).</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">The 2D array containing the following information:<br />
+&nbsp;&nbsp;&nbsp; [0][0] - Number of rows in array (n)<br />
+&nbsp;&nbsp;&nbsp; [0][1] - Unused<br />
+&nbsp;&nbsp;&nbsp; [n][0] - The typeface name of the font.<br />
+&nbsp;&nbsp;&nbsp; [n][1] - The style of the font.<br />
+&nbsp;&nbsp;&nbsp; [n][2] - The unique name of the font.<br />
+&nbsp;&nbsp;&nbsp; [n][3] - The script, that is, the character set, of the font.<br />
+&nbsp;&nbsp;&nbsp; [n][4] - The type of the font ($*_FONTTYPE).<br />
+&nbsp;&nbsp;&nbsp; [n][5] - The pitch, technology, and family of the font (same as in the TEXTMETRIC structure).<br />
+&nbsp;&nbsp;&nbsp; [n][6] - The character set of the font ($*_CHARSET).<br />
+&nbsp;&nbsp;&nbsp; [n][7] - The font flags ($NTM_*).</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>Sets the @error flag to non-zero.</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>The fonts for many East Asian languages have two typeface names: an English name and a localized name.<br />
+The function returns the English typeface name if the system locale does not match the language of the font.<br />
+<br />
+When the graphics mode on the device context is set to $GM_ADVANCED and the $DEVICE_FONTTYPE flag is specified,<br />
+<a href="_WinAPI_EnumFontFamilies.htm">_WinAPI_EnumFontFamilies()</a> returns a list of Type 1 and OpenType fonts on the system.<br />
+When the graphics mode is not set to $GM_ADVANCED, this function returns a list of Type 1, OpenType, and TrueType fonts on the system.<br />
+</p>
+
+<h2>See Also</h2>
+<p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(EnumFontFamiliesEx);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">EnumFontFamiliesEx</a> in MSDN  Library.
+</p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_EnumFontFamilies.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;APIGdiConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;FontConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIGdi.au3&gt;</span>
+
+<span class="S1">; Enumerates all uniquely-named fonts excluding "@" fonts, which is designed for vertical text, in the ANSI character set</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_EnumFontFamilies.htm"><span class="S15">_WinAPI_EnumFontFamilies</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$ANSI_CHARSET</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$DEVICE_FONTTYPE</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$TRUETYPE_FONTTYPE</span><span class="S8">),</span><span class="S0"> </span><span class="S7">'@*'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aData</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'_WinAPI_EnumFontFamilies'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S1">; Enumerates all styles of "Arial" font in the ANSI character set</span>
+<span class="S9">$aData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_EnumFontFamilies.htm"><span class="S15">_WinAPI_EnumFontFamilies</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Arial'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$ANSI_CHARSET</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aData</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'_WinAPI_EnumFontFamilies'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

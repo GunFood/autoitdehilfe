@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<html><head><title>Skripte ausf&uuml;hren</title>
+  <meta charset="utf-8">
+  <link href="../css/default.css" rel="stylesheet">
+</head>
+<body>
+<h1>Skripte ausf&uuml;hren</h1>
+<p>Wenn man AutoIt startet, dann wird man nach dem <strong>Skript</strong>
+gefragt, welches man &ouml;ffnen m&ouml;chte. Eine Skriptdatei ist eine
+einfache Textdatei, die AutoIt-Schl&uuml;sselw&ouml;rter und
+-Funktionen enth&auml;lt, die AutoIt sagen, was es machen soll. Skripte
+k&ouml;nnen mit<strong> notepad.exe</strong> oder einer viel besseren <a href="editors.htm">Alternative</a> geschrieben werden.</p>
+<p>Obwohl AutoIt 3-Skripte einfache Textdateien sind, erhalten sie &uuml;blicherweise die Endung <strong>.au3</strong>,
+damit sich Skripte und Textdateien besser unterscheiden lassen. Wenn man
+AutoIt komplett installiert hat, kann man ein Skript ausf&uuml;hren,
+indem man es einfach doppelt anklickt. Man kann auch Optionen
+w&auml;hlen - n&auml;mlich das Skript zu &ouml;ffnen, zu bearbeiten
+oder zu kompilieren - wenn man mit der rechten Maustaste auf die
+.au3-Datei klickt.</p>
+<p> </p>
+<p>Hier ein Beispielskript. Es ist zu beachten, dass das ; einen einzeiligen Kommentar einleitet &auml;hnlich <strong>REM</strong> in MSDOS-Batch-Dateien):</p>
+<p class="codebox">
+; Das ist mein erstes Skript<br>
+MsgBox(0, "Mein erstes Skript!", "Hallo Welt!")</p>
+<p> </p>
+<p>Kompliziertere Skripte werden <strong>Funktionen</strong> nutzen, die normalerweise am Ende des Skriptes platziert werden. Hier ein &auml;hnliches Skript mit Funktionen:</p>
+<p class="codebox">
+; Das ist mein erstes Skript (mit Funktionen)<br>
+  MsgBox(0, "Mein zweites Skript!", "Hallo aus dem Hauptskript!")<br>
+  TestFunc()<br>
+  <br>
+  Func TestFunc()<br>
+    MsgBox(0, "Mein zweites Skript!", "Hallo aus der Funktion!")<br>
+  EndFunc
+</p>
+<p class="code"> </p>
+<h2><a name="CommandLine"></a>Kommandozeilenparameter</h2>
+<p>Das besondere Array $CmdLine wird mit den, deinem AutoIt-Skript
+&uuml;bergebenen, Kommandozeilenparametern initialisiert. Der Skriptname
+wird dabei nicht als Parameter aufgefasst; den kann man &uuml;ber
+@ScriptName herausfinden. Ein Parameter, der Leerzeichen beinhaltet,
+muss von "doppelten Anf&uuml;hrungszeichen" umgeben sein. <a href="compiler.htm">Kompilierte</a> Skripte akzeptieren Kommandozeilenparameter genauso.<br>
+  <br>
+  $CmdLine[0] ist die Anzahl der Parameter<br>
+  $CmdLine[1] ist Parameter 1<br>
+  $CmdLine[2] ist Parameter 2 etc.<br>
+  ...<br>
+  $CmdLine[$CmdLine[0]] ist einer der Wege, um den letzten Parameter auszulesen...</p>
+<p> </p>
+<p>Wenn man also sein Skript so ausf&uuml;hrt:</p>
+<p class="code">    AutoIt3.exe meinskript.au3 param1 "das ist ein anderer Parameter"</p>
+<p>$CmdLine[0] <em>ergibt...</em> 2</p>
+<p>$CmdLine[1] <em>ergibt...</em> param1</p>
+<p>$CmdLine[2] <em>ergibt...</em><em></em> das ist ein anderer Parameter</p>
+<p>@ScriptName <em>ergibt... </em>meinskript.au3</p>
+<p> </p>
+<p>Zus&auml;tzlich zu $CmdLine gibt es noch eine Variable namens
+$CmdLineRaw, die unformatierten Kommandozeilenparameter enth&auml;lt.
+Im obigen Beispiel:</p>
+<p>$CmdLineRaw <em>ergibt...</em> <span class="code">meinskript.au3 param1 "das ist ein anderer Parameter"</span></p>
+<p> </p>
+<p>Falls das Skript kompiliert wurde wird es dies ausf&uuml;hren:</p>
+<p class="code">     meinskript.exe param1 "das ist ein anderer Parameter"</p>
+<p>$CmdLineRaw <em>entspricht...</em> <span class="code">param1 "das ist ein anderer Parameter"</span></p>
+<p>Es ist zu beachten, dass $CmdLineRaw nur die Parameter zur&uuml;ckgibt.</p>
+<p> </p>
+<p><b>Es ist zu beachten</b>, dass nur 63 Parameter durch $CmdLine[...] zur&uuml;ckgegeben werden k&ouml;nnen, aber $CmdLineRaw 
+wird immer die komplette Befehlszeile zur&uuml;ckgeben.</p>
+<p> </p>
+<h2>AutoIt spezifische Kommandozeilenparameter</h2>
+<p><b>Form1</b>: AutoIt3.exe [/ErrorStdOut]  [/AutoIt3ExecuteScript] Datei [params ...]<br>
+               
+Eine AutoIt3 Skriptdatei ausf&uuml;hren</p>
+<p><br>
+/ErrorStdOut<br>
+Erlaubt es fatale Fehler auf StdOut umzuleiten, welches 
+durch eine Anwendung wie den Scite Editor verarbeitet werden kann. Dieser Schalter kann in einem 
+kompilierten Skript verwendet werden.<br>
+ </p>
+<p>Um eine Standard AutoIt Skriptdatei 'meinscript.au3' auszuf&uuml;hren ist dieser Befehl zu verwenden:<br>
+'AutoIt3.exe 'meinscript.au3'</p>
+<p> </p>
+<p><b>Form2</b>: Compiled.exe [/ErrorStdOut] [params ...]<br>
+                
+Ausf&uuml;hren einer AutoIt3 Skriptdatei die mit Aut2Exe erstellt wurde.</p>
+<p><b>Form3</b>: Compiled.exe [/ErrorStdOut] [/AutoIt3ExecuteScript Datei] [params 
+...]<br>
+                
+So kann direkt aus einer kompilierten AutoIt3 Skriptdatei eine andere nicht kompilierte Skriptdatei gestartet werden. Dann ist es 
+nicht notwendig eine andere Kopie der AutoIT3.exe in der kompilierten Datei zu installieren.</p>
+<p><br>
+
+<b>Form4</b>: 
+Es gibt zwei M&ouml;glichkeiten, Anf&uuml;hrungszeichen maskieren, um einen Befehl als Zeichenkette einem anderen Befehl zur Ausf&uuml;hrung zu &uuml;bergeben:<br />
+Man umschliesst den zu &uuml;bergebenden Befehl mit den jeweils anderen Anf&uuml;hrungszeichen, also<br />
+<span style="font-family: Courier New, Courier, mono">$string = &quot;MsgBox(0, 'Hallo Welt!', 'Hi!')&quot;</span><br />
+oder<br />
+<span style="font-family: Courier New, Courier, mono">$string = 'MsgBox(0, &quot;Hallo Welt!&quot;, &quot;Hi!&quot;)'</span><br />
+<br />
+Zweite M&ouml;glichkeit, Anf&uuml;hrungszeichen durch Verdopplung maskieren:<br />
+<span style="font-family: Courier New, Courier, mono">$string = &quot;MsgBox(0, &quot;&quot;Hallo Welt!&quot;&quot;, &quot;&quot;Hi!&quot;&quot;)&quot;<br />
+$string = 'MsgBox(0, ''Hallo Welt!'', ''Hi!'')'</span><br />
+<br />
+Beispiel:<br />
+<span style="font-family: Courier New, Courier, mono">MsgBox(0, <span style="color: #ff0000">'</span>Hallo Welt!<span style="color: #ff0000">'</span>, <span style="color: #ff0000">'</span>Hi!<span style="color: #ff0000">'</span>)</span><br />
+<br />
+bei direkter Eingabe an der Eingabeaufforderung w&uuml;rde das so aussehen:<br />
+<span style="font-family: Courier New, Courier, mono">AutoIt.exe /AutoIt3ExecuteLine <span style="color: #0000ff">&quot;</span>MsgBox(0, <span style="color: #ff0000">'</span>Hallo Welt!<span style="color: #ff0000">'</span>, <span style="color: #ff0000">'</span>Hi!<span style="color: #ff0000">'</span>)<span style="color: #0000ff">&quot;</span></span><br />
+(Maskierung der <span style="color: #ff0000">einfachen Anf&uuml;hrungszeichen</span> mittels <span style="color: #0000ff">doppelter Anf&uuml;hrungszeichen</span>)<br />
+<br />
+Befehlszeile an Run() &uuml;bergeben:<br />
+<span style="font-family: Courier New, Courier, mono">Run(<span style="color: #006600">'</span>AutoIt.exe /AutoIt3ExecuteLine <span style="color: #0000ff">&quot;</span>MsgBox(0, <span style="color: #006600">'</span><span style="color: #ff0000">'</span>Hallo Welt!<span style="color: #006600">'</span><span style="color: #ff0000">'</span>, <span style="color: #006600">'</span><span style="color: #ff0000">'</span>Hi!<span style="color: #006600">'</span><span style="color: #ff0000">'</span>)<span style="color: #0000ff">&quot;</span><span style="color: #006600">'</span>)</span><br />
+oder<br />
+<span style="font-family: Courier New, Courier, mono">Run(@AutoItExe &amp; <span style="color: #006600">'</span> /AutoIt3ExecuteLine <span style="color: #0000ff">&quot;</span>MsgBox(0, <span style="color: #006600">'</span><span style="color: #ff0000">'</span>Hallo Welt!<span style="color: #006600">'</span><span style="color: #ff0000">'</span>, <span style="color: #006600">'</span><span style="color: #ff0000">'</span>Hi!<span style="color: #006600">'</span><span style="color: #ff0000">'</span>)<span style="color: #0000ff">&quot;</span><span style="color: #006600">'</span>)</span><br />
+<br />
+<br />
+auch das w&auml;re m&ouml;glich:<br />
+<span style="font-family: Courier New, Courier, mono">AutoIt.exe /AutoIt3ExecuteLine <span style="color: #0000ff">'</span>MsgBox(0, <span style="color: #0000ff">'</span><span style="color: #ff0000">'</span>Hallo Welt!<span style="color: #0000ff">'</span><span style="color: #ff0000">'</span>, <span style="color: #0000ff">'</span><span style="color: #ff0000">'</span>Hi!<span style="color: #0000ff">'</span><span style="color: #ff0000">'</span>)<span style="color: #0000ff">'</span></span><br />
+(<span style="color: #0000ff">Maskierung</span> der <span style="color: #ff0000">einfachen Anf&uuml;hrungszeichen</span> mittels Verdopplung)<br />
+<span style="font-family: Courier New, Courier, mono">Run(@AutoItExe &amp; <span style="color: #006600">'</span> /AutoIt3ExecuteLine <span style="color: #006600">'</span><span style="color: #0000ff">'</span>MsgBox(0, <span style="color: #006600">'</span><span style="color: #0000ff">'</span><span style="color: #006600">'</span><span style="color: #ff0000">'</span>Hallo Welt!<span style="color: #006600">'</span><span style="color: #0000ff">'</span><span style="color: #006600">'</span><span style="color: #ff0000">'</span>, <span style="color: #006600">'</span><span style="color: #0000ff">'</span><span style="color: #006600">'</span><span style="color: #ff0000">'</span>Hi!<span style="color: #006600">'</span><span style="color: #0000ff">'</span><span style="color: #006600">'</span><span style="color: #ff0000">'</span>)<span style="color: #006600">'</span><span style="color: #0000ff">'</span> <span style="color: #006600">'</span>)</span><br />
+Die <span style="color: #ff0000">Anf&uuml;hrungszeichen der MsgBox</span> werden zur &Uuml;bergabe an die AutoIt.exe <span style="color: #0000ff">maskiert</span>, und <span style="text-decoration: underline">beide</span> zur &Uuml;bergabe an Run() jeweils <span style="color: #006600">erneut maskiert</span>								</div>
+<br />
+Form3 und Form4 f&uuml;r ein kompiliertes Skript durch #NoAutoIt3Execute deaktiviert werden.
+</body>
+</html>

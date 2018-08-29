@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _GDIPlus_PenScaleTransform</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1>_GDIPlus_PenScaleTransform</h1>
+<p class="funcdesc">Updates the world transformation matrix of a pen object with the product of itself and a scaling matrix<br /></p>
+<p class="codeheader">
+#include &lt;GDIPlus.au3&gt;<br />
+_GDIPlus_PenScaleTransform ( $hPen, $fScaleX, $fScaleY [, $iOrder = 0] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$hPen</td>
+<td style="width:85%">A pointer to a Pen object.</td>
+</tr>
+<tr>
+<td>$fScaleX</td>
+<td>A real number that specifies the amount to scale in the X direction.</td>
+</tr>
+<tr>
+<td>$fScaleY</td>
+<td>A real number that specifies the amount to scale in the Y direction.</td>
+</tr>
+<tr>
+<td>$iOrder</td>
+<td><strong>[optional]</strong> The order of matrices multiplication:<br />
+&nbsp;&nbsp;&nbsp; 0 - The passed matrix is on the left<br />
+&nbsp;&nbsp;&nbsp; 1 - The passed matrix is on the right</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">True.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>False and sets the @error flag to non-zero, @extended may contain GPSTATUS error code ($GPID_ERR*).</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>None.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="_GDIPlus_PenResetTransform.htm">_GDIPlus_PenResetTransform</a>, <a href="_GDIPlus_PenRotateTransform.htm">_GDIPlus_PenRotateTransform</a></p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://search.msdn.microsoft.com/search/Default.aspx?brand=msdn&query=GdipScalePenTransform">GdipScalePenTransform</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_GDIPlus_PenScaleTransform.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GDIPlus.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"GUIOnEventMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Startup.htm"><span class="S15">_GDIPlus_Startup</span></a><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_hGui</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"GDI+"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">800</span><span class="S8">,</span><span class="S0"> </span><span class="S3">360</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUISetOnEvent.htm"><span class="S4">GUISetOnEvent</span></a><span class="S8">(</span><span class="S9">$GUI_EVENT_CLOSE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"_Exit"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_hGraphics</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsCreateFromHWND.htm"><span class="S15">_GDIPlus_GraphicsCreateFromHWND</span></a><span class="S8">(</span><span class="S9">$g_hGui</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_hBmp_Buffer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BitmapCreateFromScan0.htm"><span class="S15">_GDIPlus_BitmapCreateFromScan0</span></a><span class="S8">(</span><span class="S3">800</span><span class="S8">,</span><span class="S0"> </span><span class="S3">360</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_hGfx_Buffer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageGetGraphicsContext.htm"><span class="S15">_GDIPlus_ImageGetGraphicsContext</span></a><span class="S8">(</span><span class="S9">$g_hBmp_Buffer</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsSetSmoothingMode.htm"><span class="S15">_GDIPlus_GraphicsSetSmoothingMode</span></a><span class="S8">(</span><span class="S9">$g_hGfx_Buffer</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsSetPixelOffsetMode.htm"><span class="S15">_GDIPlus_GraphicsSetPixelOffsetMode</span></a><span class="S8">(</span><span class="S9">$g_hGfx_Buffer</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$g_cPI</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/ATan.htm"><span class="S4">ATan</span></a><span class="S8">(</span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*</span></a><span class="S0"> </span><span class="S3">4</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$g_cDeg2Rad</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$g_cPI</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">/</span></a><span class="S0"> </span><span class="S3">180</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_hPath</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PathCreate.htm"><span class="S15">_GDIPlus_PathCreate</span></a><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hFamily</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_FontFamilyCreate.htm"><span class="S15">_GDIPlus_FontFamilyCreate</span></a><span class="S8">(</span><span class="S7">"Arial"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tLayout</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_RectFCreate.htm"><span class="S15">_GDIPlus_RectFCreate</span></a><span class="S8">(</span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PathAddString.htm"><span class="S15">_GDIPlus_PathAddString</span></a><span class="S8">(</span><span class="S9">$g_hPath</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"AutoIt"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tLayout</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hFamily</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">256</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_GDIPlus_FontFamilyDispose.htm"><span class="S15">_GDIPlus_FontFamilyDispose</span></a><span class="S8">(</span><span class="S9">$hFamily</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_hPen</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PenCreate.htm"><span class="S15">_GDIPlus_PenCreate</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;Create Pen: Width = 2, Units = World coordinates</span>
+<a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PenSetMiterLimit.htm"><span class="S15">_GDIPlus_PenSetMiterLimit</span></a><span class="S8">(</span><span class="S9">$g_hPen</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;Disable Miter</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_fAngle</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_fStep</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+
+<a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">10</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; _Draw</span><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _Draw</span><span class="S8">(</span><span class="S9">$fExtrude</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">8</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_fStep</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+=</span></a><span class="S0"> </span><span class="S3">0.01</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_fAngle</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Mod.htm"><span class="S4">Mod</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/Sin.htm"><span class="S4">Sin</span></a><span class="S8">(</span><span class="S9">$g_fStep</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*</span></a><span class="S0"> </span><span class="S3">360</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S3">45</span><span class="S8">,</span><span class="S0"> </span><span class="S3">360</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsClear.htm"><span class="S15">_GDIPlus_GraphicsClear</span></a><span class="S8">(</span><span class="S9">$g_hGfx_Buffer</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xF4303030</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PenSetColor.htm"><span class="S15">_GDIPlus_PenSetColor</span></a><span class="S8">(</span><span class="S9">$g_hPen</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0x8000A000</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PenScaleTransform.htm"><span class="S15">_GDIPlus_PenScaleTransform</span></a><span class="S8">(</span><span class="S9">$g_hPen</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$fExtrude</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;Scale Pen in X-Direction</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PenRotateTransform.htm"><span class="S15">_GDIPlus_PenRotateTransform</span></a><span class="S8">(</span><span class="S9">$g_hPen</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_fAngle</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">;Rotate Pen</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDrawPath.htm"><span class="S15">_GDIPlus_GraphicsDrawPath</span></a><span class="S8">(</span><span class="S9">$g_hGfx_Buffer</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hPath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hPen</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PenResetTransform.htm"><span class="S15">_GDIPlus_PenResetTransform</span></a><span class="S8">(</span><span class="S9">$g_hPen</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;Reset Pen´s transformation matrix</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PenSetColor.htm"><span class="S15">_GDIPlus_PenSetColor</span></a><span class="S8">(</span><span class="S9">$g_hPen</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xA000FF00</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsTranslateTransform.htm"><span class="S15">_GDIPlus_GraphicsTranslateTransform</span></a><span class="S8">(</span><span class="S9">$g_hGfx_Buffer</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$fExtrude</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Cos.htm"><span class="S4">Cos</span></a><span class="S8">(</span><span class="S9">$g_fAngle</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*</span></a><span class="S0"> </span><span class="S9">$g_cDeg2Rad</span><span class="S8">),</span><span class="S0"> </span><span class="S9">$fExtrude</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Sin.htm"><span class="S4">Sin</span></a><span class="S8">(</span><span class="S9">$g_fAngle</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*</span></a><span class="S0"> </span><span class="S9">$g_cDeg2Rad</span><span class="S8">))</span><span class="S0"> </span><span class="S1">;Offset foreground text, to match scaled-rotated text</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDrawPath.htm"><span class="S15">_GDIPlus_GraphicsDrawPath</span></a><span class="S8">(</span><span class="S9">$g_hGfx_Buffer</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hPath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hPen</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsResetTransform.htm"><span class="S15">_GDIPlus_GraphicsResetTransform</span></a><span class="S8">(</span><span class="S9">$g_hGfx_Buffer</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDrawImage.htm"><span class="S15">_GDIPlus_GraphicsDrawImage</span></a><span class="S8">(</span><span class="S9">$g_hGraphics</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hBmp_Buffer</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_Draw</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _Exit</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PathDispose.htm"><span class="S15">_GDIPlus_PathDispose</span></a><span class="S8">(</span><span class="S9">$g_hPath</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PenDispose.htm"><span class="S15">_GDIPlus_PenDispose</span></a><span class="S8">(</span><span class="S9">$g_hPen</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDispose.htm"><span class="S15">_GDIPlus_GraphicsDispose</span></a><span class="S8">(</span><span class="S9">$g_hGfx_Buffer</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BitmapDispose.htm"><span class="S15">_GDIPlus_BitmapDispose</span></a><span class="S8">(</span><span class="S9">$g_hBmp_Buffer</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDispose.htm"><span class="S15">_GDIPlus_GraphicsDispose</span></a><span class="S8">(</span><span class="S9">$g_hGraphics</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIDelete.htm"><span class="S4">GUIDelete</span></a><span class="S8">(</span><span class="S9">$g_hGui</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Shutdown.htm"><span class="S15">_GDIPlus_Shutdown</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_Exit</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

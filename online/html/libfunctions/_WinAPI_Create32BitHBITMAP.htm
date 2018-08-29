@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinAPI_Create32BitHBITMAP</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1>_WinAPI_Create32BitHBITMAP</h1>
+<p class="funcdesc">Creates a 32 bits-per-pixel bitmap from the specified icon<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIGdi.au3&gt;<br />
+_WinAPI_Create32BitHBITMAP ( $hIcon [, $bDib = False [, $bDelete = False]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$hIcon</td>
+<td style="width:85%">Handle to the source icon.</td>
+</tr>
+<tr>
+<td>$bDib</td>
+<td><strong>[optional]</strong> Specifies whether to create device-independent (DIB) or device-dependent (DDB) bitmap, valid values:<br />
+True	- Creates DIB.<br />
+False - Creates DDB (Default).</td>
+</tr>
+<tr>
+<td>$bDelete</td>
+<td><strong>[optional]</strong> Specifies whether to delete the icon after the function is successful, valid values:<br />
+&nbsp;&nbsp;&nbsp; True	- Icon will be deleted if the function succeeds.<br />
+&nbsp;&nbsp;&nbsp; False - Do not delete, you must release the icon when you are finished using it (Default).</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">Handle to the created bitmap.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>0 and sets the @error flag to non-zero.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>The <a href="_WinAPI_Create32BitHBITMAP.htm">_WinAPI_Create32BitHBITMAP()</a> creates a 32 bits-per-pixel bitmap with alpha chanel (if possible) from the icons with any color depth.<br />
+The function internally converts the specified icon to the 32 bits-per-pixel icon.<br />
+<br />
+When you are finished using the bitmap, destroy it using the <a href="_WinAPI_DeleteObject.htm">_WinAPI_DeleteObject()</a> function.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="_WinAPI_DeleteObject.htm">_WinAPI_DeleteObject</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_Create32BitHBITMAP.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/NoTrayIcon.htm"><span class="S11">#NoTrayIcon</span></a>
+
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIMenu.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIGdi.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIShellEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPISys.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">'TrayMenuMode'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Number.htm"><span class="S4">Number</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetVersion.htm"><span class="S15">_WinAPI_GetVersion</span></a><span class="S8">())</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;</span></a><span class="S0"> </span><span class="S3">6.0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$MB_ICONERROR</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">),</span><span class="S0"> </span><span class="S7">'Fehler'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Ben&ouml;tigt Windows Vista oder neuer.'</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hMenu</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/TrayItemGetHandle.htm"><span class="S4">TrayItemGetHandle</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iOptions</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/TrayCreateItem.htm"><span class="S4">TrayCreateItem</span></a><span class="S8">(</span><span class="S7">'Options'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/TrayCreateItem.htm"><span class="S4">TrayCreateItem</span></a><span class="S8">(</span><span class="S7">''</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idExit</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/TrayCreateItem.htm"><span class="S4">TrayCreateItem</span></a><span class="S8">(</span><span class="S7">'Exit'</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_GUICtrlMenu_SetItemBmp.htm"><span class="S15">_GUICtrlMenu_SetItemBmp</span></a><span class="S8">(</span><span class="S9">$hMenu</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_Create32BitHBITMAP.htm"><span class="S15">_WinAPI_Create32BitHBITMAP</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_ShellExtractIcon.htm"><span class="S15">_WinAPI_ShellExtractIcon</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SystemDir"><span class="S6">@SystemDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'\shell32.dll'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">207</span><span class="S8">,</span><span class="S0"> </span><span class="S3">16</span><span class="S8">,</span><span class="S0"> </span><span class="S3">16</span><span class="S8">),</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../libfunctions/_GUICtrlMenu_SetItemBmp.htm"><span class="S15">_GUICtrlMenu_SetItemBmp</span></a><span class="S8">(</span><span class="S9">$hMenu</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_Create32BitHBITMAP.htm"><span class="S15">_WinAPI_Create32BitHBITMAP</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_ShellExtractIcon.htm"><span class="S15">_WinAPI_ShellExtractIcon</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SystemDir"><span class="S6">@SystemDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'\shell32.dll'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">131</span><span class="S8">,</span><span class="S0"> </span><span class="S3">16</span><span class="S8">,</span><span class="S0"> </span><span class="S3">16</span><span class="S8">),</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">))</span>
+
+<a class="codeSnippetLink" href="../functions/TraySetState.htm"><span class="S4">TraySetState</span></a><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Do</span></a>
+<a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Until</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/TrayGetMsg.htm"><span class="S4">TrayGetMsg</span></a><span class="S8">()</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$idExit</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

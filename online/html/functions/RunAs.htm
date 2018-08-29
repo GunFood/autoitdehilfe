@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion RunAs</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">RunAs</h1><br />
+<a href="../functions_en/RunAs.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Startet ein externes Programm im Kontext eines anderen Benutzers.<br /></p>
+<p class="codeheader">
+RunAs ( "username", "domain", "password", logon_flag, "program" [, "workingdir" [, show_flag [, opt_flag]]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">username</td>
+<td style="width:85%">Benutzername, mit dem eingeloggt wird.</td>
+</tr>
+<tr>
+<td>domain</td>
+<td>Dom&auml;ne, gegen&uuml;ber der man sich authentifiziert.</td>
+</tr>
+<tr>
+<td>password</td>
+<td>Passwort des Benutzers.</td>
+</tr>
+<tr>
+<td>logon_flag</td>
+<td>&nbsp;&nbsp;&nbsp; $RUN_LOGON_NOPROFILE (0) - Interaktives Logon ohne Profil.<br />
+&nbsp;&nbsp;&nbsp; $RUN_LOGON_PROFILE (1) - Interaktives Logon mit Profil.<br />
+&nbsp;&nbsp;&nbsp; $RUN_LOGON_NETWORK (2) - Nur Netzwerk-Authentifizierung.<br />
+&nbsp;&nbsp;&nbsp; $RUN_LOGON_INHERIT (4) - &Uuml;bernehme die Umgebung des aufrufenden Prozesses statt der Umgebung des Benutzers.<br />
+<br />
+Die Konstanten sind in "AutoItConstants.au3" definiert.</td>
+</tr>
+<tr>
+<td>program</td>
+<td>Der komplette Pfad des Programms (.EXE, .BAT, .COM oder .PIF), die ausgef&uuml;hrt werden soll. (siehe Bemerkungen)</td>
+</tr>
+<tr>
+<td>workingdir</td>
+<td><strong>[optional]</strong> Arbeitsverzeichnis. Wenn nicht angegeben, wird @SystemDir verwendet. Dies ist nicht der Pfad des Programms.</td>
+</tr>
+<tr>
+<td>show_flag</td>
+<td><strong>[optional]</strong> Legt die Sichtbarkeit des ausgef&uuml;hrten Programms fest:<br />
+&nbsp;&nbsp;&nbsp; @SW_HIDE = Verstecktes Fenster (benutzt alternativ das Schl&uuml;sselwort Default).<br />
+&nbsp;&nbsp;&nbsp; @SW_MINIMIZE = Minimiertes Fenster.<br />
+&nbsp;&nbsp;&nbsp; @SW_MAXIMIZE = Maximiertes Fenster.</td>
+</tr>
+<tr>
+<td>opt_flag</td>
+<td><strong>[optional]</strong> Steuert verschiedene Optionen, die die Interaktion zwischen Parent- und Child-Prozess betreffen (STDIO).<br />
+&nbsp;&nbsp;&nbsp; $STDIN_CHILD (0x1) = Stellt ein Handle zum STDIN-Stream des Child-Fensters bereit.<br />
+&nbsp;&nbsp;&nbsp; $STDOUT_CHILD (0x2) = Stellt ein Handle zum STDOUT-Stream des Child-Fensters bereit.<br />
+&nbsp;&nbsp;&nbsp; $STDERR_CHILD (0x4) = Stellt ein Handle zum STDERR-Stream des Child-Fensters bereit.<br />
+&nbsp;&nbsp;&nbsp; $STDERR_MERGED (0x8) = Stellt das selbe Handle f&uuml;r den STDOUT- und STDERR-Stream bereit (Setzt $STDOUT_CHILD und $STDERR_CHILD).<br />
+&nbsp;&nbsp;&nbsp; $STDIO_INHERIT_PARENT (0x10) = Stellt dem Child-Fenster das Handle zum STDIO-Stream des Parent-Fensters bereit. Kann nicht mit einem anderen STDIO-Flag kombiniert werden. Dieses Flag ist nur dann sinnvoll, wenn die Parent-Anwendung als Kommandozeilenapplikation kompiliert wurde.<br />
+&nbsp;&nbsp;&nbsp; $RUN_CREATE_NEW_CONSOLE (0x10000) = Der Child-Kommandozeilenprozess wird in einem eigenen Kommandozeilenfenster ausgef&uuml;hrt. Dieses Flag ist nur dann sinnvoll, wenn die Parent-Anwendung als Kommandozeilenapplikation kompiliert wurde.<br />
+<br />
+Die Konstanten sind in "AutoItConstants.au3" definiert.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">Die PID des Prozesses, der gestartet wurde.</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>0 und setzt @error auf ungleich 0.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Pfade mit Leerzeichen m&uuml;ssen in Anf&uuml;hrungszeichen gesetzt werden.<br />
+<br />
+Es ist wichtig, ein Arbeitsverzeichnis anzugeben, f&uuml;r den der Benutzer Zugriffsrechte hat, in dessen Kontext der Prozess ausgef&uuml;hrt wird, anderenfalls schl&auml;gt der Aufruf der Funktion <a href="RunAs.htm">RunAs()</a> fehl.<br />
+<br />
+Es ist empfehlenswert, nur dann das "fremde" Benutzerprofil zu verwenden, wenn es auch wirklich ben&ouml;tigt wird. Es besteht eine geringe Wahrscheinlichkeit, dass das Profil unter bestimmten Bedingungen im Speicher h&auml;ngen bleibt. Wenn ein Skript <a href="RunAs.htm">RunAs()</a> benutzt, um einen Prozess unter dem SYSTEM-Account zu starten (z.B. um als Dienst zu fungieren), und ein Benutzerprofil ist aktiv, muss daf&uuml;r gesorgt werden, dass das Skript nicht beendet wird, bevor der Child-Prozess geschlossen wurde.<br />
+<br />
+Wenn man als Administrator angemeldet ist, muss der Service 'Sekund&auml;re Anmeldung' (<a href="RunAs.htm">RunAs()</a>) aktiv sein, sonst schl&auml;gt die Funktion fehl. Dies gilt nicht, wenn das SYSTEM-Konto aktiv ist.<br />
+<br />
+Nach dem Start des angeforderten Programms wird das Skript weiter ausgef&uuml;hrt. Soll die Ausf&uuml;hrung des Skripts angehalten werden, bis das gestartete Programm beendet ist, so ist statt der <a href="RunAs.htm">RunAs()</a> Funktion die <a href="RunAsWait.htm">RunAsWait()</a> Funktion zu verwenden.<br />
+<br />
+Das Bereitstellen der Standard-I/O-Parameter mit den geeigneten Werten ist Voraussetzung f&uuml;r die Interaktion des Child-Prozesses mit den Funktionen <a href="StderrRead.htm">StderrRead()</a>, <a href="StdinWrite.htm">StdinWrite()</a> und <a href="StdoutRead.htm">StdoutRead()</a>.<br />
+Um mehrere I/O-Streams zu verwalten, kombiniert man die „Flag“-Werte (oder man benutzt $STDERR_CHILD, $STDIN_CHILD & $STDOUT_CHILD, die in Constants.au3 definiert sind).<br />
+<br />
+Um die I/O-Streams zu schlie&szlig;en, m&uuml;ssen folgende Bedingungen erf&uuml;llt sein: <br />
+1) Der Child-Prozess hat seine Seite des Streams geschlossen (das ist der Fall, wenn der Child-Prozess geschlossen wird). <br />
+2) AutoIt muss gekaperte Streams auslesen, bis keine Daten mehr enthalten sind. <br />
+3) Wenn STDIN dem Child-Prozess zugewiesen ist, muss <a href="StdinWrite.htm">StdinWrite()</a> aufgerufen werden, um den Stream zu schlie&szlig;en. Sobald alle Streams als nicht mehr ben&ouml;tigt erkannt werden, werden alle intern verwendeten Ressourcen automatisch freigegeben.<br />
+<a href="StdioClose.htm">StdioClose()</a> kann verwendet werden, um das Schlie&szlig;en der STDIO-Streams zu erzwingen.<br />
+<br />
+<a href="StdioClose.htm">StdioClose()</a> kann verwendet werden, um die STDIO-Streams zu erzwingen..<br />
+<br />
+Die 'logon_flags' mit Profil (0 oder 1) und Netzwerk-Authentifizierung (2) sind inkompatibel. Wenn beide in Kombination benutzt werden, kann das zu unvorhersehbaren Ergebnissen f&uuml;hren!<br />
+<br />
+Aufgrund eines Problems, das Windows XP mit der Fenstererzeugung hat, kann die STDIO-Umleitung und Steuerung der Sichtbarkeit blockiert werden (siehe den Microsoft Knowledge Base Artikel KB818858 f&uuml;r weitere Informationen dar&uuml;ber, welche Versionen betroffen sind und wie das Problem umgangen werden kann). Benutzer von Windows XP SP2 (oder sp&auml;ter) oder Windows Vista (oder sp&auml;ter) sind nicht betroffen.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="ProcessClose.htm">ProcessClose</a>, <a href="Run.htm">Run</a>, <a href="RunAsWait.htm">RunAsWait</a>, <a href="RunWait.htm">RunWait</a>, <a href="ShellExecute.htm">ShellExecute</a>, <a href="ShellExecuteWait.htm">ShellExecuteWait</a>, <a href="StderrRead.htm">StderrRead</a>, <a href="StdinWrite.htm">StdinWrite</a>, <a href="StdioClose.htm">StdioClose</a>, <a href="StdoutRead.htm">StdoutRead</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\RunAs.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;AutoItConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Hier den Benutzername und Passwort eingeben, die dem System entsprechen.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sUserName</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Benutzername"</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sPassword</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Passwort"</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Startet den Editor mit einem maximierten Fenster. Der Editor l&auml;uft unter dem obigen Benutzer.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iPID</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/RunAs.htm"><span class="S4">RunAs</span></a><span class="S8">(</span><span class="S9">$sUserName</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@ComputerName"><span class="S6">@ComputerName</span></a><span class="S8">,</span><span class="S0"> </span><span class="S9">$sPassword</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$RUN_LOGON_NOPROFILE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"notepad.exe"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOWMAXIMIZED"><span class="S6">@SW_SHOWMAXIMIZED</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Wartet 10 Sekunden bis das Editorfenster erscheint.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinWait.htm"><span class="S4">WinWait</span></a><span class="S8">(</span><span class="S7">"[CLASS:Notepad]"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Wartet 2 Sekunden.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">2000</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Schlie&szlig;t den Editor Prozess mit Hilfe der PID die durch RunAs zur&uuml;ckgegeben wurde.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ProcessClose.htm"><span class="S4">ProcessClose</span></a><span class="S8">(</span><span class="S9">$iPID</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

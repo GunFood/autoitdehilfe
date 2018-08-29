@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Keyword $tagOPENFILENAME</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Keyword Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">$tagOPENFILENAME</h1><br />
+<a href="../libfunctions/$tagOPENFILENAME.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Contains information information that the GetOpenFileName and GetSaveFileName functions use to initialize an Open or Save As dialog box<br /></p>
+<p class="codeheader">
+Global Const $tagOPENFILENAME = "dword StructSize;hwnd hwndOwner;hwnd hInstance;ptr lpstrFilter;ptr lpstrCustomFilter;" & _<br />
+	"dword nMaxCustFilter;dword nFilterIndex;ptr lpstrFile;dword nMaxFile;ptr lpstrFileTitle;int nMaxFileTitle;" & _<br />
+	"ptr lpstrInitialDir;ptr lpstrTitle;dword Flags;short nFileOffset;short nFileExtension;ptr lpstrDefExt;ptr lCustData;" & _<br />
+	"ptr lpfnHook;ptr lpTemplateName;ptr pvReserved;dword dwReserved;dword FlagsEx"<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">StructSize</td>
+<td style="width:85%">Specifies the length, in bytes, of the structure.</td>
+</tr>
+<tr>
+<td>hwndOwner</td>
+<td>Handle to the window that owns the dialog box. This member can be any valid window handle, or it can be NULL if the dialog box has no owner.</td>
+</tr>
+<tr>
+<td>hInstance</td>
+<td>If the $OFN_ENABLETEMPLATEHANDLE flag is set in the Flags member, hInstance is a handle to a memory object containing a dialog box template.<br />
+If the $OFN_ENABLETEMPLATE flag is set, hInstance is a handle to a module that contains a dialog box template named by the lpTemplateName member.<br />
+If neither flag is set, this member is ignored.<br />
+If the $OFN_EXPLORER flag is set, the system uses the specified template to create a dialog box that is a child of the default Explorer-style dialog box.<br />
+If the $OFN_EXPLORER flag is not set, the system uses the template to create an old-style dialog box that replaces the default dialog box.</td>
+</tr>
+<tr>
+<td>lpstrFilter</td>
+<td>Pointer to a buffer containing pairs of null-terminated filter strings. The last string in the buffer must be terminated by two NULL characters.</td>
+</tr>
+<tr>
+<td>lpstrCustomFilter</td>
+<td>Pointer to a static buffer that contains a pair of null-terminated filter strings for preserving the filter pattern chosen by the user.<br />
+The first string is your display string that describes the custom filter, and the second string is the filter pattern selected by the user.<br />
+The first time your application creates the dialog box, you specify the first string, which can be any nonempty string.<br />
+When the user selects a file, the dialog box copies the current filter pattern to the second string.<br />
+The preserved filter pattern can be one of the patterns specified in the lpstrFilter buffer, or it can be a filter pattern typed by the user.<br />
+The system uses the strings to initialize the user-defined file filter the next time the dialog box is created.<br />
+If the nFilterIndex member is zero, the dialog box uses the custom filter.<br />
+If this member is NULL, the dialog box does not preserve user-defined filter patterns.<br />
+If this member is not NULL, the value of the nMaxCustFilter member must specify the size, in TCHARs, of the lpstrCustomFilter buffer.<br />
+For the ANSI version, this is the number of bytes; for the Unicode version, this is the number of characters.</td>
+</tr>
+<tr>
+<td>nMaxCustFilter</td>
+<td>Specifies the size, in TCHARs, of the buffer identified by lpstrCustomFilter.<br />
+For the ANSI version, this is the number of bytes; for the Unicode version, this is the number of characters.<br />
+This buffer should be at least 40 characters long. This member is ignored if lpstrCustomFilter is NULL or points to a NULL string.</td>
+</tr>
+<tr>
+<td>nFilterIndex</td>
+<td>Specifies the index of the currently selected filter in the File Types control.<br />
+The buffer pointed to by lpstrFilter contains pairs of strings that define the filters.<br />
+The first pair of strings has an index value of 1, the second pair 2, and so on.<br />
+An index of zero indicates the custom filter specified by lpstrCustomFilter.<br />
+You can specify an index on input to indicate the initial filter description and filter pattern for the dialog box.<br />
+When the user selects a file, nFilterIndex returns the index of the currently displayed filter.<br />
+If nFilterIndex is zero and lpstrCustomFilter is NULL, the system uses the first filter in the lpstrFilter buffer.<br />
+If all three members are zero or NULL, the system does not use any filters and does not show any files in the file list control of the dialog box.</td>
+</tr>
+<tr>
+<td>lpstrFile</td>
+<td>Pointer to a buffer that contains a file name used to initialize the File Name edit control.<br />
+The first character of this buffer must be NULL if initialization is not necessary.<br />
+When the _WinAPI_GetOpenFileName or _WinAPI_GetSaveFileName function returns successfully, this buffer contains the drive designator, path, file name, and extension of the selected file.<br />
+If the $OFN_ALLOWMULTISELECT flag is set and the user selects multiple files, the buffer contains the current directory followed by the file names of the selected files.<br />
+For Explorer-style dialog boxes, the directory and file name strings are NULL separated, with an extra NULL character after the last file name.<br />
+For old-style dialog boxes, the strings are space separated and the function uses short file names for file names with spaces.<br />
+You can use the FindFirstFile function to convert between long and short file names.<br />
+If the user selects only one file, the lpstrFile string does not have a separator between the path and file name.<br />
+If the buffer is too small, the function returns False and the _WinAPI_CommDlgExtendedError() function returns $FNERR_BUFFERTOOSMALL.<br />
+In this case, the first two bytes of the lpstrFile buffer contain the required size, in bytes or characters.</td>
+</tr>
+<tr>
+<td>nMaxFile</td>
+<td>Specifies the size, in TCHARs, of the buffer pointed to by lpstrFile.<br />
+For the ANSI version, this is the number of bytes; for the Unicode version, this is the number of characters.<br />
+The buffer must be large enough to store the path and file name string or strings, including the terminating NULL character.<br />
+The _WinAPI_GetOpenFileName and _WinAPI_GetSaveFileName functions return False if the buffer is too small to contain the file information.<br />
+The buffer should be at least 256 characters long.</td>
+</tr>
+<tr>
+<td>lpstrFileTitle</td>
+<td>Pointer to a buffer that receives the file name and extension (without path information) of the selected file. This member can be NULL.</td>
+</tr>
+<tr>
+<td>nMaxFileTitle</td>
+<td>Specifies the size, in TCHARs, of the buffer pointed to by lpstrFileTitle.<br />
+For the ANSI version, this is the number of bytes; for the Unicode version, this is the number of characters. This member is ignored if lpstrFileTitle is NULL.</td>
+</tr>
+<tr>
+<td>lpstrInitialDir</td>
+<td>Pointer to a NULL terminated string that can specify the initial directory.</td>
+</tr>
+<tr>
+<td>lpstrTitle</td>
+<td>Pointer to a string to be placed in the title bar of the dialog box. If this member is NULL, the system uses the default title (that is, Save As or Open).</td>
+</tr>
+<tr>
+<td>Flags</td>
+<td>A set of bit flags you can use to initialize the dialog box. When the dialog box returns, it sets these flags to indicate the user's input. This member can be a combination of the following flags.<br />
+$OFN_ALLOWMULTISELECT - Specifies that the File Name list box allows multiple selections.<br />
+If you also set the $OFN_EXPLORER flag, the dialog box uses the Explorer-style user interface; otherwise, it uses the old-style user interface.<br />
+$OFN_CREATEPROMPT - If the user specifies a file that does not exist, this flag causes the dialog box to prompt the user for permission to create the file.<br />
+If the user chooses to create the file, the dialog box closes and the function returns the specified name; otherwise, the dialog box remains open.<br />
+If you use this flag with the $OFN_ALLOWMULTISELECT flag, the dialog box allows the user to specify only one nonexistent file.<br />
+$OFN_DONTADDTORECENT - Prevents the system from adding a link to the selected file in the file system directory that contains the user's most recently used documents.<br />
+$OFN_ENABLEHOOK - Enables the hook function specified in the lpfnHook member.<br />
+$OFN_ENABLEINCLUDENOTIFY - Causes the dialog box to send CDN_INCLUDEITEM notification messages to your OFNHookProc hook procedure when the user opens a folder.<br />
+The dialog box sends a notification for each item in the newly opened folder.<br />
+These messages enable you to control which items the dialog box displays in the folder's item list.<br />
+$OFN_ENABLESIZING - Enables the Explorer-style dialog box to be resized using either the mouse or the keyboard.<br />
+By default, the Explorer-style Open and Save As dialog boxes allow the dialog box to be resized regardless of whether this flag is set.<br />
+This flag is necessary only if you provide a hook procedure or custom template. The old-style dialog box does not permit resizing.<br />
+$OFN_ENABLETEMPLATE - Indicates that the lpTemplateName member is a pointer to the name of a dialog template resource in the module identified by the hInstance member.<br />
+If the $OFN_EXPLORER flag is set, the system uses the specified template to create a dialog box that is a child of the default Explorer-style dialog box.<br />
+If the $OFN_EXPLORER flag is not set, the system uses the template to create an old-style dialog box that replaces the default dialog box.<br />
+$OFN_ENABLETEMPLATEHANDLE - Indicates that the hInstance member identifies a data block that contains a preloaded dialog box template.<br />
+The system ignores lpTemplateName if this flag is specified.<br />
+If the $OFN_EXPLORER flag is set, the system uses the specified template to create a dialog box that is a child of the default Explorer-style dialog box.<br />
+If the $OFN_EXPLORER flag is not set, the system uses the template to create an old-style dialog box that replaces the default dialog box.<br />
+$OFN_EXPLORER - Indicates that any customizations made to the Open or Save As dialog box use the new Explorer-style customization methods.<br />
+By default, the Open and Save As dialog boxes use the Explorer-style user interface regardless of whether this flag is set.<br />
+This flag is necessary only if you provide a hook procedure or custom template, or set the $OFN_ALLOWMULTISELECT flag.<br />
+If you want the old-style user interface, omit the $OFN_EXPLORER flag and provide a replacement old-style template or hook procedure.<br />
+If you want the old style but do not need a custom template or hook procedure, simply provide a hook procedure that always returns False.<br />
+$OFN_EXTENSIONDIFFERENT - Specifies that the user typed a file name extension that differs from the extension specified by lpstrDefExt.<br />
+The function does not use this flag if lpstrDefExt is NULL.<br />
+$OFN_FILEMUSTEXIST - Specifies that the user can type only names of existing files in the File Name entry field.<br />
+If this flag is specified and the user enters an invalid name, the dialog box procedure displays a warning in a message box.<br />
+If this flag is specified, the $OFN_PATHMUSTEXIST flag is also used. This flag can be used in an Open dialog box. It cannot be used with a Save As dialog box.<br />
+$OFN_FORCESHOWHIDDEN - Forces the showing of system and hidden files, thus overriding the user setting to show or not show hidden files.<br />
+However, a file that is marked both system and hidden is not shown.<br />
+$OFN_HIDEREADONLY - Hides the Read Only check box.<br />
+$OFN_LONGNAMES - For old-style dialog boxes, this flag causes the dialog box to use long file names.<br />
+If this flag is not specified, or if the $OFN_ALLOWMULTISELECT flag is also set, old-style dialog boxes use short file names (8.3 format) for file names with spaces.<br />
+Explorer-style dialog boxes ignore this flag and always display long file names.<br />
+$OFN_NOCHANGEDIR - Restores the current directory to its original value if the user changed the directory while searching for files.<br />
+This flag is ineffective for GetOpenFileName.<br />
+$OFN_NODEREFERENCELINKS - Directs the dialog box to return the path and file name of the selected shortcut (.LNK) file.<br />
+If this value is not specified, the dialog box returns the path and file name of the file referenced by the shortcut.<br />
+$OFN_NOLONGNAMES - For old-style dialog boxes, this flag causes the dialog box to use short file names (8.3 format).<br />
+Explorer-style dialog boxes ignore this flag and always display long file names.<br />
+$OFN_NONETWORKBUTTON - Hides and disables the Network button.<br />
+$OFN_NOREADONLYRETURN - Specifies that the returned file does not have the Read Only check box selected and is not in a write-protected directory.<br />
+$OFN_NOTESTFILECREATE - Specifies that the file is not created before the dialog box is closed.<br />
+This flag should be specified if the application saves the file on a create-nonmodify network share.<br />
+When an application specifies this flag, the library does not check for write protection, a full disk, an open drive door, or network protection.<br />
+Applications using this flag must perform file operations carefully, because a file cannot be reopened once it is closed.<br />
+$OFN_NOVALIDATE - Specifies that the common dialog boxes allow invalid characters in the returned file name.<br />
+Typically, the calling application uses a hook procedure that checks the file name by using the FILEOKSTRING message.<br />
+If the text box in the edit control is empty or contains nothing but spaces, the lists of files and directories are updated.<br />
+If the text box in the edit control contains anything else, nFileOffset and nFileExtension are set to values generated by parsing the text.<br />
+No default extension is added to the text, nor is text copied to the buffer specified by lpstrFileTitle.<br />
+If the value specified by nFileOffset is less than zero, the file name is invalid.<br />
+Otherwise, the file name is valid, and nFileExtension and nFileOffset can be used as if the $OFN_NOVALIDATE flag had not been specified.<br />
+$OFN_OVERWRITEPROMPT - Causes the Save As dialog box to generate a message box if the selected file already exists.<br />
+The user must confirm whether to overwrite the file.<br />
+$OFN_PATHMUSTEXIST - Specifies that the user can type only valid paths and file names.<br />
+If this flag is used and the user types an invalid path and file name in the File Name entry field, the dialog box function displays a warning in a message box.<br />
+$OFN_READONLY - Causes the Read Only check box to be selected initially when the dialog box is created.<br />
+This flag indicates the state of the Read Only check box when the dialog box is closed.<br />
+$OFN_SHAREAWARE - Specifies that if a call to the OpenFile function fails because of a network sharing violation, the error is ignored and the dialog box returns the selected file name.<br />
+If this flag is not set, the dialog box notifies your hook procedure when a network sharing violation occurs for the file name specified by the user.<br />
+If you set the $OFN_EXPLORER flag, the dialog box sends the CDN_SHAREVIOLATION message to the hook procedure.<br />
+If you do not set $OFN_EXPLORER, the dialog box sends the SHAREVISTRING registered message to the hook procedure.<br />
+$OFN_SHOWHELP - Causes the dialog box to display the Help button.<br />
+The hwndOwner member must specify the window to receive the HELPMSGSTRING registered messages that the dialog box sends when the user clicks the Help button.<br />
+An Explorer-style dialog box sends a CDN_HELP notification message to your hook procedure when the user clicks the Help button.<br />
+$OFN_USESHELLITEM - Do not use.</td>
+</tr>
+<tr>
+<td>nFileOffset</td>
+<td>Specifies the 0-based offset, in TCHARs, from the beginning of the path to the file name in the string pointed to by lpstrFile.<br />
+For the ANSI version, this is the number of bytes; for the Unicode version, this is the number of characters.</td>
+</tr>
+<tr>
+<td>nFileExtension</td>
+<td>Specifies the 0-based offset, in TCHARs, from the beginning of the path to the file name extension in the string pointed to by lpstrFile.<br />
+For the ANSI version, this is the number of bytes; for the Unicode version, this is the number of characters.</td>
+</tr>
+<tr>
+<td>lpstrDefExt</td>
+<td>Pointer to a buffer that contains the default extension.</td>
+</tr>
+<tr>
+<td>lCustData</td>
+<td>Specifies application-defined data that the system passes to the hook procedure identified by the lpfnHook member.</td>
+</tr>
+<tr>
+<td>lpfnHook</td>
+<td>Pointer to a hook procedure. This member is ignored unless the Flags member includes the $OFN_ENABLEHOOK flag.</td>
+</tr>
+<tr>
+<td>lpTemplateName</td>
+<td>Pointer to a null-terminated string that names a dialog template resource in the module identified by the hInstance member.</td>
+</tr>
+<tr>
+<td>pvReserved</td>
+<td>Reserved. Must be set to NULL.</td>
+</tr>
+<tr>
+<td>dwReserved</td>
+<td>Reserved. Must be set to 0.</td>
+</tr>
+<tr>
+<td>FlagsEx</td>
+<td>A set of bit flags you can use to initialize the dialog box. Currently, this member can be zero or the following flag.<br />
+$OFN_EX_NOPLACESBAR - If this flag is set, the places bar is not displayed.<br />
+If this flag is not set, Explorer-style dialog boxes include a places bar containing icons for commonly-used folders, such as Favorites and Desktop.</td>
+</tr>
+</table>
+
+</body>
+</html>

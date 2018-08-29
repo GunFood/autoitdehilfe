@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Schl&uuml;sselwort $tagOPENFILENAME</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Schl&uuml;sselwortreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">$tagOPENFILENAME</h1><br />
+<a href="../libfunctions_en/$tagOPENFILENAME.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Enth&auml;lt Informationen, die von den Funktionen GetOpenFileName und GetSaveFileName genutzt werden, um ein "&Ouml;ffnen"- oder "Speichern unter"-Dialogfenster zu initialisieren<br /></p>
+<p class="codeheader">
+Global Const $tagOPENFILENAME = "dword StructSize;hwnd hwndOwner;hwnd hInstance;ptr lpstrFilter;ptr lpstrCustomFilter;" & _<br />
+		"dword nMaxCustFilter;dword nFilterIndex;ptr lpstrFile;dword nMaxFile;ptr lpstrFileTitle;int nMaxFileTitle;" & _<br />
+		"ptr lpstrInitialDir;ptr lpstrTitle;dword Flags;short nFileOffset;short nFileExtension;ptr lpstrDefExt;ptr lCustData;" & _<br />
+		"ptr lpfnHook;ptr lpTemplateName;ptr pvReserved;dword dwReserved;dword FlagsEx"<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">StructSize</td>
+<td style="width:85%">Bestimmt die Gr&ouml;&szlig;e der Struktur, in Bytes.</td>
+</tr>
+<tr>
+<td>hwndOwner</td>
+<td>Handle zu dem Fenster, das dieses Dialogfenster besitzt. Dieses Mitglied kann irgendein g&uuml;ltiges Fensterhandle sein oder NULL, wenn das Dialogfenster keinen Besitzer hat.</td>
+</tr>
+<tr>
+<td>hInstance</td>
+<td>Wenn das $OFN_ENABLETEMPLATEHANDLE-Flag im <strong>Flags</strong>-Mitglied gesetzt ist, dann ist <strong>hInstance</strong> ein Speicherobjekt, das eine Vorlage f&uuml;r ein Dialogfenster enth&auml;lt.<br />
+Wenn das $OFN_ENABLETEMPLATE-Flag gesetzt ist, dann ist <strong>hInstance</strong> ein Modul, das eine Vorlage f&uuml;r ein Dialogfenster enth&auml;lt, benannt im <strong>lpTemplateName</strong>-Mitglied.<br />
+Ist keines dieser beiden Flags gesetzt, wird dieses Mitglied ignoriert.<br />
+Wenn das $OFN_EXPLORER-Flag gesetzt ist, benutzt das System eine definierte Vorlage, um ein Dialogfenster zu erzeugen, das ein Child des standardm&auml;&szlig;igen Explorer-Style-Dialogfensters ist.<br />
+Wenn das $OFN_EXPLORER-Flag nicht gesetzt ist, benutzt das System die Vorlage, um ein Old-Style-Dialogfenster zu erzeugen, welches das standardm&auml;&szlig;ige Dialogfenster ersetzt.</td>
+</tr>
+<tr>
+<td>lpstrFilter</td>
+<td>Zeiger auf einen Puffer, der Paare von NULL-terminierten Filter-Strings enth&auml;lt. Die letzte String in dem Puffer muss mit zwei NULL-Zeichen beendet werden.</td>
+</tr>
+<tr>
+<td>lpstrCustomFilter</td>
+<td>Zeiger auf einen statischen Puffer, der ein Paar von NULL-terminierten Filter-Strings enth&auml;lt, um den vom Benutzer gew&auml;hlten Filter aufzubewahren.<br />
+&nbsp;&nbsp;&nbsp; Der erste String ist der Anzeige-String, der den individuellen Filter beschreibt, und der zweite String ist das Filtermuster, das vom Benutzer gew&auml;hlt wurde.<br />
+&nbsp;&nbsp;&nbsp; Das erste Mal, wenn Ihre Anwendung das Dialogfenster erzeugt, legen Sie den ersten String fest, der irgendein nicht-leerer String sein kann.<br />
+&nbsp;&nbsp;&nbsp; Wenn der Benutzer eine Datei ausgew&auml;hlt hat, kopiert die Dialogbox das Filtermuster in den zweiten String.<br />
+&nbsp;&nbsp;&nbsp; Das aufbewahrte Filtermuster kann eines der Filtermuster sein, die im <strong>lpstrFilter</strong>-Puffer festgelegt wurden, oder es kann ein vom Benutzer eingegebenes Filtermuster sein.<br />
+&nbsp;&nbsp;&nbsp; Das System nutzt diese Strings, um das benutzerdefinierte Filtermuster zu initialisieren, wenn das Dialogfenster das n&auml;chste Mal erzeugt wird.<br />
+&nbsp;&nbsp;&nbsp; Ist das <strong>nFilterIndex</strong>-Mitglied gleich 0, benutzt das Dialogfenster den individuellen Filter.<br />
+&nbsp;&nbsp;&nbsp; Ist dieses Mitglied gleich NULL, bewahrt das Dialogfenster keine benutzerdefinierten Filtermuster auf.<br />
+&nbsp;&nbsp;&nbsp; Ist dieses Mitglied ungleich 0, muss der Wert des <strong>nMaxCustFilter</strong>-Mitglieds die Gr&ouml;&szlig;e des Puffers, auf den <strong>lpstrCustomFilter</strong> zeigt, in TCHARs angeben.<br />
+&nbsp;&nbsp;&nbsp; F&uuml;r die ANSI-Version ist dies die Anzahl der Bytes; f&uuml;r die Unicode-Version ist es die Anzahl der Zeichen.</td>
+</tr>
+<tr>
+<td>nMaxCustFilter</td>
+<td>Bestimmt die Gr&ouml;&szlig;e des Puffers, in TCHARs, der in <strong>lpstrCustomFilter</strong> bezeichnet ist.<br />
+&nbsp;&nbsp;&nbsp; F&uuml;r die ANSI-Version ist dies die Anzahl der Bytes; f&uuml;r die Unicode-Version ist es die Anzahl der Zeichen.<br />
+&nbsp;&nbsp;&nbsp; Dieser Puffer sollte mindestens 40 Zeichen lang sein. Dieses Mitglied wird ignoriert, wenn <strong>lpstrCustomFilter</strong> gleich NULL ist oder auf einen NULL-String zeigt.</td>
+</tr>
+<tr>
+<td>nFilterIndex</td>
+<td>Bestimmt den Index des aktuell gew&auml;hlten Filters im "Dateityp"-Input-Control.<br />
+&nbsp;&nbsp;&nbsp; Der Puffer, auf den <strong>lpstrFilter</strong> verweist, enth&auml;lt Paare von Strings, die den Filter definieren.<br />
+&nbsp;&nbsp;&nbsp; Das erste String-Paar hat einen Indexwert von 1, das zweite Paar 2, und so weiter.<br />
+&nbsp;&nbsp;&nbsp; Ein Index von 0 weist auf den individuellen Filter hin, der in <strong>lpstrCustomFilter</strong> angegeben ist.<br />
+&nbsp;&nbsp;&nbsp; Es kann ein Index bei der Eingabe bestimmt werden, um auf Start-Filterbeschreibung und -Filtermuster f&uuml;r das Dialogfenster hinzuweisen.<br />
+&nbsp;&nbsp;&nbsp; Wenn der Benutzer eine Datei ausw&auml;hlt, gibt <strong>nFilterIndex</strong> den Index des aktuell angezeigten Filters zur&uuml;ck.<br />
+&nbsp;&nbsp;&nbsp; Ist <strong>nFilterIndex</strong> gleich 0 und <strong>lpstrCustomFilter</strong> ist NULL, benutzt das System den ersten Filter aus dem <strong>lpstrFilter</strong>-Puffer.<br />
+&nbsp;&nbsp;&nbsp; Sind alle drei Mitglieder gleich 0 oder NULL, benutzt das System keinen Filter und zeigt keine Dateien im List-Control des Dialogfensters an.</td>
+</tr>
+<tr>
+<td>lpstrFile</td>
+<td>Zeiger auf einen Puffer, der einen Dateinamen enth&auml;lt, welcher dazu genutzt wird, das "Dateiname"-Input-Control zu initialisieren.<br />
+&nbsp;&nbsp;&nbsp; Das erste Zeichen in diesem Puffer muss NULL sein, wenn keine Initialisierung n&ouml;tig ist.<br />
+&nbsp;&nbsp;&nbsp; Wenn die Funktion _WinAPI_GetOpenFileName oder _WinAPI_GetSaveFileName erfolgreich ausgef&uuml;ht wurde, enth&auml;lt dieser Puffer den Laufwerksbezeichner, Pfad, Dateiname und -Erweiterung der ausgew&auml;hlten Datei.<br />
+&nbsp;&nbsp;&nbsp; Ist das $OFN_ALLOWMULTISELECT-Flag gesetzt und der Benutzer w&auml;hlt mehrere Dateien aus, enth&auml;lt der Puffer das aktuelle Verzeichnis gefolgt von den Dateinamen der gew&auml;hlten Dateien.<br />
+&nbsp;&nbsp;&nbsp; F&uuml;r Explorer-Style-Dialogfenster sind die Strings f&uuml;r Verzeichnis und Dateinamen durch NULL-Zeichen getrennt, mit einem zus&auml;tzlichen NULL-Zeichen nach dem letzten Dateinamen.<br />
+&nbsp;&nbsp;&nbsp; F&uuml;r Old-Style-Dialogfenster sind die Strings durch Leerzeichen getrennt und die Funktion benutzt kurze Dateinamen f&uuml;r Dateien, deren Namen Leerzeichen enthalten.<br />
+&nbsp;&nbsp;&nbsp; Wenn der Benutzer nur eine Datei ausw&auml;hlt, enth&auml;lt der String <strong>lpstrFile</strong> keinen Trenner zwischen Pfad und Dateinamen.<br />
+&nbsp;&nbsp;&nbsp; Wenn der Puffer zu klein ist, gibt die Funktion FALSE zur&uuml;ck und die _WinAPI_CommDlgExtendedError() Funktion gibt $FNERR_BUFFERTOOSMALL zur&uuml;ck.<br />
+&nbsp;&nbsp;&nbsp; In diesem Falle enthalten die ersten zwei Bytes die ben&ouml;tigte Gr&ouml;&szlig;e, in Bytes oder Zeichen (TCHARs).</td>
+</tr>
+<tr>
+<td>nMaxFile</td>
+<td>Bestimmt die Gr&ouml;&szlig;e des Puffers, in TCHARs, auf den <strong>lpstrFile</strong> verweist.<br />
+&nbsp;&nbsp;&nbsp; F&uuml;r die ANSI-Version ist dies die Anzahl der Bytes; f&uuml;r die Unicode-Version ist es die Anzahl der Zeichen.<br />
+&nbsp;&nbsp;&nbsp; Der Puffer muss gro&szlig; genug sein, um den Pfad und den oder die Dateinamen-Strings aufzunehmen, inklusive abschliessender NULL-Zeichen.<br />
+&nbsp;&nbsp;&nbsp; Die Funktionen _WinAPI_GetOpenFileName und _WinAPI_GetSaveFileName geben FALSE zur&uuml;ck, wenn der Puffer zu klein ist, um die Dateiinformation aufzunehmen.<br />
+&nbsp;&nbsp;&nbsp; Dieser Puffer sollte mindestens 256 Zeichen lang sein.</td>
+</tr>
+<tr>
+<td>lpstrFileTitle</td>
+<td>Zeiger auf einen Puffer, der Dateiname und Erweiterung (ohne Pfadinformation) der ausgew&auml;hlten Datei aufnimmt. Dieses Mitglied kann NULL sein.</td>
+</tr>
+<tr>
+<td>nMaxFileTitle</td>
+<td>Bestimmt die Gr&ouml;&szlig;e des Puffers, in TCHARs, auf den <strong>lpstrFileTitle</strong> verweist.<br />
+&nbsp;&nbsp;&nbsp; F&uuml;r die ANSI-Version ist dies die Anzahl der Bytes; f&uuml;r die Unicode-Version ist es die Anzahl der Zeichen. Dieses Mitglied wird ignoriert, wenn <strong>lpstrFileTitle</strong> NULL ist.</td>
+</tr>
+<tr>
+<td>lpstrInitialDir</td>
+<td>Zeiger auf einen NULL-terminierten String, der das Startverzeichnis bestimmen kann.</td>
+</tr>
+<tr>
+<td>lpstrTitle</td>
+<td>Zeiger auf einen String, der in der Titelleiste des Dialogfensters platziert wird. Ist dieses Mitglied NULL, benutzt das System den Standardtitel ("Speichern" oder "&Ouml;ffnen").</td>
+</tr>
+<tr>
+<td>Flags</td>
+<td>Ein Satz von Bitflags, die genutzt werden k&ouml;nnen, um das Dialogfenster zu initialisieren. Wenn das Dialogfenster geschlossen wird und die Funktion zur&uuml;ckkehrt, setzt sie diese Flags, um auf die Eingabe des Benutzers zu deuten. Dieses Mitglied kann eine Kombination der folgenden Flags sein.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_ALLOWMULTISELECT - Legt fest, dass die "Dateiname"-ListBox eine Mehrfachauswahl erlaubt.<br />
+&nbsp;&nbsp;&nbsp;     Ist zugleich das $OFN_EXPLORER-Flag gesetzt, benutzt das Dialogfenster das Explorer-Style-UI; andernfalls nutzt es das Old-Style-UI.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_CREATEPROMPT - Wenn der Benutzer eine Datei angibt, die nicht existiert, dann bewirkt dieses Flag, dass das Dialogfenster den Benutzer um Erlaubnis fragt, die Datei zu erzeugen.<br />
+&nbsp;&nbsp;&nbsp;     Wenn der Benutzer ausw&auml;hlt, die Datei zu erzeugen, dann schliesst sich das Dialogfenster und die Funktion gibt den angegebenen Namen zur&uuml;ck; andernfalls bleibt das Dialogfenster ge&ouml;ffnet.<br />
+&nbsp;&nbsp;&nbsp;     Wenn dieses Flag mit dem $OFN_ALLOWMULTISELECT-Flag kombiniert wird, erlaubt das Dialogfenster dem Benutzer nur <em>eine</em> nicht-existierende Datei zu erzeugen.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_DONTADDTORECENT : Verhindert, dass das System eine Verkn&uuml;pfung zu der gew&auml;hlten Datei im Dateisystem-Verzeichnis hinzuf&uuml;gt, welches die zuletzt verwendeten Dokumente des Benutzers enth&auml;lt.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_ENABLEHOOK - Aktiviert die Hook-Funktion, die im <strong>lpfnHook</strong>-Mitglied festgelegt ist.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_ENABLEINCLUDENOTIFY : Veranlasst das Dialogfenster, CDN_INCLUDEITEM-Benachrichtigungen an die OFNHookProc-Hook-Prozedur zu senden, wenn der Benutzer ein Verzeichnis &ouml;ffnet.<br />
+&nbsp;&nbsp;&nbsp;     Das Dialogfenster sendet f&uuml;r jedes Element in dem neu ge&ouml;ffneten Verzeichnis eine Benachrichtigung.<br />
+&nbsp;&nbsp;&nbsp;     Diese Nachrichten erm&ouml;glichen eine Steuerung, welche Elemente das Dialogfenster in der Verzeichnisliste anzeigt.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_ENABLESIZING : Erlaubt es, die Gr&ouml;&szlig;e des Explorer-Style-Dialogfensters mit der Maus oder der Tastatur zu ver&auml;ndern.<br />
+&nbsp;&nbsp;&nbsp;     Standardm&auml;&szlig;ig erlauben die "&Ouml;ffnen"- und "Speichern unter"-Dialogfenster es, ihre Gr&ouml;&szlig;e zu &auml;ndern, unabh&auml;ngig davon, ob dieses Flag gesetzt ist.<br />
+&nbsp;&nbsp;&nbsp;     Dieses Flag wird nur ben&ouml;tigt, wenn eine Hook-Prozedur oder eine benutzerdefinierte Vorlage zur Verf&uuml;gung gestellt werden soll. Das Old-Style-Dialogfenster erlaubt keine Gr&ouml;&szlig;enver&auml;nderung.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_ENABLETEMPLATE - Deutet darauf hin, dass das <strong>lpTemplateName</strong>-Mitglied ein Zeiger auf den Namen einer Dialogvorlagen-Ressource in dem Modul enth&auml;lt, das in <strong>hInstance</strong> benannt ist.<br />
+&nbsp;&nbsp;&nbsp;     Ist das $OFN_EXPLORER Flag gesetzt, benutzt das System die angegebene Vorlage um ein Dialogfenster zu erzeugen, welches ein Child des standardm&auml;&szlig;igen Explorer-Style-Dialogfensters ist.<br />
+&nbsp;&nbsp;&nbsp;     Ist das $OFN_EXPLORER Flag nicht gesetzt, benutzt das System die Vorlage um ein Old-Style-Dialogfenster zu erzeugen, welches das standardm&auml;&szlig;ige Dialogfenster ersetzt.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_ENABLETEMPLATEHANDLE - Deutet darauf hin, dass das <strong>hInstance</strong>-Mitglied einen Datenblock kennzeichnet, der eine bereits geladene Dialogvorlage enth&auml;lt.<br />
+&nbsp;&nbsp;&nbsp;     Das System ignoriert <strong>lpTemplateName</strong>, wenn dieses Flag gesetzt ist.<br />
+&nbsp;&nbsp;&nbsp;     Ist das $OFN_EXPLORER-Flag gesetzt, benutzt das System die angegebene Vorlage um ein Dialogfenster zu erzeugen, welches ein Child des standardm&auml;&szlig;igen Explorer-Style-Dialogfensters ist.<br />
+&nbsp;&nbsp;&nbsp;     Ist das $OFN_EXPLORER-Flag nicht gesetzt, benutzt das System die Vorlage, um ein Old-Style-Dialogfenster zu erzeugen, welches das standardm&auml;&szlig;ige Dialogfenster ersetzt.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_EXPLORER - Deutet darauf hin, dass jegliche benutzerdefinierten Anpassungen des "&Ouml;ffnen"- oder "Speichern unter"-Dialogfensters, die neuen Explorer-Style-Methoden zum Anpassen nutzen.<br />
+&nbsp;&nbsp;&nbsp;     Standardm&auml;&szlig;ig nutzen die "&Ouml;ffnen"- und "Speichern unter"-Dialogfenster das Explorer-Style-UI, unabh&auml;ngig davon, ob dieses Flag gesetzt ist.<br />
+&nbsp;&nbsp;&nbsp;     Dieses Flag wird nur ben&ouml;tigt, wenn eine Hook-Prozedur oder eine benutzerdefinierte Vorlage zur Verf&uuml;gung gestellt, oder das $OFN_ALLOWMULTISELECT-Flag gesetzt wird.<br />
+&nbsp;&nbsp;&nbsp;     Wenn das Old-Style-UI genutzt werden soll, l&auml;sst man das $OFN_EXPLORER-Flag weg und stellt eine Old-Style-Dialogvorlage als Ersatz oder eine Hook-Prozedur bereit.<br />
+&nbsp;&nbsp;&nbsp;     Wenn das Old-Style-UI genutzt werden soll und man ben&ouml;tigt keine benutzerdefinierte Dialogvorlage oder Hook-Prozedur, dann stellt man einfach eine Hook-Prozedur bereit, die immer FALSE zur&uuml;ckgibt.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_EXTENSIONDIFFERENT - Gibt an, dass der Benutzer eine Dateinamenserweiterung eingetippt hat, die von der Erweiterung aus <strong>lpstrDefExt</strong> abweicht.<br />
+&nbsp;&nbsp;&nbsp;     Die Funktion nutzt dieses Flag nicht, wenn <strong>lpstrDefExt</strong> NULL ist.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_FILEMUSTEXIST - Legt fest, dass der Benutzer nur Namen existierender Dateien in das "Dateiname"-Input-Control eintippen kann.<br />
+&nbsp;&nbsp;&nbsp;     Ist dieses Flag angegeben und der Benutzer gibt einen ung&uuml;ltigen Namen ein, zeigt die Dialogfenster-Prozedur eine Warnung in einer MessageBox an.<br />
+&nbsp;&nbsp;&nbsp;     Ist dieses Flag angegeben, wird das $OFN_PATHMUSTEXIST Flag ebenso benutzt. Dieses Flag kann in einem "&Ouml;ffnen"-Dialogfenster genutzt werden. Es kann nicht mit einem "Speichern unter"-Dialogfenster genutzt werden.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_FORCESHOWHIDDEN : Erzwingt die Anzeige von System- und versteckten Dateien, und ordnet sich somit den Benutzereinstellungen, ob versteckte Dateien angezeigt werden oder nicht, &uuml;ber.<br />
+&nbsp;&nbsp;&nbsp;     Jedoch wird eine Datei die als beides gekennzeichnet ist (System und versteckt) nicht angezeigt.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_HIDEREADONLY - Versteckt die "Nur lesend"-Checkbox.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_LONGNAMES - F&uuml;r Old-Style-Dialogenster bewirkt dieses Flag, dass das Dialogfenster lange Dateinamen verwendet.<br />
+&nbsp;&nbsp;&nbsp;     Ist dieses Flag nicht festgelegt oder wenn das $OFN_ALLOWMULTISELECT-Flag ebenso gesetzt ist, benutzen Old-Style-Dialogfenster kurze Dateinamen (8.3 Format) f&uuml;r Dateinamen mit Leerzeichen.<br />
+&nbsp;&nbsp;&nbsp;     Explorer-Style Dialogfenster ignorieren dieses Flag und zeigen immer lange Dateinamen an.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_NOCHANGEDIR - Stellt den urspr&uuml;nglichen Wert des aktuellen Verzeichnisses wieder her, wenn der Benutzer das Verzeichnis gewechselt hat um nach Dateien zu suchen.<br />
+&nbsp;&nbsp;&nbsp;     Windows 2000/XP: Dieses Flag hat keinen Effekt auf GetOpenFileName.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_NODEREFERENCELINKS - Weist das Dialogfenster an, den Pfad und Dateinamen der ausgew&auml;hlten Verkn&uuml;pfung (.LNK) zur&uuml;ckzugeben.<br />
+&nbsp;&nbsp;&nbsp;     Ist dieses Flag nicht angegeben, gibt das Dialogfenster den Pfad und Dateinamen der Datei zur&uuml;ck, auf die sich die Verkn&uuml;pfung bezieht.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_NOLONGNAMES - F&uuml;r Old-Style-Dialogfenster bewirkt dieses Flag, dass das Dialogfenster kurze Dateinamen benutzt (8.3 Format).<br />
+&nbsp;&nbsp;&nbsp;     Explorer-Style Dialogfenster ignorieren dieses Flag und zeigen immer lange Dateinamen an.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_NONETWORKBUTTON - Versteckt und deaktiviert den "Netzwerk"-Button.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_NOREADONLYRETURN - Gibt an, dass die zur&uuml;ckgegebene Datei nicht die "Nur lesend"-Checkbox gew&auml;hlt hat und nicht in einem schreibgesch&uuml;tzten Verzeichnis ist.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_NOTESTFILECREATE - Legt fest, dass die Datei nicht erzeugt wird, bevor das Dialogfenster geschlossen wird.<br />
+&nbsp;&nbsp;&nbsp;     Dieses Flag sollte angegeben werden, wenn die Anwendung die Datei in einer unver&auml;nderliche Netzwerkfreigabe abspeichert.<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Wenn eine Anwendung dieses Flag angibt, pr&uuml;ft die Bibliothek nicht auf Schreibschutz, ein volles Laufwerk, ein ge&ouml;ffnetes Laufwerk oder Netzwerkschutz.<br />
+&nbsp;&nbsp;&nbsp;     Anwendungen die dieses Flag nutzen, m&uuml;ssen Dateioperationen sorgf&auml;ltig durchf&uuml;hren, weil eine Datei nicht erneut ge&ouml;ffnet werden kann, wenn sie erst einmal geschlossen ist.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_NOVALIDATE - Legt fest, dass die Dialogfenster ung&uuml;ltige Zeichen in dem zur&uuml;ckgegebenen Dateinamen erlauben.<br />
+&nbsp;&nbsp;&nbsp;     &Uuml;blicherweise benutzt die aufrufende Anwendung eine Hook-Prozedur, welche den Dateinamen mittels der FILEOKSTRING Nachricht &uuml;berpr&uuml;ft.<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Ist das Input-Control leer oder enth&auml;lt nur Leerzeichen, werden die Listen der Dateien und Verzeichnisse aktualisiert.<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Enth&auml;lt das Input-Control irgendetwas anderes, dann werden <strong>nFileOffset</strong> und <strong>nFileExtension</strong> auf Werte gesetzt, die sich aus der Textanalyse ergeben.<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Weder wird eine standardm&auml;&szlig;ige Erweiterung hinzugef&uuml;gt, noch wird Text in den Puffer aus <strong>lpstrFileTitle</strong> kopiert.<br />
+&nbsp;&nbsp;&nbsp;     Ist der Wert aus <strong>nFileOffset</strong> kleiner als NULL, dann ist der Dateineme ung&uuml;ltig.<br />
+&nbsp;&nbsp;&nbsp;     Andernfalls ist der Dateiname g&uuml;ltig und <strong>nFileExtension</strong> und <strong>nFileOffset</strong> k&ouml;nnen so genutzt werden, als w&auml;re das $OFN_NOVALIDATE-Flag nicht gesetzt.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_OVERWRITEPROMPT - Veranlasst das "Speichern unter"-Dialogfenster eine MessageBox zu erzeugen, wenn die ausgew&auml;hlte Datei bereits existiert.<br />
+&nbsp;&nbsp;&nbsp;     Der Benutzer muss best&auml;tigen, ob die Datei &uuml;berschrieben werden soll.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_PATHMUSTEXIST - Legt fest, dass der Benutzer nur g&uuml;ltige Pfade und Dateinamen eingeben darf.<br />
+&nbsp;&nbsp;&nbsp;     Wird dieses Flag benutzt und der Benutzer gibt einen ung&uuml;ltigen Pfad oder Dateinamen in das "Dateiname"-Input-Control ein, dann zeigt die Dialogfenster-Funktion eine Warnung in einer MessageBox an.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_READONLY - Bewirkt, dass die "Nur lesen"-Checkbox anfangs markiert ist, wenn das Dialogfenster erzeugt wird.<br />
+&nbsp;&nbsp;&nbsp;     Dieses Flag weist auf den Status der "Nur lesen"-Checkbox hin, wenn das Dialogfenster geschlossen wird.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_SHAREAWARE - Legt fest, dass wenn ein Aufruf der OpenFile Funktion durch eine Verletzung der Netzwerkfreigabe fehlschl&auml;gt, der Fehler ignoriert wird und das Dialogfenster den ausgew&auml;lten Dateinamen zur&uuml;ckgibt.<br />
+&nbsp;&nbsp;&nbsp;     Ist dieses Flag nicht gesetzt, benachrichtigt das Dialogfenster die Hook-Prozedur, wenn eine Verletzung der Netzwerkfreigabe f&uuml;r den Dateinamen auftritt, den der Benutzer angegeben hat.<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Wenn das $OFN_EXPLORER-Flag gesetzt ist, sendet das Dialogfenster die CDN_SHAREVIOLATION-Nachricht an die Hook-Prozedur.<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Wenn das $OFN_EXPLORER-Flag nicht gesetzt ist, sendet das Dialogfenster die registrierte SHAREVISTRING-Nachricht an die Hook-Prozedur.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_SHOWHELP - Veranlasst das Dialogfenster den Hilfe-Button anzuzeigen.<br />
+&nbsp;&nbsp;&nbsp;     Das <strong>hwndOwner</strong>-Mitglied muss das Fenster festlegen, welches die registrierten HELPMSGSTRING-Nachrichten empfangen soll, die das Dialogfenster sendet, wenn der Benutzer auf die Hilfe-Schlaltfl&auml;che klickt.<br />
+&nbsp;&nbsp;&nbsp;     Ein Dialogfenster im Explorer-Stil sendet eine CDN_HELP-Benachrichtigung an die Hook-Prozedur, wenn der Benutzer auf den Hilfe-Button klickt.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_USESHELLITEM - Dieses Flag nicht benutzen.</td>
+</tr>
+<tr>
+<td>nFileOffset</td>
+<td>Gibt den 0-basierten Abstand in TCHAR's an, vom Anfang des Pfades bis zum Dateinamen in dem String, auf den <strong>lpstrFile</strong> verweist.<br />
+&nbsp;&nbsp;&nbsp; F&uuml;r die ANSI-Version ist dies die Anzahl der Bytes; f&uuml;r die Unicode-Version ist es die Anzahl der Zeichen.</td>
+</tr>
+<tr>
+<td>nFileExtension</td>
+<td>Gibt den 0-basierten Abstand an, in TCHAR's, vom Anfang des Pfades bis zum Dateinamenserweiterung in dem String, auf den <strong>lpstrFile</strong> verweist.<br />
+&nbsp;&nbsp;&nbsp; F&uuml;r die ANSI-Version ist dies die Anzahl der Bytes; f&uuml;r die Unicode-Version ist es die Anzahl der Zeichen.</td>
+</tr>
+<tr>
+<td>lpstrDefExt</td>
+<td>Zeiger auf einen Puffer, der die standardm&auml;&szlig;ige Erweiterung enth&auml;lt.</td>
+</tr>
+<tr>
+<td>lCustData</td>
+<td>Bestimmt anwendungsdefinierte Daten, die das System an die Hook-Prozedur weiterreicht, benannt im <strong>lpfnHook</strong>-Mitglied.</td>
+</tr>
+<tr>
+<td>lpfnHook</td>
+<td>Zeiger auf eine Hook-Prozedur. Dieses Mitglied wird ignoriert, solange nicht das $OFN_ENABLEHOOK-Flag im <strong>Flags</strong>-Mitglied angegeben ist.</td>
+</tr>
+<tr>
+<td>lpTemplateName</td>
+<td>Zeiger auf einen NULL-terminierten String, der eine Dialogfenster-Vorlage aus dem Modul bezeichnet, das in <strong>hInstance</strong> angegeben ist.</td>
+</tr>
+<tr>
+<td>pvReserved</td>
+<td>Reserviert. Muss auf NULL gesetzt werden.</td>
+</tr>
+<tr>
+<td>dwReserved</td>
+<td>Reserviert. Muss auf 0 gesetzt werden.</td>
+</tr>
+<tr>
+<td>FlagsEx</td>
+<td>Windows 2000/XP: Ein Satz von Bitflags, die genutzt werden k&ouml;nnen, um das Dialogfenster zu initialisieren. Gegenw&auml;rtig kann dieses Mitglied NULL oder das folgende Flag sein.<br />
+&nbsp;&nbsp;&nbsp;   $OFN_EX_NOPLACESBAR - Ist dieses Flag gesetzt, wird die "Orte"-Leiste nicht angezeigt.<br />
+&nbsp;&nbsp;&nbsp;     Ist dieses Flag nicht gesetzt, dann beinhalten Explorer-Style Dialogfenster eine "Orte"-Leiste, in der die allgemein verwendeten Ordner enthalten sind, wie Favoriten und Desktop.</td>
+</tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _WinAPI_LoadImage</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_WinAPI_LoadImage</h1><br />
+<a href="../libfunctions/_WinAPI_LoadImage.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Loads an icon, cursor, or bitmap<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIRes.au3&gt;<br />
+_WinAPI_LoadImage ( $hInstance, $sImage, $iType, $iXDesired, $iYDesired, $iLoad )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$hInstance</td>
+<td style="width:85%">Identifies an instance of the module that contains the image to be loaded. To load an OEM<br />
+image, set this parameter to zero.</td>
+</tr>
+<tr>
+<td>$sImage</td>
+<td>Identifies the image to load. If the $hInstance parameter is not 0 and the $iLoad parameter<br />
+does not include $LR_LOADFROMFILE $sImage is a string that contains the name of the image resource in the<br />
+$hInstance module. If $hInstance is 0 and $LR_LOADFROMFILE is not specified, the low-order word of this<br />
+parameter must be the identifier of the OEM image to load.</td>
+</tr>
+<tr>
+<td>$iType</td>
+<td>Specifies the type of image to be loaded. This parameter can be one of the following values:<br />
+$IMAGE_BITMAP - Loads a bitmap<br />
+$IMAGE_CURSOR - Loads a cursor<br />
+$IMAGE_ICON - Loads an icon</td>
+</tr>
+<tr>
+<td>$iXDesired</td>
+<td>Specifies the width, in pixels, of the icon or cursor. If this is 0<br />
+and $iLoad is $LR_DEFAULTSIZE the function uses the SM_CXICON or SM_CXCURSOR system<br />
+metric value to set the width. If this parameter is 0 and $LR_DEFAULTSIZE is not<br />
+used, the function uses the actual resource width.</td>
+</tr>
+<tr>
+<td>$iYDesired</td>
+<td>Specifies the height, in pixels, of the icon or cursor. If this is 0<br />
+and $iLoad is $LR_DEFAULTSIZE the function uses the SM_CYICON or SM_CYCURSOR system<br />
+metric value to set the height. If this parameter is 0 and $LR_DEFAULTSIZE is not<br />
+used, the function uses the actual resource height.</td>
+</tr>
+<tr>
+<td>$iLoad</td>
+<td>Specifies a combination of the following values:<br />
+$LR_DEFAULTCOLOR - The default flag<br />
+$LR_CREATEDIBSECTION - When the $iType parameter specifies $IMAGE_BITMAP, causes the function to return a DIB<br />
+section bitmap rather than a compatible bitmap. This flag is useful for loading a bitmap without mapping it<br />
+to the colors of the display device.<br />
+$LR_DEFAULTSIZE - Uses the width or height specified by the system metric values for cursors or icons if<br />
+the $iXDesired or $iYDesired values are set to 0. If this flag is not specified and $iXDesired and $iYDesired<br />
+are set to zero, the function uses the actual resource size. If the resource contains multiple images the<br />
+function uses the size of the first image.<br />
+$LR_LOADFROMFILE - Loads the image from the file specified by the $sImage parameter. If this flag is not<br />
+specified, $sImage is the name of the resource.<br />
+$LR_LOADMAP3DCOLORS - Searches the color table for the image and replaces the following shades of gray with<br />
+the corresponding 3D color:<br />
+Dk Gray: RGB(128,128,128) COLOR_3DSHADOW<br />
+Gray : RGB(192,192,192) COLOR_3DFACE<br />
+Lt Gray: RGB(223,223,223) COLOR_3DLIGHT<br />
+$LR_LOADTRANSPARENT - Gets the color value of the first pixel in the image and replaces the corresponding<br />
+entry in the color table with the default window color. All pixels in the image that use that entry become<br />
+the default window color. This value applies only to images that have corresponding color tables. If $iLoad<br />
+includes both the $LR_LOADTRANSPARENT and $LR_LOADMAP3DCOLORS values, $LRLOADTRANSPARENT takes precedence.<br />
+However, the color table entry is replaced with COLOR_3DFACE rather than COLOR_WINDOW.<br />
+$LR_MONOCHROME - Loads the image in black and white<br />
+$LR_SHARED - Shares the image handle if the image is loaded multiple times. If LR_SHARED is not set,<br />
+a second call to LoadImage for the same resource will load the image again and return a different handle. Do<br />
+not use $LR_SHARED for images that have non-standard sizes, that may change after loading, or that are loaded<br />
+from a file.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">The handle of the newly loaded image</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>0, call <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> to get extended error information</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>Above constants require #include &lt;WinAPIConstants.au3&gt;<br />
+</p>
+
+<h2>See Also</h2>
+<p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(LoadImage);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">LoadImage</a> in MSDN  Library.
+</p>
+
+</body>
+</html>

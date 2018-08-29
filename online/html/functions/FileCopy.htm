@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion FileCopy</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">FileCopy</h1><br />
+<a href="../functions_en/FileCopy.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Kopiert eine oder mehrere Dateien.<br /></p>
+<p class="codeheader">
+FileCopy ( "source", "dest" [, flag = 0] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">source</td>
+<td style="width:85%">Das Quellverzeichnis der zu kopierenden Datei(en). (* und ? Wildcards werden akzeptiert - siehe Bemerkungen)</td>
+</tr>
+<tr>
+<td>dest</td>
+<td>Das Zielverzeichnis der zu kopierenden Datei(en), und sofern erw&uuml;nscht, der neue Dateiname (* und ? Wildcards werden akzeptiert - siehe Bemerkungen)</td>
+</tr>
+<tr>
+<td>flag</td>
+<td><strong>[optional]</strong> Dieses Flag bestimmt, ob Dateien &uuml;berschrieben werden, falls sie schon bestehen.<br />
+Kann eine Kombination der folgenden sein:<br />
+&nbsp;&nbsp;&nbsp; $FC_NOOVERWRITE (0) = (Standard) bestehende Dateien nicht &uuml;berschreiben<br />
+&nbsp;&nbsp;&nbsp; $FC_OVERWRITE (1) = &Uuml;berschreiben bestehender Dateien<br />
+&nbsp;&nbsp;&nbsp; $FC_CREATEPATH (8) = Erstellt die Zielverzeichnisstruktur, falls diese nicht besteht (siehe Anmerkungen).<br />
+<br />
+Die Konstanten sind in "FileConstants.au3" definiert.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">1.</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>0.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Siehe <a href="FileFindFirstFile.htm">FileFindFirstFile()</a> f&uuml;r Erl&auml;uterungen zu Wildcards.<br />
+<br />
+Das Zielverzeichnis muss bestehen, au&szlig;er der Flagwert $FC_CREATEPATH (8) wird genutzt.<br />
+Beispiel: Der kombinierte Flagwert $FC_OVERWRITE (1) + $FC_CREATEPATH (8) &uuml;berschreibt das Zielverzeichnis und pr&uuml;ft vorher, ob die Zielverzeichnisstruktur besteht und erstellt sie gegebenenfalls automatisch.<br />
+                  <br />
+Einige Dateiattribute k&ouml;nnen ein &Uuml;berschreiben unm&ouml;glich machen, in diesem Fall siehe <a href="FileSetAttrib.htm">FileSetAttrib()</a> um die Attribute der Datei zu &auml;ndern.<br />
+<br />
+Beim Parameter dest darf auch ein Dateiname stehen<br />
+z.B. filecopy ("C:\Temp\file_1.pdf", "D:\Temp\file_2.pdf")<br />
+Besonderer Hinweis: Die englische Hilfe hat seit Jahren einen Bug in dieser Angelegenheit. Also nicht wundern, wenn die deutsche Hilfe hier von der englischen abweicht. Richtig ist die deutsche Hilfe!<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="DirCopy.htm">DirCopy</a>, <a href="DirCreate.htm">DirCreate</a>, <a href="FileDelete.htm">FileDelete</a>, <a href="FileMove.htm">FileMove</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\FileCopy.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;FileConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIFiles.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erstellt eine konstante Variable im lokalen Bereich des Dateipfads der gelesen bzw. in den geschrieben werden soll.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$sFilePath</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetTempFileName.htm"><span class="S15">_WinAPI_GetTempFileName</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erstellt eine tempor&auml;re Datei zum kopieren.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileWrite.htm"><span class="S4">FileWrite</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Dies ist ein Beispiel f&uuml;r die Verwendung von FileCopy."</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Es ist w&auml;hrend dem schreiben der tempor&auml;ren Datei ein Fehler aufgetreten."</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Kopiert au3-Dateien in das tempor&auml;re Verzeichnis in einen neuen Ordner namens Au3Files.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/FileCopy.htm"><span class="S4">FileCopy</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"\*.au3"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"\Au3Files\"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$FC_OVERWRITE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S9">$FC_CREATEPATH</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Zeigt das tempor&auml;re Verzeichnis.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ShellExecute.htm"><span class="S4">ShellExecute</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

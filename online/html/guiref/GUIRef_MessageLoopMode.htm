@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>GUI-Referenz - MessageLoop Modus</title>
+	<meta charset="utf-8">
+	<link href="../css/default.css" rel="stylesheet">
+</head>
+<body>
+	<h1>GUI-Referenz - MessageLoop Modus</h1>
+	<p>Im MessageLoop Modus wird dein Skript die meiste Zeit in einer engen Schleife verbringen. Diese Schleife wird einfach permanent die GUI mit der <a href="../functions/GUIGetMsg.htm">GUIGetMsg</a> Funktion abfragen. Wenn ein Ereignis eingetreten ist, zeigt der R&uuml;ckgabewert der GUIGetMsg Funktion die Details (ein Button wurde angeklickt, die GUI wurde geschlossen, etc.).</p>
+	<p>Der MessageLoop Modus ist der voreingestellte (Default) Nachrichtenmodus f&uuml;r AutoIt GUIs - der andere m&ouml;gliche Modus ist der <a href="GUIRef_OnEventMode.htm">OnEvent</a> Modus.</p>
+	<p><strong>Im MessageLoop Modus wirst du nur von Ereignissen erfahren w&auml;hrend du aktiv die GUIGetMsg Funktion aufrufst; deshalb musst du daf&uuml;r sorgen, dass du sie mehrmals pro Sekunde aufrufst, sonst wird deine GUI nicht reagieren.</strong></p>
+	<h2>Grundlegendes MessageLoop Format</h2>
+	<p>Der allgemeine MessageLoop Code siehst folgenderma&szlig;en aus:</p>
+@@SyntaxHighlighting@@
+Local $iMsg = 0
+
+While 1
+	$iMsg = GUIGetMsg()
+	...
+	...
+WEnd
+@@End@@
+  <p>&nbsp;</p>
+	<p>Normalerweise w&uuml;rde so eine Schleife die CPU zu 100% auslasten - gl&uuml;cklicherweise l&auml;sst die <a href="../functions/GUIGetMsg.htm">GUIGetMsg</a> Funktion die CPU automatisch im Leerlauf laufen solange keine Ereignisse warten. Schreibe <strong>keinen</strong> Sleep-Befehl in die Schleife aus Angst, die CPU auszulasten - das wird nur dazu f&uuml;hren, dass die GUI nicht mehr auf den Nutzer reagiert.</p>
+	<h2>GUI Events</h2>
+	<p>Es gibt 3 Typen von Ereignis-Nachrichten, die <a href="../functions/GUIGetMsg.htm">GUIGetMsg</a> zur&uuml;ckgeben kann:</p>
+	<ul>
+		<li>Kein Ereignis</li>
+		<li>Control-Ereignis</li>
+		<li>System-Ereignis</li>
+	</ul>
+	<p></p>
+	<p><strong>Kein Ereignis</strong></p>
+	<p>Wenn keine Ereignisse darauf warten, verarbeitet zu werden, gibt GUIGetMsg den Wert <strong>0</strong> zur&uuml;ck. In einer normalen GUI ist das <em>das h&auml;ufigste Ereignis</em>.</p>
+	<p></p>
+	<p><strong>Control-Ereignis</strong></p>
+	<p>Wenn ein Control angeklickt wird oder sein Wert ver&auml;ndert wird, wird ein Control-Ereignis gesendet - dieses Ereignis ist eine <strong>positive</strong> Zahl, die mit der <strong>Control-ID</strong> &uuml;bereinstimmt, die beim Erstellen des Controls mit <a href="GUICtrlCreate.htm">GUICtrlCreate...</a> zur&uuml;ckgegeben wurde.</p>
+	<p></p>
+	<p><strong>System-Ereignis</strong></p>
+	<p>System-Ereignisse - wie das Schlie&szlig;en der GUI - sind <strong>negative</strong> Zahlen. Die verschiedenen Ereignisse werden unten aufgelistet und sind in <strong>GUIConstantsEx.au3</strong> definiert:</p>
+@@SyntaxHighlighting@@
+$GUI_EVENT_CLOSE
+$GUI_EVENT_MINIMIZE
+$GUI_EVENT_RESTORE
+$GUI_EVENT_MAXIMIZE
+$GUI_EVENT_PRIMARYDOWN
+$GUI_EVENT_PRIMARYUP
+$GUI_EVENT_SECONDARYDOWN
+$GUI_EVENT_SECONDARYUP
+$GUI_EVENT_MOUSEMOVE
+$GUI_EVENT_RESIZED
+$GUI_EVENT_DROPPED
+@@End@@
+
+	<h2>Beispiel-GUI</h2>
+	<p>Auf der Hauptseite der <a href="GUIRef.htm">GUI Referenz</a> haben wir mit einem einfachen "Hallo Welt!" Beispiel angefangen, das so aussah:</p>
+@@SyntaxHighlighting@@
+#include <GUIConstantsEx.au3>
+
+GUICreate("Hallo Welt", 200, 100)
+GUICtrlCreateLabel("Hallo Welt! Wie geht's?", 30, 10)
+GUICtrlCreateButton("OK", 70, 50, 60)
+GUISetState(@SW_SHOW)
+Sleep(2000)
+@@End@@
+
+  <p>&nbsp;</p>
+	<p>Jetzt vervollst&auml;ndigen wir den Code mit einer MessageLoop und einigen der oben beschriebenen Ereignis-Nachrichten (Messages). Es ist &uuml;blich, wegen der Vielzahl der m&ouml;glichen Nachrichten einen Switch-Ausdruck der besseren Lesbarkeit wegen zu verwenden.</p>
+@@SyntaxHighlighting@@
+#include <GUIConstantsEx.au3>
+#include <MsgBoxConstants.au3>
+
+Local $hGUI = GUICreate("Hallo Welt", 200, 100)
+GUICtrlCreateLabel("Hallo Welt! Wie geht's?", 30, 10)
+Local $iOKButton = GUICtrlCreateButton("OK", 70, 50, 60)
+GUISetState(@SW_SHOW, $hGUI)
+
+Local $iMsg = 0
+While 1
+	$iMsg = GUIGetMsg()
+	Switch $iMsg
+		Case $iOKButton
+			MsgBox($MB_SYSTEMMODAL, "GUI Event", "Du hast auf OK geklickt.")
+
+		Case $GUI_EVENT_CLOSE
+			MsgBox($MB_SYSTEMMODAL, "GUI Event", "Du hast auf CLOSE geklickt. Programm wird beendet...")
+			ExitLoop
+	EndSwitch
+WEnd
+
+GUIDelete($hGUI)
+@@End@@
+
+	<p>So einfach ist das. Offensichtlich wird es umso komplizierter, je mehr Fenster und Controls du anlegst, aber das Beispiel zeigt dir die Grundlagen.</p>
+	<p></p>
+	<h2>GUIGetMsg f&uuml;r Fortgeschrittene und mehrere Fenster</h2>
+	<p>Control-IDs sind eindeutig, auch wenn du mehrere Fenster hast; deshalb funktioniert der obenstehende Code gut mit Controls und mehreren Fenstern. Wenn du jedoch Ereignisse wie $GUI_EVENT_CLOSE oder $GUI_MOUSEMOVE verarbeiten willst, musst du wissen, welches GUI-Fenster das Ereignis ausgel&ouml;st hat. Dazu musst du GUIGetMsg folgenderma&szlig;en aufrufen:</p>
+@@SyntaxHighlighting@@
+$iMsg = GUIGetMsg(1)
+@@End@@
+	<p>Wenn die Funktion mit dem Parameter <strong>1</strong> aufgerufen wird, gibt sie statt dem Ereigniswert ein <strong>Array</strong> zur&uuml;ck, das das Ereignis ( in $aArray[1] ) und zus&auml;tzliche Information wie den Handle des Fensters beinhaltet ( in $array[1] ). Wenn im vorhergehenden Beispiel zwei Fenster angelegt worden w&auml;ren, w&auml;re die korrekte Schreibweise f&uuml;r den Code:</p>
+@@SyntaxHighlighting@@
+#include <GUIConstantsEx.au3>
+#include <MsgBoxConstants.au3>
+
+Local $hMainGUI = GUICreate("Hallo Welt", 200, 100)
+GUICtrlCreateLabel("Hallo Welt! Wie geht's?", 30, 10)
+Local $iOKButton = GUICtrlCreateButton("OK", 70, 50, 60)
+
+Local $hDummyGUI = GUICreate("Dummy-Fenster zum Testen", 200, 100)
+
+GUISwitch($hMainGUI)
+GUISetState(@SW_SHOW)
+
+Local $aMsg = 0
+While 1
+	$aMsg = GUIGetMsg(1)
+
+	Select
+		Case $aMsg[0] = $iOKButton
+			MsgBox($MB_SYSTEMMODAL, "GUI Event", "Du hast auf OK geklickt!")
+
+		Case $aMsg[0] = $GUI_EVENT_CLOSE And $aMsg[1] = $hMainGUI
+			MsgBox($MB_SYSTEMMODAL, "GUI Event", "Du hast auf CLOSE im Hauptfenster geklickt! Programm wird beendet...")
+			ExitLoop
+	EndSelect
+WEnd
+@@End@@
+
+  <p>&nbsp;</p>
+	<p>Die erste gro&szlig;e &Auml;nderung ist der Aufruf der <a href="../functions/GUISwitch.htm">GUISwitch</a> Funktion - wenn ein neues Fenster angelegt wird, wird es das "default"-Fenster f&uuml;r zuk&uuml;nftige GUI-Operationen (einschlie&szlig;lich des Anlegens von Controls). In unserem Fall wollen wir mit dem Hauptfenster "Hello World" arbeiten, nicht mit dem Testfenster, deshalb schalten wir um ( "Switch"). Manche GUI-Funktionen erlauben dir, den Fenster-Handle im Funktionsaufruf selbst zu benutzen - diese Funktionen werden also automatisch umschalten. In unserem Beispiel h&auml;tten wir das so machen k&ouml;nnen:</p>
+@@SyntaxHighlighting@@
+GUISetState(@SW_SHOW, $hMainGUI)
+@@End@@
+
+  <p>&nbsp;</p>
+	<p>Die zweite &Auml;nderung ist die Art, wie GUIGetMsg aufgerufen wird und wie die Ereignisse abgefragt werden - achte auf die Verwendung von $msg[0] und $msg[1] - jetzt wird das Skript nur beendet wenn das Close-Ereignis gesendet wird <strong>und</strong> das Ereignis vom Hauptfenster stammt.</p>
+</body>
+</html>

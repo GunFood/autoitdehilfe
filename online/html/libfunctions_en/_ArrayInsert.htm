@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _ArrayInsert</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_ArrayInsert</h1><br />
+<a href="../libfunctions/_ArrayInsert.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Insert a new value at the specified position of a 1D or 2D array<br /></p>
+<p class="codeheader">
+#include &lt;Array.au3&gt;<br />
+_ArrayInsert ( ByRef $aArray, $vRange [, $vValue = "" [, $iStart = 0 [, $sDelim_Item = "|" [, $sDelim_Row = @CRLF [, $iForce = $ARRAYFILL_FORCE_DEFAULT]]]]] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$aArray</td>
+<td style="width:85%">Array to modify</td>
+</tr>
+<tr>
+<td>$vRange</td>
+<td>Position(s) at which to insert item(s) - see Remarks for format</td>
+</tr>
+<tr>
+<td>$vValue</td>
+<td><strong>[optional]</strong> Value(s) to add - can be a single variable, a delimited string or a 1D array</td>
+</tr>
+<tr>
+<td>$iStart</td>
+<td><strong>[optional]</strong> Column in which insert is to begin (2D array only)</td>
+</tr>
+<tr>
+<td>$sDelim_Item</td>
+<td><strong>[optional]</strong> Delimiter used if a string is to be split into items</td>
+</tr>
+<tr>
+<td>$sDelim_Row</td>
+<td><strong>[optional]</strong> Delimiter used if a string is to be split into rows (2D only)</td>
+</tr>
+<tr>
+<td>$iForce</td>
+<td><strong>[optional]</strong> Maintains default behaviour,<br />
+&nbsp;&nbsp;&nbsp; $ARRAYFILL_FORCE_DEFAULT (0)<br />
+Forces $vValue addition as a single item,<br />
+&nbsp;&nbsp;&nbsp; $ARRAYFILL_FORCE_SINGLEITEM (1)<br />
+Or forces datatype for all added items<br />
+&nbsp;&nbsp;&nbsp; $ARRAYFILL_FORCE_INT (2)<br />
+&nbsp;&nbsp;&nbsp; $ARRAYFILL_FORCE_NUMBER (3)<br />
+&nbsp;&nbsp;&nbsp; $ARRAYFILL_FORCE_PTR (4)<br />
+&nbsp;&nbsp;&nbsp; $ARRAYFILL_FORCE_HWND (5)<br />
+&nbsp;&nbsp;&nbsp; $ARRAYFILL_FORCE_STRING (6)<br />
+See Remarks for more details</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">the new size of the array.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>0 and sets the @error flag to non-zero.</td>
+</tr>
+<tr>
+<td class="valign-top">@error:</td>
+<td>1 - $aArray is not an array<br />
+2 - $aArray is not a 1D or 2D array<br />
+3 - $vRange incorrectly formatted (incorrect character or unordered)<br />
+4 - $vRange is not a 1D array or has only 1 element<br />
+5 - $vRange limits outside array bounds<br />
+6 - $iStart outside array bounds (2D only)<br />
+7 - $vValue not 2D array (2D only)<br />
+8 - $vValue has too many columns to fit into $aArray</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>$vRange can be a string containing the rows above which a row is to to be inserted. It can be a single number or a range denoted by the first and last lines separated by a hyphen (-) - multiple items are separated by a semi-colon (;).<br />
+<br />
+$vRange can also be a 1D array containing the rows above which a row is to to be inserted with the count in the [0] element].<br />
+<br />
+In either case, the rows must be in ascending order but can be duplicated.<br />
+<br />
+If $vValue is a delimited string all items are inserted into the array as strings. This can be over-ridden by using the $hDataType parameter which forces the items into the required datatype. Note that all items in the delimited string are converted - if the items are of different datatypes then they must be passed as an array so that their specific datatype is conserved.<br />
+<br />
+<br />
+Insertion mode depends on $vValue type, but using $iForce can affect this. Default behaviour is as follows:<br />
+<br />
+1D arrays:<br />
+&nbsp;&nbsp;&nbsp; Single item - inserts 1 element containing $vValue<br />
+&nbsp;&nbsp;&nbsp; $sDelim_Item delimited string - matches insertion lines to items in the string<br />
+&nbsp;&nbsp;&nbsp; 0-based 1D array - matches insertion lines to elements in the array<br />
+<br />
+2D arrays:<br />
+&nbsp;&nbsp;&nbsp; Single item - inserts 1 row containing $vValue in the first column<br />
+&nbsp;&nbsp;&nbsp; $sDelim_Item delimited string - inserts 1 row at first insertion line, columns filled if enough items<br />
+&nbsp;&nbsp;&nbsp; $sDelim_Row delimited string - matches insertion lines to items in the string, only 1 column filled<br />
+&nbsp;&nbsp;&nbsp; Double-delimited string&nbsp;&nbsp;&nbsp; - matches insertion lines to string split on $sDelim_Row, columns to string split on $sDelim_Item<br />
+&nbsp;&nbsp;&nbsp; 0-based 2D array - matches insertion lines to rows in the array, columns to columns in the array<br />
+<br />
+An empty string ("") is added if there are insufficient items specified in $vValue. Excess items are ignored.<br />
+<br />
+Setting the $iForce parameter can change the default insertion behaviour or amend the datatype for added items. It can be set as follows:<br />
+&nbsp;&nbsp;&nbsp; - $ARRAYFILL_FORCE_DEFAULT (default):<br />
+ - Items are split as described above. Single items and array elements retain their datatypes - delimited strings are added as strings.<br />
+&nbsp;&nbsp;&nbsp; - $ARRAYFILL_FORCE_SINGLEITEM:<br />
+ - If $aArray is 1D, $vValue is inserted as a single element.<br />
+ - if $aArray is 2D the parameter is ignored.<br />
+&nbsp;&nbsp;&nbsp; - $ARRAYFILL_FORCE_INT, $ARRAYFILL_FORCE_NUMBER, $ARRAYFILL_FORCE_PTR, $ARRAYFILL_FORCE_HWND, $ARRAYFILL_FORCE_STRING<br />
+ - If $vValue is a single item, it is forced into the defined datatype - by default it would retain its existing datatype.<br />
+ - If $vValue is a delimited string, all items are forced into the specified datatype - by default they would be inserted into the array as strings. If different datatypes are required for the items they must be passed as an array.<br />
+ - If $vValue is an array, the parameter is ignored and the array elements are inserted retaining their existing datatypes.<br />
+<br />
+If $iForce is set to any other value it is ignored.<br />
+<br />
+The function does NOT update any count element within the array, but the return value of the function (if successful) gives the new highest row index of the array.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="_ArrayAdd.htm">_ArrayAdd</a>, <a href="_ArrayDelete.htm">_ArrayDelete</a>, <a href="_ArrayPop.htm">_ArrayPop</a>, <a href="_ArrayPush.htm">_ArrayPush</a></p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<h3>Example 1</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_ArrayInsert.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span><span class="S8">[</span><span class="S3">10</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">,</span><span class="S0"> </span><span class="S3">5</span><span class="S8">,</span><span class="S0"> </span><span class="S3">6</span><span class="S8">,</span><span class="S0"> </span><span class="S3">7</span><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">,</span><span class="S0"> </span><span class="S3">9</span><span class="S8">]</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray_Base</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"1D - Original"</span><span class="S8">)</span>
+
+<span class="S1">; Insert single item</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayInsert.htm"><span class="S15">_ArrayInsert</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Insert above 2"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"1D - Single item"</span><span class="S8">)</span>
+
+<span class="S1">; Insert delimited string using range array</span>
+<span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aRange</span><span class="S8">[</span><span class="S3">4</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[</span><span class="S3">3</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">,</span><span class="S0"> </span><span class="S3">5</span><span class="S8">,</span><span class="S0"> </span><span class="S3">9</span><span class="S8">]</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sFill</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Insert above 3|Insert above 5|Insert above 9"</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayInsert.htm"><span class="S15">_ArrayInsert</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aRange</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFill</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"1D - Delim String"</span><span class="S8">)</span>
+
+<span class="S1">; Insert 1D array using range string</span>
+<span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aFill</span><span class="S8">[</span><span class="S3">4</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[</span><span class="S7">"Insert above 2"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Insert above 6.1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Insert above 6.2"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Insert above 7"</span><span class="S8">]</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayInsert.htm"><span class="S15">_ArrayInsert</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2;6;6;7"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aFill</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"1D - 1D array"</span><span class="S8">)</span>
+
+<span class="S1">; Insert 1D array as single item</span>
+<span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aFill</span><span class="S8">[</span><span class="S3">4</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[</span><span class="S7">"Insert 0"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Insert 1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Insert 2"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Insert 3"</span><span class="S8">]</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayInsert.htm"><span class="S15">_ArrayInsert</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aFill</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S9">$ARRAYFILL_FORCE_SINGLEITEM</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"1D - Single Item"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">((</span><span class="S9">$aArray</span><span class="S8">)[</span><span class="S3">2</span><span class="S8">],</span><span class="S0"> </span><span class="S7">"Internal array"</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Example 2</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_ArrayInsert[2].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span><span class="S8">[</span><span class="S3">10</span><span class="S8">][</span><span class="S3">3</span><span class="S8">]</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">9</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$j</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">2</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aArray_Base</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">][</span><span class="S9">$j</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" - "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$j</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray_Base</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2D - Original"</span><span class="S8">)</span>
+
+<span class="S1">; Insert single item</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayInsert.htm"><span class="S15">_ArrayInsert</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S3">7</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Insert above 7-0"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2D - Single item"</span><span class="S8">)</span>
+
+<span class="S1">; Insert single item in defined column</span>
+<span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayInsert.htm"><span class="S15">_ArrayInsert</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Insert above 3-1"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2D - Defined column"</span><span class="S8">)</span>
+
+<span class="S1">; Insert item delimited string - inserted as 1 row - other rows filled with ""</span>
+<span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sFill</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Above 3-0|Above 3-1|Above 3-2"</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayInsert.htm"><span class="S15">_ArrayInsert</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"3;5;9"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFill</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2D - Item delim string"</span><span class="S8">)</span>
+
+<span class="S1">; Insert row delimited string using range array - inserted as 3 rows, other cols filled with ""</span>
+<span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aRange</span><span class="S8">[</span><span class="S3">4</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[</span><span class="S3">3</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">,</span><span class="S0"> </span><span class="S3">5</span><span class="S8">,</span><span class="S0"> </span><span class="S3">9</span><span class="S8">]</span>
+<span class="S9">$sFill</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Above 3-2"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Above 5-2"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Above 9-2"</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayInsert.htm"><span class="S15">_ArrayInsert</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aRange</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFill</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Insert in column 2</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2D - Item delim string"</span><span class="S8">)</span>
+
+<span class="S1">; Insert item as row delimited string - inserted as 4 rows</span>
+<span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span>
+<span class="S9">$sFill</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Above 3-0|3-1|3-2"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Above 5a|5-1a|5-2a"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Above 5b|5-1b|5-2b"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Above 9|9-1|9-2"</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayInsert.htm"><span class="S15">_ArrayInsert</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"3;5;5;9"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFill</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2D - Item &amp; row delim string"</span><span class="S8">)</span>
+
+<span class="S1">; Insert 2D array</span>
+<span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aFill_1D</span><span class="S8">[</span><span class="S3">3</span><span class="S8">][</span><span class="S3">3</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[[</span><span class="S7">"Above 2"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2-1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2-2"</span><span class="S8">],</span><span class="S0"> </span><span class="S8">[</span><span class="S7">"Above 3"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"3-1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"3-2"</span><span class="S8">],</span><span class="S0"> </span><span class="S8">[</span><span class="S7">"Above 4"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"4-1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"4-2"</span><span class="S8">]]</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayInsert.htm"><span class="S15">_ArrayInsert</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2-4"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aFill_1D</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2D - 2D Array"</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Example 3</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_ArrayInsert[3].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext3\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext3">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span><span class="S8">[</span><span class="S3">2</span><span class="S8">][</span><span class="S3">2</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[[</span><span class="S7">"Org Item 0 - 0"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Org Item 0 - 1"</span><span class="S8">],</span><span class="S0"> </span><span class="S8">[</span><span class="S7">"Org Item 1 - 0"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Org Item 1 - 1"</span><span class="S8">]]</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sFill</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S3">2</span><span class="S0"> </span><span class="S1">; Note added as number datatype here</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Delimited string to add"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFill</span><span class="S8">)</span>
+
+<span class="S1">; Add items by delimited string</span>
+<span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span>
+<span class="S0">&nbsp;</span><a class="codeSnippetLink" href="../libfunctions/_ArrayInsert.htm"><span class="S15">_ArrayInsert</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"0;1"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFill</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Converted to string"</span><span class="S8">)</span>
+<span class="S1">; But converted to string datatype here</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Result"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Data:"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$aArray</span><span class="S8">[</span><span class="S3">2</span><span class="S8">][</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Datatype:"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/VarGetType.htm"><span class="S4">VarGetType</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">[</span><span class="S3">2</span><span class="S8">][</span><span class="S3">0</span><span class="S8">]))</span>
+
+<span class="S1">; Add items by delimited string</span>
+<span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aArray_Base</span>
+<span class="S1">; Now force datatype to be retained</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hDataType</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Number.htm"><span class="S4">Number</span></a>
+<span class="S0">&nbsp;</span><a class="codeSnippetLink" href="../libfunctions/_ArrayInsert.htm"><span class="S15">_ArrayInsert</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"0;1"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFill</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S9">$ARRAYFILL_FORCE_NUMBER</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Forced to number"</span><span class="S8">)</span>
+<span class="S1">; And datatype is retained</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Result"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Data:"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$aArray</span><span class="S8">[</span><span class="S3">2</span><span class="S8">][</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Datatype:"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/VarGetType.htm"><span class="S4">VarGetType</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">[</span><span class="S3">2</span><span class="S8">][</span><span class="S3">0</span><span class="S8">]))</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

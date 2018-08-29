@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinNet_UseConnection</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_WinNet_UseConnection</h1><br />
+<a href="../libfunctions_en/_WinNet_UseConnection.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Verbindet ein lokales Ger&auml;t mit einer Netzwerkressource<br /></p>
+<p class="codeheader">
+#include &lt;WinNet.au3&gt;<br />
+_WinNet_UseConnection ( $hWnd, $sLocalName, $sRemoteName [, $sUserName = 0 [, $sPassword = 0 [, $iType = 1 [, $iOptions = 1]]]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$hWnd</td>
+<td style="width:85%">Handle zu einem Fenster, das der Anbieter der Netzwerkressource eigenst&auml;ndig f&uuml;r Dialoge verwenden kann.<br />
+Dieser Parameter wird verwendet, wenn Bit 2 (Interaktiv) bei $iOptions gew&auml;hlt wird.<br />
+Dieser Parameter kann den Wert 0 haben.</td>
+</tr>
+<tr>
+<td>$sLocalName</td>
+<td>Name eines lokalen Ger&auml;tes wie z.B. "F:" oder "LPT1".<br />
+Bei diesem String ist auf Gro&szlig;-/Kleinschreibung zu achten.<br />
+Wenn dieser Parameter 0 ist, wird eine Verbindung zu der Netzwerkressource ohne Umleitung auf das lokale Ger&auml;t hergestellt.</td>
+</tr>
+<tr>
+<td>$sRemoteName</td>
+<td>Name der Netzwerkressource, zu der verbunden werden soll.</td>
+</tr>
+<tr>
+<td>$sUsername</td>
+<td><strong>[optional]</strong> Username zum Herstellen der Verbindung.<br />
+Wenn dieser Parameter 0 ist verwendet die Funktion den Standard Usernamen.</td>
+</tr>
+<tr>
+<td>$sPassword</td>
+<td><strong>[optional]</strong> Passwort zum Herstellen der Verbindung.<br />
+Wenn dieser Parameter 0 ist verwendet die Funktion das Standard Passwort.<br />
+Wenn der String leer ist, wird kein Passwort verwendet.</td>
+</tr>
+<tr>
+<td>$iType</td>
+<td><strong>[optional]</strong> Gibt den Typ der Netzwerkressource an, zu der verbunden werden soll:<br />
+&nbsp;&nbsp;&nbsp; 0 - Jede (nur wenn $sLocalName leer ist)<br />
+&nbsp;&nbsp;&nbsp; 1 - Laufwerk<br />
+&nbsp;&nbsp;&nbsp; 2 - Drucker</td>
+</tr>
+<tr>
+<td>$iOptions</td>
+<td><strong>[optional]</strong> Verbindungsoptionen. Kann einer der folgenden Werte sein:<br />
+&nbsp;&nbsp;&nbsp; 1 - Die Verbindung zur Netzwerkressource soll gespeichert werden<br />
+&nbsp;&nbsp;&nbsp; 2 - Das Betriebssystem kann Abfragen zur User-Authentifizierung machen (Abfragefenster)<br />
+&nbsp;&nbsp;&nbsp; 4 - Das System verwendet Standard Usernamen oder Passw&ouml;rter nicht ohne dem Benutzer die M&ouml;glichkeit zu geben,<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; diese alternativ manuell einzugeben. Dieses Flag wird ignoriert, wenn nicht auch Bit 2 (Interaktiv) gesetzt ist.<br />
+&nbsp;&nbsp;&nbsp; 8 - Erzwingt das Umleiten eines lokalen Ger&auml;tes, wenn die Verbindung hergestellt wird<br />
+&nbsp;&nbsp;&nbsp; 16 - Das Betriebssystem verwendet die Kommandozeile zur Eingabe der Authentifizierung verwendet anstatt einer GUI.<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Dieses Flag wird ignoriert, wenn nicht auch Bit 2 (Interaktiv) gesetzt ist.<br />
+&nbsp;&nbsp;&nbsp; 32 - Wenn dieses Bit gesetzt ist und das Betriebssystem meldet mit einer Eingabeaufforderung, dass eine Authentifizierung <br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; notwendig ist, werden die Eingabedaten vom Credential Manager gespeichert. Wenn der Credential Manager deaktiviert ist f&uuml;r diese Session,<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; oder das speichern nicht vom Netzwerk Provider unterst&uuml;tzt ist, wird dieses Flag ignoriert. Dieses Flag wird ignoriert, <br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; wenn nicht auch Bit 5 (Eingabeaufforderung anstatt GUI) gesetzt ist.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">Ein Array mit dem folgenden Format:<br />
+&nbsp;&nbsp;&nbsp; $aInfo[0] - Wenn True, die Verbindung wurde hergestellt mit der Umleitung eines lokalen Ger&auml;tes<br />
+&nbsp;&nbsp;&nbsp; $aInfo[1] - Wenn $sLocalName ein lokales Ger&auml;t angibt, ist dies der lokale Ger&auml;tename. Wenn mit $sLocalName kein Ger&auml;t angegeben wurde<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; und das Netzwerk eine Umleitung auf ein lokales Ger&auml;t ben&ouml;tigt, oder wenn Bit 4 (erzwungene Umleitung) gesetzt ist, gibt dieser Wert<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; den Namen des umgeleiteten lokalen Ger&auml;tes zur&uuml;ck. Ansonsten gibt dieser Wert den Namen der Remote Ressource zur&uuml;ck.</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>Setzt @error auf ungleich 0</td>
+</tr>
+</table>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(WNetUseConnection);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">WNetUseConnection</a> in der MSDN Bibliothek.
+</p>
+
+</body>
+</html>

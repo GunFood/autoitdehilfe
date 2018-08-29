@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinAPI_ShellUserAuthenticationDlg</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1>_WinAPI_ShellUserAuthenticationDlg</h1>
+<p class="funcdesc">Creates and displays a configurable dialog box that accepts credentials information from a user<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIDlg.au3&gt;<br />
+_WinAPI_ShellUserAuthenticationDlg ( $sCaption, $sMessage, $sUser, $sPassword, $sTarget [, $iFlags = 0 [, $iError = 0 [, $bSave = False [, $hBitmap = 0 [, $hParent = 0]]]]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$sCaption</td>
+<td style="width:85%">The title for the dialog box.</td>
+</tr>
+<tr>
+<td>$sMessage</td>
+<td>A brief message to display in the dialog box.</td>
+</tr>
+<tr>
+<td>$sUser</td>
+<td>The user name to populate the credential fields in the dialog box. For domain users, the string must<br />
+be in the following format (if domain is not specified, the trget string is used as the domain):<br />
+<br />
+DomainName\UserName</td>
+</tr>
+<tr>
+<td>$sPassword</td>
+<td>The initial password.</td>
+</tr>
+<tr>
+<td>$sTarget</td>
+<td>The name of the target, typically a server name. This parameter is used to identify target information<br />
+when storing and retrieving credentials.</td>
+</tr>
+<tr>
+<td>$iFlags</td>
+<td><strong>[optional]</strong> The flags that specifies behavior for this function. It can be a bitwise-OR combination of zero<br />
+or more of the following values.<br />
+$CREDUI_FLAGS_ALWAYS_SHOW_UI<br />
+$CREDUI_FLAGS_COMPLETE_USERNAME<br />
+$CREDUI_FLAGS_DO_NOT_PERSIST<br />
+$CREDUI_FLAGS_EXCLUDE_CERTIFICATES<br />
+$CREDUI_FLAGS_EXPECT_CONFIRMATION<br />
+$CREDUI_FLAGS_GENERIC_CREDENTIALS<br />
+$CREDUI_FLAGS_INCORRECT_PASSWORD<br />
+$CREDUI_FLAGS_KEEP_USERNAME<br />
+$CREDUI_FLAGS_PASSWORD_ONLY_OK<br />
+$CREDUI_FLAGS_PERSIST<br />
+$CREDUI_FLAGS_REQUEST_ADMINISTRATOR<br />
+$CREDUI_FLAGS_REQUIRE_CERTIFICATE<br />
+$CREDUI_FLAGS_REQUIRE_SMARTCARD<br />
+$CREDUI_FLAGS_SERVER_CREDENTIAL<br />
+$CREDUI_FLAGS_SHOW_SAVE_CHECK_BOX<br />
+$CREDUI_FLAGS_USERNAME_TARGET_CREDENTIALS<br />
+$CREDUI_FLAGS_VALIDATE_USERNAME</td>
+</tr>
+<tr>
+<td>$iError</td>
+<td><strong>[optional]</strong> The system error code that specifies why the credential dialog box is needed.</td>
+</tr>
+<tr>
+<td>$bSave</td>
+<td><strong>[optional]</strong> Specifies whether the "Save" check box is selected in the dialog box (it makes sense only if the<br />
+$CREDUI_FLAGS_SHOW_SAVE_CHECK_BOX flag is used), valid values:<br />
+&nbsp;&nbsp;&nbsp; True	 - Selected.<br />
+&nbsp;&nbsp;&nbsp; False	 - Deselected (Default).</td>
+</tr>
+<tr>
+<td>$hBitmap</td>
+<td><strong>[optional]</strong> A bitmap handle to display in the dialog box. If this parameter is 0, the default bitmap is used.<br />
+The bitmap size is limited to 320x60 pixels.</td>
+</tr>
+<tr>
+<td>$hParent</td>
+<td><strong>[optional]</strong> The dialog box is modal with respect to the parent window. If this parameter is 0, the desktop<br />
+is the parent window of the dialog box.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">The array containing the following information:<br />
+[0] - The user name, including domain name (if necessary).<br />
+[1] - The password.<br />
+[2] - The state of the "Save" check box.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>Sets the @error flag to non-zero. If the function is cancelled by the user, @extended flag will<br />
+contain the ERROR_CANCELLED (1223) system error code. Any other value indicates that the function<br />
+failed to load.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Credentials are stored in the credential manager based on target name. Each target name is stored as generally as<br />
+possible without colliding with credentials already stored in the credential manager. Because credentials are stored<br />
+by target name, a particular user can only have one credential per target stored in the credential manager.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="_WinAPI_ConfirmCredentials.htm">_WinAPI_ConfirmCredentials</a></p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(CredUIPromptForCredentials);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">CredUIPromptForCredentials</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_ShellUserAuthenticationDlg.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;APIDlgConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Crypt.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIDlg.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIRes.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hBitmap</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_LoadImage.htm"><span class="S15">_WinAPI_LoadImage</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@ScriptDir"><span class="S6">@ScriptDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'\Extras\Authentication.bmp'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$IMAGE_BITMAP</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$LR_LOADFROMFILE</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aData</span><span class="S8">[</span><span class="S3">3</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[</span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">]</span>
+
+<a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_ShellUserAuthenticationDlg.htm"><span class="S15">_WinAPI_ShellUserAuthenticationDlg</span></a><span class="S8">(</span><span class="S7">'Authentication'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'To continue, type a login and password, and then click OK.'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aData</span><span class="S8">[</span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$aData</span><span class="S8">[</span><span class="S3">1</span><span class="S8">],</span><span class="S0"> </span><span class="S7">'MyScript'</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$CREDUI_FLAGS_ALWAYS_SHOW_UI</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$CREDUI_FLAGS_EXPECT_CONFIRMATION</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$CREDUI_FLAGS_GENERIC_CREDENTIALS</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$CREDUI_FLAGS_SHOW_SAVE_CHECK_BOX</span><span class="S8">),</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aData</span><span class="S8">[</span><span class="S3">2</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$hBitmap</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S8">(</span><a class="codeSnippetLink" href="../functions/StringCompare.htm"><span class="S4">StringCompare</span></a><span class="S8">(</span><span class="S9">$aData</span><span class="S8">[</span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S7">'AutoIt'</span><span class="S8">))</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Or</span></a><span class="S0"> </span><span class="S8">(</span><a class="codeSnippetLink" href="../functions/StringCompare.htm"><span class="S4">StringCompare</span></a><span class="S8">(</span><span class="S9">$aData</span><span class="S8">[</span><span class="S3">1</span><span class="S8">],</span><span class="S0"> StringEncrypt</span><span class="S8">(</span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">'DC7E430A1C88'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'123'</span><span class="S8">)))</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$aData</span><span class="S8">[</span><span class="S3">2</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_ConfirmCredentials.htm"><span class="S15">_WinAPI_ConfirmCredentials</span></a><span class="S8">(</span><span class="S7">'MyScript'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$MB_ICONERROR</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">),</span><span class="S0"> </span><span class="S7">'Error'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'You have typed an incorrect login or password, it should be "AutoIt" and "123".'</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$aData</span><span class="S8">[</span><span class="S3">2</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_ConfirmCredentials.htm"><span class="S15">_WinAPI_ConfirmCredentials</span></a><span class="S8">(</span><span class="S7">'MyScript'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> StringEncrypt</span><span class="S8">(</span><span class="S9">$bEncrypt</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sData</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sPassword</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_Crypt_Startup.htm"><span class="S15">_Crypt_Startup</span></a><span class="S8">()</span><span class="S0"> </span><span class="S1">; Start the Crypt library.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sReturn</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">''</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$bEncrypt</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><span class="S1">; If the flag is set to True then encrypt, otherwise decrypt.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sReturn</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_Crypt_EncryptData.htm"><span class="S15">_Crypt_EncryptData</span></a><span class="S8">(</span><span class="S9">$sData</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sPassword</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$CALG_RC4</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sReturn</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BinaryToString.htm"><span class="S4">BinaryToString</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_Crypt_DecryptData.htm"><span class="S15">_Crypt_DecryptData</span></a><span class="S8">(</span><span class="S9">$sData</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sPassword</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$CALG_RC4</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_Crypt_Shutdown.htm"><span class="S15">_Crypt_Shutdown</span></a><span class="S8">()</span><span class="S0"> </span><span class="S1">; Shutdown the Crypt library.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S9">$sReturn</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;StringEncrypt</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

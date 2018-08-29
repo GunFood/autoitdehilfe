@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function GUICreate</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">GUICreate</h1><br />
+<a href="../functions/GUICreate.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Create a GUI window.<br /></p>
+<p class="codeheader">
+GUICreate ( "title" [, width [, height [, left = -1 [, top = -1 [, style = -1 [, exStyle = -1 [, parent = 0]]]]]]] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">title</td>
+<td style="width:85%">The title of the dialog box.</td>
+</tr>
+<tr>
+<td>width</td>
+<td><strong>[optional]</strong> The width of the window.</td>
+</tr>
+<tr>
+<td>height</td>
+<td><strong>[optional]</strong> The height of the window.</td>
+</tr>
+<tr>
+<td>left</td>
+<td><strong>[optional]</strong> The left side of the dialog box. By default (-1), the window is centered. If defined, top must also be defined.</td>
+</tr>
+<tr>
+<td>top</td>
+<td><strong>[optional]</strong> The top of the dialog box. Default (-1) is centered</td>
+</tr>
+<tr>
+<td>style</td>
+<td><strong>[optional]</strong> defines the style of the window. See <a href="../appendix/GUIStyles.htm">GUI Control Styles Appendix</a>.<br />
+Use -1 for the default style which includes a combination of $WS_MINIMIZEBOX, $WS_CAPTION, $WS_POPUP, $WS_SYSMENU styles.<br />
+Some styles are always included: $WS_CLIPSIBLINGS, and $WS_SYSMENU if $WS_MAXIMIZEBOX or $WS_SIZEBOX is specified.</td>
+</tr>
+<tr>
+<td>exStyle</td>
+<td><strong>[optional]</strong> defines the extended style of the window. See the <a href="GUICreate.htm#Extended Style Table">Extended Style Table</a> below.<br />
+Use -1 for the default, which is no extended styles.<br />
+Forced styles: $WS_EX_WINDOWEDGE</td>
+</tr>
+<tr>
+<td>parent</td>
+<td><strong>[optional]</strong> The handle of another previously created window - this new window then becomes a child of that window.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">a windows handle.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>0 if the window cannot be created and sets the @error flag to 1.</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>By default the dialog box is non sizable and non maximizable. So WS_SIZEBOX or WS_MAXIMIZEBOX can be used in the style parameter.<br />
+As defining only one style just set this style don't forget to combine it with default ones, i.e. just defining WS_SIZEBOX will not set $WS_MINIMIZEBOX, $WS_CAPTION, $WS_POPUP, $WS_SYSMENU. So the best method to define a resizeable window is to use $WS_OVERLAPPEDWINDOW.<br />
+When using $WS_EX_MDICHILD the position is relative to client area of the parent window. With $WS_EX_LAYERED it is possible to have a transparent picture on a background picture defined in the parent window.<br />
+Adding $WS_CLIPCHILDREN style can avoid some flickering when resizing GUI containing Edit control for example.<br />
+You can enable window dragging for GUI without $WS_CAPTION by using $WS_EX_CONTROLPARENT in the exStyle parameter.<br />
+<br />
+To combine styles with the default style use <a href="BitOR.htm">BitOR</a>($GUI_SS_DEFAULT_GUI, newstyle, ...).<br />
+The size specified is the size of the client area of the window. The border and title bar will make the window slightly larger than specified. Using menu controls will also change the windows height.<br />
+<br />
+<a id="Extended Style table"></a><strong>Extended Style table</strong><br />
+<br />
+<table>
+<tr>
+<th>Extended Style</th>
+<th>result</th>
+</tr>
+
+<tr>
+<td>$WS_EX_ACCEPTFILES</td>
+<td>Allow an edit or input control within the created GUI window to receive filenames via drag and drop. The control must have also the $GUI_DROPACCEPTED state set by <a href="GUICtrlSetState.htm">GUICtrlSetState()</a>. for other controls the drag&drop info can be retrieved with @GUI_DragId, @GUI_DragFile, @GUI_DropId.</td>
+</tr>
+
+<tr>
+<td>$WS_EX_APPWINDOW</td>
+<td>Forces a top-level window onto the taskbar when the window is visible.</td>
+</tr>
+
+<tr>
+<td>$WS_EX_CLIENTEDGE</td>
+<td>Specifies that a window has a border with a sunken edge.</td>
+</tr>
+
+<tr>
+<td>$WS_EX_CONTEXTHELP</td>
+<td>Includes a question mark in the title bar of the window. Cannot be used with the $WS_MAXIMIZEBOX or $WS_MINIMIZEBOX.</td>
+</tr>
+
+<tr>
+<td>$WS_EX_DLGMODALFRAME</td>
+<td>Creates a window that has a double border; the window can, optionally, be created with a title bar by specifying the WS_CAPTION style in the style parameter.</td>
+</tr>
+
+<tr>
+<td>$WS_EX_MDICHILD</td>
+<td>Create a child window that will be moved with its parent (simulation of a MDI window maximize/minimize are not simulated).</td>
+</tr>
+
+<tr>
+<td>$WS_EX_OVERLAPPEDWINDOW</td>
+<td>Combines the $WS_EX_CLIENTEDGE and $WS_EX_WINDOWEDGE styles.</td>
+</tr>
+
+<tr>
+<td>$WS_EX_STATICEDGE</td>
+<td>Creates a window with a three-dimensional border style intended to be used for items that do not accept user input.</td>
+</tr>
+
+<tr>
+<td>$WS_EX_TOPMOST</td>
+<td>Specifies that a window created with this style should be placed above all non-topmost windows and should stay above them, even when the window is deactivated.</td>
+</tr>
+
+<tr>
+<td>$WS_EX_TRANSPARENT</td>
+<td>The window appears transparent because the bits of underlying sibling windows have already been painted.</td>
+</tr>
+
+<tr>
+<td>$WS_EX_TOOLWINDOW</td>
+<td>Creates a tool window; that is, a window intended to be used as a floating toolbar. A tool window has a title bar that is shorter than a normal title bar, and the window title is drawn using a smaller font. A tool window does not appear in the taskbar or in the dialog box that appears when the user presses ALT+TAB. If a tool window has a system menu, its icon is not displayed on the title bar. However, you can display the system menu by typing ALT+SPACE.</td>
+</tr>
+
+<tr>
+<td>$WS_EX_WINDOWEDGE</td>
+<td>Specifies that a window has a border with a raised edge.</td>
+</tr>
+
+<tr>
+<td>$WS_EX_LAYERED</td>
+<td>Creates a layered window. Note that this cannot be used for child windows.</td>
+</tr>
+</table><br />
+To use the values specified above you must #include &lt;WindowsConstants.au3&gt; in your script.<br />
+<br />
+Note: The handle returned from this function is a real windows handle, which means it can be used in the same way as the result of <a href="WinGetHandle.htm">WinGetHandle()</a>.<br />
+<a href="WinMove.htm">WinMove()</a> use before <a href="GuiSetState.htm">GuiSetState()</a> to change GUI window size will not change the position/resizing of defined Controls.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="GUICtrlCreate%20Management.htm">GUICtrlCreate...</a>, <a href="GUICtrlSetDefBkColor.htm">GUICtrlSetDefBkColor</a>, <a href="GUICtrlSetDefColor.htm">GUICtrlSetDefColor</a>, <a href="GUIDelete.htm">GUIDelete</a>, <a href="GUIGetCursorInfo.htm">GUIGetCursorInfo</a>, <a href="GUIGetMsg.htm">GUIGetMsg</a>, <a href="GUIGetStyle.htm">GUIGetStyle</a>, <a href="GUISetParameters%20Management.htm">GUISetParameters...</a>, <a href="GUISetState.htm">GUISetState</a>, <a href="GUISwitch.htm">GUISwitch</a>, <a href="WinGetHandle.htm">WinGetHandle</a>, <a href="WinMove.htm">WinMove</a></p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<h3>Example 1</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\GUICreate.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Create a GUI with various controls.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGUI</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"Example"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idOK</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateButton.htm"><span class="S4">GUICtrlCreateButton</span></a><span class="S8">(</span><span class="S7">"OK"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">310</span><span class="S8">,</span><span class="S0"> </span><span class="S3">370</span><span class="S8">,</span><span class="S0"> </span><span class="S3">85</span><span class="S8">,</span><span class="S0"> </span><span class="S3">25</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Display the GUI.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">,</span><span class="S0"> </span><span class="S9">$hGUI</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Loop until the user exits.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$idOK</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Delete the previous GUI and all controls.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIDelete.htm"><span class="S4">GUIDelete</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Example 2</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\GUICreate[2].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WindowsConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sFilePath</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"..\GUI\logo_autoit_210x72.gif"</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Create a GUI with various controls.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGUI</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"Example"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">400</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlCreatePic.htm"><span class="S4">GUICtrlCreatePic</span></a><span class="S8">(</span><span class="S7">"..\GUI\msoobe.jpg"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">400</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Display the GUI.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">,</span><span class="S0"> </span><span class="S9">$hGUI</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hChild</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">210</span><span class="S8">,</span><span class="S0"> </span><span class="S3">72</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><span class="S3">15</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$WS_POPUP</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$WS_EX_LAYERED</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$WS_EX_MDICHILD</span><span class="S8">),</span><span class="S0"> </span><span class="S9">$hGUI</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Create a picture control with a transparent image.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlCreatePic.htm"><span class="S4">GUICtrlCreatePic</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">210</span><span class="S8">,</span><span class="S0"> </span><span class="S3">72</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Display the child GUI.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Loop until the user exits.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Delete the previous GUIs and all controls.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIDelete.htm"><span class="S4">GUIDelete</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIDelete.htm"><span class="S4">GUIDelete</span></a><span class="S8">(</span><span class="S9">$hChild</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

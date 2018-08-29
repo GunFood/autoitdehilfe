@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _WinAPI_ShellFileOperation</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1>_WinAPI_ShellFileOperation</h1>
+<p class="funcdesc">Copies, moves, renames, or deletes a file system object<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIShellEx.au3&gt;<br />
+_WinAPI_ShellFileOperation ( $sFrom, $sTo, $iFunc, $iFlags [, $sTitle = '' [, $hParent = 0]] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$sFrom</td>
+<td style="width:85%">Single string or array of string that contains the source file name(s). These names should be<br />
+fully-qualified paths to prevent unexpected results.</td>
+</tr>
+<tr>
+<td>$sTo</td>
+<td>Single string or array of string that contains the destination file or directory name(s) (if used).<br />
+These names should be fully-qualified paths to prevent unexpected results.</td>
+</tr>
+<tr>
+<td>$iFunc</td>
+<td>A value that indicates which operation to perform. This parameter can be one of the following values.<br />
+$FO_COPY<br />
+$FO_DELETE<br />
+$FO_MOVE<br />
+$FO_RENAME</td>
+</tr>
+<tr>
+<td>$iFlags</td>
+<td>Flags that control the file operation. This parameter can be one of the following values.<br />
+$FOF_ALLOWUNDO<br />
+$FOF_CONFIRMMOUSE<br />
+$FOF_FILESONLY<br />
+$FOF_MULTIDESTFILES<br />
+$FOF_NOCONFIRMATION<br />
+$FOF_NOCONFIRMMKDIR<br />
+$FOF_NO_CONNECTED_ELEMENTS<br />
+$FOF_NOCOPYSECURITYATTRIBS<br />
+$FOF_NOERRORUI<br />
+$FOF_NORECURSEREPARSE<br />
+$FOF_NORECURSION<br />
+$FOF_RENAMEONCOLLISION<br />
+$FOF_SILENT<br />
+$FOF_SIMPLEPROGRESS<br />
+$FOF_WANTMAPPINGHANDLE<br />
+$FOF_WANTNUKEWARNING<br />
+$FOF_NO_UI</td>
+</tr>
+<tr>
+<td>$sTitle</td>
+<td><strong>[optional]</strong> The title of a progress dialog box. This parameter is used only if $iFlags includes the $FOF_SIMPLEPROGRESS flag.</td>
+</tr>
+<tr>
+<td>$hParent</td>
+<td><strong>[optional]</strong> Handle to the dialog box to display information about the status of the file operation.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">$tagSHFILEOPSTRUCT structure that contains the additional information.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>Sets the @error flag, @extended may be set to the one of the following values.<br />
+113 - The source and destination files are the same file.<br />
+114 - Multiple file paths were specified in the source buffer, but only one destination file path.<br />
+115 - Rename operation was specified but the destination path is a different directory. Use the move operation instead.<br />
+116 - The source is a root directory, which cannot be moved or renamed.<br />
+117 - The operation was cancelled by the user, or silently cancelled if the appropriate flags were supplied to <a href="_WinAPI_ShellFileOperation.htm">_WinAPI_ShellFileOperation()</a>.<br />
+118 - The destination is a subtree of the source.<br />
+120 - Security settings denied access to the source.<br />
+121 - The source or destination path exceeded or would exceed MAX_PATH.<br />
+122 - The operation involved multiple destination paths, which can fail in the case of a move operation.<br />
+124 - The path in the source or destination or both was invalid.<br />
+125 - The source and destination have the same parent folder.<br />
+126 - The destination path is an existing file.<br />
+128 - The destination path is an existing folder.<br />
+129 - The name of the file exceeds MAX_PATH.<br />
+130 - The destination is a read-only CD-ROM, possibly unformatted.<br />
+131 - The destination is a read-only DVD, possibly unformatted.<br />
+132 - The destination is a writable CD-ROM, possibly unformatted.<br />
+133 - The file involved in the operation is too large for the destination media or file system.<br />
+134 - The source is a read-only CD-ROM, possibly unformatted.<br />
+135 - The source is a read-only DVD, possibly unformatted.<br />
+136 - The source is a writable CD-ROM, possibly unformatted.<br />
+183 - MAX_PATH was exceeded during the operation.<br />
+026 - An unknown error occurred. This is typically due to an invalid path in the source or destination.<br />
+536 - An unspecified error occurred on the destination.<br />
+652 - Destination is a root directory and cannot be renamed.</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>You should use fully-qualified path names with this function. Using it with relative path names is not thread safe.<br />
+</p>
+
+<h2>See Also</h2>
+<p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(SHFileOperation);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">SHFileOperation</a> in MSDN  Library.
+</p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_ShellFileOperation.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;APIShellExConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIFiles.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIShellEx.au3&gt;</span>
+
+<span class="S1">; Create temporary file</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sTemp</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetTempFileName.htm"><span class="S15">_WinAPI_GetTempFileName</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/ShellExecute.htm"><span class="S4">ShellExecute</span></a><span class="S8">(</span><span class="S7">'::{645FF040-5081-101B-9F08-00AA002F954E}'</span><span class="S8">)</span>
+
+<span class="S1">; Delete file to Recycle Bin</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileExists.htm"><span class="S4">FileExists</span></a><span class="S8">(</span><span class="S9">$sTemp</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_ShellFileOperation.htm"><span class="S15">_WinAPI_ShellFileOperation</span></a><span class="S8">(</span><span class="S9">$sTemp</span><span class="S8">,</span><span class="S0"> </span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$FO_DELETE</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$FOF_ALLOWUNDO</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$FOF_NO_UI</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

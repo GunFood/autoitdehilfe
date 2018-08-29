@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _WinAPI_EnumFiles</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1>_WinAPI_EnumFiles</h1>
+<p class="funcdesc">Enumerates the files and subdirectories for the specified directory with a name that matches the template<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIFiles.au3&gt;<br />
+_WinAPI_EnumFiles ( $sDir [, $iFlag = 0 [, $sTemplate = '' [, $bExclude = False]]] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$sDir</td>
+<td style="width:85%">The path to the directory.</td>
+</tr>
+<tr>
+<td>$iFlag</td>
+<td><strong>[optional]</strong> The flag that specifies whether to enumerate files, subdirectories, or both.<br />
+This parameter can be one of the following values:<br />
+&nbsp;&nbsp;&nbsp; 0 - Enumerate both files and subdirectories (Default).<br />
+&nbsp;&nbsp;&nbsp; 1 - Enumerate files only.<br />
+&nbsp;&nbsp;&nbsp; 2 - Enumerate subdirectories only.</td>
+</tr>
+<tr>
+<td>$sTemplate</td>
+<td><strong>[optional]</strong> A template that using to enumerating files and directories. For example, "*.jpe;*.jpeg;*.jpg".</td>
+</tr>
+<tr>
+<td>$bExclude</td>
+<td><strong>[optional]</strong> Specifies whether the specified template is used to exclude files, valid values:<br />
+&nbsp;&nbsp;&nbsp; True - The files matching the template will not be enumerated.<br />
+&nbsp;&nbsp;&nbsp; False - The only those files that match the template will be enumerated (Default).</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">a 2D array containing the following information:<br />
+&nbsp;&nbsp;&nbsp; [0][0] - Number of rows in array (n)<br />
+&nbsp;&nbsp;&nbsp; [0][i] - Unused<br />
+&nbsp;&nbsp;&nbsp; [n][0] - The name of the file.<br />
+&nbsp;&nbsp;&nbsp; [n][1] - The time (UTC) when the file was created.<br />
+&nbsp;&nbsp;&nbsp; [n][2] - The time (UTC) when the file was last accessed.<br />
+&nbsp;&nbsp;&nbsp; [n][3] - The time (UTC) when the file was last changed.<br />
+&nbsp;&nbsp;&nbsp; [n][4] - The size of the file, in bytes.<br />
+&nbsp;&nbsp;&nbsp; [n][5] - The allocation size of the file, in bytes.<br />
+&nbsp;&nbsp;&nbsp; [n][6] - The file attributes ($FILE_ATTRIBUTE_*).</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>Sets the @error flag to non-zero, @extended flag may contain the NTSTATUS error code.</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>If the target directory is empty or no files matched the specified criteria, the function still returns an array where zeroth array element set to 0.<br />
+</p>
+
+<h2>See Also</h2>
+<p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(ZwQueryDirectoryFile);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">ZwQueryDirectoryFile</a> in MSDN  Library.
+</p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_EnumFiles.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIFiles.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_EnumFiles.htm"><span class="S15">_WinAPI_EnumFiles</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SystemDir"><span class="S6">@SystemDir</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'*.ax;*.cpl;*.dll;*.drv;*.exe;*.ocx;*.scr'</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aData</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'_WinAPI_EnumFiles'</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

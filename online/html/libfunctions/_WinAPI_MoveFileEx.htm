@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinAPI_MoveFileEx</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1>_WinAPI_MoveFileEx</h1>
+<p class="funcdesc">Moves a file or directory, notifying the application of its progress through a callback function<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIFiles.au3&gt;<br />
+_WinAPI_MoveFileEx ( $sExistingFile, $sNewFile [, $iFlags = 0 [, $pProgressProc = 0 [, $pData = 0]]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$sExistingFile</td>
+<td style="width:85%">The name of the existing file or directory on the local computer.<br />
+<br />
+If $iFlags specifies $MOVE_FILE_DELAY_UNTIL_REBOOT, the file cannot exist on a remote share because delayed operations are performed before the network is available.<br />
+</td>
+</tr>
+<tr>
+<td>$sNewFile</td>
+<td>The new name of the file or directory on the local computer.<br />
+<br />
+When moving a file, $sNewFile can be on a different file system or volume.<br />
+If $sNewFile is on another drive, you must set the $MOVE_FILE_COPY_ALLOWED flag in $iFlags parameter.<br />
+<br />
+When moving a directory, $sExistingFile and $sNewFile must be on the same drive.<br />
+<br />
+If $iFlags specifies $MOVE_FILE_DELAY_UNTIL_REBOOT and $sNewFile is 0, <a href="_WinAPI_MoveFileEx.htm">_WinAPI_MoveFileEx()</a> registers $sExistingFile to be deleted when the system restarts.<br />
+If $sExistingFile refers to a directory, the system removes the directory at restart only if the directory is empty.<br />
+</td>
+</tr>
+<tr>
+<td>$iFlags</td>
+<td><strong>[optional]</strong> The move options. This parameter can be one or more of the following values:<br />
+&nbsp;&nbsp;&nbsp; $MOVE_FILE_COPY_ALLOWED (0x0002)<br />
+&nbsp;&nbsp;&nbsp; $MOVE_FILE_CREATE_HARDLINK (0x0010)<br />
+&nbsp;&nbsp;&nbsp; $MOVE_FILE_DELAY_UNTIL_REBOOT (0x0004)<br />
+&nbsp;&nbsp;&nbsp; $MOVE_FILE_FAIL_IF_NOT_TRACKABLE (0x0020)<br />
+&nbsp;&nbsp;&nbsp; $MOVE_FILE_REPLACE_EXISTING (0x0001)<br />
+&nbsp;&nbsp;&nbsp; $MOVE_FILE_WRITE_THROUGH (0x0008)</td>
+</tr>
+<tr>
+<td>$pProgressProc</td>
+<td><strong>[optional]</strong> The address of a callback function that is called each time another portion of the file has been moved.<br />
+(See MSDN for more information)</td>
+</tr>
+<tr>
+<td>$pData</td>
+<td><strong>[optional]</strong> Pointer to the argument to be passed to the callback function.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">True.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>False, call <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> to get extended error information</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>$MOVE_* , $PROGRESS_* constants require #include &lt;APIFilesConstants.au3&gt;<br />
+<br />
+If the $iFlags parameter specifies $MOVE_FILE_DELAY_UNTIL_REBOOT, <a href="_WinAPI_MoveFileEx.htm">_WinAPI_MoveFileEx()</a> fails if it cannot access the registry.<br />
+The function stores the locations of the files to be renamed at restart in the following registry value:<br />
+&nbsp;&nbsp;&nbsp; HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\PendingFileRenameOperations<br />
+</p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(MoveFileWithProgress);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">MoveFileWithProgress</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_MoveFileEx.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;APIFilesConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Misc.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIError.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIFiles.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">'TrayAutoPause'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hProgressProc</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllCallbackRegister.htm"><span class="S4">DllCallbackRegister</span></a><span class="S8">(</span><span class="S7">'_ProgressProc'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'bool'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'uint64;uint64;uint64;uint64;dword;dword;handle;handle;ptr'</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/FileDelete.htm"><span class="S4">FileDelete</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'\Test*.tmp'</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/ProgressOn.htm"><span class="S4">ProgressOn</span></a><span class="S8">(</span><span class="S7">'_WinAPI_MoveFileEx()'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Bigfile Creation...'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">''</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sFile</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'\Test.tmp'</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hFile</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileOpen.htm"><span class="S4">FileOpen</span></a><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">1000000</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/FileWriteLine.htm"><span class="S4">FileWriteLine</span></a><span class="S8">(</span><span class="S9">$hFile</span><span class="S8">,</span><span class="S0"> </span><span class="S7">" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<a class="codeSnippetLink" href="../functions/FileClose.htm"><span class="S4">FileClose</span></a><span class="S8">(</span><span class="S9">$hFile</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/ProgressOn.htm"><span class="S4">ProgressOn</span></a><span class="S8">(</span><span class="S7">'_WinAPI_MoveFileEx()'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Moving...'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'0%'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">500</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; to show the change as moving on same device just rename</span>
+
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_MoveFileEx.htm"><span class="S15">_WinAPI_MoveFileEx</span></a><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'\Test1.tmp'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MOVE_FILE_COPY_ALLOWED</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllCallbackGetPtr.htm"><span class="S4">DllCallbackGetPtr</span></a><span class="S8">(</span><span class="S9">$hProgressProc</span><span class="S8">))</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_ShowLastError.htm"><span class="S15">_WinAPI_ShowLastError</span></a><span class="S8">(</span><span class="S7">'Error moving '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sFile</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<a class="codeSnippetLink" href="../functions/DllCallbackFree.htm"><span class="S4">DllCallbackFree</span></a><span class="S8">(</span><span class="S9">$hProgressProc</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/ProgressOff.htm"><span class="S4">ProgressOff</span></a><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../functions/FileDelete.htm"><span class="S4">FileDelete</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'\Test*.tmp'</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _ProgressProc</span><span class="S8">(</span><span class="S9">$iTotalFileSize</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iTotalBytesTransferred</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iStreamSize</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iStreamBytesTransferred</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iStreamNumber</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iCallbackReason</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hSourceFile</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hDestinationFile</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$pData</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S12">#forceref $iStreamSize, $iStreamBytesTransferred, $iStreamNumber, $iCallbackReason, $hSourceFile, $hDestinationFile, $pData</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iPercent</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Round.htm"><span class="S4">Round</span></a><span class="S8">(</span><span class="S9">$iTotalBytesTransferred</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">/</span></a><span class="S0"> </span><span class="S9">$iTotalFileSize</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*</span></a><span class="S0"> </span><span class="S3">100</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$iPercent</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">100</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ProgressSet.htm"><span class="S4">ProgressSet</span></a><span class="S8">(</span><span class="S9">$iPercent</span><span class="S8">,</span><span class="S0"> </span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Complete'</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ProgressSet.htm"><span class="S4">ProgressSet</span></a><span class="S8">(</span><span class="S9">$iPercent</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iPercent</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"%"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">100</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IsPressed.htm"><span class="S15">_IsPressed</span></a><span class="S8">(</span><span class="S7">'1B'</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S9">$PROGRESS_CANCEL</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S9">$PROGRESS_CONTINUE</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_ProgressProc</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

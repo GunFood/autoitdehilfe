@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _GDIPlus_FontPrivateCollectionDispose</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1>_GDIPlus_FontPrivateCollectionDispose</h1>
+<p class="funcdesc">Deletes the specified PrivateFontCollection object<br /></p>
+<p class="codeheader">
+#include &lt;GDIPlus.au3&gt;<br />
+_GDIPlus_FontPrivateCollectionDispose ( $hFontCollection )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$hFontCollection</td>
+<td style="width:85%">&nbsp;A handle to the font collection object to delete</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">True</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>False and sets the @error flag to non-zero, @extended may contain GPSTATUS error code ($GPID_ERR*).</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>None.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="_GDIPlus_FontPrivateCreateCollection.htm">_GDIPlus_FontPrivateCreateCollection</a>, <a href="_GDIPlus_FontFamilyCreateFromCollection.htm">_GDIPlus_FontFamilyCreateFromCollection</a>, <a href="_GDIPlus_FontPrivateAddFont.htm">_GDIPlus_FontPrivateAddFont</a></p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://search.msdn.microsoft.com/search/Default.aspx?brand=msdn&query=GdipDeletePrivateFontCollection">GdipDeletePrivateFontCollection</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_GDIPlus_FontPrivateCreateCollection.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GDIPlus.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIGdi.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGUI</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hBrush</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hFormat</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hFamily</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hFont</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tLayout</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFontInternalName</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hCollection</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFontFile</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@WindowsDir"><span class="S6">@WindowsDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"\Fonts\Times.ttf"</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_DwmIsCompositionEnabled.htm"><span class="S15">_WinAPI_DwmIsCompositionEnabled</span></a><span class="S8">()</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@Compiled"><span class="S6">@Compiled</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sFontFile</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringRegExpReplace.htm"><span class="S4">StringRegExpReplace</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@AutoItExe"><span class="S6">@AutoItExe</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">"(.*)\\.*"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$1"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sFontFile</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringRegExpReplace.htm"><span class="S4">StringRegExpReplace</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/RegRead.htm"><span class="S4">RegRead</span></a><span class="S8">(</span><span class="S7">"HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\AutoItv3"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"DisplayIcon"</span><span class="S8">),</span><span class="S0"> </span><span class="S7">"(.*)\\.*"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$1"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$sFontFile</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">""</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$MB_ICONERROR</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MB_TOPMOST</span><span class="S8">),</span><span class="S0"> </span><span class="S7">"Error"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Unable to locate SF Square Head Bold.ttf in AutoIt sub dir!"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sFontFile</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><span class="S7">"\Examples\Helpfile\Extras\SF Square Head Bold.ttf"</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$sFontInternalName</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetFontResourceInfo.htm"><span class="S15">_WinAPI_GetFontResourceInfo</span></a><span class="S8">(</span><span class="S9">$sFontFile</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hGUI</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"GDI+"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">720</span><span class="S8">,</span><span class="S0"> </span><span class="S3">235</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">()</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Startup.htm"><span class="S15">_GDIPlus_Startup</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hGraphic</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsCreateFromHWND.htm"><span class="S15">_GDIPlus_GraphicsCreateFromHWND</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsSetSmoothingMode.htm"><span class="S15">_GDIPlus_GraphicsSetSmoothingMode</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GDIP_SMOOTHINGMODE_HIGHQUALITY</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;Sets the graphics object rendering quality (anti aliasing)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsSetTextRenderingHint.htm"><span class="S15">_GDIPlus_GraphicsSetTextRenderingHint</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GDIP_TEXTRENDERINGHINT_ANTIALIASGRIDFIT</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;set the anti aliasing for fonts</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hCollection</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_FontPrivateCreateCollection.htm"><span class="S15">_GDIPlus_FontPrivateCreateCollection</span></a><span class="S8">()</span><span class="S0"> </span><span class="S1">;create a PrivateFontCollection object to add fonts later</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_FontPrivateAddFont.htm"><span class="S15">_GDIPlus_FontPrivateAddFont</span></a><span class="S8">(</span><span class="S9">$hCollection</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFontFile</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;add the font to the font collection</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hFormat</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_StringFormatCreate.htm"><span class="S15">_GDIPlus_StringFormatCreate</span></a><span class="S8">()</span><span class="S0"> </span><span class="S1">;create a string format object</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hFamily</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_FontFamilyCreateFromCollection.htm"><span class="S15">_GDIPlus_FontFamilyCreateFromCollection</span></a><span class="S8">(</span><span class="S9">$sFontInternalName</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hCollection</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;create a font family object</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hFont</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_FontCreate.htm"><span class="S15">_GDIPlus_FontCreate</span></a><span class="S8">(</span><span class="S9">$hFamily</span><span class="S8">,</span><span class="S0"> </span><span class="S3">72</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;create a font object</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$tLayout</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_RectFCreate.htm"><span class="S15">_GDIPlus_RectFCreate</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">720</span><span class="S8">,</span><span class="S0"> </span><span class="S3">235</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;create a $tagGDIPRECTF structure to save x, y position of the text</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_StringFormatSetAlign.htm"><span class="S15">_GDIPlus_StringFormatSetAlign</span></a><span class="S8">(</span><span class="S9">$hFormat</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;center text</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_StringFormatSetLineAlign.htm"><span class="S15">_GDIPlus_StringFormatSetLineAlign</span></a><span class="S8">(</span><span class="S9">$hFormat</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;center text</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hBrush</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BrushCreateSolid.htm"><span class="S15">_GDIPlus_BrushCreateSolid</span></a><span class="S8">(</span><span class="S3">0xFF00007F</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;create a brush with a defined color for the text</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDrawStringEx.htm"><span class="S15">_GDIPlus_GraphicsDrawStringEx</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"AutoIt"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@LF"><span class="S6">@LF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"forever"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hFont</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tLayout</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hFormat</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hBrush</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;draw the string</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Loop until user exits</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Do</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Until</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Clean up resources</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_FontDispose.htm"><span class="S15">_GDIPlus_FontDispose</span></a><span class="S8">(</span><span class="S9">$hFont</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_FontFamilyDispose.htm"><span class="S15">_GDIPlus_FontFamilyDispose</span></a><span class="S8">(</span><span class="S9">$hFamily</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_StringFormatDispose.htm"><span class="S15">_GDIPlus_StringFormatDispose</span></a><span class="S8">(</span><span class="S9">$hFormat</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_FontPrivateCollectionDispose.htm"><span class="S15">_GDIPlus_FontPrivateCollectionDispose</span></a><span class="S8">(</span><span class="S9">$hCollection</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BrushDispose.htm"><span class="S15">_GDIPlus_BrushDispose</span></a><span class="S8">(</span><span class="S9">$hBrush</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDispose.htm"><span class="S15">_GDIPlus_GraphicsDispose</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Shutdown.htm"><span class="S15">_GDIPlus_Shutdown</span></a><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

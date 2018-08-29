@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinAPI_CopyIcon</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_WinAPI_CopyIcon</h1><br />
+<a href="../libfunctions_en/_WinAPI_CopyIcon.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Kopiert das angegebene Icon von einem anderen Modul<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIIcons.au3&gt;<br />
+_WinAPI_CopyIcon ( $hIcon )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$hIcon</td>
+<td style="width:85%">Handle zu dem Icon das kopiert wird</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">Das Handle zu dem duplizierten Icon</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>0. Es ist <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> aufzurufen um erweiterte Fehlerinformationen zu erhalten.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Die CopyIcon-Funktion erm&ouml;glicht einer Anwendung oder DLL, sein eigenes Handle zu einem Icon eines anderen Moduls zu bekommen.<br />
+Wenn das andere Modul freigegeben wird, wird das Anwendungsicon noch im Stande sein, das Icon zu verwenden.<br />
+Bevor die Anwendung geschlossen wird, ist die <a href="_WinAPI_DestroyIcon.htm">_WinAPI_DestroyIcon()</a> Funktion aufzurufen, um Systemressourcen die durch das Icon belegt wurden, wieder freizugeben.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="_WinAPI_DestroyIcon.htm">_WinAPI_DestroyIcon</a></p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(CopyIcon);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">CopyIcon</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_CopyIcon.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Constants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPI.au3&gt;</span>
+
+<span class="S9">$hGui</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"_WinAPI_Icon"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">450</span><span class="S8">,</span><span class="S0"> </span><span class="S3">120</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">()</span>
+<span class="S9">$hDC</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetDC.htm"><span class="S15">_WinAPI_GetDC</span></a><span class="S8">(</span><span class="S9">$hGui</span><span class="S8">)</span>
+
+<span class="S9">$hInstance</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetModuleHandle.htm"><span class="S15">_WinAPI_GetModuleHandle</span></a><span class="S8">(</span><span class="S7">"shell32.dll"</span><span class="S8">)</span>
+<span class="S9">$hIcon1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_LoadImage.htm"><span class="S15">_WinAPI_LoadImage</span></a><span class="S8">(</span><span class="S9">$hInstance</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$IMAGE_ICON</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$LR_DEFAULTSIZE</span><span class="S8">)</span>
+<span class="S9">$hIcon2</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_LoadImage.htm"><span class="S15">_WinAPI_LoadImage</span></a><span class="S8">(</span><span class="S9">$hInstance</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$IMAGE_ICON</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$LR_DEFAULTSIZE</span><span class="S8">)</span>
+<span class="S9">$hIcon3</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CopyIcon.htm"><span class="S15">_WinAPI_CopyIcon</span></a><span class="S8">(</span><span class="S9">$hIcon2</span><span class="S8">)</span>
+<span class="S1">;$hIcon4 = _WinAPI_PrivateExtractIcon("shell32.dll", 4, 96, 96) ; ab der n&auml;chsten Beta</span>
+<span class="S9">$hIcon5</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_LoadShell32Icon.htm"><span class="S15">_WinAPI_LoadShell32Icon</span></a><span class="S8">(</span><span class="S3">5</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_DrawIcon.htm"><span class="S15">_WinAPI_DrawIcon</span></a><span class="S8">(</span><span class="S9">$hDC</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hIcon1</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_DrawIconEx.htm"><span class="S15">_WinAPI_DrawIconEx</span></a><span class="S8">(</span><span class="S9">$hDC</span><span class="S8">,</span><span class="S0"> </span><span class="S3">70</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hIcon2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">,</span><span class="S0"> </span><span class="S3">50</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_DrawIcon.htm"><span class="S15">_WinAPI_DrawIcon</span></a><span class="S8">(</span><span class="S9">$hDC</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hIcon3</span><span class="S8">)</span>
+<span class="S1">;_WinAPI_DrawIconEx($hDC, 300, 10, $hIcon4, 96, 96)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_DrawIcon.htm"><span class="S15">_WinAPI_DrawIcon</span></a><span class="S8">(</span><span class="S9">$hDC</span><span class="S8">,</span><span class="S0"> </span><span class="S3">400</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hIcon5</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">3</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">10</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_DestroyIcon.htm"><span class="S15">_WinAPI_DestroyIcon</span></a><span class="S8">(</span><span class="S9">$hIcon1</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_DestroyIcon.htm"><span class="S15">_WinAPI_DestroyIcon</span></a><span class="S8">(</span><span class="S9">$hIcon2</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_DestroyIcon.htm"><span class="S15">_WinAPI_DestroyIcon</span></a><span class="S8">(</span><span class="S9">$hIcon3</span><span class="S8">)</span>
+<span class="S1">;_WinAPI_DestroyIcon($hIcon4)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_DestroyIcon.htm"><span class="S15">_WinAPI_DestroyIcon</span></a><span class="S8">(</span><span class="S9">$hIcon5</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_ReleaseDC.htm"><span class="S15">_WinAPI_ReleaseDC</span></a><span class="S8">(</span><span class="S9">$hGui</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hDC</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

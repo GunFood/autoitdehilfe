@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion InetGet</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">InetGet</h1><br />
+<a href="../functions_en/InetGet.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">L&auml;dt eine Datei aus dem Internet unter Verwendung des HTTP-, HTTPS- oder FTP-Protokolls.<br /></p>
+<p class="codeheader">
+InetGet ( "URL", "filename" [, options = 0 [, background = 0]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">URL</td>
+<td style="width:85%">URL der herunterzuladenden Datei. Siehe Bemerkungen unten.</td>
+</tr>
+<tr>
+<td>filename</td>
+<td>Neuer, lokaler Dateiname nach dem Download.</td>
+</tr>
+<tr>
+<td>options</td>
+<td><strong>[optional]</strong>$INET_LOCALCACHE (0) = Holt die Datei aus dem lokalen Cache, wenn vorhanden.(Standard) <br />
+&nbsp;&nbsp;&nbsp; $INET_FORCERELOAD (1) = Erzwingt ein erneutes Laden von der Remote-Seite<br />
+&nbsp;&nbsp;&nbsp; $INET_IGNORESSL (2) = Ignoriert alle SSL-Fehler (bei HTTPS-Verbindungen).<br />
+&nbsp;&nbsp;&nbsp; $INET_ASCIITRANSFER (4) = Verwendet ASCII, wenn Dateien mit dem FTP-Protokol transferiert werden (Kann nicht mit Flag $INET_BINARYTRANSFER (8) kombiniert werden).<br />
+&nbsp;&nbsp;&nbsp; $INET_BINARYTRANSFER (8) = Verwendet BINARY, wenn Dateien mit dem FTP-Protokol transferiert werden (Kann nicht mit Flag $INET_ASCIITRANSFER (4) kombiniert werden). Dies ist der Standardtransfermodus, falls kein anderer angegeben wird.<br />
+&nbsp;&nbsp;&nbsp; $INET_FORCEBYPASS (16) = Umgeht das Erzwingen einer Onlineverbindung (Siehe Bemerkungen).<br />
+<br />
+Die Konstanten sind in InetConstants.au3 definiert.</td>
+</tr>
+<tr>
+<td>background</td>
+<td><strong>[optional]</strong><br />
+&nbsp;&nbsp;&nbsp; $INET_DOWNLOADWAIT (0) = Wartet mit der Fortsetzung des Skripts, bis der Download abgeschlossen ist (Standard). <br />
+&nbsp;&nbsp;&nbsp; $INET_DOWNLOADBACKGROUND (1) = Sofortige Fortsetzung des Skripts, w&auml;hrend der Download im Hintergrund ausgef&uuml;hrt wird (siehe Bemerkungen).<br />
+<br />
+Die Konstanten sind in InetConstants.au3 definiert.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">Der R&uuml;ckgabewert &auml;ndert sich abh&auml;ngig davon, ob der Download im Hintergrund l&auml;uft:<br />
+Hintergrund: Ein Handle wird zur&uuml;ckgegeben. <br />
+Warten: Die Anzahl der heruntergeladenen Bytes.</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>Hintergrund: Ein Handle wird zur&uuml;ckgegeben. <br />
+Warten: 0 und setzt @error auf ungleich 0.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Um festzustellen, ob es beim Download einen Fehler gab, ist das zur&uuml;ckgegebene Handle mit <a href="InetGetInfo.htm">InetGetInfo()</a> zu verwenden.<br />
+Das Handle muss mit <a href="InetClose.htm">InetClose()</a> freigegeben werden.<br />
+<br />
+Der URL-Parameter sollte die folgende Form haben: "http://www.somesite.com/path/file.html" - wie eine Adresse, die man in den Webbrowser tippt.<br />
+<br />
+Um einen Benutzernamen und Passwort zum Verbinden zu benutzen, schreibt man einfach "Username:Passwort@" vor den Servernamen, z.B. "http://myuser:mypassword@www.somesite.com"<br />
+<br />
+<br />
+<strong>Anmerkungen zum "background"-Parameter</strong><br />
+Standardm&auml;&szlig;ig wartet die Funktion mit der Fortsetzung des Skripts, bis der Download abgeschlossen ist. Wenn der Parameter <strong>background</strong> auf $INET_DOWNLOADBACKGROUND (1) gesetzt wird, so wird das Skript sofort fortgesetzt und der Download l&auml;uft im Hintergrund weiter. Die Funktion <a href="InetGetInfo.htm">InetGetInfo()</a> kann verwendet werden, um den Status des Downloads festzustellen. Sie ben&ouml;tigt das Handle, welches von <a href="InetGet.htm">InetGet()</a> zur&uuml;ckgegeben wurde.<br />
+<br />
+Mehrere parallele Downloads werden unterst&uuml;tzt, falls diese im Hintergrundmodus gestartet wurden.<br />
+<br />
+Um einen Download abzubrechen, ist <a href="InetClose.htm">InetClose()</a> aufzurufen und das von <a href="InetGet.htm">InetGet()</a> zur&uuml;ckgegebene Handle zu &uuml;bergeben.<br />
+<br />
+Standardm&auml;&szlig;ig erzwingt AutoIt eine Verbindung, bevor der Download beginnt. Bei Benutzern mit einer DF&Uuml;-Verbindung erscheint eine Nachricht, dass man Online gehen oder sich mit dem Modem einw&auml;hlen soll (abh&auml;ngig davon, wie das System konfiguriert ist). Der Wert $INET_FORCEBYPASS (16) des <strong>options</strong>-Parameters deaktiviert dieses Verhalten. Das Deaktivieren dieses Verhaltens kann z.B. f&uuml;r st&auml;ndige Verbindungen (Breitband, LAN) sinnvoll sein. Es ist jedoch auch geeignet, um fehlerfrei unter Windows Vista und Windows 7 arbeiten zu k&ouml;nnen.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="FtpSetProxy.htm">FtpSetProxy</a>, <a href="HttpSetProxy.htm">HttpSetProxy</a>, <a href="HttpSetUserAgent.htm">HttpSetUserAgent</a>, <a href="InetClose.htm">InetClose</a>, <a href="InetGetInfo.htm">InetGetInfo</a>, <a href="InetGetSize.htm">InetGetSize</a>, <a href="InetRead.htm">InetRead</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<h3>Beispiel 1</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\InetGet.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;InetConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIFiles.au3&gt;</span>
+
+<span class="S1">; Download einer Datei im Hintergrund.</span>
+<span class="S1">; Wartet bis der Download vollst&auml;ndig ist.</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Speichert die heruntergeladene Datei in den tempor&auml;ren Ordner.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sFilePath</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetTempFileName.htm"><span class="S15">_WinAPI_GetTempFileName</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; L&auml;dt die Datei im Hintergrund mit den ausgew&auml;hlten Optionen von 'Erzwingt ein erneutes Laden von der Remote-Seite' herunter.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hDownload</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/InetGet.htm"><span class="S4">InetGet</span></a><span class="S8">(</span><span class="S7">"http://www.autoitscript.com/autoit3/files/beta/update.dat"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFilePath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$INET_FORCERELOAD</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$INET_DOWNLOADBACKGROUND</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Wartet bis der Download komplett ist. Dabei wird solange gewartet, bis der zweite Wert von InetGetInfo True zur&uuml;ckgibt.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Do</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">250</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Until</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/InetGetInfo.htm"><span class="S4">InetGetInfo</span></a><span class="S8">(</span><span class="S9">$hDownload</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$INET_DOWNLOADCOMPLETE</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Ermittelt die &uuml;bertragenen Bytes und die Dateigr&ouml;&szlig;e.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iBytesSize</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/InetGetInfo.htm"><span class="S4">InetGetInfo</span></a><span class="S8">(</span><span class="S9">$hDownload</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$INET_DOWNLOADREAD</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iFileSize</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileGetSize.htm"><span class="S4">FileGetSize</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Schlie&szlig;t das durch InetGet zur&uuml;ckgegebene Handle.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/InetClose.htm"><span class="S4">InetClose</span></a><span class="S8">(</span><span class="S9">$hDownload</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Zeigt Details &uuml;ber die gelesenen Bytes und die Dateigr&ouml;&szlig;e.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"heruntergeladene Bytes: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iBytesSize</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"gesamte Dateigr&ouml;&szlig;e: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iFileSize</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; L&ouml;scht die Datei.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/FileDelete.htm"><span class="S4">FileDelete</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 2</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\InetGet[02].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;InetConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIFiles.au3&gt;</span>
+
+<span class="S1">; Download a file in the background.</span>
+<span class="S1">; Wait for the download to complete.</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Save the downloaded file to the temporary folder.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sFilePath</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetTempFileName.htm"><span class="S15">_WinAPI_GetTempFileName</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Download the file by waiting for it to complete. The option of 'get the file from the local cache' has been selected.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iBytesSize</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/InetGet.htm"><span class="S4">InetGet</span></a><span class="S8">(</span><span class="S7">"http://www.autoitscript.com/autoit3/files/beta/update.dat"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFilePath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$INET_FORCERELOAD</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Retrieve the filesize.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iFileSize</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileGetSize.htm"><span class="S4">FileGetSize</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Display details about the total number of bytes read and the filesize.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"The total download size: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iBytesSize</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"The total filesize: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iFileSize</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Delete the file.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/FileDelete.htm"><span class="S4">FileDelete</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

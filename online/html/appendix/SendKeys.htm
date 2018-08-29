@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Liste der Tasten f&uuml;r Send</title>
+	<meta charset="utf-8">
+	<link href="../css/default.css" rel="stylesheet">
+	<style type="text/css">
+	   th.c2 {width:20%}
+	    td.c1 {width:20%}
+	</style>
+</head>
+<body>
+	<h1>Liste der Tasten f&uuml;r Send</h1>
+	<p>Schnellreferenz f&uuml;r die <strong><a href="../functions/Send.htm">Send ( "keys" [, flag] )</a></strong>-Funktion: <strong>^</strong> Ctrl <strong>!</strong> Alt <strong>+</strong> Shift <strong>#</strong> Win<br></p>
+	<p>AutoIt kann alle ASCII-Zeichen und die Zeichen des "Extended ASCII"-Zeichensatzes (0-255) senden. Um UNICODE-Zeichen senden zu k&ouml;nnen, muss die "ASC"-Option und der gew&uuml;nschte Codeparameter verwendet werden (siehe dazu den Abschnitt {ASC} weiter unten).</p>
+	<p><br>
+	<br>
+	Um den ASCII-Wert "A" zu senden (entspricht dem Dr&uuml;cken von ALT+065 auf dem Ziffernblock), schreibt man folgendes:</p>
+@@SyntaxHighlighting@@
+Send("{ASC 065}")
+@@End@@
+
+	<p>(Wenn zweistellige ASCII-Werte verwendet werden, muss eine f&uuml;hrende Null angeh&auml;ngt, ansonsten wird die veraltete Codepage 437 verwendet.)</p>
+	<p></p>
+	<p>Um UNICODE-Zeichen zu senden, muss die Nummer des Zeichens angegeben werden. Folgendes gibt z.B. ein chinesisches Zeichen</p>
+@@SyntaxHighlighting@@
+Send("{ASC 2709}")
+@@End@@
+
+	<p></p>
+	<p>Einzelne Tasten k&ouml;nnen auch wiederholt gedr&uuml;ckt werden, z.B.:<br></p>
+@@SyntaxHighlighting@@
+Send("{DEL 4}") ;Dr&uuml;ckt 4x ENTF
+Send("{S 30}") ;schickt 30x das Zeichen 'S'
+Send("+{TAB 4}) ;Dr&uuml;ckt 4x SHIFT+TAB
+@@End@@
+
+  <p>&nbsp;</p>
+	<p>Eine Taste gedr&uuml;ckt zu halten funktioniert mit folgendem Befehl:<br></p>
+@@SyntaxHighlighting@@
+Send("{a down}") ;Dr&uuml;ckt die A-Taste herunter
+Send("{a up}") ;L&auml;sst sie wieder los
+@@End@@
+
+  <p>&nbsp;</p>
+	<p>Um die Anzahl der Tastendr&uuml;cke in einer Variablen zu speichern und damit zu arbeiten, kann wie folgt gel&ouml;st werden:</p>
+@@SyntaxHighlighting@@
+Local $iCount = 4
+Send("+{TAB " & $iCount & "}")
+@@End@@
+
+  <p>&nbsp;</p>
+	<p>Wenn der ASCII-Wert von A 4x gesendet werden soll, l&ouml;st man das so:</p>
+@@SyntaxHighlighting@@
+Local $iChr = Chr(65)
+Send("{" & $iChr & " 4}")
+@@End@@
+
+  <p>&nbsp;</p>
+	<p>Die meisten Laptops haben eine spezielle "Fn"-Taste. Diese kann nicht simuliert werden.<br>
+	<br>
+	Man beachte, dass das Setzen des Flag-Parameters auf 1 bewirkt, dass die "Tasten" im sog. RAW-Modus gesendet werden. Das ist sinnvoll, wenn Text aus einer Variablen genau so ausgeben werden soll.<br>
+	<br>
+	<br>
+	<strong>Der Send-Befehl ist &uuml;beraus n&uuml;tzlich, da man in Fenstern navigieren kann, ohne die Maus zu verwenden.</strong><br>
+	<br>
+	Ein Beispiel: Ordneroptionen in der Systemsteuerung ausw&auml;hlen und dort folgendes ausprobieren:</p><br>
+	<p></p>
+	<table>
+		<tr>
+			<td class="c1">Send("{TAB}")</td>
+			<td>Zum n&auml;chsten Control weiterschalten (Button, Checkbox, etc).</td>
+		</tr>
+		<tr>
+			<td>Send("+{TAB}")</td>
+			<td>Zum vorherigen Control zur&uuml;ckschalten.</td>
+		</tr>
+		<tr>
+			<td>Send("^{TAB}")</td>
+			<td>Zum n&auml;chsten Tab weiterschalten (in einem entsprechenden Dialog).</td>
+		</tr>
+		<tr>
+			<td>Send("^+{TAB}")</td>
+			<td>Zum vorherigen Tab zur&uuml;ckschalten.</td>
+		</tr>
+		<tr>
+			<td>Send("{SPACE}")</td>
+			<td>Kann benutzt werden, um eine Checkbox auszuw&auml;hlen oder einen Button zu dr&uuml;cken.</td>
+		</tr>
+		<tr>
+			<td>Send("{+}")</td>
+			<td>Markiert normalerweise eine Checkbox (wenn es eine "echte" Checkbox ist).<br></td>
+		</tr>
+		<tr>
+			<td>Send("{-}")</td>
+			<td>Demarkiert normalerweise eine Checkbopx.</td>
+		</tr>
+		<tr>
+			<td>Send("{NumPadMult}")</td>
+			<td>Faltet ein SysTreeView32 aus (auch Unterverzeichnisse des markierten).</td>
+		</tr>
+	</table><br>
+	<br>
+	Die Alt+[Taste]-Kombinationen benutzen, um Men&uuml;eintr&auml;ge auszuw&auml;hlen. Notepad &ouml;ffnen und ausprobieren :<br>
+	<br>
+	<table>
+		<tr>
+			<td class="c1">Send("!f")</td>
+			<td>Sendet Alt+f, Die Tastenkombination f&uuml;r das Dateimen&uuml;. <em>Versuche auch andere Buchstaben (B, O, A)!</em><br></td>
+		</tr>
+		<tr>
+			<td>Send("{DOWN}")</td>
+			<td>Im Men&uuml; abw&auml;rts bewegen.<br></td>
+		</tr>
+		<tr>
+			<td>Send("{UP}")</td>
+			<td>Im Men&uuml; aufw&auml;rts bewegen.</td>
+		</tr>
+		<tr>
+			<td>Send("{LEFT}")</td>
+			<td>Nach links zum n&auml;chsten Men&uuml; bewegen oder Untermen&uuml; &ouml;ffnen.</td>
+		</tr>
+		<tr>
+			<td>Send("{RIGHT}")</td>
+			<td>Nach rechts zum n&auml;chsten Men&uuml; bewegen oder Untermen&uuml; schlie&szlig;en.</td>
+		</tr>
+
+	</table><br>
+	<br>
+	Die Windowshilfe benutzen (Tasten <em>Win+F1</em>), um eine komplette Liste der Tastenkombinationen zu erhalten, wenn man die N&uuml;tzlichkeit von Alt+F4, STRG+C usw. noch nicht kennengelernt hat.<br>
+	<br>
+	<br>
+	<a id="KeysList"></a>
+	<table>
+		<tr>
+			<th class="c2">zu sendender Befehl (wenn flag-Parameter = 0)</th>
+			<th>Resultierender Tastendruck</th>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{!}</td>
+			<td width="67%">!</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{#}</td>
+			<td width="67%">#</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{+}</td>
+			<td width="67%">+</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{^}</td>
+			<td width="67%">^</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{{}</td>
+			<td width="67%">{</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{}}</td>
+			<td width="67%">}</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{SPACE}</td>
+			<td width="67%">Leertaste/Blanc</td>
+		</tr>
+		<tr>
+			<td class="center">{ENTER}</td>
+			<td>ENTER-Taste auf dem Hauptteil der Tastatur (Return )</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{ALT}</td>
+			<td width="67%">ALT-Taste</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{BACKSPACE} oder {BS}</td>
+			<td width="67%">BACKSPACE</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{DELETE} oder {DEL}</td>
+			<td width="67%">ENTF-Taste</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{UP}</td>
+			<td width="67%">Cursor hoch</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{DOWN}</td>
+			<td width="67%">Cursor runter<br></td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{LEFT}</td>
+			<td width="67%">Cursor links</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{RIGHT}</td>
+			<td width="67%">Cursor rechts</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{HOME}</td>
+			<td width="67%">HOME/Pos1</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{END}</td>
+			<td width="67%">END</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{ESCAPE} oder {ESC}</td>
+			<td width="67%">ESCAPE</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{INSERT} oder {INS}</td>
+			<td width="67%">Einfg-Taste</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{PGUP}</td>
+			<td width="67%">Bild hoch<br></td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{PGDN}</td>
+			<td width="67%">Bild runter<br></td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{F1} - {F12}</td>
+			<td width="67%">Funktionstasten</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{TAB}</td>
+			<td width="67%">TABulator-Taste</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{PRINTSCREEN}</td>
+			<td width="67%">Drucken-Taste</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{LWIN}</td>
+			<td width="67%">Linke Windows-Taste<br></td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{RWIN}</td>
+			<td width="67%">Rechte Windows-Taste<br></td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{NUMLOCK}</td>
+			<td width="67%">NUMLOCK-Taste</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{CAPSLOCK}</td>
+			<td>width="67%"&gt;CAPSLOCK</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{SCROLLLOCK}</td>
+			<td>width="67%"&gt;SCROLLLOCK</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{CTRLBREAK}</td>
+			<td width="67%">Ctrl+Break<br></td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{PAUSE}</td>
+			<td width="67%">PAUSE</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{NUMPAD0} - {NUMPAD9}</td>
+			<td width="67%">Ziffernblock-Zahlen</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{NUMPADMULT}</td>
+			<td width="67%">Ziffernblock *</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{NUMPADADD}</td>
+			<td width="67%">Ziffernblock +</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{NUMPADSUB}</td>
+			<td width="67%">Ziffernblock -</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{NUMPADDIV}</td>
+			<td width="67%">Ziffernblock /</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{NUMPADDOT}</td>
+			<td width="67%">Ziffernblock ,</td>
+		</tr>
+		<tr>
+			<td class="center">{NUMPADENTER}</td>
+			<td>Enter-Taste auf dem Ziffernblock</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{APPSKEY}</td>
+			<td width="67%">Windows App-Taste</td>
+		</tr>
+		<tr>
+			<td class="center">{LALT}</td>
+			<td>linke ALT-Taste</td>
+		</tr>
+		<tr>
+			<td class="center">{RALT}</td>
+			<td>rechte ALT-Taste (Alt Gr)</td>
+		</tr>
+		<tr>
+			<td class="center">{LCTRL}</td>
+			<td>linke CTRL-Taste</td>
+		</tr>
+		<tr>
+			<td class="center">{RCTRL}</td>
+			<td>rechte CTRL-Taste</td>
+		</tr>
+		<tr>
+			<td class="center">{LSHIFT}</td>
+			<td>linke Shift-Taste</td>
+		</tr>
+		<tr>
+			<td class="center">{RSHIFT}</td>
+			<td>rechte Shift-Taste</td>
+		</tr>
+		<tr>
+			<td class="center">{SLEEP}</td>
+			<td>Computer SLEEP-Taste</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{ALTDOWN}</td>
+			<td width="67%">H&auml;lt ALT gedr&uuml;ckt, bis {ALTUP} gesendet wird<br></td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{SHIFTDOWN}</td>
+			<td width="67%">H&auml;lt Shift gedr&uuml;ckt, bis {SHIFTUP} gesendet wird</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{CTRLDOWN}</td>
+			<td width="67%">H&auml;lt STRG gedr&uuml;ckt, bis {CTRLUP} gesendet wird</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{LWINDOWN}</td>
+			<td width="67%">H&auml;lt die linke Windows-Taste gedr&uuml;ckt, bis {LWINUP} gesendet wird</td>
+		</tr>
+		<tr>
+			<td class="center" width="33%">{RWINDOWN}</td>
+			<td width="67%">H&auml;lt die rechte Windows-Taste gedr&uuml;ckt, bis {RWINUP} gesendet wird</td>
+		</tr>
+		<tr>
+			<td class="center">{ASC nnnn}</td>
+			<td>Sendet die Kombination ALT + nnnn<br></td>
+		</tr>
+		<tr>
+      <td class="center">&nbsp;</td>
+      <td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="center">{BROWSER_BACK}</td>
+			<td>W&auml;hle im Browser"Zur&uuml;ck"</td>
+		</tr>
+		<tr>
+			<td class="center">{BROWSER_FORWARD}</td>
+			<td>W&auml;hle im Browser"Vorw&auml;rts"</td>
+		</tr>
+		<tr>
+			<td class="center">{BROWSER_REFRESH}</td>
+			<td>W&auml;hle im Browser"Aktualisieren"</td>
+		</tr>
+		<tr>
+			<td class="center">{BROWSER_STOP}</td>
+			<td>W&auml;hle im Browser"Abbrechen"</td>
+		</tr>
+		<tr>
+			<td class="center">{BROWSER_SEARCH}</td>
+			<td>W&auml;hle im Browser"Suchen"</td>
+		</tr>
+		<tr>
+			<td class="center">{BROWSER_FAVORITES}</td>
+			<td>W&auml;hle im Browser"Favoriten"</td>
+		</tr>
+		<tr>
+			<td class="center">{BROWSER_HOME}</td>
+			<td>Starte den Browser auf der Startseite</td>
+		</tr>
+		<tr>
+			<td class="center">{VOLUME_MUTE}</td>
+			<td>Lautst&auml;rke d&auml;mmen<br></td>
+		</tr>
+		<tr>
+			<td class="center">{VOLUME_DOWN}</td>
+			<td>Lautst&auml;rke verringern</td>
+		</tr>
+		<tr>
+			<td class="center">{VOLUME_UP}</td>
+			<td>Lautst&auml;rke verst&auml;rken</td>
+		</tr>
+		<tr>
+			<td class="center">{MEDIA_NEXT}</td>
+			<td>N&auml;chsten Track im Media Player w&auml;hlen</td>
+		</tr>
+		<tr>
+			<td class="center">{MEDIA_PREV}</td>
+			<td>Vorherigen Track im Media Player w&auml;hlen</td>
+		</tr>
+		<tr>
+			<td class="center">{MEDIA_STOP}</td>
+			<td>Stoppe den Media Player</td>
+		</tr>
+		<tr>
+			<td class="center">{MEDIA_PLAY_PAUSE}</td>
+			<td>Play/Pause im Media Player</td>
+		</tr>
+		<tr>
+			<td class="center">{LAUNCH_MAIL}</td>
+			<td>Starte die Standardanwendung f&uuml;r den Mailversand</td>
+		</tr>
+		<tr>
+			<td class="center">{LAUNCH_MEDIA}</td>
+			<td>Starte den Media Player</td>
+		</tr>
+		<tr>
+			<td class="center">{LAUNCH_APP1}</td>
+			<td>Starte die benutzerdefinierte Anwendung 1</td>
+		</tr>
+		<tr>
+			<td class="center">{LAUNCH_APP2}</td>
+			<td>Starte die benutzerdefinierte Anwendung 2<br></td>
+		</tr>
+		<tr>
+			<td class="center">{OEM_102}</td>
+			<td>Entweder die "angle bracket" Taste oder die Backslash-Taste auf der RT 102-Tasten Tastatur<br>
+			wird zumindeste bei der ungarischen Tastatur f&uuml;r "Í" oder "í" verwendet</td>
+		</tr>
+	</table>
+</body>
+</html>

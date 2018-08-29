@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _IECreate</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_IECreate</h1><br />
+<a href="../libfunctions_en/_IECreate.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Erstellt ein Internet-Explorer-Fenster<br /></p>
+<p class="codeheader">
+#include &lt;IE.au3&gt;<br />
+_IECreate ( [$sUrl = "about:blank" [, $iTryAttach = 0 [, $iVisible = 1 [, $iWait = 1 [, $iTakeFocus = 1]]]]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$sUrl</td>
+<td style="width:85%"><strong>[optional]</strong> Gibt an, welche Url beim Erstellen aufgerufen werden soll</td>
+</tr>
+<tr>
+<td>$iTryAttach</td>
+<td><strong>[optional]</strong> Gibt an, ob versucht werden soll, ein vorhandenes IE-Fenster (weiter) zu nutzen<br />
+&nbsp;&nbsp;&nbsp; 0 = (Standard) Nicht versuchen, ein vorhandenes Fenster zu nutzen<br />
+&nbsp;&nbsp;&nbsp; 1 = Versuchen, ein vorhandenes Fenster zu nutzen</td>
+</tr>
+<tr>
+<td>$iVisible</td>
+<td><strong>[optional]</strong> Gibt an, ob das Browserfenster sichtbar sein soll<br />
+&nbsp;&nbsp;&nbsp; 0 = Browserfenster ist versteckt<br />
+&nbsp;&nbsp;&nbsp; 1 = (Standard) Browserfenster ist sichtbar</td>
+</tr>
+<tr>
+<td>$iWait</td>
+<td><strong>[optional]</strong> Legt fest, ob die erste Seite geladen werden soll, bevor der n&auml;chste Befehl im Skript ausgef&uuml;hrt wird<br />
+&nbsp;&nbsp;&nbsp; 0 = Sofort n&auml;chsten Befehl ausf&uuml;hren, nicht warten bis die Seite geladen ist<br />
+&nbsp;&nbsp;&nbsp; 1 = (Standard) Warten bis die Seite geladen ist</td>
+</tr>
+<tr>
+<td>$iTakeFocus</td>
+<td><strong>[optional]</strong> Legt fest, ob ein weitergenutztes Fenster den Fokus erhalten soll<br />
+&nbsp;&nbsp;&nbsp; 0 = Fenster nicht fokussieren<br />
+&nbsp;&nbsp;&nbsp; 1 = (Standard) Fenster fokussieren</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">eine Objektvariable, die auf ein InternetExplorer.Application-Objekt verweist</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>Setzt @error auf ungleich 0</td>
+</tr>
+<tr>
+<td class="valign-top">@error:</td>
+<td>1 ($_IEStatus_GeneralError) - Allgemeiner Fehler<br />
+3 ($_IEStatus_InvalidDataType) - Ung&uuml;ltiger Datentyp<br />
+4 ($_IEStatus_InvalidObjectType) - Ung&uuml;ltiger Objekttyp<br />
+6 ($_IEStatus_LoadWaitTimeout) - Zeit&uuml;berschreitung beim Laden<br />
+8 ($_IEStatus_AccessIsDenied) - Zugriff verweigert<br />
+9 ($_IEStatus_ClientDisconnected) - Verbindung getrennt</td>
+</tr>
+<tr>
+<td class="valign-top">@Extended:</td>
+<td>Wird auf true (1) oder false (0) gesetzt, je nachdem, ob $iTryAttach erfolgreich war.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Wenn man tryAttach verwendet, gibt es einen No-Match-Fehler in der Konsole durch <a href="_IEAttach.htm">_IEAttach()</a>. Das kann mit der Funktion <a href="_IEErrorNotify.htm">_IEErrorNotify()</a> beeinflusst werden.<br />
+<br />
+Wenn man eine lokale HyperTextApplication (.hta) &ouml;ffnet, wird der Internet Explorer einen neuen Browserprozess starten, der nicht mit dem Objekt von <a href="_IECreate.htm">_IECreate()</a> gesteuert werden kann.<br />
+Um das neue Browserfenster anzusteuern, muss man _IEAttach mit der "embedded"-Option benutzen.<br />
+<br />
+Wenn der Browser eine URL laden soll, die in einer anderen Sicherheitszone liegt, wird ab Windows Vista wird ein neues Browser Fenster erstellt. Dies erh&ouml;ht die Sicherheit.<br />
+Dies geschieht auch bei dem ersten erstellen und wenn die Seite durch <a href="_IECreate.htm">_IECreate()</a> erstellt wurde.<br />
+Das neue Fenster ist eine neue Browserinstanz und vorherige Browserinstanzen haben keinen Bezug mehr darauf.<br />
+Es gibt verschiedene M&ouml;glichkeiten dies zu umgehen:<br />
+&nbsp;&nbsp;&nbsp; 1) Es kann #RequireAdmin in dem Code hinzugef&uuml;gt werden (dies ist notwendig, wenn der Account ein Teil der Administratorgruppe ist und fordert gegebenenfalls die Administrator-Benutzerkennung).<br />
+&nbsp;&nbsp;&nbsp; 2) Es kann <a href="_IEAttach.htm">_IEAttach()</a> verwendet werden um es an ein neues Browser Fenster anzuh&auml;ngen.<br />
+&nbsp;&nbsp;&nbsp; 3) Es kann die Zielwebseite zu der vertrauten Sicherheitszone im Internet Explorer hinzugef&uuml;gt werden.<br />
+&nbsp;&nbsp;&nbsp; 4) Es kann der "gesch&uuml;tzte Modus" im Internet Explorer abgeschaltet werden.<br />
+&nbsp;&nbsp;&nbsp; 5) Es kann die Benutzerkontensteuerung (UAC) abgeschaltet werden. Jedoch muss man sich im Klaren sein, was es bedeutet, wenn man die Sicherheitsfeatures des Internet Explorers abschaltet, wenn man ungesch&uuml;tzte Seiten besucht.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="_IEAttach.htm">_IEAttach</a>, <a href="_IECreateEmbedded.htm">_IECreateEmbedded</a>, <a href="_IELoadWait.htm">_IELoadWait</a>, <a href="_IENavigate.htm">_IENavigate</a>, <a href="_IEQuit.htm">_IEQuit</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<h3>Beispiel 1</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_IECreate.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
+
+<span class="S1">; Erstellt ein Browserfenster und navigiert zu einer Webseite.</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IECreate.htm"><span class="S15">_IECreate</span></a><span class="S8">(</span><span class="S7">"www.autoit.de"</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 2</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_IECreate[02].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
+
+<span class="S1">;Erstellt neue Browserfenster, die 3 verschiedene URL zeigen, auch wenn noch keine existiert ($f_tryAttach = 1) nicht warten, bis die Seite fertig geladen ist ($f_wait = 0).</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_IECreate.htm"><span class="S15">_IECreate</span></a><span class="S8">(</span><span class="S7">"www.autoitscript.com"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_IECreate.htm"><span class="S15">_IECreate</span></a><span class="S8">(</span><span class="S7">"http://www.autoit.de/hilfe/"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_IECreate.htm"><span class="S15">_IECreate</span></a><span class="S8">(</span><span class="S7">"www.metager2.de"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 3</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_IECreate[03].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext3\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext3">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<span class="S1">;Versucht einen bereits existierenden Browser anzusprechen, der eine spezielle Webseiten-URL anzeigt.</span>
+<span class="S1">; Erstellt einen neuen Browser und navigiert zu dieser Seite, falls sie noch nicht existiert.</span>
+
+<span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IECreate.htm"><span class="S15">_IECreate</span></a><span class="S8">(</span><span class="S7">"www.autoit.de"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S1">; Der Wiedergabewert @extended muss &uuml;berpr&uuml;ft werden, um zu checken, ob das Verbinden erfolgreich war.</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"An existierenden Browser angeh&auml;ngt"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Neuen Browser erzeugt"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 4</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_IECreate[04].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext4\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext4">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
+
+<span class="S1">; Erstellt ein leeres Browserfenster und versieht es mit eigenem HTML-Text.</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IECreate.htm"><span class="S15">_IECreate</span></a><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sHTML</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"&lt;h1&gt;Hallo Welt!&lt;/h1&gt;"</span>
+<a class="codeSnippetLink" href="../libfunctions/_IEBodyWriteHTML.htm"><span class="S15">_IEBodyWriteHTML</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sHTML</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 5</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_IECreate[05].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext5\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext5">
+<pre>
+<span><span class="S1">; Erstellt ein Browser-Fenster, welches an eine neue Instanz von iexplore.exe angeh&auml;ngt wird.</span>
+<span class="S1">; Dies ist oft notwendig, um einen neuen Cookie-Kontext der Sitzung zu erhalten.</span>
+<span class="S1">; (Sitzungs-Cookies sind f&uuml;r alle Browserinstanzen, die die gleiche iexplore.exe verwenden).</span>
+
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"WinTitleMatchMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/ShellExecute.htm"><span class="S4">ShellExecute</span></a><span class="S8">(</span><span class="S7">"iexplore.exe"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"about:blank"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/WinWait.htm"><span class="S4">WinWait</span></a><span class="S8">(</span><span class="S7">"Windows Internet Explorer"</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IEAttach.htm"><span class="S15">_IEAttach</span></a><span class="S8">(</span><span class="S7">"about:blank"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"url"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_IELoadWait.htm"><span class="S15">_IELoadWait</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_IENavigate.htm"><span class="S15">_IENavigate</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"www.autoitscript.com"</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 6</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_IECreate[06].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext6\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext6">
+<pre>
+<span><span class="S1">;Erstellt ein unsichtbares Browserfenster, navigiert zu einer</span>
+<span class="S1">; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Webseite, fragt Informationen ab und schlie&szlig;t den Browser.</span>
+
+
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
+
+<span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IECreate.htm"><span class="S15">_IECreate</span></a><span class="S8">(</span><span class="S7">"http://dict.leo.org"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oElement</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"keywords"</span>
+<span class="S1">; Zeigt den "content" des Elementes mit dem Namen "keywords" auf der Seite an.</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oInfo</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IEGetObjByName.htm"><span class="S15">_IEGetObjByName</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$oElement</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_OK</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Objektinformation: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$oElement</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$oInfo</span><span class="S8">.</span><span class="S14">content</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_IEQuit.htm"><span class="S15">_IEQuit</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">)</span>
+
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

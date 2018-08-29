@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Schl&uuml;sselwort #include</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Schl&uuml;sselwortreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">#include</h1><br />
+<a href="../keywords_en/include.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Bindet eine Datei in das aktuelle Skript ein.<br /></p>
+<p class="codeheader">
+<strong>#include</strong> "[path\]filename"<br />
+<strong>#include</strong> <filename><br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">filename</td>
+<td style="width:85%">Der Dateiname des Skriptes, das eingebunden werden soll. Der Pfad ist optional. <strong>Er muss einen String sein - er darf keine Variable sein.</strong><br />
+Wenn <strong>"..."</strong> verwendet wird, wird der Dateiname als relativ zum aktuellen Skript aufgefasst.<br />
+Wenn <strong>&lt;...&gt;</strong> verwendet wird, wird der Dateiname als relativ zum Include-Verzeichnis aufgefasst (normalerweise C:\Programme\AutoIt3\Include). Das Include-Verzeichnis beinhaltet bereits viele vor-produzierte Funktionen, die eingebunden und dann verwendet werden k&ouml;nnen.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Andere Skripte k&ouml;nnen in ein AutoIt-Script mittels des #include-Kommandos eingebunden werden. Dies kann entweder im .au3 oder .a3x Format sein.<br />
+Der Inhalt der eingebundenen Datei wird an der Stelle des #include-Befehls eingef&uuml;gt. Meistens ist dies der Anfang des Skripts, so dass jede Variable oder Konstante die in der eingebunden Text deklariert ist f&uuml;r den Rest des Skripts zur Verf&uuml;gung steht.<br />
+<br />
+Wenn man eine Datei mehrfach einbindet und damit eine benutzerdefinierte Funktion mehrfach existieren w&uuml;rde, wird man folgenden Fehler erhalten: "Duplicate function". Wenn man eine Include-Datei schreibt, die das verursachen k&ouml;nnte, muss man sicherstellen, dass die erste Zeile <strong>#include-once</strong> beinhaltet, sodass die Datei nicht mehrfach eingebunden werden kann.<br />
+<br />
+Es gibt einen besonderen Registrywert, namens "Include" welche in "HKEY_CURRENT_USER\Software\AutoIt v3\AutoIt" erstellt wurde. Es sollte ein REG_SZ (String) Wert sein. Die Inhalte dieses Wertes sind durch ein Semikolon getrennte Verzeichnisse, welche zus&auml;tzlich zu den Standardordnern durchsucht werden sollten, wenn #include's im Skript angegeben wird.<br />
+<br />
+Der von AutoIt verwendete Suchordner ist unterschiedlich, je nachdem welche Form von #include verwendet wird. Die untenstehenden Tabellen zeigen welche Ordner bei den beiden Formen durchsucht werden.<br />
+<br />
+Verwendung von #include &lt;&gt;<table>
+<tr>
+<td style="width:15%">Standard library</td>
+<td style="width:85%">Der Pfad des aktuell laufenden Interpreter mit dem Anhang "\Include" wird durchsucht.</td>
+</tr>
+<tr>
+<td>User-defined libraries</td>
+<td>Der oben erw&auml;hnte Registrywert wird gelesen und jedes Verzeichnis wird in der Reihenfolge durchsucht in der sie erscheinen.</td>
+</tr>
+<tr>
+<td>Script directory</td>
+<td>Das Verzeichnis des momentan ausgef&uuml;hrten Skripts.</td>
+</tr>
+</table><br />
+Verwendung von #include "" (Dies ist die Umkehrung von #include &lt;&gt;).<table>
+<tr>
+<td style="width:15%">Script directory</td>
+<td style="width:85%">Das Verzeichnis des momentan ausgef&uuml;hrten Skripts.</td>
+</tr>
+<tr>
+<td>User-defined libraries</td>
+<td>Der oben erw&auml;hnte Registrywert wird gelesen und jedes Verzeichnis wird in der Reihenfolge durchsucht in der sie erscheinen.</td>
+</tr>
+<tr>
+<td>Standard Library</td>
+<td>Der Pfad des aktuell laufenden Interpreter mit dem Anhang "\Include" wird durchsucht.</td>
+</tr>
+</table><br />
+Folgendes ist bei der Verwendung der /AutoIt3ExecuteScript Option zu beachten. Seit die Standard-Library im aktuellen Interpreter's Verzeichnis durchsucht wird, wird die Standard-Library-Funktion nicht mehr gefunden; Diese Library wird nur noch gefunden, wenn AutoIt3.exe durchlaufen wird. Es ist empfehlenswert, ein Skript in das .a3x Format zu kompilieren, bevor man versucht es mit /AutoIt3ExecuteScript laufen zu lassen.<br />
+<br />
+Aut2Exe verwendet den selben Algorithmus wie AutoIt3.exe, mit dem einzigen Unterschied, dass es nach dem Sub-Include-Ordner auch in einem Schwesternordner zu sich selbst schaut (..\Include).<br />
+<br />
+Mit <a href="../functions/AutoItSetOption.htm#TrayIconDebug">Opt</a>("TrayIconDebug",1) k&ouml;nnen nur 64 include Dateinamen im Tray-ToolTip dargestellt werden. Bei den anderen wird kein Dateiname angezeigt.<br />
+<br />
+Folgende Erleichterungen funktionieren, wenn man SciTE4AutoIt3 installiert hat.<br />
+Steht der Cursor in der Zeile eines Funktionsaufrufes (z. B. "_ArraySort($array)" und man dr&uuml;ckt die Tastenkombination "STRG+j", springt man automatisch zu der Funktion.<br />
+Dort ist dann ersichtlich, in welchem include diese Funktion steht und wie die Funktion programmiert wurde.<br />
+Dabei ist es egal ob die Funktion in einer separaten UDF-Datei steht oder im Skript selbst.<br />
+Steht der Cursor in der Zeile eines Includes (z. B. "#include<Array.au3>") und man dr&uuml;ckt die Tastenkombination "ALT+i", springt man automatisch in die Datei mit dieser Funktion.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="include-once.htm">#include-once</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\include.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">"include-TIME.au3"</span>
+
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Beispiel"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a>
+
+<span class="S1">; Das starten von script.au3 zeigt zwei Nachrichtenfenster an:</span>
+<span class="S1">; eines mit 'Beispiel', gefolgt mit einem mit der Zeit.</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

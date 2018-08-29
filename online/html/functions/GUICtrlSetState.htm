@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion GUICtrlSetState</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">GUICtrlSetState</h1><br />
+<a href="../functions_en/GUICtrlSetState.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Ver&auml;ndert den Status eines Controls.<br /></p>
+<p class="codeheader">
+GUICtrlSetState ( controlID, state )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">ControlID</td>
+<td style="width:85%">Die Identifikationsnummer des Controls (Control-ID), wie von einer <a href="GUICtrlCreate Management.htm">GUICtrlCreate...</a> Funktion zur&uuml;ckgegeben, oder -1 f&uuml;r das zuletzt erzeugte Control.</td>
+</tr>
+<tr>
+<td>state</td>
+<td>Siehe <a href="#StateTable">Status-Tabelle</a> unten.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">1.</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>0.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>&nbsp;&nbsp;&nbsp; <a id="StateTable"></a><strong>Status-Tabelle</strong><br />
+<br />
+<table>
+<tr>
+<th><strong>Status</strong></th>
+<th><strong>Kommentare</strong></th>
+</tr>
+
+<tr>
+<td>$GUI_CHECKED (1)</td>
+<td>Radiobutton, Checkbox oder ein ListViewItem wird markiert</td>
+</tr>
+
+<tr>
+<td>$GUI_INDETERMINATE (2)</td>
+<td>Eine Checkbox mit Dreifach-Status-Attribut wird grau dargestellt</td>
+</tr>
+
+<tr>
+<td>$GUI_UNCHECKED (4)</td>
+<td>Markierung von Radiobutton, Checkbox oder eines ListViewItems wird entfernt</td>
+</tr>
+
+<tr>
+<td>$GUI_DROPACCEPTED (8)</td>
+<td>Control wird "Drop"-Aktionen annehmen: von Dateien oder von "Drag"-Aktionen eines anderen Controls. Siehe Bemerkungen</td>
+</tr>
+
+<tr>
+<td>$GUI_SHOW (16)</td>
+<td>Das Control wird sichtbar. Auf ein TabItem-Control angewendet, wird der vorderste Tab angezeigt</td>
+</tr>
+
+<tr>
+<td>$GUI_HIDE (32)</td>
+<td>Das Control wird unsichtbar</td>
+</tr>
+
+<tr>
+<td>$GUI_ENABLE (64)</td>
+<td>Das Control kann benutzt werden</td>
+</tr>
+
+<tr>
+<td>$GUI_DISABLE (128)</td>
+<td>Das Control wird grau dargestellt (kann nicht benutzt werden)</td>
+</tr>
+
+<tr>
+<td>$GUI_FOCUS (256)</td>
+<td>Das Control erh&auml;lt den Eingabe- bzw. Auswahlfokus</td>
+</tr>
+
+<tr>
+<td>$GUI_DEFBUTTON (512)</td>
+<td>Das Control wird zum vor-ausgew&auml;hlten Button des Fensters.</td>
+</tr>
+
+<tr>
+<td>$GUI_EXPAND (1024)</td>
+<td>Das TreeViewItem klappt seinen Unterverzeichnisbaum auf.</td>
+</tr>
+
+<tr>
+<td>$GUI_ONTOP (2048)</td>
+<td>Control hat das "immer im Vordergrund" Attribut f&uuml;r das Fenster (zOrdering).</td>
+</tr>
+
+<tr>
+<td>$GUI_NODROPACCEPTED (4096)</td>
+<td>Control wird keine "Drop"-Aktionen annehmen</td>
+</tr>
+
+<tr>
+<td>$GUI_NOFOCUS (8192)</td>
+<td>ListView-Controls verlieren den Fokus</td>
+</tr>
+
+<tr>
+<td>$GUI_AVISTART (0)</td>
+<td>Avi-Control beginnt mit dem Abspielen des avi-Videos</td>
+</tr>
+
+<tr>
+<td>$GUI_AVISTOP (1)</td>
+<td>Avi-Control stoppt das avi-Video</td>
+</tr>
+
+<tr>
+<td>$GUI_AVICLOSE (2)</td>
+<td>Avi-Control stoppt das Abspielen und gibt die Videodatei frei</td>
+</tr>
+</table><br />
+Statuswerte k&ouml;nnen aufsummiert werden; zum Beispiel wird durch $GUI_DISABLE (128) + $GUI_HIDE (32) das Control deaktiviert und versteckt.<br />
+<br />
+Wenn ein AVI-Control mit $GUI_HIDE (32) versteckt werden soll, sollte es mit $GUI_AVICLOSE (1) geschlossen werden.<br />
+<br />
+Der Status eines Kontextmen&uuml;s <strong>kann nicht ver&auml;ndert werden.</strong><br />
+Der Status von "listviewitem" Controls kann ver&auml;ndert werden, falls das zugeh&ouml;rige "Listview"-Item mit dem erweiterten Stil $LVS_EX_CHECKBOXES erzeugt wurde. $GUI_FOCUS (256) und $GUI_NOFOCUS (8192) k&ouml;nnen auf spezielle ListViewItems angewendet werden, vorausgesetzt, der Stil dieser ListView-Items gestattet auch ein Anzeigen: $LVS_SHOWSELALWAYS.<br />
+Der Status eines "Men&uuml;-" oder eines "Men&uuml;eintrag-" Controls <strong>kann nicht versteckt sein.</strong><br />
+<br />
+! Wichtige Information f&uuml;r $GUI_EXPAND: dieser Status kann nur f&uuml;r TreeViewItems verwendet werden. Falls dies verwendet werden soll, dann muss mindestens 1 Sub-TreeViewItem unter diesem Item existieren/erstellt werden !<br />
+Falls ein anderer Eintrag im TreeView markiert werden soll, ist $GUI_FOCUS (256) zu verwenden. Das Parent-TreeView erh&auml;lt den Fensterfokus, und der festgelegte Eintrag wird als ausgew&auml;hlt markiert.<br />
+Falls ein Treeview-Eintrag als Standard deklariert werden soll (d.h. in dicker Schrift darstellen), ist $GUI_DEFBUTTON (512) zu verwenden. Um es wieder abzuschalten, ist statt $GUI_DEFBUTTON (512) ein anderer Wert zu verwenden, z.B. 0. Dieser Status wird nicht durch <a href="GUICtrlGetState.htm">GUICtrlGetState()</a> zur&uuml;ckgegeben.<br />
+<br />
+Falls $GUI_DROPACCEPTED (8) auf ein sichtbares Control angewendet wurde, ist "Drag & Drop" freigeschaltet. Das &Auml;nderungs- bzw.- Eingabe-Control erh&auml;lt den Dateinamen zugewiesen. <br />
+F&uuml;r andere Controls gilt beim Erhalt von $GUI_EVENT_DROPPED: @GUI_DragId gibt die Control-ID zur&uuml;ck, wo die "Drag"-Aktion begann (-1 falls ein Dateiname angegeben wurde, @GUI_DragFile enth&auml;lt den Dateinamen, der "gedroppt" werden soll) und @GUI_DropId gibt die Control-ID des Controls zur&uuml;ck, auf das "gedroppt" wurde.<br />
+Nur das "Ziehen" ("Drag") eines ListviewItems startet den Drag & Drop Prozess. Die @GUI_DragId ist dann die ListView Control-ID.<br />
+<br />
+GUICtrlSetState funktioniert nur mit Standard-Controls.<br />
+Bei Controls die z. B. durch _GUICtrlComboBoxEx_Create oder _GUICtrlListView_Create erstellt wurden, kann der Status mit _WinAPI_ShowWindow ver&auml;ndert werden. <br />
+<br />
+<a href="../guiref/GUIRef.htm">- - - - - - - - Erkl&auml;rung der Controls - - - - - - - -</a><br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="GUICtrlCreate%20Management.htm">GUICtrlCreate...</a>, <a href="GUICtrlGetState.htm">GUICtrlGetState</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\GUICtrlSetState.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;StaticConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WindowsConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erstellt eine GUI mit verschiedenen Controls.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGui</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"Beispiel"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">420</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$WS_EX_ACCEPTFILES</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erstellt ein Label und setzt den Status "Drop"-Aktionen annehmen.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idLabel</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateLabel.htm"><span class="S4">GUICtrlCreateLabel</span></a><span class="S8">(</span><span class="S7">"Ziehe eine Datei auf dieses Label."</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">400</span><span class="S8">,</span><span class="S0"> </span><span class="S3">40</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$WS_BORDER</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetState.htm"><span class="S4">GUICtrlSetState</span></a><span class="S8">(</span><span class="S9">$idLabel</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_DROPACCEPTED</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erstellt ein Input und setzt den Status "Drop"-Aktionen annehmen.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idInput</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateInput.htm"><span class="S4">GUICtrlCreateInput</span></a><span class="S8">(</span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">60</span><span class="S8">,</span><span class="S0"> </span><span class="S3">400</span><span class="S8">,</span><span class="S0"> </span><span class="S3">22</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetState.htm"><span class="S4">GUICtrlSetState</span></a><span class="S8">(</span><span class="S9">$idInput</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_DROPACCEPTED</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idButton_OK</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateButton.htm"><span class="S4">GUICtrlCreateButton</span></a><span class="S8">(</span><span class="S7">"OK"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">310</span><span class="S8">,</span><span class="S0"> </span><span class="S3">370</span><span class="S8">,</span><span class="S0"> </span><span class="S3">85</span><span class="S8">,</span><span class="S0"> </span><span class="S3">25</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Zeigt die GUI</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">,</span><span class="S0"> </span><span class="S9">$hGui</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$idButton_OK</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_DROPPED</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Falls der Wert von @GUI_DropId $idLabel ist, so wird der Pfad und Dateiname in das Label geschrieben.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@GUI_DropId"><span class="S6">@GUI_DropId</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$idLabel</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlSetData.htm"><span class="S4">GUICtrlSetData</span></a><span class="S8">(</span><span class="S9">$idLabel</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@GUI_DragFile"><span class="S6">@GUI_DragFile</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; L&ouml;scht die vorherige GUI und alle Controls.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIDelete.htm"><span class="S4">GUIDelete</span></a><span class="S8">(</span><span class="S9">$hGui</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _WinAPI_CreateStreamOnHGlobal</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_WinAPI_CreateStreamOnHGlobal</h1><br />
+<a href="../libfunctions/_WinAPI_CreateStreamOnHGlobal.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Creates a stream object that uses a memory handle to store the stream contents<br /></p>
+<p class="codeheader">
+#include &lt;WinAPICom.au3&gt;<br />
+_WinAPI_CreateStreamOnHGlobal ( [$hGlobal = 0 [, $bDeleteOnRelease = True]] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$hGlobal</td>
+<td style="width:85%"><strong>[optional]</strong> The memory handle, or if 0 (Default) a new handle is to be allocated instead. The handle must be allocated as moveable and nondiscardable.</td>
+</tr>
+<tr>
+<td>$bDeleteOnRelease</td>
+<td><strong>[optional]</strong> Specifies whether the underlying handle for this stream object should be automatically freed when the stream object is released, valid values:<br />
+&nbsp;&nbsp;&nbsp; True&nbsp;&nbsp;&nbsp; 	 - The final release will automatically free the $hGlobal parameter (Default).<br />
+&nbsp;&nbsp;&nbsp; False&nbsp;&nbsp;&nbsp; 	- The user must free the $hGlobal after the final release.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">The pointer to the new stream object.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>0 and sets the @error flag to non-zero, @extended flag may contain the HRESULT error code.</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>If $hGlobal is 0, the function allocates a new memory handle and the stream is initially empty, otherwise, the initial contents of the stream are the current contents of the memory block.<br />
+Thus, <a href="_WinAPI_CreateStreamOnHGlobal.htm">_WinAPI_CreateStreamOnHGlobal()</a> can be used to open an existing stream in memory. The memory handle and its contents are undisturbed by the creation of the new stream object.<br />
+<br />
+After creating the stream object with <a href="_WinAPI_CreateStreamOnHGlobal.htm">_WinAPI_CreateStreamOnHGlobal()</a>, call <a href="_WinAPI_GetHGlobalFromStream.htm">_WinAPI_GetHGlobalFromStream()</a> to retrieve the memory handle associated with the stream object.<br />
+<br />
+To release the stream object, use the <a href="_WinAPI_ReleaseStream.htm">_WinAPI_ReleaseStream()</a> function.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="_WinAPI_GetHGlobalFromStream.htm">_WinAPI_GetHGlobalFromStream</a>, <a href="_WinAPI_ReleaseStream.htm">_WinAPI_ReleaseStream</a></p>
+
+<h2>See Also</h2>
+<p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(CreateStreamOnHGlobal);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">CreateStreamOnHGlobal</a> in MSDN  Library.
+</p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_CreateStreamOnHGlobal.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GDIPlus.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Memory.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;SendMessage.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;StaticConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPICom.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIHObj.au3&gt;</span>
+
+<span class="S1">; Create bitmap (MSDNLogo.png)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$dData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> _Image_MSDNLogo</span><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iLength</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BinaryLen.htm"><span class="S4">BinaryLen</span></a><span class="S8">(</span><span class="S9">$dData</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_MemGlobalAlloc.htm"><span class="S15">_MemGlobalAlloc</span></a><span class="S8">(</span><span class="S9">$iLength</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GMEM_MOVEABLE</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$pData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_MemGlobalLock.htm"><span class="S15">_MemGlobalLock</span></a><span class="S8">(</span><span class="S9">$hData</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">'byte['</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iLength</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">']'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$pData</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tData</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$dData</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_MemGlobalUnlock.htm"><span class="S15">_MemGlobalUnlock</span></a><span class="S8">(</span><span class="S9">$hData</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$pStream</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateStreamOnHGlobal.htm"><span class="S15">_WinAPI_CreateStreamOnHGlobal</span></a><span class="S8">(</span><span class="S9">$hData</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Startup.htm"><span class="S15">_GDIPlus_Startup</span></a><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hImage</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BitmapCreateFromStream.htm"><span class="S15">_GDIPlus_BitmapCreateFromStream</span></a><span class="S8">(</span><span class="S9">$pStream</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hBitmap</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BitmapCreateHBITMAPFromBitmap.htm"><span class="S15">_GDIPlus_BitmapCreateHBITMAPFromBitmap</span></a><span class="S8">(</span><span class="S9">$hImage</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iWidth</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageGetWidth.htm"><span class="S15">_GDIPlus_ImageGetWidth</span></a><span class="S8">(</span><span class="S9">$hImage</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iHeight</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageGetHeight.htm"><span class="S15">_GDIPlus_ImageGetHeight</span></a><span class="S8">(</span><span class="S9">$hImage</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_ReleaseStream.htm"><span class="S15">_WinAPI_ReleaseStream</span></a><span class="S8">(</span><span class="S9">$pStream</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageDispose.htm"><span class="S15">_GDIPlus_ImageDispose</span></a><span class="S8">(</span><span class="S9">$hImage</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Shutdown.htm"><span class="S15">_GDIPlus_Shutdown</span></a><span class="S8">()</span>
+
+<span class="S1">; Create GUI</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hForm</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">'Test '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringReplace.htm"><span class="S4">StringReplace</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@ScriptName"><span class="S6">@ScriptName</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">'.au3'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'()'</span><span class="S8">),</span><span class="S0"> </span><span class="S9">$iWidth</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iHeight</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idPic</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreatePic.htm"><span class="S4">GUICtrlCreatePic</span></a><span class="S8">(</span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iWidth</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iHeight</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hPic</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlGetHandle.htm"><span class="S4">GUICtrlGetHandle</span></a><span class="S8">(</span><span class="S9">$idPic</span><span class="S8">)</span>
+
+<span class="S1">; Set bitmap to control</span>
+<a class="codeSnippetLink" href="../libfunctions/_SendMessage.htm"><span class="S15">_SendMessage</span></a><span class="S8">(</span><span class="S9">$hPic</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$STM_SETIMAGE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hBitmap</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hObj</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_SendMessage.htm"><span class="S15">_SendMessage</span></a><span class="S8">(</span><span class="S9">$hPic</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$STM_GETIMAGE</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$hObj</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;&gt;</span></a><span class="S0"> </span><span class="S9">$hBitmap</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_DeleteObject.htm"><span class="S15">_WinAPI_DeleteObject</span></a><span class="S8">(</span><span class="S9">$hBitmap</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Do</span></a>
+<a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Until</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _Image_MSDNLogo</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sImage</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'0x89504E470D0A1A0A0000000D49484452000000BE000000460802000000FDD7B9'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'BE000000097048597300000B1300000B1301009A9C180000000467414D410000'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'B18E7CFB5193000000206348524D00007A25000080830000F9FF000080E90000'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'75300000EA6000003A980000176F925FC546000014444944415478DAEC5D795C'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'545796BE6FABBDA028A0100B011111177430B82088C10D4D2409C6AD21064D8C'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'11C1D89A31C14E3A6A667E331AED98C42191884D121BD456034651B15DB22806'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'C2A68080C5BED7BE507BBD65FE28BBAC201465679C60F2BE3FF855BD77EE79EF'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'DCF3D53DE79E7BDF03A2280AD0A0F1E880E92EA0415387064D1D1A347568D0D4'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'A14183A60E0D9A3A3468EAD0A0A94383A60E0D1A3475683C2EA0BF317B6EB6A9'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'4E54774B65FA17C7F9AC5E309E76304D1DB770BE41F6D97549FD1589A2457D85'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'243DF73DBB644938ED633A600D83920EF5E73F34579EAAE9AD9552246903D0B1'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'BC4ADAC13475864197CEFC79597BCD85066D5F3FC6C620088220D0D2AA321AAD'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'B48F69EA0C099CA4FE56D353F36D8BAA43CBE23321040200008A62333104A6E7'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'0174AE33347EEAD57E5FD1D555276372192441020008880406EBF810219385D2'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'3EA6A933386C24552C51B455F40008200C04B24100000A8680C1161F1F4A3B98'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'A6CE9068521B2B6AFB74723DC6C6289C0214051004E82C61A33D963D37897630'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'4D9D2151A730485BD5100223084C0002C01865B52132FDEECF57F2784CDAC174'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'9A3C24DA55867EA51165621002232C148228BC45B57DD39CC54B26D0DEA5471D'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'57F0E3320186A06C9424489BDC40352BDECD88F9E39BF37EF39EC371BCA3A383'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'A2288220B85CAE582CA6A9E32E280020009E19E7739A246FB7A980D61C335194'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'B1EB0F31B1637F0F3FFA9E9E9ED8D8589BCD86E3785C5CDCD9B36769EA0C0F13'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'4E16B42B5BEB659BE78C150A39F99FBCD0D2ACE47BB08282BD7E3FF18224C9BE'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'BE3EFB63746AB59A0E586EF1E6AF777B2F977534DFEC88429084A5E11C2E63CA'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'54FFDF5BAA014110866156AB150080A2284D9D614050D44989FC724947478B12'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'97EB7D7D7974BA4ACFB0DC4271A7FA625967678B0AA6C0243E33629ABF8352BD'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'46ABCC64A33D4A8F3A83E08ED25050D9DD764F817118DA5B6D193BE661180200'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'68549B8A5AE4D51285CD4AAC08F57971CE58DAAF34751E406DC1CFDC9536D5CB'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'3136AAAAECDEF0F4B8F90BC30000D77AB4272ABBEE55F52ABAB50441D5144BC4'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'303C7B7610ED5A3A600100004581ABDD9A5A89C26A2514B7DA574EF4FDF79DF3'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'0100FFE8D1E4DE6CABBED1A6ECEB47300463222486DC2C69A3FD4A8F3AF7A1B4'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'D8AED5F5B59775723BD57B92A7AF4E990E00A85419F27FEC68ACECC17192C1C6'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'4882A400003849118FF0DA17994CD6D5D565341A4522516060208BC51A4A52AF'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'D7777676AA542A168B251289020202200872F32A2A95AAB7B757AD56B3582CA1'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'5028168B994CB71649D46A756F6FAF46A3613018229168F4E8D1BF703265B158'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'DADBDB150A058220762B300CFBCD52C764C59938196D22626382973CB354E8CD'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'010028ADF889DB3D929A3E92245114254912A660804256B53124583840435656'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'5643430382203C1E6FDBB66DDEDEDE0080C2C2C29C9C9CEAEA6AB55A6DB55A79'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'3C5E7070F0EAD5ABD3D2D23C3D3D9D9B5754541C3972E4DAB56B3299CC683462'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'18C6E3F1C2C3C35352525253535D908024C9C2C2C22FBFFCF2F6EDDB1A8DC660'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'306018C6E170FCFDFDE7CC99B36EDDBAE8E8E8411B5AADD6828282E3C78F5757'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'576B341AA3D188A2288FC70B090959B56AD5BA75EB8442A18B1ECBCBCBBB75EB'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'168AA2300C6FDEBC393434140070EFDEBD9C9C9C4B972E757575E9F57A0441B8'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'5C6E7070F08A152B5E7FFD752FAF472F895123185682BCAED4BFB1F7AAD58A0F'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'38F575B3FCD9433FCCC82C9AF5EEC5199917A2DE2E8A7AABE8A91DE7A7CE3924'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'93F50F108E8A8AB21BCB6030BABABA341A4D7272F2501D3263C68CE6E66647DB'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'BD7BF772B9DCA184172E5C28954A07BDF9E6E6E6848404173DBF68D12292241F'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'6E585E5E1E1B1BEBA2E1942953AAAAAAE4723983C1B01F898F8F77D6B062C50A'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'87F0B56BD7288ACACACAF2F5F51D4A616464647D7DFDA37A67E4E63A3A1B51D0'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'AD39F459C9384F1682C02D466B69BFB9B5570700D0D8881FEEC9350A038385C2'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'300421108440301BD3DDED5BFBDCE4878B3D0EDF7B7B7BF7F7F7A7A4A4E4E7E7'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'DB8FB058AC0121E0A79F7E7AF1C517552A1500203333333333D3603038841104'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'7116BE72E54A6A6AAAD96C1E70C5B6B6B665CB961517173F482A6198CD663B5F'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'0B1E6C07E3D9B3671312126EDCB8E17C10C330E7485A5B5B9B9898F8E38F3FB2'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'D9EC41BBCE71DC3EB41C3C78303D3D5D2E970F654555555552529242A1B00F25'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'4F76C0925AF033CDF2D3FF73333E50189F38E9B454FB5D7997CE68436BA547DF'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'4F505BF1EEDE7E18822018021400280C30485B279DC644D3B7B8FABDC230BC73'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'E7CEA2A22200C0CB2FBFBC6AD5AAF1E3C76BB5DACACACA23478E545454D8C5AA'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'ABABB3B2B2222222F6EDDB67EFEB575E7925292969CC98314AA5B2BCBCFCC891'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'23B5B5B576E14B972EE5E7E7BFF2CA2B0FEA9604B17DFBF6FAFA7AFB575F5FDF'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'8C8C8CF8F8783F3F3FB55A2D91488A8B8B0B0A0A1C8C74A0B4B434353555ABD5'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'3A18B37CF9F2C4C4C4F0F0703E9FDFDDDD7DE3C68DBCBCBCC6C6C6AEAEAEF4F4'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'748BC5E2BA1B391CCEA953A70E1D3A0400080C0C5CBF7EFDBC79F3FCFDFD351A'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'4D5959594E4E4E4D4D8D5DB2A1A161D7AE5D595959EE2770232E60111455AF37'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'BF79AA6AE9DABF9DBDDC58DCAECCFCBE69E5915BCF7CFC7DE26737E7BE906BB1'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'E25A9C78F544E58203D717FCE5DBF8FDD76377158727FE75F5CAAF140AFDA03A'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'E7CD9B37A0438F1F3F3E4046ABD53A8FF3BEBEBE2291080020140A2F5EBC3840'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'582A95C6C4C43884636262CC66B3E36C6969A9637419356A547979F9C3B7545D'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'5D7DF8F061E756FDFDFD4F3DF59443E7D8B163AF5EBDFA7043994CB671E3C601'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'4E1C10B0D6AE5DEB1875EC77327FFEFCD6D6D687AD58BA74A943894020904824'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'EE7B6AC451A7B947BB75F7A58F3FFEAE43D67F5EA64B3B5BF3C2673792B24B56'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'7EF553DC1F0BF7FEF7FDDE3C75AE6EF6CBF991A9C7A7241E9DB3E0F04707BE33'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'9B6C43E91C409D03070E0C2A2697CBC78C19E32C8920C8C9932707152E2D2D75'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'04113E9FDFD8D8E838F5D1471F3934BCF9E69B2E8C75CE750E1E3CE868E5E7E7'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'575D5DEDA2E1FAF5EBDDA18E83D92A956A503D3D3D3DCEBB353EFDF4D327923A'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'2449A9ADB85461C0091227C86F64DA8D5FDF5EF36559727EC5EAAFCA62D3CFA4'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'677C6D363FE047437D5FD13775653FB66B3426D79A9DA93375EA54936948F9B7'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'DE7ACBB9D357AE5CE9C2EBCE034F6161A1E3D4EEDDBB1DC7F7EDDBE78EED0683'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'61F2E4C98E56D9D9D9AEE5150A454848883BD4E170386565652E546DDDBAD521'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'9C9A9AFA84A5C9668294F49B2FF46A8ED4F49C3A5B8BC090CC682DFEBEB55F6B'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'26F45659558FB4F0EE9AF1A2439FBCC0643E48CE2684FB3D933869C6AC404F4F'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'96FBD74A49497151BC71261982201B366C184A128220C7C40D00D0D9D9E9F8EC'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'98F800002412893B77555A5A5A575767FF1C1111F1D24B2FB996F7F6F65EBD7A'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'B53B9A172E5C3863C60C1702CE314B2A953E31D5640341D6E9CC855DEABCAAEE'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'DCBCCAA25D97674F1B0500F066A2A3250A9F3B7DA1DDBAD722C5F98792D2B7C6'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'3E420637041004898C8C7421E0EFEFEF989E88C5E2E9D3A7BB101E3FFEC133ED'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'36DB8395D7F0F0074F2B9F3C79D29D4D58D7AF5F777C4E4C4CE47038C336898B'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'8B73C7E4458B16B916080A0A7298AC56AB874DBD7FFD19164152A5ADCA1F9A15'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'8D0DF2F63BBD817C6C636244FCB6A73114262880A1C89F32173CDCCA8893BD26'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'ABDC64B3E00403412608D842E62398C0E7F383825C2D6F0904022E976B329900'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'002291482010B89EBF380F42CE4E0D0E0E6E6B6B0300F4F7F7AF59B3E68D37DE'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'C8C8C818904839C3315F0300CC9E3DDB1D5BC4623182200441B8160B0E0E1E76'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'16C6E7F3ED261B0C06B3D9EC66A5FB57A00E050049513849B1703250639E14EC'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'353B399227E0A86D44838DE85318543A1382C0C1BEDC081E8B09DF7789D64654'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'2AF477FA746D52BD4E67B15A7192046383BCD68FF71937DAD3DD1F0A8A3A4793'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'87C164321D857904415C173948921C2A9AECDEBD7BDDBA75F7C3B1D9FCC1071F'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'E4E5E5252727A7A4A44C9B366D80BCCD66EBE9E971145D020202DCB1C5D3D373'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'58EA4010C4E3F186A58E402090C9647679F787F6FF0FEAE8F4568AC75099AC7A'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'9232E2A48D20CD048931502F7FFEAAF1D3101852E0C4E55E6D5D9746A3B798AD'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'044E902449F105EC4A8D65E30B530000DD66DBB926796DAB4AAD36D96CF7E725'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'044ED6DD931F2A69FBF0EDF930EC96C1F7A706EE09FC927F81909A9AAAD7EB33'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'3333F57ABDFD487777F7FEFDFB3FFDF4D3E5CB97EFD8B1232222C27975CC5E81'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'B48F8B0396415CDCEAFFA1D8085AC32208D264B2DA6C388A221DDDBAEBA51D1D'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'9D1A03003A234E10008108AB8DF443E0FFF8D30281805DD1AA2E95696D568282'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'20048351060261B04167B971A961E30B538C0479AE595E794F6E32E1080A4330'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'441214499208020114E96AD7E038C9602023ADAA999E9E1E1515B567CF9E8B17'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'2F3EC8ED0C8663C78E9D3F7FFEFDF7DFCFC8C8708C5E388E3B8A96B07BCFC9FF'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'F2CC6FA45047ADD6575634DFABE9ECBE27D549F5FA3E3DA1348FF1F45C90111B'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FFF26C9190D5D3229F302980EDC1C271B2A345EA2DE47BFADC1F4B056AA3EC7A'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'0B1A24E078712840990D36458B12342AFEBC2D0E00A0C289A66E1D8E934C2642'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'92144190100010805116A2EDD04CF6628F40DED8316BD6AC0B172E1417171F3D'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'7AB4A8A8C868343AB2D12D5BB6180C86B7DF7E7B0009088218367DB91FC1B55A'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'37254716754892B2D9702613B37FCE3A78AEE4B35B5E2D5601CC64234818C614'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'84787926050922FD5A14EA9796EE6BF8B17BB138F0BD928CBADB6DD9FB2FF497'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'48F71765807F5267D6CCC09060E18D9BAD77EB6426934DC444132346C76D996B'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'7F7C93450118062C0E46D80800410040304A4128D2DFA3EBFFB6E58D9C95237C'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'E53F2121212121A1BCBCFCC30F3F3C7EFCB8E3F87BEFBD171717171D1DCDE170'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'BCBCBC5A5B5B01001A8D46A9548E1B376E58B50A85E2C9A00E4551F7EEF55455'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'34D757B4A95A55B8C28CAB2DC251FCF403AB4685FB816F7BFE60F2634C667984'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'09BDA303B8B1626C0CFF74DE0F477715689BF44C80AE9916FA5CCEF3D99F17E7'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'EEBEEC65C6D2926385E3BD9DF5FB8A7849491149835DDA878505F51A7E2208BE'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'3F1F0080E3A44161ECAE6AE77468B20F3E375AEC099E04444545E5E7E7272525'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'A5A5A529954A0080D56ACDCDCD8D8E8E66B1587E7E7E76311CC72512C9CC9933'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'8755D8D8D838D20396566B3C73EAE63F4E95E94BFAC406D41F7082010A288885'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'C0A3BBACFC4E23631A96767A03A1B3C03C06C6C600001D1DF2D796EE173510DE'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'001233B86B5E9D1BB97BDEDE0305973EB82580B0E7674F58F6E13330FA0825A5'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'B494E99C2FCBBFBDD0A8B391B8DEE2CD405F7D3A64F9DE65AC27ED1D282B57AE'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'944AA55BB66CB17FADACACA4280A82A0C993273B52A24B972EA5A4A40CABCA79'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'597E2452E7DCD9D24FDE3B2DAC314F05023EF021012001C540212F1612FA9478'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'E25B733D9686020050268AFAA2562BAEEF37F1F8ECA6FAEED94AAE603473C2FC'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'D0A9EBA6FBC6059D3CF6DDD5FD25013067E9D3E1295FACE2F8701EE92E61185A'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'BF7EC65AFC298DDA8420909790039E582C5BB6EC9D77DED1E97400009D4E67B1'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'58582CD682050B0E1C386017F8E69B6FEEDEBD3B6992ABD774DCBA756BA45367'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'6F4ACE6283C80BE251304011E0C9407CBC39E2B981E2E5933D168D43780C0040'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'4343D7E5F3154D375A8CB54A968E5AB831FAF9F79F8DBD1B0E28C010DC2FF9FB'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'8F12AE7B76C6B498D0E99B6731788C7FF15E51D8C7973BF2C9A1D56A5D4CB0CD'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'66B32347E1F3F9F6FADBDCB973C3C3C31B1A1AEC7CCACCCC3C73E6CC505B3F35'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'1ACD8E1D3BEC45BC914B9DFD6B96A0DFF79820922FE67B86F9784407F26605B0'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'C37DEC675B5BA51FFEE719F9D74DA15A6608C442008302805DDC43FD996078B2'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00000683F9DAD53B9E38323B21226E5104F87D60CF9E3D288A6666660EBA0DF4'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'8B2FBE70ECD499356B967D7AC5E572D3D2D21C2B91E7CE9D7BFDF5D70F1E3CF8'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'30053B3A3A366EDC78F3E64DFB1C7EA8B2E4AF4F9DE8C34978AF9E82002A60C1'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'3F1F2D24929E2D4BFF32B385311112D820CA06480B09841C247C5314CC440100'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'57AE547FB5F32CF7B69E0F63D87675F47F2D7C1C06D8FB0E1E49EF0CECEFEFCF'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'C9C9292C2C4C4E4E9E376FDEC48913994C26499277EFDE3D71E2447676B6A370'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'ECBC416CC3860D8585858EC5ACDCDCDC3B77EE6CDAB4292E2E4E24129124D9DA'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'DA7AE5CA95ECEC6CFB5C6CEBD6ADB9B9B91A8D6684520742616C8CC7A0A7BEC8'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'2A9EDECA10416C0320488A8200E4CD46676E9E11B82E1200505070EB54EADFA7'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'9A3D2C804950C0A2323E26037EF5CAD86099190C009048247BF6EC8120C8C3C3'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'C37E44A7D3394FA7DF7DF75DE7B5770E8773F4E8D1C58B17373535D98F545454'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'BCF6DA6B1C0EC71ED40C0683FD097300C0ABAFBEBA7DFBF6C3870FFF9A66FECB'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'2DC3C68DF684300B454210E03390D040CFA7DF9F1FB12F0142A09696BE2F37FD'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'3DDAE005480A10408020C18BC63D3EEA0CCB1EC7DE61A3D1E87A84A728CA51B8'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'1B3699709480C1CF57CE9D978DECFB0FD56AB55AAD76F086CBE5EEDBB7EF9D77'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'DE19A070ECD8B14545450B17FE6C78361A8DF6E676DEC030BC6DDB36FB4E50C7'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'1D0ED81CED58FDB6BF7D67D8B28B438F7D27D363AF26AF4D5FDCC6F6565F6BA3'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'6020FCB751A2651378E1F7F7DC97DCA80F5330488A8228888FA0E17382029686'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FD8ABF8F9898182E970BC3308FC773F178833D882C5EBC58AD5653143571E244'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'D77170CC9831F1F1F1288ADA6C36E78D573B77EE0C0A0A3A7DFAF4EDDBB7ED33'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'A97FA6F9A8582C4E4848D8B469D3507B3FC2C2C22E5CB870ECD8B1DCDCDCAAAA'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'2AE7FDCB3E3E3EF3E7CFDFB469537C7CBC5DDB92254B701C27086280B6C8C848'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'B95C8E200804413E3E3EAE3B87C964C6C7C77777775314151212E2FE6359D0E3'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'581EABAD693FF5629E5F2B0EA120242630FAB3448F9F17007F33B05765EC7F1F'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'4EC23A3B3B9B9A9A944A2545510C06232020202C2CCCCDD54D92249B9A9A1A1B'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'1B8D46A39D0193264D1A356AD4C8B11D7A4C2BAB25672AF17C09C6C7C236CFF4'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'9E190068FCE6003DBE45791ABF6DD0EFC1A7415387064D1D1A347568D0D4A141'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'83A60E0D9A3A3468EAD0A0A94383A60E0D1A3475683C36FCEF00A7516BFF8067'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'B69A0000000049454E44AE426082'</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Binary.htm"><span class="S4">Binary</span></a><span class="S8">(</span><span class="S9">$sImage</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_Image_MSDNLogo</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

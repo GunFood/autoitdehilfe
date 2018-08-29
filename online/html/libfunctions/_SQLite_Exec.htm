@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _SQLite_Exec</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_SQLite_Exec</h1><br />
+<a href="../libfunctions_en/_SQLite_Exec.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">F&uuml;hrt eine SQLite Abfrage durch, bearbeitet jedoch keine Ergebnisse<br /></p>
+<p class="codeheader">
+#include &lt;SQLite.au3&gt;<br />
+_SQLite_Exec ( $hDB, $sSQL [, $sCallBack = ""] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$hDB</td>
+<td style="width:85%">Eine offene Datenbank, mit -1 wird die zuletzt ge&ouml;ffnete Datenbank verwendet</td>
+</tr>
+<tr>
+<td>$sSQL</td>
+<td>SQL-Anweisung die ausgef&uuml;hrt werden soll</td>
+</tr>
+<tr>
+<td>$sCallback</td>
+<td><strong>[optional]</strong> Wenn angegeben, wird diese Funktion f&uuml;r jede Zeile ausgef&uuml;hrt.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">$SQLITE_OK</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>ein Wert, welcher mit den $SQLITE_* Konstanten verglichen werden kann.</td>
+</tr>
+<tr>
+<td class="valign-top">@error:</td>
+<td>-1 - SQLite hat einen Fehler festgestellt (R&uuml;ckgabewert &uuml;berpr&uuml;fen)<br />
+1 - Fehler beim Aufruf des SQLite API 'sqlite3_exec'<br />
+2 - Aufruf vom Sicherheitsmodus verhindert<br />
+3 - Fehler in der Callback-Funktion von <a href="_SQLite_GetTable2d.htm">_SQLite_GetTable2d()</a><br />
+4 - Fehler beim konvertieren des SQL-Auszuges in UTF-8</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Die Callback-Funktion muss einen Parameter annehmen und kann $SQLITE_ABORT zur&uuml;ckgeben, um die Bearbeitung zu stoppen (siehe Beispiel).<br />
+Die erste Zeile in der Callback-Sequenz wird der Spaltenname sein.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="_SQLite_GetTable.htm">_SQLite_GetTable</a>, <a href="_SQLite_GetTable2d.htm">_SQLite_GetTable2d</a>, <a href="_SQLite_Query.htm">_SQLite_Query</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_SQLite_Exec.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;sqlite.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;sqlite.dll.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hQuery</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aRow</span>
+<a class="codeSnippetLink" href="../libfunctions/_SQLite_Startup.htm"><span class="S15">_SQLite_Startup</span></a><span class="S8">()</span>
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"_SQLite_LibVersion="</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_SQLite_LibVersion.htm"><span class="S15">_SQLite_LibVersion</span></a><span class="S8">()</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_SQLite_Open.htm"><span class="S15">_SQLite_Open</span></a><span class="S8">()</span>
+<span class="S1">; Ohne $sCallback ist es eine ergebnislose Abfrage</span>
+<a class="codeSnippetLink" href="../libfunctions/_SQLite_Exec.htm"><span class="S15">_SQLite_Exec</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Create table tblTest (a,b int,c single not null);"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Insert into tblTest values ('1',2,3);"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Insert into tblTest values (Null,5,6);"</span><span class="S8">)</span>
+
+<span class="S9">$d</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_SQLite_Exec.htm"><span class="S15">_SQLite_Exec</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Select oid,* From tblTest"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"_cb"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; _cb wird f&uuml;r jede Zeile aufgerufen</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _cb</span><span class="S8">(</span><span class="S9">$aRow</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$s</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/ForInNext.htm"><span class="S5">In</span></a><span class="S0"> </span><span class="S9">$aRow</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S9">$s</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; R&uuml;ckgabewert: $SQLITE_ABORT ; Bricht den Prozess ab und setzt @error in _SQLite_Exec()</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_cb</span>
+<a class="codeSnippetLink" href="../libfunctions/_SQLite_Close.htm"><span class="S15">_SQLite_Close</span></a><span class="S8">()</span>
+<a class="codeSnippetLink" href="../libfunctions/_SQLite_Shutdown.htm"><span class="S15">_SQLite_Shutdown</span></a><span class="S8">()</span>
+
+<span class="S1">; Ausgabe:</span>
+<span class="S1">;~ &nbsp;1&nbsp; &nbsp;&nbsp; &nbsp; 1&nbsp; &nbsp;2&nbsp; &nbsp;3</span>
+<span class="S1">;~ &nbsp;2&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; 5&nbsp; &nbsp;6</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

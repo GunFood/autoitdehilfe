@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fenstertitel und -text (Grundlagen)</title>
+	<meta charset="utf-8">
+	<link href="../css/default.css" rel="stylesheet">
+</head>
+<body>
+	<h1>Fenstertitel und -text (Grundlagen)</h1>
+	<p>Beim Automatisieren durch Skripte k&ouml;nnen die meisten Fenster eindeutig &uuml;ber ihren <strong>Titel</strong> oder einer Kombination aus <strong>Titel & Text</strong> identifiziert werden. Und diese Informationen sind beim Einsatz des <a href="au3spy.htm">AutoIt Window Info Tools</a> (oder einfach durch Sehen) leicht zu erhalten. Die Titel der meisten Fenster sind sehr offensichtlich, z.B. ist <strong>Unbenannt - Editor</strong> der Titel vom Texteditorprogramm "Notepad.exe", und in vielen F&auml;llen ist dies auch schon genug f&uuml;r eine Automation.</p>
+	<p>&nbsp;</p>
+	<p><strong>Hinweis: Wird ein Leerstring "" sowohl f&uuml;r <em>Titel</em> als auch f&uuml;r <em>Text</em> angegeben, dann wird das momentan <em>aktive</em> Fenster verwendet! (Dies trifft allerdings nicht f&uuml;r einige der weiter fortgeschrittenen <a href="../functions/AutoItSetOption.htm#WinTitleMatchMode">WinTitleMatchModes</a> zu.)</strong></p>
+	<p>&nbsp;</p>
+	<p>Fenstertitel und -text sind "<strong>case sensitive</strong>", d.h. man muss exakt sowohl Gro&szlig;-/Kleinschreibung als auch die Interpunktion beachten. Um Probleme hierbei zu vermeiden, w&auml;hlt man den Titel und Text im Window Info Tool, kopiert sie mit <strong>Ctrl-c</strong> in die Zwischenablage und f&uuml;gt sie dann direkt in das eigene Skript ein.<br>
+	Mit den <strong><a href="windowsadvanced.htm">fortgeschrittenen Modi</a></strong> kann man &Uuml;bereinstimmung z.B. in Kleinschreibung erzwingen.</p>
+	<p>&nbsp;</p>
+	<p>Die meisten der AutoIt Fensterfunktionen bieten die M&ouml;glichkeit f&uuml;r Titel- und Texteintr&auml;ge, wie z.B. in der Funktion WinWaitActive. Diese Funktion pausiert die Skriptausf&uuml;hrung solange, <em><strong>bis</strong></em> das angegebene Fenster erscheint und aktiv ist.</p>
+  <p class="codeheader">WinWaitActive ( "title" [, "text" [, timeout]] )<br /></p>
+  <p>&nbsp;</p>  
+	<p>&nbsp;</p><a id="specialtext"></a>  
+  <p>Der einzig ben&ouml;tigte Parameter f&uuml;r diese Funktion ist <em><strong>Titel</strong></em>. Jedoch gibt es noch die optionalen Parameter <em><strong>Text</strong></em> und <em><strong>Timeout</strong></em>. In einigen Funktionen ist der <em><strong>Text</strong></em> Parameter nicht optional. Falls man allerdings keinen Text angeben m&ouml;chte, schreibt man einfach <strong>""</strong> (einen Leerstring). Ein Leerstring, oder gar nichts, im <em><strong>Text</strong></em> teilt AutoIt mit, dass jeder Text g&uuml;ltig ist.</p>
+  <p>&nbsp;</p>
+	<p>Um die Funktion mit jedem beliebigen Editor-Fenster zu benutzen, w&uuml;rden beide der folgenden Methoden funktionieren:</p>
+@@SyntaxHighlighting@@
+WinWaitActive("Unbenannt - Editor")
+@@End@@
+
+  <p>und</p>
+@@SyntaxHighlighting@@
+WinWaitActive("Unbenannt - Editor", "")
+@@End@@
+
+  <p>&nbsp;</p>
+  <p>Sollte das gleiche Editor-Fenster den Text "Dies ist etwas Text!" in seinem Fenster geschrieben haben, w&uuml;rde das <a href="au3spy.htm">Window Info Tool</a> Folgendes zeigen:</p>
+  <p>&nbsp;</p>	
+  <p><img src="../images/au3spy_notepad.png" alt=""></p>
+  <p>&nbsp;</p>	
+	<p>Zu beachten ist, dass das Window Info Tool den Titel und Text des Editor-Fensters <em><strong>gesehen</strong></em> hat. Was immer das Window Info Tool sehen kann, kann auch AutoIt sehen. Wir haben jetzt genug Informationen, um genau dieses Fenster zu identifizieren, selbst wenn eine ganze Menge weiterer Editor-Fenster ge&ouml;ffnet sind. In diesem Fall schreibt man also:</p>
+  <p>&nbsp;</p>
+@@SyntaxHighlighting@@
+WinWaitActive("Unbenannt - Editor", "Dies ist etwas Text!")
+@@End@@
+
+  <p>&nbsp;</p>
+  <h2>Fenstertext</h2>
+	<p>Der Fenstertext besteht aus allem Text, den AutoIt "sehen" kann. Das sind normalerweise Sachen wie der Inhalt von Eingabe-Controls (siehe oben: "Dies ist etwas Text!"), beinhaltet aber auch anderen Text wie z.B.:</p>
+	<ul>
+		<li>Schaltfl&auml;chentext wie &Ja, &Nein, &Weiter (das & bezeichnet einen unterstrichenen Buchstaben)</li>
+		<li>Dialog-Text wie "Wollen Sie wirklich fortfahren?"</li>
+		<li>Control-Text</li>
+		<li>Verschiedener Text - manchmal wei&szlig; man gar nicht, was es ist :)</li>
+	</ul>
+	<p>Der springende Punkt ist, dass man den Text zusammen mit dem Titel benutzen kann, um das zu bearbeitende Fenster eindeutig identifizieren zu k&ouml;nnen.</p>
+	<p>Gibt man den <em><strong>Text</strong></em> Parameter in einer Fensterfunktion an, so wird er als "subString" behandelt. Wenn man beim obigen Beispiel also den Text "ist eine " benutzt, erh&auml;lt man eine &Uuml;bereinstimmung.</p>
+	<p>&nbsp;</p>
+	<p>Was hier beschrieben wurde, ist der <em>Standard</em> Mode, in dem AutoIt arbeitet. Es gibt eine Menge weiterer <a href="windowsadvanced.htm">fortgeschrittener Modi</a>, die benutzt werden k&ouml;nnen, wenn die Dinge mal nicht so einfach sein sollten.</p>
+	<p>&nbsp;</p><strong>Es ist folgendes zu beachten:</strong> Versteckte Fenster k&ouml;nnen nur durch den "title" gefunden werden, wenn "text" leer ist ("").
+</body>
+</html>

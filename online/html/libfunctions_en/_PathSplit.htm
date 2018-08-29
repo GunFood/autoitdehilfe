@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _PathSplit</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_PathSplit</h1><br />
+<a href="../libfunctions/_PathSplit.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Splits a path into the drive, directory, file name and file extension parts. An empty string is set if a part is missing<br /></p>
+<p class="codeheader">
+#include &lt;File.au3&gt;<br />
+_PathSplit ( $sFilePath, ByRef $sDrive, ByRef $sDir, ByRef  $sFileName, ByRef  $sExtension )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$sFilePath</td>
+<td style="width:85%">The path to be split (can contain a UNC server or drive letter)</td>
+</tr>
+<tr>
+<td>$sDrive</td>
+<td>String to hold the drive</td>
+</tr>
+<tr>
+<td>$sDir</td>
+<td>String to hold the directory</td>
+</tr>
+<tr>
+<td>$sFileName</td>
+<td>String to hold the file name</td>
+</tr>
+<tr>
+<td>$sExtension</td>
+<td>String to hold the file extension</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+Returns an array with 5 elements:<br />
+	$aArray[$PATH_ORIGINAL] = original path<br />
+	$aArray[$PATH_DRIVE] = drive<br />
+	$aArray[$PATH_DIRECTORY] = directory<br />
+	$aArray[$PATH_FILENAME] = filename<br />
+	$aArray[$PATH_EXTENSION] = extension<br />
+
+
+<h2>Remarks</h2>
+<p>This function does not take a command line string. It works on paths, not paths with arguments.<br />
+<br />
+<table>
+<tr>
+<th>$PATH_ORIGINAL</th>
+<th>0</th>
+</tr>
+
+<tr>
+<td>$PATH_DRIVE</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>$PATH_DIRECTORY</td>
+<td>2</td>
+</tr>
+
+<tr>
+<td>$PATH_FILENAME</td>
+<td>3</td>
+</tr>
+
+<tr>
+<td>$PATH_EXTENSION</td>
+<td>4</td>
+</tr>
+</table><br />
+Constants are defined in FileConstants.au3.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="_PathFull.htm">_PathFull</a>, <a href="_PathMake.htm">_PathMake</a></p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_PathSplit.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;File.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sDrive</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sDir</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFileName</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sExtension</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">""</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aPathSplit</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_PathSplit.htm"><span class="S15">_PathSplit</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@ScriptFullPath"><span class="S6">@ScriptFullPath</span></a><span class="S8">,</span><span class="S0"> </span><span class="S9">$sDrive</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sDir</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFileName</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sExtension</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aPathSplit</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"_PathSplit of "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@ScriptFullPath"><span class="S6">@ScriptFullPath</span></a><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

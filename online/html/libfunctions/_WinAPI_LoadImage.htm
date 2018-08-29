@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinAPI_LoadImage</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_WinAPI_LoadImage</h1><br />
+<a href="../libfunctions_en/_WinAPI_LoadImage.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">L&auml;dt ein Icon, Cursor oder Bitmap<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIRes.au3&gt;<br />
+_WinAPI_LoadImage ( $hInstance, $sImage, $iType, $iXDesired, $iYDesired, $iLoad )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$hInstance</td>
+<td style="width:85%">Identifiziert die Instanz des Moduls, welches das Image enth&auml;lt. Um ein OEM-Image<br />
+zu laden, ist dieser Parameter auf Null zu setzen.</td>
+</tr>
+<tr>
+<td>$sImage</td>
+<td>Identifiziert das zu ladende Image. Ist der Parameter $hInstance ungleich 0 und der Parameter $iLoad enth&auml;lt<br />
+nicht $LR_LOADFROMFILE, dann ist $sImage einen String, die den Namen der Image-Ressource aus dem Modul in<br />
+$hInstance enth&auml;lt. Ist $hInstance 0 und $LR_LOADFROMFILE nicht festgelegt, ist in das niederwertige Wort (WORD)<br />
+dieses Parameters der Identifizierer des zu ladenden OEM-Images einzusetzen.</td>
+</tr>
+<tr>
+<td>$iType</td>
+<td>Gibt den zu ladenden Typ des Images an. Dieser Parameter kann einer der folgenden Werte sein:<br />
+$IMAGE_BITMAP - L&auml;dt eine Bitmap<br />
+$IMAGE_CURSOR - L&auml;dt einen Cursor<br />
+$IMAGE_ICON - L&auml;dt ein Icon</td>
+</tr>
+<tr>
+<td>$iXDesired</td>
+<td>Legt die Breite (in Pixel) des Icons oder Cursors fest. Ist diese 0 und $iLoad enth&auml;lt $LR_DEFAULTSIZE, benutzt<br />
+diese Funktion die in SM_CXICON oder SM_CXCURSOR vom System vorgegebenen Abmessungen. Ist dieser Parameter 0 und $LR_DEFAULTSIZE ist nicht<br />
+in $iLoad gesetzt, wird die originale Breite der Ressource genutzt.</td>
+</tr>
+<tr>
+<td>$iYDesired</td>
+<td>Legt die H&ouml;he (in Pixel) des Icons oder Cursors fest. Ist diese 0 und $iLoad enth&auml;lt $LR_DEFAULTSIZE, benutzt<br />
+diese Funktion die in SM_CYICON oder SM_CYCURSOR vom System vorgegebenen Abmessungen. Ist dieser Parameter 0 und $LR_DEFAULTSIZE ist nicht<br />
+in $iLoad gesetzt, wird die originale H&ouml;he der Ressource genutzt.</td>
+</tr>
+<tr>
+<td>$iLoad</td>
+<td>Legt einen oder eine Kombination der folgenden Werte fest:<br />
+$LR_DEFAULTCOLOR - Das Standard-Flag<br />
+$LR_CREATEDIBSECTION - Wenn der $iType-Parameter $IMAGE_BITMAP angegeben ist, wird eine DIB-Bitmap anstelle einer <br />
+kompatiblen Bitmap (DDB) zur&uuml;ckgegeben. Dies ist n&uuml;tzlich, wenn die geladene Bitmap nicht an den Farbraum des Anzeigeger&auml;tes angepasst werden soll.<br />
+$LR_DEFAULTSIZE - Benutzt die vom System vorgegebenen Abmessungen f&uuml;r H&ouml;he oder Breite des Cursors oder Icons, wenn<br />
+die Werte in $iXDesired oder $iYDesired auf 0 gesetzt sind. Ist dieses Flag nicht angegeben und $iXDesired und $iYDesired<br />
+sind auf 0 gesetzt, wird die originale Gr&ouml;&szlig;e der Ressource genutzt. Enth&auml;lt die Ressource mehrfache Images, nutzt<br />
+die Funktion die Gr&ouml;&szlig;e des ersten Images.<br />
+$LR_LOADFROMFILE - L&auml;dt das Image aus der Datei, das in $sImage festgelegt wurde. Wenn dieses Flag nicht gesetzt ist,<br />
+dann ist $sImage der Name der Ressource.<br />
+$LR_LOADMAP3DCOLORS - Durchsucht die Farbtabelle f&uuml;r das Image und ersetzt die folgenden Graustufen mit<br />
+der entsprechenden 3D-Farbe:<br />
+&nbsp;Dunkelgrau: RGB(128,128,128) COLOR_3DSHADOW<br />
+&nbsp;Grau: RGB(192,192,192) COLOR_3DFACE<br />
+&nbsp;Hellgrau: RGB(223,223,223) COLOR_3DLIGHT<br />
+$LR_LOADTRANSPARENT - Nimmt den Farbwert des ersten Pixels des Bildes und ersetzt den entsprechenden<br />
+Eintrag in der Farbtabelle mit der Standardfarbe f&uuml;r Fenster. Alle Pixel im Bild, die diesen Eintrag nutzen,<br />
+erhalten die Standardfarbe f&uuml;r Fenster. Dieser Wert beeinflusst nur Bilder, die eine dementsprechende Farbtabelle besitzen.<br />
+Wenn $iLoad beides enth&auml;lt, also $LR_LOADTRANSPARENT und $LR_LOADMAP3DCOLORS, erh&auml;lt $LRLOADTRANSPARENT den Vorzug.<br />
+Trotzdem wird der Farbtabelleneintrag durch COLOR_3DFACE ersetzt, nicht durch COLOR_WINDOW.<br />
+$LR_MONOCHROME - L&auml;dt das Image monochrom (Schwarz/Wei&szlig;)<br />
+$LR_SHARED - Teilt das Imagehandle, sollte das Bild mehrfach geladen werden. Ist $LR_SHARED nicht gesetzt,<br />
+wird ein zweiter Aufruf von LoadImage f&uuml;r dieselbe Ressource das Bild erneut laden und ein anderes Handle zur&uuml;ckgeben. <br />
+$LR_SHARED darf nicht f&uuml;r Bilder benutzt werden, die keine Standardabmessungen haben, deren Gr&ouml;&szlig;e nach dem Laden eventuell ge&auml;ndert<br />
+werden soll, oder die aus einer Bilddatei geladen werden.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">Das Handle zu dem Bild</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>0. Es ist <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> aufzurufen um erweiterte Fehlerinformationen zu erhalten.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Oben genannte Konstanten ben&ouml;tigen #include &lt;WinAPIConstants.au3&gt;<br />
+Wird die Bitmap nicht mehr ben&ouml;tigt, sollte diese Ressource, so wie jedes GDI-Objekt, mit _WinAPI_DeleteObject wieder<br />
+freigegeben werden.<br />
+</p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(LoadImage);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">LoadImage</a> in der MSDN Bibliothek.
+</p>
+
+</body>
+</html>

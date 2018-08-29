@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>AutoIt FAQ</title>
+	<meta charset="utf-8">
+	<link href="css/default.css" rel="stylesheet">
+</head>
+<body>
+	<h1><a id="FAQ" name="FAQ"></a>H&auml;ufig gestellte Fragen (FAQ)</h1>
+	<p>Dieser Abschnitt stellt einige der im <a class="ext" href="http://www.autoitscript.com/forum/" target="_blank">Forum</a> h&auml;ufiger gestellten Fragen zusammen. Wenn du die Antwort auf deine Frage hier nicht findest, dann sollte das <a class="ext" href="http://www.autoitscript.com/forum/">Forum</a> deine erste Anlaufstelle sein.</p>
+	<h2>Fragen</h2>
+	<ol>
+		<li>
+			<a href="#1">Wie kann ich DOS-Programme aus AutoIt heraus ausf&uuml;hren?</a>
+		</li>
+		<li>
+			<a href="#2">Warum funktioniert der "run"-Befehl nur bei .exe- und .com-Dateien, nicht aber bei .msi-, .txt- oder anderen Dateien?</a>
+		</li>
+		<li>
+			<a href="#3">Warum erhalte ich Fehlermeldungen, wenn ich doppelte Anf&uuml;hrungszeichen (") verwende?</a>
+		</li>
+		<li>
+			<a href="#4">Was bedeuten die Fenstertitel und -text Parameter?</a>
+		</li>
+		<li>
+			<a href="#5">Warum kann ich Variablen nicht verwenden, indem ich folgendes schreibe: "Meine Variable hat den Wert $vVariable"?</a>
+		</li>
+		<li>
+			<a href="#6">Warum passieren merkw&uuml;rdige Dinge, wenn ich Variablen an den Send-Befehl &uuml;bergebe?</a>
+		</li>
+		<li>
+			<a href="#7">Was ist der Unterschied zwischen dem "return"-Wert und @error?</a>
+		</li>
+		<li>
+			<a href="#8">Wie kann ich mein Skript &uuml;ber einen Hotkey beenden?</a>
+		</li>
+		<li>
+			<a href="#9">Wie kann ich ein selbst gew&auml;hltes Icon benutzen, wenn ich mein Skript kompiliere?</a>
+		</li>
+		<li>
+			<a href="#10">Wie kann ich sicher gehen, dass nur eine Instanz meines Skriptes l&auml;uft?</a>
+		</li>
+		<li>
+			<a href="#11">Wo liegen die derzeitigen technischen Grenzen von AutoIt v3?</a>
+		</li>
+		<li>
+			<a href="#12">Ich habe ein Symbol wie bei fehlenden Bildern unter den Beispielen in der Hilfe.</a>
+		</li>
+	</ol>
+  <hr>
+	<h2><a id="1"></a>1. <a href="#1">Wie kann ich DOS-Programme aus AutoIt heraus ausf&uuml;hren?</a></h2>
+	<p>Wenn du etwas wie den DOS-Befehl "dir" ausf&uuml;hren m&ouml;chtest, dann musst du dazu den Kommandozeileninterpreter verwenden (je nach Betriebssystem ist das "command.com" oder "cmd.exe"). Das Makro <a href="macros.htm">@ComSpec</a> beinhaltet den korrekten Ort dieser Datei. Du solltest den <a href="functions/RunWait.htm">RunWait()-Befehl</a> verwenden, weil es auf die Beendigung des DOS-Programms abwartet, bevor die Ausf&uuml;hrung des eigenen Skriptes fortgesetzt wird. Hier ein Beispiel, wie man den DOS-"dir"-Befehl auf das Laufwerk C:\ anwendet (tats&auml;chlich wird folgendes ausgef&uuml;hrt: <strong>command.com /c Dir C:\</strong> ):</p>
+@@SyntaxHighlighting@@
+RunWait(@ComSpec & " /c Dir C:\")
+@@End@@
+
+  <p>&nbsp;</p>
+  <p><a href="#FAQ">Zur&uuml;ck nach oben</a></p>
+  <hr>
+	<h2><a id="2"></a>2. <a href="#2">Warum funktioniert der "run"-Befehl nur bei .exe- und .com-Dateien, nicht aber bei .msi-, .txt- oder anderen Dateien?</a></h2>
+	<p>Nur wenige Dateitypen sind per Definition "ausf&uuml;hrbar" - n&auml;mlich .exe, .bat, .com, .pif. Andere Dateitypen wie .txt und .msi werden von einem anderen Programm wiedergegeben. Wenn du auf eine Datei namens "my_installer.msi" doppelklickst, dann wird im Hintergrund "msiexec.exe my_installer.msi" ausgef&uuml;hrt. Um eine .msi-Datei auszuf&uuml;hren, kann man also folgendes tun:</p>
+@@SyntaxHighlighting@@
+RunWait("msiexec my_installer.msi")
+@@End@@
+
+  <p>&nbsp;</p>  
+	<p>Der noch einfachere Weg ist, den (DOS-)Befehl "start" aufzurufen, der sich selbst darum k&uuml;mmert, wie die Datei auszuf&uuml;hren ist:</p>
+@@SyntaxHighlighting@@
+RunWait(@ComSpec & " /c Start my_installer.msi")
+@@End@@
+
+  <p>Oder man verwendet die ShellExecuteWait Funktion, welche automatisch die Datei mit dem verkn&uuml;pften Programm startet:</p>
+@@SyntaxHighlighting@@
+ShellExecuteWait("my_installer.msi")
+@@End@@
+
+<!--QuoteEnd-->
+  <p><a href="#FAQ">Zur&uuml;ck nach oben</a></p>
+  <hr>
+  <h2><a id="3"></a>3. <a href="#3">Warum erhalte ich Fehlermeldungen, wenn ich doppelte Anf&uuml;hrungszeihen (") verwende?</a></h2>
+<p>Wenn du doppelte Anf&uuml;hrungszeichen innerhalb eines Strings verwenden m&ouml;chtest, dann musst du sie "verdoppeln". Also immer zwei statt ein doppeltes Anf&uuml;hrungszeichen. Wenn du also z.B. eine Variable in einen String einbinden willst (<strong>Ein Wort in "diesem" Satz hat Anf&uuml;hrungszeichen um sich!</strong>), dann m&uuml;sstest du das folgenderma&szlig;en schreiben:</p>
+@@SyntaxHighlighting@@
+$vVar = "Ein Wort in ""diesem"" Satz hat Anf&uuml;hrungszeichen um sich!"
+@@End@@
+
+  <p>or use single quotes instead:</p>
+@@SyntaxHighlighting@@
+$vVar = 'Ein Wort in "diesem" Satz hat doppelte Anf&uuml;hrungszeichen um sich!'
+@@End@@
+
+  <p>&nbsp;</p>
+  <p><a href="#FAQ">Zur&uuml;ck nach oben</a></p>
+  <hr>
+  <h2><a id="4"></a>4. <a href="#4">Was bedeuten die Fenstertitel und -text-Parameter?</a></h2>
+	<p>Dazu gibt es <a href="intro/windowsbasic.htm">hier</a> eine detaillierte Beschreibung.</p>
+	<p>&nbsp;</p>
+  <p><a href="#FAQ">Zur&uuml;ck nach oben</a></p>
+  <hr>
+	<h2><a id="5"></a>5. <a href="#5">Warum kann ich Variablen nicht verwenden, indem ich folgendes schreibe: "Meine Variable hat den Wert $vVariable"?</a></h2>
+ 	<p>Angenommen, du hast eine Variable namens $msg und du m&ouml;chtest sie in einer MessageBox ausgeben, dann wird <i>das</i> NICHT funktionieren:</p>
+@@SyntaxHighlighting@@
+#include <MsgBoxConstants.au3>
+
+MsgBox($MB_OK, "Beispiel", "Meine Variable ist $msg")
+@@End@@
+
+	<p>Das wird einfach folgendes ausgeben: <strong>Meine Variable ist $msg</strong>. Du musst AutoIt anweisen, den Text und den Inhalt der Variablen zu verbinden. Dazu ben&ouml;tigst du den <a href="intro/lang_operators.htm">&-Operator</a>:</p>
+@@SyntaxHighlighting@@
+#include <MsgBoxConstants.au3>
+
+MsgBox($MB_OK, "Beispiel", "Meine Variable ist " & $msg)
+@@End@@
+
+  <p>&nbsp;</p>
+	<p><strong>F&uuml;r Fortgeschrittene:</strong> Wenn du viele Variablen in einen String einbinden willst, dann k&ouml;nnte die <a href="functions/StringFormat.htm">StringFormat()</a>-Funktion f&uuml;r dich interessant sein. Die Variablen $vVar1 bis $vVar5 bindest du so einfacher ein:</p>
+@@SyntaxHighlighting@@
+#include <MsgBoxConstants.au3>
+
+Local $sMessage = StringFormat("Var1 ist %s, Var2 ist %s, Var3 ist %s, Var4 ist %s", $vVar1, $vVar2, $vVar3, $vVar4)
+MsgBox($MB_SYSTEMMODAL, "", $sMessage)
+@@End@@
+
+  <p>&nbsp;</p>
+  <p><a href="#FAQ">Zur&uuml;ck nach oben</a></p>
+  <hr>  
+	<h2><a id="6"></a>6. <a href="#6">Warum passieren merkw&uuml;rdige Dinge, wenn ich Variablen an den Send-Befehl &uuml;bergebe?</a></h2>
+	<p>Wenn du den Inhalt einer Variablen per <a href="functions/Send.htm">Send-Befehl</a> weitergibst, dann bedenke, dass spezielle Zeichen wie !, ^, + oder {SPACE} umgewandelt werden. Das ist aber nur selten erw&uuml;nscht. Um das zu umgehen, benutzt man den "RAW"-Modus des <a href="functions/Send.htm">Send-Befehls</a>, der diese Umwandlung nicht durchf&uuml;hrt:</p>
+@@SyntaxHighlighting@@
+Send($vMyVar, 1)
+@@End@@
+
+  <p>&nbsp;</p>
+  <p><a href="#FAQ">Zur&uuml;ck nach oben</a></p>
+  <hr>
+  <h2><a id="7"></a>7. <a href="#7">Was ist der Unterschied zwischen dem "return"-Wert und @error?</a></h2>
+	<p>Normalerweise wird der "return"-Wert dazu benutzt, anzugeben, ob eine Funktion erfolgreich durchgef&uuml;hrt wurde. Gibt die Funktion (wie z.B. <a href="functions/WinGetText.htm">WinGetText()</a>) aber schon einen anderen Wert zur&uuml;ck, dann brauchen wir eine andere M&ouml;glichkeit, festzustellen, ob die Funktion erfolgreich ausgef&uuml;hrt wurde. Dazu dient dann @error.</p>
+  <p>&nbsp;</p>
+  <p><a href="#FAQ">Zur&uuml;ck nach oben</a></p>
+  <hr>  
+  <h2><a id="8"></a>8. <a href="#8">Wie kann ich mein Skript &uuml;ber einen HotKey beenden?</a></h2>
+	<p>Ah, etwas leichtes. Wenn du willst, dass sich dein Skript beendet, wenn du eine bestimmte Tastenkombination dr&uuml;ckst, dann benutze die <a href="functions/HotKeySet.htm">HotKeySet()</a>-Funktion, um eine selbstdefinierte Funktion auszuf&uuml;hren. Diese sollte einfach das Schl&uuml;sselwort <a href="keywords/Exit.htm">Exit</a> enthalten.</p>
+	<p>Hier ein St&uuml;ck Code, das das Skript beendet, wenn Strg + ALT + x gedr&uuml;ckt wird:<br></p>
+@@SyntaxHighlighting@@
+HotKeySet("^!x", "MyExit")
+...
+...
+; Rest des Skriptes
+...
+...
+Func MyExit()
+	Exit
+EndFunc   ;==>MyExit
+@@End@@
+
+  <p>&nbsp;</p>
+  <p><a href="#FAQ">Zur&uuml;ck nach oben</a></p>
+  <hr>   
+  <h2><a id="9"></a>9. <a href="#9">Wie kann ich ein selbst gew&auml;hltes Icon benutzen, wenn ich mein Skript kompiliere?</a></h2>
+	<p>Dazu musst du den richtigen Compiler starten und nicht nur mit der rechten Maustaste auf das Skript klicken und "Compile" (=Kompilieren) ausw&auml;hlen. <a href="intro/compiler.htm">Diese Seite</a> beschreibt den Compiler en detail.</p>
+  <p>&nbsp;</p>
+  <p><a href="#FAQ">Zur&uuml;ck nach oben</a></p>
+  <hr>
+  <h2><a id="10"></a>10. <a href="#10">Wie kann ich sicher gehen, dass nur eine Instanz meines Skriptes l&auml;uft?</a></h2>
+	<p>Verwende die <a href="libfunctions/_Singleton.htm">_Singleton()</a> Funktion. Schau in der Dokumentation zu den benutzerdefinierten Funktion nach mehr Informationen f&uuml;r _Singleton() und wie es zu verwenden ist.</p>
+  <p>&nbsp;</p>
+  <p><a href="#FAQ">Zur&uuml;ck nach oben</a></p>
+  <hr>
+  <h2><a id="11"></a>11. <a href="#11">Wo liegen die derzeitigen technischen Grenzen von AutoIt v3?</a></h2>
+	<p>Hier sind die technischen Limitierungen von AutoIt v3. Bedenke, dass manche Begrenzungen theoretischer Natur sind und du sie m&ouml;glicherweise aufgrund zuvor auftretender Speicher- oder Performanceprobleme gar nicht erreichen kannst.</p>
+	<p>Bitte beachte den Abschnitt <a href="appendix/LimitsDefaults.htm">AutoIt3 Standardbegrenzungen</a> f&uuml;r die technischen Grenzen von AutoIt3.<br>
+	<br>
+	Zus&auml;tzliche Informationen &uuml;ber die theoretischen Grenzen von AutoIt3.</p>
+	<table>
+		<tr>
+			<th>Wert</th>
+			<th>Beschreibung</th>
+		</tr>
+		<tr>
+			<td class="right">unlimitiert</td>
+			<td>Maximale Anzahl von GUI-Fenstern.</td>
+		</tr>
+		<tr>
+			<td class="right">unlimitiert</td>
+			<td>Maximale Anzahl benutzerdefinierter Funktionen.</td>
+		</tr>
+		<tr>
+			<td class="right">unlimitiert</td>
+			<td>Maximale Anzahl gleichzeitig benutzter Variablen.</td>
+		</tr>
+		<tr>
+			<td class="right">1.7E308 bis 1.7E+308</td>
+			<td>Zahlenbereich (Gleitkommazahl) mit 15-stelliger Pr&auml;zision.</td>
+		</tr>
+		<tr>
+			<td class="right">0x8000000000000000 bis 0x7FFFFFFFFFFFFFFF</td>
+			<td>Hexadezimaler Zahlenbereich (32-bit/64-bit signierte Integer).</td>
+		</tr>
+	</table>
+  <p>&nbsp;</p>
+  <p><a href="#FAQ">Zur&uuml;ck nach oben</a></p>
+  <hr>
+	<h2><a id="12"></a>12. <a href="#12">Ich habe ein Symbol wie bei fehlenden Bildern unter den Beispielen in der Hilfe.</a></h2>
+	<p>An dieser Stelle sollte eine Schaltfl&auml;che "Dieses Skript &ouml;ffnen" sein, mit der man das Beispiel direkt im Editor &ouml;ffnen kann.<br>
+	In diesem Fall ist m&ouml;glicherweise die Datei hhctrl.ocx nicht im System registriert oder besch&auml;digt.<br>
+	Man kann versuchen, "regsvr32 hhctrl.ocx" bei "Start", "Ausf&uuml;hren..." einzugeben, um damit dieses Problem zu beheben.<br></p>
+  <p>&nbsp;</p>
+  <p><a href="#FAQ">Zur&uuml;ck nach oben</a></p>
+  <hr>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion ShellExecuteWait</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">ShellExecuteWait</h1><br />
+<a href="../functions_en/ShellExecuteWait.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">F&uuml;hrt ein externes Programm unter Verwendung der ShellExecute API aus und pausiert die Skriptausf&uuml;hrung, bis das Programm beendet wird.<br /></p>
+<p class="codeheader">
+ShellExecuteWait ( "filename" [, "parameters" [, "workingdir" [, "verb" [, showflag]]]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">filename</td>
+<td style="width:85%">Der Name der auszuf&uuml;hrenden Datei (EXE, .txt, .lnk etc.).</td>
+</tr>
+<tr>
+<td>parameters</td>
+<td><strong>[optional]</strong> Alle Parameter f&uuml;r das Programm. Leerer String ("") verwendet keine.</td>
+</tr>
+<tr>
+<td>workingdir</td>
+<td><strong>[optional]</strong> Das Arbeitsverzeichnis. Ein leerer String ("") verwendet das aktuelle Arbeitsverzeichnis.</td>
+</tr>
+<tr>
+<td>verb</td>
+<td><strong>[optional]</strong> Der zu verwendende Folgebefehl, gebr&auml;uchliche Folgebefehle sind:<br />
+&nbsp;&nbsp;&nbsp; $SHEX_OPEN ("open") = &Ouml;ffnet die angegebene Datei. Die Datei kann eine Anwendung, ein Dokument oder ein Ordner sein.<br />
+&nbsp;&nbsp;&nbsp; $SHEX_EDIT ("edit") = Startet einen Editor und &ouml;ffnet das Dokument zum Bearbeiten. Falls "filename" kein Dokument ist, scheitert die Funktion.<br />
+&nbsp;&nbsp;&nbsp; $SHEX_PRINT ("print") = Druckt das angegebene Dokument. Falls "filename" kein Dokument ist, scheitert die Funktion.<br />
+&nbsp;&nbsp;&nbsp; $SHEX_PROPERTIES ("properties") = Zeigt die Eigenschaften der Datei oder des Ordners.<br />
+<strong>F&uuml;r mehr Informationen was passiert, wenn kein "verb" festgelegt ist siehe Bemerkungen.</strong><br />
+<br />
+Die Konstanten sind in "AutoItConstants.au3" definiert.</td>
+</tr>
+<tr>
+<td>showflag</td>
+<td><strong>[optional]</strong> Das Anzeige-Flag des ausgef&uuml;hrten Programms:<br />
+&nbsp;&nbsp;&nbsp; @SW_HIDE = Verstecktes Fenster<br />
+&nbsp;&nbsp;&nbsp; @SW_MINIMIZE = Minimiertes Fenster<br />
+&nbsp;&nbsp;&nbsp; @SW_MAXIMIZE = Maximiertes Fenster</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">Den "exit code" des ausgef&uuml;hrten Programms.</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>Setzt @error auf ungleich 0.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Nach dem Starten des angegebenen Programms pausiert das Skript, bis das gestartete Programm beendet wurde.<br />
+<br />
+Wenn kein "verb" festgelegt wird, wird das Standard-verb verwendet. Das Standard-verb ist das "verb" welches in der Registry definiert ist. Falls kein "verb" in der Registry als Standard gesetzt ist, wird das "open" "verb" verwendet. Falls das "open" "verb" nicht verf&uuml;gbar ist, dann wird das erste in der Registry aufgelistete "verb" verwendet.<br />
+<br />
+Um .lnk-Dateien (Verkn&uuml;pfungen) zu starten ist es eventuell notwendig, zuerst den korrekten Dateinamen zu ermitteln. Dies geschieht mit der Funktion FileGetShortcut.<br />
+Bsp:<br />
+$filepath = FileGetShortcut($lnk)<br />
+ShellExecute($filepath[0])<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="Run.htm">Run</a>, <a href="RunAs.htm">RunAs</a>, <a href="RunAsWait.htm">RunAsWait</a>, <a href="RunWait.htm">RunWait</a>, <a href="ShellExecute.htm">ShellExecute</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\ShellExecuteWait.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Startet den Editor und wartet bis der Editorprozess geschlossen wurde.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iReturn</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/ShellExecuteWait.htm"><span class="S4">ShellExecuteWait</span></a><span class="S8">(</span><span class="S7">"notepad.exe"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Zeigt den R&uuml;ckgabecode des Editorprozesses.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Der R&uuml;ckgabecode des Editorprozesses lautet: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iReturn</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

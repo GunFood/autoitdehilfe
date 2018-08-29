@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion ProcessClose</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">ProcessClose</h1><br />
+<a href="../functions_en/ProcessClose.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Beendet den genannten Prozess.<br /></p>
+<p class="codeheader">
+ProcessClose ( "process" )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">process</td>
+<td style="width:85%">Der Name oder die PID des Prozesses, der beendet werden soll.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">1.</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>0 und setzt @error auf einen Wert ungleich 0.</td>
+</tr>
+<tr>
+<td class="valign-top">@error:</td>
+<td>1 = OpenProcess fehlgeschlagen<br />
+2 = AdjustTokenPrivileges fehlgeschlagen<br />
+3 = TerminateProcess fehlgeschlagen<br />
+4 = Es konnte nicht sichergestellt werden, ob der Prozess existiert</td>
+</tr>
+<tr>
+<td class="valign-top">@extended:</td>
+<td>wird auf Win API GetLastError() gesetzt</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Die Prozessnamen sind die ausf&uuml;hrbaren Dateien ohne den kompletten Pfad, also z.B. "notepad.exe" oder "winword.exe".<br />
+<br />
+Wenn mehrere Prozesse den gleichen Namen haben, dann wird derjenige mit der h&ouml;chsten PID beendet - egal, wann er gestartet wurde.<br />
+<br />
+Die PID ist eine eindeutige Zahl, die einen Prozess indentifiziert. Die PID kann &uuml;ber die R&uuml;ckgabewerte der Funktionen <a href="ProcessExists.htm">ProcessExists()</a> oder <a href="Run.htm">Run()</a> ermittelt werden.<br />
+<br />
+Der Prozess wird ungef&auml;hr alle 250 Millisekunden abgefragt.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="ProcessExists.htm">ProcessExists</a>, <a href="ProcessList.htm">ProcessList</a>, <a href="ProcessWait.htm">ProcessWait</a>, <a href="ProcessWaitClose.htm">ProcessWaitClose</a>, <a href="Run.htm">Run</a>, <a href="RunAs.htm">RunAs</a>, <a href="Shutdown.htm">Shutdown</a>, <a href="WinClose.htm">WinClose</a>, <a href="WinKill.htm">WinKill</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\ProcessClose.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Startet den Editor</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iPID</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Run.htm"><span class="S4">Run</span></a><span class="S8">(</span><span class="S7">"notepad.exe"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Wartet maximal 10 Sekunden bis das Editorfenster erscheint.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinWait.htm"><span class="S4">WinWait</span></a><span class="S8">(</span><span class="S7">"[CLASS:Notepad]"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Wartet 10 Sekunden</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">2000</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Schlie&szlig;t den Editorprozessf durch die Verwendung der von Run zur&uuml;ckgegebenen PID.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ProcessClose.htm"><span class="S4">ProcessClose</span></a><span class="S8">(</span><span class="S9">$iPID</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _WinAPI_BroadcastSystemMessage</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1>_WinAPI_BroadcastSystemMessage</h1>
+<p class="funcdesc">Sends a message to the specified recipients<br /></p>
+<p class="codeheader">
+#include &lt;WinAPISysWin.au3&gt;<br />
+_WinAPI_BroadcastSystemMessage ( $iMsg [, $wParam = 0 [, $lParam = 0 [, $iFlags = 0 [, $iRecipients = 0]]]] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$iMsg</td>
+<td style="width:85%">The message to be sent.</td>
+</tr>
+<tr>
+<td>$wParam</td>
+<td><strong>[optional]</strong> The message-specific information.</td>
+</tr>
+<tr>
+<td>$lParam</td>
+<td><strong>[optional]</strong> The message-specific information.</td>
+</tr>
+<tr>
+<td>$iFlags</td>
+<td><strong>[optional]</strong> The broadcast option. This parameter can be one or more of the following values:<br />
+&nbsp;&nbsp;&nbsp; $BSF_ALLOWSFW<br />
+&nbsp;&nbsp;&nbsp; $BSF_FLUSHDISK<br />
+&nbsp;&nbsp;&nbsp; $BSF_FORCEIFHUNG<br />
+&nbsp;&nbsp;&nbsp; $BSF_IGNORECURRENTTASK<br />
+&nbsp;&nbsp;&nbsp; $BSF_NOHANG<br />
+&nbsp;&nbsp;&nbsp; $BSF_NOTIMEOUTIFNOTHUNG<br />
+&nbsp;&nbsp;&nbsp; $BSF_POSTMESSAGE<br />
+&nbsp;&nbsp;&nbsp; $BSF_QUERY<br />
+&nbsp;&nbsp;&nbsp; $BSF_SENDNOTIFYMESSAGE</td>
+</tr>
+<tr>
+<td>$iRecipients</td>
+<td><strong>[optional]</strong> The recipients of the message. This parameter can be one or more of the following values:<br />
+&nbsp;&nbsp;&nbsp; $BSM_ALLCOMPONENTS (Default)<br />
+&nbsp;&nbsp;&nbsp; $BSM_ALLDESKTOPS<br />
+&nbsp;&nbsp;&nbsp; $BSM_APPLICATIONS<br />
+&nbsp;&nbsp;&nbsp; $BSM_INSTALLABLEDRIVERS<br />
+&nbsp;&nbsp;&nbsp; $BSM_NETDRIVER<br />
+&nbsp;&nbsp;&nbsp; $BSM_VXDS</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">>0 or 0 (see below), @extended flag receives a combination of $BSM_* values identifying which recipients actually received the message.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>(-1), call <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> to get extended error information.</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>If the $iFlags parameter is $BSF_QUERY and at least one recipient returned BROADCAST_QUERY_DENY to the corresponding message, the return value is 0.<br />
+<br />
+The system only does marshalling for system messages (those in the range 0 to (WM_USER-1)).<br />
+To send other messages (those >= WM_USER) to another process, you must do custom marshalling.<br />
+</p>
+
+<h2>See Also</h2>
+<p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(BroadcastSystemMessage);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">BroadcastSystemMessage</a> in MSDN  Library.
+</p>
+
+</body>
+</html>

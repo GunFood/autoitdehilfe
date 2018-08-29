@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _WinAPI_CreateMutex</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_WinAPI_CreateMutex</h1><br />
+<a href="../libfunctions/_WinAPI_CreateMutex.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Creates or opens a named or unnamed mutex object<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIProc.au3&gt;<br />
+_WinAPI_CreateMutex ( $sMutex [, $bInitial = True [, $tSecurity = 0]] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$sMutex</td>
+<td style="width:85%">The name of the mutex object. Name comparisons are case sensitive.</td>
+</tr>
+<tr>
+<td>$bInitial</td>
+<td><strong>[optional]</strong> Specifies whether the calling process obtains the initial ownership of the mutex object, valid values:<br />
+&nbsp;&nbsp;&nbsp; True	 - The calling thread obtains initial ownership of the mutex object (Default).<br />
+&nbsp;&nbsp;&nbsp; False	 - The calling thread does not obtain ownership of the mutex object.</td>
+</tr>
+<tr>
+<td>$tSecurity</td>
+<td><strong>[optional]</strong> $tagSECURITY_ATTRIBUTES structure that specifies a security descriptor for the new mutex.<br />
+If this parameter is 0 (Default), the mutex gets a default security descriptor.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">The handle to the newly created mutex object.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>0, call <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> to get extended error information.</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>If the mutex is a named mutex and the object existed before this function call, the return value is a handle to the existing object, <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> returns ERROR_ALREADY_EXISTS (183), $bInitial is ignored, and the calling thread is not granted ownership.<br />
+However, if the caller has limited access rights, the function will fail with ERROR_ACCESS_DENIED (5) and the caller should use the <a href="_WinAPI_OpenMutex.htm">_WinAPI_OpenMutex()</a> function.<br />
+<br />
+Any process can specify the mutex-object handle in a call to one of the wait functions.<br />
+The single-object wait functions return when the state of the specified object is signaled.<br />
+The multiple-object wait functions can be instructed to return either when any one or when all of the specified objects are signaled.<br />
+When a wait function returns, the waiting thread is released to continue its execution.<br />
+<br />
+Two or more processes can call <a href="_WinAPI_CreateMutex.htm">_WinAPI_CreateMutex()</a> to create the same named mutex.<br />
+The first process actually creates the mutex, and subsequent processes with sufficient access rights simply open a handle to the existing mutex.<br />
+This enables multiple processes to get handles of the same mutex, while relieving the user of the responsibility of ensuring that the creating process is started first.<br />
+When using this technique, you should set the $bInitial parameter to False; otherwise, it can be difficult to be certain which process has initial ownership.<br />
+<br />
+Use the <a href="_WinAPI_CloseHandle.htm">_WinAPI_CloseHandle()</a> function to close the handle.<br />
+The system closes the handle automatically when the process terminates.<br />
+The mutex object is destroyed when its last handle has been closed.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="_WinAPI_CloseHandle.htm">_WinAPI_CloseHandle</a>, <a href="_WinAPI_OpenMutex.htm">_WinAPI_OpenMutex</a></p>
+
+<h2>See Also</h2>
+<p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(CreateMutex);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">CreateMutex</a> in MSDN  Library.
+</p>
+
+</body>
+</html>

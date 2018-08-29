@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion Send</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">Send</h1><br />
+<a href="../functions_en/Send.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Sendet einen oder mehrere simulierte Tastendr&uuml;cke an das aktive Fenster.<br /></p>
+<p class="codeheader">
+Send ( "keys" [, flag = 0] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">keys</td>
+<td style="width:85%">Die Folge von Tastendr&uuml;cken, die gesendet werden soll.</td>
+</tr>
+<tr>
+<td>flag</td>
+<td><strong>[optional]</strong> Kennzeichnet, wie der "keys"-Parameter verarbeitet wird:<br />
+&nbsp;&nbsp;&nbsp; $SEND_DEFAULT (0) = Text beinhaltet spezielle Zeichen, wie „+“ und „!“, die f&uuml;r SHIFT- (=UMSCHALT) und ALT-Tasten stehen (Standard).<br />
+&nbsp;&nbsp;&nbsp; $SEND_RAW (1) = Tasten ("keys") werden so wie angegeben gesendet.<br />
+<br />
+Die Konstanten sind in "AutoItConstants.au3" definiert.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+Keine.<br />
+
+
+<h2>Bemerkungen</h2>
+<p>Siehe <a href="../appendix/SendKeys.htm">Anhang</a> f&uuml;r einige Tipps zur Verwendung von <a href="Send.htm">Send()</a>. AutoIt kann alle ASCII und erweiterte ASCII Zeichen (0-255) senden. Um UNICODE Zeichen zu senden, muss die "ASC" Option  mit dem Code des Zeichens, das gesendet werden soll, benutzt werden (siehe {ASC} am Ende der untenstehenden Tabelle).<br />
+<br />
+Die <a href="Send.htm">Send()</a> Befehlssyntax ist &auml;hnlich dem von ScriptIt und Visual Basic verwendetem "SendKeys"-Befehl. Die Zeichen werden wie geschrieben gesendet, mit Ausnahme der folgenden Zeichen:<br />
+<br />
+'!'<br />
+Dies weist AutoIt an, den ALT Tastendruck zu senden, folglich w&uuml;rde <a href="Send.htm">Send</a>("Das ist ein Text!a") die Tastendr&uuml;cke "Das ist ein Text" senden und dann die Tastendr&uuml;cke "ALT+a".<br />
+<br />
+Nebenbei sind einige Programme sehr empfindlich bez&uuml;glich Gro&szlig;buchstaben und ALT-Taste, z.B. "!A" ist unterschiedlich zu "!a". Der erste Ausdruck bewirkt ALT+SHIFT+A, der zweite ist ALT+a. Im Zweifelsfall benutzt man die Kleinschreibung!<br />
+<br />
+'+'<br />
+Dies weist AutoIt an, den SHIFT-(=UMSCHALT)-Tastendruck zu senden, folglich w&uuml;rde <a href="Send.htm">Send</a>("Hell+o") den Text "HellO" senden. <a href="Send.htm">Send</a>("!+a") w&uuml;rde "ALT+SHIFT+a" senden.<br />
+<br />
+'^'<br />
+Dies weist AutoIT an, den CTRL (=STRG)-Tastendruck zu senden, folglich w&uuml;rde <a href="Send.htm">Send</a>("^!a") "STRG+ALT+a" senden.<br />
+<br />
+Bemerkung: Einige Programme reagieren sehr empfindlich auf Gro&szlig;-/Kleinschreibung (Case sensitive) und STRG-Tastendr&uuml;cke, z.B. ist "^A" unterschiedlich zu "^a". Der erste Ausdruck sendet STRG+SHIFT+A, der zweite sendet STRG+a. Im Zweifelsfall benutzt man die Kleinschreibung!<br />
+<br />
+'#'<br />
+Die Hash (Raute oder Doppelkreuz)-Taste simuliert das Dr&uuml;cken der Windows-Taste. Folglich w&uuml;rde <a href="Send.htm">Send</a>("#r") Win+r senden und damit die Run Dialogbox (Ausf&uuml;hren-Dialog) aufrufen.<br />
+<br />
+Man kann "SendCapslockMode" so einstellen, dass die CAPSLOCK-Taste (FESTSTELLTASTE) beim Start einer <a href="Send.htm">Send()</a> Funktion abgeschaltet wird und nach Beenden wieder zur&uuml;ckgesetzt wird.<br />
+Wenn aber ein Anwender die SHIFT-Taste beim Beginn einer <a href="Send.htm">Send()</a> Funktion gedr&uuml;ckt h&auml;lt, k&ouml;nnte der Text in Gro&szlig;buchstaben gesendet werden.<br />
+Eine Vermeidungsm&ouml;glichkeit ist Send("{SHIFTDOWN}{SHIFTUP}") vor dem eigentlichen <a href="Send.htm">Send()</a> Befehl zu senden.<br />
+<br />
+Bestimmte Tastaturen, wie z.B. die tschechische, senden unterschiedliche Zeichen, je nachdem, ob die SHIFT- oder FESTSTELL-Taste bet&auml;tigt ist. Nach der AutoIt-Arbeitsweise werden die Zeichen der FESTSTELL-Taste als SHIFT-Zeichen gesendet und deshalb <strong>kann dieses Verhalten nicht simuliert werden</strong>.<br />
+ <br />
+Bestimmte spezielle Tastendr&uuml;cke m&uuml;ssen in geschweiften Klammern gesendet werden:<br />
+<br />
+Wichtig : Windows verbietet das Senden der Tastenkombination "STRG-ALT-DEL"!<br />
+<br />
+<table>
+<tr>
+<th><strong><a href="Send.htm">Send()</a> Befehl (wenn Flag = 0)</strong></th>
+<th><strong>Resultierender Tastendruck</strong></th>
+</tr>
+
+<tr>
+<td>{!}</td>
+<td>!</td>
+</tr>
+
+<tr>
+<td>{#}</td>
+<td>#</td>
+</tr>
+
+<tr>
+<td>{+}</td>
+<td>+</td>
+</tr>
+
+<tr>
+<td>{^}</td>
+<td>^</td>
+</tr>
+
+<tr>
+<td>{{}</td>
+<td>{</td>
+</tr>
+
+<tr>
+<td>{}}</td>
+<td>}</td>
+</tr>
+
+<tr>
+<td>{SPACE}</td>
+<td>SPACE (Leertaste)</td>
+</tr>
+
+<tr>
+<td>{ENTER}</td>
+<td>Eingabetaste auf der Haupttastatur</td>
+</tr>
+
+<tr>
+<td>{ALT}</td>
+<td>ALT</td>
+</tr>
+
+<tr>
+<td>{BACKSPACE} oder {BS}</td>
+<td>BACKSPACE (R&uuml;cktaste)</td>
+</tr>
+
+<tr>
+<td>{DELETE} oder {DEL}</td>
+<td>DELETE Entfernen (Entf)</td>
+</tr>
+
+<tr>
+<td>{UP}</td>
+<td>Nach-Oben-Taste</td>
+</tr>
+
+<tr>
+<td>{DOWN}</td>
+<td>Nach-Unten-Taste</td>
+</tr>
+
+<tr>
+<td>{LEFT}</td>
+<td>Nach-Links-Taste</td>
+</tr>
+
+<tr>
+<td>{RIGHT}</td>
+<td>Nach-Rechts-Taste</td>
+</tr>
+
+<tr>
+<td>{HOME}</td>
+<td>HOME (Pos1 – Taste)</td>
+</tr>
+
+<tr>
+<td>{END}</td>
+<td>END (Ende - Taste)</td>
+</tr>
+
+<tr>
+<td>{ESCAPE} oder {ESC}</td>
+<td>ESCAPE- Taste</td>
+</tr>
+
+<tr>
+<td>{INSERT} oder {INS}</td>
+<td>INS (EINF&Uuml;GEN (Einfg)-Taste)</td>
+</tr>
+
+<tr>
+<td>{PGUP}</td>
+<td>PageUp (Bild-Auf-Taste)</td>
+</tr>
+
+<tr>
+<td>{PGDN}</td>
+<td>PageDown (Bild-Ab-Taste)</td>
+</tr>
+
+<tr>
+<td>{F1} - {F12}</td>
+<td>Funktionstasten</td>
+</tr>
+
+<tr>
+<td>{TAB}</td>
+<td>TAB(Tabulator – Taste)</td>
+</tr>
+
+<tr>
+<td>{PRINTSCREEN}</td>
+<td>Druck-Taste</td>
+</tr>
+
+<tr>
+<td>{LWIN}</td>
+<td>linke Windows Taste</td>
+</tr>
+
+<tr>
+<td>{RWIN}</td>
+<td>rechte Windows Taste</td>
+</tr>
+
+<tr>
+<td>{NUMLOCK on}</td>
+<td>NUMLOCK (Num)-Taste (on/off/toggle)</td>
+</tr>
+
+<tr>
+<td>{CAPSLOCK off}</td>
+<td>CAPSLOCK-Taste (FESTSTELLTASTE) (on/off/toggle)</td>
+</tr>
+
+<tr>
+<td>{SCROLLLOCK toggle}</td>
+<td>ROLLEN-Taste (on/off/toggle)</td>
+</tr>
+
+<tr>
+<td>{BREAK}</td>
+<td>STRG+Break = STRG+UNTERBRECHUNG Taste</td>
+</tr>
+
+<tr>
+<td>{PAUSE}</td>
+<td>PAUSE-Taste</td>
+</tr>
+
+<tr>
+<td>{NUMPAD0} - {NUMPAD9}</td>
+<td>Ziffernblock 0-9 (Numpad = numerisches Tastenfeld)</td>
+</tr>
+
+<tr>
+<td>{NUMPADMULT}</td>
+<td>Multiplizieren auf Numpad</td>
+</tr>
+
+<tr>
+<td>{NUMPADADD}</td>
+<td>Addieren auf Numpad</td>
+</tr>
+
+<tr>
+<td>{NUMPADSUB}</td>
+<td>Subtrahieren auf Numpad</td>
+</tr>
+
+<tr>
+<td>{NUMPADDIV}</td>
+<td>Dividieren auf Numpad</td>
+</tr>
+
+<tr>
+<td>{NUMPADDOT}</td>
+<td>Punkt (Komma) auf Numpad</td>
+</tr>
+
+<tr>
+<td>{NUMPADENTER}</td>
+<td>Eingabe-Taste auf Numpad</td>
+</tr>
+
+<tr>
+<td>{APPSKEY}</td>
+<td>Windows-Programm Taste</td>
+</tr>
+
+<tr>
+<td>{LALT}</td>
+<td>Linke ALT-Taste</td>
+</tr>
+
+<tr>
+<td>{RALT}</td>
+<td>Rechte ALT-Taste</td>
+</tr>
+
+<tr>
+<td>{LCTRL}</td>
+<td>Linke STRG-Taste</td>
+</tr>
+
+<tr>
+<td>{RCTRL}</td>
+<td>Rechte STRG-Taste</td>
+</tr>
+
+<tr>
+<td>{LSHIFT}</td>
+<td>Linke Shift-Taste</td>
+</tr>
+
+<tr>
+<td>{RSHIFT}</td>
+<td>Rechte Shift-Taste</td>
+</tr>
+
+<tr>
+<td>{SLEEP}</td>
+<td>Computer PAUSE Taste</td>
+</tr>
+
+<tr>
+<td>{ALTDOWN}</td>
+<td>H&auml;lt die ALT-Taste gedr&uuml;ckt, bis {ALTUP} gesendet wird</td>
+</tr>
+
+<tr>
+<td>{SHIFTDOWN}</td>
+<td>H&auml;lt die SHIFT-Taste gedr&uuml;ckt, bis {SHIFTUP} gesendet wird</td>
+</tr>
+
+<tr>
+<td>{CTRLDOWN}</td>
+<td>H&auml;lt die STRG-Taste gedr&uuml;ckt, bis {CTRLUP} gesendet wird</td>
+</tr>
+
+<tr>
+<td>{LWINDOWN}</td>
+<td>H&auml;lt die linke Windows-Taste gedr&uuml;ckt, bis {LWINUP} gesendet wird</td>
+</tr>
+
+<tr>
+<td>{RWINDOWN}</td>
+<td>H&auml;lt die rechte Windows-Taste gedr&uuml;ckt, bis {RWINUP} gesendet wird</td>
+</tr>
+
+<tr>
+<td>{ASC nnnn}</td>
+<td>Sendet die ALT+nnnn ASCII-CODE-Tastenkombination</td>
+</tr>
+
+<tr>
+<td>{BROWSER_BACK}</td>
+<td>W&auml;hlt den Browser-Button "Zur&uuml;ck"</td>
+</tr>
+
+<tr>
+<td>{BROWSER_FORWARD}</td>
+<td>W&auml;hlt den Browser-Button "Vorw&auml;rts"</td>
+</tr>
+
+<tr>
+<td>{BROWSER_REFRESH}</td>
+<td>W&auml;hlt den Browser-Button "Aktualisieren"</td>
+</tr>
+
+<tr>
+<td>{BROWSER_STOP}</td>
+<td>W&auml;hlt den Browser-Button "Stop"</td>
+</tr>
+
+<tr>
+<td>{BROWSER_SEARCH}</td>
+<td>W&auml;hlt den Browser-Button "Suche"</td>
+</tr>
+
+<tr>
+<td>{BROWSER_FAVORITES}</td>
+<td>W&auml;hlt den Browser-Button "Favoriten"</td>
+</tr>
+
+<tr>
+<td>{BROWSER_HOME}</td>
+<td>Startet den Browser und geht zur Startseite</td>
+</tr>
+
+<tr>
+<td>{VOLUME_MUTE}</td>
+<td>Stellt Lautsprecher auf Stumm</td>
+</tr>
+
+<tr>
+<td>{VOLUME_DOWN}</td>
+<td>Reduziert die Lautst&auml;rke</td>
+</tr>
+
+<tr>
+<td>{VOLUME_UP}</td>
+<td>Vergr&ouml;&szlig;ert die Lautst&auml;rke</td>
+</tr>
+
+<tr>
+<td>{MEDIA_NEXT}</td>
+<td>W&auml;hlt den n&auml;chsten Track im Media Player</td>
+</tr>
+
+<tr>
+<td>{MEDIA_PREV}</td>
+<td>W&auml;hlt den vorhergehenden Track im Media Player</td>
+</tr>
+
+<tr>
+<td>{MEDIA_STOP}</td>
+<td>Stoppt Media Player</td>
+</tr>
+
+<tr>
+<td>{MEDIA_PLAY_PAUSE}</td>
+<td>Wiedergabe/Pause Media Player</td>
+</tr>
+
+<tr>
+<td>{LAUNCH_MAIL}</td>
+<td>Startet die Standard-E-Mail-Anwendung</td>
+</tr>
+
+<tr>
+<td>{LAUNCH_MEDIA}</td>
+<td>Startet den Media Player</td>
+</tr>
+
+<tr>
+<td>{LAUNCH_APP1}</td>
+<td>Startet das Anwender-Programm 1</td>
+</tr>
+
+<tr>
+<td>{LAUNCH_APP2}</td>
+<td>Startet das Anwender-Programm 2</td>
+</tr>
+
+<tr>
+<td>{OEM_102}</td>
+<td>Entweder die "angle bracket" Taste oder die Backslash-Taste auf der RT 102-Tasten-Tastatur</td>
+</tr>
+</table><br />
+Um z.B. den Wert A als ASCII-Code zu senden (man dr&uuml;ckt st&auml;ndig die ALT Taste und gibt am Nummernblock die Ziffern 065 ein):<br />
+&nbsp;&nbsp;&nbsp; <a href="Send.htm">Send</a>("{ASC 065}")<br />
+<br />
+Es k&ouml;nnen auch mehrere verschiedene ASCII-Zeichen, mit einem Send-Befehl, an ein Control gesendet werden, z.B.<br />
+&nbsp;&nbsp;&nbsp; <a href="Send.htm">Send</a>("{ASC 067}{ASC 058}{ASC 092}")    ; Sendet C:\ an das Control.<br />
+<br />
+(wenn man einen zweistelligen ASCII-Code hat, muss eine 0 vorangestellt werden (z.B. 065), andernfalls wird die veraltete Codepage 437 verwendet.)<br />
+<br />
+Um UNICODE Zeichen zu senden, gibt man den Code entweder dezimal oder in hex ein, als Beispiel ein chinesisches Zeichen: <br />
+&nbsp;&nbsp;&nbsp; <a href="Send.htm">Send</a>("{ASC 2709}") oder <a href="Send.htm">Send</a>("{ASC 0xA95}")<br />
+<br />
+<br />
+Einzelne Tastendr&uuml;cke k&ouml;nnen mehrfach wiederholt werden:<br />
+&nbsp;&nbsp;&nbsp; <a href="Send.htm">Send</a>("{DEL 4}")&nbsp;&nbsp;&nbsp; ;Dr&uuml;ckt 4 mal die DEL (Entf-) Taste<br />
+&nbsp;&nbsp;&nbsp; <a href="Send.htm">Send</a>("{S 30}")&nbsp;&nbsp;&nbsp; ;Sendet 30 mal ein S<br />
+&nbsp;&nbsp;&nbsp; <a href="Send.htm">Send</a>("+{TAB 4}")&nbsp;&nbsp;&nbsp; ;Dr&uuml;ckt 4 mal SHIFT+TAB<br />
+  <br />
+Es wird keine Taste gesendet, wenn die Anzahl 0 ist, so dass die Anzahl programmgesteuert gesetzt werden kann:<br />
+&nbsp;&nbsp;&nbsp; <a href="Send.htm">Send</a>("{M " & $iCount & "}")&nbsp;&nbsp;&nbsp; ;Dr&uuml;ckt die M-Taste so oft wie dies in der $iCount Variable definiert wurde<br />
+ <br />
+<br />
+Die Taste wird mindestens ein Mal gesendet, auch wenn als Zahl Null angegeben wird.<br />
+<br />
+Um eine Taste gedr&uuml;ckt zu lassen:<br />
+&nbsp;&nbsp;&nbsp; <a href="Send.htm">Send</a>("{a down}")&nbsp;&nbsp;&nbsp; ;H&auml;lt die Taste A gedr&uuml;ckt<br />
+&nbsp;&nbsp;&nbsp; <a href="Send.htm">Send</a>("{a up}")&nbsp;&nbsp;&nbsp; ;L&auml;sst die Taste wieder los<br />
+<br />
+Um den Status der Capslock, Numlock oder Scrolllock Taste zu setzen:<br />
+&nbsp;&nbsp;&nbsp; <a href="Send.htm">Send</a>("{NumLock on}")&nbsp;&nbsp;&nbsp; ;Schaltet die NumLock Taste  ein<br />
+&nbsp;&nbsp;&nbsp; <a href="Send.htm">Send</a>("{CapsLock off}")&nbsp;&nbsp;&nbsp; ;Schaltet die CapsLock Taste aus<br />
+&nbsp;&nbsp;&nbsp; <a href="Send.htm">Send</a>("{Scrolllock toggle}")&nbsp;&nbsp;&nbsp; ;&Auml;ndert den Zustand der  Scrolllock Taste (wenn die Taste eingeschaltet ist, wird sie ausgeschaltet bzw. umgekehrt)<br />
+<br />
+Will man einen Z&auml;hler als Variable vordefinieren, dann benutzt man das so:<br />
+&nbsp;&nbsp;&nbsp; $n = 4<br />
+&nbsp;&nbsp;&nbsp; <a href="Send.htm">Send</a>("+{TAB " & $n & "}")<br />
+<br />
+Will man z.B. den ASCII-Code "A" vier Mal senden, dann probiert man das hier:<br />
+&nbsp;&nbsp;&nbsp; $x = <a href="Chr.htm">Chr</a>(65)<br />
+&nbsp;&nbsp;&nbsp; <a href="Send.htm">Send</a>("{" & $x & " 4}")<br />
+<br />
+Die LAPTOP-Taste "Fn" kann leider nicht simuliert werden.<br />
+<br />
+Bemerkung:  Wenn das Flag auf 1 gesetzt ist, dann sind die o.g. speziellen Prozeduren ausgeschaltet.<br />
+Dies ist sinnvoll, wenn man einen Text, der aus einer Variablen stammt, senden will und dieser Text exakt gleich gesendet werden soll. <br />
+<br />
+Beispiel: &Ouml;ffnet die Ordneroptionen (in der Systemsteuerung) und versucht folgendes: <br />
+<table>
+<tr>
+<th><a href="Send.htm">Send</a>("{TAB}")</th>
+<th>Springt zum n&auml;chsten Button oder n&auml;chster  Checkbox, etc. </th>
+</tr>
+
+<tr>
+<td><a href="Send.htm">Send</a>("+{TAB}")</td>
+<td>Springt zum vorhergehenden Button oder  Checkbox, etc.</td>
+</tr>
+
+<tr>
+<td><a href="Send.htm">Send</a>("^{TAB}")</td>
+<td>Springt zum n&auml;chsten WindowTab (bei einem Fenster mit mehreren TABs, z.B. Firefox) </td>
+</tr>
+
+<tr>
+<td><a href="Send.htm">Send</a>("^+{TAB}")</td>
+<td>Springt zum vorhergehenden WindowTab. </td>
+</tr>
+
+<tr>
+<td><a href="Send.htm">Send</a>("{SPACE}")</td>
+<td>Kann verwendet werden, um den Zustand einer Checkbox zu wechseln oder einen Button anzuklicken. </td>
+</tr>
+
+<tr>
+<td><a href="Send.htm">Send</a>("{+}")</td>
+<td>Setzt einen Haken (Kreuz, etc.) in der Checkbox (wenn es eine “echte” Checkbox ist!!) </td>
+</tr>
+
+<tr>
+<td><a href="Send.htm">Send</a>("{-}")</td>
+<td>L&ouml;scht den Haken (Kreuz, etc.) in der Checkbox</td>
+</tr>
+
+<tr>
+<td><a href="Send.htm">Send</a>("{NumPadMult}")</td>
+<td>Klappt alle Ebenen einer Ordnerstruktur im Explorer (vom Typ SysTreeView32) auf.</td>
+</tr>
+</table><br />
+Man benutzt die ALT-Taste auch, um Men&uuml;s/ Untermen&uuml;s zu steuern, zum Beispiel bei einem ge&ouml;ffneten NotePad:<br />
+<a href="Send.htm">Send</a>("!d")  &nbsp;&nbsp;&nbsp; Sendet Alt+d, (&ouml;ffnet im Notepad das Datei Men&uuml;).<br />
+<br />
+<table>
+<tr>
+<th><a href="Send.htm">Send</a>("{DOWN}")</th>
+<th>F&auml;hrt runter im Men&uuml;. </th>
+</tr>
+
+<tr>
+<td><a href="Send.htm">Send</a>("{UP}")</td>
+<td>F&auml;hrt rauf im Men&uuml;.</td>
+</tr>
+
+<tr>
+<td><a href="Send.htm">Send</a>("{LEFT}")</td>
+<td>F&auml;hrt nach links in ein neues Men&uuml; oder &ouml;ffnet ein Untermen&uuml;.</td>
+</tr>
+
+<tr>
+<td><a href="Send.htm">Send</a>("{RIGHT}")</td>
+<td>F&auml;hrt nach rechts in ein neues Men&uuml; oder schlie&szlig;t ein Untermen&uuml;.</td>
+</tr>
+</table><br />
+<br />
+Wenn man ein Skript auf einem Remotecomputer durch ein Programm wie psexec (www.sysinternals.com) oder beyondexec (www.beyondlogic.org) ausf&uuml;hren l&auml;sst, ist es notwendig (insbesondere dann, wenn Tastendr&uuml;cke an ein Programm gesendet werden sollen, das per Skript mittels <a href="Run.htm">Run()</a> Funktion gestartet wird), <strong><a href="ControlSend.htm">ControlSend()</a></strong> oder ControlXXX-Funktionen zu benutzen, um eine direkte Kommunikation mit der Steuerung herzustellen. Der <a href="Send.htm">Send</a>-Befehl, auch mit der Option <a href="AutoItSetOption.htm#SendAttachMode">Opt("SendAttachMode", 1)</a>, funktioniert hier nicht.<br />
+Um bessere Rechte auf dem Remote-Computer beim Senden zu haben, benutzt man den Modus -s.<br />
+<br />
+<a href="AutoItSetOption.htm#SendKeyDelay">Opt("SendKeyDelay",...)</a> &auml;ndert die L&auml;nge der kurzen Pause zwischen gesendeten Tastenanschl&auml;gen.<br />
+<a href="AutoItSetOption.htm#SendKeyDownDelay">Opt("SendKeyDownDelay",...)</a> &auml;ndert die Zeitspanne, die eine Taste niedergehalten wird, bevor diese wieder freigegeben wird.<br />
+Wird "SendKeyDelay" und "SendKeyDownDelay" auf 0 gesetzt, so werden alle Verz&ouml;gerungen beim senden von Tasten entfernt. Dies kann unter bestimmten Umst&auml;nden notwendig sein, zum Beispiel wenn man mit ("#l") das System sperrt, um zu vermeiden, dass die WIN-Taste untengehalten wird.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="BlockInput.htm">BlockInput</a>, <a href="ControlSend.htm">ControlSend</a>, <a href="HotKeySet.htm">HotKeySet</a>, <a href="AutoItSetOption.htm#SendAttachMode ">SendAttachMode (Option)</a>, <a href="SendKeepActive.htm">SendKeepActive</a>, <a href="AutoItSetOption.htm#SendKeyDelay ">SendKeyDelay (Option)</a>, <a href="AutoItSetOption.htm#SendKeyDownDelay ">SendKeyDownDelay (Option)</a>, <a href="WinMenuSelectItem.htm">WinMenuSelectItem</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\Send.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Simuliert die Tastenkombination Win + R um das Run-Fenster zu &ouml;ffnen.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Send.htm"><span class="S4">Send</span></a><span class="S8">(</span><span class="S7">"#r"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Wartet maximal 10 Sekunden bis das Run-Fenster erscheint.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinWait.htm"><span class="S4">WinWait</span></a><span class="S8">(</span><span class="S7">"Run"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Simuliert die Eingabe 'notepad.exe' und dr&uuml;ckt die 'ENTER' Taste.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Send.htm"><span class="S4">Send</span></a><span class="S8">(</span><span class="S7">"notepad.exe</span><span class="S10">{Enter}</span><span class="S7">"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Wartet maximal 10 Sekunden bis das Editorfenster erscheint.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hWnd</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/WinWait.htm"><span class="S4">WinWait</span></a><span class="S8">(</span><span class="S7">"[CLASS:Notepad]"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Simuliert die Eingabe des folgenden Strings und dr&uuml;ckt die 'F5' Taste f&uuml;r Eingabe des Datums und der Uhrzeit in das Edit-Control des Editors.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Send.htm"><span class="S4">Send</span></a><span class="S8">(</span><span class="S7">"Today's time/date is </span><span class="S10">{F5}</span><span class="S7">"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Schlie&szlig;t das Editorfenster durch die Verwendung des von WinWait zur&uuml;ckgegebenen Handles.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinClose.htm"><span class="S4">WinClose</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Nun erscheint eine Meldung mit der Frage, ob die &Auml;nderungen gespeichert werden sollen.</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Der Klassenname (classname) des Fenster lautet "#32770".</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Anschlie&szlig;end wird die "TAB"-Taste gedr&uuml;ckt um zum zweiten Button zu wechseln. Dieser wird automatisch durch dr&uuml;cken der "ENTER"-Taste bet&auml;tigt, so dass die Datei nicht gespeichert wird.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinWaitActive.htm"><span class="S4">WinWaitActive</span></a><span class="S8">(</span><span class="S7">"[CLASS:#32770]"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">500</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Send.htm"><span class="S4">Send</span></a><span class="S8">(</span><span class="S7">"</span><span class="S10">{TAB}{ENTER}</span><span class="S7">"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

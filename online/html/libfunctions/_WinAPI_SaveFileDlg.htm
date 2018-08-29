@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinAPI_SaveFileDlg</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1>_WinAPI_SaveFileDlg</h1>
+<p class="funcdesc">Creates a dialog box that lets the user specify the drive, directory, and name of a file to save<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIDlg.au3&gt;<br />
+_WinAPI_SaveFileDlg ( [$sTitle = "" [, $sInitDir = "" [, $sFilters = "" [, $iDefaultFilter = 0 [, $sDefaultFilePath = "" [, $sDefaultExt = "" [, $iFlags = 0 [, $iFlagsEx = 0 [, $pOFNProc = 0 [, $pData = 0 [, $hParent = 0]]]]]]]]]]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$sTitle</td>
+<td style="width:85%"><strong>[optional]</strong> A string to be placed in the title bar of the dialog box.<br />
+If this parameter is empty string (Default), the system uses the default title (that is, "Save As").</td>
+</tr>
+<tr>
+<td>$sInitDir</td>
+<td><strong>[optional]</strong> The initial directory.</td>
+</tr>
+<tr>
+<td>$sFilters</td>
+<td><strong>[optional]</strong> The pairs of filter strings (for example, "Text Files (*.txt)").<br />
+To specify multiple filter patterns for a single display string, use a semicolon to separate the patterns (for example, "*.txt;*.doc;*.bak").<br />
+Do not include spaces in the pattern. To specify multiple groups of filters, use the "|" character as a delimiter (for example, "Text Files (*.txt)|All Files (*.*)").<br />
+If this parameter is omitted or an empty string (Default), the dialog box does not display any filters</td>
+</tr>
+<tr>
+<td>$iDefaultFilter</td>
+<td><strong>[optional]</strong> The 1-based index of the currently selected filter to initialize the combo box control.</td>
+</tr>
+<tr>
+<td>$sDefaultFilePath</td>
+<td><strong>[optional]</strong> The file name to initialize the edit control.</td>
+</tr>
+<tr>
+<td>$sDefaultExt</td>
+<td><strong>[optional]</strong> The default extension that appends to the file name if the user fails to type an extension.<br />
+This string can be any length, but only the first three characters are appended. The string should not contain a period (.).<br />
+If this parameter is empty string (Default), no extension is appended.</td>
+</tr>
+<tr>
+<td>$iFlags</td>
+<td><strong>[optional]</strong> A set of bit flags you can use to initialize the dialog box.<br />
+This parameter can be 0 or combination of the following values:<br />
+&nbsp;&nbsp;&nbsp; $OFN_ALLOWMULTISELECT<br />
+&nbsp;&nbsp;&nbsp; $OFN_CREATEPROMPT<br />
+&nbsp;&nbsp;&nbsp; $OFN_DONTADDTORECENT<br />
+&nbsp;&nbsp;&nbsp; $OFN_ENABLEHOOK<br />
+&nbsp;&nbsp;&nbsp; $OFN_ENABLEINCLUDENOTIFY<br />
+&nbsp;&nbsp;&nbsp; $OFN_ENABLESIZING<br />
+&nbsp;&nbsp;&nbsp; $OFN_EXPLORER<br />
+&nbsp;&nbsp;&nbsp; $OFN_FORCESHOWHIDDEN<br />
+&nbsp;&nbsp;&nbsp; $OFN_HIDEREADONLY<br />
+&nbsp;&nbsp;&nbsp; $OFN_LONGNAMES<br />
+&nbsp;&nbsp;&nbsp; $OFN_NOCHANGEDIR<br />
+&nbsp;&nbsp;&nbsp; $OFN_NODEREFERENCELINKS<br />
+&nbsp;&nbsp;&nbsp; $OFN_NOLONGNAMES<br />
+&nbsp;&nbsp;&nbsp; $OFN_NONETWORKBUTTON<br />
+&nbsp;&nbsp;&nbsp; $OFN_NOREADONLYRETURN<br />
+&nbsp;&nbsp;&nbsp; $OFN_NOTESTFILECREATE<br />
+&nbsp;&nbsp;&nbsp; $OFN_NOVALIDATE<br />
+&nbsp;&nbsp;&nbsp; $OFN_OVERWRITEPROMPT<br />
+&nbsp;&nbsp;&nbsp; $OFN_PATHMUSTEXIST<br />
+&nbsp;&nbsp;&nbsp; $OFN_READONLY<br />
+&nbsp;&nbsp;&nbsp; $OFN_SHAREAWARE<br />
+&nbsp;&nbsp;&nbsp; $OFN_SHOWHELP</td>
+</tr>
+<tr>
+<td>$iFlagsEx</td>
+<td><strong>[optional]</strong> A set of bit flags you can use to initialize the dialog box. It can be 0 or the following value:<br />
+&nbsp;&nbsp;&nbsp; $OFN_EX_NOPLACESBAR</td>
+</tr>
+<tr>
+<td>$pOFNProc</td>
+<td><strong>[optional]</strong> A pointer to a hook procedure. This parameter is ignored unless the $OFN_ENABLEHOOK flag is set.</td>
+</tr>
+<tr>
+<td>$pData</td>
+<td><strong>[optional]</strong> Application-defined pointer to data that the system passes to the hook procedure.</td>
+</tr>
+<tr>
+<td>$hParent</td>
+<td><strong>[optional]</strong> A handle to the parent window for the dialog box.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">If the $OFN_ALLOWMULTISELECT flag is not set, the function returns the full path of the input file, otherwise always an array of paths.<br />
+&nbsp;&nbsp;&nbsp; The zeroth array element contains the number of files.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>Sets the @error flag to non-zero, @extended flag may contain the dialog box error code ($CDERR_* or $FNERR_*).</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>Constants are defined in WinAPIConstants.au3.<br />
+<br />
+Call <a href="_WinAPI_GetExtended.htm">_WinAPI_GetExtended()</a> to retrieve internal $tagOPENFILENAME structure containing the user's selection information after closing the dialog box.<br />
+<br />
+If you use a hook, you can not preserve the UI of the dialog box like in <strong>Windows Vista or later</strong>.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="_WinAPI_GetExtended.htm">_WinAPI_GetExtended</a></p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(GetSaveFileName);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">GetSaveFileName</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_SaveFileDlg.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIDlg.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sFile</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SaveFileDlg.htm"><span class="S15">_WinAPI_SaveFileDlg</span></a><span class="S8">(</span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@WorkingDir"><span class="S6">@WorkingDir</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">'AutoIt v3 Skripte (*.au3)|Alle Dateiene (*.*)'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'MyScript.au3'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'.'</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$OFN_PATHMUSTEXIST</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$OFN_OVERWRITEPROMPT</span><span class="S8">))</span>
+
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S9">$sFile</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

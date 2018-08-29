@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Keyword Dim / Global / Local / Const</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Keyword Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">Dim / Global / Local / Const</h1><br />
+<a href="../keywords/Dim.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Declare a variable, a constant, or create an array.<br /></p>
+<p class="codeheader">
+<strong>Global | Local</strong> [Const] $variable [ = initializer ]<br />
+<strong>Global | Local</strong> [Const] $aArray<strong>[</strong>subscript 1<strong>]</strong>...<strong>[</strong>subscript n<strong>]</strong> [ = initializer ]<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">Const</td>
+<td style="width:85%"><strong>[optional]</strong> If present, the Const keyword creates a constant rather than a variable.</td>
+</tr>
+<tr>
+<td>$variable</td>
+<td>The name of the variable/constant to declare.</td>
+</tr>
+<tr>
+<td>initializer</td>
+<td>The value that will be initially assigned to the variable. A Const must include the initializer. The initializer can be a function call.</td>
+</tr>
+<tr>
+<td>subscript</td>
+<td>The number of elements to create for the array dimension, indexed 0 to n-1.</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>The Dim/Local/Global keywords perform similar functions:<br />
+1. Declare a variable before you use it (similar to VBScript)<br />
+2. Create an array<br />
+<br />
+<strong>Note</strong>: In AutoIt you can create a variable simply by assigning a value ($myvar = 0) but many people like to explicitly declare them. If <strong><a href="../functions/AutoItSetOption.htm#MustDeclareVars">AutoItSetOption("MustDeclareVars", 1)</a></strong> is active, then variables must be declared prior to use.<br />
+<br />
+You can also declare multiple variables on a single line:<br />
+<p class="code">Local $vVar_1, $vVar_2, $vVar_3</p><br />
+And initialize the variables:<br />
+<p class="code">Local $vVar_1 = 10, $vVar_2 = "20", $vVar_3 = 30</p><br />
+Creating constants can be done in a similar way:<br />
+<p class="code">Const $CONST_1 = 1, $CONST_2 = 2, $CONST_3 = 3<br />
+Global Const $PI = 3.14, $MEANING_OF_LIFE = 42<br />
+Local Const $iApples = 500<br />
+</p><br />
+Once created, you cannot change the value of a constant. Also, you cannot change an existing variable into a constant.<br />
+<br />
+To initialize an array, specify the values for each element inside square brackets, separated by commas. For multiple dimensions, nest the initializers. You can specify fewer elements in the initializer than declared, but not more. Function calls can also be placed in the initializers of an array. If the function call returns an array, then the one array element will contain that returned array.<br />
+<p class="code">Local $aArray_1[12] = [3, 7.5, "string"], $aArray_1[5] = [8, 4, 5, 9, 1]<br />
+Local $aGrid[2][4] = [["Paul", "Jim", "Richard", "Louis"], [485.44, 160.68, 275.16, 320.00]]<br />
+Global $aTest[5] = [3, 1, StringSplit("Abe|Jack|Bobby|Marty", "|"), Cos(0)]<br />
+</p><br />
+The difference between Dim, Local and Global is the scope in which they are created:<br />
+<strong>Dim</strong> = Local scope if the variable name doesn't already exist globally (in which case it reuses the global variable!)<br />
+<strong>Global</strong> = Forces creation of the variable in the Global scope<br />
+<strong>Local</strong> = Forces creation of the variable in the Local/Function scope<br />
+<br />
+You should use Local or Global, instead of Dim, to explicitly state which scope is desired for a variable/constant/array.<br />
+<br />
+When using variables, the local scope is checked first and then the global scope second.<br />
+<br />
+When creating arrays you are limited to up to 64 dimensions and/or a total of 16 million elements.<br />
+<br />
+A unique feature in AutoIt is the ability to copy arrays like this:<br />
+$mycopy = $myarray<br />
+In this case $mycopy will be an exact copy of $myarray and will have the same dimensions - no Dim statement is required to size the array first. If <strong><a href="../functions/AutoItSetOption.htm#MustDeclareVars">AutoItSetOption ( "MustDeclareVars", 1)</a></strong> is active then the variable $mycopy would still need to be declared first, but would not need to be sized. If the variable $mycopy was already an array or single value it will be erased before the copy takes place.<br />
+<br />
+To erase an array (maybe because it is a large global array and you want to free the memory), simply assign a single value to it:<br />
+$aArray = 0<br />
+This will free the array and convert it back to the single value of 0.<br />
+<br />
+Declaring the same variable name again will erase all array values and reset the dimensions to the new definition. Declaring a variable with a simple value in the same scope will not change the value in the variable.<br />
+<br />
+If you declare a variable with the same name as a parameter, using <strong>Local</strong> inside a user function, an error will occur. <strong>Global</strong> can be used to assign to global variables inside a function, but if a local variable (or parameter) has the same name as a global variable, the local variable will be the only one used. It is recommended that local and global variables have distinct names.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="../functions/AutoItSetOption.htm#MustDeclareVars">AutoItSetOption</a>, <a href="../functions/UBound.htm">UBound</a>, <a href="ReDim.htm">ReDim</a>, <a href="Static.htm">Static</a></p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<h3>Example 1</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\Dim.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><span class="S1">; Example 1 - Declaring variables</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$j</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">23</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$k</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_fPI</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">3.14159</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_iRADIUS</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iDaysWorking</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">5</span>
+
+<span class="S1">; Example 2 - Declaring arrays</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_aChessBoard</span><span class="S8">[</span><span class="S3">8</span><span class="S8">][</span><span class="S3">8</span><span class="S8">]</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aStates</span><span class="S8">[</span><span class="S3">2</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$aWindowsStats</span><span class="S8">[</span><span class="S3">4</span><span class="S8">]</span>
+
+<span class="S1">; Example 3 - Declaring constant variables</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$iX1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">11</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iY1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">23</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iZ1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">55</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$PI</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">3.14159</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$E</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">2.71828</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$DAYS_WORKING</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">5</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Example 2</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\Dim[2].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<span><span class="S0">#AutoIt3Wrapper_Au3Check_Parameters</span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=-</span></a><span class="S0">q </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0">d </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0">w</span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">3</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0">w</span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">6</span><span class="S0"> </span><span class="S1">; Already declared var=off, warn when using Dim=off</span>
+
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Dim</span></a><span class="S0"> </span><span class="S9">$vVariableThatIsGlobal</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"This is a variable that has ""Program Scope"" aka Global."</span>
+
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"An example of why Dim can cause more problems than solve them."</span><span class="S8">)</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; That looks alright to me as it displays the following text: This is a variable that has "Program Scope" aka Global.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$vVariableThatIsGlobal</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Call some random function.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$vReturn</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> SomeFunc</span><span class="S8">()</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; The Global variable ($vVariableThatIsGlobal) changed because I totally forgot I had a duplicate variable name in "SomeFunc".</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$vReturn</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"The variable has now changed: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$vVariableThatIsGlobal</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> SomeFunc</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; This should create a variable in Local scope if the variable name doesn't already exist.</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; For argument sake I totally forgot that I declared a variable already with the same name.</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Well I only want this to be changed in the function and not the variable at the top of the script.</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Should be OK right? Think again.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Dim</span></a><span class="S0"> </span><span class="S9">$vVariableThatIsGlobal</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">""</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">10</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$vVariableThatIsGlobal</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><span class="S1">; This will return 12345678910 totally wiping the previous contents of $vVariableThatIsGlobal.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S9">$vVariableThatIsGlobal</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;SomeFunc</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

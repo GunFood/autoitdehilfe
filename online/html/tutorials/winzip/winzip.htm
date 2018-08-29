@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tutorial - WinZip</title>
+	<meta charset="utf-8">
+	<link href="../../css/default.css" rel="stylesheet">
+</head>
+<body>
+	<h1>Tutorial - WinZip</h1>
+	<p>Dieses Tutorial zeigt dir, wie man die Installation <a class="ext" href="http://www.winzip.com/">WinZip 9 SR-1</a> automatisieren kann. Es wird vorausgesetzt, dass du Skripte in AutoIt schreiben und ausf&uuml;hren, sowie das <a href="../../intro/au3spy.htm">AutoIt v3 Window Information Tool</a> benutzen kannst, um Fenstertitel und -texte herauszufinden. All das wird in den Tutorials <a href="../helloworld/helloworld.htm">HalloWelt</a> und <a href="../notepad/notepad.htm">Notepad</a> gezeigt.</p>
+	<p></p>
+	<p>Die WinZip-Installation umfasst ca. 10 Dialoge, in denen man Schaltfl&auml;chen dr&uuml;cken musste (normalerweise <strong>Weiter [engl. Next]</strong>), um mit der Installation fortzufahren. Wir werden ein Skript schreiben, das einfach auf diese Dialogfenster wartet und dann die richtigen Schaltfl&auml;chen dr&uuml;ckt. Wie bei derartigen Installationen &uuml;blich bleibt der Titel dieser Dialoge gleich (hier: WinZip Setup), sodass wir die Dialogfenster im Skript unterscheiden m&uuml;ssen. Ich habe euch Screenshots jedes einzelnen Fensters gemacht und wenn du auf das jeweilige Bild klickst, erh&auml;ltst du die zugeh&ouml;rigen <a href="../../intro/au3spy.htm">Window Information Tool</a> Ergebnisse f&uuml;r den Dialog.</p>
+	<p></p>
+	<p>Lege zuerst ein Verzeichnis an, das wir f&uuml;r die WinZip-Installationsroutine und unser Skript benutzen werden. Kopiere die WinZip-Installationsroutine in das Verzeichnis und lege ein leeres Skript namens <strong>winzipinstall.au3</strong> an.</p>
+	<p><img alt="" border="0" src="folder.png"></p>
+	<p></p>
+	<p>Wir f&uuml;hren nun die Installation von Hand durch und schreiben quasi "nebenher" das Skript. Die zur Automation n&ouml;tigen Skriptzeilen werden nach jedem Bild gezeigt (vergiss nicht, dass "hinter" den Bildern das Ergebnis der Anwendung des Window Information Tool schlummert!). Du kannst dir stattdessen auch das <a href="script.htm">komplette Skript</a> ansehen.</p>
+	<p></p>
+	<p>Die erste Skriptzeile ist einfach: Wir wollen die Datei <strong>winzip90.exe</strong> starten:</p>
+@@SyntaxHighlighting@@
+Run("winzip90.exe")
+@@End@@
+
+  <p>&nbsp;</p>  
+	<p>Das erste Dialogfenster erscheint.<br></p>
+	<p><a href="dialog1.txt"><img alt="" border="0" src="dialog1.png"></a></p>
+	<p>Wir m&uuml;ssen warten, bis dieses Fenster aktiv ist und dann die Tastenkombination <strong>ALT + S</strong> simulieren, um den <strong>Setup</strong>-Button anzuklicken. Die resultierenden Skriptzeilen lauten:</p>
+@@SyntaxHighlighting@@
+WinWaitActive("WinZip® 9.0 SR-1 Setup", "&Setup")
+Send("!s")
+@@End@@
+	<p>(Vergiss nicht, dir anzusehen, was das AutoIt v3 Window Information Tool zu diesem Fenster zu sagen hat, besonders, weil hier das speziellen Zeichen (R) vorkommt, das nur schwer einzutippen ist.)</p>
+	<p>&nbsp;</p>
+	<p>Die Dialog zur Auswahl des Installationsverzeichnisses wird als n&auml;chstes erscheinen:<br></p>
+	<p><a href="dialog2.txt"><img alt="" border="0" src="dialog2.png"></a></p>
+	<p>Wir m&uuml;ssen wieder auf das Fenster warten und dann ENTER dr&uuml;cken, um das vorgeschlagene Verzeichnis zu akzeptieren. Die zugeh&ouml;rigen Skriptzeilen:<br></p>
+@@SyntaxHighlighting@@
+WinWaitActive("WinZip Setup", "into the following folder")
+Send("{ENTER}")
+@@End@@
+
+  <p>&nbsp;</p>
+	<p>Danach kommt dieses Fenster:<br></p>
+  <p><a href="dialog3.txt"><img src="dialog3.png" alt="" border="0"></a></p>
+	<p>Der Fenstertitel ist exakt der gleiche wie beim vorherigen und allen kommenden Fenster! Um den Skript nun den Unterschied zwischen den Fenstern mitzuteilen, musst du auch den Fenstertext verwenden. Versuche immer, den eindeutigsten m&ouml;glichen Text zu nehmen. In diesem Fall habe ich mich f&uuml;r <strong>WinZip features include</strong> entschieden. Nach dem Erscheinen des Fensters wollen wir<strong>ALT + N</strong> dr&uuml;cken (lassen):</p>
+@@SyntaxHighlighting@@
+WinWaitActive("WinZip Setup", "WinZip features include")
+Send("!n")
+@@End@@
+
+  <p>&nbsp;</p>
+	<p>Dann kommt der Lizenzdialog:</p>
+  <p><a href="dialog4.txt"><img src="dialog4.png" alt="" border="0"></a></p>
+	<p>Wir m&uuml;ssen nur auf das Fenster warten und dann <strong>ALT + Y</strong> klicken, um den Vertrag zu akzeptieren:</p>
+@@SyntaxHighlighting@@
+WinWaitActive("License Agreement")
+Send("!y")
+@@End@@
+
+  <p>&nbsp;</p>
+	<p>Die Installation geht einige Dialoge lang so oder so &auml;hnlich weiter. Deshalb einfach nur das Bild und die jeweils zur Automation ben&ouml;tigten Skriptzeilen dazu.</p>
+  <p>&nbsp;</p>
+  <p><a href="dialog5.txt"><img src="dialog5.png" alt="" border="0"></a></p>
+@@SyntaxHighlighting@@
+WinWaitActive("WinZip Setup", "Quick Start Guide")
+Send("!n")
+@@End@@
+
+  <p>&nbsp;</p>
+  <p><a href="dialog6.txt"><img src="dialog6.png" alt="" border="0"></a></p>
+@@SyntaxHighlighting@@
+WinWaitActive("WinZip Setup", "switch between the two interfaces")
+Send("!c")
+Send("!n")
+@@End@@
+
+  <p>&nbsp;</p>
+  <p><a href="dialog7.txt"><img src="dialog7.png" alt="" border="0"></a></p>
+@@SyntaxHighlighting@@
+WinWaitActive("WinZip Setup", "&Express setup (recommended)")
+Send("!e")
+Send("!n")
+@@End@@
+
+  <p>&nbsp;</p>
+  <p><a href="dialog8.txt"><img src="dialog8.png" alt="" border="0"></a></p>
+@@SyntaxHighlighting@@
+WinWaitActive("WinZip Setup", "WinZip needs to associate itself with your archives")
+Send("!n")
+@@End@@
+
+  <p>&nbsp;</p>
+  <p><a href="dialog9.txt"><img src="dialog9.png" alt="" border="0"></a></p>
+	<p>Das ist das letzte Dialogfenster der Installation. Beachte, dass der <strong>Finish</strong>-Button keinen Tastatur-Shortcut besitzt - zum Gl&uuml;ck ist er ohnehin der Standardbutton, sodass wir einfach ENTER dr&uuml;cken k&ouml;nnen. Wenn das nicht so w&auml;re, k&ouml;nnten wir mittels der ALT-Taste zwischen den Controls hin- und herspringen oder - noch besser - die <a href="../../functions/ControlClick.htm">ControlClick</a>-Funktion benutzen.</p>
+@@SyntaxHighlighting@@
+WinWaitActive("WinZip Setup", "Thank you for installing this evaluation version")
+Send("{ENTER}")
+@@End@@
+
+  <p>&nbsp;</p>
+	<p>Nach der Installation starten WinZip automatisch:<br></p>
+  <p><a href="dialog10.txt"><img src="dialog10.png" alt="" border="0"></a></p>
+	<p>Wir warten einfach auf das Fenster und benutzen dann die <a href="../../functions/WinClose.htm">WinClose</a>-Funktion, um es direkt wieder zu schlie&szlig;en.<br></p>
+@@SyntaxHighlighting@@
+WinWaitActive("WinZip (Evaluation Version)")
+WinClose("WinZip (Evaluation Version)")
+@@End@@
+
+  <p>&nbsp;</p>
+	<p>Hier das <a href="script.htm">komplette Skript</a> - ich habe jedes Fenster kommentiert, damit sich das Skript leichter verstehen l&auml;sst.</p>
+	<p></p>
+	<p>Das war es schon! F&uuml;hre die Datei <strong>winzipinstaller.au3</strong> aus und sieh dir an, wie WinZip in wenigen Sekunden installiert wird. Die hier erlernten Techniken helfen dir, die meisten Installationen zu automatisieren.</p>
+	<p></p>
+	<p>Kleine Aufgabe: Benutze statt der Send-Funktion die <a href="../../functions/ControlClick.htm">ControlClick</a>-Funktion.Dazu musst du vermutlich bei <a href="../../intro/controls.htm">Controls</a> weiter lesen.<br></p>
+</body>
+</html>

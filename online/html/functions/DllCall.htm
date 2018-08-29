@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion DllCall</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">DllCall</h1><br />
+<a href="../functions_en/DllCall.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Ruft eine Funktion in einer DLL dynamisch auf.<br /></p>
+<p class="codeheader">
+DllCall ( "dll", "return type", "function" [, type1, param1 [, type n, param n]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">dll</td>
+<td style="width:85%">Der Dateiname der zu verwendenden DLL, z.B. "user32.dll". Es kann auch ein Handle verwendet werden, das von DllOpen zur&uuml;ckgegeben wird (siehe Bemerkungen).</td>
+</tr>
+<tr>
+<td>return type</td>
+<td>Der R&uuml;ckgabewert der Funktion (siehe unten).</td>
+</tr>
+<tr>
+<td>function</td>
+<td>Der Name oder die Nummer der Funktion in der DLL, die aufgerufen werden soll, z.B. "MessageBox" oder 62.</td>
+</tr>
+<tr>
+<td>type1</td>
+<td><strong>[optional]</strong> Der Typ des Parameters (siehe Bemerkungen).</td>
+</tr>
+<tr>
+<td>param1</td>
+<td><strong>[optional]</strong> Der eigentliche Parameter (siehe Bemerkungen).</td>
+</tr>
+<tr>
+<td>type n</td>
+<td><strong>[optional]</strong> Der Typ des n. Parameters (siehe Bemerkungen).</td>
+</tr>
+<tr>
+<td>param n</td>
+<td><strong>[optional]</strong> Der eigentliche n. Parameter (siehe Bemerkungen).</td>
+</tr>
+</table><br />
+G&uuml;ltige Typen sind:<br />
+<br />
+<table>
+<tr>
+<td style="width:15%"><strong>Typ</strong></td>
+<td style="width:85%"><strong>Details</strong></td>
+</tr>
+<tr>
+<td>NONE</td>
+<td>ohne Wert (nur als R&uuml;ckgabewert zul&auml;ssig - entspricht dem void in C)</td>
+</tr>
+<tr>
+<td>BYTE</td>
+<td>vorzeichenloser 8 bit Integerwert</td>
+</tr>
+<tr>
+<td>BOOLEAN</td>
+<td>vorzeichenloser 8 bit Integerwert</td>
+</tr>
+<tr>
+<td>SHORT</td>
+<td>16 bit Integerwert</td>
+</tr>
+<tr>
+<td>USHORT</td>
+<td>vorzeichenloser 16 bit Integerwert</td>
+</tr>
+<tr>
+<td>WORD</td>
+<td>vorzeichenloser 16 bit Integerwert</td>
+</tr>
+<tr>
+<td>INT</td>
+<td>32 bit Integerwert</td>
+</tr>
+<tr>
+<td>LONG</td>
+<td>32 bit Integerwert</td>
+</tr>
+<tr>
+<td>BOOL</td>
+<td>32 bit Integerwert</td>
+</tr>
+<tr>
+<td>UINT</td>
+<td>vorzeichenloser 32 bit Integerwert</td>
+</tr>
+<tr>
+<td>ULONG</td>
+<td>vorzeichenloser 32 bit Integerwert</td>
+</tr>
+<tr>
+<td>DWORD</td>
+<td>vorzeichenloser 32 bit Integerwert</td>
+</tr>
+<tr>
+<td>INT64</td>
+<td>64 bit Integerwert</td>
+</tr>
+<tr>
+<td>UINT64</td>
+<td>vorzeichenloser 64 bit Integerwert</td>
+</tr>
+<tr>
+<td>PTR</td>
+<td>allgemeiner Zeiger (pointer), (void *)</td>
+</tr>
+<tr>
+<td>HWND</td>
+<td>Fensterhandle (Zeiger)</td>
+</tr>
+<tr>
+<td>FLOAT</td>
+<td>Gleitkommazahl, einfache Genauigkeit</td>
+</tr>
+<tr>
+<td>DOUBLE</td>
+<td>Gleitkommazahl, doppelte Genauigkeit</td>
+</tr>
+<tr>
+<td>INT_PTR, LONG_PTR, LRESULT, LPARAM</td>
+<td>Integerwert, der gro&szlig; genug ist, einen Zeiger aufzunehmen, abh&auml;ngig von der AutoIt-Version (x86 oder x64)</td>
+</tr>
+<tr>
+<td>UINT_PTR, LONG_PTR, LRESULT, LPARAM</td>
+<td>vorzeichenloser Integerwert, der gro&szlig; genug ist, einen Zeiger aufzunehmen, abh&auml;ngig von der AutoIt-Version (x86 oder x64)</td>
+</tr>
+<tr>
+<td>STR</td>
+<td>ANSI-String (maximal 65536 Zeichen)</td>
+</tr>
+<tr>
+<td>WSTR</td>
+<td>UNICODE-Wide-String (Umwandlung von/nach ANSI-String w&auml;hrend des Aufrufs, wenn notwendig), maximal 65536 Zeichen</td>
+</tr>
+<tr>
+<td>STRUCT</td>
+<td>Struktur erstellt durch DllStructCreate()</td>
+</tr>
+<tr>
+<td>*</td>
+<td>H&auml;nge * an das Ende eines anderen Typs an, um ihn als Referenz zu &uuml;bergeben. Zum Beispiel &uuml;bergibt "int*" einen Zeiger auf einen "int"-Typ.</td>
+</tr>
+</table><br />
+Vergleich der Windows-API-Typen mit den AutoIt-Typen:<br />
+<br />
+<table>
+<tr>
+<td style="width:15%"><strong>WINDOWS-API-Typ</strong></td>
+<td style="width:85%"><strong>AutoIt-Typ</strong></td>
+</tr>
+<tr>
+<td>LPCSTR/LPSTR</td>
+<td>STR</td>
+</tr>
+<tr>
+<td>LPCWSTR/LPWSTR</td>
+<td>WSTR</td>
+</tr>
+<tr>
+<td>LPVOID</td>
+<td>PTR</td>
+</tr>
+<tr>
+<td>LP<em>xyz</em></td>
+<td><em>xyz</em>*</td>
+</tr>
+<tr>
+<td>HINSTANCE</td>
+<td>HANDLE</td>
+</tr>
+<tr>
+<td>HRESULT</td>
+<td>LONG</td>
+</tr>
+<tr>
+<td>LONGLONG/LARGE_INTEGER</td>
+<td>INT64</td>
+</tr>
+<tr>
+<td>ULONGLONG/ULARGE_INTEGER</td>
+<td>UINT64</td>
+</tr>
+<tr>
+<td>SIZE_T</td>
+<td>ULONG_PTR</td>
+</tr>
+</table>Um verschachtelte Strukturen innerhalb einer Struktur zu verwenden muss die verschachtelte Struktur neu definiert werden.<br />
+So w&uuml;rde zum Beispiel eine Struktur die eine 2 POINT Struktur enth&auml;lt ("long;long") als "long;long;long;long" deklariert. Die ersten long Werte entsprechen der ersten POINT Struktur und die zweiten Werte entsprechen der zweiten POINT Struktur.<br />
+<br />
+F&uuml;r mehr Windows API Typen siehe <a href="http://msdn.microsoft.com/en-us/library/aa383751.aspx">MSDN</a>.<br />
+<br />
+
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">Ein Array, siehe Bemerkungen.</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>Setzt @error auf ungleich 0.</td>
+</tr>
+<tr>
+<td class="valign-top">@error:</td>
+<td>1 = Die Dll-Datei kann nicht verwendet werden,<br />
+2 = unbekannter R&uuml;ckgabewert "return type",<br />
+3 = Funktion "function" wurde in der DLL-Datei nicht gefunden.<br />
+4 = Falsche Anzahl von Parametern.<br />
+5 = Falscher Parameter.</td>
+</tr>
+</table><br />
+
+
+<h2>Bemerkungen</h2>
+<p>Wenn der Dateiname einer DLL angegeben wird, wird die DLL automatisch geladen und nach den Funktionsaufruf wieder geschlossen. Wenn man das Laden und Entladen selbst kontrollieren will, verwendet man dazu die Funktionen <a href="DllOpen.htm">DllOpen()</a> und <a href="DllClose.htm">DllClose()</a> und gibt statt des Dateinamens ein Handle an.<br />
+<br />
+Normalerweise benutzt AutoIt die 'stdcall'-Befehlsmethode. Um die 'cdecl'-Methode zu benutzen  ist ':cdecl' nach dem R&uuml;ckgabewert "return type" zu setzen:<br />
+<a href="DllCall.htm">DllCall</a>("SQLite.dll", "int:cdecl", "sqlite3_open", "str", $sDatabase_Filename , "long_*", 0).<br />
+<br />
+Standardm&auml;&szlig;ig versucht AutoIt, die ANSI-Variante des Funktionsnamens zu verwenden, d.h. MessageBoxA wird verwendet, wenn MessageBox als Funktionsname gegeben ist. Um explizit die Unicode-Variante aufzurufen, kann MessageBoxW verwendet werden.<br />
+<br />
+Wenn der Funktionsaufruf scheitert, wird @error auf ungleich 0 gesetzt. <br />
+Ansonsten wird ein Array mit dem R&uuml;ckgabewert der Funktion und einer Kopie aller Parameter (inklusive derer, die die Funktion m&ouml;glicherweise ver&auml;ndert hat) zur&uuml;ckgegeben.<br />
+$return[0] = R&uuml;ckgabewert der Funktion<br />
+$return[1] = Param1<br />
+$return[2] = Param2<br />
+...<br />
+$return[n] = Paramn<br />
+<br />
+Es k&ouml;nnen beliebig viele "type"- und "param"-Parameter angegeben werden. Siehe die Beispiele unten, die viele Parameter verwenden.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="DllCallbackFree.htm">DllCallbackFree</a>, <a href="DllCallbackGetPtr.htm">DllCallbackGetPtr</a>, <a href="DllCallbackRegister.htm">DllCallbackRegister</a>, <a href="DllClose.htm">DllClose</a>, <a href="DllOpen.htm">DllOpen</a>, <a href="DllStructCreate.htm">DllStructCreate</a>, <a href="DllStructGetPtr.htm">DllStructGetPtr</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<h3>Beispiel 1</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\DllCall.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><span class="S1">; Direkter Aufruf der Nachrichtenfenster-API.</span>
+<a class="codeSnippetLink" href="../functions/DllCall.htm"><span class="S4">DllCall</span></a><span class="S8">(</span><span class="S7">"user32.dll"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"int"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"MessageBox"</span><span class="S8">,</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"hwnd"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S8">_</span><span class="S0"> </span><span class="S1">; Handle des Hauptfensters</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"str"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Some text"</span><span class="S8">,</span><span class="S0"> </span><span class="S8">_</span><span class="S0"> </span><span class="S1">; Der Text des Nachrichtenfensters</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"str"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Some title"</span><span class="S8">,</span><span class="S0"> </span><span class="S8">_</span><span class="S0"> </span><span class="S1">; Der Titel des Nachrichtenfensters</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"int"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Flags des Nachrichtenfensters</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 2</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\DllCall[02].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<span class="S1">;Aufrufen einer Funktion, die Parameter ver&auml;ndert</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iPID</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Run.htm"><span class="S4">Run</span></a><span class="S8">(</span><span class="S7">"notepad"</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hWnd</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/WinWait.htm"><span class="S4">WinWait</span></a><span class="S8">(</span><span class="S7">"[CLASS:Notepad]"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2000</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$hWnd</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Wartezeit abgelaufen.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">"Es ist nicht m&ouml;glich den Editor zu starten!"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllCall.htm"><span class="S4">DllCall</span></a><span class="S8">(</span><span class="S7">"user32.dll"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"int"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"GetWindowText"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"hwnd"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"str"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"int"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">32768</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">"Anzahl zur&uuml;ckgegebener Zeichen: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$aResult</span><span class="S8">[</span><span class="S3">0</span><span class="S8">])</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">"Text (zur&uuml;ckgegeben in Parameter 2): '"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$aResult</span><span class="S8">[</span><span class="S3">2</span><span class="S8">]</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"'"</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/WinClose.htm"><span class="S4">WinClose</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 3</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\DllCall[03].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext3\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext3">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+
+<span class="S1">;Den Windows PickIconDlg anzeigen</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sFileName</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@SystemDir"><span class="S6">@SystemDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'\shell32.dll'</span>
+
+<span class="S1">; Struktur erzeugen um den Iconindex abzuspeichern</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tIconIndex</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">"int"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tString</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">"wchar[260]"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iStructsize</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetSize.htm"><span class="S4">DllStructGetSize</span></a><span class="S8">(</span><span class="S9">$tString</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">/</span></a><span class="S0"> </span><span class="S3">2</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tString</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFileName</span><span class="S8">)</span>
+
+<span class="S1">; Den PickIconDlg starten - '62' ist der Ordinalwert f&uuml;r diese Funktion</span>
+<a class="codeSnippetLink" href="../functions/DllCall.htm"><span class="S4">DllCall</span></a><span class="S8">(</span><span class="S7">"shell32.dll"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"none"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">62</span><span class="S8">,</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"hwnd"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"struct*"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tString</span><span class="S8">,</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"int"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iStructsize</span><span class="S8">,</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"struct*"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tIconIndex</span><span class="S8">)</span>
+
+<span class="S9">$sFileName</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$tString</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iIconIndex</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$tIconIndex</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+
+<span class="S1">; Den neuen Dateinamen und den Iconindex anzeigen</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Info"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Die zuletzt ausgew&auml;hlte Datei: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sFileName</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Icon-Index: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iIconIndex</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

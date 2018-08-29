@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _GDIPlus_PathIsOutlineVisiblePoint</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1>_GDIPlus_PathIsOutlineVisiblePoint</h1>
+<p class="funcdesc">Determines whether a specified point touches the outline of a path with the specified Graphics and Pen<br /></p>
+<p class="codeheader">
+#include &lt;GDIPlus.au3&gt;<br />
+_GDIPlus_PathIsOutlineVisiblePoint ( $hPath, $nX, $nY [, $hPen = 0 [, $hGraphics = 0]] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$hPath</td>
+<td style="width:85%">Pointer to a GraphicsPath object</td>
+</tr>
+<tr>
+<td>$nX</td>
+<td>X coordinate of the point to test</td>
+</tr>
+<tr>
+<td>$nY</td>
+<td>Y coordinate of the point to test</td>
+</tr>
+<tr>
+<td>$hPen</td>
+<td><strong>[optional]</strong> Pointer to a Pen object that define the width of point to test. If 0, a solid black pen with a width of 1 will be used</td>
+</tr>
+<tr>
+<td>$hGraphics</td>
+<td><strong>[optional]</strong> Pointer to a Graphics object that specifies a world-to-device transformation. If 0, the test is done in world coordinates; otherwise, the test is done in device coordinates.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">True if the point touches the outline of the path,<br />
+False otherwise.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>sets the @error flag to non-zero, @extended may contain GPSTATUS error code ($GPID_ERR*).</td>
+</tr>
+</table>
+
+<h2>See Also</h2>
+<p>Search <a href="http://search.msdn.microsoft.com/search/Default.aspx?brand=msdn&query=GdipIsOutlineVisiblePathPoint">GdipIsOutlineVisiblePathPoint</a> in MSDN  Library.
+</p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_GDIPlus_PathIsVisiblePoint.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GDIPlus.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_hGUI</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_hGraphics</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hBmp_Buffer</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hGfx_Bufffer</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hBrush_NA</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hBrush_A</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hPen_NA</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hPen_A</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_hPath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hFormat</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hFamily</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">AutoItSetOption</span></a><span class="S8">(</span><span class="S7">"GUIOnEventMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$iW</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">640</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iH</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">240</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tLayout</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_hGUI</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"GDI+"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iW</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iH</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetOnEvent.htm"><span class="S4">GUISetOnEvent</span></a><span class="S8">(</span><span class="S9">$GUI_EVENT_CLOSE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"_Exit"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetOnEvent.htm"><span class="S4">GUISetOnEvent</span></a><span class="S8">(</span><span class="S9">$GUI_EVENT_MOUSEMOVE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"_MouseMove"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Startup.htm"><span class="S15">_GDIPlus_Startup</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_hGraphics</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsCreateFromHWND.htm"><span class="S15">_GDIPlus_GraphicsCreateFromHWND</span></a><span class="S8">(</span><span class="S9">$g_hGUI</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_hBmp_Buffer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BitmapCreateFromGraphics.htm"><span class="S15">_GDIPlus_BitmapCreateFromGraphics</span></a><span class="S8">(</span><span class="S9">$iW</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iH</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hGraphics</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_hGfx_Bufffer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageGetGraphicsContext.htm"><span class="S15">_GDIPlus_ImageGetGraphicsContext</span></a><span class="S8">(</span><span class="S9">$g_hBmp_Buffer</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsSetSmoothingMode.htm"><span class="S15">_GDIPlus_GraphicsSetSmoothingMode</span></a><span class="S8">(</span><span class="S9">$g_hGfx_Bufffer</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GDIP_SMOOTHINGMODE_HIGHQUALITY</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_hBrush_NA</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BrushCreateSolid.htm"><span class="S15">_GDIPlus_BrushCreateSolid</span></a><span class="S8">(</span><span class="S3">0xFF000066</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_hBrush_A</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BrushCreateSolid.htm"><span class="S15">_GDIPlus_BrushCreateSolid</span></a><span class="S8">(</span><span class="S3">0xFF00FF00</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_hPen_NA</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PenCreate.htm"><span class="S15">_GDIPlus_PenCreate</span></a><span class="S8">(</span><span class="S3">0xFF666600</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_hPen_A</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PenCreate.htm"><span class="S15">_GDIPlus_PenCreate</span></a><span class="S8">(</span><span class="S3">0xFF00FF00</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_hPath</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PathCreate.htm"><span class="S15">_GDIPlus_PathCreate</span></a><span class="S8">()</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_hFormat</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_StringFormatCreate.htm"><span class="S15">_GDIPlus_StringFormatCreate</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_StringFormatSetAlign.htm"><span class="S15">_GDIPlus_StringFormatSetAlign</span></a><span class="S8">(</span><span class="S9">$g_hFormat</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_hFamily</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_FontFamilyCreate.htm"><span class="S15">_GDIPlus_FontFamilyCreate</span></a><span class="S8">(</span><span class="S7">"Arial Black"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$tLayout</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_RectFCreate.htm"><span class="S15">_GDIPlus_RectFCreate</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iW</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iH</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PathAddString.htm"><span class="S15">_GDIPlus_PathAddString</span></a><span class="S8">(</span><span class="S9">$g_hPath</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"move mouse"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@LF"><span class="S6">@LF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"over text"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tLayout</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hFamily</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">72</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hFormat</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; _MouseMove</span><span class="S8">()</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">10</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _MouseMove</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sInfo</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">""</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aMouse</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetCursorInfo.htm"><span class="S4">GUIGetCursorInfo</span></a><span class="S8">()</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsClear.htm"><span class="S15">_GDIPlus_GraphicsClear</span></a><span class="S8">(</span><span class="S9">$g_hGfx_Bufffer</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xFF000000</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsFillPath.htm"><span class="S15">_GDIPlus_GraphicsFillPath</span></a><span class="S8">(</span><span class="S9">$g_hGfx_Bufffer</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hPath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hBrush_NA</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDrawPath.htm"><span class="S15">_GDIPlus_GraphicsDrawPath</span></a><span class="S8">(</span><span class="S9">$g_hGfx_Bufffer</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hPath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hPen_NA</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Select.htm"><span class="S5">Select</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PathIsOutlineVisiblePoint.htm"><span class="S15">_GDIPlus_PathIsOutlineVisiblePoint</span></a><span class="S8">(</span><span class="S9">$g_hPath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aMouse</span><span class="S8">[</span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$aMouse</span><span class="S8">[</span><span class="S3">1</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$g_hPen_A</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hGfx_Bufffer</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDrawPath.htm"><span class="S15">_GDIPlus_GraphicsDrawPath</span></a><span class="S8">(</span><span class="S9">$g_hGfx_Bufffer</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hPath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hPen_A</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sInfo</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"mouse cursor touches path outline"</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PathIsVisiblePoint.htm"><span class="S15">_GDIPlus_PathIsVisiblePoint</span></a><span class="S8">(</span><span class="S9">$g_hPath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aMouse</span><span class="S8">[</span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$aMouse</span><span class="S8">[</span><span class="S3">1</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$g_hGraphics</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsFillPath.htm"><span class="S15">_GDIPlus_GraphicsFillPath</span></a><span class="S8">(</span><span class="S9">$g_hGfx_Bufffer</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hPath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hBrush_A</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sInfo</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"mouse cursor in path fill area"</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Select.htm"><span class="S5">EndSelect</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ToolTip.htm"><span class="S4">ToolTip</span></a><span class="S8">(</span><span class="S9">$sInfo</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDrawImage.htm"><span class="S15">_GDIPlus_GraphicsDrawImage</span></a><span class="S8">(</span><span class="S9">$g_hGraphics</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hBmp_Buffer</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_MouseMove</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _Exit</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_FontFamilyDispose.htm"><span class="S15">_GDIPlus_FontFamilyDispose</span></a><span class="S8">(</span><span class="S9">$g_hFamily</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_StringFormatDispose.htm"><span class="S15">_GDIPlus_StringFormatDispose</span></a><span class="S8">(</span><span class="S9">$g_hFormat</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PathDispose.htm"><span class="S15">_GDIPlus_PathDispose</span></a><span class="S8">(</span><span class="S9">$g_hPath</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BrushDispose.htm"><span class="S15">_GDIPlus_BrushDispose</span></a><span class="S8">(</span><span class="S9">$g_hBrush_NA</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BrushDispose.htm"><span class="S15">_GDIPlus_BrushDispose</span></a><span class="S8">(</span><span class="S9">$g_hBrush_A</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PenDispose.htm"><span class="S15">_GDIPlus_PenDispose</span></a><span class="S8">(</span><span class="S9">$g_hPen_NA</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PenDispose.htm"><span class="S15">_GDIPlus_PenDispose</span></a><span class="S8">(</span><span class="S9">$g_hPen_A</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDispose.htm"><span class="S15">_GDIPlus_GraphicsDispose</span></a><span class="S8">(</span><span class="S9">$g_hGfx_Bufffer</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BitmapDispose.htm"><span class="S15">_GDIPlus_BitmapDispose</span></a><span class="S8">(</span><span class="S9">$g_hBmp_Buffer</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDispose.htm"><span class="S15">_GDIPlus_GraphicsDispose</span></a><span class="S8">(</span><span class="S9">$g_hGraphics</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Shutdown.htm"><span class="S15">_GDIPlus_Shutdown</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIDelete.htm"><span class="S4">GUIDelete</span></a><span class="S8">(</span><span class="S9">$g_hGUI</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_Exit</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion DllCallAddress</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">DllCallAddress</h1><br />
+<a href="../functions_en/DllCallAddress.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Ruft eine Funktion an einer bestimmten Speicheradresse dynamisch auf.<br /></p>
+<p class="codeheader">
+DllCallAddress ( "return type", address [, type1, param1 [, type n, param n]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">return type</td>
+<td style="width:85%">Der R&uuml;ckgabetyp der Funktion (siehe unten).</td>
+</tr>
+<tr>
+<td>address</td>
+<td>Die Adresse einer Funktion. <strong>Wenn dieser Wert ung&uuml;ltig ist, wird das AutoIt abst&uuml;rzen!</strong></td>
+</tr>
+<tr>
+<td>type1</td>
+<td><strong>[optional]</strong> Der Typ des ersten Parameters (siehe Bemerkungen).</td>
+</tr>
+<tr>
+<td>param1</td>
+<td><strong>[optional]</strong> Der eigentliche erste Parameter (siehe Bemerkungen).</td>
+</tr>
+<tr>
+<td>type n</td>
+<td><strong>[optional]</strong> Der Typ des n-ten Parameters (siehe Bemerkungen).</td>
+</tr>
+<tr>
+<td>param n</td>
+<td><strong>[optional]</strong> Der eigentliche n-te Parameter (siehe Bemerkungen).</td>
+</tr>
+</table>G&uuml;ltige Typen sind:<br />
+<br />
+<table>
+<tr>
+<td style="width:15%"><strong>Typ</strong></td>
+<td style="width:85%"><strong>Details</strong></td>
+</tr>
+<tr>
+<td>NONE</td>
+<td>kein Wert (nur f&uuml;r R&uuml;ckgabetyp g&uuml;ltig - &auml;quivalent zu void in C)</td>
+</tr>
+<tr>
+<td>BYTE</td>
+<td>ein vorzeichenloser 8 bit Integer</td>
+</tr>
+<tr>
+<td>BOOLEAN</td>
+<td>ein vorzeichenloser 8 bit Integer</td>
+</tr>
+<tr>
+<td>SHORT</td>
+<td>ein 16 bit Integer</td>
+</tr>
+<tr>
+<td>USHORT</td>
+<td>ein vorzeichenloser 16 bit Integer</td>
+</tr>
+<tr>
+<td>WORD</td>
+<td>ein vorzeichenloser 16 bit Integer</td>
+</tr>
+<tr>
+<td>INT</td>
+<td>ein 32 bit Integer</td>
+</tr>
+<tr>
+<td>LONG</td>
+<td>ein 32 bit Integer</td>
+</tr>
+<tr>
+<td>BOOL</td>
+<td>ein 32 bit Integer</td>
+</tr>
+<tr>
+<td>UINT</td>
+<td>ein vorzeichenloser 32 bit Integer</td>
+</tr>
+<tr>
+<td>ULONG</td>
+<td>ein vorzeichenloser 32 bit Integer</td>
+</tr>
+<tr>
+<td>DWORD</td>
+<td>ein vorzeichenloser 32 bit Integer</td>
+</tr>
+<tr>
+<td>INT64</td>
+<td>ein 64 bit Integer</td>
+</tr>
+<tr>
+<td>UINT64</td>
+<td>ein vorzeichenloser 64 bit Integer</td>
+</tr>
+<tr>
+<td>PTR</td>
+<td>ein allgemeiner Pointer (void *)</td>
+</tr>
+<tr>
+<td>HWND</td>
+<td>ein Fensterhandle (pointer)</td>
+</tr>
+<tr>
+<td>HANDLE</td>
+<td>ein Handle (pointer)</td>
+</tr>
+<tr>
+<td>FLOAT</td>
+<td>eine Gleitkommazahl mit einfacher Genauigkeit</td>
+</tr>
+<tr>
+<td>DOUBLE</td>
+<td>eine Gleitkommazahl mit doppelter Genauigkeit</td>
+</tr>
+<tr>
+<td>INT_PTR, LONG_PTR, LRESULT, LPARAM</td>
+<td>ein Integer, gro&szlig; genug um einen Pointer zu enthalten wenn die x86 oder x64 Versionen von AutoIt benutzt werden.</td>
+</tr>
+<tr>
+<td>UINT_PTR, ULONG_PTR, DWORD_PTR, WPARAM</td>
+<td>ein vorzeichenloser Integer, gro&szlig; genug um einen Pointer zu enthalten wenn die x86 oder x64 Versionen von AutoIt benutzt werden.</td>
+</tr>
+<tr>
+<td>STR</td>
+<td>ein ANSI String (ein Minimum von 65536 chars wird reserviert).</td>
+</tr>
+<tr>
+<td>WSTR</td>
+<td>ein UNICODE wide character String (ein Minimum von 65536 chars wird reserviert).</td>
+</tr>
+<tr>
+<td>STRUCT</td>
+<td>Struktur die mit DllStructCreate() erstellt wurde</td>
+</tr>
+<tr>
+<td>*</td>
+<td>Um einen Datentypen via Referenz (Pointer) zu &uuml;bergeben muss * an den Datentyp angef&uuml;gt werden. Beispiel: "int*" &uuml;bergibt einen Pointer zu einem "int" Typ.</td>
+</tr>
+</table><br />
+Umwandlungen von Windows API Typen zu AutoIt Typen:<br />
+<br />
+<table>
+<tr>
+<td style="width:15%"><strong>WINDOWS API Typ</strong></td>
+<td style="width:85%"><strong>AutoIt Typ</strong></td>
+</tr>
+<tr>
+<td>LPCSTR/LPSTR</td>
+<td>STR</td>
+</tr>
+<tr>
+<td>LPCWSTR/LPWSTR</td>
+<td>WSTR</td>
+</tr>
+<tr>
+<td>LPVOID</td>
+<td>PTR</td>
+</tr>
+<tr>
+<td>LP<em>xyz</em></td>
+<td><em>xyz</em>*</td>
+</tr>
+<tr>
+<td>HINSTANCE</td>
+<td>HANDLE</td>
+</tr>
+<tr>
+<td>HRESULT</td>
+<td>LONG</td>
+</tr>
+<tr>
+<td>LONGLONG/LARGE_INTEGER</td>
+<td>INT64</td>
+</tr>
+<tr>
+<td>ULONGLONG/ULARGE_INTEGER</td>
+<td>UINT64</td>
+</tr>
+<tr>
+<td>SIZE_T</td>
+<td>ULONG_PTR</td>
+</tr>
+</table>Um verschachtelte Strukturen innerhalb einer Struktur zu verwenden muss zuerst die verschachtelte Struktur neu definiert werden. Zum Beispiel w&uuml;rde eine Struktur die 2 POINT Strukturen ("long;long") enth&auml;lt, als "long;long;long;long" deklariert werden. Die ersten zwei long Werte beziehen sich auf die erste POINT Struktur und die letzten zwei long Werte beziehen sich auf die zweite POINT Struktur.<br />
+<br />
+F&uuml;r weitere Windows API Typen siehe <a href="http://msdn.microsoft.com/en-us/library/aa383751.aspx">MSDN</a>.<br />
+<br />
+
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%">ein Array. Siehe Anmerkungen.</td>
+</tr>
+<tr>
+<td class="valign-top">Fehler:</td>
+<td>Setzt @error auf ungleich 0.</td>
+</tr>
+<tr>
+<td class="valign-top">@error:</td>
+<td>2 = unbekannter "R&uuml;ckgabetyp",<br />
+4 = falsche Anzahl von Parametern,<br />
+5 = falscher Parameter</td>
+</tr>
+</table><br />
+
+
+<h2>Bemerkungen</h2>
+<p>Standardm&auml;&szlig;ig, benutzt AutoIt die 'stdcall' Aufrufmethode. Um die 'cdecl' Methode zu benutzen muss ein ':cdecl' nach dem R&uuml;ckgabetyp angegeben werden.<br />
+<br />
+Falls die Funktion fehlschl&auml;gt, wird @error auf ungleich 0 gesetzt. <br />
+Andernfalls wird ein Array zur&uuml;ckgegeben, dass den R&uuml;ckgabewert der Funktion zusammen mit einer Kopie aller Parameter (inklusive der Parameter die die Funktion m&ouml;glicherweise ver&auml;ndert hat wenn sie via Referenz &uuml;bergeben wurden).<br />
+$return[0] = R&uuml;ckgabewert der Funktion<br />
+$return[1] = param1<br />
+$return[2] = param2<br />
+...<br />
+$return[n] = paramn<br />
+<br />
+<div class="specialnote">Anmerkung: Dies ist eine fortgeschrittene Funktion. Falsche Benutzung dieser Funktion kann AutoIt zum Absturz bringen. Bevor diese Funktion verwendet wird sollte sicher sein, dass <a href="DllCall.htm">DllCall()</a> nicht den gew&uuml;nschten Zweck erf&uuml;llt.</div><br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="DllCall.htm">DllCall</a>, <a href="DllCallbackFree.htm">DllCallbackFree</a>, <a href="DllCallbackGetPtr.htm">DllCallbackGetPtr</a>, <a href="DllCallbackRegister.htm">DllCallbackRegister</a>, <a href="DllClose.htm">DllClose</a>, <a href="DllOpen.htm">DllOpen</a>, <a href="DllStructCreate.htm">DllStructCreate</a>, <a href="DllStructGetPtr.htm">DllStructGetPtr</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\DllCallAddress.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPISysWin.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WindowsConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Aktiviert den Gui OnEvent Mode</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"GUIOnEventMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erstellt eine einfache Gui</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hWnd</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"DllCallAddress Beispiel"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Beim schliessen des Fensters, OnClose aufrufen</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetOnEvent.htm"><span class="S4">GUISetOnEvent</span></a><span class="S8">(</span><span class="S9">$GUI_EVENT_CLOSE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"OnClose"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Zeigt die Gui</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOWNORMAL"><span class="S6">@SW_SHOWNORMAL</span></a><span class="S8">,</span><span class="S0"> </span><span class="S9">$hWnd</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Holt den Pointer zur Windows-Funktion WindowProc().</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$pWndProc</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetWindowLong.htm"><span class="S15">_WinAPI_GetWindowLong</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GWL_WNDPROC</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Teilt dem User mit was passieren wird</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"DllCallAddress Beispiel Nachricht"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Wenn auf OK geklickt wird, wird das Fenster geschlossen."</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Explizit wird ein WM_CLOSE Event generiert und direkt zur WindowProc() weitergegeben.</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Das sollte in keiner echten Applikation so sein (lieber _SendMessage() nutzen) aber</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; es demonstriert wie man die Funktion nutzt</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllCallAddress.htm"><span class="S4">DllCallAddress</span></a><span class="S8">(</span><span class="S7">"LRESULT"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$pWndProc</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"HWND"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"UINT"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$WM_CLOSE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"WPARAM"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"LPARAM"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> OnClose</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIDelete.htm"><span class="S4">GUIDelete</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@GUI_WinHandle"><span class="S6">@GUI_WinHandle</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"DllCallAddress Beispiel Nachricht"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Schliess-Event empfangen. Das Test-Fenster sollte jetzt geschlossen sein"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;OnClose</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

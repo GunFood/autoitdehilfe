@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _DebugSetup</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_DebugSetup</h1><br />
+<a href="../libfunctions/_DebugSetup.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Setup up a debug session using a specific reporting type<br /></p>
+<p class="codeheader">
+#include &lt;Debug.au3&gt;<br />
+_DebugSetup ( [$sTitle = Default [, $bBugReportInfos = False [, $vReportType = 1 [, $sLogFile = "" [, $bTimeStamp = False]]]]] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$sTitle</td>
+<td style="width:85%"><strong>[optional]</strong> Title to be displayed on the report window. Default value is "AutoIt Debug Report".</td>
+</tr>
+<tr>
+<td>$bBugReportInfos</td>
+<td><strong>[optional]</strong> Display BugReport infos. Default value is False.</td>
+</tr>
+<tr>
+<td>$vReportType</td>
+<td><strong>[optional]</strong> 1 - Report Log Window (Default).<br />
+2 - ConsoleWrite.<br />
+3 - MsgBox.<br />
+4 - FileWrite into $sLogFile defines the filename.<br />
+5 - Report Notepad Window.<br />
+string - name of specific report function to be used.</td>
+</tr>
+<tr>
+<td>$sLogFile</td>
+<td><strong>[optional]</strong> Name of the file if $vReportType = 4</td>
+</tr>
+<tr>
+<td>$bTimeStamp</td>
+<td><strong>[optional]</strong> True if every message must be prefixed with a timeStamp "YYYY/MM/DD HH:MM:SS"</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">the report type.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>sets the @error flag to non-zero.</td>
+</tr>
+<tr>
+<td class="valign-top">@error:</td>
+<td>1 - if already called<br />
+2 - invalid report type<br />
+3 - invalid CallBack function</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>If a specific reporting function is registered then on AutoIt exit it is called without parameters.<br />
+<br />
+You can only start one debug session at a time in the running script.<br />
+You can debug several concurrent scripts using the same debugging session, just use the same $sTitle when calling <a href="_DebugSetup.htm">_DebugSetup()</a>. All <a href="_DebugOut.htm">_DebugOut()</a> will go to the same debugging session.<br />
+<br />
+Commenting out the <a href="_DebugSetup.htm">_DebugSetup()</a> call will effectively disable all the calls to _Debug...(), but you may want to remove the calls to all _Debug...() functions before making a release version of your script.<br />
+<br />
+If the "Report Log Window" type is used then the script will end only when closing the report window.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="_DebugOut.htm">_DebugOut</a>, <a href="_DebugReport.htm">_DebugReport</a>, <a href="_DebugReportEx.htm">_DebugReportEx</a>, <a href="_DebugReportVar.htm">_DebugReportVar</a></p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_DebugSetup.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><span class="S2">#cs ----------------------------------------------------------------------------</span>
+
+<span class="S2">&nbsp; &nbsp; AutoIt Version: 3.2.8.1</span>
+<span class="S2">&nbsp; &nbsp; Author: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;David Nuttall</span>
+
+<span class="S2">&nbsp; &nbsp; Script Function:</span>
+<span class="S2">&nbsp; &nbsp; Base script to show functionality of Debug functions.</span>
+
+<span class="S2">#ce ----------------------------------------------------------------------------</span>
+
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Debug.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_DebugSetup.htm"><span class="S15">_DebugSetup</span></a><span class="S8">(</span><span class="S7">"Check Excel"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">; start displaying debug environment</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">4</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinActivate.htm"><span class="S4">WinActivate</span></a><span class="S8">(</span><span class="S7">"Microsoft Excel"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; interact with Excel</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Send.htm"><span class="S4">Send</span></a><span class="S8">(</span><span class="S7">"</span><span class="S10">{Down}</span><span class="S7">"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugOut.htm"><span class="S15">_DebugOut</span></a><span class="S8">(</span><span class="S7">"Moved Mouse Down"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; forces debug notepad window to take control</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

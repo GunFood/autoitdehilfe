@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Skripte mit Aut2Exe kompilieren</title>
+	<meta charset="utf-8">
+	<link href="../css/default.css" rel="stylesheet">
+</head>
+<body>
+	<h1>Skripte mit Aut2Exe kompilieren</h1>
+	<p>Es ist m&ouml;glich, <em>.au3-</em>Skripte in <strong>eigenst&auml;ndig lauff&auml;hige</strong> Programme zu kompilieren. Die daraus resultierenden, ausf&uuml;hrbaren Dateien k&ouml;nnen auch dann gestartet werden, wenn weder AutoIt v3 auf dem Zielcomputer installiert wurde noch die Datei <em>AutoIt3.exe</em> auf dem PC vorhanden ist. Der Kompilierungsprozess konvertiert das Skript und seine <a href="../keywords/include.htm">#include</a> Dateien sowie alle Dateien, die von den <a href="../functions/FileInstall.htm">FileInstall</a> hinzugef&uuml;gt wurden, in eine Token-Form, die dann komprimiert und verschl&uuml;sselt wird. Auf diese Weise sind keine dieser zus&auml;tzlichen Dateien zur Laufzeit erforderlich. Abh&auml;ngig von der gew&auml;hlten Kompilierungsoption wird dieses Skript "<em>kompiliert</em>" und entweder in die Ressourcen eines eigenst&auml;ndigen ausf&uuml;hrbaren Interpreters eingef&uuml;gt, der es direkt ausf&uuml;hrt oder in dem <em>.a3x</em> Format gespeichert. Eine <em>.a3x</em> Datei kann in ein anderes Skript aufgenommen oder von einem AutoIt-Interpreter ausgef&uuml;hrt werden - entweder <em>Autoit3.exe</em> selbst oder ein anderes kompiliertes Skript mit dem <em>AutoItExecuteAllowed</em> Flag gesetzt. </ p>
+	<p><b>Achtung:</b> Das zu kompilierende Skript muss frei von Syntaxfehlern sein, da die Syntax bei der Kompilierung nicht gepr&uuml;ft wird.</p>
+	<p>Aut2Exe kann auf drei verschiede Weisen verwendet werden:<br></p>
+	<h2>Methode 1 - Startmen&uuml;</h2>
+	<p><em>Nur m&ouml;glich, wenn beim Setup von AutoIt die Komplettinstallation gew&auml;hlt wurde!</em></p>
+	<p>1. &Ouml;ffnen des Startmen&uuml;s und navigieren zum Eintrag "AutoIt v3"</p>
+	<p>2. Klick auf <em>"Compile Script to .exe"</em></p>
+	<p>3. Das Hauptfenster von Aut2Exe erscheint.</p>
+	<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img alt="" src="../images/aut2exe.png"></p>
+	<p>4. Schaltfl&auml;chen "<em>Browse</em>" benutzen, um die Quell- (.au3) und die Zieldatei (.exe) auszuw&auml;hlen bzw. einzutragen.</p>
+	<p>5. Wenn erw&uuml;nscht, kann das Icon der resultierenden .exe-Datei &uuml;ber die entsprechende Schaltfl&auml;che ver&auml;ndert werden (einige Beispiel-Icons liegen im Ordner C:\Programme<em>\AutoIt3\Aut2Exe\Icons</em>).</p>
+	<p>6. Die einzige andere Option, die eventuell ver&auml;ndert werden m&ouml;chte, ist der Kompressionsfaktor (besonders dann, wenn mit FileInstall zus&auml;tzliche Dateien eingebunden werden). Die entsprechenden Einstellungen finden sich im Men&uuml; "Compression". Wie bei allen Kompressionsroutinen ist die Geschwindigkeit der Kompilierung geringer, je gr&ouml;&szlig;er der Kompressionsfaktor ist. Egal welche Kompression gew&auml;hlt wird, die Ausf&uuml;hrungsgeschwindigkeit der kompilierten .exe-Datei wird immer die gleiche sein.</p>
+	<p>7. Auf "<em>Convert</em>" klicken, um das Skript zu kompilieren.</p>
+	<p><strong>Es ist folgendes zu beachten:</strong> Skripte k&ouml;nnen mit einer .a3x Erweiterung kompiliert werden. Dieses sollte mit AutoIt.exe filename.a3x aufgerufen werden. Die .a3x Datei enth&auml;lt das Skript selbst mit allen genannten #include und den eingebundenen Dateien. durch dieses Format ist es m&ouml;glich eine kleinere Datei zu erzeugen, da die AutoIt3.exe nicht in jedem kompilierten Skript enthalten ist. Allerdings ben&ouml;tigt man auf dem Ziel-PC die AutoIt3.exe.</p>
+	<p></p>
+	<p></p>
+	<h2>Methode 2 - Kontextmen&uuml;<br></h2>
+	<p><em>Nur m&ouml;glich, wenn beim Setup von AutoIt die Komplettinstallation gew&auml;hlt wurde!</em></p>
+	<p>1. Im Explorer zu der zu kompilierenden .au3-Datei navigieren</p>
+	<p>2. Das Kontextmen&uuml; aufrufen (rechte Maustaste)</p>
+	<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img alt="" src="../images/compile-rightclick.png"></p>
+	<p>3. Nach Aufruf durch Klicken auf "Compile Script" wird das Skript im Hintergrund kompiliert. Als Ergebnis wird im selben Verzeichnis eine Datei mit dem gleichen Dateinamen, aber der Endung ".exe" erstellt.</p>
+	<p>Hinweis: Bei dieser Methode werden die beim letzten Start nach Methode 1 getroffenen Einstellungen &uuml;ber Kompression und Icon benutzt.<br></p>
+	<p></p>
+	<h2>Methode 3 - Die Kommandozeile<br></h2>
+	<p>Die <em>Aut2Exe.exe</em> kann auch auf folgende Art &uuml;ber die Kommandozeile aufgerufen werden:</p>
+@@SyntaxHighlighting@@
+Aut2exe.exe / In < infile.au3 >[/out < outfile.exe >][/icon < iconfile.ico >][/comp 0 - 4][/nopack][/x64][/bin < binfile.bin >]
+@@End@@
+	<p>Where</p>
+  <table>
+    <tbody>
+      <tr>
+  			<th>Switch</th>
+  			<th>Verwendung</th>
+  			<th>Standardwert</th>
+  		</tr>
+  		<tr>
+  			<td>/in</td>
+				<td>&lt;infile.au3&gt; Legt den Pfad und den Dateinamen der bin-Datei fest, welche verwendet wird um die Datei zu kompilieren.</td>
+				<td class="center">Nichts. Die Datei <strong>muss</strong> festgelegt sein</td>
+  		</tr>
+  		<tr>
+  			<td>/out</td>
+  			<td>Legt den Pfad und den Dateinamen der kompilierten Datei fest.<br>
+  			Legt den Pfad und den Dateinamen fest, wenn eine *.a3x Datei erstellt wird.</td>
+				<td class="center">Der Eingabedateiname mit einer .exe Erweiterung</td>
+  		</tr>
+  		<tr>
+  			<td>/icon</td>
+  			<td>Legt den Pfad und den Dateinamen des zu verwendenden Icons f&uuml;r die kompilierte Datei fest.</td>
+				<td class="center">Standard-Icon</td>
+  		</tr>
+  		<tr>
+  			<td>/comp</td>
+  			<td>Legt das Komprimierungslevel fest, welche beim enkodieren verwendet wird (Dies hat NICHTS mit UPX zu tun).<br>
+  			Es muss eine Zahl zwischen 0 (keine) und 4 (maximum) sein.</td>
+				<td class="center">2</td>
+  		</tr>
+  		<tr>
+  			<td>/nopack</td>
+  			<td>Legt fest, dass die Datei nicht mit UPX nach dem kompilieren komprimiert werden soll.</td>
+				<td class="center">pack</td>
+  		</tr>
+  		<tr>
+  			<td>/pack</td>
+  			<td>Legt fest, dass die Datei mit UPX nach dem kompilieren komprimiert werden soll.</td>
+				<td class="center">pack</td>
+  		</tr>
+  		<tr>
+  			<td>/x64</td>
+  			<td>Legt fest, dass das Skript sp&auml;ter auch auf x64 (64-bit) Systemen funktionieren soll.</td>
+				<td class="center">siehe Bemerkungen</td>
+  		</tr>
+  		<tr>
+  			<td>/x86</td>
+  			<td>Legt fest, dass das Skript sp&auml;ter auch auf x86 (32-bit) Systemen funktionieren soll.</td>
+				<td class="center">see notes</td>
+  		</tr>
+  		<tr>
+  			<td>/console</td>
+  			<td>Legt fest, dass das Skript als eine Console-Anwendung kompiliert werden soll.</td>
+				<td class="center">Windowsanwendung (/gui)</td>
+  		</tr>
+  		<tr>
+  			<td>/gui</td>
+  			<td>Legt fest, dass das Skript als eine Windowsanwendung kompiliert werden soll.</td>
+				<td class="center">Windowsanwendung (/gui)</td>
+  		</tr>
+		</tbody>
+	</table>
+	<h2>Beispiele Kommandozeilentools</h2>
+	<p>/in c:\myscript.au3 /out c:\myapp.exe /icon c:\myicon.ico /x64</p>
+	<p>Ergebnis: Es ergibt in Anlehnung an c:\myapp.exe mit normaler Komprimierung. Es wird das festgelegte Icon verwendet und es wird auf x64 Systemen funktionieren.</p>
+	<p>/in c:\myscript.au3</p>
+	<p>Ergebnis: Es ergibt in Anlehnung an Unicode c:\myscript.exe mit normaler Komprimierung. Es wird das Standard AutoIt Icon verwendet und es wird auf Win32 Systemen funktionieren.</p>
+	<h2>Bemerkungen zu Kommandozeilentools</h2>
+	<p>Lange Dateinamen und Dateinamen mit enthaltenden Leerzeichen sollten in doppelte Anf&uuml;hrungszeichen eingeschlossen werden. Beispiel: "C:\Programme\AutoIt Test\test.au3". Wenn der Parameter "out" nicht angegeben wird, dann wird der Name der Quelldatei mit der Endung ".exe" benutzt.<br></p>Files\Test\test.au3".
+	<p></p>
+	<p>Mit der Ausnahme von /in sind alle Schalter optional.</p>
+	<p>Der Standard ist ein 32-bit Grundgerippe.</p>
+	<p>Standardm&auml;&szlig;ig erstellt der 32-bit Kompiler eine 32-bit Version und der 64-bit Kompiler eine 64-bit Version. Die Parameter /x86 und /x64 sind zu verwenden, um die Art Version direkt festzulegen.</p>
+	<p>Die Schalter /pass und /nodecompile sind seit der Version 3.2.8.1 &uuml;berfl&uuml;ssig. Sie werden, falls verwendet, ignoriert. Au&szlig;erdem wurden sie von dieser Liste entfernt.</p>
+	<p>Die Schalter /ansi und /unicode sind seit der Version 3.3.0.0 &uuml;berfl&uuml;ssig.</p>
+	<p>Der Schalter /bin ist seit der Version 3.3.10.0 redundant und wurde von der Liste entfernt.</p>
+	<p></p>
+	<p></p>
+	<h2>Technische Details<br></h2>
+	<p>Das kompilierte Skript und die mit FileInstall eingebundenen Dateien werden mit Jons eigenem Kompressionsalgorhythmus komprimiert.</p><br>
+</body>
+</html>

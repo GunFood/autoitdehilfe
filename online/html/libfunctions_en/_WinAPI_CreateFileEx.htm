@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _WinAPI_CreateFileEx</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_WinAPI_CreateFileEx</h1><br />
+<a href="../libfunctions/_WinAPI_CreateFileEx.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Creates or opens a file or I/O device<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIFiles.au3&gt;<br />
+_WinAPI_CreateFileEx ( $sFilePath, $iCreation [, $iAccess = 0 [, $iShare = 0 [, $iFlagsAndAttributes = 0 [, $tSecurity = 0 [, $hTemplate = 0]]]]] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$sFilePath</td>
+<td style="width:85%">The name of the file or device to be created or opened.</td>
+</tr>
+<tr>
+<td>$iCreation</td>
+<td>The action to take on a file or device that exists or does not exist. This parameter must be one of the following values, which cannot be combined.<br />
+&nbsp;&nbsp;&nbsp; $CREATE_NEW<br />
+&nbsp;&nbsp;&nbsp; $CREATE_ALWAYS<br />
+&nbsp;&nbsp;&nbsp; $OPEN_EXISTING<br />
+&nbsp;&nbsp;&nbsp; $OPEN_ALWAYS<br />
+&nbsp;&nbsp;&nbsp; $TRUNCATE_EXISTING</td>
+</tr>
+<tr>
+<td>$iAccess</td>
+<td><strong>[optional]</strong> The requested access to the file or device, which can be summarized as read, write, both or neither (zero) (Default).<br />
+&nbsp;&nbsp;&nbsp; $GENERIC_READ<br />
+&nbsp;&nbsp;&nbsp; $GENERIC_WRITE<br />
+&nbsp;&nbsp;&nbsp; (See MSDN for more information)</td>
+</tr>
+<tr>
+<td>$iShare</td>
+<td><strong>[optional]</strong> The requested sharing mode of the file or device, which can be read, write, both, delete, all of these, or none.<br />
+If this parameter is 0 (Default) and <a href="_WinAPI_CreateFileEx.htm">_WinAPI_CreateFileEx()</a> succeeds, the file or device cannot be shared and cannot be opened again until the handle to the file or device is closed.<br />
+&nbsp;&nbsp;&nbsp; $FILE_SHARE_DELETE<br />
+&nbsp;&nbsp;&nbsp; $FILE_SHARE_READ<br />
+&nbsp;&nbsp;&nbsp; $FILE_SHARE_WRITE</td>
+</tr>
+<tr>
+<td>$iFlagsAndAttributes</td>
+<td><strong>[optional]</strong> The file or device attributes and flags. This parameter can be one or more of the following values:<br />
+&nbsp;&nbsp;&nbsp; $FILE_ATTRIBUTE_READONLY<br />
+&nbsp;&nbsp;&nbsp; $FILE_ATTRIBUTE_HIDDEN<br />
+&nbsp;&nbsp;&nbsp; $FILE_ATTRIBUTE_SYSTEM<br />
+&nbsp;&nbsp;&nbsp; $FILE_ATTRIBUTE_DIRECTORY<br />
+&nbsp;&nbsp;&nbsp; $FILE_ATTRIBUTE_ARCHIVE<br />
+&nbsp;&nbsp;&nbsp; $FILE_ATTRIBUTE_DEVICE<br />
+&nbsp;&nbsp;&nbsp; $FILE_ATTRIBUTE_NORMAL<br />
+&nbsp;&nbsp;&nbsp; $FILE_ATTRIBUTE_TEMPORARY<br />
+&nbsp;&nbsp;&nbsp; $FILE_ATTRIBUTE_SPARSE_FILE<br />
+&nbsp;&nbsp;&nbsp; $FILE_ATTRIBUTE_REPARSE_POINT<br />
+&nbsp;&nbsp;&nbsp; $FILE_ATTRIBUTE_COMPRESSED<br />
+&nbsp;&nbsp;&nbsp; $FILE_ATTRIBUTE_OFFLINE<br />
+&nbsp;&nbsp;&nbsp; $FILE_ATTRIBUTE_NOT_CONTENT_INDEXED<br />
+&nbsp;&nbsp;&nbsp; $FILE_ATTRIBUTE_ENCRYPTED<br />
+<br />
+&nbsp;&nbsp;&nbsp; $FILE_FLAG_BACKUP_SEMANTICS<br />
+&nbsp;&nbsp;&nbsp; $FILE_FLAG_DELETE_ON_CLOSE<br />
+&nbsp;&nbsp;&nbsp; $FILE_FLAG_NO_BUFFERING<br />
+&nbsp;&nbsp;&nbsp; $FILE_FLAG_OPEN_NO_RECALL<br />
+&nbsp;&nbsp;&nbsp; $FILE_FLAG_OPEN_REPARSE_POINT<br />
+&nbsp;&nbsp;&nbsp; $FILE_FLAG_OVERLAPPED<br />
+&nbsp;&nbsp;&nbsp; $FILE_FLAG_POSIX_SEMANTICS<br />
+&nbsp;&nbsp;&nbsp; $FILE_FLAG_RANDOM_ACCESS<br />
+&nbsp;&nbsp;&nbsp; $FILE_FLAG_SEQUENTIAL_SCAN<br />
+&nbsp;&nbsp;&nbsp; $FILE_FLAG_WRITE_THROUGH<br />
+<br />
+&nbsp;&nbsp;&nbsp; $SECURITY_ANONYMOUS (Default)<br />
+&nbsp;&nbsp;&nbsp; $SECURITY_CONTEXT_TRACKING<br />
+&nbsp;&nbsp;&nbsp; $SECURITY_DELEGATION<br />
+&nbsp;&nbsp;&nbsp; $SECURITY_EFFECTIVE_ONLY<br />
+&nbsp;&nbsp;&nbsp; $SECURITY_IDENTIFICATION<br />
+&nbsp;&nbsp;&nbsp; $SECURITY_IMPERSONATION</td>
+</tr>
+<tr>
+<td>$tSecurity</td>
+<td><strong>[optional]</strong> $tagSECURITY_ATTRIBUTES structure that contains two separate but related data members: an optional security descriptor, and a Boolean value that determines whether the returned handle can be inherited by child processes.<br />
+If this parameter is 0 (Default), the handle cannot be inherited by any child processes the application may create and the file or device associated with the returned handle gets a default security descriptor.</td>
+</tr>
+<tr>
+<td>$hTemplate</td>
+<td><strong>[optional]</strong> Handle to a template file with the $GENERIC_READ access right. The template file supplies file attributes and extended attributes for the file that is being created.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">Handle to the specified file, device, named pipe, or mail slot.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>0 and sets the @error flag to non-zero, @extended contains <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a>.</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>When an application is finished using the object handle returned by this function, use the <a href="_WinAPI_CloseHandle.htm">_WinAPI_CloseHandle()</a> function to close the handle.<br />
+This not only frees up system resources, but can have wider influence on things like sharing the file or device and committing data to disk.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="_WinAPI_CloseHandle.htm">_WinAPI_CloseHandle</a></p>
+
+<h2>See Also</h2>
+<p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(CreateFile);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">CreateFile</a> in MSDN  Library.
+</p>
+
+</body>
+</html>

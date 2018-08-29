@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _WinAPI_AdjustTokenPrivileges</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_WinAPI_AdjustTokenPrivileges</h1><br />
+<a href="../libfunctions/_WinAPI_AdjustTokenPrivileges.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Show description in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Enables or disables privileges in the specified access token<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIProc.au3&gt;<br />
+_WinAPI_AdjustTokenPrivileges ( $hToken, $aPrivileges, $iAttributes, ByRef $aAdjust )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$hToken</td>
+<td style="width:85%">Handle to the access token that contains the privileges to be modified.<br />
+The handle must have 	$TOKEN_ADJUST_PRIVILEGES and $TOKEN_QUERY accesses to the token.</td>
+</tr>
+<tr>
+<td>$aPrivileges</td>
+<td>The variable that specifies a privileges.<br />
+If this parameter is (-1), the function disables of the token's privileges and ignores the $iAttributes parameter.<br />
+$aPrivileges can be one of the following types.<br />
+<br />
+The privilege constant ($SE_*).<br />
+1D array of $SE_* constants.<br />
+2D array of $SE_* constants and their attributes (see below).<br />
+[0][0] - Privilege<br />
+[0][1] - Attributes<br />
+[n][0] - Privilege<br />
+[n][1] - Attributes</td>
+</tr>
+<tr>
+<td>$iAttributes</td>
+<td>The privilege attributes. If $aPrivileges parameter is 1D array, $iAttributes applied to the entire array.<br />
+If $aPrivileges parameter is (-1) or 2D array, the function ignores this parameter and will use the attributes that specified in this array.<br />
+This parameter can be 0 (disables privilege) or any combination of the following values:<br />
+&nbsp;&nbsp;&nbsp; $SE_PRIVILEGE_ENABLED<br />
+&nbsp;&nbsp;&nbsp; $SE_PRIVILEGE_ENABLED_BY_DEFAULT<br />
+&nbsp;&nbsp;&nbsp; $SE_PRIVILEGE_REMOVED<br />
+&nbsp;&nbsp;&nbsp; $SE_PRIVILEGE_USED_FOR_ACCESS</td>
+</tr>
+<tr>
+<td>$aAdjust</td>
+<td>2D array of the previous state of any privileges that the function modifies. That is, if a privilege has been modified by this function, the privilege and its previous state are contained in this array.</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">1 and sets the @extended flag to the following values.</td>
+</tr>
+<tr>
+<td class="valign-top">@extended :</td>
+<td>0 - The function adjusted all specified privileges.<br />
+1 - The token does not have one or more of the privileges specified in the $aPrivileges parameter.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>0 and sets the @error flag to non-zero.</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>This function cannot add new privileges to the access token. It can only enable or disable the token's existing privileges.<br />
+<br />
+To determine whether the function success and adjusted all of the specified privileges, check the @error and @extended flags both, for example:<br />
+<br />
+If Not (@error Or @extended) Then<br />
+&nbsp;&nbsp;&nbsp; ...<br />
+EndIf<br />
+</p>
+
+<h2>See Also</h2>
+<p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(AdjustTokenPrivileges);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">AdjustTokenPrivileges</a> in MSDN  Library.
+</p>
+
+</body>
+</html>

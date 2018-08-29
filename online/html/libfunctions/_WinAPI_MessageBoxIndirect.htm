@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _WinAPI_MessageBoxIndirect</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1>_WinAPI_MessageBoxIndirect</h1>
+<p class="funcdesc">Creates, displays, and operates a message box<br /></p>
+<p class="codeheader">
+#include &lt;WinAPIDlg.au3&gt;<br />
+_WinAPI_MessageBoxIndirect ( $tMSGBOXPARAMS )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$tMSGBOXPARAMS</td>
+<td style="width:85%">$tagMSGBOXPARAMS structure that contains information used to display the message box.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">One of the $ID* constants.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>0.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>When you use a system-modal message box to indicate that the system is low on memory, the strings pointed to by the<br />
+"Text" and "Caption" members of the $tagMSGBOXPARAMS structure should not be taken from a resource file, because<br />
+an attempt to load the resource may fail.<br />
+<br />
+If you create a message box while a dialog box is present, use a handle to the dialog box as the hWnd parameter.<br />
+The hWnd parameter should not identify a child window, such as a control in a dialog box.<br />
+</p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(MessageBoxIndirect);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">MessageBoxIndirect</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_MessageBoxIndirect.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIDlg.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPISys.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$sTitle</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">'Message'</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$sText</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">'This is a simple message box with a custom icon.'</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tMBP</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><a class="codeSnippetLink" href="$tagMSGBOXPARAMS.htm"><span class="S9">$tagMSGBOXPARAMS</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">';wchar szCaption['</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">(</span><a class="codeSnippetLink" href="../functions/StringLen.htm"><span class="S4">StringLen</span></a><span class="S8">(</span><span class="S9">$sTitle</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'];wchar szText['</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">(</span><a class="codeSnippetLink" href="../functions/StringLen.htm"><span class="S4">StringLen</span></a><span class="S8">(</span><span class="S9">$sText</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">']'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tMBP</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Size'</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetPtr.htm"><span class="S4">DllStructGetPtr</span></a><span class="S8">(</span><span class="S9">$tMBP</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'szCaption'</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetPtr.htm"><span class="S4">DllStructGetPtr</span></a><span class="S8">(</span><span class="S9">$tMBP</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tMBP</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'hOwner'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tMBP</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'hInstance'</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetModuleHandle.htm"><span class="S15">_WinAPI_GetModuleHandle</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SystemDir"><span class="S6">@SystemDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'\shell32.dll'</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tMBP</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Text'</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetPtr.htm"><span class="S4">DllStructGetPtr</span></a><span class="S8">(</span><span class="S9">$tMBP</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'szText'</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tMBP</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Caption'</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetPtr.htm"><span class="S4">DllStructGetPtr</span></a><span class="S8">(</span><span class="S9">$tMBP</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'szCaption'</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tMBP</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Style'</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$MB_OKCANCEL</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MB_USERICON</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tMBP</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Icon'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">239</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tMBP</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'ContextHelpId'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tMBP</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'MsgBoxCallback'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tMBP</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'LanguageId'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tMBP</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'szCaption'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sTitle</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tMBP</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'szText'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sText</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_MessageBoxIndirect.htm"><span class="S15">_WinAPI_MessageBoxIndirect</span></a><span class="S8">(</span><span class="S9">$tMBP</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'Return: '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iResult</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

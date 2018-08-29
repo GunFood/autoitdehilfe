@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _GDIPlus_GraphicsSetCompositingQuality</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<h1>_GDIPlus_GraphicsSetCompositingQuality</h1>
+<p class="funcdesc">Sets the compositing quality of a Graphics object<br /></p>
+<p class="codeheader">
+#include &lt;GDIPlus.au3&gt;<br />
+_GDIPlus_GraphicsSetCompositingQuality ( $hGraphics, $iCompositionQuality )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$hGraphics</td>
+<td style="width:85%">Pointer to a Graphics object</td>
+</tr>
+<tr>
+<td>$iCompositionQuality</td>
+<td>Compositing quality:<br />
+&nbsp;&nbsp;&nbsp; 0 - Gamma correction is not applied.<br />
+&nbsp;&nbsp;&nbsp; 1 - Gamma correction is not applied. High speed, low quality.<br />
+&nbsp;&nbsp;&nbsp; 2 - Gamma correction is applied. Composition of high quality and speed.<br />
+&nbsp;&nbsp;&nbsp; 3 - Gamma correction is applied.<br />
+&nbsp;&nbsp;&nbsp; 4 - Gamma correction is not applied. Linear values are used.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">True.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>False and sets the @error flag to non-zero, @extended may contain GPSTATUS error code ($GPID_ERR*).</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>None.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="_GDIPlus_GraphicsGetCompositingQuality.htm">_GDIPlus_GraphicsGetCompositingQuality</a></p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://search.msdn.microsoft.com/search/Default.aspx?brand=msdn&query=GdipSetCompositingQuality">GdipSetCompositingQuality</a> in der MSDN Bibliothek.
+</p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_GDIPlus_GraphicsSetCompositingQuality.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GDIPlus.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGui</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hBrush</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iQuality1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iQuality2</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hMatrix</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Erstellt die GUI</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hGui</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"GDI+"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">800</span><span class="S8">,</span><span class="S0"> </span><span class="S3">400</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Startup.htm"><span class="S15">_GDIPlus_Startup</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hGraphic</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsCreateFromHWND.htm"><span class="S15">_GDIPlus_GraphicsCreateFromHWND</span></a><span class="S8">(</span><span class="S9">$hGui</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Erstellt ein Grafikobjekt aus einem Fensterhandle</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsSetSmoothingMode.htm"><span class="S15">_GDIPlus_GraphicsSetSmoothingMode</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GDIP_SMOOTHINGMODE_HIGHQUALITY</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsClear.htm"><span class="S15">_GDIPlus_GraphicsClear</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xFF6600AA</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hPath</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PathCreate.htm"><span class="S15">_GDIPlus_PathCreate</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PathAddEllipse.htm"><span class="S15">_GDIPlus_PathAddEllipse</span></a><span class="S8">(</span><span class="S9">$hPath</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">380</span><span class="S8">,</span><span class="S0"> </span><span class="S3">360</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hBrush</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PathBrushCreateFromPath.htm"><span class="S15">_GDIPlus_PathBrushCreateFromPath</span></a><span class="S8">(</span><span class="S9">$hPath</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PathBrushSetCenterColor.htm"><span class="S15">_GDIPlus_PathBrushSetCenterColor</span></a><span class="S8">(</span><span class="S9">$hBrush</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xFFFFFFFF</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PathBrushSetSurroundColor.htm"><span class="S15">_GDIPlus_PathBrushSetSurroundColor</span></a><span class="S8">(</span><span class="S9">$hBrush</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PathBrushSetSigmaBlend.htm"><span class="S15">_GDIPlus_PathBrushSetSigmaBlend</span></a><span class="S8">(</span><span class="S9">$hBrush</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PathBrushSetFocusScales.htm"><span class="S15">_GDIPlus_PathBrushSetFocusScales</span></a><span class="S8">(</span><span class="S9">$hBrush</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0.7</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0.7</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsFillPath.htm"><span class="S15">_GDIPlus_GraphicsFillPath</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hPath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hBrush</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$iQuality1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsGetCompositingQuality.htm"><span class="S15">_GDIPlus_GraphicsGetCompositingQuality</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hMatrix</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_MatrixCreate.htm"><span class="S15">_GDIPlus_MatrixCreate</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_MatrixTranslate.htm"><span class="S15">_GDIPlus_MatrixTranslate</span></a><span class="S8">(</span><span class="S9">$hMatrix</span><span class="S8">,</span><span class="S0"> </span><span class="S3">400</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PathTransform.htm"><span class="S15">_GDIPlus_PathTransform</span></a><span class="S8">(</span><span class="S9">$hPath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hMatrix</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PathBrushSetTransform.htm"><span class="S15">_GDIPlus_PathBrushSetTransform</span></a><span class="S8">(</span><span class="S9">$hBrush</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hMatrix</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsSetCompositingQuality.htm"><span class="S15">_GDIPlus_GraphicsSetCompositingQuality</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsFillPath.htm"><span class="S15">_GDIPlus_GraphicsFillPath</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hPath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hBrush</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$iQuality2</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsGetCompositingQuality.htm"><span class="S15">_GDIPlus_GraphicsGetCompositingQuality</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">)</span>
+
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDrawString.htm"><span class="S15">_GDIPlus_GraphicsDrawString</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"CompositingQuality = "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iQuality1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">380</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDrawString.htm"><span class="S15">_GDIPlus_GraphicsDrawString</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"CompositingQuality = "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iQuality2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">420</span><span class="S8">,</span><span class="S0"> </span><span class="S3">380</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI ausl&ouml;st</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Do</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Until</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Gibt die Ressourcen frei</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_MatrixDispose.htm"><span class="S15">_GDIPlus_MatrixDispose</span></a><span class="S8">(</span><span class="S9">$hMatrix</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_PathDispose.htm"><span class="S15">_GDIPlus_PathDispose</span></a><span class="S8">(</span><span class="S9">$hPath</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BrushDispose.htm"><span class="S15">_GDIPlus_BrushDispose</span></a><span class="S8">(</span><span class="S9">$hBrush</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDispose.htm"><span class="S15">_GDIPlus_GraphicsDispose</span></a><span class="S8">(</span><span class="S9">$hGraphic</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Shutdown.htm"><span class="S15">_GDIPlus_Shutdown</span></a><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>
