@@ -15,4 +15,5 @@ Probleme
 -----------------------------
 Problem: Im rechten Fenster der Hilfedatei, wo die Hilfetexte stehen sollten, wird nichts angezeigt
 Lösung: die Datei AutoIt.chm auf ein FAT32-Laufwerk kopieren und dann erst in das AutoIt Verzeichnis kopieren
-        Falls bei den Dateieigenschaften der Datei AutoIt.chm beim Register "allgemein" ganz unten bei "Sicherheit" die Checkbox "Zulassen" existiert, ist diese anzuhaken 
+
+Falls bei den Dateieigenschaften der Datei AutoIt.chm beim Register "allgemein" ganz unten bei "Sicherheit" die Checkbox "Zulassen" existiert, ist diese anzuhaken 
