@@ -15,4 +15,3 @@ Offline
 ----------------------------
 Diese Hilfe stellt das Windows Hilfe Format CHM zur Verfügung.
 Für die Installation, bitte die beiliegende README.md beachten.
-
