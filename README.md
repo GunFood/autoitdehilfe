@@ -9,7 +9,7 @@ Wer mithelfen möchte, kann sich gern an Tweaky wenden.
 Online
 ----------------------------
 Diese Hilfe liegt im HTML Format vor und ist auf der AutoIt.de Seite verlinkt.
-Hier kann dirket schnell nachgeschlgen werden.
+Hier kann direkt schnell nachgeschlagen werden.
 
 Offline
 ----------------------------
