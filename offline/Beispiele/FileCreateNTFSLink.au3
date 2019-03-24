@@ -4,11 +4,11 @@
 Example()
 
 Func Example()
-	; Erstellt eine konstante Variable im lokalen Bereich des Dateipfads der gelesen bzw. in den geschrieben werden soll.
+	; Erstellt eine Konstante im lokalen Bereich des Dateipfads der gelesen bzw. in den geschrieben werden soll.
 	Local Const $sFilePath = _WinAPI_GetTempFileName(@TempDir)
 
 	; Erstellt eine temporäre Datei auf die verlinkt werden soll.
-	If Not FileWrite($sFilePath, "Dies ist ein Beispiel für die Verwendung von  FileCreateNTFSLink.") Then
+	If Not FileWrite($sFilePath, "Dies ist ein Beispiel für die Verwendung von FileCreateNTFSLink.") Then
 		MsgBox($MB_SYSTEMMODAL, "", "Es ist während dem schreiben der temporären Datei ein Fehler aufgetreten.")
 		Return False
 	EndIf

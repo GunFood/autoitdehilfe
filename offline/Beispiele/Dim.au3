@@ -7,7 +7,7 @@ Local $iDaysWorking = 5
 Global $g_aChessBoard[8][8]
 Local $aStates[2], $aWindowsStats[4]
 
-; Beispiel 3 - Konstante Variablen deklarieren
+; Beispiel 3 - Konstanten deklarieren
 Const $iX1 = 11, $iY1 = 23, $iZ1 = 55
 Global Const $PI = 3.14159, $E = 2.71828
 Local Const $DAYS_WORKING = 5

@@ -26,7 +26,7 @@ Func Example()
 			"hwnd", $hWnd, _
 			"ptr", DllStructGetPtr($tRECT))
 
-	; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und gebe False zurück.
+	; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und False zurückgegeben.
 	If @error Then
 		$iError = @error
 		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), Default, "Error in DllCall, Code: " & $iError)
@@ -40,7 +40,7 @@ Func Example()
 	Local $iLeft = DllStructGetData($tRECT, "Left") ; Oder 1 statt "Left".
 	Local $iTop = DllStructGetData($tRECT, 2) ;Oder "Top" statt 2.
 	Local $iRight = DllStructGetData($tRECT, 3) ;Oder "Right" statt 3.
-	Local $iBottom = DllStructGetData($tRECT, "Bottom") ;Oder 4 statt Bottom.
+	Local $iBottom = DllStructGetData($tRECT, "Bottom") ;Oder 4 statt "Bottom".
 
 
 	; Gibt die Ressourcen, welche von der Struktur genutzt wurden, frei.

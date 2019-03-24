@@ -9,7 +9,7 @@ Local $hProgressProc = DllCallbackRegister('_ProgressProc', 'bool', 'uint64;uint
 
 FileDelete(@TempDir & '\Test*.tmp')
 
-ProgressOn('_WinAPI_MoveFileEx()', 'Bigfile Creation...', '')
+ProgressOn('_WinAPI_MoveFileEx()', 'Erstellung einer großen Datei...', '')
 Local $sFile = @TempDir & '\Test.tmp'
 Local $hFile = FileOpen($sFile, 2)
 For $i = 1 To 1000000
@@ -17,11 +17,11 @@ For $i = 1 To 1000000
 Next
 FileClose($hFile)
 
-ProgressOn('_WinAPI_MoveFileEx()', 'Moving...', '0%')
-Sleep(500) ; to show the change as moving on same device just rename
+ProgressOn('_WinAPI_MoveFileEx()', 'Verschieben...', '0%')
+Sleep(500) ; Um anzuzeigen, dass sich die Änderung auf demselben Gerät befindet, ist die Datei einfach umzubenennen
 
 If Not _WinAPI_MoveFileEx($sFile, @TempDir & '\Test1.tmp', $MOVE_FILE_COPY_ALLOWED, DllCallbackGetPtr($hProgressProc)) Then
-	_WinAPI_ShowLastError('Error moving ' & $sFile)
+	_WinAPI_ShowLastError('Fehler beim verschieben ' & $sFile)
 EndIf
 
 DllCallbackFree($hProgressProc)
@@ -35,7 +35,7 @@ Func _ProgressProc($iTotalFileSize, $iTotalBytesTransferred, $iStreamSize, $iStr
 
 	Local $iPercent = Round($iTotalBytesTransferred / $iTotalFileSize * 100)
 	If $iPercent = 100 Then
-		ProgressSet($iPercent, '', 'Complete')
+		ProgressSet($iPercent, '', 'Fertig')
 	Else
 		ProgressSet($iPercent, $iPercent & "%")
 	EndIf

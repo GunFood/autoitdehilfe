@@ -3,7 +3,7 @@
 Example()
 
 Func Example()
-	; Erstellt eine konstante Variable im lokalen Bereich des Dateipfads der Verknüpfung.
+	; Erstellt eine Konstante im lokalen Bereich des Dateipfads der Verknüpfung.
 	Local Const $sFilePath = @DesktopDir & "\FileCreateShortcutExample.lnk"
 
 	; Erstellt eine Verknüpfung zur explorer.exe auf dem Desktop. Dabei wird der Tastenkombination Ctrl+Alt+T oder in AutoIt ^!t gesetzt.

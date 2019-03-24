@@ -49,10 +49,10 @@ Func Example()
 EndFunc   ;==>Example
 
 Func MyUDP_Server($sIPAddress, $iPort)
-	; Weist einer lokalen Variable den Socket zu und binde die angegebene IP-Adresse und Port.
+	; Weist einer lokalen Variable den Socket zu und bindet die angegebene IP-Adresse und Port.
 	Local $iSocket = UDPBind($sIPAddress, $iPort)
 
-	; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und gebe False zurückgegeben.
+	; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und False zurückgegeben.
 	If @error Then
 		; Vielleicht lauscht bereits jemand auf dieser IP-Adresse und dem Port (läuft das Script bereits?).
 		Local $iError = @error
@@ -79,11 +79,11 @@ Func MyUDP_Server($sIPAddress, $iPort)
 EndFunc   ;==>MyUDP_Server
 
 Func MyUDP_Client($sIPAddress, $iPort)
-	; Weist einer lokalen Variable den Socket zu und verbinde sich zu einem lauschenden Socket mit der angegebenen IP-Adresse und Port.
+	; Weist einer lokalen Variable den Socket zu und verbindet sich zu einem lauschenden Socket mit der angegebenen IP-Adresse und Port.
 	Local $iSocket = UDPOpen($sIPAddress, $iPort)
 	Local $iError = 0
 
-	; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und gebe False zurückgegeben.
+	; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und False zurückgegeben.
 	If @error Then
 		; Der Server ist vermutlich offline oder der Port wurde nicht am Server geöffnet.
 		$iError = @error
@@ -94,7 +94,7 @@ Func MyUDP_Client($sIPAddress, $iPort)
 	; Sendet den String "toto" konvertiert in die Binärrepräsentation zum Server.
 	UDPSend($iSocket, StringToBinary("toto"))
 
-	; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und gebe False zurückgegeben.
+	; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und False zurückgegeben.
 	If @error Then
 		$iError = @error
 		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "Client:" & @CRLF & "Daten konnten nicht gesendet werden, Error Code: " & $iError)

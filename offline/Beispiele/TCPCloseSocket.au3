@@ -53,7 +53,7 @@ Func MyTCP_Client($sIPAddress, $iPort)
 	Local $iSocket = TCPConnect($sIPAddress, $iPort)
 	Local $iError = 0
 
-	; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und gebe False zurückgegeben.
+	; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und False zurückgegeben.
 	If @error Then
 		; Der Server ist vermutlich offline oder der Port wurde nicht am Server geöffnet.
 		$iError = @error
@@ -64,7 +64,7 @@ Func MyTCP_Client($sIPAddress, $iPort)
 	; Sendet den String "tata" zum Server.
 	TCPSend($iSocket, "tata")
 
-	; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und gebe False zurückgegeben.
+	; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und False zurückgegeben.
 	If @error Then
 		$iError = @error
 		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "Client:" & @CRLF & "Daten konnten nicht gesendet werden, Error Code: " & $iError)
@@ -76,11 +76,11 @@ Func MyTCP_Client($sIPAddress, $iPort)
 EndFunc   ;==>MyTCP_Client
 
 Func MyTCP_Server($sIPAddress, $iPort)
-	; Weist einer lokalen Variable den Socket zu und binde die angegebene IP-Adresse sowie Port mit einer maximalen Anzahl von 100 anstehenden Verbindungen.
+	; Weist einer lokalen Variable den Socket zu und bindet die angegebene IP-Adresse sowie Port mit einer maximalen Anzahl von 100 anstehenden Verbindungen.
 	Local $iListenSocket = TCPListen($sIPAddress, $iPort, 100)
 	Local $iError = 0
 
-	; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und gebe False zurückgegeben.
+	; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und False zurückgegeben.
 	If @error Then
 		; Vielleicht lauscht bereits jemand auf dieser IP-Adresse und dem Port (läuft das Script bereits?).
 		$iError = @error
@@ -95,7 +95,7 @@ Func MyTCP_Server($sIPAddress, $iPort)
 		; Akzeptiert eingehende Verbindungen sofern präsent (Socket wird geschlossen wenn die Aufgabe abgeschlossen wurde; Ein Socket pro Client).
 		$iSocket = TCPAccept($iListenSocket)
 
-		; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und gebe False zurückgegeben.
+		; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und False zurückgegeben.
 		If @error Then
 			$iError = @error
 			MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "Server:" & @CRLF & "Konnte die eingehende Verbindung nicht akzeptieren, Error Code: " & $iError)

@@ -4,7 +4,7 @@
 Example()
 
 Func Example()
-	; Erstellt eine konstante Variable im lokalen Bereich des Dateipfades, welcher zum lesen bzw. schreiben verwendet wird.
+	; Erstellt eine Konstante im lokalen Bereich des Dateipfades, welcher zum lesen bzw. schreiben verwendet wird.
 	Local Const $sFilePath = _WinAPI_GetTempFileName(@TempDir)
 
 	; Schreibt den Wert von 'AutoIt' in den Schlüssel 'Titel' und in die Sektion 'General'.

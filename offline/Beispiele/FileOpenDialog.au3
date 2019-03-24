@@ -4,7 +4,7 @@
 Example()
 
 Func Example()
-	; Erstellt eine konstante Variable im lokalen Bereich der Nachricht die in FileOpenDialog dargestellt werden soll.
+	; Erstellt eine Konstante im lokalen Bereich der Nachricht die in FileOpenDialog dargestellt werden soll.
 	Local Const $sMessage = "Strg oder Shift drücken um mehrere Dateien auszuwählen."
 
 	; Zeigt einen Öffnen-Dialog an um eine Liste von Dateien auszuwählen.

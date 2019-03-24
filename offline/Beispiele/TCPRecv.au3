@@ -50,7 +50,7 @@ EndFunc   ;==>Example
 
 
 Func MyTCP_Client($sIPAddress, $iPort)
-	; Weist einer lokalen Variable den Socket zu und verbinde sich zu einem lauschenden Socket mit der angegebenen IP-Adresse und Port.
+	; Weist einer lokalen Variable den Socket zu und verbindet sich zu einem lauschenden Socket mit der angegebenen IP-Adresse und Port.
 	Local $iSocket = TCPConnect($sIPAddress, $iPort)
 	Local $iError = 0
 
@@ -77,7 +77,7 @@ Func MyTCP_Client($sIPAddress, $iPort)
 EndFunc   ;==>MyTCP_Client
 
 Func MyTCP_Server($sIPAddress, $iPort)
-	; Weist einer lokalen Variable den Socket zu und binde die angegebene IP-Adresse sowie Port mit einer maximalen Anzahl von 100 anstehenden Verbindungen.
+	; Weist einer lokalen Variable den Socket zu und bindet die angegebene IP-Adresse sowie Port mit einer maximalen Anzahl von 100 anstehenden Verbindungen.
 	Local $iListenSocket = TCPListen($sIPAddress, $iPort, 100)
 	Local $iError = 0
 

@@ -5,7 +5,7 @@
 Example()
 
 Func Example()
-	; Erstellt eine konstante Variable im lokalen Bereich des Dateipfads der gelesen bzw. in den geschrieben werden soll.
+	; Erstellt eine Konstante im lokalen Bereich des Dateipfads der gelesen bzw. in den geschrieben werden soll.
 	Local Const $sFilePath = _WinAPI_GetTempFileName(@TempDir)
 
 	; Erstellt eine temporäre Datei die später verschoben wird.

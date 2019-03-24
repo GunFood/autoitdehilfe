@@ -2,7 +2,7 @@
 #include <FTPEx.au3>
 #include <MsgBoxConstants.au3>
 
-Local $sServer = 'ftp.csx.cam.ac.uk1'
+Local $sServer = 'ftp.csx.cam.ac.uk'
 Local $sUsername = ''
 Local $sPass = ''
 

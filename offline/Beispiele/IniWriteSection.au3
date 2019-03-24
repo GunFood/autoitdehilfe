@@ -4,7 +4,7 @@
 Example()
 
 Func Example()
-	; Erstellt eine konstante Variable im lokalen Bereich des Dateipfades, welcher zum lesen bzw. schreiben verwendet wird.
+	; Erstellt eine Konstante im lokalen Bereich des Dateipfades, welcher zum lesen bzw. schreiben verwendet wird.
 	Local Const $sFilePath = _WinAPI_GetTempFileName(@TempDir)
 
 	; Erstellt eine Sektion in der ini mit der Struktur eines Strings. Das Element bei Index 0 enthält die Anzahl der Items im Array, in diesem Fall 3.

@@ -4,7 +4,7 @@
 Example()
 
 Func Example()
-	; Erstellt eine konstante Variable im lokalen Bereich um die Dateigenschaften des aktuellen Skripts zu speichern.
+	; Erstellt eine Konstante im lokalen Bereich um die Dateigenschaften des aktuellen Skripts zu speichern.
 	Local Const $sAttribute = FileGetAttrib(@ScriptFullPath)
 
 	; Zeigt den String der durch FileGetAttrib zurückgegebene wurde.

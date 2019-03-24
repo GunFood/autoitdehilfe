@@ -4,7 +4,7 @@
 Example()
 
 Func Example()
-	; Erstellt eine konstante Variable im lokalen Bereich des Verzeichnisses.
+	; Erstellt eine Konstante im lokalen Bereich des Verzeichnisses.
 	Local Const $sFilePath = @TempDir & "\DirCreateFolder"
 
 	; Falls das Verzeichnis bereits existiert, beenden.

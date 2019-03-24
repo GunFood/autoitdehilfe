@@ -5,7 +5,7 @@
 Example()
 
 Func Example()
-	; Erstellt eine konstante Variable im lokalen Bereich der Nachricht die in FileSaveDialog dargestellt werden soll.
+	; Erstellt eine Konstante im lokalen Bereich der Nachricht die in FileSaveDialog dargestellt werden soll.
 	Local Const $sMessage = "Choose a filename."
 
 	; Zeigt einen Öffnen-Dialog an um eine Datei auszuwählen.

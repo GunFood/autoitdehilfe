@@ -15,7 +15,7 @@ Func Example()
 	; Weist einer lokalen Variable den Socket zu und bindet das Script an die gegebene IP-Adresse und Port.
 	Local $aSocket = UDPBind($sIPAddress, $iPort)
 
-	; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und gebe False zurückgegeben.
+	; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und False zurückgegeben.
 	If @error Then
 		; Vielleicht lauscht bereits jemand auf dieser IP-Adresse und dem Port (läuft das Script bereits?).
 		Local $iError = @error

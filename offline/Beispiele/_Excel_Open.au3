@@ -1,7 +1,7 @@
 #include <Excel.au3>
 #include <MsgBoxConstants.au3>
 
-; Create application object or connect to an already running Excel instance
+; Erstellt ein Anwendungs-Objekt oder verbindet zu einer bereits laufenden Excel-Instanz
 Local $oExcel = _Excel_Open()
-If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_Open Example 1", "Error creating the Excel application object." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
-MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_Open Example 1", "Excel Application has been opened successfully." & @CRLF & @CRLF & "Will _Excel_Close close the application?: " & @extended)
+If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_Open Beispiel 1", "Fehler beim erstellen des Excel Anwendungs-Objekt." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
+MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_Open Beispiel 1", "Excel Anwnedung wurde erfolgreich geöffnet." & @CRLF & @CRLF & "Schließt _Excel_Close die Anwendung?: " & @extended)

@@ -9,8 +9,10 @@
 <body>
 <h1 class="small">Funktionreferenz</h1>
 <hr style="height:0px">
-<h1>_WinAPI_CopyFileEx</h1>
-<p class="funcdesc">Copies an existing file to a new file, notifying the application of its progress through a callback function<br /></p>
+<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_WinAPI_CopyFileEx</h1><br />
+<a href="../libfunctions_en/_WinAPI_CopyFileEx.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
+<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<p style="margin:2px 0 0 0;" class="funcdesc">Kopiert eine vorhandene Datei in eine neue Datei und benachrichtigt die Anwendung &uuml;ber eine Callback-Funktion &uuml;ber ihren Fortschritt<br /></p>
 <p class="codeheader">
 #include &lt;WinAPIFiles.au3&gt;<br />
 _WinAPI_CopyFileEx ( $sExistingFile, $sNewFile [, $iFlags = 0 [, $pProgressProc = 0 [, $pData = 0]]] )<br />
@@ -20,47 +22,47 @@ _WinAPI_CopyFileEx ( $sExistingFile, $sNewFile [, $iFlags = 0 [, $pProgressProc 
 <table>
 <tr>
 <td style="width:15%">$sExistingFile</td>
-<td style="width:85%">The name of an existing file.</td>
+<td style="width:85%">Der Name der existierenden Datein.</td>
 </tr>
 <tr>
 <td>$sNewFile</td>
-<td>The name of the new file.</td>
+<td>Der Name der neuen Datei.</td>
 </tr>
 <tr>
 <td>$iFlags</td>
-<td><strong>[optional]</strong> The flags that specify how the file is to be copied. This parameter can be a combination of the following values:<br />
-&nbsp;&nbsp;&nbsp; $COPY_FILE_ALLOW_DECRYPTED_DESTINATION (0x0008)<br />
-&nbsp;&nbsp;&nbsp; $COPY_FILE_COPY_SYMLINK (0x0800)<br />
-&nbsp;&nbsp;&nbsp; $COPY_FILE_FAIL_IF_EXISTS (0x0001)<br />
-&nbsp;&nbsp;&nbsp; $COPY_FILE_NO_BUFFERING (0x1000)<br />
-&nbsp;&nbsp;&nbsp; $COPY_FILE_OPEN_SOURCE_FOR_WRITE (0x0004)<br />
-&nbsp;&nbsp;&nbsp; $COPY_FILE_RESTARTABLE (0x0002)</td>
+<td><strong>[optional]</strong> Die Flags welche angeben wie die Datei kopiert werden soll. Dieser Wert kann eine Kombination der folgenden Werte sein:<br />
+&nbsp;&nbsp;&nbsp; $COPY_FILE_ALLOW_DECRYPTED_DESTINATION (0x0008) (Ein Versuch, eine verschl&uuml;sselte Datei zu kopieren, ist auch dann erfolgreich, wenn die Zielkopie nicht verschl&uuml;sselt werden kann.)<br />
+&nbsp;&nbsp;&nbsp; $COPY_FILE_COPY_SYMLINK (0x0800) (Wenn es sich bei der Quelldatei um einen symbolischen Link handelt, ist die Zieldatei auch ein symbolischer Link, der auf dieselbe Datei verweist, auf die der symbolische Quelllink verweist.)<br />
+&nbsp;&nbsp;&nbsp; $COPY_FILE_FAIL_IF_EXISTS (0x0001) (Der Kopiervorgang schl&auml;gt sofort fehl, wenn die Zieldatei bereits vorhanden ist.)<br />
+&nbsp;&nbsp;&nbsp; $COPY_FILE_NO_BUFFERING (0x1000) (Die Kopieroperation wird unter Verwendung ungepufferter E/A ausgef&uuml;hrt, wobei die System-E/A-Cache-Ressourcen umgangen werden. Empfohlen f&uuml;r sehr gro&szlig;e Datei&uuml;bertragungen.)<br />
+&nbsp;&nbsp;&nbsp; $COPY_FILE_OPEN_SOURCE_FOR_WRITE (0x0004) (Die Datei wird kopiert und die Originaldatei wird f&uuml;r den Schreibzugriff ge&ouml;ffnet.)<br />
+&nbsp;&nbsp;&nbsp; $COPY_FILE_RESTARTABLE (0x0002) (Der Fortschritt der Kopie wird in der Zieldatei nachverfolgt, falls die Kopie fehlschl&auml;gt. Die fehlgeschlagene Kopie kann zu einem sp&auml;teren Zeitpunkt erneut gestartet werden, indem dieselben Werte f&uuml;r lpExistingFileName und lpNewFileName wie f&uuml;r den fehlgeschlagenen Aufruf angegeben werden. Dies kann den Kopiervorgang erheblich verlangsamen, da die neue Datei w&auml;hrend des Kopiervorgangs mehrmals geleert wird.)</td>
 </tr>
 <tr>
 <td>$pProgressProc</td>
-<td><strong>[optional]</strong> The address of a callback function that is called each time another portion of the file has been copied.<br />
-(See MSDN for more information)</td>
+<td><strong>[optional]</strong> Die Adresse einer Callback-Funktion, die jedes Mal aufgerufen wird, wenn ein anderer Teil der Datei kopiert wurde.<br />
+(Siehe MSDN f&uuml;r mehr Informationen)</td>
 </tr>
 <tr>
 <td>$pData</td>
-<td><strong>[optional]</strong> pointer to an argument to be passed to the callback function. Can be NULL.</td>
+<td><strong>[optional]</strong> Zeiger auf ein Argument, das an die RCallback-Funktion &uuml;bergeben werden soll. Kann NULL sein.</td>
 </tr>
 </table>
 
 <h2>R&uuml;ckgabewert</h2>
 <table class="noborder">
 <tr>
-<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:10%" class="valign-top">Erfolg:</td>
 <td style="width:90%">True.</td>
 </tr>
 <tr>
-<td class="valign-top">Failure:</td>
-<td>False, call <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> to get extended error information</td>
+<td class="valign-top">Fehler:</td>
+<td>False. Es ist <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> aufzurufen um erweiterte Fehlerinformationen zu erhalten.</td>
 </tr>
 </table>
 
 <h2>Bemerkungen</h2>
-<p>$COPY_* , $PROGRESS_* constants require #include &lt;APIFilesConstants.au3&gt;<br />
+<p>$COPY_* , $PROGRESS_* Konstanten ben&ouml;tigen #include &lt;APIFilesConstants.au3&gt;<br />
 </p>
 
 <h2>Siehe auch</h2>
@@ -110,7 +112,7 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 
 <a class="codeSnippetLink" href="../functions/FileDelete.htm"><span class="S4">FileDelete</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'\Test*.tmp'</span><span class="S8">)</span>
 
-<a class="codeSnippetLink" href="../functions/ProgressOn.htm"><span class="S4">ProgressOn</span></a><span class="S8">(</span><span class="S7">'_WinAPI_CopyFileEx()'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Bigfile Creation...'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">''</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/ProgressOn.htm"><span class="S4">ProgressOn</span></a><span class="S8">(</span><span class="S7">'_WinAPI_CopyFileEx()'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Erstellung einer gro&szlig;en Datei...'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">''</span><span class="S8">)</span>
 <a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sFile</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'\Test.tmp'</span>
 <a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hFile</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileOpen.htm"><span class="S4">FileOpen</span></a><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
 <a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">1000000</span>
@@ -118,10 +120,10 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
 <a class="codeSnippetLink" href="../functions/FileClose.htm"><span class="S4">FileClose</span></a><span class="S8">(</span><span class="S9">$hFile</span><span class="S8">)</span>
 
-<a class="codeSnippetLink" href="../functions/ProgressOn.htm"><span class="S4">ProgressOn</span></a><span class="S8">(</span><span class="S7">'_WinAPI_CopyFileEx()'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Copying...'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'0%'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/ProgressOn.htm"><span class="S4">ProgressOn</span></a><span class="S8">(</span><span class="S7">'_WinAPI_CopyFileEx()'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Kopieren...'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'0%'</span><span class="S8">)</span>
 
 <a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CopyFileEx.htm"><span class="S15">_WinAPI_CopyFileEx</span></a><span class="S8">(</span><span class="S9">$sFile</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'\Test1.tmp'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllCallbackGetPtr.htm"><span class="S4">DllCallbackGetPtr</span></a><span class="S8">(</span><span class="S9">$hProgressProc</span><span class="S8">))</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_ShowLastError.htm"><span class="S15">_WinAPI_ShowLastError</span></a><span class="S8">(</span><span class="S7">'Error copying '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sFile</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_ShowLastError.htm"><span class="S15">_WinAPI_ShowLastError</span></a><span class="S8">(</span><span class="S7">'Fehler beim kopieren '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sFile</span><span class="S8">)</span>
 <a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
 
 <a class="codeSnippetLink" href="../functions/DllCallbackFree.htm"><span class="S4">DllCallbackFree</span></a><span class="S8">(</span><span class="S9">$hProgressProc</span><span class="S8">)</span>
@@ -135,11 +137,11 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 
 <span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iPercent</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Round.htm"><span class="S4">Round</span></a><span class="S8">(</span><span class="S9">$iTotalBytesTransferred</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">/</span></a><span class="S0"> </span><span class="S9">$iTotalFileSize</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">*</span></a><span class="S0"> </span><span class="S3">100</span><span class="S8">)</span>
 <span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$iPercent</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">100</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ProgressSet.htm"><span class="S4">ProgressSet</span></a><span class="S8">(</span><span class="S9">$iPercent</span><span class="S8">,</span><span class="S0"> </span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Complete'</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ProgressSet.htm"><span class="S4">ProgressSet</span></a><span class="S8">(</span><span class="S9">$iPercent</span><span class="S8">,</span><span class="S0"> </span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Fertig'</span><span class="S8">)</span>
 <span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ProgressSet.htm"><span class="S4">ProgressSet</span></a><span class="S8">(</span><span class="S9">$iPercent</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iPercent</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'%'</span><span class="S8">)</span>
 <span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">10</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; to slow down to see the progress bar</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">10</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Kopierprozess verlangsamen, um die Progressbar zu sehen</span>
 
 <span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IsPressed.htm"><span class="S15">_IsPressed</span></a><span class="S8">(</span><span class="S7">'1B'</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S9">$PROGRESS_CANCEL</span>

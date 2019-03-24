@@ -17,7 +17,7 @@ Func Example()
 	; Weist einer lokalen Variable den Socket zu und verbindet sich zu einem lauschenden Socket mit der gegebenen IP-Adresse und Port.
 	Local $aSocket = UDPOpen($sIPAddress, $iPort)
 
-	; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und gebe False zurückgegeben.
+	; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und False zurückgegeben.
 	If @error Then
 		Local $iError = @error
 		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "Verbindung konnte nicht hergestellt werden, Error code: " & $iError)

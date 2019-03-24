@@ -3,7 +3,7 @@
 Example()
 
 Func Example()
-	; Erstellt eine konstante Variable im lokalen Bereich der Nachricht die in FileSelectFolder dargestellt werden soll.
+	; Erstellt eine Konstante im lokalen Bereich der Nachricht die in FileSelectFolder dargestellt werden soll.
 	Local Const $sMessage = "Select a folder"
 
 	; Zeigt einen Öffnen-Dialog an eine Datei auszuwählen.

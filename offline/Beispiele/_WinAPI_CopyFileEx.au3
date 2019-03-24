@@ -9,7 +9,7 @@ Local $hProgressProc = DllCallbackRegister('_ProgressProc', 'bool', 'uint64;uint
 
 FileDelete(@TempDir & '\Test*.tmp')
 
-ProgressOn('_WinAPI_CopyFileEx()', 'Bigfile Creation...', '')
+ProgressOn('_WinAPI_CopyFileEx()', 'Erstellung einer großen Datei...', '')
 Local $sFile = @TempDir & '\Test.tmp'
 Local $hFile = FileOpen($sFile, 2)
 For $i = 1 To 1000000
@@ -17,10 +17,10 @@ For $i = 1 To 1000000
 Next
 FileClose($hFile)
 
-ProgressOn('_WinAPI_CopyFileEx()', 'Copying...', '0%')
+ProgressOn('_WinAPI_CopyFileEx()', 'Kopieren...', '0%')
 
 If Not _WinAPI_CopyFileEx($sFile, @TempDir & '\Test1.tmp', 0, DllCallbackGetPtr($hProgressProc)) Then
-	_WinAPI_ShowLastError('Error copying ' & $sFile)
+	_WinAPI_ShowLastError('Fehler beim kopieren ' & $sFile)
 EndIf
 
 DllCallbackFree($hProgressProc)
@@ -34,11 +34,11 @@ Func _ProgressProc($iTotalFileSize, $iTotalBytesTransferred, $iStreamSize, $iStr
 
 	Local $iPercent = Round($iTotalBytesTransferred / $iTotalFileSize * 100)
 	If $iPercent = 100 Then
-		ProgressSet($iPercent, '', 'Complete')
+		ProgressSet($iPercent, '', 'Fertig')
 	Else
 		ProgressSet($iPercent, $iPercent & '%')
 	EndIf
-	Sleep(10) ; to slow down to see the progress bar
+	Sleep(10) ; Kopierprozess verlangsamen, um die Progressbar zu sehen
 
 	If _IsPressed('1B') Then
 		Return $PROGRESS_CANCEL
