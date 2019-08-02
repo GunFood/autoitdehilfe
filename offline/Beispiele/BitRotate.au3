@@ -3,7 +3,7 @@
 Example()
 
 Func Example()
-	; Zu beachten: "b" ist das Zeichen für Byte.
+	; Hinweis: "b" ist das Zeichen für binär.
 
 	; Weist einer lokalen Variable die bitweise links-rotierte Operation von 2 zu.
 	Local $iBitRotate1 = BitRotate(2, 1) ; 2 = 0010b einmal links-rotiert -> 4 = 0100b

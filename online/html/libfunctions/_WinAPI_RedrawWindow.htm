@@ -37,18 +37,25 @@ Anwendungsbereich des Fensters aktualisiert.</td>
 <tr>
 <td>$iFlags</td>
 <td><strong>[optional]</strong> Legt die Flags f&uuml;rs Neuzeichnen fest. Dieser Parameter kann eine Kombination von Flags sein welche den Fensterinhalt f&uuml;r g&uuml;ltig oder ung&uuml;ltig erkl&auml;ren, das Neuzeichnen regeln und welche Fenster davon betroffen sind:<br />
-$RDW_ERASE - Veranlasst, dem Fenster eine WM_ERASEBKGND Nachricht zu senden, wenn es neugezeichnet wird<br />
-$RDW_FRAME - Veranlasst, dem Fenster eine WM_NCPAINT Nachricht zu senden, sollten Teile des Nicht-Anwendungsbereichs sich mit der zu aktualisierenden Region &uuml;berschneiden.<br />
-$RDW_INTERNALPAINT - Veranlasst eine WM_PAINT Nachricht an das Fenster zu senden unabh&auml;ngig davon, ob ein Bereich des Fensters ung&uuml;ltig ist.<br />
-$RDW_INVALIDATE - Annulliert DllStructGetData($tRECT oder $hRegion, ""). Sind beide 0, wird das gesamte Fenster f&uuml;r ung&uuml;ltig erkl&auml;rt.<br />
-$RDW_NOERASE - Unterdr&uuml;ckt jede bevorstehende $WM_ERASEBKGND Nachricht<br />
-$RDW_NOFRAME - Unterdr&uuml;ckt jede bevorstehende $WM_NCPAINT Nachricht<br />
-$RDW_NOINTERNALPAINT - Unterdr&uuml;ckt jede bevorstehende interne $WM_PAINT Nachricht<br />
-$RDW_VALIDATE - Erkl&auml;rt $tRECT oder $hRegion f&uuml;r g&uuml;ltig<br />
-$RDW_ERASENOW - Veranlasst das betroffene Fenster eine $WM_NCPAINT und $WM_ERASEBKGND Nachricht zu erhalten, wenn n&ouml;tig, bevor die Funktion zur&uuml;ckkehrt<br />
-$RDW_UPDATENOW - Veranlasst das betroffene Fenster eine $WM_NCPAINT, $WM_ERASEBKGND, und $WM_PAINT zu erhalten, wenn n&ouml;tig, bevor die Funktion zur&uuml;ckkehrt<br />
-$RDW_ALLCHILDREN - Bezieht Child-Fenster in die Zeichenoperation mit ein<br />
-$RDW_NOCHILDREN - Schlie&szlig;t Child-Fenster von der Zeichenoperation aus</td>
+Die folgenden Flags werden zum Annullieren des Fensters verwendet.<br />
+&nbsp;&nbsp;&nbsp; $RDW_ERASE - Bewirkt, dass das Fenster eine $WM_ERASEBKGND-Nachricht empf&auml;ngt, wenn das Fenster neu gezeichnet wird. Das Flag $RDW_INVALIDATE muss ebenfalls angegeben werden. Andernfalls hat $RDW_ERASE keine Auswirkungen.<br />
+&nbsp;&nbsp;&nbsp; $RDW_FRAME - Bewirkt, dass ein Teil des Nicht-Client-Bereichs des Fensters, der den Aktualisierungsbereich schneidet, eine $WM_NCPAINT-Nachricht empf&auml;ngt. Das Flag $RDW_INVALIDATE muss ebenfalls angegeben werden. Andernfalls hat $RDW_FRAME keine Auswirkungen. Die $WM_NCPAINT-Nachricht wird normalerweise nicht w&auml;hrend der Ausf&uuml;hrung von <a href="_WinAPI_RedrawWindow.htm">_WinAPI_RedrawWindow()</a> gesendet, es sei denn, $RDW_UPDATENOW oder $RDW_ERASENOW ist angegeben.<br />
+&nbsp;&nbsp;&nbsp; $RDW_INTERNALPAINT - Bewirkt, dass eine $WM_PAINT-Nachricht an das Fenster gesendet wird, unabh&auml;ngig davon, ob ein Teil des Fensters ung&uuml;ltig ist.<br />
+&nbsp;&nbsp;&nbsp; $RDW_INVALIDATE - Ung&uuml;ltig f&uuml;r DllStructGetData($tRECT oder $hRegion, "") (nur eines darf nicht NULL sein). Wenn beide NULL sind, wird das gesamte Fenster ung&uuml;ltig gemacht.<br />
+Die folgenden Flags werden verwendet, um das Fenster zu &uuml;berpr&uuml;fen.<br />
+&nbsp;&nbsp;&nbsp; $RDW_NOERASE - Unterdr&uuml;ckt alle ausstehenden $WM_ERASEBKGND-Nachrichten.<br />
+&nbsp;&nbsp;&nbsp; $RDW_NOFRAME - Unterdr&uuml;ckt alle ausstehenden $WM_NCPAINT-Nachrichten. Dieses Flag muss mit $RDW_VALIDATE verwendet werden und wird normalerweise mit $RDW_NOCHILDREN verwendet. $RDW_NOFRAME sollte mit Vorsicht verwendet werden, da dies dazu f&uuml;hren kann, dass Teile eines Fensters falsch gezeichnet werden.<br />
+&nbsp;&nbsp;&nbsp; $RDW_NOINTERNALPAINT - Unterdr&uuml;ckt alle anstehenden internen WM_PAINT-Nachrichten. Dieses Flag wirkt sich nicht auf WM_PAINT-Nachrichten aus, die aus einem Nicht-NULL-Aktualisierungsbereich stammen.<br />
+&nbsp;&nbsp;&nbsp; $RDW_VALIDATE - &Uuml;berpr&uuml;ft  $tRECT oder $hRegion (nur eines darf nicht NULL sein). Wenn beide NULL sind, wird das gesamte Fenster &uuml;berpr&uuml;ft. Dieses Flag wirkt sich nicht auf interne $WM_PAINT-Nachrichten aus.<br />
+Die folgenden Flags steuern, wann ein Neuzeichnen erfolgt. <a href="_WinAPI_RedrawWindow.htm">_WinAPI_RedrawWindow()</a> aktualisiert nur dann, wenn eines dieser Flags angegeben wird.<br />
+&nbsp;&nbsp;&nbsp; $RDW_ERASENOW - Bewirkt, dass die betroffenen Fenster (wie durch die Flags $RDW_ALLCHILDREN und $RDW_NOCHILDREN angegeben) gegebenenfalls $WM_NCPAINT- und $WM_ERASEBKGND-Nachrichten erhalten, bevor die Funktion zur&uuml;ckkehrt. $WM_PAINT-Nachrichten werden zur normalen Zeit empfangen.<br />
+&nbsp;&nbsp;&nbsp; $RDW_UPDATENOW - Bewirkt, dass die betroffenen Fenster (wie durch die Flags $RDW_ALLCHILDREN und $RDW_NOCHILDREN angegeben) gegebenenfalls $WM_NCPAINT-, $WM_ERASEBKGND- und $WM_PAINT-Nachrichten erhalten, bevor die Funktion zur&uuml;ckkehrt.<br />
+Standardm&auml;&szlig;ig h&auml;ngen die von <a href="_WinAPI_RedrawWindow.htm">_WinAPI_RedrawWindow()</a> betroffenen Fenster davon ab, ob das angegebene Fenster den $WS_CLIPCHILDREN-Stil hat.<br />
+Untergeordnete Fenster, die nicht im $WS_CLIPCHILDREN-Stil sind, sind davon nicht betroffen.<br />
+Nicht-$WS_CLIPCHILDREN Fenster werden rekursiv validiert oder f&uuml;r ung&uuml;ltig erkl&auml;rt, bis ein $WS_CLIPCHILDREN-Fenster gefunden wird.<br />
+Die folgenden Flags steuern, welche Fenster von der <a href="_WinAPI_RedrawWindow.htm">_WinAPI_RedrawWindow()</a>-Funktion betroffen sind.<br />
+&nbsp;&nbsp;&nbsp; $RDW_ALLCHILDREN - Schlie&szlig;t gegebenenfalls untergeordnete Fenster in das Neuzeichnen ein.<br />
+&nbsp;&nbsp;&nbsp; $RDW_NOCHILDREN - Schlie&szlig;t gegebenenfalls untergeordnete Fenster vom Neuzeichnen aus.</td>
 </tr>
 </table>
 
@@ -65,7 +72,7 @@ $RDW_NOCHILDREN - Schlie&szlig;t Child-Fenster von der Zeichenoperation aus</td>
 </table>
 
 <h2>Bemerkungen</h2>
-<p>Wenn RedrawWindow benutzt wird, um Teile des Desktop-Fensters f&uuml;r ung&uuml;ltig zu erkl&auml;ren, erh&auml;lt dieses keine $WM_PAINT Nachricht.<br />
+<p>Wenn <a href="_WinAPI_RedrawWindow.htm">_WinAPI_RedrawWindow()</a> benutzt wird, um Teile des Desktop-Fensters f&uuml;r ung&uuml;ltig zu erkl&auml;ren, erh&auml;lt dieses keine $WM_PAINT Nachricht.<br />
 Um den Desktop neuzuzeichnen benutzt eine Anwendung das $RDW_ERASE Flag, um eine $WM_ERASEBKGND Nachricht zu erzeugen, welche dann ein neuzeichnen des Desktop-Fensters nach sich zieht.<br />
 <br />
 Oben genannte Konstanten ben&ouml;tigen #include &lt;WindowsConstants.au3&gt;<br />

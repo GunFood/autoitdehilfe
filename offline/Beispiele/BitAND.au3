@@ -3,7 +3,7 @@
 Example()
 
 Func Example()
-	; Zu beachten: "b" ist das Zeichen für Byte.
+	; Hinweis: "b" ist das Zeichen für binär.
 
 	; Weist einer lokalen Variable die bitweise AND Operation von 1 und 0 zu.
 	Local $iBitAND1 = BitAND(1, 0)

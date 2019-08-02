@@ -7,7 +7,7 @@
 Local $sSQliteDll = _SQLite_Startup()
 
 If @error Then
-	MsgBox($MB_SYSTEMMODAL, "SQLite Fehler", "SQLite.dll konnte nicht geladen werden!" & @CRLF & @CRLF & _
+	MsgBox($MB_SYSTEMMODAL, "SQLite Fehler", "sqlite3.dll konnte nicht geladen werden!" & @CRLF & @CRLF & _
 			"Nicht gefunden in @SystemDir, @WindowsDir, @ScriptDir, @WorkingDir oder auf www.autoitscript.com")
 	Exit -1
 EndIf

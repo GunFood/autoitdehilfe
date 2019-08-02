@@ -4,7 +4,7 @@
 Local $iBitNOT1 = BitNOT(5)
 
 #cs Comments:
-	Zu beachten: "b" ist das Zeichen für Byte.
+	Hinweis: "b" ist das Zeichen für binär.
 
 	Ergebnis ist -6 weil für 32-bit Werte
 	+5 == 0000 0000 0000 0000 0000 0000 0000 0101b

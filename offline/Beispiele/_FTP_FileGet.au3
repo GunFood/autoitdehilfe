@@ -20,6 +20,7 @@ Func _example()
 		$l_FTPSession = _FTP_Connect($l_InternetSession, $s_ServerName, $s_Username, $s_Password, $i_Passive) ;Verbindet zu einem FTP Server
 		$errFTP = @error
 		If Not @error Then
+			;Downloadet die Datei und führt sie bei erfolgreichem Download aus. (Öffnet in diesem Beispiel den Editor mit der heruntergeladenen README)
 			If _FTP_FileGet($l_FTPSession, $s_RemoteFile, $s_LocalFile) Then
 				ShellExecute($s_LocalFile)
 				ConsoleWrite("Download: erfolgreich" & @CRLF)

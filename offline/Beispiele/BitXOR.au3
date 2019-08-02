@@ -3,7 +3,7 @@
 Example()
 
 Func Example()
-	; Zu beachten: "b" ist das Zeichen für Byte.
+	; Hinweis: "b" ist das Zeichen für binär.
 
 	; Weist einer lokalen Variable die bitweise XOR Operation von 1 und 0 zu.
 	Local $iBitXOR1 = BitXOR(1, 0) ; 0001b XOR 0000b = 0001b

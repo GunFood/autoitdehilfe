@@ -3,7 +3,7 @@
 Example()
 
 Func Example()
-	; Zu beachten: "b" ist das Zeichen für Byte.
+	; Hinweis: "b" ist das Zeichen für binär.
 
 	; Weist einer lokalen Variable die bitweise OR Operation von 1 und 0 zu.
 	Local $iBitOR1 = BitOR(1, 0) ; 0001b OR 0000b = 0001b
