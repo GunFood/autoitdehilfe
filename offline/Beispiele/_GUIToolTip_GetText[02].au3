@@ -4,16 +4,16 @@
 
 Global $g_iPID
 
-; Hover over one of the characters in the Charmap app to get a tooltip to display, then press 'g' to
-; retrieve its text information.
+; Es ist der Mauszeiger über eines der Zeichen in der Charmap-App zu bewegen und 'g' zu drücken, um eine QuickInfo zu erhalten.
+; Ermittelt dessen Textinformationen.
 HotKeySet('g', "_Read_Tip")
 
 Example()
 
 Func Example()
-	; Run character map program
+	; Startet das character map Programm
 	$g_iPID = Run("charmap.exe")
-	; Wait for it to become the active window
+	; Warten bis es zum aktiven Fenster wird
 	WinWaitActive("Character Map", "", 10)
 	While ProcessExists($g_iPID)
 		Sleep(100)
@@ -21,16 +21,16 @@ Func Example()
 EndFunc   ;==>Example
 
 Func _Read_Tip()
-	; Get list of tooltips
+	; Liste mit Tooltips
 	Local $aTipList = WinList("[CLASS:tooltips_class32]")
 	Local $aRet
-	; See which belong to your app
+	; Prüfen welcher zu der App gehört
 	For $i = 1 To $aTipList[0][0]
 		If WinGetProcess($aTipList[$i][1]) = $g_iPID Then
-			; See which one is active
+			; Prüfen welches aktiv ist
 			$aRet = _GUIToolTip_GetCurrentTool($aTipList[$i][1])
-			; If one is active then display it
-			If $aRet[8] <> "" Then MsgBox(0, "Visible Tip", $aRet[8])
+			; Wenn einer aktiv ist, dann zeige ihn an
+			If $aRet[8] <> "" Then MsgBox(0, "Sicherer Tipp", $aRet[8])
 		EndIf
 	Next
 EndFunc   ;==>_Read_Tip

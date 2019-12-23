@@ -9,7 +9,7 @@ Func Example()
 	Local $hStatusBar, $idEdit, $hGui
 	Local $sWow64 = ""
 	If @AutoItX64 Then $sWow64 = "\Wow6432Node"
-	Local $sFile = RegRead("HKEY_LOCAL_MACHINE\SOFTWARE" & $sWow64 & "\AutoIt v3\AutoIt", "InstallDir") & "\include\changelog.txt"
+	Local $sFile = RegRead("HKEY_LOCAL_MACHINE\SOFTWARE" & $sWow64 & "\AutoIt v3\AutoIt", "InstallDir") & "\include\_ReadMe_.txt"
 	Local $aPartRightSide[3] = [190, 378, -1], $aSel
 
 	; Erstellt eine GUI

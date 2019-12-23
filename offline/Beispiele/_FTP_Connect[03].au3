@@ -5,18 +5,18 @@
 
 _example2()
 
+#cs
+	Beispiel mit eingebauter Fortschrittsanzeige von _FTP_ProgressDownload
+#ce
 Func _example2()
-	#cs
-		Beispiel mit eingebauter Fortschrittsanzeige von _FTP_ProgressDownload
-	#ce
-	Local $s_ServerName = 'ftp.csx.cam.ac.uk' ;das ist ein real exitierender Server
+	Local $s_ServerName = 'ftp.csx.cam.ac.uk' ;das ist ein real existierender Server
 	Local $s_Username = ''
 	Local $s_Password = ''
-	Local $i_Passive = 0 ;aktive Verbindung nutzen wenn bei anderen Server Probleme dann ach mit 1 für passive Verbung testen
+	Local $i_Passive = 0 ;aktive Verbindung nutzen wenn bei anderen Server Probleme dann auch mit 1 für passive Verbung testen
 	Local $l_InternetSession, $l_FTPSession
 	Local $errOpen, $errFTP
 
-	If FileExists(@TempDir & "\tmp.tmp") Then FileDelete(@TempDir & "\tmp.tmp") ;Nur um sicher zustellen dass das File nicht existiert
+	If FileExists(@TempDir & "\tmp.tmp") Then FileDelete(@TempDir & "\tmp.tmp") ;Nur um sicherzustellen dass die Datei nicht existiert
 
 	$l_InternetSession = _FTP_Open('AuoItZilla') ;Öffnet eine FTP Sitzung
 	$errOpen = @error

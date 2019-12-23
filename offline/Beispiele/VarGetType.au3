@@ -1,7 +1,6 @@
 #include <MsgBoxConstants.au3>
 
 Local $aArray[2] = [1, "Beispiel"]
-Local $mMap[]
 Local $dBinary = Binary("0x00204060")
 Local $bBoolean = False
 Local $pPtr = Ptr(-1)
@@ -18,7 +17,6 @@ Local $fuUserFunc = Test
 MsgBox($MB_SYSTEMMODAL, "", _
 		"Variablentypen" & @CRLF & @CRLF & _
 		"$aArray ist ein " & @TAB & @TAB & VarGetType($aArray) & " Variablentyp." & @CRLF & _
-		"$mMap : " & @TAB & @TAB & VarGetType($mMap) & " Variablentyp." & @CRLF & _
 		"$dBinary ist ein " & @TAB & @TAB & VarGetType($dBinary) & " Variablentyp." & @CRLF & _
 		"$bBoolean ist ein " & @TAB & @TAB & VarGetType($bBoolean) & " Variablentyp." & @CRLF & _
 		"$pPtr ist ein " & @TAB & @TAB & VarGetType($pPtr) & " Variablentyp." & @CRLF & _

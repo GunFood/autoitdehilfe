@@ -12,16 +12,16 @@ Func Example()
 
 	Local $hToolTip = _GUIToolTip_Create($hGUI)
 
-	_GUIToolTip_AddTool($hToolTip, 0, "This is the ToolTip text", $hButton)
+	_GUIToolTip_AddTool($hToolTip, 0, "Dies ist der ToolTip Text", $hButton)
 
 	GUISetState(@SW_SHOW)
-	; Retrieve the text of the tool
-	MsgBox($MB_SYSTEMMODAL, 'Message', _GUIToolTip_GetText($hToolTip, 0, $hButton))
+	; Ermittelt den Text des Tools
+	MsgBox($MB_SYSTEMMODAL, 'Nachricht', _GUIToolTip_GetText($hToolTip, 0, $hButton))
 
 	While 1
 		If GUIGetMsg() = $GUI_EVENT_CLOSE Then ExitLoop
 	WEnd
-	; Destroy the tooltip control
+	; Zerstört das Tooltip Control
 	_GUIToolTip_Destroy($hToolTip)
 	GUIDelete($hGUI)
 EndFunc   ;==>Example

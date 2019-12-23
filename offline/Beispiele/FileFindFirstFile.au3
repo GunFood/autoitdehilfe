@@ -3,7 +3,7 @@
 Example()
 
 Func Example()
-	; Weist eine lokale Variable dem Handle von allen DSateien in dem aktuellen Verzeichnis zu.
+	; Weist einer lokalen Variable ein Suchhandle für alle Dateien im aktuellen Verzeichnis zu.
 	Local $hSearch = FileFindFirstFile("*.*")
 
 	; Prüft, ob die Suche erfolgreich war. Falls nicht wird eine Nachricht dargestellt und False zurückgegeben.
@@ -12,7 +12,7 @@ Func Example()
 		Return False
 	EndIf
 
-	;Weist eine lokale Variable dem leeren String zu welcher die Namen der gefundenen Dateien enthält.
+	; Weist einer lokalen Variable einen leeren String zu, die die Namen der gefundenen Dateien aufnimmt.
 	Local $sFileName = "", $iResult = 0
 
 	While 1
@@ -20,7 +20,7 @@ Func Example()
 		; Falls es keine passenden Dateien mehr gibt.
 		If @error Then ExitLoop
 
-		; Zeigt den Dateienamen.
+		; Zeigt den Dateinamen.
 		$iResult = MsgBox(BitOR($MB_SYSTEMMODAL, $MB_OKCANCEL), "", "Datei: " & $sFileName)
 		If $iResult <> $IDOK Then ExitLoop ; Falls der Benutzer den Abbrechen oder Schließen Button anklickt.
 	WEnd

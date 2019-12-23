@@ -18,6 +18,5 @@ Func Example()
 	Else
 		; Zeigt den Rückgabewert des Editorprozesses an.
 		MsgBox($MB_SYSTEMMODAL, "", "Der Rückgabecode des Editors lautete: " & $iReturn)
-		MsgBox($MB_SYSTEMMODAL, "", "Der Rückgabecode des Editors lautete: " & $iReturn)
 	EndIf
 EndFunc   ;==>Example

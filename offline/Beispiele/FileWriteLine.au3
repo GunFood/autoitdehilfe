@@ -10,18 +10,18 @@ Func Example()
 
 	; Erstellt eine temporäre Datei in die Daten geschrieben werden sollen.
 	If Not FileWrite($sFilePath, "Start des FileWriteLine Beispiels, Zeile 1. " & @CRLF) Then
-		MsgBox($MB_SYSTEMMODAL, "", "Es ist während dem schreiben der temporären Datei ein Fehler aufgetreten.")
+		MsgBox($MB_SYSTEMMODAL, "", "Es ist während des Schreibens der temporären Datei ein Fehler aufgetreten.")
 		Return False
 	EndIf
 
-	; Öffnet die Datei zum schreiben (hängt den Text an das Ende der Datei) und speichert das Handle in einer Variable.
+	; Öffnet die Datei zum Lesen und speichert das Handle in einer Variable.
 	Local $hFileOpen = FileOpen($sFilePath, $FO_APPEND)
 	If $hFileOpen = -1 Then
-		MsgBox($MB_SYSTEMMODAL, "", "Es ist während dem lesen der Datei ein Fehler aufgetreten.")
+		MsgBox($MB_SYSTEMMODAL, "", "Es ist während des Lesens der Datei ein Fehler aufgetreten.")
 		Return False
 	EndIf
 
-	; Schreibt durch die Verwendung des von FileOpen zurückgegebenen Handles Daten in die Datei.
+	; Schreibt durch die Verwendung des von FileOpen zurückgegebenen Handles Daten in die Datei (hängt den Text an das Ende der Datei).
 	FileWriteLine($hFileOpen, "Zeile 2")
 	FileWriteLine($hFileOpen, "Dies ist mit Zeile 3 eine neue Zeile, da eine neue Zeile beim letzten Aufruf von FileWriteLines angehängt wurde." & @CRLF)
 	FileWriteLine($hFileOpen, "Zeile 4" & @CRLF)

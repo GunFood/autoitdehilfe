@@ -32,7 +32,7 @@ Func Example()
 	; Prüft die Dateiposition und versucht den Inhalt der aktuellen Position zu lesen.
 	MsgBox($MB_SYSTEMMODAL, "", "Position: " & FileGetPos($hFileOpen) & @CRLF & "Daten: " & @CRLF & FileRead($hFileOpen))
 
-	; Schließt das Handle welches von FileOpen zuürckgegeben wurde.
+	; Schließt das Handle welches von FileOpen zurückgegeben wurde.
 	FileClose($hFileOpen)
 
 	; Löscht die temporäre Datei.
