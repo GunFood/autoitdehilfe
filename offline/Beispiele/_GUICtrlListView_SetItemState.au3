@@ -37,7 +37,7 @@ Func Example()
 	_GUICtrlListView_SetItemState($idListView, 0, $LVIS_FOCUSED, $LVIS_FOCUSED)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Status von Item 1: " & _GUICtrlListView_GetItemState($idListView, 0, $LVIS_FOCUSED))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

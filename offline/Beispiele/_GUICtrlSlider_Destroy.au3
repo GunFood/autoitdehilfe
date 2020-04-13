@@ -15,7 +15,7 @@ Func Example()
 	MsgBox(8192 + 64, "Information", "Der Slider wird gelöscht")
 	_GUICtrlSlider_Destroy($idSlider)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

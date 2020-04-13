@@ -22,7 +22,7 @@ Func Example()
 	_GUICtrlMonthCal_SetMaxSelCount($idMonthCal, 7)
 	MemoWrite("Maximal markierbaren Datumsbereich: " & _GUICtrlMonthCal_GetMaxSelCount($idMonthCal))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

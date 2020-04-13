@@ -64,7 +64,7 @@ Func Example()
 	MemoWrite("Handle vom angehakten Itempunkt 'Öffnen' .: 0x" & Hex(_GUICtrlMenu_GetItemBmpChecked($hFile, 0)))
 	MemoWrite("Handle vom abgehakten Itempunkt 'Öffnen' .: 0x" & Hex(_GUICtrlMenu_GetItemBmpUnchecked($hFile, 0)))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

@@ -13,7 +13,7 @@ Func _Beispiel_External()
 	$hAVI = _GUICtrlAVI_Create($hGui, @SystemDir & "\Shell32.dll", 160, 10, 10)
 	GUISetState(@SW_SHOW)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 		Sleep(100)
 		; Spult zu einem Zufallsframe des AVI Clips

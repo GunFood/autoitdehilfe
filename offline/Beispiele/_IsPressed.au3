@@ -1,7 +1,7 @@
 #include <Misc.au3>
 #include <MsgBoxConstants.au3>
 
-Local $dll = DllOpen("user32.dll")
+Local $hDLL = DllOpen("user32.dll")
 
 While 1
 	If _IsPressed("10", $hDLL) Then

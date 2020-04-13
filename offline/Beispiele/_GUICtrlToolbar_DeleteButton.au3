@@ -30,7 +30,7 @@ Func Example()
 	MsgBox($MB_SYSTEMMODAL, "Information", "Löscht den Hilfe Button")
 	_GUICtrlToolbar_DeleteButton($hToolbar, $idHelp)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

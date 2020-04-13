@@ -52,7 +52,7 @@ Func Example_UDF_Created()
 	GUISetState(@SW_SHOW)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Hintergrundbild: " & @CRLF & $aImage[1])
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	DllCall('ole32.dll', 'long', 'CoUinitialize') ; Muss für jeden Aufruf von CoInitializeEx ausgeführt werden

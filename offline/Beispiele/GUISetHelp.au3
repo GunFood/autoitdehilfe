@@ -13,7 +13,7 @@ Func Example()
 	; Display the GUI.
 	GUISetState(@SW_SHOW, $hGUI)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	While 1
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE

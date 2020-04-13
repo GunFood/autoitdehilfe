@@ -14,7 +14,7 @@ Func _Beispiel_External()
 	$id_Show = GUICtrlCreateButton("Verstecken", 225, 150, 70, 22)
 	GUISetState(@SW_SHOW)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	While 1
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE

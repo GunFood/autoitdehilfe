@@ -30,7 +30,7 @@ Func Example()
 			_GUICtrlTreeView_SetCheckedByIndex($idTreeView, $ahItem[$hRandomItem], $iRandIndex)))
 	_GUICtrlTreeView_Expand($idTreeView)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

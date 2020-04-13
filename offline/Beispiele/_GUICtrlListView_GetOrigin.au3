@@ -32,7 +32,7 @@ Func Example()
 	$aOrigin = _GUICtrlListView_GetOrigin($idListView)
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Erfolg: %s Ursprung: X=%d, Y=%d", @extended = 1, $aOrigin[0], $aOrigin[1]))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

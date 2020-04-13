@@ -29,7 +29,7 @@ Func Example()
 	Local $aCoord = _GDIPlus_PathBrushGetCenterPoint($hBrush)
 	MsgBox($MB_SYSTEMMODAL, "", "Mittelpunkt der X Koordinate: " & $aCoord[0] & @CRLF & "Mittelpunkt der Y Koordinate: " & $aCoord[1])
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 

@@ -18,7 +18,7 @@ Func Example()
 	; Ermittelt die logische Position des Skalenstriches
 	MsgBox($MB_SYSTEMMODAL, "Information", "Logische Position des Skalenstriches: " & _GUICtrlSlider_GetTic($idSlider, $iTic))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

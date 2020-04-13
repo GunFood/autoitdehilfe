@@ -22,7 +22,7 @@ Func Example()
 	; Ermittelt die Anzahl von Kalendern
 	MemoWrite("Anzahl von Kalendern: " & _GUICtrlMonthCal_GetCalendarCount($idMonthCal))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

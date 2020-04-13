@@ -29,7 +29,7 @@ Func Example()
 	Local $iPoints = _GDIPlus_PathBrushGetPointCount($hBrush)
 	MsgBox($MB_SYSTEMMODAL, "", "Anzahl von Punkten im Punkte-Array, welches die Begrenzungen des Pinsel-Pfads definieren: " & $iPoints)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 

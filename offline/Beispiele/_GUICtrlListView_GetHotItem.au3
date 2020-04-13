@@ -35,7 +35,7 @@ Func Example()
 	; Registriert WM_NOTIFY-Ereignisse
 	GUIRegisterMsg($WM_NOTIFY, "WM_NOTIFY")
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

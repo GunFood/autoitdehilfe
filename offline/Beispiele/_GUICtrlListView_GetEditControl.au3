@@ -43,7 +43,7 @@ Func Example()
 	MemoWrite("Edit Handle: 0x" & Hex(_GUICtrlListView_GetEditControl($g_hListView)) & _
 			" IsPtr = " & IsPtr(_GUICtrlListView_GetEditControl($g_hListView)) & " IsHWnd = " & IsHWnd(_GUICtrlListView_GetEditControl($g_hListView)))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

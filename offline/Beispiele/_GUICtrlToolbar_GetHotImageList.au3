@@ -55,7 +55,7 @@ Func Example()
 	MemoWrite("IsPtr = " & IsPtr(_GUICtrlToolbar_GetHotImageList($hToolbar)) & " IsHWnd = " & IsHWnd(_GUICtrlToolbar_GetHotImageList($hToolbar)))
 	MemoWrite("Handle der normalen Imagelist .....: 0x" & Hex(_GUICtrlToolbar_GetImageList($hToolbar)))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

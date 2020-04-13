@@ -43,7 +43,7 @@ Func Example()
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Position (bei 0 beginnend) des Items mit dem Index %d:" & @CRLF & "%d", $iRand, _GUICtrlTreeView_Index($idTreeView, $ahItem[$iRand])))
 	_GUICtrlTreeView_SelectItem($idTreeView, $ahItem[$iRand])
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

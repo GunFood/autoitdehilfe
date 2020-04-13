@@ -23,7 +23,7 @@ Func Example()
 	$aRect = _GUICtrlListBox_GetItemRect($idListBox, 4)
 	MsgBox(8256, "Information", "Rechteck des Items mit dem Index 5: " & @CRLF & @CRLF & "Linke Kante:" & @TAB & $aRect[0] & ", " & @CRLF & "Obere Kante:" & @TAB & $aRect[1] & ", " & @CRLF & "Breite:" & @TAB & @TAB & $aRect[2] & ", " & @CRLF & "Höhe:" & @TAB & @TAB & $aRect[3])
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

@@ -26,7 +26,7 @@ Func Example()
 	_GUICtrlListView_EnsureVisible($idListView, 49)
 	MsgBox($MB_SYSTEMMODAL, "Information", "obersten sichtbarer Index: " & _GUICtrlListView_GetTopIndex($idListView))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

@@ -43,7 +43,7 @@ Func Example()
 	MemoWrite("Position im Verhältnis zum Button .: " & $aMark[1])
 	MemoWrite("Farbe für die Einfügemarke ........: 0x" & Hex(_GUICtrlToolbar_GetInsertMarkColor($hToolbar), 6))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

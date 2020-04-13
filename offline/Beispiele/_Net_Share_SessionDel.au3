@@ -25,7 +25,7 @@ Func Example()
 	_Net_Share_SessionDel($sServer, @ComputerName)
 	MemoWrite("Fehler ...................: " & @error)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

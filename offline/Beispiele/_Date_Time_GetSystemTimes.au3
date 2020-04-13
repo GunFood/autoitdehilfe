@@ -22,7 +22,7 @@ Func Example()
 	MemoWrite("System Zeit .: " & _Date_Time_FileTimeToStr($aTime[1]))
 	MemoWrite("Benutzer Zeit ...: " & _Date_Time_FileTimeToStr($aTime[2]))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

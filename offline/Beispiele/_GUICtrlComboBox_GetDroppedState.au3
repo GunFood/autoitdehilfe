@@ -39,7 +39,7 @@ Func Example()
 	; Versteckt die ListBox der ComboBox
 	_GUICtrlComboBox_ShowDropDown($idCombo)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

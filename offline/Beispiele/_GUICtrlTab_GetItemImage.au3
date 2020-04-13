@@ -30,7 +30,7 @@ Func Example()
 	_GUICtrlTab_SetItemImage($idTab, 1, 1)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Tab 2 Bildindex: " & _GUICtrlTab_GetItemImage($idTab, 1))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

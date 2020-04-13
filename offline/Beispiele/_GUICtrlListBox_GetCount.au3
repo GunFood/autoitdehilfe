@@ -23,7 +23,7 @@ Func Example()
 	; Ermittelt die Anzahl an Items
 	MsgBox($MB_SYSTEMMODAL, "Information", "Anzahl an Items: " & _GUICtrlListBox_GetCount($idListBox))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

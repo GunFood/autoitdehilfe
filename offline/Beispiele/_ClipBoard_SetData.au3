@@ -17,7 +17,7 @@ Func Example()
 	$id_GetData = GUICtrlCreateButton("Holt Daten aus der Zwischenablage", 300, 410, 220, 30)
 	GUISetState(@SW_SHOW)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	While 1
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE

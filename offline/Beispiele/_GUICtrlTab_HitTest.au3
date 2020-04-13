@@ -21,7 +21,7 @@ Func Example()
 	$aHit = _GUICtrlTab_HitTest($idTab, 80, 10)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Der Punkt [80,10] liegt über Tab " & $aHit[0])
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

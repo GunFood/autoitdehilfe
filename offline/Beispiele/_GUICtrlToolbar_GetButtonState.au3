@@ -44,7 +44,7 @@ Func Example()
 	; Zeigt den Status des Speichern-Buttons
 	MemoWrite("Status des Speichern-Buttons: " & _GUICtrlToolbar_GetButtonState($hToolbar, $e_idSave))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

@@ -21,7 +21,7 @@ Func Example()
 	; Ermittelt die Anzahl von logischen Position, die der Slider abfahren kann
 	MsgBox(8256, "Information", "Logische Positionen: " & _GUICtrlSlider_GetPageSize($idSlider))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

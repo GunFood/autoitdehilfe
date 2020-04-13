@@ -49,7 +49,7 @@ Func Example()
 	_GUICtrlMenu_SetItemBmp($hFile, 0, _WinAPI_CreateSolidBitmap($hGui, 0xFF0000, 11, 11))
 	MemoWrite("Handle des Itembitmap: 0x" & Hex(_GUICtrlMenu_GetItemBmp($hFile, 0)))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

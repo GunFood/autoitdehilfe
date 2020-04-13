@@ -1,6 +1,6 @@
 #include <MsgBoxConstants.au3>
 
-; ; Weist einer lokalen Variable die bitweise NOT Operation von 5 zu.
+; Weist einer lokalen Variable die bitweise NOT Operation von 5 zu.
 Local $iBitNOT1 = BitNOT(5)
 
 #cs Comments:
@@ -10,7 +10,7 @@ Local $iBitNOT1 = BitNOT(5)
 	+5 == 0000 0000 0000 0000 0000 0000 0000 0101b
 	-6 == 1111 1111 1111 1111 1111 1111 1111 1010b
 	und das erste Bit das Vorzeichenbit ist.
-#ce
+#ce Comments:
 
 ; Zeigt das Ergebnis.
 MsgBox($MB_SYSTEMMODAL, "", $iBitNOT1)

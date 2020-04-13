@@ -41,7 +41,7 @@ Func Example()
 
 	MsgBox($MB_SYSTEMMODAL, "Information", "Ist Index 0 das Parent vom Child Index 2: " & _GUICtrlTreeView_IsParent($idTreeView, $ahItem[0], $aidChildItem[2]))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

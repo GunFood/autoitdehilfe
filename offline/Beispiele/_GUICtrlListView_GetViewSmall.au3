@@ -25,7 +25,7 @@ Func Example()
 	_GUICtrlListView_SetView($idListView, 3)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Ansicht 'kleine Icons': " & _GUICtrlListView_GetViewSmall($idListView))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

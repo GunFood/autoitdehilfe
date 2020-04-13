@@ -27,7 +27,7 @@ Func Example()
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Anzahl der Childs für den Itemindex %d: %d", $iRand, _GUICtrlTreeView_GetChildCount($idTreeView, $aidItem[$iRand])))
 	_GUICtrlTreeView_Expand($idTreeView, $aidItem[$iRand])
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

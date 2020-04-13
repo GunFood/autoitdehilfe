@@ -33,7 +33,7 @@ Func Example()
 	$hRandomImage = Random(0, _GUIImageList_GetImageCount($hImage) - 1, 1)
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Handle der Imagelist für Bild %d? %s", $hRandomImage, _GUICtrlTreeView_GetImageListIconHandle($idTreeView, $hRandomImage)))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

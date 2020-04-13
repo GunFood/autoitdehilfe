@@ -21,7 +21,7 @@ Func Example()
 	_GUICtrlTab_SetCurSel($idTab, 1)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Aktuell ausgewählter Tab: " & _GUICtrlTab_GetCurSel($idTab))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

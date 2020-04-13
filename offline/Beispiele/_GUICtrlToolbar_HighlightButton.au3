@@ -44,7 +44,7 @@ Func Example()
 	_GUICtrlToolbar_HighlightButton($hToolbar, $e_idSave)
 	MemoWrite("Status des Speichern Button: " & _GUICtrlToolbar_IsButtonHighlighted($hToolbar, $e_idSave))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

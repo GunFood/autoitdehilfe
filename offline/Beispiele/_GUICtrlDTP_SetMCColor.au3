@@ -31,7 +31,7 @@ Func Example()
 	MemoWrite("Hintergrund innerhalb der Monate .: " & "0x" & Hex(_GUICtrlDTP_GetMCColor($hDTP, 4), 6))
 	MemoWrite("Text des folgenden Tages .........: " & "0x" & Hex(_GUICtrlDTP_GetMCColor($hDTP, 5), 6))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

@@ -27,7 +27,7 @@ Func Example_UDF_Created()
 	; Ermittelt den Parameter von Item 2 und zeigt ihn an
 	MsgBox(8256, "Information", "Parameter von Item 2: " & _GUICtrlListView_GetItemParam($hListView, 1))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

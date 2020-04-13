@@ -34,7 +34,7 @@ Func Example()
 	$hRandomItem = Random(0, UBound($ahItem) - 1, 1)
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Item %d Bilderindex? %s", $hRandomItem, _GUICtrlTreeView_GetImageIndex($idTreeView, $ahItem[$hRandomItem])))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

@@ -37,7 +37,7 @@ Func Example()
 	_GUICtrlListView_SetItemImage($idListView, 1, 1, 1)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Bild vom Item 1, Subitem 1: " & _GUICtrlListView_GetItemImage($idListView, 1, 1))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

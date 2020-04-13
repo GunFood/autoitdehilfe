@@ -32,7 +32,7 @@ Func Example()
 	MemoWrite("Größe des Randes in Pixel: " & _GUICtrlMonthCal_GetCalendarBorder($idMonthCal))
 	GUISetState(@SW_UNLOCK)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

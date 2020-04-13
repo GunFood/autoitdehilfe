@@ -22,7 +22,7 @@ Func Example()
 	; Zeigt den Itemtext
 	MsgBox($MB_SYSTEMMODAL, "Information", "Item 5 Text: " & _GUICtrlListBox_GetText($idListBox, 4))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

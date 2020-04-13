@@ -29,7 +29,7 @@ Func Example()
 	; Begrenze den Text in dem Input-Control
 	_GUICtrlComboBox_ReplaceEditSel($idCombo, "Neuer Text im Input-Control")
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

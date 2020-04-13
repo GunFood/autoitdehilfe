@@ -21,7 +21,7 @@ Func Example()
 	_GDIPlus_PathBrushSetLinearBlend($hBrush, 0.25, 0.75)
 	_GDIPlus_GraphicsFillPath($hGraphics, $hPath, $hBrush)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 

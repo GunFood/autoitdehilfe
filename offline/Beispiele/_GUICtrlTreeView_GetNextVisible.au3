@@ -34,7 +34,7 @@ Func Example()
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Index %d, nächstes sichtbares: %s", $hRandItem, _GUICtrlTreeView_GetNextVisible($idTreeView, $aidItem[$hRandItem])))
 	_GUICtrlTreeView_SelectItem($idTreeView, _GUICtrlTreeView_GetNextVisible($idTreeView, $aidItem[$hRandItem]))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

@@ -51,7 +51,7 @@ Func Example()
 	If @error Then MsgBox($MB_SYSTEMMODAL, "Information", "Fehler beim Entfernen der Freigabe : " & @error)
 	MemoWrite("Freigabe entfernt")
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

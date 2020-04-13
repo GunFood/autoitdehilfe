@@ -37,7 +37,7 @@ Func Example()
 	_GUICtrlToolbar_SetStyleRegisterDrop($hToolbar, Not $bStyle)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Die Toolbar hat TBN_GETOBJECT Nachrichten erzeugt .: " & _GUICtrlToolbar_GetStyleRegisterDrop($hToolbar))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

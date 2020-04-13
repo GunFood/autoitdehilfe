@@ -21,7 +21,7 @@ Func Example()
 	; Klickt ein Item an
 	_GUICtrlListBox_ClickItem($idListBox, 4, "left", True)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

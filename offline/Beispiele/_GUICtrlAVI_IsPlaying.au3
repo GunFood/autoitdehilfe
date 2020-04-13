@@ -23,7 +23,7 @@ Func Example()
 	; Spielt das Beispiel AutoIt AVI ab
 	_GUICtrlAVI_Open($hAVI, $sFile)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	While 1
 		Switch GUIGetMsg()
 			Case $id_StartStop

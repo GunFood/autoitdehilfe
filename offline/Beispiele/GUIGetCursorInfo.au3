@@ -12,7 +12,7 @@ Func Example()
 	$g_idY = GUICtrlCreateLabel("0", 10, 30, 50)
 	GUISetState(@SW_SHOW)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	While 1
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE

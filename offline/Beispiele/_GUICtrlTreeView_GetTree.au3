@@ -47,7 +47,7 @@ Func Example()
 	_GUICtrlTreeView_SelectItem($idTreeView, $aidChildItem[$iRand])
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Tree für den markierten Child-Index %d: %s", $iRand, _GUICtrlTreeView_GetTree($idTreeView)))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

@@ -15,7 +15,7 @@ Func Example()
 	_GUICtrlListView_InsertColumn($idListView, 1, "Spalte 2", 100)
 	_GUICtrlListView_InsertColumn($idListView, 2, "Spalte 3", 100)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

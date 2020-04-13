@@ -25,7 +25,7 @@ Func Example()
 	$iX = _GUICtrlListView_ApproximateViewWidth($idListView) + 5 ; +5 ist nur eine Sicherheitszugabe
 	_WinAPI_SetWindowPos(GUICtrlGetHandle($idListView), 0, 2, 2, $iX, 268, $SWP_NOZORDER)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

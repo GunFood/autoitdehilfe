@@ -36,7 +36,7 @@ Func Example()
 	_GUICtrlTreeView_SetStateImageIndex($idTreeView, $ahItem[0], 2)
 
 	MsgBox($MB_SYSTEMMODAL, "Information", "Index des Statusbildes für Item 0: " & _GUICtrlTreeView_GetStateImageIndex($idTreeView, $ahItem[0]))
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

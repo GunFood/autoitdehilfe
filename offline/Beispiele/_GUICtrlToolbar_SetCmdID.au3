@@ -36,7 +36,7 @@ Func Example()
 	_GUICtrlToolbar_SetCmdID($hToolbar, 2, $idPrint)
 	_GUICtrlToolbar_SetButtonBitMap($hToolbar, $idPrint, $STD_PRINT)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

@@ -42,7 +42,7 @@ Func Example()
 	; Ermittelt den Text von String 2
 	MemoWrite("Text von String 2 .: " & _GUICtrlToolbar_GetString($hToolbar, 2))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

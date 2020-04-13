@@ -32,7 +32,7 @@ Func Example()
 			"Textfarbe .............: " & _GUICtrlListView_GetTextColor($idListView) & @CRLF & _
 			"Texthintergrundfarbe: " & _GUICtrlListView_GetTextBkColor($idListView))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

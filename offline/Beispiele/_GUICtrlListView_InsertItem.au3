@@ -18,7 +18,7 @@ Func Example()
 	_GUICtrlListView_InsertItem($idListView, "Item 2", 1)
 	_GUICtrlListView_InsertItem($idListView, "Item 3", 1)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

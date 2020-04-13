@@ -29,7 +29,7 @@ Func Example()
 	_GUICtrlListBox_Dir($g_hListBox, "", $DDL_DRIVES, False)
 	_GUICtrlListBox_EndUpdate($g_hListBox)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

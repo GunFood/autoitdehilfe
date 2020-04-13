@@ -26,7 +26,7 @@ Func Example_Internal()
 	_GUICtrlTreeView_SelectItem($idTreeView, $idChild)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Parent Paramemter/ID: " & _GUICtrlTreeView_GetParentParam($idTreeView, $idChild)) ; Dies entspricht der Control-ID
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

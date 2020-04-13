@@ -21,7 +21,7 @@ Func Example()
 	MemoWrite("DOS date .: 0x" & Hex($aDOS[0], 4))
 	MemoWrite("DOS time .: 0x" & Hex($aDOS[1], 4))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

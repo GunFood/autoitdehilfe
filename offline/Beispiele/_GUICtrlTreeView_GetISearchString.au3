@@ -34,7 +34,7 @@ Func Example()
 	Send($aText[Random(0, 5, 1)])
 	MsgBox($MB_SYSTEMMODAL, "Information", "Inkrementeller Suchstring: " & _GUICtrlTreeView_GetISearchString($idTreeView))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

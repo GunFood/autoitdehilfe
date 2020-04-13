@@ -13,7 +13,7 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	Local $idMsg
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 		$idMsg = GUIGetMsg()
 

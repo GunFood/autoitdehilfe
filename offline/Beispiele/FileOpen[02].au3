@@ -11,7 +11,7 @@ Func Example()
 	; Öffnet eine Datei für den Lese/Schreib-Zugriff.
 	Local $hFileOpen = FileOpen($sFilePath, $FO_READ + $FO_OVERWRITE)
 	If $hFileOpen = -1 Then
-		MsgBox($MB_SYSTEMMODAL, "", "Es ist während des lesens der temporären Datei ein Fehler aufgetreten.")
+		MsgBox($MB_SYSTEMMODAL, "", "Es ist während des Lesens der temporären Datei ein Fehler aufgetreten.")
 		Return False
 	EndIf
 
@@ -27,19 +27,19 @@ Func Example()
 	; Zeigt den Inhalt der Datei.
 	MsgBox($MB_SYSTEMMODAL, "", FileRead($hFileOpen))
 
-	; Die Position wird auf die voerherige Position gesetzt.
+	; Die Position wird auf die vorherige Position gesetzt.
 	FileSetPos($hFileOpen, 0, $iFilePos)
 
 	; Schreibt nochmals etwas Text.
 	FileWrite($hFileOpen, "Dies ist etwas zusätzlicher Text.")
 
-	; Die Position wird auf die voerherige Position gesetzt.
+	; Die Position wird auf die vorherige Position gesetzt.
 	FileSetPos($hFileOpen, 0, $FILE_BEGIN)
 
 	; Zeigt den Inhalt der Datei.
 	MsgBox($MB_SYSTEMMODAL, "", FileRead($hFileOpen))
 
-	; Schließt das Handle welches von FileOpen zurückgegeben wurde.
+	; Schließt das Handle, welches von FileOpen zurückgegeben wurde.
 	FileClose($hFileOpen)
 
 	; Löscht die temporäre Datei.

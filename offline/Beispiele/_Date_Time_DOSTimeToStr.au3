@@ -19,7 +19,7 @@ Func Example()
 	$sDate = _Date_Time_DOSTimeToStr(0x944a) ; 18:34:20
 	MemoWrite("FAT Zeit .: " & $sDate)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

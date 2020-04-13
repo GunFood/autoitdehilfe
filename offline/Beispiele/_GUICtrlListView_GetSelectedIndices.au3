@@ -24,7 +24,7 @@ Func Example()
 	_GUICtrlListView_SetItemSelected($idListView, 2)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Indizes der markierten Items: " & _GUICtrlListView_GetSelectedIndices($idListView))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

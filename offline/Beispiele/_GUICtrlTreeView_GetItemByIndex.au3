@@ -35,7 +35,7 @@ Func Example()
 
 	MsgBox($MB_SYSTEMMODAL, "Information", "Item 3, Handle des Child Index 1: " & _GUICtrlTreeView_GetItemByIndex($idTreeView, $ahItem[3], 1))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

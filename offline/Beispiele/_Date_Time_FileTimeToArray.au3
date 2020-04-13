@@ -21,7 +21,7 @@ Func Example()
 	$sFile = StringFormat("%02d/%02d/%04d %02d:%02d:%02d", $aFile[0], $aFile[1], $aFile[2], $aFile[3], $aFile[4], $aFile[5])
 	MemoWrite("Momentane/s Zeit/Datum .: " & $sFile)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

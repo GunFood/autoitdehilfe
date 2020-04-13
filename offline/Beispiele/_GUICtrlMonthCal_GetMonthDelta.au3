@@ -22,7 +22,7 @@ Func Example()
 	_GUICtrlMonthCal_SetMonthDelta($idMonthCal, 2)
 	MemoWrite("Datumsdifferenz: " & _GUICtrlMonthCal_GetMonthDelta($idMonthCal))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

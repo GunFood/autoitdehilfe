@@ -39,7 +39,7 @@ Func Example()
 	_GUICtrlTreeView_SetState($idTreeView, $a_hItem[$iRand], $TVIS_CUT)
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Status von Index %d? %s", $iRand, _GUICtrlTreeView_GetState($idTreeView, $a_hItem[$iRand])))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

@@ -25,7 +25,7 @@ Func Example()
 	_GUICtrlListView_SetView($idListView, 4)
 	MsgBox($MB_SYSTEMMODAL, "Information", "'Kachel' Modus: " & _GUICtrlListView_GetViewTile($idListView))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

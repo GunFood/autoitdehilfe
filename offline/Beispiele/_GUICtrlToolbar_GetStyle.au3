@@ -39,7 +39,7 @@ Func Example()
 	; Zeigt den Stil des Controls
 	MemoWrite("Stil der Toolbar .: 0x" & Hex(_GUICtrlToolbar_GetStyle($hToolbar)))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

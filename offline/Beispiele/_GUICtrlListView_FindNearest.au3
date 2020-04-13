@@ -33,7 +33,7 @@ Func Example()
 	$iIndex = _GUICtrlListView_FindNearest($idListView, 200, 10)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Das nächste Item [200, 10]: " & $iIndex)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

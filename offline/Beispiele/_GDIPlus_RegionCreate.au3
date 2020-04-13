@@ -33,7 +33,7 @@ Func Example()
 
 	Local $hTimer = TimerInit()
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 		If TimerDiff($hTimer) > 20 Then
 			_GDIPlus_GraphicsResetClip($hGfx_Buffer)

@@ -27,7 +27,7 @@ Func Example()
 	Local $aValue = _GDIPlus_PathBrushGetFocusScales($hBrush)
 	MsgBox($MB_SYSTEMMODAL, "", "X Fokus Skalierung: " & $aValue[0] & @CRLF & "Y Fokus Skalierung: " & $aValue[1])
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 

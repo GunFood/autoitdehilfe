@@ -24,7 +24,7 @@ Func Example()
 	; Ermittelt den Top Index
 	MsgBox($MB_SYSTEMMODAL, "Information", "Top Index:" & @TAB & _GUICtrlComboBox_GetTopIndex($idCombo))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

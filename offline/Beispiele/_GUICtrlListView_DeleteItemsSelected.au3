@@ -24,7 +24,7 @@ Func Example()
 	; Übergibt die Control-ID eines nativ erstellten ListViews um beide nativ- und UDF-erstellten Items zu löschen
 	_GUICtrlListView_DeleteItemsSelected($idListView)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	While 1
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE

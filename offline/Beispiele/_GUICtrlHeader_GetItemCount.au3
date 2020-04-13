@@ -25,7 +25,7 @@ Func Example()
 	; Zeigt die Anzahl der Spalten
 	MemoWrite("Anzahl der Spalten: " & _GUICtrlHeader_GetItemCount($hHeader))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

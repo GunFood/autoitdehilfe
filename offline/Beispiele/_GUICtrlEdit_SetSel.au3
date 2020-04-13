@@ -33,7 +33,7 @@ Func Example()
 	_GUICtrlStatusBar_SetText($hStatusBar, "Start: " & $aSel[0])
 	_GUICtrlStatusBar_SetText($hStatusBar, "Ende: " & $aSel[1], 1)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

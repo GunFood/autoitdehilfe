@@ -16,7 +16,7 @@ Func Example()
 	; Ermittelt die Anzahl der Millisekunden, die seit dem Hochfahren des Rechners vergangen sind.
 	MemoWrite("Ticks (ms) .: " & _Date_Time_GetTickCount())
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

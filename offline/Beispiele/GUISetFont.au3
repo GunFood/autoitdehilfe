@@ -7,7 +7,7 @@ Func Example()
 	GUICreate("Meine GUI mit der Standard Schriftart") ; Erstellt ein GUI-Fenster welches mittig ausgerichtet wird
 
 	Local $sFont = "Comic Sans MS"
-	GUISetFont(9, $FW_NORMAL, $GUI_FONTUNDER, $sFont) ; ; Schrift wird unterstrichen
+	GUISetFont(9, $FW_NORMAL, $GUI_FONTUNDER, $sFont) ; Schrift wird unterstrichen
 	GUICtrlCreateLabel("Unterschrichenes Label", 10, 20)
 
 	GUISetFont(9, $FW_NORMAL, $GUI_FONTITALIC, $sFont) ; Schrift wird kursiv geschrieben
@@ -18,7 +18,7 @@ Func Example()
 
 	GUISetState(@SW_SHOW)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	While 1
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE

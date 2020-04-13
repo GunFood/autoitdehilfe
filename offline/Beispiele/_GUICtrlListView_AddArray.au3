@@ -43,7 +43,7 @@ Func Example()
 	_GUICtrlListView_AddArray($idListView, $aItems)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Füllzeit: " & TimerDiff($iTimer) / 1000 & " Sekunden")
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

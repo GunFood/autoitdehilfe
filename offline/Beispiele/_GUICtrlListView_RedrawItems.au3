@@ -23,7 +23,7 @@ Func Example()
 	; Bewegt das Control dazu, einen Bereich mit Items neu aufzubauen
 	_GUICtrlListView_RedrawItems($idListView, 0, 9)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

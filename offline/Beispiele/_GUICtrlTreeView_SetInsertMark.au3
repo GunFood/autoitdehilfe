@@ -38,7 +38,7 @@ Func Example()
 	$iRand = Random(0, 9, 1)
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Setzt die Einfügemarke bei Itemindex[%d]: %s", $iRand, _GUICtrlTreeView_SetInsertMark($idTreeView, $ahItem[$iRand])))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

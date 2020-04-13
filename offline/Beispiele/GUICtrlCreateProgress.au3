@@ -16,7 +16,7 @@ Func Example()
 	Local $iSavPos = 0 ; Progressbar-Startposition
 
 	Local $idMsg, $idM
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 		$idMsg = GUIGetMsg()
 		If $idMsg = $idButton Then

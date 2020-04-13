@@ -27,7 +27,7 @@ Func Example()
 	_GDIPlus_PenSetWidth($hPen, 8)
 	_GDIPlus_GraphicsDrawLine($hGraphic, 10, 170, 390, 170, $hPen)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 

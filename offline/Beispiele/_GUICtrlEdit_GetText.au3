@@ -18,7 +18,7 @@ Func Example()
 	; Ermittelt den Text
 	MsgBox($MB_SYSTEMMODAL, "Information", _GUICtrlEdit_GetText($idEdit))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

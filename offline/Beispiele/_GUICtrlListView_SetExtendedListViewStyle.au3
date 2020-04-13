@@ -33,7 +33,7 @@ Func Example()
 	_GUICtrlListView_AddSubItem($idListView, 1, "Zeile 2: Spalte 2", 1, 2)
 	_GUICtrlListView_AddItem($idListView, "Zeile 3: Spalte 1", 2)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

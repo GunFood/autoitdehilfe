@@ -26,7 +26,7 @@ Func Example()
 	MsgBox($MB_SYSTEMMODAL, "Information", "Löscht das Treeview-Control")
 	_GUICtrlTreeView_Destroy($hTreeView)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

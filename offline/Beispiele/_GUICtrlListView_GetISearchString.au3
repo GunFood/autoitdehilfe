@@ -30,7 +30,7 @@ Func Example()
 	; Ermittelt den inkrementellen Suchstring
 	MsgBox(8256, "Information", "Inkrementeller Suchstring: " & _GUICtrlListView_GetISearchString($idListView))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 

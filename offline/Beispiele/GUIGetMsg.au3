@@ -1,6 +1,8 @@
 #include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>
 
+Example()
+
 ; Drücke den Button, um die Werte der Checkboxen anzuzeigen
 ; Das Skript ermittelt auch Statusänderungen (geschlossen/minimiert/Timeouts, etc).
 Func Example()
@@ -32,7 +34,7 @@ Func Example()
 				Exit
 			Case $idMsg = $GUI_EVENT_MINIMIZE
 				MsgBox($MB_SYSTEMMODAL, "", "Dialog wurde minimiert", 2)
-			Case $idMsg = $GUI_EVENT_MAXIMIZE
+			Case $idMsg = $GUI_EVENT_RESTORE
 				MsgBox($MB_SYSTEMMODAL, "", "Dialog wurde wiederhergestellt", 2)
 
 			Case $idMsg = $idButton_1

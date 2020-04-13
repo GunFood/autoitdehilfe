@@ -23,7 +23,7 @@ Func Example()
 	MemoWrite("Anfangsdatum: " & _GUICtrlMonthCal_GetSelRangeMinStr($idMonthCal))
 	MemoWrite("Enddatum .: " & _GUICtrlMonthCal_GetSelRangeMaxStr($idMonthCal))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

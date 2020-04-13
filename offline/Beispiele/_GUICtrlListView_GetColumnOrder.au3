@@ -21,7 +21,7 @@ Func Example()
 	$a_Order = StringSplit(_GUICtrlListView_GetColumnOrder($idListView), "|")
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Reihenfolge der Spalten: [%d, %d, %d, %d]", $a_Order[1], $a_Order[2], $a_Order[3], $a_Order[4]))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 

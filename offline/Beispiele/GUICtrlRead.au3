@@ -17,7 +17,7 @@ Func Example()
 	GUISetState(@SW_SHOW) ; Zeigt das leere GUI-Fenster
 
 	Local $idMsg, $iMenustate, $sMenutext
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 		$idMsg = GUIGetMsg()
 		If $idMsg = $idButton Then

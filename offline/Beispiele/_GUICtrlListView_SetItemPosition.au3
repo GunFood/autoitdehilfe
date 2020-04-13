@@ -26,7 +26,7 @@ Func Example()
 	MsgBox($MB_SYSTEMMODAL, "Information", "Verschiebt Item 2")
 	_GUICtrlListView_SetItemPosition($idListView, 1, 100, 100)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

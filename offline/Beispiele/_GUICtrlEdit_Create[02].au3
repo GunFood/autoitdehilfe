@@ -19,7 +19,7 @@ Func _Example2()
 
 	_GUICtrlEdit_SetText($g_hEdit, "Dies ist ein Test" & @CRLF & "Noch eine Zeile")
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

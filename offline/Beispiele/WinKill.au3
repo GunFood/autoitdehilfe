@@ -7,7 +7,7 @@ Func Example()
 	; Wartet maximal 10 Sekunden bis das Editorfenster erscheint.
 	Local $hWnd = WinWait("[CLASS:Notepad]", "", 10)
 
-	; Wartet 2 Skeunden bevor die WinKill-Funktion aufgerufen wird.
+	; Wartet 2 Sekunden bevor die WinKill-Funktion aufgerufen wird.
 	Sleep(2000)
 
 	; Erzwingt die Schließung des Fensters durch die Verwendung des von WinWait zurückgegebenen Handles.

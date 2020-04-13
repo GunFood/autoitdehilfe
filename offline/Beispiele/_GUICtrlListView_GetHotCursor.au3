@@ -20,7 +20,7 @@ Func Example()
 	MsgBox($MB_SYSTEMMODAL, "Information", "Handle des 'Hot'-Cursors: 0x" & Hex(_GUICtrlListView_GetHotCursor($idListView)) & @CRLF & _
 			"IsPtr = " & IsPtr(_GUICtrlListView_GetHotCursor($idListView)) & " IsHwnd = " & IsHWnd(_GUICtrlListView_GetHotCursor($idListView)))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

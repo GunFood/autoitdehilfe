@@ -9,7 +9,7 @@ Func Example()
 	Local $idDate = GUICtrlCreateMonthCal("1953/03/25", 10, 10)
 	GUISetState(@SW_SHOW)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst oder ein Timeout vorliegt
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst. oder ein Timeout vorliegt
 	While 1
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE

@@ -28,7 +28,7 @@ Func Example()
 	MsgBox($MB_SYSTEMMODAL, "Information", "erstes sichtbare Item: " & $hFirst)
 	_GUICtrlTreeView_SelectItem($idTreeView, $hFirst)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

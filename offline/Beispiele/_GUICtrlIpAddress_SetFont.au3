@@ -16,7 +16,7 @@ Func Example()
 	_GUICtrlIpAddress_Set($hIPAddress2, "24.168.2.128")
 	_GUICtrlIpAddress_SetFont($hIPAddress2, "Arial", 12, 300)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

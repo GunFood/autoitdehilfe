@@ -42,7 +42,7 @@ Func Example()
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Index %d Ebene: %d", $iRand, _GUICtrlTreeView_Level($idTreeView, $aidChildItem[$iRand])))
 	_GUICtrlTreeView_SelectItem($idTreeView, $aidChildItem[$iRand])
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

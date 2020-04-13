@@ -21,7 +21,7 @@ Func Example()
 	$g_aPicPos = WinGetPos($g_hPic)
 	$g_aGuiPos = WinGetPos($g_hGui)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	While 1
 		Switch GUIGetMsg()
 			Case $Gui_EVENT_CLOSE

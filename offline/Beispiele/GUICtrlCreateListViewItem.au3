@@ -20,7 +20,7 @@ Func Example()
 	GUICtrlSetData($idItem3, "||SPALTE33")
 	GUICtrlDelete($idItem1)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	While 1
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE

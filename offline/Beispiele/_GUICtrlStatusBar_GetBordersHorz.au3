@@ -26,7 +26,7 @@ Func Example()
 	MemoWrite("Breite des vertikalen Randes .............: " & _GUICtrlStatusBar_GetBordersVert($hStatus))
 	MemoWrite("Breite des Randes zwischen den Rechtecken : " & _GUICtrlStatusBar_GetBordersRect($hStatus))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

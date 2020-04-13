@@ -22,7 +22,7 @@ Func Example()
 	; Ermittelt den 0-basierenden Index des Items, das den angegebenen Koordinaten am nächsten liegt
 	MsgBox(8256, "Information", "Index des Items, das den Koordinaten 30,30 am nächsten ist: " & _GUICtrlListBox_ItemFromPoint($idListBox, 30, 30))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

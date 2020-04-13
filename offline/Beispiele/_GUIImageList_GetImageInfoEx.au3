@@ -38,7 +38,7 @@ Func Example()
 	MemoWrite("Rechte Seite des Bildes ..: " & DllStructGetData($tInfo, "Right"))
 	MemoWrite("Untere Seite des Bildes .: " & DllStructGetData($tInfo, "Bottom"))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

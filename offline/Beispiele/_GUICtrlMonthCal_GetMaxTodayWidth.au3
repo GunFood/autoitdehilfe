@@ -21,7 +21,7 @@ Func Example()
 	; Ermittelt die maximale Breite des "heute"-Strings
 	MemoWrite("Maximale Breite des 'heute'-Strings: " & _GUICtrlMonthCal_GetMaxTodayWidth($idMonthCal))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

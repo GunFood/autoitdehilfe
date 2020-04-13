@@ -21,7 +21,7 @@ Func Example()
 	_GUICtrlTab_SetItemText($idTab, 0, "Neuer Text")
 	MsgBox($MB_SYSTEMMODAL, "Information", "Tab 1 Text: " & _GUICtrlTab_GetItemText($idTab, 0))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

@@ -30,7 +30,7 @@ Func Example_External()
 	_GUICtrlTreeView_SelectItem($hTreeView, $hChild)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Parent Parameter: " & _GUICtrlTreeView_GetParentParam($hTreeView, $hChild))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

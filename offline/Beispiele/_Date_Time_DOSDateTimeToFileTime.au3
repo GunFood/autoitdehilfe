@@ -24,7 +24,7 @@ Func Example()
 	MemoWrite("Vergleich 2 (gleiches Datum) :" & _Date_Time_CompareFileTime($tFileTime1, $tFileTime1))
 	MemoWrite("Vergleich 3 (2. Datei jünger):" & _Date_Time_CompareFileTime($tFileTime2, $tFileTime1))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

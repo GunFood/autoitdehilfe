@@ -31,7 +31,7 @@ Func Example()
 	; Ermittelt die Breite des Bitmaprandes
 	MemoWrite("Neuer Rand .....: " & _GUICtrlHeader_GetBitmapMargin($hHeader))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

@@ -40,7 +40,7 @@ Func Example()
 	_GDIPlus_GraphicsDrawString($hGraphic, "CompositingQuality = " & $iQuality1, 10, 380)
 	_GDIPlus_GraphicsDrawString($hGraphic, "CompositingQuality = " & $iQuality2, 420, 380)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 

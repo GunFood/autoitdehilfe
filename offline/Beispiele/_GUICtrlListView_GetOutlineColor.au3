@@ -35,7 +35,7 @@ Func Example()
 	_GUICtrlListView_SetOutlineColor($idListView, 0x0000FF)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Farbe des Randes: " & Hex(_GUICtrlListView_GetOutlineColor($idListView)))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

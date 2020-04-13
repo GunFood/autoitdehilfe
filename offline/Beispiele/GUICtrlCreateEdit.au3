@@ -16,7 +16,7 @@ Func Example()
 	; Wird hinzugefügt, 3. Parameter nicht vergessen!
 	GUICtrlSetData($idMyedit, "Zweite Zeile", 1)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	While 1
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE

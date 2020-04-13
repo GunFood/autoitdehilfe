@@ -24,7 +24,7 @@ Func Example()
 	; Ermittelt die minimale Größe um einen kompletten Monat darzustellen
 	MemoWrite(_FormatOutPut(_GUICtrlMonthCal_GetMinReqRectArray($idMonthCal)))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

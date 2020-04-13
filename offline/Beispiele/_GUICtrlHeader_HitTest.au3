@@ -36,7 +36,7 @@ Func Example()
 	MemoWrite("Rechts des begrenzenden Rechtecks ........: " & $aHT[9])
 	MemoWrite("Links des begrenzenden Rechtecks .........: " & $aHT[10])
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

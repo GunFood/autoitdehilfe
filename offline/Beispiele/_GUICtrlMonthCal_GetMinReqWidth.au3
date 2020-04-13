@@ -22,7 +22,7 @@ Func Example()
 	MemoWrite("Minimal notwendige Höhe  : " & _GUICtrlMonthCal_GetMinReqHeight($idMonthCal))
 	MemoWrite("Minimal notwendige Breite: " & _GUICtrlMonthCal_GetMinReqWidth($idMonthCal))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

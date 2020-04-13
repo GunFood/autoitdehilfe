@@ -19,7 +19,7 @@ Func Example()
 
 	MsgBox($MB_SYSTEMMODAL, "Information", "Textlimit: " & _GUICtrlEdit_GetLimitText($idEdit))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

@@ -22,7 +22,7 @@ Func Example()
 	_GDIPlus_MatrixRotate($hMatrix, 1, True)
 	_GDIPlus_MatrixTranslate($hMatrix, @DesktopWidth / 2, @DesktopHeight / 2, True)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Local $iTimer = TimerInit()
 	Do
 		If TimerDiff($iTimer) > 40 Then

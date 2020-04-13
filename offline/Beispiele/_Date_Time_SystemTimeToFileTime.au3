@@ -20,7 +20,7 @@ Func Example()
 	$tFile = _Date_Time_SystemTimeToFileTime($tSystem)
 	MemoWrite("Datei-Zeit : " & _Date_Time_FileTimeToStr($tFile))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

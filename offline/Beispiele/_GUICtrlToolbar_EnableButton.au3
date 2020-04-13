@@ -28,7 +28,7 @@ Func Example()
 	; Deaktiviert den Hilfe Button
 	_GUICtrlToolbar_EnableButton($hToolbar, $idHelp, False)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

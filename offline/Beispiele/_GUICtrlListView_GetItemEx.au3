@@ -31,7 +31,7 @@ Func Example()
 	_GUICtrlListView_GetItemEx($idListView, $tItem)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Status von Item 2: " & DllStructGetData($tItem, "State"))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

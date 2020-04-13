@@ -21,7 +21,7 @@ Func Example()
 	; Spielt das AutoIt Beispiel-AVI ab
 	_GUICtrlAVI_Play($g_hAVI)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 

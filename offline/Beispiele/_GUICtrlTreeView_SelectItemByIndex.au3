@@ -28,7 +28,7 @@ Func Example()
 	; Wählt das Child-Item mit dem Index 1 des zufällig gewählten Items aus
 	_GUICtrlTreeView_SelectItemByIndex($idTreeView, $aidItem[$iRand], 1)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

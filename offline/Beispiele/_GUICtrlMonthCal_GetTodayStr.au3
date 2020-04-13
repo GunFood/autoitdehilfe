@@ -21,7 +21,7 @@ Func Example()
 	; Ermittelt die Datumsinformationen für das Datum im Stringformat, welches als 'heute' definiert ist
 	MemoWrite("Heute: " & _GUICtrlMonthCal_GetTodayStr($idMonthCal))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

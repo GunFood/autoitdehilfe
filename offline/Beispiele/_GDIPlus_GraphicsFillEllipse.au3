@@ -15,7 +15,7 @@ Func Example()
 	$hGraphic = _GDIPlus_GraphicsCreateFromHWND($hGui)
 	_GDIPlus_GraphicsFillEllipse($hGraphic, 130, 100, 140, 70)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 

@@ -19,7 +19,7 @@ Func Example()
 	MsgBox($MB_SYSTEMMODAL, "Information", "Löscht den String bei Index 1")
 	_GUICtrlComboBox_DeleteString($idCombo, 1)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

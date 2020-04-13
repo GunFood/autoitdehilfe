@@ -21,7 +21,7 @@ Func Example()
 	; Die Breite des Zeichenstifts anzeigen
 	MsgBox($MB_SYSTEMMODAL, "Information", "Breite des Zeichenstifts: " & _GDIPlus_PenGetWidth($hPen))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 

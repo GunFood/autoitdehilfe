@@ -21,7 +21,7 @@ Func Example()
 	_GUICtrlTab_SetExtendedStyle($idTab, $TCS_EX_FLATSEPARATORS)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Erweiterte Stile: 0x" & Hex(_GUICtrlTab_GetExtendedStyle($idTab)))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

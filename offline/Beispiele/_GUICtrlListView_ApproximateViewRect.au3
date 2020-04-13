@@ -24,7 +24,7 @@ Func Example()
 	; Neuaufbau des Listviews
 	$aXY = _GUICtrlListView_ApproximateViewRect($idListView)
 	_WinAPI_SetWindowPos(GUICtrlGetHandle($idListView), 0, 2, 2, $aXY[0] + 5, $aXY[1], $SWP_NOZORDER); Die +5 ist eine Sicherheitszugabe
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

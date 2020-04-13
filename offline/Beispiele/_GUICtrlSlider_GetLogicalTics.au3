@@ -22,7 +22,7 @@ Func Example()
 		MemoWrite(StringFormat("(%02d) logischen Positionen für die Skalenstriche ..........: %d", $x, $aTics[$x]))
 	Next
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

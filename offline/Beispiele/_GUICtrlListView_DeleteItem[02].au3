@@ -25,7 +25,7 @@ Func Example_UDF_Created()
 	; Verwendet das Handle eines mit der UDF erstellen ListViews
 	MsgBox($MB_SYSTEMMODAL, "Gelöscht?", _GUICtrlListView_DeleteItem($idListView, 1))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 

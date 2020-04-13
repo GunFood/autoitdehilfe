@@ -40,7 +40,7 @@ Func Example()
 	; Ermittelt die minimale Anzahl sichtbarer Items
 	MsgBox(8256, "Information", "Anzahl jetzt sichtbarer Items:" & @TAB & _GUICtrlComboBox_GetMinVisible($idCombo), 3)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

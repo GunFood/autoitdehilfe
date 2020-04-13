@@ -13,7 +13,7 @@ Func Example()
 	GUISetState(@SW_SHOW) ; Zeigt das GUI-Fenster mit 2 Radiobuttons
 
 	Local $idMsg
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	While 1
 		$idMsg = GUIGetMsg()
 		Select

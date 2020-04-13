@@ -60,7 +60,7 @@ Func Example()
 	_GUIScrollBars_Init($hGui)
 	_GUIScrollBars_Init($h_GUIC)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	While 1
 		$hGuiMsg = GUIGetMsg()
 		Switch $hGuiMsg

@@ -21,7 +21,7 @@ Func Example()
 	$tSystem = _Date_Time_FileTimeToSystemTime(DllStructGetPtr($tFile))
 	MemoWrite("System Dateizeit .: " & _Date_Time_SystemTimeToDateTimeStr($tSystem))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

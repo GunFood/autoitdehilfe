@@ -13,7 +13,7 @@ Func Example()
 	GUICtrlSetData($idSlider1, 45) ; Setzt den Cursor
 
 	Local $idMsg
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 		$idMsg = GUIGetMsg()
 

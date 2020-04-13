@@ -36,7 +36,7 @@ Func Example()
 	_GDIPlus_GraphicsDrawLine($hGraphic, 420, 10, 420 + Cos($fAngle) * 300, 10 + Sin($fAngle) * 300, $hPen)
 	_GDIPlus_GraphicsDrawString($hGraphic, "IsAngleScalable = True", 420, 320)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 

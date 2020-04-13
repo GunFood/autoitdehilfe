@@ -51,7 +51,7 @@ Func Example()
 	Next
 	_GUICtrlListView_SetGroupInfo($idListView, 1, "Neue Gruppe 1")
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 

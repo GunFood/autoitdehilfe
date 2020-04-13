@@ -24,7 +24,7 @@ Func Example()
 	; Prüfen, ob die IP-Adresse leer ist
 	MemoWrite("Leer: " & _GUICtrlIpAddress_IsBlank($hIPAddress))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

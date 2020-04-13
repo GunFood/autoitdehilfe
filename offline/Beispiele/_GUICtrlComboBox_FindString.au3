@@ -22,7 +22,7 @@ Func Example()
 	; Den String finden
 	MsgBox($MB_SYSTEMMODAL, "Information", "Gefundener String: " & _GUICtrlComboBox_FindString($idCombo, "Dies"))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

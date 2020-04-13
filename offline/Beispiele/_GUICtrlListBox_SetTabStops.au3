@@ -17,7 +17,7 @@ Func Example()
 	; Fügt einen String hinzu um den Tabstop zu testen
 	_GUICtrlListBox_AddString($idListBox, "Spalte 1" & @TAB & "Spalte 2" & @TAB & "Spalte 3")
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

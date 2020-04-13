@@ -28,7 +28,7 @@ Func Example()
 	$aRect = _GUICtrlListView_GetSubItemRect($idListView, 1, 1)
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Begrenzendes Rechteck von Item 2 : [%d, %d, %d, %d]", $aRect[0], $aRect[1], $aRect[2], $aRect[3]))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

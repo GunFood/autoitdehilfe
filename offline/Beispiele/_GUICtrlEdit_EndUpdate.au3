@@ -23,7 +23,7 @@ Func Example()
 	_GUICtrlStatusBar_SetIcon($hStatusBar, 0, 97, "shell32.dll")
 	_GUICtrlStatusBar_SetText($hStatusBar, @TAB & "Zeilen: " & _GUICtrlEdit_GetLineCount($idEdit))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

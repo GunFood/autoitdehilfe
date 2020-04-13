@@ -24,7 +24,7 @@ Func Example()
 	MsgBox($MB_SYSTEMMODAL, "Information", "Setzt die Tab Auswahl zurück")
 	_GUICtrlTab_DeselectAll($idTab, False)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

@@ -28,7 +28,7 @@ Func Example()
 	MsgBox($MB_SYSTEMMODAL, "Information", "Tauscht Strings (3:5)")
 	_GUICtrlListBox_SwapString($idListBox, 3, 5)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

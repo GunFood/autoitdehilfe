@@ -19,7 +19,7 @@ Func Example()
 	Local $bBalloon = _GUICtrlEdit_HideBalloonTip($idEdit)
 	_GUICtrlEdit_AppendText($idEdit, "BalloonTip verstecken= " & $bBalloon & @CRLF)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

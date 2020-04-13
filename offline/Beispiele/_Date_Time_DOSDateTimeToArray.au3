@@ -20,7 +20,7 @@ Func Example()
 	MemoWrite("FAT Datum  :" & StringFormat("%02d.%02d.%04d", $aDate[1], $aDate[0], $aDate[2]))
 	MemoWrite("FAT Uhrzeit:" & StringFormat("%02d:%02d:%02d", $aDate[3], $aDate[4], $aDate[5]))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

@@ -26,7 +26,7 @@ Func Example()
 	_GUICtrlTab_InsertItem($idTab, 1, "Tab 2", 1)
 	_GUICtrlTab_InsertItem($idTab, 2, "Tab 3", 2)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

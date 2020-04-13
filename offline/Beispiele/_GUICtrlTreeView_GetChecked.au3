@@ -25,7 +25,7 @@ Func Example()
 	_GUICtrlTreeView_SetChecked($idTreeView, $aidItem[$hRandomItem])
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Item %d markiert? %s", $hRandomItem, _GUICtrlTreeView_GetChecked($idTreeView, $aidItem[$hRandomItem])))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

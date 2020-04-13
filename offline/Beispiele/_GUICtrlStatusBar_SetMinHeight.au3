@@ -21,7 +21,7 @@ Func Example()
 	; Setzt die minimale Höhe
 	_GUICtrlStatusBar_SetMinHeight($hStatus, 30)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

@@ -29,7 +29,7 @@ Func Example()
 	_GUICtrlListView_SetItemChecked($idListView, 1)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Item 2 angehakt: " & _GUICtrlListView_GetItemChecked($idListView, 1))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

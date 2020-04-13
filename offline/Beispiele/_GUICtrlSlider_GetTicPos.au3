@@ -15,7 +15,7 @@ Func Example()
 	; Ermittelt die aktuelle physikalische Position des Skalenstrichs
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Skalenstrich %d: X Position: %d", $iTic, _GUICtrlSlider_GetTicPos($idSlider, $iTic)))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

@@ -41,7 +41,7 @@ Func Example()
 	MemoWrite("Hervorgehoben: " & '0x' & Hex($aScheme[0], 6))
 	MemoWrite("Schatten: " & '0x' & Hex($aScheme[1], 6))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

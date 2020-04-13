@@ -7,10 +7,10 @@ Func Example()
 	; Erstellt eine Konstante im lokalen Bereich um die Dateigenschaften des aktuellen Skripts zu speichern.
 	Local Const $sAttribute = FileGetAttrib(@ScriptFullPath)
 
-	; Zeigt den String der durch FileGetAttrib zurückgegebene wurde.
+	; Zeigt den String der durch FileGetAttrib zurückgegeben wurde.
 	MsgBox($MB_SYSTEMMODAL, "", "Die Attribute des Strings: " & @CRLF & $sAttribute)
 
-	; ; Zeigt den String der durch AttributeToString zurückgegebene wurde.
+	; Zeigt den String der durch AttributeToString zurückgegeben wurde.
 	MsgBox($MB_SYSTEMMODAL, "", "Die Attribute des String mit leichter zu verstehenden Werten: " & @CRLF & _
 			AttributeToString($sAttribute))
 EndFunc   ;==>Example

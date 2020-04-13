@@ -30,7 +30,7 @@ Func Example()
 	MsgBox($MB_SYSTEMMODAL, "Information", "Handle der Imagelist: 0x" & Hex(_GUICtrlTab_GetImageList($idTab)) & @CRLF & _
 			"IsPtr = " & IsPtr(_GUICtrlTab_GetImageList($idTab)) & " IsHwnd = " & IsHWnd(_GUICtrlTab_GetImageList($idTab)))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

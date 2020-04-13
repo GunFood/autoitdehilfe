@@ -42,7 +42,7 @@ Func Example()
 	; Zeigt das Bild von Spalte 1
 	MemoWrite("Bild von Spalte 1: " & _GUICtrlHeader_GetItemImage($hHeader, 0))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

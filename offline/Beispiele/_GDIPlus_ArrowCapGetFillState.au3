@@ -29,7 +29,7 @@ Func Example()
 	_GDIPlus_PenSetCustomEndCap($hPen, $hEndCap)
 	_GDIPlus_GraphicsDrawLine($hGraphic, 10, 160, 390, 160, $hPen)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 

@@ -24,7 +24,7 @@ Func Example()
 	; Zeigt die aktuelle horizontale Ausdehnung
 	MsgBox($MB_SYSTEMMODAL, "Information", "Horizontale Ausdehnung: " & _GUICtrlListBox_GetHorizontalExtent($idListBox))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

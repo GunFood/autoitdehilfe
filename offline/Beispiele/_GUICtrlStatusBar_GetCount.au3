@@ -24,7 +24,7 @@ Func Example()
 	; Ermittelt die Anzahl von Abschnitten
 	MemoWrite("Anzahl von Abschnitten .: " & _GUICtrlStatusBar_GetCount($hStatus))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

@@ -38,7 +38,7 @@ Func Example()
 	MsgBox($MB_SYSTEMMODAL, "Information", "Scrollt den blinkenden Balken in die Ansicht")
 	_GUICtrlEdit_Scroll($idEdit, $SB_SCROLLCARET)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

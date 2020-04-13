@@ -40,7 +40,7 @@ Func Example()
 	; Zeigt die Anzahl der Zeilen
 	MemoWrite("Anzahl der Zeilen:" & _GUICtrlToolbar_GetRows($hToolbar))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

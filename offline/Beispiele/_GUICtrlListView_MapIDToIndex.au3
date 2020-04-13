@@ -24,7 +24,7 @@ Func Example()
 	MsgBox($MB_SYSTEMMODAL, "Information", "Index zu ID: " & $iID)
 	MsgBox($MB_SYSTEMMODAL, "Information", "ID zu Index: " & _GUICtrlListView_MapIDToIndex($idListView, $iID))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

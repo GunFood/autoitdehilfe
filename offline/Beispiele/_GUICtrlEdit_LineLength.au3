@@ -29,7 +29,7 @@ Func Example()
 	$iRandom = Random(0, 7, 1)
 	_GUICtrlStatusBar_SetText($hStatusBar, "Länge: " & _GUICtrlEdit_LineLength($idEdit, $iRandom) & " Zeichen in einer Zeile: " & $iRandom)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

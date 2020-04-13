@@ -46,7 +46,7 @@ Func Example()
 	MsgBox($MB_SYSTEMMODAL, "Information", "Bisheriger Text der ersten Gruppe: " & $aInfo[0])
 	_GUICtrlListView_SetGroupInfo($idListView, 1, "Neue Gruppe 1") ; Text linksbündig
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 

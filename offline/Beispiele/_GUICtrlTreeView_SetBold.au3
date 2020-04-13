@@ -25,7 +25,7 @@ Func Example()
 	_GUICtrlTreeView_SetBold($idTreeView, $aidItem[$hRandomItem])
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Item %d im stil 'Fett'? %s", $hRandomItem, _GUICtrlTreeView_GetBold($idTreeView, $aidItem[$hRandomItem])))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

@@ -41,7 +41,7 @@ Func Example()
 	_GUICtrlListView_EditLabel($g_idListView, 0)
 	$iTime = TimerInit()
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 		If _GUICtrlListView_GetEditControl($g_idListView) <> 0 Then
 			If TimerDiff($iTime) > 5000 Then _GUICtrlListView_CancelEditLabel($g_idListView)

@@ -41,7 +41,7 @@ Func Example()
 	$iRand = Random(0, 9, 1)
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Text für Item %d: %s", $iRand, _GUICtrlTreeView_GetText($idTreeView, $ahItem[$iRand])))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

@@ -10,14 +10,14 @@ Func Example()
 
 	; Erstellt eine temporäre Datei von der Dateien gelesen werden sollen.
 	If Not FileWrite($sFilePath, "Dies ist ein Beispiel für die Verwendung von FileOpen.") Then
-		MsgBox($MB_SYSTEMMODAL, "", "Es ist während dem schreiben der temporären Datei ein Fehler aufgetreten.")
+		MsgBox($MB_SYSTEMMODAL, "", "Es ist während des Schreibens der temporären Datei ein Fehler aufgetreten.")
 		Return False
 	EndIf
 
 	; Öffnet die Datei zum lesen und speichert das Handle in einer Variable.
 	Local $hFileOpen = FileOpen($sFilePath, $FO_READ)
 	If $hFileOpen = -1 Then
-		MsgBox($MB_SYSTEMMODAL, "", "Es ist während dem lesen der Datei ein Fehler aufgetreten.")
+		MsgBox($MB_SYSTEMMODAL, "", "Es ist während des Schreibens der temporären Datei ein Fehler aufgetreten.")
 		Return False
 	EndIf
 

@@ -24,7 +24,7 @@ Func Example()
 	; Zeichnet eine Linie
 	_GDIPlus_GraphicsDrawLine($hGraphic, 10, 150, 390, 150, $hPen)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 

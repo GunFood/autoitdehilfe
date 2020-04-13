@@ -25,7 +25,7 @@ Func Example()
 	; Zeigt den Index des Items an Stelle 3
 	MemoWrite("Stelle 3 Index: " & _GUICtrlHeader_OrderToIndex($hHeader, 2))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

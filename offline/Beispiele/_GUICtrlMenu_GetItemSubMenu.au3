@@ -50,7 +50,7 @@ Func Example()
 	_GUICtrlMenu_SetItemSubMenu($hMain, 2, $hHelp)
 	MemoWrite("Handle des Menüpunkts 'Hilfe': " & _GUICtrlMenu_GetItemSubMenu($hMain, 2))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

@@ -20,7 +20,7 @@ Func Example()
 	_GUICtrlListView_SetSelectedColumn($idListView, 1)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Ausgewählte Spalte: " & _GUICtrlListView_GetSelectedColumn($idListView))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

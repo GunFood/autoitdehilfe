@@ -22,7 +22,7 @@ Func Example()
 	; Zeigt Items pro Spalte
 	MsgBox($MB_SYSTEMMODAL, "Information", "Items pro Spalte: " & _GUICtrlListBox_GetListBoxInfo($idListBox))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

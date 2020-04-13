@@ -30,7 +30,7 @@ Func Example()
 	_GUICtrlListView_SetItemIndent($idListView, 1, 1)
 	_GUICtrlListView_SetItemIndent($idListView, 2, 2)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

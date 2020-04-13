@@ -35,7 +35,7 @@ Func Example()
 	MsgBox($MB_SYSTEMMODAL, "Information", "Erweiterten ListView Stile: 0x" & _GUICtrlListView_GetExtendedListViewStyle($idListView) & @CRLF & _
 			_DisplayExtendStringList($idListView))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

@@ -18,7 +18,7 @@ Func Example()
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 3", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 4", 100)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 		If TimerDiff($hBegin) > 500 Then
 			$iIndex = Mod($iIndex + 1, 4)

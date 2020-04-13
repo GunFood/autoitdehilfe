@@ -28,7 +28,7 @@ Func Example()
 	; Zeigt die Reihenfolge der ersten Spalte
 	MemoWrite("Column 1 order: " & _GUICtrlHeader_GetItemOrder($hHeader, 0))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

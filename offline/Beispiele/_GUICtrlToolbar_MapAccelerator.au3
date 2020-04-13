@@ -40,7 +40,7 @@ Func Example()
 	$iCmdID = _GUICtrlToolbar_MapAccelerator($hToolbar, "s")
 	_GUICtrlToolbar_PressButton($hToolbar, $iCmdID)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

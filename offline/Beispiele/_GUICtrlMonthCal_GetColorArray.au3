@@ -33,7 +33,7 @@ Func Example()
 	MemoWrite(_FormatOutPut(@CRLF & "Farbe, die verwendet wird, um Text innerhalb des Kalendertitels darzustellen:", _GUICtrlMonthCal_GetColorArray($idMonthCal, $MCSC_TITLETEXT)))
 	MemoWrite(_FormatOutPut(@CRLF & "Farbe für den Text der Vor- und Nachspanntage:", _GUICtrlMonthCal_GetColorArray($idMonthCal, $MCSC_TRAILINGTEXT)))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

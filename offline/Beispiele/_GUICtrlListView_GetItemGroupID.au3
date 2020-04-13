@@ -43,7 +43,7 @@ Func Example()
 	; Zeigt die Item 3 Gruppen-ID
 	MsgBox($MB_SYSTEMMODAL, "Information", "Item 3 Gruppe-ID: " & _GUICtrlListView_GetItemGroupID($idListView, 2))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

@@ -25,7 +25,7 @@ Func Example()
 	MsgBox($MB_SYSTEMMODAL, "Einzeln", "Löschen von nativ erstelltem Item 5")
     _GUICtrlListView_DeleteItem($idListView, 5)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	While 1
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE

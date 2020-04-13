@@ -24,7 +24,7 @@ Func Example()
 	$iY = _GUICtrlListView_GetItemSpacingY($idListView)
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Abstand zwischen den Items: X=%d, Y=%d", $iX, $iY))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

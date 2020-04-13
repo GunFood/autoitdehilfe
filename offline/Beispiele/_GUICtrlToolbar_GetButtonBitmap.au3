@@ -36,7 +36,7 @@ Func Example()
 	_GUICtrlToolbar_SetButtonBitMap($hToolbar, $e_idSave, $STD_PRINT)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Index des Speichern-Bitmap: " & _GUICtrlToolbar_GetButtonBitmap($hToolbar, $e_idSave))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

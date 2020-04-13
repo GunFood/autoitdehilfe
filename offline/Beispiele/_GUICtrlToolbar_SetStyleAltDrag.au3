@@ -39,7 +39,7 @@ Func Example()
 	_GUICtrlToolbar_SetStyleAltDrag($hToolbar, Not $bStyle)
 	MemoWrite("Zeigt an, ob das Control es erlaubt, dass Buttons mitgeschleppt werden können .: " & _GUICtrlToolbar_GetStyleAltDrag($hToolbar))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example

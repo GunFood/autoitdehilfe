@@ -27,7 +27,7 @@ Func Example()
 	MemoWrite("Breite von Abschnitt 2 .: " & _GUICtrlStatusBar_GetWidth($hStatus, 1))
 	MemoWrite("Breite von Abschnitt 3 .: " & _GUICtrlStatusBar_GetWidth($hStatus, 2))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()
