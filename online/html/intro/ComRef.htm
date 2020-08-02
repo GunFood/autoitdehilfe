@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
-        <head>
-                <title>COM Reference</title>
+<head>
+  <title>COM Reference</title>
   <meta charset="utf-8">
   <link href="../css/default.css" rel="stylesheet">
   <style type="text/css">
@@ -9,609 +9,340 @@ td.c2 {width:85%}
   td.c1 {width:15%}
   </style>
 </head>
-        <body>
-                <p><b><span style="FONT-SIZE: 10pt; FONT-FAMILY: Arial"><br clear="all" style="PAGE-BREAK-BEFORE:always">
-                </span></b></p>
-                <h1>COM-Erweiterungen mit AutoIt</h1>
-                <p>Eine kurze Einf&uuml;hrung</p>
-                <H2>Was ist COM?</H2>
-                <p>COM steht f&uuml;r <i>"Component Object Model"</i> und bezeichnet Microsofts Weg, Software
-                        &uuml;ber eine gemeinsame Schnittstelle miteinander zu verbinden. Die Interfaces
-                        sind in einem COM-Objekt definiert.</p>
-                <p>Bevor es COM gab, musste man die genaue Implementierung eines Programms kennen,
-                        um mit ihm zu interagieren. Mit COM k&ouml;nnen nun die definierten Objekte des
-                        Programms angesprochen werden. Die einzigen Dinge, die man &uuml;ber das Programm
-                        wissen muss, sind die Namen der benutzten Objekte und welche Eigenschaften
-                        und Methoden sie ver&ouml;ffentlichen.</p>
-                <p> </p>
-                <H2>Was sind (Objekt-) Eigenschaften und Methoden?</H2>
-                <p>Das sind die beiden grundlegenden Merkmale eines Objekts. Man kann die Eigenschaften (<i>properties</i>)
-                        als gespeicherte Daten eines Objekts betrachten. Eine Methode kann als interner Funktionsaufruf
-                        angesehen werden, der eine Operation mit den Daten ausf&uuml;hrt.</p>
-                <H2>Ben&ouml;tigt man COM in seinem AutoIt-Skript?</H2>
-                <p>Es kommt darauf an. AutoIt verf&uuml;gt &uuml;ber eine Vielzahl eingebauter Funktionen und eine riesige Bibliothek
-                        von benutzerdefinierten Funktionen (<i>UDF</i>). Die meisten Programmieraufgaben k&ouml;nnen damit gel&ouml;st werden.
-                        Wenn aber besonderer Zugriff auf andere Applikationen erforderlich ist, kann COM einige Zeilen Code
-                        sparen. Skriptprogrammierer m&uuml;ssen aber beachten, dass die Existenz der COM-Objekte <b>extrem</b> abh&auml;ngig
-                        vom verwendeten Betriebssystem und der installierten Software ist. Die folgenden Beispiele wurden
-                        alle unter einem 'gew&ouml;hnlichen' <b>Windows XP Professional</b> mit <b>Microsoft Office 2000</b><b></b> getestet.</p>
-                <p> </p>
-                <p> </p>
-                <p><b><span style="FONT-SIZE: 10pt; FONT-FAMILY: Arial"><br clear="all" style="PAGE-BREAK-BEFORE:always">
-                </span></b></p>
-                <h1>Beispiel f&uuml;r die Verwendung von COM mit AutoIt</h1>
-                <p> </p>
-                <p>
-                        Angenommen, man wollte alle ge&ouml;ffneten Fenster minimieren. Man k&ouml;nnte dies mit den &uuml;blichen AutoIt-Funktionen
-                        wie <b>WinList</b><b></b> und <b>WinSetState</b> erledigen. Die folgenden zwei Zeilen COM-Code f&uuml;hren schneller zum Ziel:</p>
-                <P> </P>
-                <p><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"> </p>
-                <P class="codebox">
-                        $oShell = ObjCreate("shell.application")<BR>
-                        $oShell.MinimizeAll</P>
-                </span></P>
-                <P>
-                <P><FONT size="2"><u>Anmerkung:</u> Das Beispiel ist nicht mehr der k&uuml;rzeste Weg, um alle Fenster zu minimieren,
-                                seit die Funktion <b>WinMinimizeAll()</b> in AutoIt eingef&uuml;hrt wurde.</FONT></P>
-                <P></P>
-                <p>In der ersten Zeile wird eine neue Instanz des Objekts namens
-                        <span style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New'">"shell.application"</span> erzeugt.
-                        Hierbei handelt es sich um ein Windows-internes Objekt, das in der
-                        <span style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New'">shell32.dll</span> definiert ist.
-                        Der zur&uuml;ckgegebene Zeiger auf das Objekt wird der Variablen <span style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New'">$oShell</span> zugewiesen.
-                        <span style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New'">$oShell</span> ist ab jetzt eine <b>Objektvariable</b>.</p>
-                <p> </p>
-                <p>
-                        In der zweiten Zeile wird die Methode
-                        <span style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New'">"MinimizeAll"</span>
-                        auf das oShell-Objekt angewendet. Dadurch werden alle Fenster minimiert.</p>
-                <p> </p>
-                <p>Alle Windows-Versionen verf&uuml;gen &uuml;ber eine Unmenge interner Objekte f&uuml;r die verschiedensten Zwecke.
-                        Anwendungen wie Excel oder Word besitzen wiederum ihren eigenen Satz von Objekten.
-                </p>
-                <p>Allerdings ist es manchmal schwierig, eine Liste aller im System existierenden Objekte mit den dazugeh&ouml;rigen
-                        Eigenschaften und Methoden zu erhalten. Eine Suche auf
-                        <a href="http://msdn.microsoft.com" target="_blank"
-                                style="COLOR: blue; TEXT-DECORATION: underline; text-underline: single">MSDN</a>
-                        oder <a href="http://www.google.de" target="_blank"
-                                style="COLOR: blue; TEXT-DECORATION: underline; text-underline: single">Google</a>
-                        kann wertvolle Anhaltspunkte zum Objekt 'X', das benutzt werden soll, ergeben.</p>
-                <p> </p>
-                <p>Beispielsweise k&ouml;nnen Informationen &uuml;ber das Objekt
-                        <span style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New'">"shell.application"</span>
-                        hier gefunden werden: <a href="http://msdn.microsoft.com/en-us/library/bb774094.aspx"
-                                target="_blank"style="COLOR: blue; TEXT-DECORATION: underline; text-underline: single">http://msdn.microsoft.com/en-us/library/bb774094.aspx</a>
-                        <P>Um einen &Uuml;berblick &uuml;ber alle derzeitig im System vorhandenen
-                                Objekte zu erhalten, kann das Tool "<span style="Font-Size:11pt; Font-Family:'Courier New'">OLE-COM-Objektkatalog</span>"
-                                wertvolle Dienste leisten. Dieses Tool wird sp&auml;ter in einem separaten Abschnitt behandelt.</P>
-                </P>
-                <p>Kommen wir zu einem weiteren Beispiel. Es soll der HTML-Quellcode einer bestimmten Internetseite ermittelt
-                        werden. Man k&ouml;nnte die interne Funktion InetGet() verwenden, um das Ergebnis in einer Datei zu
-                        speichern und anschlie&szlig;end mit FileRead() einzulesen. Aber dieser Code erledigt die Aufgabe eleganter:</p>
-                <p> </p>
-                <p><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"> </p>
-                <P class="codebox">$oHTTP = ObjCreate("winhttp.winhttprequest.5.1")<BR>
-                        $oHTTP.Open("GET","<A href="http://www.AutoIt.de">http://www.AutoIt.de</A>")<BR>
-                        $oHTTP.Send()<BR>
-                        $HTMLSource = $oHTTP.Responsetext</P>
-                </span></P>
-                <p> </p>
-                <p>Die (String-) Variable $HTMLSource enth&auml;lt nun den Kompletten HTML-Code der
-                        AutoIt.de-Homepage (sprich das oberste HTML-Frame).</p>
-                <p> </p>
-                <p>Informationen &uuml;ber das
-                        <span style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New'">"winhttp.winhttprequest"</span>-Objekt
-                        k&ouml;nnen hier nachgelesen werden: <a href="http://msdn.microsoft.com/en-us/library/aa384106.aspx" target="_blank"
-                                style="COLOR: blue; TEXT-DECORATION: underline; text-underline: single">
-                                http://msdn.microsoft.com/en-us/library/aa384106.aspx</a>
-                        </p>
-                </p>
-                <p><STRONG>Zur Erinnerung:</STRONG> Die Existenz von Objekten h&auml;ngt vom Betriebssystem und den
-                        installierten Programmen ab. Zum Beispiel existiert das Objekt
-                        <span style="Font-size:11pt;FONT-FAMILY:'Courier New'">winhttp.winhttprequest.5.1</span>
-                        nur auf Computern, auf denen mindestens die Internet Explorer-Version 5 installiert ist.
-                        Wenn Skripte weitergegeben werden sollen, die COM-Objekte verwenden, muss sichergestellt sein, dass
-                        diese Objekte auf allen Computern vorhanden sind.</p>
-                <p> </p>
-                <P>Objektvariablen verhalten sich etwas anders als andere Arten von Variablen in AutoIt.
-                        Ein Objekt ist kein realer Wert, sondern ein 'Zeiger' auf irgendetwas au&szlig;erhalb des Skripts.
-                        Darum k&ouml;nnen weder Berechnungen noch Vergleiche mit Objektvariablen ausgef&uuml;hrt werden.
-                        Wenn einer Objektvariablen ein anderer Wert zugewiesen wird, wird der 'Zeiger' automatisch freigegeben.
-                        Die Freigabe eines Objekts kann beispielsweise dadurch erzwungen werden, dass der Objektvariablen eine
-                        Zahl oder ein Textwert zugewiesen wird:</P>
-                <P> </P>
-                <p><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">
-                <P class="codebox">
-                        $oHTTP = ObjCreate("winhttp.winhttprequest.5.1")  ; Objekt wurde instanziert<BR>
-                        $oHTTP=0 ; Objekt wurde freigegeben.</P>
-                </span></P>
-                <P>Objekte <STRONG>m&uuml;ssen nicht</STRONG> freigegeben werden, wenn ihre Verwendung abgeschlossen ist.
-                        Wenn ein Skript beendet wird, versucht AutoIt, alle aktiven Verweise auf in diesem Skript instanzierte
-                        Objekte freizugeben. Das gleiche geschieht, wenn in einer Funktion eine lokale Objektvariable definiert
-                        wurde und die Funktion mit Return beendet wird.</P>
-                <p> </p>
-                <p><b><span style="FONT-SIZE: 10pt; FONT-FAMILY: Arial"><br clear="all" style="PAGE-BREAK-BEFORE:always">
-                </span></b></p>
-                <h1>Automatisierung mit COM</h1>
-                <p> </p>
-                <p>Eine sehr verbreitete Verwendung des COM ist die Automatisierung von Programmen. Anstelle der Verwendung
-                        normaler AutoIt-Funktionen wie Send() oder WinActivate() k&ouml;nnen Objekte benutzt werden, die innerhalb
-                        der Zielanwendung definiert wurden.
-                </p>
-                <p> </p>
-                <p>Hier folgt ein Beispiel zur Automatisierung von Microsoft Excel:</p>
-		            <P>&nbsp;</P>
-                <P class="codebox">
-                        $oExcel = ObjCreate("Excel.Application") ; Instanziert ein Excel-Objekt<BR>
-                        $oExcel.Visible = 1 ; L&auml;sst Excel sich selbst anzeigen<BR>
-                        $oExcel.WorkBooks.Add ; F&uuml;gt eine neue Arbeitsmappe hinzu<BR>
-                        $oExcel.ActiveWorkBook.ActiveSheet.Cells(1,1).Value="Test" ; F&uuml;llt eine Zelle<BR>
-                        Sleep(4000) ; Zeigt das Ergebnis 4 Sekunden lang an<BR>
-                        $oExcel.ActiveWorkBook.Saved = 1 ; Simuliert das Speichern der Arbeitsmappe<BR>
-                        $oExcel.Quit ; Beendet Excel
-                </P>
-                <P></SPAN> </P>
-                <p>Die Komplexit&auml;t der Steuerung eines anderen Programms h&auml;ngt vom jeweiligen Programm und nicht vom
-                        AutoIt-Skript ab. Wenn etwas nicht wie erwartet funktioniert, ist ein zu Rate ziehen der
-                        Programmdokumentation erfolgversprechender, als das Studium der AutoIt-Hilfe.</p>
-                <p><b><span style="FONT-SIZE: 10pt; FONT-FAMILY: Arial"><br clear="all" style="PAGE-BREAK-BEFORE:always">
-                </span></b></p>
-                <h1>Spezielle Anweisungen</h1>
-                <p> </p>
-                <p>In AutoIt wurden zwei spezielle Anweisungen f&uuml;r die Arbeit mit COM integriert:<br>
-                        Die WITH/ENDWITH und die FOR/IN/NEXT Schleife.</p>
-                <p> </p>
-                <p> </p>
-                <p><b><span style="FONT-SIZE: 10pt; FONT-FAMILY: Arial"><br clear="all" style="PAGE-BREAK-BEFORE:always">
-                </span></b></p>
-                <h2>WITH..ENDWITH</h2>
-                <p> </p>
-                <p>Die WITH/ENDWITH-Anweisung stellt keine zus&auml;tzliche Funktionalit&auml;t zur Verf&uuml;gung, aber sie macht
-                        das Skript besser lesbar.  Zum Beispiel kann das vorherige Beispiel auch so umgesetzt werden:</p>
-		            <P>&nbsp;</P>
-                <P class="codebox">
-                        $oExcel = ObjCreate("Excel.Application") ; Instanziert ein Excel-Objekt<BR>
-                        WITH $oExcel<BR>
-                           .Visible = 1 ; L&auml;sst Excel sich selbst anzeigen<BR>
-                           .WorkBooks.Add ; F&uuml;gt eine neue Arbeitsmappe hinzu<BR>
-                           .ActiveWorkBook.ActiveSheet.Cells(1,1).Value="Test" ; F&uuml;llt eine Zelle<BR>
-                           Sleep(4000) ;Zeigt das Ergebnis 4 Sekunden lang an<BR>
-                           .ActiveWorkBook.Saved = 1 ; Simuliert das Speichern der Arbeitsmappe<BR>
-                           .Quit ; Beendet Excel<BR>
-                        ENDWITH
-                </P></SPAN>
-                <p>
-                        Dieses Beispiel erspart nicht viel Tipparbeit, aber wenn ein Objekt lange Ketten von Eigenschaften-
-                        oder Methoden-Bezeichnern verwendet, k&ouml;nnen diese mit Hilfe der WITH-Anweisung deutlich verk&uuml;rzt werden,
-                        was auch der Lesbarkeit zu Gute kommt.</p>
-                <p> </p>
-                <p> </p>
-                <p><b><span style="FONT-SIZE: 10pt; FONT-FAMILY: Arial"><br clear="all" style="PAGE-BREAK-BEFORE:always">
-                </span></b></p>
-                <h2>FOR..IN</h2>
-                <p> </p>
-                <p>Die FOR...IN-Schleife wird ben&ouml;tigt, wenn Collections verwendet werden. Collections sind spezielle Arten
-                        von Objekten, die aus mehreren Unterobjekten bestehen. Man kann sie als Arrays betrachten (tats&auml;chlich
-                        funktioniert die FOR..IN-Anweisung auch mit Array-Variablen).</p>
-                <p> </p>
-                <H3>FOR..IN-Schleife bei Verwendung eines Arrays</H3>
-                <P>Das folgende Beispiel verwendet eine FOR..IN-Schleife mit einem normalen AutoIt-Array, es hat also
-                        nichts mit COM zu tun und soll nur das Funktionsprinzip verdeutlichen:</P>
-                <P>&nbsp;</P>
-                <P class="codebox">
-                        $String = "" ; Eine String-Variable zur Kontrolle der Ausgabe<BR>
-                        $aArray[0]="a" ; F&uuml;llen des Arrays<BR>
-                        $aArray[1]=0 ; mit mehreren<BR>
-                        $aArray[2]=1.3434 ; unterschiedlichen <BR>
-                        $aArray[3]="testestestest" ; Beispielwerten. <BR>
-                        FOR $Element IN $aArray    ; Hier beginnt die eigentliche Schleife...<BR>
-                           $String = $String & $Element & @CRLF <BR>
-                        NEXT<BR>
-                        ; Anzeige des Ergebnisses:<BR>
-                        Msgbox(0,"For..IN Array-Test","Ergebnis: " & @CRLF & $String)
-                </P></SPAN>
-                <p> </p>
-                <H3>FOR..IN-Schleife bei Verwendung eines Objekts:</H3>
-                <p>In den meisten F&auml;llen k&ouml;nnen keine 'normalen' Objekt-Methoden verwendet werden, um die Elemente
-                        einer Collection abzufragen. In 'COM'-Termini ausgedr&uuml;ckt, m&uuml;ssen sie 'durchgez&auml;hlt' werden.
-                        Hier kommt die FOR..IN-Schleife ins Spiel.</p>
-                <p>Das folgende Excel-Beispiel durchl&auml;uft die Zellen A1:N16 im aktuellen Arbeitsblatt. Wenn der Wert
-                        einer Zelle kleiner als 5 ist, ersetzt der Code ihn mit 0 (null):</p>
-                <P>&nbsp;</P>
-                <P class="codebox">
-                        $oExcel = ObjCreate("Excel.Application") ; Instanziert ein Excel-Objekt<BR>
-                        $oExcel.Visible = 1 ; L&auml;sst Excel sich selbst anzeigen<BR>
-                        $oExcel.WorkBooks.Add ; F&uuml;gt eine neue Arbeitsmappe hinzu<BR>
-                        Dim $arr[15][16] ; Diese Zeilen <BR>
-                        For $i = 0 to 14 ; sind nur <BR>
-                           For $j =  0 to 15 ; ein Beispiel <BR>
-                              $arr[$i][$j] = $i ; um Werte zum F&uuml;llen   <BR>
-                           Next ; einiger Zellen zu erzeugen.
-                        Next<BR>
-                        $oExcel.activesheet.range("A1:O16").value = $arr ; Zellen mit den Beispielwerten f&uuml;llen<BR>
-                        Sleep(2000) ; Wartet 2 Sekunden<BR>
-                        For $cell in $oExcel.ActiveSheet.Range("A1:O16")<BR>
-                           If $cell.Value < 5 Then <BR>
-                              $cell.Value = 0 <BR>
-                           Endif <BR>
-                        Next <BR>
-                        $oExcel.ActiveWorkBook.Saved = 1 ; Simuliert das Speichern der Arbeitsmappe<BR>
-                        Sleep(2000) ; Vor dem Beenden 2 Sekunden warten<BR>
-                        $oExcel.Quit ; Excel beenden
-                </P></SPAN>
-                <P><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"></SPAN> </P>
-                <p><b><span style="FONT-SIZE: 10pt; FONT-FAMILY: Arial"><br clear="all" style="PAGE-BREAK-BEFORE:always">
-                </span></b></p>
-                <h1>COM f&uuml;r Fortgeschrittene</h1>
-                <p> </p>
-                <p>Die folgenden M&ouml;glichkeiten der AutoIt-COM-Schnittstelle erfordern profunde Kenntnis der COM-Ereignisse
-                        und der COM-Fehlerbehandlung.
-                </p>
-                <p>F&uuml;r Neulinge der COM-Programmierung halten die folgenden Quellen wertvolle Informationen bereit:</p>
-                <p> </p>
-                <p>Die Bibel der COM-Programmierung ist das englische Buch "Inside OLE 2" von Kraig Brockschmidt (Microsoft Press).</p>
-                <p> </p>
-                <p>Es gibt auch im Internet eine F&uuml;lle von Informationen zum Thema COM (ohne AutoIt-Bezug):</p>
-                <p>
-                        <a href="http://msdn.microsoft.com/en-us/library/ms694363.aspx" target="_blank"
-                                style="COLOR: blue; TEXT-DECORATION: underline; text-underline: single">http://msdn.microsoft.com/en-us/library/ms694363.aspx</a>
-                        (OLE-&Uuml;berblick)</p>
-                <p>
-                        <a href="http://www.garybeene.com/vb/tut-obj.htm" target="_blank" style="COLOR: blue; TEXT-DECORATION: underline; text-underline: single">
-                                http://www.garybeene.com/vb/tut-obj.htm</a> (engl.: Objekte in Visual Basic)</p>
-                <p>
-                        <a href="http://java.sun.com/docs/books/tutorial/java/concepts/" target="_blank" style="COLOR: blue; TEXT-DECORATION: underline; text-underline: single">
-                                http://java.sun.com/docs/books/tutorial/java/concepts/</a>
-                        (engl.: Verwendung von Objekten in Java)</p>
-                <p>
-                        <a href="http://msdn.microsoft.com/de-de/library/awbftdfh(VS.80).aspx" target="_blank" style="COLOR: blue; TEXT-DECORATION: underline; text-underline: single">
-                                http://msdn.microsoft.com/de-de/library/awbftdfh(VS.80).aspx</a> (Objekt-Ereignisse in C++)</p>
-                <p>
-                        <a href="http://www.garybeene.com/vb/tut-err.htm" target="_blank" style="COLOR: blue; TEXT-DECORATION: underline; text-underline: single">
-                                http://www.garybeene.com/vb/tut-err.htm</a> (engl.: Fehlerbehandlung in Visual Basic)</p>
-                <p> </p>
-                <p> </p>
-                <p><b><span style="FONT-SIZE: 10pt; FONT-FAMILY: Arial"><br clear="all" style="PAGE-BREAK-BEFORE:always">
-                </span></b></p>
-                <h1>COM-Ereignisse</h1>
-                <p> </p>
-                <p>Die normale COM-Automation verwendet haupts&auml;chlich Einweg-Kommunikation. Eine beliebige Eigenschaft oder
-                        die Ergebnisse einer Methode werden abgefragt. Ein COM-Objekt kann aber dem Skript auch etwas erwidern,
-                        wenn es daf&uuml;r ausgelegt ist. <br>
-                        Das kann sehr praktisch sein, wenn auf das Auftreten bestimmter Aktionen mit COM-Bezug gewartet werden muss.
-                </p>
-                <p>Statt eine Art Schleife zu verwenden, in der das Objekt gefragt wird, ob irgendetwas Interessantes
-                        passiert ist, kann man das Objekt selbst dazu veranlassen, eine bestimmte UDF im Skript aufzurufen.
-                        Inzwischen kann das Skript andere Aufgaben (nahezu) gleichzeitig erledigen.</p>
-                <p> </p>
-                <p>Nicht alle Objekte unterst&uuml;tzen Ereignisse. Man muss die Objekt-Dokumentation sorgf&auml;ltig lesen, um zu
-                        erfahren, ob das Objekt Ereignisse unterst&uuml;tzt oder nicht.</p>
-                <p>Wenn es Ereignisse unters&uuml;tzt, muss als n&auml;chtes ermittelt werden, welche Art von Ereignissen
-                        unterst&uuml;tzt werden. AutoItCOM kann nur Ereignisse vom Typ 'dispatch' empfangen.</p>
-                <p>Schlie&szlig;lich m&uuml;ssen noch die Namen der Ereignisse inklusive ihrer Argumente ermittelt werden,
-                        die das Objekt generieren kann (wenn vorhanden).</p>
-                <p> </p>
-                <p>Nur wenn alle diese Informationen bekannt sind, kann mit der Entwicklung des AutoIt-Skripts, das
-                        COM-Ereignisse benutzt, begonnen werden.</p>
-                <p>Es folgt ein Ausschnitt aus einem Skript, der das Entgegennehmen von Ereignissen des Internet Explorers
-                        demonstriert: </p>
-                <P>&nbsp;</P>
-                        <P class="codebox">
-                                $oIE=ObjCreate("InternetExplorer.Application.1") ; Instanziert ein Internet Explorer Objekt<BR>
-                                $EventObject=ObjEvent($oIE,"IEEvent_","DWebBrowserEvents")  ; Startet den Ereignisempfang<BR>
-                                $oIE.url= "http://www.autoitscript.com"  ; L&auml;dt eine Beispiel-Webseite<br>
-                                ;Ab jetzt generiert das $oIE-Objekt Ereignisse, w&auml;hrend die Webseite geladen wird.<BR>
-                                ;Sie werden in der folgenden Ereignisfunktion behandelt.<BR>
-                                ;Hier kann das Skript angehalten werden, bis der Benutzer beenden will.<BR>
-                                <BR>
-                                ...(eigener Code)... <BR>
-                                <BR>
-                                $EventObject.stop ; Dem IE mitteilen, dass keine Ereignisse mehr empfangen werden<BR>
-                                $EventObject=0 ; Zerst&ouml;rt das Ereigniss-Objekt<BR>
-                                $oIE.quit ; Beende den IE<BR>
-                                $oIE=0 ; IE aus dem Speicher entfernen (nicht wirklich notwendig)<BR>
-                                Exit ; Ende des Hauptskripts <BR>
-                                <BR>
-                                ; Ein paar Internet Explorer Ereignisfunktionen<BR>
-                                ; <BR>
-                                ; Eine vollst&auml;ndige Liste aller IE-Ereignisfunktionen findet man in der
-                                        MSDN-WebBrowser-Dokumentation:
-                                <BR>
-                                ; <A href="http://msdn.microsoft.com/en-us/library/system.windows.forms.webbrowser.aspx" target="_blank">http://msdn.microsoft.com/en-us/library/system.windows.forms.webbrowser.aspx</A>
-                                <BR>
-                                <BR>
-                                Func IEEvent_StatusTextChange($Text)<BR>
-                                ; Im compilierten ASkript (siehe Link weiter unten) wird der Inhalt einem Edit-Feld angezeigt.<BR>
-                                   GUICtrlSetData ( $GUIEdit, "IE-Statustext ge&auml;ndert zu: " & $Text & @CRLF, "append" )<BR>
-                                EndFunc<BR>
-                                <BR>
-                                Func IEEvent_BeforeNavigate($URL, $Flags, $TargetFrameName, $PostData, $Headers, $Cancel)<BR>
-                                ; Im compilierten ASkript (siehe Link weiter unten) wird der Inhalt einem Edit-Feld angezeigt.<BR>
-                                ; Hinweis: Die Deklaration unterscheidet sich von der im MSDN!<BR>
-                                   GUICtrlSetData ( $GUIEdit, "BeforeNavigate: " & $URL & " Flags: " & $Flags & @CRLF, "append")<BR>
-                                EndFunc<BR>
-                        </P>
-                        <P>
-                </span><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"></SPAN></P>
-                <p>Klicke <A href="IE6Example.htm" target="_blank"><U><STRONG> hier</STRONG></U></A>, um das komplette Skript
-                        zu sehen.</p>
-                <P> </P>
-                <P>Die wichtigste Zeile im Skript ist:
-                        <span style="FONT-SIZE: 11pt; FONT-FAMILY:'Courier New'">$EventObject=ObjEvent($oIE,"IEEvent_",...).<BR></span>
-                Diese Funktion &uuml;bernimmt das Objekt $<span style="FONT-SIZE: 11pt; FONT-FAMILY:'Courier New'">oIE</span>
-                        und leitet dessen Ereignisse auf AutoIt-Funktionen um, deren Namen mit
-                        <span style="FONT-SIZE: 11pt; FONT-FAMILY:'Courier New'">IEEvent_</span> beginnen. Der dritte Parameter
-                        ist optional. Er wird benutzt, wenn das Objekt mehrere Ereignisschnittstellen besitzt
-                        und AutoIt nicht automatisch eine davon ausw&auml;hlen soll.<BR>
-                        <BR>
-                        Das f&uuml;r die st&auml;ndige Umleitung der Ereignisse verantwortliche Objekt ist
-                        <span style="FONT-SIZE: 11pt; FONT-FAMILY:'Courier New'">$EventObject</span>. Diese Variable ben&ouml;tigt keine weitere
-                        Beachtung, au&szlig;er wenn die Ereignisumleitung gestoppt werden soll.</P>
-                <P>
-                        Um die Umleitung der Ereignisse zu beenden, kann nicht einfach der Inhalt der Variable gel&ouml;scht
-                        werden (etwa so: <span style="FONT-SIZE: 11pt; FONT-FAMILY:'Courier New'">$EventObject=""</span>).
-                        Der Grund ist, dass das 'aufrufende' Objekt weiterhin einen Verweis zu dieser Variable h&auml;lt
-                        und diesen nicht freigibt, solange das Objekt selbst existiert. Man k&ouml;nnte das Problem l&ouml;sen,
-                        indem man das 'aufrufende' Objekt zerst&ouml;rt, aber man kann dem Objekt auch mitteilen, dass man keine
-                        Ereignisse mehr empfangen m&ouml;chte:
-                        <span style="Font-Size:11pt; Font-Family:'Courier New'">$EventObject.Stop</span>. Danach kann man (muss man aber nicht) das
-                        Ereignis-Objekt durch Zuweisen eines beliebigen Wertes l&ouml;schen, etwa so:
-                        <SPAN style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'">$EventObject=""</SPAN>.</P>
-                <p> </p>
-                <p>     Wenn man die Namen der Ereignisse kennt, die <span style="FONT-SIZE: 11pt; FONT-FAMILY:'Courier New'">$oIE</span>
-                        aussendet, kann die Behandlung der Ereignisse, an denen man interessiert ist, durch Erstellen
-                        von benutzerdefinierten Funktionen im eigenen Skript implementiert werden, indem man die Funktionen
-                        folgenderma&szlig;en benennt:
-                        <span style="FONT-SIZE: 11pt; FONT-FAMILY:'Courier New'">IEEvent_<i>Ereignisname</i>(<i>optionale Argumente</i>)</span>.
-                        Dabei ist die korrekte Anzahl und Reihenfolge der Argumente zu beachten, so wie sie f&uuml;r das
-                        jeweilige Ereignis definiert sind. Anderenfalls wird es zu unerwarteten Ergebnissen f&uuml;hren.</span></p>
-                <P></P>
-                <P>     Wenn man (egal aus welchem Grund) die Namen der Ereignisse nicht kennt, kann eine Funktion erstellt
-                        werden, deren Name nur den Pr&auml;fix enth&auml;lt, in diesem Beispiel:<br>
-                        <span style="Font-Size:11pt; Font-Family:'Courier New'">Func IEEvent_($Eventname)</span>. Wenn ein Ereignis empfangen wurde und
-                        keine entsprechende Ereignisfunktion
-                        (<span style="Font-Size:11pt; Font-Family:'Courier New'">IEEvent_</span><EM><span style="Font-Size:11pt; Font-Family:'Courier New'">Ereignisname</span></EM>)
-                        existiert, wird stattdessen diese allgemeine Ereignisfunktion aufgerufen und der Name des Ereignisses
-                        in der Variablen $Eventname abgelegt.</P>
-                <P></P>
-                <p>Man muss nicht alle Ereignisse als Funktion implementieren. Jene die nicht implementiert sind,
-                        werden einfach ignoriert.</p>
-                <P> </P>
-                <P>Mehr Beispielskripte zur Verwendung der COM-Ereignisfunktionen findet man unter:
-                <A href="http://www.autoitscript.com/autoit3/files/beta/autoit/COM/"
-                        target="_blank">http://www.autoitscript.com/autoit3/files/beta/autoit/COM/</A></P>
-                <p> </p>
-                <P><STRONG>Einschr&auml;nkungen beim Umgang mit COM-Ereignissen in AutoIt</STRONG></P>
-                <P> </P>
-                <P>Manche Objekte (wie 'WebBrowser') &uuml;bergeben Argumente zu ihren Ereignisfunktionen als Referenz ('by ref').
-                        Das erlaubt dem Anwender, diese Argumente zu ver&auml;ndern und das Objekt zur&uuml;ck zu geben.
-                        Allerdings verwendet AutoIt sein eigenes Variablen-Modell, das mit den COM-Variablen nicht
-                        kompatibel ist. Das bedeutet, das alle von Objekten &uuml;bergebenen Werte in AutoIt-Variablen konvertiert
-                        werden m&uuml;ssen, wodurch die Referenz auf den originalen Speicherbereich verloren geht.
-                        M&ouml;glicherweise k&ouml;nnte in naher Zukunft diese Beschr&auml;nkung entfallen.</P>
-                <P> </P>
-                <p><b><span style="FONT-SIZE: 10pt; FONT-FAMILY: Arial"><br clear="all" style="PAGE-BREAK-BEFORE:always">
-                </span></b></p>
-                <H1>COM-Fehlerbehandlung</H1>
-                <p> </p>
-                <P>Die Verwendung von COM ohne vern&uuml;nftige Fehlerbehandlung ist sehr heikel. Besonders dann, wenn man
-                        mit den Objekten in seinem Skript nicht vertraut ist.</P>
-                <p> </p>
-                <p>Ein AutoIt-Skript wird unmittelbar seine Ausf&uuml;hrung abbrechen, wenn es einen COM-Fehler entdeckt.
-                        Das ist die Voreinstellung und auch die sicherste Einstellung. In diesem Fall m&uuml;ssen Ma&szlig;nahmen
-                        im Skript getroffen werden, um das Auftreten von Fehlern zu <b>verhindern</b>.</p>
-                <p> </p>
-                <p>Nur wenn es keine M&ouml;glichkeit gibt, einen COM-Fehler zu <b>verhindern</b>, kann ein "Error-Handler"
-                        implementiert werden, der Aktionen veranlasst, <b>nachdem</b> ein Fehler aufgetreten ist.
-                        Das ist <STRONG>keine</STRONG> L&ouml;sung, um ein fehlerhaftes Skript zum korrekten Arbeiten zu bringen.
-                        Es werden auch keine Fehler im Skript abgefangen, die nichts mit COM zu tun haben
-                        (z.B. Deklarations- und Syntaxfehler).</p>
-                <p> </p>
-                <p>Die Fehlerbehandlung ist auf die gleiche Art wie die Behandlung der normalen COM-Ereignisse implementiert,
-                        es werden ObjEvent() und benutzerdefinierte COM-Ereignisfunktionen verwendet. Der einzige Unterschied
-                        ist die Verwendung der unver&auml;nderlichen Zeichenkette "AutoIt.Error" als Name des Objekts.</p>
-                <p> </p>
-                <p>Ein Beispiel:</p>
-		            <p>&nbsp;</p>
-                <P class="codebox">
-                        $oMyError = ObjEvent("AutoIt.Error","MyErrFunc") ; Implementiert einen eigenen Error-Handler<BR>
-                        <BR>
-                        ; Erzeugt absichtlich einen Fehler (Objekt existiert nicht)<BR>
-                        $oIE = ObjCreate("InternetExplorer.Application")<br>
-                        $oIE.visible = 1<br>
-                        $oIE.bogus<!--c2--><BR>
-                        if @error then Msgbox(0,"","Die vorherige Zeile lieferte einen Fehler!")<BR>
-                        <BR>
-                        Exit <BR>
-                        <BR>
-                        <BR>
-                        ; Das ist unser eigener Error-Handler<BR>
-                        Func MyErrFunc()<BR>
-                           $HexNumber=hex($oMyError.number,8)<BR>
-                           Msgbox(0,"","Ein COM-Fehler wurde abgefangen!" & @CRLF & _<BR>
-                              "Fehlernummer: " & $HexNumber & @CRLF & _<BR>
-                              "WinDescription: " & $oMyError.windescription )<BR>
-                        <BR>
-                           SetError(1) ; Ein R&uuml;ckgabewert zum &Uuml;berpr&uuml;fen, wen die Funktion zur&uuml;ckgekehrt ist<BR>
-                        Endfunc</P>
-                <P></SPAN><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"></SPAN> </P>
-                </SPAN>
-                <p>
-                        Etwas ist besonders am Error-Event-Handler, und das ist das Objekt, welches er zur&uuml;ckgibt.
-                        Das ist ein AutoIt-Error-Objekt, welches &uuml;ber einige n&uuml;tzliche Eigenschaften und Methoden verf&uuml;gt.
-                        Dessen Implementierung ist teilweise an das "Err"-Objekt von VB(script) angelehnt:</p>
-                <p> </p>
-                <p>Eigenschaften des AutoIt-Error-Objekts:</p>
-                <p>
-                        <TABLE id="Table1" cellSpacing="0" cellPadding="3" width="100%" border="1" bordercolor="#C0C0C0">
-                                <TR>
-                                        <TD width="15%">.number  </TD>
-                                        <TD width="85%">Der Windows-HRESULT-Wert eines COM-Aufrufes</TD>
-                                </TR>
-                                <TR>
-                                        <TD>.windescription</TD>
-                                        <TD>Der FormatWinError()-Text, der von .number abgeleitet wurde</TD>
-                                </TR>
-                                <TR>
-                                        <TD>.source </TD>
-                                        <TD>Name des Objekts, das den Fehler erzeugt hat (Inhalt von ExcepInfo.source)</TD>
-                                </TR>
-                                <TR>
-                                        <TD>.description</TD>
-                                        <TD>Fehlerbeschreibung des Quellobjekts (Inhalt von ExcepInfo.description)</TD>
-                                </TR>
-                                <TR>
-                                        <TD>.helpfile</TD>
-                                        <TD>Fehler-Hilfedatei des Quellobjekts (Inhalt von ExcepInfo.helpfile)</TD>
-                                </TR>
-                                <TR>
-                                        <TD>.helpcontext
-                                        </TD>
-                                        <TD>Hilfedatei-Kontext-ID des Quellobjekts (Inhalt von ExcepInfo.helpcontext)</TD>
-                                </TR>
-                                <TR>
-                                        <TD>.lastdllerror</TD>
-                                        <TD>Die von GetLastError() gelieferte Nummer</TD>
-                                </TR>
-                                <TR>
-                                        <TD>.scriptline</TD>
-                                        <TD>Die Skriptzeile, in der der Fehler generiert wurde</TD>
-                                </TR>
-                        </TABLE>
-                </p>
-		            <p>&nbsp;</p>
-		            <P>&nbsp;</P>
-                <P><STRONG>Ein Hinweis f&uuml;r UDF-Autoren</STRONG></P>
+<body>
+  <h1>COM Extensions to AutoIt</h1>
+  <p>A short introduction</p>
+  <h2>What is COM?</h2>
+  <p>COM stands for "Component Object Model". It is the Microsoft way to interconnect software using a common interface. These interfaces are defined in a COM Object.</p>
+  <p>Before COM, you had to know the exact implementation of a program before you could 'interface' with it. Using COM, you can now "talk" to its defined Object(s). The only things you have to know are the names of the Objects that are used and which
+  'properties' or 'methods' they have.</p>
+  <h2>What are (Object) properties or methods?</h2>
+  <p>These are the two basic characteristics of an Object. You can see a 'property' as the data storage of an Object. A 'method' can be seen as an internal function call to do something with the data.</p>
+  <h2>Do I need COM in my AutoIt script?</h2>
+  <p>It just depends. AutoIt has a lot of built-in functions and a huge library of UDF's. You can do most of your programming with these. However if you need special 'interfacing' to other applications, using COM might save you some lines of script.
+  Scripters have to be aware that the existence of COM Objects depend HEAVILY on the Operating System AND the installed software. The examples below have all been tested under a 'plain' Windows XP professional version with Microsoft Office 2000.</p>
+  <h1>An example usage of COM in AutoIt</h1>
+  <p>Let's say you want to minimize all open windows. You could do this using regular AutoIt functions like WinList and WinSetState. However, two lines of COM-code can give you the same result:</p>
+@@SyntaxHighlighting@@
+Local $oShell = ObjCreate("shell.application")
 
-                <P>Es kann nur EIN Error-Event-Handler pro AutoIt-Skript aktiv sein.
-                                Wenn UDFs geschrieben werden, die COM-Funktionen beinhalten, kann so &uuml;berpr&uuml;ft werden,
-                                ob der Anwender einen Error-Handler installiert hat:
-                <P><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"> </P>
-                <P class="codebox">
-                        $sFuncName = ObjEvent("AutoIt.Error")<BR>
-                        if $sFuncName <> "" then Msgbox (0,"Test","Der Anwender hat folgenden Error-Handler installiert: " & $sFuncName)<BR>
-                </P></SPAN>
-                <P>
-                <P>Wenn kein Error Handler aktiv ist, kann man vor&uuml;bergehend einen eigenen Error-Handler w&auml;hrend des
-                        UDF-Aufrufes installieren.</P>
-                <P> </P>
-                <P>Allerdings kann man einen existierenden Error-Handler nicht beenden, ohne die Variable freizugeben,
-                        die ihm zugeordnet wurde. Wenn der Skript-Autor einen COM-Error-Handler installiert hatte,
-                        liegt es in seiner Verantwortung, eine geeignete Funktion zu verwenden, die auch die von UDFs generierten
-                        COM-Fehler abfangen kann.</P>
-                <P> </P>
-                <p><b><span style="FONT-SIZE: 10pt; FONT-FAMILY: Arial"><br clear="all" style="PAGE-BREAK-BEFORE:always">
-                </span></b></p>
-                <b><H1>OLE-COM-Objektkatalog (oleview.exe)</H1></b>
-                <P> </P>
-                <P>Der "OLE-COM-Objektkatalog" ist ein sehr praktisches Werkzeug, um einen &Uuml;berblick &uuml;ber alle COM-Objekte
-                        zu erhalten, die gegenw&auml;rtig im System installiert sind.  Es ist Teil des Windows 2000 Resource Kits
-                        und kann hier heruntergeladen werden:
-                        <A href="http://www.microsoft.com/downloads/details.aspx?familyid=5233b70d-d9b2-4cb5-aeb6-45664be858b6&displaylang=en" target="_blank">
-                        http://www.microsoft.com/downloads/details.aspx?familyid=5233b70d-d9b2-4cb5-aeb6-45664be858b6&displaylang=en</A></P>
-                <P>Die Installation des Programms ist ein wenig plump. Es werden keine Startmen&uuml;eintr&auml;ge erstellt.
-                        Stattdessen wird eine Datei namens <SPAN style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'">oleview.exe</span> in das Verzeichnis
-                        <SPAN style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'">C:\Programme\Resource Kit</span> installiert (Standard-Installation).</P>
-                <P></P>
-                <P>Wenn <SPAN style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'">oleview.exe</span> gestartet wird, reklamieren einige Systeme ein Fehlen der
-                        Datei <SPAN style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'">iviewers.dll</span>. Diese Datei wird ben&ouml;tigt, ist aber
-                        sonderbarerweise im aktuellen Installationspaket nicht enthalten. Man kann diese Dll aus einem
-                        &auml;lteren Installationspaket erhalten:
-                        <A href="http://download.microsoft.com/download/2/f/1/2f15a59b-6cd7-467b-8ff2-f162c3932235/ovi386.exe" target="_blank">
-                        http://download.microsoft.com/download/2/f/1/2f15a59b-6cd7-467b-8ff2-f162c3932235/ovi386.exe</A>.
-                        Es installiert die Dateien standardm&auml;&szlig;ig nach C:\MSTOOLS\BIN. Es wird nur die Datei iviewer.dll
-                        ben&ouml;tigt. Sie muss ins selbe Verzeichnis kopiert werden, in dem sich auch die oleview.exe befindet,
-                        dann muss die Dll mit folgender Eingabe in die Kommandozeile registriert werden:
-                        <SPAN style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'">regsvr32 iviewers.dll</span>.</P>
-                <P> </P>
-                <P>Sehen wir uns nun ein kleines Beispiel mit dem Oleviewer an. Nach dem Starten folgt man diesem Zweig:<br>
-                <SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">Object Classes->Grouped by Component Category->Control->Microsoft Web Browser</span>.</P>
-                <P></P>
-		            <p><img src="../images/oleview1.png" width="591" height="416" alt=""></p>
-                <P> </P>
-                <P>In der linken Spalte sieht man alle COM-Schnittstellen, die f&uuml;r das gew&auml;hlte Objekt definiert sind.
-                        Dazu kommen wir sp&auml;ter. Ein genauere Blick auf die rechte Spalte zeigt, dass sie eine Vielzahl
-                        von Informationen enth&auml;lt, die f&uuml;r die Benutzung des Objekts in einem AutoIt-Skript von Bedeutung sind.
-                        Am wichtigsten ist die "<SPAN style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'">VersionIndependentProgID</span>". Das ist der Name,
-                        der in den Funktionen ObjCreate, ObjGet oder ObjEvent zu verwenden ist.
-                        Au&szlig;erdem sind der Verzeichnis- und Dateiname enthalten, wo das Objekt zu finden ist.
-                        Dabei kann es sich um eine EXE-, DLL- oder OCX-Datei handeln.
-                        <SPAN style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'">InProcServer32</span> bedeutet, dass das Objekt im selben Thread wie unser
-                        Skript l&auml;uft (in-process). Wenn <SPAN style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'">LocalServer32</span> zu lesen ist, l&auml;uft
-                        das Objekt in einem eigenen Prozess. Das Objekt muss au&szlig;erdem eine Typbibliothek enthalten (die Zeilen
-                        nach <SPAN style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'">TypeLib=</span>"), sonst kann es nicht in einem AutoIt-Skript verwendet
-                        werden.</P>
-                <P> </P>
-                <P>Die Schnittstellen in der linken Spalte werden verwendet, um verschiedene Arten der Interaktion mit dem
-                        Objekt zu realisieren. Einige sind f&uuml;r Speichervorg&auml;nge (IStorage, IPersist), andere f&uuml;r das Einbetten
-                        in ein GUI (IOleObject, IOleControl) zust&auml;ndig. AutoIt verwendet die
-                        <SPAN style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'">IDispatch</span>-Schnittstelle f&uuml;r die Automatisierung. Diese Schnittstelle
-                        'enth&uuml;llt' alle skriptf&auml;higen Methoden und Eigenschaften, die das Objekt unters&uuml;tzt. Wenn sie nicht
-                        existiert, kann das Objekt nicht in einem AutoIt-Skript benutzt werden.</P>
-                <P>Schauen wir uns diese Schnittstelle genauer an. Rechtsklicken wir auf den Namen
-                        <SPAN style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'">IDispatch</span> und w&auml;hlen "<SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">View...</span>"
-                        im erscheinenden Kontextmen&uuml; aus. Nun klicken wir auf die Schaltfl&auml;che
-                        "<SPAN style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'">View TypeInfo...</span>". <br>
-                        (Hinweis: Sollte die Schaltfl&auml;che ausgegraut sein, wurde die
-                        <SPAN style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'">iviewers.dll</span> noch nicht registriert oder das Objekt enth&auml;lt keine
-                        Typbibliothek)</P>
-                <P> </P>
-                <p><img src="../images/oleview2.png" width="592" height="830" alt=""></p>
-                <P> </P>
-                <P>Das Fenster "ITypeInfo Viewer" zeigt nur die Informationen, die das Objekt bereitstellt. Wenn der
-                        Entwickler sich dazu entschlossen hat, keine Hilfedatei einzubinden, kann man nur die Namen der
-                        Methoden und Eigenschaften sehen, nichts weiter. Die "Microsoft Web Browser"-Typbibliothek dagegen
-                        ist ziemlich umfangreich. Klickt man einen Eintrag in der linken Spalte an, wird rechts eine
-                        Beschreibung angezeigt. Manchmal muss man "<SPAN style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'">Inherited Interfaces</span>"
-                        durchst&ouml;bern, um mehr Methoden des Objekts zu erhalten.</P>
-                <P>Die Syntax der beschriebenen Methoden und Eigenschaften ist im Stil von C/C++ dargestellt.
-                        Eine Eigenschaft, die als "<SPAN style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'">HRESULT Resizable([in] VARIANT_BOOL pbOffline)
-                        </span>" beschrieben wird, muss in etwa so f&uuml;r AutoIt umgeschrieben werden:
-                        <SPAN style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'">$Resizable=$Object.Resizable</span>
-                        ($Object enth&auml;lt das Objekt, welches mit ObjCreate oder ObjGet erzeugt wurde).</P>
-                <P> </P>
-                <P> </P>
-                <b>
-                <p><b><span style="FONT-SIZE: 10pt; FONT-FAMILY: Arial"><br clear="all" style="PAGE-BREAK-BEFORE:always">
-                </span></b></p>
-                        <H1>H&auml;ufig verwechselte Begriffe</H1>
-                </b>
-                <p> </p>
-                <p>Diese Begriffe werden h&auml;ufig mit COM verwechselt, haben aber eine andere Bedeutung:
-                </p>
-                <p> </p>
-                <p><b>OOP = Object Oriented Programming</b><br>
-                Eine Programmiertechnik, bei der Software-Komponenten aus
-                        wiederverwendbaren Code-Bausteinen zusammengesetzt werden, bekannt als Objekte.</p>
-                <p> </p>
-                <p><b>DDE = Dynamic Data Exchange</b><br>
-                Man k&ouml;nnte sagen, das ist der Vorl&auml;ufer von COM. Es benutzte IPC, um Informationen und Kommandos
-                        zwischen verschiedenen Anwendungen auszutauschen.</p>
-                <p> </p>
-                <p><b>OLE = Object Linking and Embedding</b><br>
-                In seiner ersten Version war OLE eine erweiterte Version von DDE, um Daten aus einem Programm in ein
-                        anderes 'einzubetten'. Die aktuelle Generation von OLE baut auf COM auf und ist Teil von ActiveX.</p>
-                <p> </p>
-                <p><b>Automation = Automatisierung</b><br>
-                Eine M&ouml;glichkeit, die Objekte anderer Anwendungen zu manipulieren. Wird in OLE, ActiveX
-                        und COM verwendet.</p>
-                <p> </p>
-                <p><b>ActiveX</b><br>
-                Die n&auml;chste Generation von OLE mit Automation, uspr&uuml;nglich entwickelt, um Anwendungen &uuml;ber
-                        ein Netzwerk zu verkn&uuml;pfen (haupts&auml;chlich Web-Browser). ActiveX baut auf COM auf.</p>
-                <p> </p>
-                <p><b>DCOM = Distributed COM</b><br>
-                Eine geringf&uuml;gige Modifikation von COM, um zwischen verschiedenen physischen
-                        Computern kommunizieren zu k&ouml;nnen.</p>
-                <p> </p>
-                <p><b>.NET = Dot Net</b><br>
-                Das ist nicht wirklich ein St&uuml;ck Software, sondern eine 'Idee' von Microsoft,
-                        um einfach 'Alles' mit deren Software zu vernetzen. "Dot Net" wird haupts&auml;chlich f&uuml;r
-                        Web-Anwendungen benutzt.</p>
-                <p> </p>
-                <p><b>COMmunist = Kommunist</b><br>
-                Das ist kein Unterst&uuml;tzer von COM, sondern jemand, der an den Kommunismus glaubt
-                        (Eine Theorie, nach der das gemeine Volk im Besitz allen Eigentums sein sollte).</p>
-                <p> </p>
-        </body>
+$oShell.MinimizeAll
+@@End@@
+
+  <p>Side note: The example is no longer the shortest way to minimize all windows after the introduction of the WinMinimizeAll() function in AutoIt.</p>
+  <p>&nbsp;</p>
+  <p>On the first line we create a new object called <span>"shell.application"</span>. This is an internal Windows object, defined in <span>shell32.dll</span>. The pointer to this new object is assigned to the variable $oShell. $oShell is from now on an
+  Object variable.</p>
+  <p>On the second line, we use a Method called <span>"MinimizeAll"</span> to the oShell object. This will minimize all windows.</p>
+  <p>All Windows versions have a huge amount of internal Objects for various purposes. And applications like Excel or Word have also their own set of Objects.</p>
+  <p>However, it is sometimes difficult to get a list of all existing Objects defined on your system with their corresponding properties and methods. Searching at Microsoft.com or Google.com might give you some clues about the Object 'X' you want to
+  use.</p>
+  <p>For instance, you can find information about the <span>"shell.application"</span> object at:<br />
+  <a href="http://msdn.microsoft.com/en-us/library/bb774094.aspx" target="_blank">http://msdn.microsoft.com/en-us/library/bb774094.aspx</a></p>
+  <p><br />
+  To get a peek on all objects currently installed on your system, the <span>"<strong>OLE/COM Object Viewer</strong>"</span> is a very helpful tool. This tool will be explained in a separate section below.</p>
+  <p>Let's do another example. We would like to get a HTML source code from a certain web page. You could use the internal InetGet() function to save the result to a file and retrieve it back again with FileRead(). But these lines of code do the
+  same:</p>
+@@SyntaxHighlighting@@
+Local $oHTTP = ObjCreate("winhttp.winhttprequest.5.1")
+$oHTTP.Open("GET", "http://www.AutoItScript.com")
+$oHTTP.Send()
+$HTMLSource = $oHTTP.Responsetext
+@@End@@
+
+  <p>The (string) variable $HTMLSource now contains the complete HTML code of the AutoItScript.com home page (that is, the top HTML-Frame).</p>
+  <p>(Information about the <span>"winhttp.winhttprequest"</span> object can be found at:<br />
+  <a href="http://msdn.microsoft.com/en-us/library/aa384106.aspx" target="_blank">http://msdn.microsoft.com/en-us/library/aa384106.aspx</a> )</p>
+  <p>&nbsp;</p>
+  <p><strong>Please mind this:</strong> The existence of Objects depend on the computer's operating system and installed programs. For example, the <span>winhttp.winhttprequest.5.1</span> object only exists on computers that have at least Internet
+  Explorer version 5 installed. When you are sharing scripts that use COM objects, be sure the objects exist on all computers.</p>
+  <p>Object variables behave a bit different than other types of AutoIt variables. An Object is not a real value, but a 'pointer' to something outside the script. So you can't perform arithmetic's, nor equations on Object variables. When you assign an
+  Object variable a different value, the 'pointer' will automatically be released. You can, for instance, force deletion of an Object by assigning it any number or any text value.</p>
+@@SyntaxHighlighting@@
+Local $oHTTP = ObjCreate("winhttp.winhttprequest.5.1") ; Object is created
+$oHTTP = 0 ; Object is deleted
+@@End@@
+
+  <p>You don't <strong>need</strong> to delete Objects when you are finished. If a script exits, AutoIt tries to release all active references to Objects that had been created in the script. Same thing happens when you had defined a local Object variable
+  inside a function, and the function ends with a return.</p>
+  <p>&nbsp;</p>
+  <h1>Automation using COM</h1>
+  <p>A very popular application of COM is to 'automate' programs. Instead of using the regular AutoIt functions like Send() or WinActivate(), you can make use of the Objects that are defined inside the program.</p>
+  <p>Here is an example that 'automates' Microsoft Excel:</p>
+@@SyntaxHighlighting@@
+Local $oExcel = ObjCreate("Excel.Application") ; Create an Excel Object
+$oExcel.Visible = 1 ; Let Excel show itself
+$oExcel.WorkBooks.Add ; Add a new workbook
+$oExcel.ActiveWorkBook.ActiveSheet.Cells(1, 1).Value = "Text" ; Fill a cell
+Sleep(4000) ; Display the results for 4 seconds
+$oExcel.ActiveWorkBook.Saved = 1 ; Simulate a save of the Workbook
+$oExcel.Quit ; Quit Excel
+@@End@@
+
+  <p>The complexity of controlling other programs depends on that specific program, not on the AutoIt script. If something does not work as expected you might need to consult the applications' documentation and not the AutoIt help.</p>
+  <p>&nbsp;</p>
+  <h1>Special Statements</h1>
+  <p>In AutoIt, two special statements are designed for COM usage:</p>
+  <p>With/EndWith and the For/In/Next loop.</p>
+  <h1>With..EndWith</h1>
+  <p>The With/EndWith statement does not add functionality, but it makes your script easier to read. For instance, the previous example using Excel can also be written as:</p>
+@@SyntaxHighlighting@@
+Local $oExcel = ObjCreate("Excel.Application") ; Create an Excel Object
+
+With $oExcel
+	.Visible = 1 ; Let Excel show itself
+	.WorkBooks.Add ; Add a new workbook
+	.ActiveWorkBook.ActiveSheet.Cells(1, 1).Value = "Text" ; Fill a cell
+	Sleep(4000) ; Display the results for 4 seconds
+	.ActiveWorkBook.Saved = 1 ; Simulate a save of the Workbook
+	.Quit ; Quit Excel
+EndWith
+@@End@@
+
+  <p>This example does not save you a lot of text, but when your object uses long lines of properties/methods, you can shorten it heavily within a With statement.</p>
+  <h1>For..In</h1>
+  <p>The FOR...IN loop is required when using Collections. Collections are a special type of Object, that exist out of multiple sub-Objects. You could see them as Arrays (Actually, the For..In statement also works on Array-type variables).</p>
+  <h2>For..In loop using an Array</h2>
+  <p>Below is an example of an For..In loop. This example uses a normal AutoIt array, so it has nothing to do with COM. It's just to show you the principle:</p>
+@@SyntaxHighlighting@@
+#include <MsgBoxConstants.au3>
+
+Local $sString = "" ; A string for displaying purposes
+
+Local $aArray[4]
+$aArray[0] = "A" ; We fill an array
+$aArray[1] = 0 ; with several
+$aArray[2] = 1.3434 ; different
+$aArray[3] = "Example Text" ; example values.
+
+For $iElement In $aArray ; Here it starts...
+	$sString &= $iElement & @CRLF
+Next
+
+; Display the results
+MsgBox($MB_OK, "For..In Array Example", "Result: " & @CRLF & $sString)
+@@End@@
+
+  <h2>For..In loop using an Object</h2>
+  <p>In most cases you can't use 'normal' Object methods to retrieve the elements of a collection. In 'COM'-terms they say you have to 'enumerate' them. This is where the For..In loop comes in.</p>
+  <p>The Excel example below loops on cells A1:O16 on the current active sheet. If one of the cells has a value less than 5, the code replaces the value with 0 (zero):</p>
+@@SyntaxHighlighting@@
+Local $oExcel = ObjCreate("Excel.Application") ; Create an Excel Object
+
+$oExcel.Visible = 1 ; Let Excel show itself
+$oExcel.WorkBooks.Add ; Add a new workbook
+
+Local $aArray[16][16] ; These lines
+For $i = 0 To 15 ; are just
+	For $j = 0 To 15 ; an example to
+		$aArray[$i][$j] = $i ; create some
+	Next ; cell contents.
+Next
+
+$oExcel.activesheet.range("A1:O16").value = $aArray ; Fill cells with example numbers
+
+Sleep(2000) ; Wait a while before continuing
+
+For $iCell In $oExcel.ActiveSheet.Range("A1:O16")
+	If $iCell.Value < 5 Then
+		$iCell.Value = 0
+	EndIf
+Next
+
+$oExcel.ActiveWorkBook.Saved = 1 ; Simulate a save of the Workbook
+Sleep(2000) ; Wait a while before closing
+$oExcel.Quit ; Quit Excel
+@@End@@
+
+  <p>&nbsp;</p>
+  <h1>Advanced COM usage</h1>
+  <p>The following features of AutoItCOM requires profound knowledge of COM Events and COM Error handling.</p>
+  <p>If you are a newbie to COM programming, please read some good COM documentation first.</p>
+  <p>&nbsp;</p>
+  <p>The bible of COM is the book called "Inside OLE 2" by Kraig Brockschmidt (Microsoft Press).</p>
+  <p>&nbsp;</p>
+  <p>You can also find some COM resources on the internet (not AutoIt related):</p>
+  <p><a href="http://msdn.microsoft.com/en-us/library/ms694363.aspx" target="_blank">http://msdn.microsoft.com/en-us/library/ms694363.aspx</a> (introduction)</p>
+  <p><a href="http://www.garybeene.com/vb/tut-obj.htm" target="_blank">http://www.garybeene.com/vb/tut-obj.htm</a> (about Objects in Visual Basic)</p>
+  <p><a href="http://java.sun.com/docs/books/tutorial/java/concepts/" target="_blank">http://java.sun.com/docs/books/tutorial/java/concepts/</a> (Using objects in Java)</p>
+  <p><a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms686915.aspx" target="_blank">http://msdn.microsoft.com/en-us/library/windows/desktop/ms686915.aspx</a> (Object Events in C++)</p>
+  <p><a href="http://www.garybeene.com/vb/tut-err.htm" target="_blank">http://www.garybeene.com/vb/tut-err.htm</a> (Error handling in Visual Basic)</p>
+  <h1>COM Events</h1>
+  <p>Normal COM Automation mainly uses one-way communication. You 'ask' the Object for any properties or results from a Method. However a COM Object can also 'talk back' to your script when it suits it.</p>
+  <p>This could be very handy in case you need to wait for some COM-related action to happen.</p>
+  <p>Instead of writing a kind of loop, asking the Object if something interesting has happened, you can let the Object itself call a specific UDF in your script. Meanwhile you can do other things in your script (almost) simultaneously.</p>
+  <p>&nbsp;</p>
+  <p>Not all Object to support events. You have to read the Object documentation carefully whether it supports events or not.</p>
+  <p>If it does, the second thing to know is the type of Events it supports. AutoItCOM can only receive 'dispatch' type events.</p>
+  <p>Finally you have to know the names of the Events the Object could generate, including their arguments (if any).</p>
+  <p>&nbsp;</p>
+  <p>Only when you have all this information, you can start building an AutoIt script using COM Events.</p>
+  <p>Below is a snippet from a script that demonstrates how to receive Events from the Internet Explorer:</p>
+@@SyntaxHighlighting@@
+Local $oIE = ObjCreate("InternetExplorer.Application.1") ; Create an Internet Explorer Object
+
+Local $oEventObject = ObjEvent($oIE, "IEEvent_", "DWebBrowserEvents") ; Start receiving Events.
+
+$oIE.url = "http://www.autoitscript.com" ; Load an example web page
+; From now on, the $oIE Object generates events during web page load.
+; They are handled in the event functions shown below.
+
+; Here you can let the script wait until the user wants to finish.
+...(your code here)...
+
+$oEventObject.stop ; Tell IE we want to stop receiving Events
+$oEventObject = 0 ; Kill the Event Object
+$oIE.quit ; Quit IE
+$oIE = 0 ; Remove IE from memory (not really necessary)
+Exit ; End of main script
+
+; A few Internet Explorer Event Functions.
+;
+; For the full list of IE Event Functions, see the MSDN WebBrowser documentation at:
+; http://msdn.microsoft.com/en-us/library/aa768400.aspx
+
+Func IEEvent_StatusTextChange($sText)
+	; In the complete script (see link below) we show the contents in a GUI Edit box.
+	GUICtrlSetData($GUIEdit, "IE Status text changed to: " & $sText & @CRLF, "append")
+EndFunc   ;==>IEEvent_StatusTextChange
+
+Func IEEvent_BeforeNavigate($sURL, $iFlags, $sTargetFrameName, $dPostData, $sHeaders, $bCancel)
+	; In the complete script (see link below) we show the contents in a GUI Edit box.
+	; Note: the declaration is different from the one on MSDN.
+	GUICtrlSetData($GUIEdit, "BeforeNavigate: " & $sURL & " Flags: " & $iFlags & @CRLF, "append")
+EndFunc   ;==>IEEvent_BeforeNavigate
+@@End@@
+
+  <p>Click <a href="IE6Example.htm" target="_blank"><strong>here</strong></a> to view the complete script.</p>
+  <p>The main line in this script is: <span>$EventObject = <a href="../functions/ObjEvent.htm">ObjEvent</a> ($oIE, "IEEvent_", ...)</span>.<br />
+  This function takes the object $<span>oIE</span> and reroutes it's events to AutoIt functions whose names start with <span>IEEvent_</span>. The third parameter is optional. It is used when an Object has multiple Event interfaces and you don't want
+  AutoIt to choose one automatically.<br />
+  <br />
+  The Object responsible for the continuous rerouting is <span>$EventObject</span>. This variable does not require any further attention, unless you want to stop the events.</p>
+  <p>To stop rerouting Events, you can not just delete the variable like <span>$EventObject = ""</span>. The reason is that the 'calling' Object is still holding a reference to this variable, and it won't loose it until the Object itself quits. You could
+  solve this problem by killing the 'calling' Object, but you can also tell the Object that you don't want to receive any events by using: <span>$EventObject.Stop</span>. Then you can (but not really necessary) kill the Event by assigning it any value,
+  like: <span>$EventObject = ""</span></p>
+  <p>If you know the names of the Events <span>$oIE</span> fires, you can implement the Events you are interested in by creating AutoIt UDF's with the name <span>IEEvent_<em>Eventname</em>(<em>optional arguments</em>)</span>. Be sure you
+  use the correct number of arguments and in their correct order as specified for THAT Event function. Otherwise you might end up with unexpected values.</p>
+  <p>You don't have to implement ALL event functions. Those not implemented will just be ignored.</p>
+  <p>More script examples using COM Event functions can be found via this <a href="http://www.autoitscript.com/autoit3/files/beta/autoit/COM/" target=
+  "_blank">URL</a>.</p>
+  <p>&nbsp;</p>
+  <p><strong>Limitations on COM Events in AutoIt</strong></p>
+  <p>Some Objects (like the 'WebBrowser') pass arguments to their Event Functions 'by reference'. This is intended to allow the user change these arguments and passing it back to the Object. However, AutoIt uses its own variable scheme, which is not
+  compatible to COM variables. This means that all values from Objects need to be converted into AutoIt variables, thus losing the reference to the original memory space. Maybe in the near future we can solve this limitation for you !</p>
+  <h1>COM Error Handling</h1>
+  <p>Using COM without proper error handling can be very tricky. Especially when you are not familiar with the Objects in your script.</p>
+  <p>Only if there is no way to <strong>prevent</strong> a COM error, you could install an "Error Handler" in which you take action <strong>after</strong> the error has happened. It is <strong>not</strong> a solution to make a buggy script work properly.
+  Neither does it catch non-COM related script errors (e.g. declaration and syntax errors).</p>
+  <p>Error handling is implemented in the same way as a normal COM Event, using ObjEvent() and a user defined COM Event Function. The only difference is the usage of the fixed string "AutoIt.Error" as the name of the object.</p>
+  <p>An example:</p>
+@@SyntaxHighlighting@@
+#include <MsgBoxConstants.au3>
+
+; Install a custom error handler
+; if used in a Function, the handler is automatically disable on return.
+; If not installed the script will terminated on error
+Local $oMyError = ObjEvent("AutoIt.Error", "ErrFunc")
+
+; Perform a deliberate failure (the object doesn't exist)
+Local $oIE = ObjCreate("InternetExplorer.Application")
+$oIE.visible = 1
+$oIE.bogus
+If @error Then
+	; checking @error need a custom error handler
+	MsgBox($MB_OK, "Error", "There was an error on the previous line.")
+EndIf
+
+MsgBox($MB_OK, "", "Script exit") ; this line will not be executed if no handler is installed
+
+Exit
+
+; This is a custom error handler
+Func ErrFunc($oError)
+	MsgBox($MB_OK, "We intercepted a COM Error !", _
+			"Number: 0x" & Hex($oError.number, 8) & @CRLF & _
+			"Description: " & $oError.windescription & _
+			"At line: " & $oError.scriptline)
+EndFunc   ;==>ErrFunc
+@@End@@
+
+  <p>&nbsp;</p>
+  <p>One thing is special about the Error Event Handler, and that is the Object it returns. This is an AutoIt Error Object that contains some useful properties and methods. It's implementation is partly based on the "Err" Object in VB(script):</p>
+  <p>Properties of the AutoIt Error Object:</p>
+  <table>
+    <tr>
+      <td class="c1">.number</td>
+      <td class="c2">The Windows HRESULT value from a COM call</td>
+    </tr>
+    <tr>
+      <td>.windescription</td>
+      <td>The FormatWinError() text derived from .number</td>
+    </tr>
+    <tr>
+      <td>.source</td>
+      <td>Name of the Object generating the error (contents from ExcepInfo.source)</td>
+    </tr>
+    <tr>
+      <td>.description</td>
+      <td>Source Object's description of the error (contents from ExcepInfo.description)</td>
+    </tr>
+    <tr>
+      <td>.helpfile</td>
+      <td>Source Object's helpfile for the error (contents from ExcepInfo.helpfile)</td>
+    </tr>
+    <tr>
+      <td>.helpcontext</td>
+      <td>Source Object's helpfile context id number (contents from ExcepInfo.helpcontext)</td>
+    </tr>
+    <tr>
+      <td>.lastdllerror</td>
+      <td>The number returned from GetLastError()</td>
+    </tr>
+    <tr>
+      <td>.scriptline</td>
+      <td>The script line on which the error was generated</td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  <p><strong>A note for UDF writers</strong></p>
+  <p>You can have as many COM Error event handlers as you like. The last registered and alive object is the one that gets called.</p>
+  <p>However, you can never stop an existing Error Handler without releasing the variable it had been assigned to. That happens when that variable goes out of scope or gets reassigned.</p>
+  <h1>OLE/COM Object Viewer</h1>
+  <p>The "OLE/COM Object Viewer" is a very handy tool to get a peek on all COM objects currently installed on your system. It is part of the Windows Server 2003 resource kit (OK for Windows XP and above) and can be downloaded for free from: <a href=
+  "http://www.microsoft.com/en-us/download/details.aspx?id=17657" target="_blank">http://www.microsoft.com/en-us/download/details.aspx?id=17657</a></p>
+  <p>The setup of this program is a bit awkward. It will not create any start menu icon for you. Instead, a file called <span>oleview.exe</span> will be installed in the <span>C:\Program Files\Resource Kit</span> directory (default install).</p>
+  <p>When running <span>oleview.exe</span>, some systems will complain about a missing file called <span>iviewers.dll</span>. This file is required, but strangely enough not included in the latest setup. You can obtain this dll from an older version of
+  oleview.exe at: <a href="http://download.microsoft.com/download/2/f/1/2f15a59b-6cd7-467b-8ff2-f162c3932235/ovi386.exe" target="_blank">http://download.microsoft.com/download/2/f/1/2f15a59b-6cd7-467b-8ff2-f162c3932235/ovi386.exe</a>. It will install the
+  files by default to the C:\MSTOOLS\BIN directory. You only need the file iviewer.dll. Copy it to the same directory where oleview.exe resides, then register the dll using the command line: <span>regsvr32 iviewers.dll</span>.</p>
+  <p>Let's do an example with the Oleviewer. Run it and follow this tree: <span>Object Classes-&gt;Grouped by Component Category-&gt;Control-&gt;Microsoft Web Browser</span>.</p>
+  <p>&nbsp;</p>
+  <p><img src="../images/oleview1.png" alt=""></p>
+  <p>&nbsp;</p>
+  <p>In the left-hand pane you see all the COM Interfaces that have been defined for this object. We talk about those later. Take a closer look at the right column. It contains a lot of information about this object that can be useful in an AutoIt script. Most important is the
+  "<span>VersionIndependentProgID</span>". This is the name to be used in an <a href="../functions/ObjCreate.htm">ObjCreate()</a>, <a href="../functions/ObjGet.htm">ObjGet()</a> or <a href="../functions/ObjEvent.htm">ObjEvent()</a>. Furthermore it contains the directory and filename that contains the object. This can be an EXE, a DLL or an OCX file.
+  <span>InProcServer32</span> means that the object runs in the same thread as your script (in-process). When you see <span>LocalServer32</span>, the object runs as a separate process. The object must also contain a type library (the lines following
+  "<span>TypeLib=</span>"), otherwise it can't be used in an AutoIt script.</p>
+  <p>The interfaces in the left-hand pane provide various ways of interacting with the object. Some are used for storage (IStorage, IPersist), others for embedding in a GUI (IOleObject, IOleControl). AutoIt uses the <span>IDispatch</span> interface for
+  automation. This interface 'exposes' all scriptable methods and properties that the object supports. If there is no IDispatch interface for an object, you can't use the object in an AutoIt script.</p>
+  <p>Let's take a look at this interface. Right-click on the name <span>IDispatch</span> and choose "<span>View...</span>" from the context menu. Then click the "<span>View TypeInfo...</span>" button. (Note: if this button is greyed out, you failed to register the iviewers.dll file -- see above., or the object does not have a type library)</p>
+  <p>&nbsp;</p>
+  <p><img src="../images/oleview2.png" alt=""></p>
+  <p>&nbsp;</p>
+  <p>The "ITypeInfo Viewer" window shows all the information that has been provided for the object; it may not be complete. If the developer decides not to include a help file, you will only see the names of the method/properties and nothing else. The "Microsoft Web Browser"
+  type library is however quite extensive. Just click an item in the left-hand pane, and a description will be shown at the right. Sometimes you have to browse through "<span>Inherited Interfaces</span>" to retrieve more methods for the object.</p>
+  <p>The syntax of the described methods/properties are in C/C++ style. A property described as "<span>HRESULT Resizable([in] VARIANT_BOOL pbOffline)</span>", has to be rewritten in AutoIt like: <span>$Resizable=$Object.Resizable</span> ($Object holds
+  the object created with ObjCreate or ObjGet).</p>
+  <h1>COMmonly mixed up terms</h1>
+  <p>These terms are commonly mixed up with COM, but have a different meanings:</p>
+  <p>OOP = Object Oriented Programming. A programming technique in which software components are put together from reusable building blocks known as Objects.</p>
+  <p>DDE = Dynamic Data Exchange.</p>
+  <p>You can say this is the predecessor of COM. It used IPC to transfer information and commands between different applications.</p>
+  <p>OLE = Object Linking and Embedding</p>
+  <p>In its first version, OLE was an extended version of DDE to 'embed' data from one program into another. The current generation of OLE is built on top of COM and is part of ActiveX.</p>
+  <p>Automation = This is a way of manipulating another application's objects. It is used in OLE, ActiveX and COM.</p>
+  <p>ActiveX = The next generation OLE with Automation, at first mainly developed to interface between applications over a network (especially web browsers). ActiveX is built on top of COM.</p>
+  <p>DCOM = Distributed COM. A slight modification to COM, making it able to communicate between different physical computers.</p>
+  <p>.NET (dot Net) = This is not really a piece of software, but an 'idea' from Microsoft to interconnect just about "everything" through (their) software. "dot Net" is used mainly for Web-based services.</p>s
+</body>
 </html>

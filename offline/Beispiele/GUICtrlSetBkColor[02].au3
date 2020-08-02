@@ -5,36 +5,36 @@
 Example()
 
 Func Example()
-	; Create a GUI with a listview.
-	Local $hGUI = GUICreate("Colored ListView Items", 250, 170, 100, 200, -1)
+	; Erstellt eine GUI mit einem Listview.
+	Local $hGUI = GUICreate("Farbige ListView Items", 250, 170, 100, 200, -1)
 	Local $idListview = GUICtrlCreateListView("col1|col2|col3", 10, 10, 230, 150)
 
-	; Alternate between the listview background color and the listview item background color.
+	; Wechselt zwischen der Hintergrundfarbe des Listview und der Hintergrundfarbe des Listviewelements.
 	GUICtrlSetBkColor(-1, $GUI_BKCOLOR_LV_ALTERNATE)
 
-	; Set the background color for the listview.
-	; Odd listview items will be shown with the background color of the listview,
-	; even with the background color of the listview item.
+	; Setzt die Hintergrundfarbe für das Listview.
+	; Ungerade Listviewelemente werden mit der Hintergrundfarbe des Listview angezeigt,
+	; gerade mit der Hintergrundfarbe des Listviewelements.
 	GUICtrlSetBkColor(-1, $COLOR_AQUA)
 
-	; Create listview items and set the backgroundcolor for each of them.
+	; Erstellt Listviewelemente und setzt die Hintergrundfarbe für jedes.
 	GUICtrlCreateListViewItem("item1|col12|col13", $idListview)
 
-	; The following line could be dropped as the background color is taken from the listview.
+	; Die folgende Zeile könnte gelöscht werden, da hier die Hintergrundfarbe vom Listview verwendet wird.
 	GUICtrlSetBkColor(-1, $COLOR_GREEN)
 	GUICtrlCreateListViewItem("item2|col22|col23", $idListview)
 	GUICtrlSetBkColor(-1, $COLOR_GREEN)
 	GUICtrlCreateListViewItem("item3|col32|col33", $idListview)
 
-	; The following line could be dropped as the background color is taken from the listview.
+	; Die folgende Zeile könnte gelöscht werden, da hier die Hintergrundfarbe vom Listview verwendet wird.
 	GUICtrlSetBkColor(-1, $COLOR_GREEN)
 
-	; Change the color of a single listview item.
+	; Wechselt die Farbe eines einzelnen Listviewelements.
 	GUICtrlCreateListViewItem("Now|change|color", $idListview)
 	GUICtrlSetBkColor(-1, $COLOR_LIME)
 	GUICtrlCreateListViewItem("item5|col52|col53", $idListview)
 
-	; The following line could be dropped as the background color is taken from the listview.
+	; Die folgende Zeile könnte gelöscht werden, da hier die Hintergrundfarbe vom Listview verwendet wird.
 	GUICtrlSetBkColor(-1, $COLOR_GREEN)
 	GUICtrlCreateListViewItem("item6|col62|col63", $idListview)
 	GUICtrlSetBkColor(-1, $COLOR_GREEN)
@@ -48,6 +48,6 @@ Func Example()
 		EndSwitch
 	WEnd
 
-	; Delete the previous GUI and all controls
+	; Löscht die vorherige GUI und alle Steuerelemente
 	GUIDelete($hGUI)
 EndFunc   ;==>Example

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Tutorial - Regul&auml;re Ausdr&uuml;cke</title>
+  <title>Tutorial - Regular Expression</title>
   <meta charset="utf-8">
   <link href="../../css/default.css" rel="stylesheet">
   <style type="text/css">
@@ -11,205 +11,143 @@ span.c3 {color: #009900}
   </style>
 </head>
 <body>
-<h1>Tutorial - Regul&auml;re Ausdr&uuml;cke</h1>
-<p>Dies hier ist eine kleine Anleitung, um das scheinbare Geheimnis von StringRegExp() zu entr&auml;tseln.<br>
-  <br>
-  StringRegExp(
-  <!--coloro:#3333FF--><span style="color: rgb(51, 51, 255);">
-  <!--/coloro-->"test"<!--colorc--></span><!--/colorc-->,
-  <!--coloro:#FF0000--><span style="color: rgb(255, 0, 0);">
-  <!--/coloro-->"pattern"<!--colorc--></span><!--/colorc--> [,
-  <!--coloro:#009900--><span style="color: rgb(0, 153, 0);">
-  <!--/coloro-->flag<!--colorc--></span><!--/colorc--> ] )<br>
-  <br>
-  <!--coloro:#3333FF--><span style="color: rgb(51, 51, 255);">
-  <!--/coloro-->"test"<!--colorc--></span><!--/colorc--> = Die Zeichenkette, die nach Treffern durchsucht werden soll.<br>
-  <!--coloro:#FF0000--><span style="color: rgb(255, 0, 0);">
-  <!--/coloro-->"pattern"<!--colorc--></span><!--/colorc--> = Eine Zeichenkette, bestehend aus bestimmten Schl&uuml;sselzeichen, der die Funktion <b>genau</b> wissen l&auml;sst was gesucht wird. Kein wenn und aber, es gibt einen Treffer oder es gibt keinen.<br>
-  <!--coloro:#009900--><span style="color: rgb(0, 153, 0);">
-  <!--/coloro-->flag<!--colorc--></span><!--/colorc-->[optional] = Sagt der Funktion ob nur nach dem <b>pattern</b> gesucht werden soll, oder ob nur der erste Treffer aus der <b>test</b>-Zeichenkette zur&uuml;ckgegeben wird oder alle.<br>
-  <br>
-  </p><h2>Die wirklichen Grundkenntnisse</h2>
-Wie sie vielleicht schon herausgefunden haben, ist nur das Suchmuster
-(pattern) der einzigst komplizierte Teil von StringRegExp() (im
-Folgenden nur noch SRE genannt). Ich finde es ist am einfachsten sich
-ein Muster vorzustellen, das der Funktion sagt eine Zeichenkette
-Zeichen f&uuml;r Zeichen mit diesem Muster abzugleichen. Es gibt
-verschiedene Wege ein bestimmtes Zeichen zu finden: Wenn beispielsweise
-die Zeichenfolge "test" gesucht wird, dann sollte es recht einfach sein
-diese zu finden. Es soll der Funktion SRE mitgeteilt werden als erstes
-nach einem"t" in der Zeichenkette zu suchen. Wird eines von der
-Funktion gefunden, nimmt sie an eine &Uuml;bereinstimmung gefunden zu haben
-und der Rest des Suchmusters wird dazu genutzt, zu pr&uuml;fen ob das was
-gefunden wurde keine &Uuml;bereinstimmung ergibt. Also, wenn das n&auml;chste
-Zeichen ein "e" ist, k&ouml;nnte es immer noch eine &Uuml;bereinstimmung sein.
-Sagen wir das n&auml;chste Zeichen ist ein "x". Dann wei&szlig; SRE unverz&uuml;glich,
-dass es keine &Uuml;bereinstimmung ergibt, weil wir im Suchmuster festgelegt
-haben, dass das dritte Zeichen ein "s" ist.<br>
-   <p></p>
-<p>
-  <u><b>Beispiel 1</b></u></p>
-<p class="codebox">MsgBox(0, "SRE Beispiel 1 - Ergebnis", StringRegExp("text", 'test'))</p>
-<p>In diesem Beispiel, sollte die MessageBox "0" ausgeben, was
-bedeutet, das Suchmuster "test" wurde in der zu testenden Zeichenkette
-"text" nicht gefunden. Ich wei&szlig;, dies erscheint kinderleicht, aber
-jetzt wissen wir wenigstens auch warum "test" nicht gefunden wurde.<br>
-  <br>
-Um als n&auml;chstes ein Suchmuster festzulegen, nutzen wir eine
-Zeichenklasse ("[ ... ]"). Die Abgleichung der Zeichenmuster in
-Zeichenklassen k&ouml;nnen wir uns wie das logische "OR" vorstellen. Nehmen
-wir wieder das vorherige Beispiel. Wir wollen entweder die Zeichenkette
-"test" oder "text" finden. Nun, die Art wie ich beginne nach einem
-Suchmuster Ausschau zu halten, ist so zu denken wie SRE es auch tun
-w&uuml;rde: Das erste abzugleichende Zeichen ist "t", dann der Buchstabe
-"e", dies gilt bis jetzt f&uuml;r beide Suchmuster. Jetzt m&ouml;chten wir ein
-"s" OR "x", demnach k&ouml;nnen wir eine Zeichenklasse als Ersatz nutzen
-f&uuml;r: "[sx]" bedeutet, suche nach einer &Uuml;bereinstimmung mit einem "s"
-oder einem "x". Der letzte Buchstabe ist nun wieder ein "t", was auch
-wieder f&uuml;r beide Suchmuster gilt.<br>
-  <br>
-  <u><b>Beispiel 2</b></u></p>
-<p class="codebox">MsgBox(0, "SRE Beispiel 2 - Ergebnis", StringRegExp("text", 'te[sx]t'))<br>
-    MsgBox(0, "SRE Beispiel 2 - Ergebnis", StringRegExp("test", 'te[sx]t'))</p>
-<p>Beide Aufrufe von SRE sollten zu dem Ergebnis "1" f&uuml;hren, denn das Suchmuster sollte eine &Uuml;bereinstimmung 
-  in beiden F&auml;llen "test" und "text" ergeben.<br>
-  <br>
-  Es kann au&szlig;erdem festgelegt werden, wie oft jedes Zeichen &uuml;bereinstimmen soll, indem man "{Anzahl 
-  der &Uuml;bereinstimmungen}" dem Zeichen anf&uuml;gt oder man legt einen Bereich "{min, max}" fest. Das erste 
-  Beispiel weiter unten ist eigentlich &uuml;berfl&uuml;ssig, aber zeigt was ich meine:<br>
-  <br>
-  <u><b>Beispiel 3</b></u></p>
-<p class="codebox">MsgBox(0, "SRE Beispiel 3 - Ergebnis", StringRegExp("text", 't{1}e{1}[sx]{1}t{1}'))<br>
-    MsgBox(0, "SRE Beispiel 3 - Ergebnis", StringRegExp("aaaabbbbcccc", 'b{4}'))</p>
-  <p><br>
-  <br>
-  </p><h2>Die etwas fortgeschrittenen Grundlagen</h2>
-  In diesem Moment wird man m&ouml;glicherweise denken "Ist dies nicht blo&szlig; eine bessere StringInStr() 
-  Funktion?". Nun, nutzt man nur den <b>flag</b> Wert 0, liegt man mit diesem Gedanken meist richtig. 
-  Aber SRE ist wesentlich m&auml;chtiger als StringInStr(). Wenn man SRE's immer &ouml;fter und mehr benutzt, 
-  mag man denken sehr wenig dar&uuml;ber zu wissen und noch weniger dar&uuml;ber die Art des Suchmusters 
-  festzulegen. Doch es gibt Mittel und Wege jedes zu suchende Zeichen mehr oder weniger genau 
-  in dem Suchmuster zu definieren. Nehmen wir, zum Beispiel, eine Zeile einer Log-Datei 
-  eines Bestandes: "Es liegen 18 Bl&auml;tter auf dem linken Papierstapel." Jetzt m&ouml;chten wir herausfinden 
-  wie viele Bl&auml;tter &uuml;brigbleiben. Nun gut, wir k&ouml;nnen StringInStr() 
-  nicht daf&uuml;r benutzen, denn wir suchen nicht nach "18", wir suchen "????", wobei ? irgendeine 
-  Zahl sein kann.<br>
-  <br>
-  Hier zeige ich nun wie ich das Suchmuster zusammensetzen w&uuml;rde:<br>
-  1) Wir wissen, dass es IMMER nichts anderes als Zahlen enth&auml;lt.<br>
-  2) Wir wissen, dass es MANCHMAL 2 Zeichen lang ist.<br>
-  2a) Wir wissen, dass ein kompletter Stapel Papier 500 Bl&auml;tter umfasst.<br>
-  2b) Wir wissen, dass die minimale Anzahl Bl&auml;tter 0 ist.<br>
-  3) Wir wissen, dass es IMMER zwischen 1 und 3 Zeichen lang ist.<br>
-  4) Wir wissen, dass es keine anderen Zahlen in der zu testenden Zeichenkette gibt.<br>
-  <br>
-  An diesem Punkt, wollen wir uns an den <b>flag</b> Wert "1" und Zeichengruppen "()" herantasten. 
-  Der Wert "1" des Flags bedeutet, dass SRE nicht blo&szlig; auf &Uuml;bereinstimmung des 
-  Suchmusters pr&uuml;ft, sondern auch ein Array zur&uuml;ckgibt, in dem jedes Element 
-  eine &uuml;bereinstimmende "Gruppe" von Zeichen enth&auml;lt. Um nicht zu weit vom Kurs abzukommen, 
-  nehmen wir dieses Beispiel:<br>
-  <br>
-  <u><b>Beispiel 4</b></u><!--c1--><p></p>
-<p class="codebox">$asResult = StringRegExp("Dies ist ein Test-Beispiel", '(Test)', 1)<br>
-    If @error == 0 Then<br>
-        MsgBox(0, "SRE Beispiel 4 - Ergebnis", $asResult[0])<br>
-    EndIf<br>
-    $asResult = StringRegExp("Dies ist ein Test-Beispiel", '(Te)(st)', 1)<br>
-    If @error == 0 Then<br>
-        MsgBox(0, "SRE Beispiel 4 - Ergebnis", $asResult[0] & "," & $asResult[1])<br>
-    EndIf</p>
-<p> </p>
-<p>So, als erstes muss das Suchmuster in der zu testenden Zeichenkette eine &Uuml;bereinstimmung finden. Ist dies der Fall, 
-  dann wird SRE mitgeteilt jegliche Gruppen ("()")"einzufangen" und sie in dem zur&uuml;ckzugebenden Array 
-  abzulegen. Es k&ouml;nnen mehrfache Gruppen verwendet werden, wie im zweiten Teil des Beispielcodes.<br>
-  <br>
-Ok, zur&uuml;ck zur Log-Datei. Jetzt, wo wir wissen wie man Text
-"einf&auml;ngt", lasst uns das Suchmuster zusammensetzen: Seitdem wir
-wissen, dass wir Zahlen suchen, bieten sich uns 3 Wege an f&uuml;r "Finde
-eine Zahl": "[:digit:]", "[0-9]", und "\d". Das erste ist vermutlich am
-einfachsten zu verstehen. Es gibt ein paar Klassen (digit, alnum,
-space, etc. siehe in der Hilfedatei f&uuml;r eine vollst&auml;ndige Liste) die
-wir nutzen k&ouml;nnen um Zeichenklassen festzulegen, eine von ihnen ist f&uuml;r
-Zahlen. "[0-9]" legt lediglich einen Bereich aller Zahlen zwischen 0
-und 9 fest. "\d" ist blo&szlig; ein Sonderzeichen mit der gleichen Bedeutung
-wie die ersten beiden Arten. Zwischen den dreien besteht kein
-Unterschied, und mit allen SRE's gibt es wenigstens ein paar Wege um
-irgendein Suchmuster zusammenzusetzen.<br>
-  <br>
-  Nun, das erste was wir wissen ist, dass wir die Zahlen(-gruppe) einfangen wollen, also weisen wir daraufhin 
-  indem wir eine Klammer &ouml;ffnen "(". Als n&auml;chstes wissen wir, dass wir zwischen 1 und 3 
-  Zeichen einfangen wollen, alle aus Zahlen bestehend, sodass unser Suchmuster jetzt aussieht wie 
-"([0-9]{1,3}". Und letztendlich schlie&szlig;en wir das ganze mit einer Klammer um auf das Ende 
-  der Gruppe hinzuweisen: "([0-9]{1,3})". Lasst es uns ausprobieren:<br>
-  <br>
-  <u><b>Beispiel 5</b></u></p>
-<p class="codebox">$asResult = StringRegExp("Es liegen 18 Bl&auml;tter auf dem linken Papierstapel.", 
-_<br>
-                               '([0-9]{1,3})', 1)<br>
-    If @error == 0 Then<br>
-        MsgBox(0, "SRE Beispiel 5 - Ergebnis", $asResult[0])<br>
-    EndIf</p>
-<p> </p>
-<p>Na bitte, die MessageBox zeigt korrekt "18" an.<br>
-  <br> Als
-n&auml;chstes schauen wir uns die nicht-einfangenden Gruppen an. Die Art wie
-wir diese Gruppen kenntlich machen ist "(?:" anstatt nur "(". Lasst uns
-annehmen eure Log-Datei sagt "Du vewendest 36 von 279 Bl&auml;tter.".
-Wenn wir nun Beispiel 5 ausf&uuml;hren, erhalten
-wir "36" anstatt "279". Nun m&ouml;chte ich an dieser Stelle den Unterschied
-der beiden Zahlen untersuchen. Das erste was mir auff&auml;llt ist, dass der
-zweiten Zahl immer ein Leerzeichen folgt und dann das Wort
-"Bl&auml;tter". Wir k&ouml;nnten nun unser voriges Suchmuster ab&auml;ndern zu
-"([0-9]{1,3} Bl&auml;tter)", aber was ist wenn unser Skript nur nach
-der Gesamtanzahl der Bl&auml;tter sucht, ohne "Bl&auml;tter" an das Ende der
-Zahl anzuheften? An dieser Stelle k&ouml;nnen wir nicht-einfangende Gruppen
-einsetzen um unser Ziel zu erreichen.<br>
-  <br>
-  <u><b>Beispiel 6</b></u></p>
-<p class="codebox">$asResult = StringRegExp("Du verwendest 36 von 279 Bl&auml;tter.", 
-    '([0-9]{1,3})(?: Bl&auml;tter)', 1)<br>
-    If @error == 0 Then<br>
-        MsgBox(0, "SRE Beispiel 6 - Ergebnis", $asResult[0])<br>
-    EndIf</p>
-<p> </p>
+  <h1>Tutorial - Regular Expression</h1>
+  <p>Here's a smallish guide on unraveling the seeming mysteries of StringRegExp().<br />
+  <br />
+  StringRegExp( <!--coloro:#3333FF--> <span class="c1"><!--/coloro-->"test" <!--colorc--></span><!--/colorc-->, <!--coloro:#FF0000--> <span class="c2"><!--/coloro-->"pattern"<!--colorc--></span><!--/colorc--> [, <!--coloro:#009900-->
+   <span class="c3"><!--/coloro-->flag<!--colorc--></span><!--/colorc--> ] )<br />
+  <br />
+  <!--coloro:#3333FF--> <span class="c1"><!--/coloro-->"test" <!--colorc--></span> <!--/colorc--> = The string to search through for matches.<br />
+  <!--coloro:#FF0000--> <span class="c2"><!--/coloro-->"pattern" <!--colorc--></span> <!--/colorc--> = A string consisting of certain key characters that let the function know <strong>PRECISELY</strong> what you want to match. No ifs, ands, or buts..
+  it's a match or it isn't.<br />
+  <!--coloro:#009900--> <span class="c3"><!--/coloro-->flag <!--colorc--></span> <!--/colorc-->[optional] = Tells the function if you just want to know if the "pattern" is found, or if you want it to return the first match, or if you want it to return
+  all the matches in the "test" string.<br />
+  <br /></p>
+  <h2>The Very Basics</h2>
+  <p>As you may have figured out, the "pattern" string is the only difficult part of calling a StringRegExp() (forthwith: SRE). I find it best to think of patterns as telling the function to match a string character by character. There are different ways
+  to find a certain character: If you want to match the string "test", that should be simple enough. You want to tell SRE to first search the string for a "t". If it finds one, then it assumes it has a match, and the rest of the pattern is used to try to
+  prove that what it's found is not a match. So, if the next character is an "e", it could still be a match. Let's say the next letter is an "x". SRE knows immediately that it hasn't found a match because the third character you tell it to look for is an
+  "s".</p><br />
+  <p><strong>Example 1</strong></p>
+@@SyntaxHighlighting@@
+#include <MsgBoxConstants.au3>
 
-  <p>Dieses Thema k&ouml;nnten wir noch weiter ausdehnen, aber Zielsetzung dieses Tutorials ist die Grundlagen 
-  zu vermitteln, wie regul&auml;re Ausdr&uuml;cke funktionieren und haupts&auml;chlich wie SRE "denkt". Hier noch einige Sachen 
-  die man im Hinterkopf behalten sollte:<br>
-  - Nicht vergessen &uuml;ber das Suchmuster f&uuml;r jedes Zeichen nachzudenken<br>
-- Die StringRegExp() Funktion findet das erste Zeichen in dem
-Suchmuster, danach ist es dein Job gen&uuml;gend Belege zu erbringen um zu
-"Beweisen" ob oder ob keine &Uuml;bereinstimmung erfolgt. Beispiel 6 ist ein
-gutes Beispiel daf&uuml;r.<br>
-  - Nicht vergessen, [ ... ] bedeutet OR ([xyz] finde ein "x", ein "y", oder ein "z")<br>
-  Sollten noch Fragen offen sein, sollte der erste Griff zur Hilfedatei sein! Diese erkl&auml;rt im Detail 
-  die wesentliche Syntax, die mit SRE daherkommt. Eine Sache 
-  auf die man ein besonderes Augenmerk legen sollte ist die Sektion &uuml;ber "Wiederkehrende Zeichen". 
-  Dies macht das Suchmuster leichter lesbar, wenn man f&uuml;r bestimmte Zeichen Bereiche festlegt. Zum 
-  Beispiel: "*" ist gleichbedeutend mit {0,} oder dem Bereich von 0 bis irgendeine Anzahl von Zeichen.<br>
-  <br>
-  Viel Gl&uuml;ck, Regul&auml;re Ausdr&uuml;cke k&ouml;nnen gro&szlig;artig dazu genutzt werden um die L&auml;nge des Codes zu reduzieren, 
-  und machen eine sp&auml;tere &Auml;nderung dessen wesentlich einfacher. Korrekturen und Resonanz sind stets willkommen!</p><h2>Quellen</h2><br>
+MsgBox($MB_OK, "SRE Example 1 Result", StringRegExp("text", 'test'))
+@@End@@
 
-<a href="http://de.wikipedia.org/wiki/Regul%C3%A4rer_Ausdruck" target="_blank">
-Wikipedia Artikel - Regul&auml;rer Ausdruck</a> - Vielen Dank an blindwig.<p>
+  <p>In this example, the message box should read "0", which means the pattern "test" was not found in the test string "text". I know this seems pretty simple, but now you know why it wasn't found.<br />
+  <br />
+  The next way of specifying a pattern is by using a set ("[ ... ]"). You can equate a set to the logic function "OR". Let's use the previous Example. We want to find either the string "test" or the string "text". So, the way I start looking for a
+  pattern is to think like SRE would think: The first character I want to match is "t", then the letter "e", this is the same for both strings we want to match. Now we want to match "s" OR "x", so we can use a set as a substitute: "[sx]" means match an
+  "s" or an "x". Then the last letter is a "t" again.<br /></p><br />
+  <p><strong>Example 2</strong></p>
+@@SyntaxHighlighting@@
+#include <MsgBoxConstants.au3>
 
-<a href="http://www.codeproject.com/dotnet/regextutorial.asp" target="_blank">
-The 30 Minute Regex Tutorial</a> - von Jim Hollenhorst.</p>
-<p><br>
-GUI um verschiedene Suchmuster mit StringRegExp() zu testen - 
-Vielen Dank an steve8tch. Anerkennung: w0uter</p>
-<p> 
-<object id="hhctrl" type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11" height="57" width="58">
-<param name="Command" value="ShortCut">
-<param name="Button" value="Text:&Ouml;ffne StringRegExpGUI.au3">
-<param name="Item1" value=",Examples\Helpfile\StringRegExpGUI.au3,">
-</object> </p>
-<p> </p>
-<p> </p>
-<p></p>
+MsgBox($MB_OK, "SRE Example 2 Result", StringRegExp("text", 'te[sx]t'))
+MsgBox($MB_OK, "SRE Example 2 Result", StringRegExp("test", 'te[sx]t'))
+@@End@@
 
-<p>Vielen Dank an neogia f&uuml;r dieses Tutorial.</p>
-<p> </p>
+  <p>These should both provide the result "1", because the pattern should match both "test" and "text".<br />
+  <br />
+  You can also specify how many times to match each character by using "{number of matches}" or you can specify a range by using "{min, max}". The first example below is redundant, but shows what I mean:<br /></p><br />
+  <p><strong>Example 3</strong></p>
+@@SyntaxHighlighting@@
+#include <MsgBoxConstants.au3>
 
-</body></html>
+MsgBox($MB_OK, "SRE Example 3 Result", StringRegExp("text", 't{1}e{1}[sx]{1}t{1}'))
+MsgBox($MB_OK, "SRE Example 3 Result", StringRegExp("aaaabbbbcccc", 'b{4}'))
+@@End@@
+
+  <h2>The Not-So Basics</h2>
+  <p>Right now you're probably thinking "Isn't this just a glorified StringInStr() function?". Well, using a "flag" value of 0, most of the time you're right. But SRE is much more powerful than that. As you use SRE's more and more, you'll find you might
+  know less and less about the type of pattern you are looking for. There are ways to be less and less specific about each character you wish to specify in the pattern. Take, for example, a line from an inventory log file: "There were 18 sheets left in
+  the ream of paper." You want to find the number of remaining sheets. Well, you can't use StringInStr() because you aren't looking for "18", you're looking for "????", where ? could be any digit.</p><br />
+  <br />
+  <p>Here's how I would assemble this pattern. Look at what you do and do not know about what you want to find:<br />
+  1) You know that it will ALWAYS contain nothing but digits.<br />
+  2) You know that it will SOMETIMES be 2 characters long.<br />
+  2a) You know that a full ream of paper is 500 sheets.<br />
+  2b) You know that the minimum number of sheets is 0.<br />
+  3) You know that it will ALWAYS be between 1 and 3 characters long.<br />
+  4) You know that there are no other digits in the test string.<br />
+  <br />
+  At this point, I'd like to introduce the FLAG value of "1" and the grouping characters "()". The flag value of "1" means that SRE will not only match your pattern, but also return an array, with each element of the array consisting of a captured
+  "group" of characters. So without veering off course too much, take this example:</p><br />
+  <br />
+  <p><strong>Example 4</strong></p>
+@@SyntaxHighlighting@@
+#include <MsgBoxConstants.au3>
+#include <StringConstants.au3>
+
+Local $aResult = StringRegExp("This is a test example", '(test)', $STR_REGEXPARRAYMATCH)
+If Not @error Then
+	MsgBox($MB_OK, "SRE Example 4 Result", $aResult[0])
+EndIf
+$aResult = StringRegExp("This is a test example", '(te)(st)', $STR_REGEXPARRAYMATCH)
+If Not @error Then
+	MsgBox($MB_OK, "SRE Example 4 Result", $aResult[0] & "," & $aResult[1])
+EndIf
+@@End@@
+
+  <p>So, first the pattern must match somewhere in the test string. If it does, then SRE is told to "capture" any groups ("()") and store them in the return array. You can use multiple captures, as demonstrated by the second piece of code in Example
+  4.<br />
+  <br />
+  Ok, back to the log file. Now that we know how to "capture" text, let's construct our pattern: Since you know what you're looking for is digits, there are 3 ways to specify "match any digit": "[:digit:]", "[0-9]", and "\d". The first is probably the
+  easiest to understand. There are a few classes (digit, alnum, space, etc. Check the help file for a full list) you can use to specify sets of characters, one of them being digit. "[0-9]" just specifies a range of all the digits 0 through 9. "\d" is
+  just a special character that means the same as the first two. There is no difference between the three, and with all SRE's there are usually at least a couple ways to construct any pattern.<br />
+  <br />
+  So, first we know we want to capture the digits, so indicate that with the opening parentheses "(". Next, we know we want to capture between 1 and 3 characters, all consisting of digits, so our pattern now looks like "([0-9]{1,3}". And finally close it
+  off with the closing parentheses to indicate the end of our group: "([0-9]{1,3})". Let's try it:<br /></p><br />
+  <p><strong>Example 5</strong></p>
+@@SyntaxHighlighting@@
+#include <MsgBoxConstants.au3>
+#include <StringConstants.au3>
+
+Local $aResult = StringRegExp("There were 18 sheets left in the ream of paper.", _
+		'([0-9]{1,3})', $STR_REGEXPARRAYMATCH)
+If Not @error Then
+	MsgBox($MB_OK, "SRE Example 5 Result", $aResult[0])
+EndIf
+@@End@@
+
+  <p>There you go, the message box correctly displays "18".<br />
+  <br />
+  Next we need to cover non-capturing groups. The way you indicate these groups is by opening the group with "(?:" instead of just "(". Let's say your log file says "You used 36 of 279 pages." Now if you run Example 5's SRE on this, you'll come up with
+  "36" instead of "279". Now what I like to do here is just determine what's different between the numbers. One that jumps out at me is that the second number is always followed by a space and then the word "pages". We could just modify our previous
+  pattern to be "([0-9]{1,3} pages)", but what if our script is just looking for the starting amount of pages, without " pages" tacked onto the end of the number? Here's where you can use a non-capturing group to accomplish this.<br />
+  <br /></p>
+  <p><strong>Example 6</strong></p>
+@@SyntaxHighlighting@@
+#include <MsgBoxConstants.au3>
+#include <StringConstants.au3>
+
+Local $aResult = StringRegExp("You used 36 of 279 pages.", '([0-9]{1,3})(?: pages)', $STR_REGEXPARRAYMATCH)
+If Not @error Then
+	MsgBox($MB_OK, "SRE Example 6 Result", $aResult[0])
+EndIf
+@@End@@
+
+  <p>This could get lengthy, but mostly I just wanted to lay out the foundation for how regular expressions work, and mainly how SRE "thinks". A few things to keep in mind:<br />
+  - Remember to think about the pattern one character at a time<br />
+  - The StringRegExp() function finds the first character in the pattern, then it's your job to provide enough<br />
+  evidence to "prove" whether or not it truly is a match. Example 6 is a good display of this.<br />
+  - Remember [ ... ] means OR ([xyz] match an "x", a "y", OR a "z")<br />
+  If you have any other questions, consult the help file first! It explains in detail all of the nitty gritty syntax that comes along with SRE's. One thing to look at in particular is the section on "Repeating Characters". It can make your pattern more
+  readable by substituting certain characters for ranges. For example: "*" is equivalent to {0,} or the range from 0 to any number of characters.<br />
+  <br />
+  Good luck, Regular Expressions can greatly decrease the length of your code, and make it easier to modify later. Corrections and feedback are welcome!</p>
+  <h2>Resources</h2>
+  <p><a class="ext" href="http://en.wikipedia.org/wiki/Regular_expression" target="_blank">Wikipedia Article - Regular Expressions</a> - Thanks blindwig.</p>
+  <p><a class="ext" href="http://www.codeproject.com/dotnet/regextutorial.asp" target="_blank">The 30 Minute Regex Tutorial</a> - by Jim Hollenhorst.</p>
+  <p><br />
+  GUI for testing various StringRegExp() patterns - Thanks steve8tch. Credit: w0uter</p>
+  <p>&nbsp; <object id="hhctrl" type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11" width="58" height="57">
+    <param name="Command" value="ShortCut">
+    <param name="Button" value="Text:Open StringRegExpGUI.au3">
+    <param name="Item1" value=",Examples\Helpfile\StringRegExpGUI.au3,">
+  </object></p>
+  <p>&nbsp;</p>
+  <p>Thanks to neogia for this tutorial.</p>
+</body>
+</html>

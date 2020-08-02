@@ -4,52 +4,52 @@
 Example()
 
 Func Example()
-	; Create a GUI.
-	Local $hGUI1 = GUICreate("Example GUI1")
-	; Create a button.
+	; Erstellt eine GUI.
+	Local $hGUI1 = GUICreate("Beispiel GUI1")
+	; Erstellt einen Button.
 	Local $idButton1 = GUICtrlCreateButton("Button1", 10, 10, 80, 22)
-	; Display the GUI
+	; Zeigt die GUI an
 	GUISetState(@SW_SHOW, $hGUI1)
 
-	; Create a GUI.
-	Local $hGUI2 = GUICreate("Example GUI2", 300, 300)
-	; Create a button.
+	; Erstellt eine GUI.
+	Local $hGUI2 = GUICreate("Beispiel GUI2", 300, 300)
+	; Erstellt einen Button.
 	Local $idButton2 = GUICtrlCreateButton("Button2", 10, 10, 80, 22)
-	; Display the GUI
+	; Zeigt die GUI an
 	GUISetState(@SW_SHOW, $hGUI2)
 
-	; Initialize a Local variable.
+	; Initialisiert eine Lokale Variable.
 	Local $aMsg = 0
 
 	While 1
-		; Assign to $aMsg the advanced GUI messages.
+		; Weist $aMsg die erweiterten GUI Nachrichten zu.
 		$aMsg = GUIGetMsg($GUI_EVENT_ARRAY)
 
-		; Switch from GUIs
+		; Schaltet zwischen den GUIs um
 		Switch $aMsg[1]
 			Case $hGUI1
-				; The event comes from the GUI1
+				; Das Ereignis kommt von GUI1
 
-				; Switch from event ID
+				; Schaltet zwischen den Ereignis-ID um
 				Switch $aMsg[0]
 					Case $GUI_EVENT_CLOSE
 						ExitLoop
 					Case $idButton1
-						MsgBox($MB_SYSTEMMODAL, "", "Button1 clicked.")
+						MsgBox($MB_SYSTEMMODAL, "", "Button1 angeklickt.")
 				EndSwitch
 			Case $hGUI2
-				; The event comes from the GUI2
+				; Das Ereignis kommt von GUI2
 
-				; Switch from event ID
+				; Schaltet zwischen den Ereignis-ID um
 				Switch $aMsg[0]
 					Case $GUI_EVENT_CLOSE
 						GUIDelete($hGUI2)
 					Case $idButton2
-						MsgBox($MB_SYSTEMMODAL, "", "Button2 clicked.")
+						MsgBox($MB_SYSTEMMODAL, "", "Button2 angeklickt.")
 				EndSwitch
 		EndSwitch
 	WEnd
 
-	; Delete the previous GUIs and all controls.
+	; Löscht die vorherigen GUIs und alle Steuerelemente.
 	GUIDelete($hGUI1)
 EndFunc   ;==>Example

@@ -2,7 +2,7 @@
 
 #include <MsgBoxConstants.au3>
 
-; Press Esc to terminate script, Pause/Break to "pause"
+; Um das Skript zu beenden ist Esc zu drücken, Pause/Break zum "Pausieren"
 
 Global $g_bPaused = False
 
@@ -15,20 +15,20 @@ While 1
 WEnd
 
 Func HotKeyPressed()
-	Switch @HotKeyPressed ; The last hotkey pressed.
-		Case "{PAUSE}" ; String is the {PAUSE} hotkey.
+	Switch @HotKeyPressed ; Der zuletzt gedrückte HotKey.
+		Case "{PAUSE}" ; Die Zeichenfolge ist der {PAUSE} HotKey.
 			$g_bPaused = Not $g_bPaused
 			While $g_bPaused
 				Sleep(100)
-				ToolTip('Script is "Paused"', 0, 0)
+				ToolTip('Skript wurde "Pausiert"', 0, 0)
 			WEnd
 			ToolTip("")
 
-		Case "{ESC}" ; String is the {ESC} hotkey.
+		Case "{ESC}" ; Die Zeichenfolge ist der {ESC} HotKey.
 			Exit
 
-		Case "+!d" ; String is the Shift-Alt-d hotkey.
-			MsgBox($MB_SYSTEMMODAL, "", "This is a message.")
+		Case "+!d" ; Die Zeichenfolge ist der Shift-Alt-d HotKey.
+			MsgBox($MB_SYSTEMMODAL, "", "Dies ist eine Nachricht.")
 
 	EndSwitch
 EndFunc   ;==>HotKeyPressed

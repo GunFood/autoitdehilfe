@@ -1,131 +1,492 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Sprachreferenz - Variablen</title>
+	<title>Language Reference - Variables</title>
 	<meta charset="utf-8">
 	<link href="../css/default.css" rel="stylesheet">
 </head>
 
 <body>
-<h1>Sprachreferenz - Variablen</h1>
+	<h1>Language Reference - Variables</h1>
 
-  
-<p>Eine Variable ist -einfach gesehen- nur ein Ort, um Daten im Speicher
-abzulegen, damit schnell darauf zugegriffen werden kann. Man stelle sie sich
-einfach als ein Postfach im Speicher vor, in das man Informationen hinein legen
-oder heraus nehmen kann. Zum Beispiel k&ouml;nnte man eine Variable erstellen, um
-eine Zahl, die Antwort auf eine Frage oder das Ergebnis einer mathematischen
-Gleichung darin zu speichern.</p>
-<p>Jede Variable hat einen Namen (&auml;hnlich eines Postfaches), muss mit einem <strong>$</strong> 
-Zeichen beginnen und darf nur <strong>Buchstaben</strong>, <strong>Zahlen</strong>
-und den Unterstrich <strong>_  </strong>enthalten. Hier sind einige
-Beispielnamen:</p>
-<p>$var1</p>
-<p>    $meine_Variable</p>
-<p> </p>
-<p>Jede Variable wird als <a href="lang_datatypes.htm">Variant</a>.
-gespeichert. </p>
-<p> </p>
-<h2>Variablen deklarieren</h2>
-<p>Variablen werden mit den Schl&uuml;sselw&ouml;rtern <a href="../keywords/Dim.htm">Dim</a>, 
-  <a href="../keywords/Dim.htm">Local</a> und <a href="../keywords/Dim.htm">Global</a>
-deklariert und erstellt:</p>
-<p class="codebox">    Dim $var1</p>
-<p>Oder man kann auch mehrere Variablen auf einmal deklarieren:</p>
-<p class="codebox">    Dim $var1, $meine_Variable</p>
-<p> </p>
-<p>Man kann eine Variable aber auch zuweisen, ohne sie vorher zu deklarieren,
-aber viele bevorzugen die explizite Deklarierung.</p>
-<p class="codebox">    $var1 = "erstellen und zuweisen"</p>
-<p> </p>
-<h2>Konstanten deklarieren</h2>
-<p>Konstanten werden mit dem Schl&uuml;sselwort <a href="../keywords/Dim.htm">Const</a> 
- deklariert und erstellt, wie z.B.:</p>
-<p class="codebox">    Const $const1 = 1, $const2=12</p>
-<p>Konstanten k&ouml;nnen auch mit dem Schl&uuml;sselwort <a href="../keywords/Enum.htm">Enum</a> 
-deklariert und initialisiert werden, z.B.:</p>
-<p class="codebox">    Enum $const1 = 1, $const2, $const3    
-; 1, 2, 3<br>
-    Enum STEP 2 $incr0, $incr2, $incr4    ; 0, 2, 
-4<br>
-    Enum STEP *2 $mult1, $mult2, $mult4   ; 1, 2, 4</p>
-<p> </p>
-<p>Konstanten k&ouml;nnen keine bereits existierenden Variablen neu deklarieren.</p>
-<p> </p>
-<h2>G&uuml;ltigkeitsbereich</h2>
-<p>Der G&uuml;ltigkeitsbereich einer Variablen wird gesteuert durch die Tatsache, wann
-und wie man die Variable deklariert. Deklariert man eine Variable am Anfang
-eines Skripts und au&szlig;erhalb von Funktionen, existiert sie in dem
-G&uuml;ltigkeitsbereich <strong>Global</strong> und kann von &uuml;berall aus dem Skript
-gelesen oder ge&auml;ndert werden.</p>
-<p>Deklariert man eine Variable <i>innerhalb</i> einer <a href="lang_functions.htm">Funktion</a>,
-befindet sie sich in dem G&uuml;ltigkeitsbereich <strong>Local</strong>  und kann nur <i>innerhalb
-dieser einen Funktion</i> genutzt werden. Variablen, die innerhalb einer
-Funktion erstellt wurden, werden automatisch am Ende dieser Funktion zerst&ouml;rt.</p>
-<p>Werden Variablen &uuml;ber <a href="../keywords/Dim.htm">Dim</a> 
- deklariert oder innerhalb einer Funktion zugewiesen, haben sie standardm&auml;&szlig;ig
-den G&uuml;ltigkeitsbereich <strong>Local</strong>, <strong>es sei denn, </strong>es
-gibt eine globale Variable des selben Namens (in diesem Fall wird die globale Variable
-verwendet). Dies kann ge&auml;ndert werden, indem man die Schl&uuml;sselw&ouml;rter <a href="../keywords/Dim.htm">Local</a> 
- und <a href="../keywords/Dim.htm">Global</a>  benutzt, um Variablen zu
-deklarieren, und um so den gew&uuml;nschten G&uuml;ltigkeitsbereich zu <strong>erzwingen.</strong></p>
-<p> </p>
-<h2>Arrays</h2>
-<p>Ein <b>Array</b> ist eine Variable, die eine Reihe von Datenelementen
-desselben Typs und derselben Gr&ouml;&szlig;e enth&auml;lt. Auf jedes Element in dieser Variablen
-kann &uuml;ber eine Indexnummer zugegriffen werden.
-<br>
-<br>
-Ein Beispiel:<br>
-<br>
-Man m&ouml;chte z.B. diese Reihe an Zeichen speichern: "A", "U", "T", "O", "I", 
-"T" und "3".<br>
-Man k&ouml;nnte hierf&uuml;r sieben separate Variablen benutzen, aber ein Array zu
-benutzen ist viel effizienter:</p>
-<p class="codebox">$Array[0]="A"<br>
-$Array[1]="U"<br>
-..etc..<br>
-$Array[6]="3"</p>
-<p>Um einen spezifischen Wert in einem Array anzusprechen, muss man nur die
-Indexnummer kennen:</p>
-<p class="codebox">$MeinZeichen=$Array[2]</p>
-<p>Als Ergebnis erh&auml;lt man in $MeinZeichen den Buchstaben "T" (siehe auch: <b>'Operatoren'</b>).<br>
-<br>
-<br>
-Die Indexnummer kann auch durch eine andere Variable oder einen Ausdruck ersetzt
-werden. Auf diese Weise kann man komplexe Arten verwenden, auf Elemente in einem
-Array zuzugreifen oder sie zu erzeugen.<br>
-<br>
-<br>
-Arrays k&ouml;nnen auch mehrdimensional sein, wenn man mehrere Reihen an
-Indexnummern benutzt, wie z.B.:</p>
-<p class="codebox">$Array[0][0]="Upper-Left"<br>
-$Array[1][0]="Lower-Left"<br>
-$Array[0][1]="Upper-Right"<br>
-$Array[1][1]="Lower-Right"</p>
-<p>(Diese Werte sind einfach nur Beispiele.)
-<br>
-Man kann bis zu 64 Dimensionen in einem Array verwenden. Die Gesamtanzahl der
-Eintr&auml;ge kann dabei nicht gr&ouml;&szlig;er sein als 2^24 (16 777 216).<br>
-<br>
-Bevor man ein Array in einem Skript verwenden kann, muss man mit dem
-Schl&uuml;sselwort <b>'<a href="../keywords/Dim.htm">Dim</a>'</b> dessen Grenzen
-definieren.<br>
-<br>
-<!--c1--></p>
-<h2>Datentypen in Arrays</h2>
-<p><br>
-Es wurde gesagt, dass ein Array nur Datentypen <b>eines</b> Typs enth&auml;lt. Aber
-technisch gesprochen kann ein Variant in AutoIt alles m&ouml;gliche -von einer Zahl
-bis zu einem Bool'schen Wert- enthalten. So k&ouml;nnte ein AutoIt-Array auch
-verschiedene Typen enthalten, sogar andere Arrays:</p>
-<p class="codebox">$Array[0]=1<br>
-$Array[1]=wahr<br>
-$Array[2]="Text"<br>
-$Array[3]=$AnderesArray</p>
-<p>Dies wurde in AutoIt nicht ausdr&uuml;cklich verboten. Trotzdem ist es <b>NICHT
-RATSAM,</b> unterschiedliche Datentypen in einem Array zu vermischen. Speziell
-der Gebrauch eines Arrays innerhalb eines anderen Arrays wird die
-Ausf&uuml;hrungsgeschwindigkeit des Skripts massiv beeinflussen.</p>
+	<p>A variable is just a place to store data in memory so that it can be accessed quickly. Think of it as a mailbox in memory that you can put information in or take information out of. For
+	example you might create a variable to store the number a user's response to a question, or the result to a math equation.</p>
+
+	<p>Each variable has a name (again, similar to a mailbox) and must start with the <strong>$</strong> character and may only contain <strong>letters</strong>, <strong>numbers</strong> and the
+	underscore <strong>_</strong> character. Here are some example names:</p>
+
+	<p>&nbsp;&nbsp;&nbsp; $Var1</p>
+
+	<p>&nbsp;&nbsp;&nbsp; $vVariable</p>
+
+	<p>&nbsp;&nbsp;&nbsp; $my_Variable</p><br>
+
+	<p>Note that all variable names are case insensitive: MyVariable() is the same as MyvARiAblE()</p>
+
+	<p>Each variable is stored as a <a href="lang_datatypes.htm">variant</a>.</p>
+
+	<p>To ease script maintenability it is proposed to use a <a href="#VariableNaming">standard variable naming convention</a>.</p>
+
+	<h2>Declaring Variables</h2>
+
+	<p>Variables are declared and created with the <a href="../keywords/Dim.htm">Local</a> and <a href="../keywords/Dim.htm">Global</a> keywords - <a href="../keywords/Dim.htm">Dim</a> can also be
+	used, although this is not recommended.</p>
+
+@@SyntaxHighlighting@@
+Local $vVariable
+@@End@@
+
+
+	<p>Or you can declare multiple variables at once:</p>
+
+@@SyntaxHighlighting@@
+Global $vVariable1, $vVariable2
+@@End@@
+
+
+	<p>You can also assign a variable <strong>without</strong> declaring it first, but many prefer explicit declarations.</p>
+
+@@SyntaxHighlighting@@
+$vVariable = "Create and Assign"
+@@End@@
+
+
+	<h2>Declaring Constants</h2>
+
+	<p>Constants are declared and created using <a href="../keywords/Dim.htm">Const</a> keyword and must be initialised with a value:<br></p>
+
+@@SyntaxHighlighting@@
+Const $iConst1 = 1, $iConst2 = 12
+@@End@@
+
+
+	<p>Constants can also be declared and initialized using the <a href="../keywords/Enum.htm">Enum</a> keyword:</p>
+
+@@SyntaxHighlighting@@
+Enum $eConst1 = 1, $eConst2, $eConst3 ; 1, 2, 3
+Enum Step 2 $eIncr0, $eIncr2, $eIncr4 ; 0, 2, 4
+Enum Step *2 $eMult1, $eMult2, $eMult4 ; 1, 2, 4
+@@End@@
+
+
+	<p>Once a constant has been assigned, it cannot be changed.<br></p>
+
+	<h2>Scope</h2>
+
+	<p>A variable's scope is controlled by when and how you declare the variable. If you declare a variable at the start of your script and outside any functions it exists in the
+	<strong>global</strong> scope and can be read or changed from anywhere in the script.</p>
+
+	<p>If you declare a variable <em>inside</em> a <a href="lang_functions.htm">function</a> it is in <strong>local</strong> scope and can only be used <em>within that same function</em>. Variables
+	created inside functions are automatically destroyed when the function ends.</p>
+
+	<p>By default when variables are declared using <a href="../keywords/Dim.htm">Dim</a> or assigned in a function they have <strong>local</strong> scope <strong>unless</strong> there is a global
+	variable of the same name (in which case the global variable is reused). This can be altered by using the <a href="../keywords/Dim.htm">Local</a> and <a href="../keywords/Dim.htm">Global</a>
+	keywords to declare variables and <strong>force</strong> the scope you want.</p>
+
+	<p>See <a href="../keywords/Static.htm">Static</a> for details on how to use this keyword as part of the scope declaration.
+
+	<h2>Arrays and Maps</h2>
+
+	<p>AutoIt has 2 types of data collection variables: Arrays and Maps.</p>
+
+	<p>Arrays are much faster for random access and can have multiple dimensions - a dimension size is fixed at the initially declared value (although it can be altered using ReDim). Arrays are
+	indexed using integer values referring to the order of elements and start at element[0] - elements can be extracted using the integer index or iterated by a simple For...Next loop.</p>
+
+	<p>Maps are better for records/dictionary type access and have a single dimension. They are indexed using either integer or string keys (integers do not refer to the order of elements) and are
+	dynamically resized as values are added or removed. A value can only be accessed by using the original key - these keys can be iterated using the TableKeys function.</p>
+
+	<p>Both Arrays and Maps use similar syntax, so care is required to ensure the variable is of the correct datatype - this is determined by the first declaration line for the variable:</p>
+
+	<p>Using empty [ ] declares a Map:</p>
+
+@@SyntaxHighlighting@@
+Local $mVar[] ; A Map
+@@End@@
+
+
+	<p>Filling the [ ] with a dimension size declares an Array:</p>
+
+@@SyntaxHighlighting@@
+Local $aVar[3] ; An Array
+@@End@@
+
+
+	<p>Assigning element values when declaring makes the variable an Array - these three lines are functionally equivalent:</p>
+
+@@SyntaxHighlighting@@
+Local $vVar[3] = [1, 2, 3] ; An Array
+Local $vVar[] = [1, 2, 3] ; An Array
+Local $vVar = [1, 2, 3] ; An Array
+@@End@@
+
+
+	<h2>Arrays</h2>
+
+	<p>An Array is a variable containing a series of data elements. Each element in this variable can be accessed by an index number which relates to the position of the element within the Array - in
+	AutoIt the first element of an Array is always element [0]. Arrays elements are stored in a defined order and can be sorted.<br>
+	<br>
+	An example:<br>
+	<br>
+	You want to store a list of names: "Jasper", "Beethoven", "Pinky" and "Fidget". You could use four separate variables to do so, but using an Array is more efficient:</p>
+
+@@SyntaxHighlighting@@
+Local $aArray[4]
+$aArray[0] = "Jasper"
+$aArray[1] = "Beethoven"
+$aArray[2] = "Pinky"
+$aArray[3] = "Fidget"
+@@End@@
+
+
+	<p>To access a specific value in an Array, you use the index number:</p>
+
+@@SyntaxHighlighting@@
+$sString = $aArray[2] ; $sString contains "Pinky"
+@@End@@
+
+
+	<p>The index number can also be substituted by another variable or an expression, so you can build complex ways to assign or access elements in an array.</p>
+
+	<p>The elements of an entire Array can be iterated using a For...Next loop:</p>
+@@SyntaxHighlighting@@
+; UBound returns the total number of elements - as the first is [0] the highest index is one less
+For $i = 0 To UBound($aArray) - 1
+	ConsoleWrite(aArray[$i] & @CRLF)
+Next
+@@End@@
+
+	<br>
+	Arrays can also be multidimensional, when you use multiple series of index numbers.&nbsp; Think of rows and columns in a grid:
+
+@@SyntaxHighlighting@@
+$aArray[0][0] = "Upper-Left"
+$aArray[1][0] = "Lower-Left"
+$aArray[0][1] = "Upper-Right"
+$aArray[1][1] = "Lower-Right"
+@@End@@
+
+
+	<p>(These values are just examples)<br>
+	<br>
+	You can use up to 64 dimensions in an Array. The total number of entries cannot be greater than 2^24 (16 777 216).<br>
+	<br>
+	Arrays must be declared before use by defining their scope using the '<a href="../keywords/Dim.htm">Global/Local/Static</a>' keywords and either specifying the size and/or assigning some of the
+	elements.<br></p>
+
+@@SyntaxHighlighting@@
+Local $aArray1[2] ; Array with 2 elements, none assigned
+Local $aArray[] = [8, 4, 5, 9, 1] ; Array with 5 elements, all assigned
+Local $aArray[7] = [3, 7.5, "string"] ; Array with 7 elements, only first 3 assigned
+@@End@@
+
+
+	<h2>Data types in Arrays</h2>
+
+	<p>An array element can contain any AutoIt datatype:</p>
+
+@@SyntaxHighlighting@@
+$aArray[0] = 1
+$aArray[1] = True
+$aArray[2] = "Text"
+$aArray[3] = $aAnotherArray
+@@End@@
+
+
+	<p>An array stored inside another array can be accessed directly, but this method is slightly slower than accessing other datatypes:</p>
+
+@@SyntaxHighlighting@@
+Local $aInternal[3] = ["A", "B", "C"] ; Declare an array
+Local $aContainer[1] = [$aInternal] ; Declare a container array holding the first
+$sString = ($aContainer[0])[1] ; $sString holds "B"
+; Note the requirement to enclose the first array element definition in ( )
+@@End@@
+
+
+	<h2>Maps</h2>
+
+	<p>A Map is a variable containing a series of data elements, each consisting of a key/value pairing. An element can only be accessed by a key, which can be either a string or an integer. However
+	an integer key does not relate to the position of the element within the Map - these are in no defined order and cannot be sorted. String keys are, almost uniquely in AutoIt, case sensitive -
+	"MyKey" is not the same as "mykey".<br>
+	<br>
+	An example:<br>
+	<br>
+	You want to store a number of variables in a collection so that you can pass them to a function as a single parameter. Using a Map allows you to use string keys to make an easily understood
+	reference to the value contained within - such as the ControlIDs of a series of controls being indexed by their names. Note that elements can be addressed by either [] or dot notation:</p>
+
+@@SyntaxHighlighting@@
+Local $mControls[]
+$mControls["Input"] = GUICtrlCreateInput(....)
+$mControls.Combo = GUICtrlCreateCombo(...)
+$mControls["Button"] = GUICtrlCreateButton(...)
+@@End@@
+
+
+	<p>To access a specific value in a Map, you use the key - again either notation can be used and need not be that used initially:</p>
+
+@@SyntaxHighlighting@@
+$idControlID = $mMap.Input ; Variable contains the ControlID for the Input
+$idControlID = $mMap["Combo"] ; Variable contains the ControlID for the Combo
+@@End@@
+
+
+	<p>Integer keys must use the [] notation and are not the same as their string equivalent:</p>
+
+@@SyntaxHighlighting@@
+$mMap[3] = "Integer 3" ; These are separate keys
+$mMap["3"] = "String 3"
+@@End@@
+
+
+	<p>Maps must be declared before use by defining their scope using the '<a href="../keywords/Dim.htm">Global/Local/Static</a>' keywords.</p>
+
+@@SyntaxHighlighting@@
+Local $mControls[]
+@@End@@
+
+
+	<h2>Datatypes in Maps</h2>
+
+	<p>A map element can contain any AutoIt datatype:</p>
+
+@@SyntaxHighlighting@@
+$mMap["Integer"] = 1
+$mMap.Boolean = True
+$mMap["String"] = "Text"
+$mMap.Array = $aArray
+$mMap["Map"] = $mAnotherMap
+@@End@@
+
+
+	<p>An internal map can be accessed directly:</p>
+
+@@SyntaxHighlighting@@
+Local $mInternal[] ; Declare a Map
+$mInternal["Internal"] = "AutoIt3" ; Assign an element
+Local $mContainer[] ; Declare a container Map
+$mContainer.Bin = $mInternal ; Assign the first Map as an element
+; All of these return "AutoIt3"
+$sString = $mContainer["Bin"]["Internal"]
+$sString = $mContainer.Bin.Internal
+$sString = $mContainer["Bin"].Internal
+$sString = $mContainer.Bin["Internal"]
+@@End@@
+
+<a id="VariableNaming"></a>
+	<h2>Names of Variables</h2>
+	<p>The variable naming convention used in AutoIt is based on <a rel="nofollow" class="external text" href="http://en.wikipedia.org/wiki/Hungarian_notation">Hungarian notation</a>.
+	The prefix defines the logical data type rather than the physical data type: in this way, it gives a hint as to what the variable's purpose is, or what it represents.
+	The prefix does not encode the actual data type: this occurs during assignment.
+	See the table below for accepted standards.</p>
+
+<table>
+<tr>
+	<th> prefix </th>
+	<th> covering type </th>
+	<th> example</th>
+</tr>
+<tr>
+	<td> a </td>
+	<td> Arrays </td>
+	<td> $aArray[0]</td>
+</tr>
+<tr>
+	<td> b </td>
+	<td> Booleans </td>
+	<td> $bBool = True</td>
+</tr>
+<tr>
+	<td> d </td>
+	<td> Binaries </td>
+	<td> $dBinary = Binary("0x80000000")</td>
+</tr>
+<tr>
+	<td> e </td>
+	<td> Constant variable </td>
+	<td> Local Const $eEulersConstant = 2.7182818284590452</td>
+</tr>
+<tr>
+	<td> f </td>
+	<td> Floating point </td>
+	<td> $fFloat = 0.123</td>
+</tr>
+<tr>
+	<td> h </td>
+	<td> Handles (and GUI handles) </td>
+	<td> $hGUI = GUICreate("My GUI")</td>
+</tr>
+<tr>
+	<td> i </td>
+	<td> Integer </td>
+	<td> $iInteger = 10</td>
+</tr>
+<tr>
+	<td> id </td>
+	<td> An AutoIt controlID </td>
+	<td> $idButton_Ok = GUICtrlCreateButton("OK", 5, 5)</td>
+</tr>
+<tr>
+	<td> m </td>
+	<td> Maps </td>
+	<td> $mMap[]</td>
+</tr>
+<tr>
+	<td> n </td>
+	<td> General number (no preference) </td>
+	<td> $nNumber = 0</td>
+</tr>
+<tr>
+	<td> p </td>
+	<td> Pointers </td>
+	<td> $pRect = DllStructGetPtr($tRECT)</td>
+</tr>
+<tr>
+	<td> s </td>
+	<td> Strings (chars included) </td>
+	<td> $sString = "Hello world"</td>
+</tr>
+<tr>
+	<td> t </td>
+	<td> Structures </td>
+	<td> $tSTRUCT = DllStructCreate($tagSTRUCT)</td>
+</tr>
+<tr>
+	<td> tag </td>
+	<td> Structures definition </td>
+	<td> $tagDATE = "struct; word Year;word Month;word Day; endstruct"</td>
+</tr>
+<tr>
+	<td>v </td>
+	<td> Variant </td>
+	<td> $vData = ClipGet()</td>
+</tr>
+</table>
+
+	<p>Variables are named following this schema:</p>
+
+<table>
+<tr>
+	<th> dollar prefix </th>
+	<th> type (lower case) </th>
+	<th> [optional] subtype (lower case) </th>
+	<th> var name (first letter in upper case)</th>
+</tr>
+<tr>
+	<td> $ </td>
+	<td> a </td>
+	<td> h </td>
+	<td> Handles</td>
+</tr>
+</table>
+
+	<p>Examples:</p>
+<div class="mw-highlight mw-content-ltr" dir="ltr"><pre><span class="c1">; Assign a local variable the integer 7</span>
+<span class="nb">Local</span> <span class="nv">$iWeekDays</span> <span class="o">=</span> <span class="mi">7</span>
+
+<span class="c1">; Assign a local variable the value of Pi</span>
+<span class="nb">Local</span> <span class="nv">$fPi</span> <span class="o">=</span> <span class="mf">3.14159265358979</span>
+
+<span class="c1">; Assign a local variable an array of strings</span>
+<span class="nb">Local</span> <span class="nv">$asArray</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>&#39;<span class="n">mon</span>&#39;<span class="p">,</span> &#39;<span class="n">tue</span>&#39;<span class="p">,</span> &#39;<span class="n">wed</span>&#39;<span class="p">,</span> &#39;<span class="n">thu</span>&#39;<span class="p">,</span> &#39;<span class="n">fri</span>&#39;<span class="p">,</span> &#39;<span class="n">sat</span>&#39;<span class="p">,</span> &#39;<span class="n">sun</span>&#39;<span class="p">]</span>
+
+<span class="c1">; Assign a local variable an array of numbers</span>
+<span class="nb">Local</span> <span class="nv">$anArray</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+</pre></div>
+
+	<h2>Variable Initialization</h2>
+	<p>When initializing variables there are several points to consider. It is bad practice to hog memory by assigning data which is not immediately required. It is therefore recommended that you declare and initialize variables immediately prior to use. If you wish to assign a default value to a variable which you intend to overwrite later, then the data should be of the same (or the most logical representation of its) type and use as little memory as possible.</p>
+
+	<p>Examples:</p>
+<div class="mw-highlight mw-content-ltr" dir="ltr"><pre><span class="c1">; Inconsistent data types are considered bad</span>
+<span class="nb">Local</span> <span class="nv">$iInteger</span> <span class="o">=</span> <span class="s">&quot;0&quot;</span>
+<span class="nb">Local</span> <span class="nv">$sString</span> <span class="o">=</span> <span class="n">False</span>
+
+<span class="c1">; Correct initialization</span>
+<span class="nb">Local</span> <span class="nv">$iInteger</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="nb">Local</span> <span class="nv">$sString</span> <span class="o">=</span> &#39;&#39;
+</pre></div>
+
+<p><br /></p>
+	<p>In the following table, recommended default values are shown for each data type.
+	Some data types have more than one possibile default value which can be used for initialization.</p>
+
+<table>
+<tr>
+	<th> Default Value </th>
+	<th> covering type</th>
+</tr>
+<tr>
+	<td> Binary("") </td>
+	<td> $d</td>
+</tr>
+<tr>
+	<td> "" </td>
+	<td> $s, $v</td>
+</tr>
+<tr>
+	<td> 0 </td>
+	<td> $a, $h, $i, $id, $m, $n, $o, $p, $t, $tag, $v</td>
+</tr>
+<tr>
+	<td> 0.0 </td>
+	<td> $f</td>
+</tr>
+<tr>
+	<td> Null </td>
+	<td> $o, $s, $v</td>
+</tr>
+<tr>
+	<td> False (or True) </td>
+	<td> $b</td>
+</tr>
+</table>
+
+<p><br /></p>
+	<p>Example:</p>
+
+<div class="mw-highlight mw-content-ltr" dir="ltr"><pre><span class="c1">; Declare and initialize a variable with the recommended default value</span>
+<span class="nb">Local</span> <span class="nv">$vUndefined</span> <span class="o">=</span> <span class="n">Null</span> <span class="c1">; This does not require much memory</span>
+
+<span class="c1">; Some time later:</span>
+<span class="nv">$vUndefined</span> <span class="o">=</span> <span class="mh">0xB0AD1CEA</span> <span class="c1">; Assign an appropriate value as and when needed</span>
+</pre></div>
+
+<p><br /></p>
+	<p>To reduce bloat, multiple variables can be declared on a single line. When declaring multiple variables on the same line, it is generally recommended that you stick to declaring one data type on each line.
+	The intention here is to make the code easier to follow and manage in a future, however the best layout will vary according to circumstance.</p>
+
+	<p>Example:</p>
+<div class="mw-highlight mw-content-ltr" dir="ltr"><pre><span class="c1">; Not recommended</span>
+<span class="nb">Local</span> <span class="nv">$sString</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="nv">$iInteger</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">$asArray</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="s">&quot;c&quot;</span><span class="p">]</span> <span class="c1">; Mixed data types</span>
+
+<span class="c1">; Recommended</span>
+<span class="nb">Local</span> <span class="nv">$iLeft</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="nv">$iTop</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1">; Integers</span>
+<span class="nb">Local</span> <span class="nv">$idButton_Go</span> <span class="o">=</span> <span class="nf">GUICtrlCreateButton</span><span class="p">(</span><span class="s">&quot;Go&quot;</span><span class="p">,</span> <span class="nv">$iLeft</span><span class="p">,</span> <span class="nv">$iTop</span><span class="p">)</span> <span class="c1">; ControlIds</span>
+<span class="nb">Local</span> <span class="nv">$idButton_Quit</span> <span class="o">=</span> <span class="nf">GUICtrlCreateButton</span><span class="p">(</span><span class="s">&quot;Quit&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="c1">; ControlIds</span>
+</pre></div>
+
+<p><br /></p>
+	<p>In some languages it is essential to initialize variables on declaration, but this is not the case with AutoIt.
+	Regarding data type, variables declared without being initialized should be considered as being undefined.</p>
+
+	<h2>Scopes of Variables</h2>
+<p>Variables should also be named according to their scope.</p>
+
+<table>
+
+<tr>
+	<th> Global UDF variable </th>
+	<th> Global variable </th>
+	<th> Local variable</th>
+</tr>
+<tr>
+	<td> $__g_iSomeVar </td>
+	<td> $g_iSomeVar </td>
+	<td> $iSomeVar</td>
+</tr>
+</table>
+
+<p>With this method, you will avoid unwanted re-assignments.<p>
+
+
 </body>
 </html>

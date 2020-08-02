@@ -5,48 +5,48 @@
 Example()
 
 Func Example()
-	; Create a constant variable in Local scope of the filepath that will be read/written to.
+	; Erstellt eine Konstante des Dateipfades, der zum Lesen/Schreiben verwendet wird.
 	Local Const $sFilePath = _WinAPI_GetTempFileName(@TempDir)
 
-	; Open the file for writing (overwrite the file) and store the handle to a variable.
+	; Öffnet die Datei zum Schreiben (überschreiben Sie die Datei) und speichert das Handle in einer Variablen.
 	Local $hFileOpen = FileOpen($sFilePath, $FO_OVERWRITE)
 	If $hFileOpen = -1 Then
-		MsgBox($MB_SYSTEMMODAL, "", "An error occurred whilst writing the temporary file.")
+		MsgBox($MB_SYSTEMMODAL, "", "Beim Schreiben der temporären Datei ist ein Fehler aufgetreten.")
 		Return False
 	EndIf
 
-	; Write data to the file using the handle returned by FileOpen and set the end of the file.
+	; Schreibt Daten in die Datei mit dem von FileOpen zurückgegebenen Handle und setzt das Dateiende.
 	FileWrite($hFileOpen, "ABCDEF")
 	FileSetEnd($hFileOpen)
 
-	; Display the file size and contents.
-	MsgBox($MB_SYSTEMMODAL, "", "Size: " & FileGetSize($sFilePath) & @CRLF & "Data: " & @CRLF & FileRead($sFilePath))
+	; Zeigt die Dateigröße und Inhalt an.
+	MsgBox($MB_SYSTEMMODAL, "", "Größe: " & FileGetSize($sFilePath) & @CRLF & "Daten: " & @CRLF & FileRead($sFilePath))
 
-	; Expand the size of the file to 9 bytes and don't write any additional data.
+	; Erweitert die Größe auf 9 Bytes und schreibt keine weiteren Daten.
 	FileSetPos($hFileOpen, 9, $FILE_BEGIN)
 	FileSetEnd($hFileOpen)
 
-	; Display the file size and contents.
-	MsgBox($MB_SYSTEMMODAL, "", "Size: " & FileGetSize($sFilePath) & @CRLF & "Data: " & @CRLF & FileRead($sFilePath))
+	; Zeigt Dateigröße und Inhalt an.
+	MsgBox($MB_SYSTEMMODAL, "", "Größe: " & FileGetSize($sFilePath) & @CRLF & "Daten: " & @CRLF & FileRead($sFilePath))
 
-	; Move the position after ABCDEF i.e. 6 bytes and then write additional data which will expand the file to 12 bytes.
+	; Verschiebt die Position hinter ABCDEF, im Bsp. 6 Bytes und schreibt zusätzliche Daten, welche die Datei auf 12 Bytes vergrößern.
 	FileSetPos($hFileOpen, 6, $FILE_BEGIN)
 	FileWrite($hFileOpen, "HIJKLM")
-	FileSetEnd($hFileOpen) ; Set the end of the file.
+	FileSetEnd($hFileOpen) ; Setzen Sie das Dateiende.
 
-	; Display the file size and contents.
-	MsgBox($MB_SYSTEMMODAL, "", "Size: " & FileGetSize($sFilePath) & @CRLF & "Data: " & @CRLF & FileRead($sFilePath))
+	; Zeigt Dateigröße und Inhalt an.
+	MsgBox($MB_SYSTEMMODAL, "", "Größe: " & FileGetSize($sFilePath) & @CRLF & "Daten: " & @CRLF & FileRead($sFilePath))
 
-	; Truncate the file size to 9 bytes.
+	; Kürzt die Datei auf 9 Bytes.
 	FileSetPos($hFileOpen, 9, $FILE_BEGIN)
-	FileSetEnd($hFileOpen) ; Set the end of the file.
+	FileSetEnd($hFileOpen) ; Setzen Sie das Dateiende.
 
-	; Display the file size and contents.
-	MsgBox($MB_SYSTEMMODAL, "", "Size: " & FileGetSize($sFilePath) & @CRLF & "Data: " & @CRLF & FileRead($sFilePath))
+	; Zeigt Dateigröße und Inhalt an.
+	MsgBox($MB_SYSTEMMODAL, "", "Größe: " & FileGetSize($sFilePath) & @CRLF & "Daten: " & @CRLF & FileRead($sFilePath))
 
-	; Close the handle returned by FileOpen.
+	; Schließt das von FileOpen zurückgegebene Handle.
 	FileClose($hFileOpen)
 
-	; Delete the temporary file.
+	; Löscht die temporäre Datei.
 	FileDelete($sFilePath)
 EndFunc   ;==>Example

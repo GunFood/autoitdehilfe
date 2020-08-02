@@ -14,7 +14,7 @@ Local $hBrowseProc = DllCallbackRegister('_BrowseProc', 'int', 'hwnd;uint;lparam
 Local $pBrowseProc = DllCallbackGetPtr($hBrowseProc)
 
 Local $pText = _WinAPI_CreateString($sInitDir)
-Local $sPath = _WinAPI_BrowseForFolderDlg(_WinAPI_PathStripToRoot($sInitDir), 'Einen Ordner von der List auswählen.', BitOR($BIF_RETURNONLYFSDIRS, $BIF_EDITBOX, $BIF_VALIDATE), $pBrowseProc, $pText)
+Local $sPath = _WinAPI_BrowseForFolderDlg(_WinAPI_PathStripToRoot($sInitDir), 'Einen Ordner von der Liste auswählen.', BitOR($BIF_RETURNONLYFSDIRS, $BIF_EDITBOX, $BIF_VALIDATE), $pBrowseProc, $pText)
 _WinAPI_FreeMemory($pText)
 
 If $sPath Then

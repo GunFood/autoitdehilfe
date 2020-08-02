@@ -1,37 +1,37 @@
 #include <MsgBoxConstants.au3>
 
-MsgBox($MB_SYSTEMMODAL, "", "The language of the OS is: " & _GetLanguage() & " (" & LCIDToLocaleName("0x" & @OSLang) & ")")
+MsgBox($MB_SYSTEMMODAL, "", "Die Sprache des Betriebssystems lautet: " & _GetLanguage() & " (" & LCIDToLocaleName("0x" & @OSLang) & ")")
 
-; Retrieve the language of the operating system.
+; Ruft die Sprache des Betriebssystems ab.
 Func _GetLanguage()
-	; @OSLang is four characters in length, the first two is the dialect and the remaining two are the language group.
-	; Therefore we only require the language group and therefore select the two right-most characters.
+	; @OSLang ist vier Zeichen lang, die ersten beiden sind der Dialekt und die restlichen zwei sind die Sprachgruppe.
+	; Da wir nur die Sprachgruppe benötigen, wählen wir die beiden Zeichen ganz rechts aus.
 	Switch StringRight(@OSLang, 2)
 		Case "07"
-			Return "German"
+			Return "Deutsch"
 		Case "09"
-			Return "English"
+			Return "Englisch"
 		Case "0a"
-			Return "Spanish"
+			Return "Spanisch"
 		Case "0b"
-			Return "Finnish"
+			Return "Finnisch"
 		Case "0c"
-			Return "French"
+			Return "Französisch"
 		Case "10"
-			Return "Italian"
+			Return "Italienisch"
 		Case "13"
-			Return "Dutch"
+			Return "Niederländisch"
 		Case "14"
-			Return "Norwegian"
+			Return "Norwegisch"
 		Case "15"
-			Return "Polish"
+			Return "Polnisch"
 		Case "16"
-			Return "Portuguese"
+			Return "Portugiesisch"
 		Case "1d"
-			Return "Swedish"
+			Return "Schwedisch"
 
 		Case Else
-			Return "Other (can't determine with @OSLang directly)"
+			Return "Andere (kann nicht direkt durch @OSLang ermittelt werden)"
 
 	EndSwitch
 EndFunc   ;==>_GetLanguage

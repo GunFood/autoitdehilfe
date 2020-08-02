@@ -3,7 +3,7 @@
 Example()
 
 Func Example()
-	; Weist einer lokalen Variable ein Array mit Zahlen zu .
+	; Weist einer lokalen Variable ein Array mit Zahlen zu.
 	Local $aNumber[8] = [4.8, 4.5, 4.3, 4, -4.8, -4.5, -4.3, -4]
 
 	; Weist einer lokalen Variable einen String zu. Dieser enthält das Ergebnis.

@@ -1,33 +1,33 @@
-#AutoIt3Wrapper_Au3Check_Parameters=-q -d -w- 3 -w- 6 ; Already declared var=off, warn when using Dim=off
+#AutoIt3Wrapper_Au3Check_Parameters=-q -d -w- 3 -w- 6 ; var bereits deklariert=off, warnen bei Verwendung von Dim=off
 
 #include <MsgBoxConstants.au3>
 
-Dim $vVariableThatIsGlobal = "This is a variable that has ""Program Scope"" aka Global."
+Dim $vVariableThatIsGlobal = "Dies ist eine Variable mit dem ""Programm Anwendungsbereich"" auch bekannt als Global."
 
-MsgBox($MB_SYSTEMMODAL, "", "An example of why Dim can cause more problems than solve them.")
+MsgBox($MB_SYSTEMMODAL, "", "Ein Beispiel dafür, warum Dim mehr Probleme verursachen als lösen kann.")
 
 Example()
 
 Func Example()
-	; That looks alright to me as it displays the following text: This is a variable that has "Program Scope" aka Global.
+	; Das sieht für mich in Ordnung aus, da es den folgenden Text anzeigt: Dies ist eine Variable mit dem "Programm Anwendungsbereich" auch bekannt als Global.
 	MsgBox($MB_SYSTEMMODAL, "", $vVariableThatIsGlobal)
 
-	; Call some random function.
+	; Ruft eine Zufallsfunktion auf.
 	Local $vReturn = SomeFunc()
 
-	; The Global variable ($vVariableThatIsGlobal) changed because I totally forgot I had a duplicate variable name in "SomeFunc".
-	MsgBox($MB_SYSTEMMODAL, $vReturn, "The variable has now changed: " & $vVariableThatIsGlobal)
+	; Die globale Variable ($vVariableThatIsGlobal) hat sich geändert, weil ich völlig vergessen habe, dass ich in "SomeFunc" einen doppelten Variablennamen hatte.
+	MsgBox($MB_SYSTEMMODAL, $vReturn, "Die Variable hat sich jetzt geändert: " & $vVariableThatIsGlobal)
 EndFunc   ;==>Example
 
 Func SomeFunc()
-	; This should create a variable in Local scope if the variable name doesn't already exist.
-	; For argument sake I totally forgot that I declared a variable already with the same name.
-	; Well I only want this to be changed in the function and not the variable at the top of the script.
-	; Should be OK right? Think again.
+	; Dies sollte eine Variable im lokalen Bereich erstellen, wenn der Variablenname noch nicht vorhanden ist.
+	; Aus Gründen der Aussage habe ich völlig vergessen, dass ich bereits eine Variable mit demselben Namen deklariert habe.
+	; Nun, ich möchte nur, dass dies in der Funktion geändert wird und nicht in der Variablen oben im Skript.
+	; Sollte in Ordnung sein, oder? Denk nochmal.
 	Dim $vVariableThatIsGlobal = ""
 
 	For $i = 1 To 10
-		$vVariableThatIsGlobal &= $i ; This will return 12345678910 totally wiping the previous contents of $vVariableThatIsGlobal.
+		$vVariableThatIsGlobal &= $i ; Dies gibt 12345678910 zurück und löscht den vorherigen Inhalt von $vVariableThatIsGlobal vollständig.
 	Next
 	Return $vVariableThatIsGlobal
 EndFunc   ;==>SomeFunc

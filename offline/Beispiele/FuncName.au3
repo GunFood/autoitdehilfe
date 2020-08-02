@@ -3,12 +3,12 @@
 Example()
 
 Func Example()
-	; Create a first class object of MsgBox and assign to a Local variable.
+	; Erstellt ein erstklassiges Objekt von MsgBox und weist es einer lokalen Variablen zu.
 	Local $hMsgBox = MsgBox
 
-	; Display a MsgBox using the previously assigned variable.
-	$hMsgBox($MB_SYSTEMMODAL, "", "This is a sentence with whitespace.")
+	; Zeigt eine MsgBox mit der zuvor zugewiesenen Variablen an.
+	$hMsgBox($MB_SYSTEMMODAL, "", "Dies ist ein Satz mit Leerzeichen.")
 
-	; Display a MsgBox that shows the function name $hMsgBox.
-	$hMsgBox($MB_SYSTEMMODAL, "", "The function name of $hMsgBox is: " & FuncName($hMsgBox))
+	; Zeigt eine MsgBox an, die den Funktionsnamen $hMsgBox anzeigt.
+	$hMsgBox($MB_SYSTEMMODAL, "", "Der Funktionsname von $hMsgBox lautet: " & FuncName($hMsgBox))
 EndFunc   ;==>Example

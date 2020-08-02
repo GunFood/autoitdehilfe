@@ -1,63 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Hinweise zu Funktionen</title>
+  <title>Function Notes</title>
   <meta charset="utf-8">
   <link href="css/default.css" rel="stylesheet">
 </head>
-
 <body>
-<h1>Hinweise zu Funktionen</h1>
+  <h1>Function Notes</h1>
+  <p>Functions in AutoIt are first class objects. Among other things, that means you can assign a function to a variable, pass it around as an argument or return from another function.<br />
+  Aside from certain specific scope-regarding declaration rules (being that the names of the built-in functions are <em>reserved</em> and of UDFs' can be overwritten only locally), the names of functions do not have special status in the language.</p>
+@@SyntaxHighlighting@@
+#include <MsgBoxConstants.au3>
 
+Local $vFunc = MsgBox
 
-<p>Viele Funktionen haben optionale Parameter, die beim Funktionsaufruf nicht angegeben werden m&uuml;ssen.
-Wenn man einen optionalen Parameter verwenden m&ouml;chte, muss jeder vorangehende Parameter angegeben sein.
-Man kann also nur den vorletzten Parameter weglassen, wenn der letzte auch weggelassen wird usw.<br>
-<br>
-Betrachen wir z.B. die <i><a href="functions/Run.htm">Run</a>-Funktion:<br>
-</i><b>Run</b> ( "filename" [, "workingdir" [, flag]] ).<br>
-Wenn man den <i>flag</i>-Parameter angeben m&ouml;chte, dann <b>muss</b> auch <i>workingdir</i> angegeben werden.
-<br>
-<br>
-Viele Win___ Funktionen haben einen optionalen Parameter Namens <i>text</i>. Dieser Parameter
-soll helfen, zwischen verschiedenen Fenstern mit gleichem Fenstertitel zu differenzieren.<br>
-<br>
-<br>
-Manche Funktionen geben den Erfolg oder Misserfolg ihrer Ausf&uuml;hrung als <b>R&uuml;ckgabewert</b> an,
-andere setzen das <b>@error-Flag</b>. Manche tun auch beides...
-<br>
-@error = 0 ;bedeutet stets Erfolg<br>
-Return = variiert, aber es ist typischerweise nicht-Null, wennn die
-Ausf&uuml;hrung erfolgreich war, damit es einfach zu handhaben ist.<br>
-<br>
-    If someUserFunc() Then      ;...Funktion hatte Erfolg<br>
-    If Not someUserFunc() Then  ;...Funktion hatte keinen Erfolg<br>
-<br>
-    $x = FileReadLine("C:\Datei.txt")<br>
-    If @error = -1 Then ;Dateiende (eof) wurde erreicht<br>
-<br>
-<b>
-Wenn eine Funktion das @error-Flag setzen kann, dann sollte man es
-immer &uuml;berpr&uuml;fen, bevor man einen R&uuml;ckgabewert benutzt.
-Wenn @error n&auml;mlich einen Fehler anzeigt, dann ist der
-R&uuml;ckgabewert generell undefiniert...
-</b>
-</p>
+$vFunc($MB_OK, "Hi there!", "Lovely day today.")
+@@End@@
 
-<p>@error wird immer auf 0 gesetzt, wenn eine Funktion aufgerufen wird.</p>
-
-
-<p>Wenn die Dokumentation einer Funktion besagt, dass es keinen R&uuml;ckgabewert gibt, dann gibt AutoIt
-trotzdem immer einen Wert zur&uuml;ck, um Fehler zu vermeiden. Normalerweise ist dies "1",
-allerdings sollte man sich darauf nicht unbedingt verlassen.</p>
-
-<p>Wenn ein optionaler Parameter definiert werden muss, und dieser ist anderen optionalen Parametern vorangestellt,
- dann muss diesem ein Standardwert zugewiesen werden. Dazu verwendet man das Schl&uuml;sselwort
-Default. Sollte das zu Problemen f&uuml;hren, hilft m&ouml;glicherweise die Angabe von "" bei Zeichenketten
-und -1 bei Zahlen. Manche Funktionen wie StringInStr oder StringReplace ben&ouml;tigen 0. Zus&auml;tzlich k&ouml;nnen einzelne
-Funktionen andere Regelungen haben, welche in der jeweilige Hilfe zu den optionalen Parametern einer Funktion erkl&auml;rt sind.</p>
-
-
-<p> </p>
+  <p>&nbsp;</p>
+<strong>Optional parameters</strong><br />
+  <br />
+  <p>Many functions contain optional parameters that can be omitted. If you wish to specify an optional parameter, however, all preceding parameters must be specified!<br />
+  For example, consider <em><a href="functions/Run.htm">Run</a> ( "filename", ["workingdir" [, flag]] )</em>. If you wish to specify the <em>flag</em>, you <strong>must</strong> specify a <em>workingdir</em>.<br />
+<p>When an optional parameter needs to be defined and is preceded by one or more optional parameters, the default value must be given for that parameter. Generally speaking functions should accept the <a href="keywords/Default.htm">Default</a> keyword when you wish to use the default parameter. See the corresponding optional parameter description for more details.</p>
+  <br />
+  Many Win___ functions contain an optional parameter "text". This parameter is intended to help differentiate between windows that have identical titles.<br />
+  <br />
+<strong>Success/failure indication</strong><br />
+  <br />
+  Some functions use the <strong>Return value</strong> to indicate success/failure, others set the <strong>@error flag</strong>. Some do both....<br />
+  <br />
+  If the <strong>Return value</strong> method is used, the Help file will specify the expected value for success/failure - but the success value is typically non-zero to allow easy to read code...<br />
+@@SyntaxHighlighting@@
+If SomeUserFunc() Then ;...function worked.
+If Not SomeUserFunc() Then ;...function failed.
+@@End@@
+  <br />
+  <br />
+  When the documentation states that the return value = none, AutoIt always returns a value to avoid errors. 1 is usually the value returned, but you should not depend on this return value.<br />
+  <br />
+  If the <strong>@error flag</strong> method is used, @error = 0 always indicates success. Other @error values indicate a problem and are defined in the Help file for the function.<br />
+@@SyntaxHighlighting@@
+Local $sFileRead = FileReadLine("C:\someFile.txt")
+If @error = -1 Then ; End-of-file was reached.
+@@End@@
+  <br />
+  <br />
+  If a function uses the <strong>@error flag</strong> method, the flag should be checked immediately after the function returns as @error will be reset to 0 when entering the next function. No attempt to use or access the function return value should be made if the @error flag has been set as in that case the return value is generally undefined...<br />
 </body>
 </html>

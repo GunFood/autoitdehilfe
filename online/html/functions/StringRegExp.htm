@@ -43,23 +43,23 @@ StringRegExp ( "test", "pattern" [, flag = 0 [, offset = 1]] )<br />
 </tr>
 <tr>
 <td>$STR_REGEXPMATCH (0)</td>
-<td>Gibt 1 (&Uuml;bereinstimmung gefunden) oder 0 (&Uuml;bereinstimmung nicht gefunden) zur&uuml;ck (Standard).</td>
+<td>Ein Pattern f&uuml;hrt zu einem Match oder nicht. (1 oder 0) (Standard).</td>
 </tr>
 <tr>
 <td>$STR_REGEXPARRAYMATCH (1)</td>
-<td>Gibt ein Array mit der ersten &Uuml;bereinstimmung zur&uuml;ck.</td>
+<td>Es wird nur der erste SubMatch zu jedem Match ausgegeben (Array).</td>
 </tr>
 <tr>
 <td>$STR_REGEXPARRAYFULLMATCH (2)</td>
-<td>Gibt ein Array mit den &Uuml;bereinstimmungen zur&uuml;ck inkl. der vollst&auml;ndigen &Uuml;bereinstimmung (Perl / PHP Stil).</td>
+<td>Im Ergebnisarray wird an [0] der gesamte erste Match ausgegeben, an [1..n] folgen die SubMatches des ersten Matches.</td>
 </tr>
 <tr>
 <td>$STR_REGEXPARRAYGLOBALMATCH (3)</td>
-<td>Gibt ein Array mit den globalen &Uuml;bereinstimmungen zur&uuml;ck.</td>
+<td>Im Ergebnisarray werden von allen Matches alle Submatches ausgegeben.</td>
 </tr>
 <tr>
 <td>$STR_REGEXPARRAYGLOBALFULLMATCH (4)</td>
-<td>Gibt ein Array mit den globalen &Uuml;bereinstimmungen zur&uuml;ck inkl. der vollst&auml;ndigen &Uuml;bereinstimmung (Perl / PHP Stil).</td>
+<td>Im Ergebnisarray wird f&uuml;r jeden Match ein Array gespeichert. Diese Arrays enthalten: an [0] den gesamten Match, an [1..n] folgen die SubMatches dieses Matches.</td>
 </tr>
 </table>Die Konstanten sind in StringConstants.au3 definiert.<br />
 <br />
@@ -122,32 +122,14 @@ StringRegExp ( "test", "pattern" [, flag = 0 [, offset = 1]] )<br />
 </table>
 
 <h2>Bemerkungen</h2>
-<p>Der Flag-Parameter kann einen von den f&uuml;nf Werten annehmen ($STR_REGEXPMATCH (0) bis $STR_REGEXPARRAYGLOBALFULLMATCH (4).<br />
-<table>
-<tr>
-<td style="width:15%">$STR_REGEXPMATCH (0)</td>
-<td style="width:85%">gibt bei einer &Uuml;bereinstimmung 1 (true) oder bei keiner &Uuml;bereinstimmung 0 (false) zur&uuml;ck.</td>
-</tr>
-<tr>
-<td>$STR_REGEXPARRAYMATCH (1)<br \>$STR_REGEXPARRAYFULLMATCH (2)</td>
-<td>sucht die erste &Uuml;bereinstimmung und gibt die &uuml;bereinstimmenden gefundenen Gruppen in einem Array zur&uuml;ck.<br />
-Sollte ein Suchmuster keine Suchgruppen enthalten so wird nur der erste Fund in einem Array zur&uuml;ckgegeben.</td>
-</tr>
-<tr>
-<td>$STR_REGEXPARRAYGLOBALMATCH (3)<br \>$STR_REGEXPARRAYGLOBALFULLMATCH (4)</td>
-<td>gibt ein Array mit allen gefundenen Suchgruppeninstanzen zur&uuml;ck.</td>
-</tr>
-</table><br />
-$STR_REGEXPARRAYFULLMATCH (2) und $STR_REGEXPARRAYGLOBALFULLMATCH (4) beinhalten im R&uuml;ckgabearray im ersten Element den komplett &uuml;bereinstimmenden Text und nicht nur die gefundenen Gruppen wie bei Flag $STR_REGEXPARRAYMATCH (1) und $STR_REGEXPARRAYGLOBALMATCH (3).<br />
-<br />
-Regul&auml;re Ausdr&uuml;cke sind Strings, in denen einfache Textzeichen angeben, welcher Text in dem Zielstring existieren muss.<br />
+<p>Regul&auml;re Ausdr&uuml;cke sind Strings, in denen einfache Textzeichen angeben, welcher Text in dem Zielstring existieren muss.<br />
 Einige Zeichen haben eine besondere Bedeutung, um anzugeben, welche Variabilit&auml;t in dem Zielstring erlaubt ist. F&uuml;r regul&auml;re Ausdr&uuml;cke in AutoIt ist normalerweise die Gro&szlig;-/Kleinschreibung relevant.<br />
 Dabei kann man die gefundenen Strings entweder mit <a href="StringRegExp.htm">StringRegExp()</a> extrahieren oder mit <a href="StringRegExpReplace.htm">StringRegExpReplace()</a> ersetzen.<br />
 <br />
 Dabei sucht die Engine des Parses f&uuml;r die regul&auml;ren Ausdr&uuml;cke nach dem programmartigen Suchmuster und geht zur letzten erfolgreichen Suchstelle zur&uuml;ck, wenn ein Fund nicht mehr dem Format entspricht.<br />
 So geht es den gesamten Eingabestring durch und returnt je nach Flag die entsprechenden Ergebnisse.<br />
 <br />
-Das sogenannte Backtrackking ist eines der fundamentalsten Features eines Parsers f&uuml;r regul&auml;re Ausdr&uuml;cke und bereits jeder Programmierneuling sollte es bereits verstehen und t&auml;glich anwenden.<br />
+Das sogenannte Backtracking ist eines der fundamentalsten Features eines Parsers f&uuml;r regul&auml;re Ausdr&uuml;cke und bereits jeder Programmierneuling sollte es bereits verstehen und t&auml;glich anwenden.<br />
 Es hinterl&auml;sst eine spezielle Haltemarke an jeder Weggabelung des Codes und man geht zu jener Haltemarke zur&uuml;ck wenn der aktuelle Codepfad sich als Sackgasse herausstellt.<br />
 Man backtrackt so weit zur&uuml;ck bis man entweder den richtigen Punkt findet (hier w&auml;re es eine &Uuml;bereinstimmung) oder bis man jeden Pfad erkundet hat ohne sein Ziel zu erreichen (keine &Uuml;bereinstimmung gefunden).<br />
 Das suchen eines Dateinamens mit optionalen Wildcards (*) innerhalb einer Ordnerstruktur ist genau dasselbe.<br />
@@ -156,7 +138,7 @@ AutoIt benutzt die PCRE Engine. PCRE bedeutet "Perl-Compatible Regular Expressio
 Diese Implementation bringt die sogenannte Unicode Category Properties (UCP) Unterst&uuml;tzung mit sich, welche es erlaubt die meisten von menschenhand entwickelten Sprachen sehr s&auml;uberlich zu parsen.<br />
 Um jedoch Vorg&auml;ngerkompabilit&auml;t zu alten AutoIt-Versionen zu wahren und die Geschwindigkeit der &Uuml;bereinstimmungssuche so hoch wie m&ouml;glich zu halten, <strong>ist der UCP Support standardm&auml;&szlig;ig nicht aktiviert</strong>.<br />
 <br />
-Diese Seite ist nur eine Zusammenfassung der g&auml;ngigsten Suchmuster. F&uuml;r einen kompletten Einblick der PCRE-Suchmuster, welche in AutoIt implementiert sind, sollte man einen Blick <strong><a href="../pcrepattern.html">>auf diese Seite werfen</a></strong>.<br />
+Diese Seite ist nur eine Zusammenfassung der g&auml;ngigsten Suchmuster. F&uuml;r einen kompletten Einblick der PCRE-Suchmuster, welche in AutoIt implementiert sind, sollte man einen Blick <strong><a href="../pcrepattern.html">auf diese Seite werfen</a></strong>.<br />
 Sollte man nicht bereits wissen wie regul&auml;re Ausdr&uuml;cke funktionieren, so sollte man sich vorher die verlinkte Dokumentation gr&uuml;ndlich durchlesen um &uuml;berhaupt im Ansatz zu wissen wie man an regul&auml;re Ausdr&uuml;cke angeht.<br />
 <br />
 Regul&auml;re Ausdr&uuml;cke werden aus einem oder mehreren der folgenden einfachen Sonderzeichen gebildet. Ist ein Zeichen nicht in der folgenden Tabelle enthalten, dann steht es nur f&uuml;r sich selbst.<br />
@@ -170,8 +152,25 @@ Alles was in einer eckigen Klammer "[]" steht wird als Set bezeichnet. Dort mu&s
 <br />
 <strong>Achtung</strong>: schlechte regul&auml;re Ausdr&uuml;cke k&ouml;nnen zu einer dauerhaft hohen CPU-Auslastung f&uuml;hren und diese eventuell besch&auml;digen.<br />
 <br />
-<strong><u>Passende Zeichen</u></strong><br />
-<br />
+<h3><u>Glossar</u></h3><table>
+<tr>
+<td style="width:15%"><strong>Pattern</strong></td>
+<td style="width:85%">Eine Regel mit der eine Zeichenfolge erkannt wird..</td>
+</tr>
+<tr>
+<td><strong>SubPattern</strong></td>
+<td>Ein Pattern kann Suchfolgen enthalten, die separat in einer Gruppe aufgefangen werden..</td>
+</tr>
+<tr>
+<td><strong>Match</strong></td>
+<td>Wird mit einem Pattern eine g&uuml;ltige Zeichenfolge erkannt, ist diese der Match.<br />
+Je nach Art des Patterns und Inhalt des Teststrings sind mehrere Matches m&ouml;glich.</td>
+</tr>
+<tr>
+<td><strong>SubMatch</strong></td>
+<td>Die mittels eines SubPatterns gefundene Zeichenfolge.</td>
+</tr>
+</table><br />
 <h3><u>Globale Einstellungen</u></h3><br />
 Diese Einstellungen werden nur am Anfang des Suchmusters wahrgenommen und wirken sich global aus.<br />
 <br />
@@ -280,7 +279,7 @@ Genau wie \x0D oder \r (Chr(13)).</td>
 <tr>
 <td><strong>\</strong><em>ddd</em></td>
 <td>Findet Zeichen mit dem Oktalcode ddd, oder einer R&uuml;ckreferenz sofern gefunden.<br />
-Findet die vorgegangene Gruppennnummer exakt. Beispielsweise <strong>([:alpha:])\1</strong> w&uuml;rde ein Doppelzeichen finden.</td>
+Findet die vorgegangene Gruppennummer exakt. Beispielsweise <strong>([:alpha:])\1</strong> w&uuml;rde ein Doppelzeichen finden.</td>
 </tr>
 <tr>
 <td><strong>\x</strong><em>hh</em></td>
@@ -292,7 +291,7 @@ Findet die vorgegangene Gruppennnummer exakt. Beispielsweise <strong>([:alpha:])
 </tr>
 <tr>
 <td><strong>\</strong><em>x</em></td>
-<td>wobei <em>x</em> nicht alphanumericsh ist und somit das Literal "x" ist.<br />
+<td>wobei <em>x</em> nicht alphanumerisch ist und somit das Literal "x" ist.<br />
 Wird verwendet um Metazeichen als Literal zu interpretieren: "\.\[" wird als Punkt gefolgt von einer eckigen Klammer interpretiert also ".[".</td>
 </tr>
 <tr>
@@ -312,7 +311,7 @@ Metazeichen werden in sp&auml;ter in einer Untersektion noch weiter besprochen s
 </tr>
 <tr>
 <td><strong>\d</strong></td>
-<td>Findet eine Dezimalziffer (0 bis 9). Auch jegliche Unicodedezimalziffer in jeglicher Sprache sofern UCP aktiviert wurde).</td>
+<td>Findet eine Dezimalziffer (0 bis 9). Auch jegliche Unicodedezimalziffer in jeglicher Sprache sofern UCP aktiviert wurde.</td>
 </tr>
 <tr>
 <td><strong>\D</strong></td>
@@ -328,7 +327,7 @@ Metazeichen werden in sp&auml;ter in einer Untersektion noch weiter besprochen s
 </tr>
 <tr>
 <td><strong>\N</strong></td>
-<td>Findet alle Zeichen au&szlig;er Zeilenumr&uuml;che ungeachtet dessen ob die Option <strong>(?s)</strong> aktiviert wurde.</td>
+<td>Findet alle Zeichen au&szlig;er Zeilenumbr&uuml;che ungeachtet dessen ob die Option <strong>(?s)</strong> aktiviert wurde.</td>
 </tr>
 <tr>
 <td><strong>\p{</strong><em>ppp</em><strong>}</strong></td>
@@ -1074,21 +1073,54 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext5">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Constants.au3&gt;</span>
+<span><span class="S12">#Region &nbsp;&nbsp;&nbsp;</span><span class="S1">;************ Includes ************</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+<span class="S12">#EndRegion </span><span class="S1">;************ Includes ************</span>
+<span class="S9">$sTest</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Name Paul (M&uuml;ller). Name Hans (Schmidt oder Meier)."</span>
+<span class="S9">$sPattern</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Name\h(\w+)\h*\(([^\)]*)\)"</span>
+<span class="S2">#cs</span>
+<span class="S2">Name\h &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Name" gefolgt von einem horizontalen Tab/Leerzeichen.</span>
+<span class="S2">(\w+) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Eine Folge von W&ouml;rterzeichen [a-zA-Z_0-9], 1-mal oder mehr, in einer Gruppe aufgefangen - Vorname.</span>
+<span class="S2">\h*\( &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Horizontale Tabs/Leerzeichen, 0-mal oder mehr, gefolgt von &ouml;ffnender Klammer.</span>
+<span class="S2">([^\)]*) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Alle Zeichen au&szlig;er schlie&szlig;ender Klammer, 0-mal oder mehr, in einer Gruppe aufgefangen - Nachname(n).</span>
+<span class="S2">\) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Am Ende eine schlie&szlig;ende Klammer.</span>
+<span class="S2">#ce</span>
 
-<span class="S1">; ----------------- Anwendung von \b</span>
-<span class="S1">; Durch das Voranstellen von \b und das anh&auml;ngen von \b an das Ende wird nur an der Wortgrenze gesucht.</span>
-<span class="S1">; "Abgrund oder folge" wird nicht gefunden, da das Wort Abgrund und nicht Grund heisst</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$a2D</span><span class="S8">[</span><span class="S3">0</span><span class="S8">][</span><span class="S3">2</span><span class="S8">]</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$iArrayIdx</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span>
 
-<span class="S9">$sString</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">_</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Grund oder Folge der Armut?"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Fahre ich in den Abgrund oder folge ich der Stra&szlig;e?"</span>
-<span class="S9">$aResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringRegExp.htm"><span class="S4">StringRegExp</span></a><span class="S8">(</span><span class="S9">$sString</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"(?i)\bgrund oder folge\b"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aResult</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"StringRegExp Results"</span><span class="S8">)</span>
+<span class="S9">$aMatch</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringRegExp.htm"><span class="S4">StringRegExp</span></a><span class="S8">(</span><span class="S9">$sTest</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sPattern</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; $STR_REGEXPARRAYMATCH</span>
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"$aMatch --&gt; "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> _cwArray</span><span class="S8">(</span><span class="S9">$aMatch</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@LF"><span class="S6">@LF</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">; ==&gt; Paul | M&uuml;ller</span>
 
+<span class="S9">$aMatch</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringRegExp.htm"><span class="S4">StringRegExp</span></a><span class="S8">(</span><span class="S9">$sTest</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sPattern</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; $STR_REGEXPARRAYFULLMATCH</span>
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"$aMatch --&gt; "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> _cwArray</span><span class="S8">(</span><span class="S9">$aMatch</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@LF"><span class="S6">@LF</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">; ==&gt; Name Paul (M&uuml;ller) | Paul | M&uuml;ller</span>
 
+<span class="S9">$aMatch</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringRegExp.htm"><span class="S4">StringRegExp</span></a><span class="S8">(</span><span class="S9">$sTest</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sPattern</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; $STR_REGEXPARRAYGLOBALMATCH</span>
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"$aMatch --&gt; "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> _cwArray</span><span class="S8">(</span><span class="S9">$aMatch</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@LF"><span class="S6">@LF</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">; ==&gt; Paul | M&uuml;ller | Hans | Schmidt oder Meier</span>
 
+<span class="S9">$aMatch</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringRegExp.htm"><span class="S4">StringRegExp</span></a><span class="S8">(</span><span class="S9">$sTest</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sPattern</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; $STR_REGEXPARRAYGLOBALFULLMATCH</span>
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"$aMatch --&gt; "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> _cwArray</span><span class="S8">(</span><span class="S9">$aMatch</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@LF"><span class="S6">@LF</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">; ==&gt; [a-0]: Name Paul (M&uuml;ller) | Paul | M&uuml;ller | [a-1]: Name Hans (Schmidt oder Meier) | Hans | Schmidt oder Meier</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _cwArray</span><span class="S8">(</span><span class="S9">$a</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iFlag</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sText</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">""</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$s</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$a</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/IsArray.htm"><span class="S4">IsArray</span></a><span class="S8">(</span><span class="S9">$a</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">])</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$iArrayIdx</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+=</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$s</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><span class="S7">"[a-"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iArrayIdx</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"]: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> _cwArray</span><span class="S8">(</span><span class="S9">$a</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$iFlag</span><span class="S8">,</span><span class="S0"> </span><span class="S7">" (Unter-Array) "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$i</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$iFlag</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">4</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_ArrayAdd.htm"><span class="S15">_ArrayAdd</span></a><span class="S8">(</span><span class="S9">$a2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'{Array} '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iArrayIdx</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">' &nbsp;Item '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'|'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$a</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">])</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$s</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><span class="S9">$a</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">]</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" | "</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$iFlag</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;</span></a><span class="S0"> </span><span class="S3">4</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$a</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Flag "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iFlag</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sText</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringInStr.htm"><span class="S4">StringInStr</span></a><span class="S8">(</span><span class="S9">$sText</span><span class="S8">,</span><span class="S0"> </span><span class="S7">" (Unter-Array) "</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$a2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Flag "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iFlag</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" (Unter-Arrays) "</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S9">$s</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_cwArray</span>
 <span class="S0"></span></span>
 </pre>
 </div>
@@ -1219,46 +1251,15 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
 <a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Constants.au3&gt;</span>
 
-<span class="S1">; ----------------- R&uuml;ckgabeformen</span>
-<span class="S1">; Hier ein kleines Script, nur um die verschiedenen R&uuml;ckgabeformen zu verdeutlichen:</span>
+<span class="S1">; ----------------- Anwendung von \b</span>
+<span class="S1">; Durch das Voranstellen von \b und das anh&auml;ngen von \b an das Ende wird nur an der Wortgrenze gesucht.</span>
+<span class="S1">; "Abgrund oder folge" wird nicht gefunden, da das Wort Abgrund und nicht Grund heisst</span>
+
 <span class="S9">$sString</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">_</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'&lt;td&gt;&lt;img src="img/x.gif" class="r1" alt="Holz" title="Holz"&gt;&lt;/td&gt;'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'&lt;td id="l4" title="600"&gt;132411/240000&lt;/td&gt;'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'&lt;td&gt;&lt;img src="img/x.gif" class="r2" alt="Lehm" title="Lehm"&gt;&lt;/td&gt;'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'&lt;td id="l3" title="600"&gt;168007/240000&lt;/td&gt;'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'&lt;td&gt;&lt;img src="img/x.gif" class="r3" alt="Eisen" title="Eisen"&gt;&lt;/td&gt;'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'&lt;td id="l2" title="750"&gt;32743/240000&lt;/td&gt;'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'&lt;td&gt;&lt;img src="img/x.gif" class="r4" alt="Getreide" title="Getreide"&gt;&lt;/td&gt;'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'&lt;td id="l1" title="79"&gt;78451/240000&lt;/td&gt;'</span>
-
-<span class="S9">$aFlag1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringRegExp.htm"><span class="S4">StringRegExp</span></a><span class="S8">(</span><span class="S9">$sString</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"l[1-4][^&gt;]+&gt;(\d+\/\d+)"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
-<span class="S9">$aFlag2</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringRegExp.htm"><span class="S4">StringRegExp</span></a><span class="S8">(</span><span class="S9">$sString</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"l[1-4][^&gt;]+&gt;(\d+\/\d+)"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
-<span class="S9">$aFlag3</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringRegExp.htm"><span class="S4">StringRegExp</span></a><span class="S8">(</span><span class="S9">$sString</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"l[1-4][^&gt;]+&gt;(\d+\/\d+)"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span>
-<span class="S9">$aFlag4</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringRegExp.htm"><span class="S4">StringRegExp</span></a><span class="S8">(</span><span class="S9">$sString</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"l[1-4][^&gt;]+&gt;(\d+\/\d+)"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">)</span>
-
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_OK</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Flag 0 gibt 1 (matched) oder 0 (no match) zur&uuml;ck."</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_OK</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Flag 0"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringRegExp.htm"><span class="S4">StringRegExp</span></a><span class="S8">(</span><span class="S9">$sString</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"l[1-4][^&gt;]+&gt;(\d+\/\d+)"</span><span class="S8">))</span>
-
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_OK</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Flag 1 zeigt das erste Match (nur Subpatterns)"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aFlag1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Flag 1"</span><span class="S8">)</span>
-
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_OK</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Flag 2 zeigt das erste Match (Full Match + Subpatterns)"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aFlag2</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Flag 2"</span><span class="S8">)</span>
-
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_OK</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Flag 3 zeigt alle Matches (nur Subpatterns)"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aFlag3</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Flag 3"</span><span class="S8">)</span>
-
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_OK</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Flag 4 gibt einen Array voller Arrays zur&uuml;ck."</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aFlag4</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Flag 4"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_OK</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Die einzelnen Arrays beinhalten Full Match + Subpatterns."</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Leider kann man Arrays in Arrays nicht direkt ansprechen"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"(ohne sie zwischenzuspeichern), deswegen benutze ich statt Flag 4 immer Flag 3."</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Hier mal alle Arrays in $aFlag4:"</span><span class="S8">)</span>
-
-<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aFlag4</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span>
-<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aDummy</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$aFlag4</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">]</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aDummy</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$aFlag4["</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"]"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Grund oder Folge der Armut?"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Fahre ich in den Abgrund oder folge ich der Stra&szlig;e?"</span>
+<span class="S9">$aResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringRegExp.htm"><span class="S4">StringRegExp</span></a><span class="S8">(</span><span class="S9">$sString</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"(?i)\bgrund oder folge\b"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aResult</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"StringRegExp Results"</span><span class="S8">)</span>
 
 
 
