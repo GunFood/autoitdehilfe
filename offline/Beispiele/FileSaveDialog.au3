@@ -14,7 +14,7 @@ Func Example()
 		; Zeigt die Fehlermeldung.
 		MsgBox($MB_SYSTEMMODAL, "", "No file was saved.")
 	Else
-		; Ermittelt den Dateinamen von dem Dateiordner e.g. Example.au3.
+		; Ermittelt den Dateinamen von dem Dateiordner z. B. Example.au3.
 		Local $sFileName = StringTrimLeft($sFileSaveDialog, StringInStr($sFileSaveDialog, "\", $STR_NOCASESENSEBASIC, -1))
 
 		; Prüft, ob die Erweiterung .au3 an Ende des Dateinamens enthalten ist.

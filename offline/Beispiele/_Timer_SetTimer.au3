@@ -10,7 +10,7 @@ _Example_CallBack()
 
 Func _Example_CallBack()
 	Local $hGUI, $iTimerProgress, $idChange, $iWait = 10, $idState
-	Local $aParts[3] = [75, 330, -1]
+	Local $aParts[3] = [55, 290, -1]
 
 	$hGUI = GUICreate("Timer mittels von CallBack-Funktionen", 400, 320)
 	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 226, BitOR($WS_HSCROLL, $WS_VSCROLL))

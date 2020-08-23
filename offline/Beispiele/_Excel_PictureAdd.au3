@@ -1,39 +1,39 @@
 #include <Excel.au3>
 #include <MsgBoxConstants.au3>
 
-; Create application object and open an example workbook
+; Erstellen des Anwendungsobjektes und Öffnen eines Beispiel Workbooks
 Local $oExcel = _Excel_Open()
-If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Example", "Error creating the Excel application object." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
-; Create new Workbook
+If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Beispiel", "Fehler beim Erstellen des Excel Objektes." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
+; Erstellen eines neuen Workbook
 Local $oWorkbook = _Excel_BookNew($oExcel)
 If @error Then
-	MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Example", "Error creating workbook." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
+	MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Beispiel", "Fehler beim Erstellen des Workbook." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
 	_Excel_Close($oExcel)
 	Exit
 EndIf
 
-; Insert and resize the picture into a range of cells. Aspect ratio retained
+; Einfügen des Bildes in einen Bereich von Zellen und Ändern seiner Größe. Seitenverhältnis beibehalten
 Local $sPicture = @ScriptDir & "\Extras\_Excel.jpg"
 _Excel_PictureAdd($oWorkbook, Default, $sPicture, "B2:D8")
-If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Example 1", "Error inserting picture." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
-MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Example 1", "Picture inserted/resized at 'B2:D8', aspect ratio retained.")
+If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Beispiel 1", "Fehler beim Einfügen des Bildes." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
+MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Beispiel 1", "Bild eingefügt/größenverändert an 'B2:D8', Seitenverhältnis beibehalten.")
 
-; Insert the picture without resizing.
+; Einfügen des Bildes ohne Größenänderung.
 _Excel_PictureAdd($oWorkbook, Default, $sPicture, "F8")
-If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Example 2", "Error inserting picture." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
-MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Example 2", "Picture inserted at 'F8' without resizing.")
+If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Beispiel 2", "Fehler beim Einfügen des Bildes." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
+MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Beispiel 2", "Bild eingefügt an 'F8' ohne Größenänderung.")
 
-; Insert the picture with a defined size/height.
+; Einfügen des Bildes mit einer definierten Größe/Höhe.
 _Excel_PictureAdd($oWorkbook, Default, $sPicture, "A8", Default, 300, 250)
-If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Example 3", "Error inserting picture." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
-MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Example 3", "Picture inserted at 'A8' with defined size/height, aspect ratio ignored")
+If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Beispiel 3", "Fehler beim Einfügen des Bildes." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
+MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Beispiel 3", "Bild eingefügt an 'A8' mit definierter Größe/Höhe, Seitenverhältnis ignoriert")
 
-; Insert the picture with a defined size/height.
+; Einfügen des Bildes mit einer definierten Größe/Höhe.
 _Excel_PictureAdd($oWorkbook, Default, $sPicture, 250, 300, 300, 250)
-If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Example 4", "Error inserting picture." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
-MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Example 4", "Picture inserted at position 250/300' with defined size/height, aspect ratio ignored")
+If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Beispiel 4", "Fehler beim Einfügen des Bildes." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
+MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Beispiel 4", "Bild an Position 250/300' mit definierter Größe/Höhe eingefügt, Seitenverhältnis ignoriert")
 
-; Insert the picture with a defined size/height.
+; Einfügen des Bildes mit einer definierten Größe/Höhe.
 _Excel_PictureAdd($oWorkbook, Default, $sPicture, "F2:H9", Default, Default, Default, False)
-If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Example 5", "Error inserting picture." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
-MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Example 5", "Picture inserted/resized at 'F2:H9', aspect ratio ignored.")
+If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Beispiel 5", "Fehler beim Einfügen des Bildes." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
+MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Beispiel 5", "Bild an 'F2:H9' eingefügt/angepasst, Seitenverhältnis ignoriert.")

@@ -4,7 +4,7 @@
 #include <WinAPIProc.au3>
 
 If Not @Compiled Then
-	MsgBox($MB_SYSTEMMODAL, '', 'To run this script, you must first compile it and then run the (.exe) file.')
+	MsgBox($MB_SYSTEMMODAL, '', 'Um dieses Skript zu starten, muss es zuerst kompiliert und dann die exe-Datei gestartet werden.')
 	Exit
 EndIf
 

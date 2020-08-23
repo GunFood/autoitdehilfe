@@ -6,18 +6,18 @@
 #include <WinAPISys.au3>
 
 If Number(_WinAPI_GetVersion()) < 6.0 Then
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Error', 'Require Windows Vista or later.')
+	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Fehler', 'Erfordert Windows Vista oder höher.')
 	Exit
 EndIf
 
 Global $g_iCount = 10
 
 Local $hForm = GUICreate('Test ' & StringReplace(@ScriptName, '.au3', '()'), 300, 100)
-Local $idLabel = GUICtrlCreateLabel('The application will be crashes after ' & $g_iCount & ' seconds.', 10, 43, 280, 14, $SS_CENTER)
+Local $idLabel = GUICtrlCreateLabel('Die Anwendung wird crashen nach ' & $g_iCount & ' Sekunden.', 10, 43, 280, 14, $SS_CENTER)
 GUISetState(@SW_SHOW)
 
 If $CmdLine[0] And ($CmdLine[1] = '/crash') Then
-	MsgBox(BitOR($MB_ICONWARNING, $MB_SYSTEMMODAL), 'Attention', 'The application has been restarted after an abnormal exit.', 0, $hForm)
+	MsgBox(BitOR($MB_ICONWARNING, $MB_SYSTEMMODAL), 'Achtung', 'Die Anwendung wurde neu gestartet nach unnormalem Beenden.', 0, $hForm)
 EndIf
 
 If Not @Compiled Then
@@ -37,7 +37,7 @@ Func _Countdown()
 
 	$g_iCount -= 1
 	If $g_iCount Then
-		GUICtrlSetData($idLabel, 'The application will be crashes after ' & $g_iCount & ' seconds.')
+		GUICtrlSetData($idLabel, 'Die Anwendung wird crashen nach ' & $g_iCount & ' Sekunden.')
 	Else
 		Local $tData
 		; Forced script crash due to a memory access violation
