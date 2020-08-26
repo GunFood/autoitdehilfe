@@ -15,7 +15,7 @@ Func Example()
 	Local $aAccelKeys[2][2] = [["^y", $idButton_Yes], ["^n", $idButton_No]]
 	GUISetAccelerators($aAccelKeys)
 
-	GUISetState(@SW_SHOW) ; Zeigt die GUI an
+	GUISetState(@SW_SHOW) ; Macht die GUI sichtbar
 
 	While 1
 		Switch GUIGetMsg()

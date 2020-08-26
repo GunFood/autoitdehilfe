@@ -17,7 +17,7 @@ Func Example()
 	GUICtrlCreateLabel("Zeile 3, Zelle 3", 0, -1) ; Nächste Zelle, gleiche Zeile
 	GUICtrlCreateLabel("Zeile 4, Zelle 1", -3 * $iWidthCell, 0) ; Nächste Zeile, Zelle 1
 
-	GUISetState(@SW_SHOW) ; Zeigt eine leere Dialogbox an
+	GUISetState(@SW_SHOW) ; Macht die GUI sichtbar
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	While 1

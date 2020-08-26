@@ -14,7 +14,7 @@ Func Example()
 	Local $idButton = GUICtrlCreateButton("Lesen", 10, 150, 50)
 	GUICtrlSetState(-1, $GUI_FOCUS) ; Der Fokus liegt auf diesem Button
 
-	GUISetState(@SW_SHOW) ; Zeigt das leere GUI-Fenster
+	GUISetState(@SW_SHOW) ; Macht die GUI sichtbar
 
 	Local $idMsg, $iMenustate, $sMenutext
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.

@@ -15,7 +15,7 @@ Func Example()
 	GUICtrlCreateButton("Abbrechen #4", 10, -1)
 	GUICtrlSetState(-1, $GUI_FOCUS)
 
-	GUISetState(@SW_SHOW) ; Zeigt ein leeres Dialogfenster an
+	GUISetState(@SW_SHOW) ; Macht die GUI sichtbar
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	While 1

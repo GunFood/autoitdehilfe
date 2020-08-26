@@ -9,7 +9,7 @@ Func Example()
 
 	GUICtrlSetData(-1, "Eintrag1|Eintrag2|Eintrag3", "Eintrag3")
 
-	GUISetState(@SW_SHOW) ; Zeigt das leere GUI-Fenster mit einem Bezug auf das Combo-Control
+	GUISetState(@SW_SHOW) ; Macht die GUI sichtbar
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	While 1

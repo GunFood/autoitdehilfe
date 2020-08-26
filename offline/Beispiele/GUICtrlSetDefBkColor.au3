@@ -14,7 +14,7 @@ Func Beispiel()
 
 	GUICtrlCreateButton("Button", 10, 55)
 
-	GUISetState(@SW_SHOW) ; Zeigt eine leere Dialogbox
+	GUISetState(@SW_SHOW) ; Macht die GUI sichtbar
 
 	; Die Schleife wiederholt sich, bis der Benutzer eine Beenden-Aktion auslöst
 	While 1

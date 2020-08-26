@@ -23,7 +23,7 @@ Func Example()
 	$idButton_Home = GUICtrlCreateButton("AutoIt Home", 230, 420, 100, 30)
 	$idButton_Stop = GUICtrlCreateButton("Stoppen", 330, 420, 100, 30)
 
-	GUISetState(@SW_SHOW) ; GUI anzeigen
+	GUISetState(@SW_SHOW) ; Macht die GUI sichtbar
 	$oIE.navigate("http://google.com")
 	Sleep(3000)
 

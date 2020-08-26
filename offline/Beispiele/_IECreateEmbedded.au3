@@ -19,7 +19,7 @@ Global $idButton_Stop = GUICtrlCreateButton("Anhalten", 340, 420, 100, 30)
 Global $g_idError_Message = GUICtrlCreateLabel("", 100, 500, 500, 30)
 GUICtrlSetColor(-1, 0xff0000)
 
-GUISetState(@SW_SHOW) ; Anzeigen der GUI
+GUISetState(@SW_SHOW) ; Macht die GUI sichtbar
 
 _IENavigate($oIE, "http://www.autoit.de")
 _IEAction($oIE, "stop")

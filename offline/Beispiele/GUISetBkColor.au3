@@ -8,7 +8,7 @@ Func Example()
 
 	GUISetBkColor($COLOR_RED) ; Ändert die Hintergrundfarbe
 
-	GUISetState(@SW_SHOW) ; Zeigt das leere GUI-Fenster
+	GUISetState(@SW_SHOW) ; Macht die GUI sichtbar
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	While 1

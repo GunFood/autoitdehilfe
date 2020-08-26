@@ -10,7 +10,7 @@ Func Example()
 	GUICtrlCreateRadio("Radio 2", 210, 110, 60, 50)
 	GUICtrlCreateGroup("", -99, -99, 1, 1) ; Gruppe schliessen
 
-	GUISetState(@SW_SHOW) ; Zeigt eine leere Dialogbox an
+	GUISetState(@SW_SHOW) ; Macht die GUI sichtbar
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	While 1

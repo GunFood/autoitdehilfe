@@ -23,7 +23,7 @@ Func Example()
 	Local $idButton_Cancel = GUICtrlCreateButton("Abbrechen", 25, -1) ; Fügt den Button hinzu, der die GUI schliesst
 	GUICtrlSetResizing($idButton_Cancel, $GUI_DOCKBOTTOM + $GUI_DOCKSIZE + $GUI_DOCKHCENTER)
 
-	GUISetState(@SW_SHOW) ; Um die GUI anzuzeigen
+	GUISetState(@SW_SHOW) ; Macht die GUI sichtbar
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	While 1

@@ -10,7 +10,7 @@ Func Example()
 	$idRadio2 = GUICtrlCreateRadio("Radiobutton 2", 10, 40, 120, 20)
 	GUICtrlSetState($idRadio2, $GUI_CHECKED)
 
-	GUISetState(@SW_SHOW) ; Zeigt das GUI-Fenster mit 2 Radiobuttons
+	GUISetState(@SW_SHOW) ; Macht die GUI sichtbar
 
 	Local $idMsg
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
