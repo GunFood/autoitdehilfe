@@ -6,8 +6,9 @@ Example()
 Func Example()
 	GUICreate("Marquee Forschrittsfenster", 290, 90, -1, -1) ; Ein Beispiel zum starten und stoppen eines "Marquee"-Fortschrittsfensters.
 	Local $idProgress = GUICtrlCreateProgress(10, 10, 270, 20, $PBS_MARQUEE)
-	Local $idStart = GUICtrlCreateButton("&Start", 10, 60, 70, 25)
-	Local $idStop = GUICtrlCreateButton("S&topp", 85, 60, 70, 25)
+	Local $idStart1 = GUICtrlCreateButton("&Start", 10, 60, 70, 25)
+	Local $idStart2 = GUICtrlCreateButton("&Start 2", 85, 60, 70, 25)
+	Local $idStop = GUICtrlCreateButton("S&topp", 160, 60, 70, 25)
 
 	GUISetState(@SW_SHOW)
 
@@ -17,11 +18,14 @@ Func Example()
 			Case $GUI_EVENT_CLOSE
 				ExitLoop
 
-			Case $idStart
-				GUICtrlSendMsg($idProgress, $PBM_SETMARQUEE, 1, 50) ; Sendet dei Nachricht $PBM_SETMARQUEE und wParam mit 1 um das Forschrittsfenster zu starten.
+			Case $idStart1
+				GUICtrlSendMsg($idProgress, $PBM_SETMARQUEE, 1, 200) ; Sendet die Nachricht $PBM_SETMARQUEE, wParam mit 1 um das Forschrittsfenster zu starten und lParam mit dem Wert für die Fortschritts-Verzögerung.
+
+			Case $idStart2
+				GUICtrlSendMsg($idProgress, $PBM_SETMARQUEE, 1, 50) ; Sendet die Nachricht $PBM_SETMARQUEE, wParam mit 1 um das Forschrittsfenster zu starten und lParam mit dem Wert für die Fortschritts-Verzögerung.
 
 			Case $idStop
-				GUICtrlSendMsg($idProgress, $PBM_SETMARQUEE, 0, 50) ; Sendet dei Nachricht $PBM_SETMARQUEE und wParam mit 0 um das Forschrittsfenster zu stoppen.
+				GUICtrlSendMsg($idProgress, $PBM_SETMARQUEE, 0, 0) ; Sendet die Nachricht $PBM_SETMARQUEE und wParam mit 0 um das Forschrittsfenster zu stoppen.
 
 		EndSwitch
 	WEnd
