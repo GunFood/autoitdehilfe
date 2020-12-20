@@ -1,17 +1,17 @@
 #include <Excel.au3>
 #include <MsgBoxConstants.au3>
 
-; Create application object and open an example workbook
+; Anwendungsobjekt erstellen und eine Beispielarbeitsmappe öffnen
 Local $oExcel = _Excel_Open()
-If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_RangeRead Example", "Error creating the Excel application object." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
+If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_RangeRead Example", "Fehler beim Erstellen des Excel-Anwendungsobjekts." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
 Local $oWorkbook = _Excel_BookOpen($oExcel, @ScriptDir & "\Extras\_Excel1.xls")
 If @error Then
-	MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_RangeRead Example", "Error opening workbook '" & @ScriptDir & "\Extras\_Excel1.xls'." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
+	MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_RangeRead Example", "Fehler beim Öffnen der Arbeitsmappe '" & @ScriptDir & "\Extras\_Excel1.xls'." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
 	_Excel_Close($oExcel)
 	Exit
 EndIf
 
-; Read data from a single cell on the active sheet of the specified workbook
+; Daten aus einer einzelnen Zelle auf dem aktiven Blatt der angegebenen Arbeitsmappe lesen
 Local $sResult = _Excel_RangeRead($oWorkbook, Default, "A1")
-If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_RangeRead Example 1", "Error reading from workbook." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
-MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_RangeRead Example 1", "Data successfully read." & @CRLF & "Value of cell A1: " & $sResult)
+If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_RangeRead Example 1", "Fehler beim Lesen aus der Arbeitsmappe." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
+MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_RangeRead Example 1", "Daten erfolgreich gelesen." & @CRLF & "Value of cell A1: " & $sResult)

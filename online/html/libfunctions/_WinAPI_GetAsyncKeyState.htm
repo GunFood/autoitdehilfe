@@ -30,7 +30,7 @@ _WinAPI_GetAsyncKeyState ( $iKey )<br />
 <table class="noborder">
 <tr>
 <td style="width:10%" class="valign-top">Erfolg:</td>
-<td style="width:90%">Ist das h&ouml;chste und das niedrigste Bit gesetzt (-32767=0x8001), ist die Taste nach vorigem Aufruf der Funktion <a href="_WinAPI_GetAsyncKeyState.htm">_WinAPI_GetAsyncKeyState()</a> gedr&uuml;ckt worden. Man sollte sich aber nicht auf dieses letzte Verhalten verlassen. F&uuml;r weitere Informationen siehe in den Bemerkungen.</td>
+<td style="width:90%">Wenn die Funktion erfolgreich ist, gibt der R&uuml;ckgabewert (SHORT) an, ob die Taste seit dem letzten Aufruf von <a href="_WinAPI_GetAsyncKeyState.htm">_WinAPI_GetAsyncKeyState()</a> gedr&uuml;ckt wurde und ob die Taste derzeit auf oder ab ist. Wenn das h&ouml;chstwertige Bit gesetzt ist (KeyState < 0), ist die Taste gedr&uuml;ckt, und wenn das niedrigstwertige Bit gesetzt ist (Mod(KeyState, 2) = 1), wurde die Taste nach dem vorherigen Aufruf von <a href="_WinAPI_GetAsyncKeyState.htm">_WinAPI_GetAsyncKeyState()</a> gedr&uuml;ckt. Man sollte sich jedoch nicht auf dieses letzte Verhalten verlassen. Weitere Informationen findet man in den Bemerkungen.</td>
 </tr>
 <tr>
 <td class="valign-top">Fehler:</td>
@@ -41,14 +41,17 @@ Der Vordergrund-Thread geh&ouml;rt zu einem anderen Prozess und der Desktop erla
 </table>
 
 <h2>Bemerkungen</h2>
-<p>Die Konstanten die f&uuml;r $iKey verwendet werden k&ouml;nnen stehen in der WinAPIvkeysConstants.au3<br />
+<p>Die f&uuml;r $iKey zu verwendeten Konstanten findet man in WinAPIvkeysConstants.au3<br />
+        <br />
+Die GetAsyncKeyState-Funktion funktioniert mit Maustasten. Es wird jedoch der Status der physischen Maustasten &uuml;berpr&uuml;ft, nicht die logischen Maustasten, denen die physischen Tasten zugeordnet sind. Beispielsweise gibt der Aufruf _WinAPI_GetAsyncKeyState ($VK_LBUTTON) immer den Status der linken physischen Maustaste zur&uuml;ck, unabh&auml;ngig davon, ob sie der linken oder rechten logischen Maustaste zugeordnet ist. Man kann die aktuelle Zuordnung der physischen Maustasten zu logischen Maustasten durch das System ermitteln, indem man <a href="_WinAPI_GetSystemMetrics.htm"> _WinAPI_GetSystemMetrics </a> ($ SM_SWAPBUTTON) aufruft, das TRUE zur&uuml;ckgibt, wenn die Maustasten ausgetauscht wurden.<br />
 <br />
-Die Funktion GetAsyncKeyState funktioniert mit Maustasten. Allerdings &uuml;berpr&uuml;ft es den Zustand der physischen Maustasten, nicht jedoch auf die logischen Maustasten, auf die die physischen Tasten abgebildet sind. Zum Beispiel gibt der Aufruf _WinAPI_GetAsyncKeyState ($VK_LBUTTON) immer den Zustand der linken physikalischen Maustaste zur&uuml;ck, unabh&auml;ngig davon, ob er auf die linke oder rechte logische Maustaste abgebildet ist. Man kann die aktuelle Zuordnung der physikalischen Maustasten des Systems zu logischen Maustasten bestimmen, indem man <a href="_WinAPI_GetSystemMetrics.htm"> _WinAPI_GetSystemMetrics </a> ($ SM_SWAPBUTTON) aufruft. Dies gibt TRUE zur&uuml;ck, wenn die Maustasten getauscht wurden.<br />
+Obwohl das niedrigstwertige Bit des R&uuml;ckgabewerts angibt, ob die Taste seit der letzten Abfrage gedr&uuml;ckt wurde, kann eine andere Anwendung aufgrund des vorbeugenden Multitasking-Charakters von Windows GetAsyncKeyState aufrufen und anstelle Ihrer Anwendung das Bit "Zuletzt gedr&uuml;ckt" empfangen. Das Verhalten des niedrigstwertigen Bits des R&uuml;ckgabewerts wird aus Gr&uuml;nden der Kompatibilit&auml;t mit 16-Bit-Windows-Anwendungen (die nicht pr&auml;emptiv sind) streng beibehalten und sollte nicht verwendet werden.<br />
 <br />
-Obwohl das niedrigstwertige Bit des R&uuml;ckgabewertes anzeigt, ob die Taste seit der letzten Abfrage gedr&uuml;ckt wurde, kann aufgrund des pr&auml;ventiven Multitasking-Verhaltens von Windows eine andere Anwendung GetAsyncKeyState aufrufen und das "k&uuml;rzlich gedrpckte" Bit anstelle der Anwendung empfangen. Das Verhalten des niedrigstwertigen Bits des R&uuml;ckgabewertes wird f&uuml;r die Kompatibilit&auml;t mit 16-Bit-Windows-Anwendungen (die nicht pr&auml;ventiv sind) strikt beibehalten und worauf man sich jedoch nicht verlassen sollte.<br />
-<br />
-Man kann die virtuellen Tastencode-Konstanten $VK_SHIFT, $VK_CONTROL und $VK_MENU als Werte f&uuml;r den vKey-Parameter verwenden. Dies gibt den Zustand der SHIFT-, CTRL- oder ALT-Tasten an, ohne zwischen links und rechts zu unterscheiden.<br />
+Man kann die Codekonstanten f&uuml;r virtuelle Schl&uuml;ssel $VK_SHIFT, $VK_CONTROL und $VK_MENU als Werte f&uuml;r den Parameter vKey verwenden. Dies gibt den Status der UMSCHALT-, STRG- oder ALT-Tasten an, ohne zwischen links und rechts zu unterscheiden.<br />
 </p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="_WinAPI_GetKeyState.htm">_WinAPI_GetKeyState</a>, <a href="_WinAPI_GetKeyboardState.htm">_WinAPI_GetKeyboardState</a></p>
 
 <h2>Siehe auch</h2>
 <p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(GetAsyncKeyState);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">GetAsyncKeyState</a> in der MSDN Bibliothek.
