@@ -1,4 +1,4 @@
 #include <MsgBoxConstants.au3>
 
-Local $iCode = AscW("A")
-MsgBox($MB_SYSTEMMODAL, "Unicode Code fürß: U+" & Hex($iCode, 6))
+Local $iCode = AscW("ß")
+MsgBox($MB_SYSTEMMODAL, "", "Unicode Code für ß: U+" & Hex($iCode, 6))

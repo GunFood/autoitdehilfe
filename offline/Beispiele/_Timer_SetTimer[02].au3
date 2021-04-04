@@ -9,10 +9,10 @@ Func _Example_TimeOut()
 	$g_sCDdrv = $g_sCDdrv[1]
 
 	Local $hGUI = GUICreate("", 140, 64, -1, -1, 0)
-	GUICtrlCreateLabel("Insert a CD into the tray", 8, 8, 115, 17)
+	GUICtrlCreateLabel("Lege eine CD in das Laufwerk ein", 8, 8, 115, 17)
 	GUISetState(@SW_SHOW)
 
-	Local $iIDtimer = _Timer_SetTimer($hGUI, 1000, "Check_mounted") ; create timer
+	Local $iIDtimer = _Timer_SetTimer($hGUI, 1000, "Check_mounted") ; Timer erstellen.
 	While $g_sResult = ''
 		Sleep(200)
 	WEnd
@@ -20,7 +20,7 @@ Func _Example_TimeOut()
 	_Timer_KillTimer($hGUI, $iIDtimer)
 	MsgBox(0, '', $g_sResult, 5)
 
-	ConsoleWrite("Killed All Timers? " & _Timer_KillAllTimers($hGUI) & @CRLF) ; must be False as all timer have already been killed
+	ConsoleWrite("Alle Timer beendet? " & _Timer_KillAllTimers($hGUI) & @CRLF) ; muss falsch sein, da alle Timer bereits beendet wurden
 	GUIDelete($hGUI)
 EndFunc   ;==>_Example_TimeOut
 
@@ -28,12 +28,12 @@ Func Check_mounted($hWnd, $iMsg, $iIDtimer, $iTime)
 	#forceref $hWnd, $iMsg, $iIDTimer,$iTime
 	$g_sResult = ''
 	If FileExists($g_sCDdrv & '\') Then
-		$g_sResult = DriveGetLabel($g_sCDdrv) & ' inserted' & @CRLF
-		$g_sResult &= 'on drive ' & $g_sCDdrv
+		$g_sResult = DriveGetLabel($g_sCDdrv) & ' eingefügt' & @CRLF
+		$g_sResult &= 'auf Laufwerk ' & $g_sCDdrv
 	Else
 		$g_iMsecs += 1000
 		If $g_iMsecs = 10000 Then
-			$g_sResult = 'timed out'
+			$g_sResult = 'Zeitüberschreitung'
 		EndIf
 	EndIf
 EndFunc   ;==>Check_mounted

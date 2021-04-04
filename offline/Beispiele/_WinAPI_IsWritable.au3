@@ -10,7 +10,7 @@ If IsArray($aDrive) Then
 			$sText = 'schreibbar'
 		Else
 			If @error Then
-				$sText = 'Keine Medium'
+				$sText = 'Kein Medium'
 				If @extended Then $sText &= ' ( @error=' & @error & ' LastError=' & _WinAPI_GetLastErrorMessage() & ')'
 			Else
 				$sText = 'Nicht schreibbar'

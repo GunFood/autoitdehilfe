@@ -6,7 +6,7 @@ Local $hParent = WinGetHandle('[CLASS:Progman;TITLE:Program Manager]')
 
 Local $hForm = GUICreate('Test ' & StringReplace(@ScriptName, '.au3', '()'), 400, 400, 100, 100, -1, $WS_EX_TOOLWINDOW)
 
-; Attach window to the desktop (always on bottom)
+; Fenster auf dem Desktop anbringen (immer unten)
 _WinAPI_SetParent($hForm, $hParent)
 
 GUISetState(@SW_SHOWNOACTIVATE)
