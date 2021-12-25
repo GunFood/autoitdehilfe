@@ -21,14 +21,14 @@ Func Example()
 	; Wartet auf das Editor Fenster und liest dessen Handle aus.
 	Local $hNotepad = WinWait("[CLASS:Notepad]")
 
-	; Weist den User daraufhin, er hinsehen soll.
+	; Weist den User daraufhin, dass er hinsehen soll.
 	MsgBox($MB_SYSTEMMODAL, "", "Schau auf die Taskbar und du solltest einen Eintrag für den Editor finden." & @CRLF & @CRLF & "OK drücken um fortzufahren.")
 
 	; Löscht den Editor Eintrag aus der Taskbar.
 	$oTaskbarList.DeleteTab($hNotepad)
 
-	; Weist den User daraufhin, er hinsehen soll.
-	MsgBox($MB_SYSTEMMODAL, "", "Schau auf die Taskbar. Dort sollte nun kein Eintrag mehr für den Editor vorhanden sein obwohl er immer noch läuft." & @CRLF & @CRLF & "OK drückenum fortzufahren.")
+	; Weist den User daraufhin, dass er hinsehen soll.
+	MsgBox($MB_SYSTEMMODAL, "", "Schau auf die Taskbar. Dort sollte nun kein Eintrag mehr für den Editor vorhanden sein obwohl er immer noch läuft." & @CRLF & @CRLF & "OK drücken um fortzufahren.")
 
 	; Schließt den Editor.
 	WinClose($hNotepad)
