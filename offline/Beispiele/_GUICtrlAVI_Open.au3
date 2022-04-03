@@ -6,11 +6,11 @@ Example()
 Func Example()
 	Local $sWow64 = ""
 	If @AutoItX64 Then $sWow64 = "\Wow6432Node"
-	Local $hGui, $hAVI, $sFile = RegRead("HKEY_LOCAL_MACHINE\SOFTWARE" & $sWow64 & "\AutoIt v3\AutoIt", "InstallDir") & "\Examples\GUI\SampleAVI.avi"
+	Local $sFile = RegRead("HKEY_LOCAL_MACHINE\SOFTWARE" & $sWow64 & "\AutoIt v3\AutoIt", "InstallDir") & "\Examples\GUI\SampleAVI.avi"
 
 	; Erstellt eine GUI
-	$hGui = GUICreate("AVI: Öffnen (Extern)", 300, 100)
-	$hAVI = _GUICtrlAVI_Create($hGui, "", -1, 10, 10)
+	Local $hGUI = GUICreate("(Extern) AVI öffnen (v" & @AutoItVersion & ")", 325, 100)
+	Local $hAVI = _GUICtrlAVI_Create($hGUI, "", -1, 10, 10)
 	GUISetState(@SW_SHOW)
 
 	; Spielt das Beispiel AutoIt AVI ab

@@ -17,16 +17,16 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	; Fügt die Spalten hinzu
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 0", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 1", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 2", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 3", 100)
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 4", 100)
 
-	; Setzt den Parameterwert von Spalte 1
+	; Setzt den Parameterwert von Spalte 0
 	_GUICtrlHeader_SetItemParam($hHeader, 0, 1234)
 
-	; Zeigt den Parameterwert von Spalte 1
-	MemoWrite("Parameterwert von Spalte 1: " & _GUICtrlHeader_GetItemParam($hHeader, 0))
+	; Zeigt den Parameterwert von Spalte 0
+	MemoWrite("Parameterwert von Spalte 0: " & _GUICtrlHeader_GetItemParam($hHeader, 0))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

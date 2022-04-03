@@ -1,4 +1,5 @@
 #include <APIRegConstants.au3>
+#include <Debug.au3>
 #include <MsgBoxConstants.au3>
 #include <WinAPIError.au3>
 #include <WinAPIHObj.au3>
@@ -7,25 +8,33 @@
 
 Opt('TrayAutoPause', 0)
 
-Local $hKey = _WinAPI_RegOpenKey($HKEY_CURRENT_USER, 'Software\Microsoft\Windows\CurrentVersion\Run', $KEY_NOTIFY)
-If @error Then
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), @extended, _WinAPI_GetErrorMessage(@extended))
-	Exit
-EndIf
-Local $hEvent = _WinAPI_CreateEvent()
-If Not _WinAPI_RegNotifyChangeKeyValue($hKey, $REG_NOTIFY_CHANGE_LAST_SET, 0, 1, $hEvent) Then
-	Exit
-EndIf
+Example()
 
-While 1
-	If Not _WinAPI_WaitForSingleObject($hEvent, 0) Then
-		Run(@AutoItExe & ' /AutoIt3ExecuteLine "MsgBox(4096, ''Registry'', ''Die Regsitry wurde verändert.'' & @CRLF & @CRLF & ''HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run'', 5)"')
-		If Not _WinAPI_RegNotifyChangeKeyValue($hKey, $REG_NOTIFY_CHANGE_LAST_SET, 0, 1, $hEvent) Then
+Func Example()
+	Local $sKey = 'Software\AutoIt v3'
+	Local $hKey = _WinAPI_RegOpenKey($HKEY_CURRENT_USER, $sKey, $KEY_NOTIFY)
+	If @error Then
+		_DebugSetup(Default, True)
+		_DebugReport("! RegOpenKey @error =" & @error & @CRLF & @TAB &_WinAPI_GetErrorMessage(@extended))
+		Exit
+	EndIf
+	Local $hEvent = _WinAPI_CreateEvent()
+	If Not _WinAPI_RegNotifyChangeKeyValue($hKey, $REG_NOTIFY_CHANGE_LAST_SET, 0, 1, $hEvent) Then
+		Exit
+	EndIf
+
+	RegWrite("HKCU\" & $sKey, "text", "REG_DWORD", 1) ; um die Änderung zu simulieren
+
+	While 1
+		If Not _WinAPI_WaitForSingleObject($hEvent, 0) Then
+			Run(@AutoItExe & ' /AutoIt3ExecuteLine "MsgBox(4096, ''Registry'', ''Der Registry-Wert wurde geändert.'' & @CRLF & @CRLF & ''HKEY_CURRENT_USER\Software\AutoIt v3'', 5)"')
 			ExitLoop
 		EndIf
-	EndIf
-	Sleep(100)
-WEnd
+		Sleep(100)
+	WEnd
 
-_WinAPI_CloseHandle($hEvent)
-_WinAPI_RegCloseKey($hKey)
+	RegDelete("HKCU\" & $sKey, "text")
+	_WinAPI_CloseHandle($hEvent)
+	_WinAPI_RegCloseKey($hKey)
+
+EndFunc   ;==>Example

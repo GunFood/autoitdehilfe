@@ -1,3 +1,4 @@
+;~ #AutoIt3Wrapper_AutoIt3Dir=e:\trunk.SVN\bin
 #include <GDIPlus.au3>
 #include <GUIConstantsEx.au3>
 
@@ -9,8 +10,8 @@ GUISetOnEvent($GUI_EVENT_CLOSE, "_Exit")
 Global $g_hGraphics = _GDIPlus_GraphicsCreateFromHWND($g_hGui)
 Global $g_hBmp_Buffer = _GDIPlus_BitmapCreateFromScan0(800, 360)
 Global $g_hGfx_Buffer = _GDIPlus_ImageGetGraphicsContext($g_hBmp_Buffer)
-_GDIPlus_GraphicsSetSmoothingMode($g_hGfx_Buffer, 2)
-_GDIPlus_GraphicsSetPixelOffsetMode($g_hGfx_Buffer, 2)
+_GDIPlus_GraphicsSetSmoothingMode($g_hGfx_Buffer, $GDIP_SMOOTHINGMODE_HIGHQUALITY)
+_GDIPlus_GraphicsSetPixelOffsetMode($g_hGfx_Buffer, $GDIP_SMOOTHINGMODE_HIGHQUALITY)
 GUISetState()
 
 Global Const $g_cPI = ATan(1) * 4

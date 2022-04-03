@@ -6,14 +6,14 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $tIP = DllStructCreate($tagGetIPAddress), $aIP[4] = [24, 168, 2, 128], $hIPAddress
+	Local $hGui = GUICreate("IP Address: Setzt und ermittelt die IP-Adresse (v" & @AutoItVersion & ")", 400, 300)
+	Local $hIPAddress = _GUICtrlIpAddress_Create($hGui, 2, 4, 125, 20)
 
-	$hGui = GUICreate("IpAddress: IP Adresse ermitteln", 400, 300)
-	$hIPAddress = _GUICtrlIpAddress_Create($hGui, 2, 4, 125, 20)
 	$g_idMemo = GUICtrlCreateEdit("", 2, 28, 396, 270, 0)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
 
+	Local $tIP = DllStructCreate($tagGetIPAddress), $aIP[4] = [24, 168, 2, 128]
 	For $x = 0 To 3
 		DllStructSetData($tIP, "Field" & $x + 1, $aIP[$x])
 	Next

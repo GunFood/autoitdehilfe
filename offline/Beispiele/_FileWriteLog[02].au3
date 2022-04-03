@@ -2,4 +2,4 @@
 
 ; Schreibt in die Logdatei durch angegeben des Dateipfades.
 
-_FileWriteLog(@ScriptDir & "\Example.log", "Text 2")
+_FileWriteLog(@TempDir & "\Example.log", "Text 2")

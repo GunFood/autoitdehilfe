@@ -14,7 +14,7 @@ Func _EnumWindowsProc($hWnd, $lParam)
 	; Falls der Titel leer ist oder das Fenster nicht sichtbar ist, so wird die Aufzählung fortgesetzt.
 	If WinGetTitle($hWnd) = "" Or BitAND(WinGetState($hWnd), 2) = 0 Then Return 1
 
-	Local $iRes = MsgBox(BitOR($MB_SYSTEMMODAL, $MB_OKCANCEL), _
+	Local $iRes = MsgBox(($MB_OKCANCEL + $MB_SYSTEMMODAL), _
 			WinGetTitle($hWnd), "$hWnd=" & $hWnd & @CRLF & _
 			"$lParam=" & $lParam & @CRLF & _
 			"$hWnd(type)=" & VarGetType($hWnd))

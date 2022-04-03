@@ -26,16 +26,19 @@ Func Example()
 	_GDIPlus_GraphicsFillPath($hGraphic, $hPath, $hBrush)
 
 	$iQuality1 = _GDIPlus_GraphicsGetCompositingQuality($hGraphic)
+	ConsoleWrite('@@ Debug(' & @ScriptLineNumber & ') : $iQuality1 = ' & $iQuality1 & @CRLF & '>Fehlercode: ' & @error & '    erweiterter Code: ' & @extended & ' (0x' & Hex(@extended) & ')' & @CRLF) ;### Debug Konsole
 
 	$hMatrix = _GDIPlus_MatrixCreate()
 	_GDIPlus_MatrixTranslate($hMatrix, 400, 0)
 	_GDIPlus_PathTransform($hPath, $hMatrix)
 	_GDIPlus_PathBrushSetTransform($hBrush, $hMatrix)
 
-	_GDIPlus_GraphicsSetCompositingQuality($hGraphic, 3)
+	Local $iRet = _GDIPlus_GraphicsSetCompositingQuality($hGraphic, $GDIP_COMPOSITINGQUALITY_GAMMACORRECTED)
+	ConsoleWrite('@@ Debug(' & @ScriptLineNumber & ') : $iRet = ' & $iRet & @CRLF & '>Fehlercode: ' & @error & '    erweiterter Code: ' & @extended & ' (0x' & Hex(@extended) & ')' & @CRLF) ;### Debug Konsole
+
 	_GDIPlus_GraphicsFillPath($hGraphic, $hPath, $hBrush)
 	$iQuality2 = _GDIPlus_GraphicsGetCompositingQuality($hGraphic)
-
+	ConsoleWrite('@@ Debug(' & @ScriptLineNumber & ') : $iQuality2 = ' & $iQuality2 & @CRLF & '>Fehlercode: ' & @error & '    erweiterter Code: ' & @extended & ' (0x' & Hex(@extended) & ')' & @CRLF) ;### Debug Konsole
 
 	_GDIPlus_GraphicsDrawString($hGraphic, "CompositingQuality = " & $iQuality1, 10, 380)
 	_GDIPlus_GraphicsDrawString($hGraphic, "CompositingQuality = " & $iQuality2, 420, 380)

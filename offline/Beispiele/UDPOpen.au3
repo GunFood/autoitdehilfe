@@ -20,7 +20,7 @@ Func Example()
 	; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und False zurückgegeben.
 	If @error Then
 		Local $iError = @error
-		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "Verbindung konnte nicht hergestellt werden, Error code: " & $iError)
+		MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), "", "Verbindung konnte nicht hergestellt werden, Error code: " & $iError)
 		Return False
 	Else
 		MsgBox($MB_SYSTEMMODAL, "", "Verbindung wurde erfolgreich hergestellt.")

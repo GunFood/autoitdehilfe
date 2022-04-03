@@ -6,23 +6,20 @@
 Example()
 
 Func Example()
-	Local $idListView
-
-	GUICreate("ListView: Ermittelt die Texthintergrundfarbe", 400, 300)
-	$idListView = GUICtrlCreateListView("", 2, 2, 394, 268)
+	GUICreate("ListView: Setzt und ermittelt die Texthintergrundfarbe (v" & @AutoItVersion & ")", 400, 300)
 	GUISetState(@SW_SHOW)
 
 	; Setzt die Farben
-	_GUICtrlListView_SetBkColor($idListView, $CLR_MONEYGREEN)
+	_GUICtrlListView_SetBkColor($idListView, $CLR_DARKSEAGREEN)
 	_GUICtrlListView_SetTextColor($idListView, $CLR_BLACK)
-	_GUICtrlListView_SetTextBkColor($idListView, $CLR_MONEYGREEN)
+	_GUICtrlListView_SetTextBkColor($idListView, $CLR_DARKSEAGREEN)
 
 	; Fügt die Spalten hinzu
 	_GUICtrlListView_AddColumn($idListView, "Items", 100)
 
 	; Fügt die Items hinzu
 	_GUICtrlListView_BeginUpdate($idListView)
-	For $iI = 1 To 10
+	For $iI = 0 To 10
 		_GUICtrlListView_AddItem($idListView, "Item " & $iI)
 	Next
 	_GUICtrlListView_EndUpdate($idListView)

@@ -8,7 +8,7 @@
 ; Load Resources.dll to memory
 Local $hInstance = _WinAPI_LoadLibraryEx(@ScriptDir & '\Extras\Resources.dll', $LOAD_LIBRARY_AS_DATAFILE)
 If Not $hInstance Then
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Error', @ScriptDir & '\Extras\Resources.dll not found.')
+	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Error', @ScriptDir & '\Extras\Resources.dll not found.')
 	Exit
 EndIf
 

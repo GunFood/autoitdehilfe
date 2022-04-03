@@ -9,12 +9,10 @@ Global $g_hImage, $g_hStateImage
 Example()
 
 Func Example()
-	Local $ahItem[10], $aidChildItem[30], $iYItem = 0, $idTreeView
+	GUICreate("TreeView: Zeigt an, ob ein Item in der Hierarchie über einem anderen Item steht (v" & @AutoItVersion & ")", 400, 300)
+
 	Local $iStyle = BitOR($TVS_EDITLABELS, $TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS)
-
-	GUICreate("TreeView: Zeigt an, ob ein Item in der Hierarchie über einem anderen Item steht", 600, 300)
-
-	$idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
+	Local $idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
 	GUISetState(@SW_SHOW)
 
 	_CreateNormalImageList()
@@ -24,6 +22,7 @@ Func Example()
 	_GUICtrlTreeView_SetStateImageList($idTreeView, $g_hStateImage)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
+	Local $ahItem[10], $aidChildItem[30], $iYItem = 0
 	For $x = 0 To 9
 		$ahItem[$x] = _GUICtrlTreeView_Add($idTreeView, 0, StringFormat("[%02d] Neues Item", $x), 4, 5)
 		_GUICtrlTreeView_SetStateImageIndex($idTreeView, $ahItem[$x], 1)

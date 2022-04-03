@@ -36,13 +36,10 @@ Func Example()
 				MsgBox($MB_SYSTEMMODAL, "", "Dialog wurde minimiert", 2)
 			Case $idMsg = $GUI_EVENT_RESTORE
 				MsgBox($MB_SYSTEMMODAL, "", "Dialog wurde wiederhergestellt", 2)
-
 			Case $idMsg = $idButton_1
 				MsgBox($MB_SYSTEMMODAL, "Standard-Button gedrückt", "Radiobutton " & $iRadioVal1)
-
 			Case $idMsg >= $idRadio_1 And $idMsg <= $idRadio_3
 				$iRadioVal1 = $idMsg - $idRadio_1
-
 		EndSelect
 	WEnd
 

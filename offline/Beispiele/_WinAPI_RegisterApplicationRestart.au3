@@ -6,7 +6,7 @@
 #include <WinAPISys.au3>
 
 If Number(_WinAPI_GetVersion()) < 6.0 Then
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Fehler', 'Erfordert Windows Vista oder höher.')
+	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Fehler', 'Erfordert Windows Vista oder höher.')
 	Exit
 EndIf
 
@@ -17,7 +17,7 @@ Local $idLabel = GUICtrlCreateLabel('Die Anwendung wird crashen nach ' & $g_iCou
 GUISetState(@SW_SHOW)
 
 If $CmdLine[0] And ($CmdLine[1] = '/crash') Then
-	MsgBox(BitOR($MB_ICONWARNING, $MB_SYSTEMMODAL), 'Achtung', 'Die Anwendung wurde neu gestartet nach unnormalem Beenden.', 0, $hForm)
+	MsgBox(($MB_ICONWARNING + $MB_SYSTEMMODAL), 'Achtung', 'Die Anwendung wurde neu gestartet nach unnormalem Beenden.', 0, $hForm)
 EndIf
 
 If Not @Compiled Then

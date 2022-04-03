@@ -13,7 +13,7 @@ Global $g_hFont = _WinAPI_CreateFont(16, 0, 0, 0, $FW_BOLD, 0, 0, 0, $DEFAULT_CH
 
 Global $g_bDwm = False
 If (Number(_WinAPI_GetVersion()) > 5.2) And (_WinAPI_DwmIsCompositionEnabled()) Then
-	If MsgBox(BitOR($MB_YESNOCANCEL, $MB_ICONQUESTION, $MB_SYSTEMMODAL), 'DWM', 'This example works only if a Desktop Window Manager (DWM) composition is disabled.' & @CRLF & @CRLF & 'Do you want to disable DWM?') = 6 Then
+	If MsgBox(($MB_YESNOCANCEL + $MB_ICONQUESTION + $MB_SYSTEMMODAL), 'DWM', 'This example works only if a Desktop Window Manager (DWM) composition is disabled.' & @CRLF & @CRLF & 'Do you want to disable DWM?') = 6 Then
 		_WinAPI_DwmEnableComposition(0)
 		$g_bDwm = True
 	Else

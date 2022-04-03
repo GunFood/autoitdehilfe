@@ -3,12 +3,16 @@
 #include <WinAPIDiag.au3>
 #include <WinAPIMisc.au3>
 
-Local $aData = _WinAPI_EnumDllProc('ntdll.dll', 'Rtl*', $SYMOPT_CASE_INSENSITIVE)
+_Example()
 
-If IsArray($aData) Then
-	For $i = 1 To $aData[0][0]
-		$aData[$i][0] = '0x' & Hex($aData[$i][0])
-	Next
-EndIf
+Func _Example()
+	Local $aData = _WinAPI_EnumDllProc('ntdll.dll', 'Rtl*', $SYMOPT_CASE_INSENSITIVE)
 
-_ArrayDisplay($aData, _WinAPI_GetExtended())
+	If IsArray($aData) Then
+		For $i = 1 To $aData[0][0]
+			$aData[$i][0] = '0x' & Hex($aData[$i][0])
+		Next
+	EndIf
+
+	_ArrayDisplay($aData, _WinAPI_GetExtended())
+EndFunc   ;==>_Example

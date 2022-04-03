@@ -17,11 +17,11 @@ Func Example()
 	Local $iMod1 = Mod(4, 7) ; 4%7 = 4 da Divisor > Dividend
 
 	; Zeigt das Ergebnis.
-	MsgBox($MB_SYSTEMMODAL, "", $iMod1)
+	MsgBox($MB_SYSTEMMODAL, "$iMod1", $iMod1)
 
 	; Weist einer lokalen Variable die Modulo-Operation von 1 geteilt durch 3/4 zu.
 	Local $iMod2 = Mod(1, 3 / 4) ; 1%(3/4) = 0.25 weil der Divisor ein Float ist.
 
 	; Zeigt das Ergebnis.
-	MsgBox($MB_SYSTEMMODAL, "", $iMod2)
+	MsgBox($MB_SYSTEMMODAL, "$iMod2", $iMod2)
 EndFunc   ;==>Example

@@ -1,4 +1,3 @@
-#include <APISysConstants.au3>
 #include <GuiMenu.au3>
 #include <SendMessage.au3>
 #include <WinAPIGdi.au3>

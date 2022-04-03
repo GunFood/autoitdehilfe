@@ -1,14 +1,18 @@
 #include <WinAPIMem.au3>
 #include <WinAPIMisc.au3>
 
-Local $tStruct1 = DllStructCreate('byte[4]')
-_WinAPI_FillMemory($tStruct1, 4, 0xAA)
+_Example()
 
-Local $tStruct2 = DllStructCreate('byte[4]')
-_WinAPI_FillMemory($tStruct2, 4, 0xDD)
+Func _Example()
+	Local $tStruct1 = DllStructCreate('byte[4]')
+	_WinAPI_FillMemory($tStruct1, 4, 0xAA)
 
-Local $tStruct3 = _WinAPI_UnionStruct($tStruct1, $tStruct2)
+	Local $tStruct2 = DllStructCreate('byte[4]')
+	_WinAPI_FillMemory($tStruct2, 4, 0xDD)
 
-ConsoleWrite('Erster:     ' & DllStructGetData($tStruct1, 1) & @CRLF)
-ConsoleWrite('Zweiter:    ' & DllStructGetData($tStruct2, 1) & @CRLF)
-ConsoleWrite('Allgemein:  ' & DllStructGetData($tStruct3, 1) & @CRLF)
+	Local $tStruct3 = _WinAPI_UnionStruct($tStruct1, $tStruct2)
+
+	ConsoleWrite('Erster:     ' & DllStructGetData($tStruct1, 1) & @CRLF)
+	ConsoleWrite('Zweiter:    ' & DllStructGetData($tStruct2, 1) & @CRLF)
+	ConsoleWrite('Allgemein:  ' & DllStructGetData($tStruct3, 1) & @CRLF)
+EndFunc   ;==>_Example

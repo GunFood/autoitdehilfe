@@ -20,7 +20,7 @@ Func Example()
 
 	Local $sFile = RegRead($sRegPath, "InstallDir") & "\Examples\GUI\logo4.gif"
 	If Not FileExists($sFile) Then
-		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", $sFile & " nicht gefunden!", 30)
+		MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), "", $sFile & " nicht gefunden!", 30)
 		Exit
 	EndIf
 

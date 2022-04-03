@@ -4,7 +4,7 @@
 #include <WinAPISys.au3>
 
 If (Number(_WinAPI_GetVersion()) < 6.0) And (@AutoItX64) Then
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Fehler', 'Dieses Beispiel funktioniert bei einem 64-bit System nur in Windows Vista oder neuer.')
+	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Fehler', 'Dieses Beispiel funktioniert bei einem 64-bit System nur in Windows Vista oder neuer.')
 	Exit
 EndIf
 

@@ -6,11 +6,9 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $aSel, $idCombo
-
 	; Erstellt eine GUI
-	GUICreate("ComboBox: Ermittelt Zeichen im Input-Control einer ComboBox", 400, 296)
-	$idCombo = GUICtrlCreateCombo("", 2, 2, 396, 296)
+	GUICreate("ComboBox: Setzt und ermittelt den String (v" & @AutoItVersion & ")", 400, 296)
+	Local $idCombo = GUICtrlCreateCombo("", 2, 2, 396, 296)
 	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
@@ -27,7 +25,7 @@ Func Example()
 	_GUICtrlComboBox_SetEditSel($idCombo, 0, 4)
 
 	; Ermittelt Zeichen im Input-Control einer ComboBox
-	$aSel = _GUICtrlComboBox_GetEditSel($idCombo)
+	Local $aSel = _GUICtrlComboBox_GetEditSel($idCombo)
 	MemoWrite(StringFormat("Ermittelt Zeichen im Input-Control einer ComboBox: %d - %d", $aSel[0], $aSel[1]))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.

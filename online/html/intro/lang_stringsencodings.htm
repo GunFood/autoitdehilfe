@@ -1,0 +1,177 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Language Reference - Strings and Encodings</title>
+    <link href="../css/default.css" rel="stylesheet">
+  </head>
+  <body>
+    <h1>AutoIt and string encodings</h1>
+    <h2>Foreword</h2>
+    <p>The problem of internal representation of characters has been plaguing
+      the computer industry since IT became widespread.<br>
+      Initially every company used its own conventions and tables to represent
+      text and symbols, making interoperability a nightmare. The growing demand
+      for support of more symbols, control characters and non-Latin scripts made
+      the situation even worse.<br>
+      Character sets and their possible encodings resembles playing cards: tarot
+      and poker don't use the same set of cards. Next, once a set is chosen, one
+      must create a design (a representation or encoding) for each card so that
+      every player recognizes them instantly.</p>
+    <h2>Character sets</h2>
+    <p>Today, all character sets fall into 2 families: Unicode and codepages.</p>
+    <li>Unicode<br>
+      <div style="margin-left: 40px;"> Also know as ISO/IEC 10646, this huge and
+        complex character set which has the formidable advantage to be
+        universal: it aims to include every character or symbol ever used by
+        humans, including cuneiform, hieroglyphs, Klingon, emoji and much more.
+        Unicode version 13.0 (03/2020) defines 143,849 characters among the
+        1,112,064 possible codepoints defined by the standard.<br>
+        Unicode is more than just a character set and defines ways to handle
+        directional text (left to right or right to left), combine glyphs in
+        complex ways (graphemes), procedures to collate (compare) strings,
+        compose/decompose characters and much more. </div>
+    </li>
+    <li>Codepages<br>
+      <div style="margin-left: 40px;"> A simple codepage uses a table of N
+        entries (typically 256) to map N characters or symbols to a numeric
+        value. Every character in a string uses a 8-bit byte in most codepages,
+        making good use of available memory when it was a scarce resource. The
+        limitation to N characters however was an issue to portability and a
+        large number of incompatible codepages were created. As a result one had
+        to know or guess the encoding used in a received text file to process it
+        correctly.<br>
+        To overcome the limitation introduced by short codepages making
+        representation of large alphabets impossible (e.g. Chinese), more
+        extensive codepages were created using a variable-width convention, the
+        MBCS encodings (Multi-Byte Character Set). </div>
+    </li>
+    <p>The question of the representation of strings in memory or files using a
+      given character set arose when IT started to use non-simple codepages.</p>
+    <h2>AutoIt strings encodings</h2>
+    <p>Native AutoIt strings use the UCS-2 character set and encoding. It is the
+      subset of Unicode limited to the BMP (Basic Multilingual Plane), the first
+      64k Unicode codepoints. This encoding uses 16-bit encoding units (each
+      character is represented by a unsigned short value) where codepoints in
+      range U+D800..U+DFFF (surrogates in UTF16) are not special and simply
+      reserved for private use.<br>
+      Note that Windows has been handling Unicode for a very long time: Win 3.x,
+      Win95, NT added a DLL to handle UCS-2, XP and up handled UTF16-LE.</p>
+    <p>However, some applications need to process strings using other encodings.</p>
+    <li>UTF8<br>
+      <div style="margin-left: 40px;"> UTF8 is a MBCS (variable-length)
+        representation of a Unicode string using a series of 1 to 4 8-bit bytes.
+        It is the ubiquitous encoding used in web pages, XML, ... being both
+        bandwidth-efficient and able to encode the full Unicode character set.<l
+
+          i=""> </l></div>
+    </li>
+    <li>Codepages<br>
+      <div style="margin-left: 40px;"> Depending on Windows language settings,
+        external files or streams you need to process or produce, you may need
+        to use or convert strings to/from a non-Unicode codepage.<br>
+      </div>
+    </li>
+    <li style="margin-left: 40px;">OEM codepages Are the traditional "DOS"
+      codepages, one for each possible language setting in effect. </li>
+    <li style="margin-left: 40px;">Windows codepages Also named "ANSI"
+      codepages, they are the codepage used by the modern Windows console and
+      defined by the language setting in effect, unless changed by the DHCP
+      command. Note that the Windows console can also accept/display UTF8 after
+      issuing the "DHCP 65001" command. </li>
+    <li style="margin-left: 40px;">Special codepages Among those are the MBCSs
+      used by many asian contexts and EBCDIC used by most IBM mainframes.</li>
+    <div style="margin-left: 40px;"> </div>
+    <p>Converting to/from some codepage from/to native UCS2 AutoIt strings</p>
+    <p>You can use these functions to perform the wanted conversion. Codepage
+      identifier 65001 means UTF8 but you can pass any identifier supported by
+      Windows.<br>
+      A list of codepages supported by Windows can be found here:</p>
+    <p style="margin-left: 40px;"> <a href="https://docs.microsoft.com/en-us/windows/win32/intl/code-page-identifiers">https://docs.microsoft.com/en-us/windows/win32/intl/code-page-identifiers</a>
+    </p>
+@@SyntaxHighlighting@@
+; To convert a native AutoIt string (UCS-2) to some codepage (by default UTF8):
+Func _StringToCodepage($sStr, $iCodepage = Default)
+    If $iCodepage = Default Then $iCodepage = 65001
+    Local $aResult = DllCall("kernel32.dll", "int", "WideCharToMultiByte", "uint", $iCodepage, "dword", 0, "wstr", $sStr, "int", StringLen($sStr), _
+            "ptr", 0, "int", 0, "ptr", 0, "ptr", 0)
+    Local $tCP = DllStructCreate("char[" & $aResult[0] & "]")
+    $aResult = DllCall("Kernel32.dll", "int", "WideCharToMultiByte", "uint", $iCodepage, "dword", 0, "wstr", $sStr, "int", StringLen($sStr), _
+            "struct*", $tCP, "int", $aResult[0], "ptr", 0, "ptr", 0)
+    Return DllStructGetData($tCP, 1)
+EndFunc   ;==>_StringToCodepage
+
+; To convert a string from a given codepage (by default UTF8) to a native AutoIt string (UCS-2):
+Func _CodepageToString($sCP, $iCodepage = Default)
+    If $iCodepage = Default Then $iCodepage = 65001
+    Local $tText = DllStructCreate("byte[" & StringLen($sCP) & "]")
+    DllStructSetData($tText, 1, $sCP)
+    Local $aResult = DllCall("kernel32.dll", "int", "MultiByteToWideChar", "uint", $iCodepage, "dword", 0, "struct*", $tText, "int", StringLen($sCP), _
+            "ptr", 0, "int", 0)
+    Local $tWstr = DllStructCreate("wchar[" & $aResult[0] & "]")
+    $aResult = DllCall("kernel32.dll", "int", "MultiByteToWideChar", "uint", $iCodepage, "dword", 0, "struct*", $tText, "int", StringLen($sCP), _
+            "struct*", $tWstr, "int", $aResult[0])
+    Return DllStructGetData($tWstr, 1)
+EndFunc   ;==>_CodepageToString
+@@End@@
+
+<br>
+    <p>If you only need to convert native AutoIt strings to/from UTF8 (a very
+      common use) you can use this</p>
+@@SyntaxHighlighting@@
+$sMyString = "Hello Χαίρετε こんにちは Привет xin chào हैलो مرحبا 你好 שלום வணக்கம்"
+$sUTF8String = BinaryToString(StringToBinary($sMyString & @LF, 4), 1)
+
+; reverse conversion:
+$sMyStringBack = BinaryToString(StringToBinary($sUTF8String & @LF, 1), 4)
+@@End@@
+
+    <h2>Tips</h2>
+    <p>It is a good idea to use the default UTF8 encoding for your source files:
+      your strings will display verbatim in both your source code and in Windows
+      controls.<br>
+      It is also a good idea to set the SciTe4AutoIt3 console to UTF8 if ever
+      you need to display characters or symbols not found in your default
+      Windows codepage.</p>
+    <p>To send UTF8 strings to the SciTe console, you can use this function:</p>
+
+@@SyntaxHighlighting@@
+; Unicode-aware ConsoleWrite for UTF8 SciTe console
+Func _ConsoleWrite($s)
+    ConsoleWrite(BinaryToString(StringToBinary($s & @LF, 4), 1))
+EndFunc   ;==>_ConsoleWrite
+@@End@@
+
+<br>
+    <p>In addition, if your program may use the compiled CUI interface *or* the
+      uncompiled SciTe console (e.g. for debugging), you can use this:</p>
+
+@@SyntaxHighlighting@@
+; Indirect Unicode-aware function for UTF8 Scite or CUI consolewrite
+Func __ConsoleWrite($s)
+    Return (@Compiled ? _CUI_ConsoleWrite : _ConsoleWrite)($s)
+EndFunc   ;==>__ConsoleWrite
+
+; Function for UTF16 CUI consolewrite
+Func _CUI_ConsoleWrite(ByRef $s)
+    Local Static $hCon = _CUI_ConsoleInit()
+    DllCall("kernel32.dll", "bool", "WriteConsoleW", "handle", $hCon, "wstr", $s & @LF, "dword", StringLen($s) + 1, "dword*", 0, "ptr", 0)
+    Return
+EndFunc   ;==>_CUI_ConsoleWrite
+
+; Helper function for CUI consolewrite
+Func _CUI_ConsoleInit()
+    DllCall("kernel32.dll", "bool", "AllocConsole")
+    Return DllCall("kernel32.dll", "handle", "GetStdHandle", "int", -11)[0]
+EndFunc   ;==>_CUI_ConsoleInit
+@@End@@
+
+    <p>For instance, run this code sample using the above functions; Hello should display correctly in different languages identically
+    in the MsgBox and the console (SciTe or CUI): </p>
+
+@@SyntaxHighlighting@@
+$sMyString = "Hello Χαίρετε こんにちは Привет xin chào हैलो مرحبا 你好 שלום வணக்கம்"
+__ConsoleWrite($sMyString)
+MsgBox(0, "", $sMyString)
+@@End@@
+  </body>
+</html>

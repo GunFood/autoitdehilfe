@@ -56,7 +56,7 @@ Func MyUDP_Server($sIPAddress, $iPort)
 	If @error Then
 		; Vielleicht lauscht bereits jemand auf dieser IP-Adresse und dem Port (läuft das Script bereits?).
 		Local $iError = @error
-		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "Server:" & @CRLF & "Konnte nicht lauschen, Error Code: " & $iError)
+		MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), "", "Server:" & @CRLF & "Konnte nicht lauschen, Error Code: " & $iError)
 		Return False
 	EndIf
 
@@ -87,7 +87,7 @@ Func MyUDP_Client($sIPAddress, $iPort)
 	If @error Then
 		; Der Server ist vermutlich offline oder der Port wurde nicht am Server geöffnet.
 		$iError = @error
-		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "Client:" & @CRLF & "Verbindung konnte nicht hergestellt werden, Error Code: " & $iError)
+		MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), "", "Client:" & @CRLF & "Verbindung konnte nicht hergestellt werden, Error Code: " & $iError)
 		Return False
 	EndIf
 
@@ -97,7 +97,7 @@ Func MyUDP_Client($sIPAddress, $iPort)
 	; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und False zurückgegeben.
 	If @error Then
 		$iError = @error
-		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "Client:" & @CRLF & "Daten konnten nicht gesendet werden, Error Code: " & $iError)
+		MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), "", "Client:" & @CRLF & "Daten konnten nicht gesendet werden, Error Code: " & $iError)
 		Return False
 	EndIf
 

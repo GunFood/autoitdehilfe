@@ -19,7 +19,7 @@ Func Example()
 	If @error Then
 		; Vielleicht lauscht bereits jemand auf dieser IP-Adresse und dem Port (läuft das Script bereits?).
 		Local $iError = @error
-		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "Konnte nicht lauschen, Error Code: " & $iError)
+		MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), "", "Konnte nicht lauschen, Error Code: " & $iError)
 		Return False
 	Else
 		MsgBox($MB_SYSTEMMODAL, "", "Lauschen erfolgreich.")

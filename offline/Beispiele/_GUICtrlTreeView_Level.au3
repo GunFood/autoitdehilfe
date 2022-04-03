@@ -9,12 +9,10 @@ Global $g_hImage, $g_hStateImage
 Example()
 
 Func Example()
-	Local $ahItem[4], $aidChildItem[120], $iYItem = 0, $iRand, $idTreeView
+	GUICreate("TreeView: Ermittelt die Ebene eines Items (v" & @AutoItVersion & ")", 400, 300)
+
 	Local $iStyle = BitOR($TVS_EDITLABELS, $TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS)
-
-	GUICreate("TreeView: Ermittelt die Ebene eines Items", 400, 300)
-
-	$idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
+	Local $idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
 	GUISetState(@SW_SHOW)
 
 	_CreateNormalImageList()
@@ -24,6 +22,7 @@ Func Example()
 	_GUICtrlTreeView_SetStateImageList($idTreeView, $g_hStateImage)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
+	Local $ahItem[4], $aidChildItem[120], $iYItem = 0
 	For $x = 0 To 3
 		$ahItem[$x] = _GUICtrlTreeView_Add($idTreeView, 0, StringFormat("[%02d] Neues Item", $x), 4, 5)
 		_GUICtrlTreeView_SetStateImageIndex($idTreeView, $ahItem[$x], 1)
@@ -38,7 +37,7 @@ Func Example()
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)
 
-	$iRand = Random(0, 99, 1)
+	Local $iRand = Random(0, 99, 1)
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Index %d Ebene: %d", $iRand, _GUICtrlTreeView_Level($idTreeView, $aidChildItem[$iRand])))
 	_GUICtrlTreeView_SelectItem($idTreeView, $aidChildItem[$iRand])
 

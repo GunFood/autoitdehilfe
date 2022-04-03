@@ -16,10 +16,10 @@ If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Word UDF: _Word_DocQuit Example", _
 ; If Word was started by this example all documents and Word will be closed.
 Local $iResult
 If $bWordClose Then
-	$iResult = MsgBox(BitOR($MB_OKCANCEL, $MB_SYSTEMMODAL), "Word UDF: _Word_Quit Example", _
+	$iResult = MsgBox(($MB_OKCANCEL + $MB_SYSTEMMODAL), "Word UDF: _Word_Quit Example", _
 			"If you click OK ALL unsaved changes in ALL open documents of this Word instance will be lost and the instance will be closed.")
 Else
-	$iResult = MsgBox(BitOR($MB_OKCANCEL, $MB_SYSTEMMODAL), "Word UDF: _Word_Quit Example", _
+	$iResult = MsgBox(($MB_OKCANCEL + $MB_SYSTEMMODAL), "Word UDF: _Word_Quit Example", _
 			"Word was already running when function _Word_Create was called. Hence only the reference to the object will be removed.")
 EndIf
 If $iResult = 2 Then Exit

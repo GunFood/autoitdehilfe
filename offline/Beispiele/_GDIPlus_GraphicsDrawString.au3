@@ -14,6 +14,7 @@ Func Example()
 	_GDIPlus_Startup()
 	$hGraphic = _GDIPlus_GraphicsCreateFromHWND($hGui)
 	_GDIPlus_GraphicsDrawString($hGraphic, "Hallo Welt", 140, 110)
+	_GDIPlus_GraphicsDrawString($hGraphic, "Hallo farbige Welt", 140, 210, Default, Default, Default, 0xFF007F)
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

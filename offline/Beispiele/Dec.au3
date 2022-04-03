@@ -1,5 +1,5 @@
-#include <MsgBoxConstants.au3>
 #include <AutoItConstants.au3>
+#include <MsgBoxConstants.au3>
 
 _Example()
 Func _Example()

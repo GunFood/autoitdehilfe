@@ -7,7 +7,7 @@ Func Example()
 	ShellExecute("::{645FF040-5081-101B-9F08-00AA002F954E}")
 
 	; Zeigt ein Nachrichtenfenster mit der Frage, ob der Papierkorb geleert werden soll.
-	If MsgBox(BitOR($MB_YESNO, $MB_SYSTEMMODAL), "", "Soll der Papierkorb in Laufwerk " & @HomeDrive & "\ geleert werden?") = $IDNO Then Return False
+	If MsgBox(($MB_YESNO + $MB_SYSTEMMODAL), "", "Soll der Papierkorb in Laufwerk " & @HomeDrive & "\ geleert werden?") = $IDNO Then Return False
 
 	; Leert den Papierkorb. Dies ist nur für den Ordner @HomeDrive. Dies ist standardmäßig Laufwerk C:\.
 	Local $iRecycle = FileRecycleEmpty(@HomeDrive)

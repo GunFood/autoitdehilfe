@@ -23,7 +23,7 @@ Func Example()
 	GUICtrlSetBkColor($g_idMemo, 0xFFFFFF)
 	GUISetState(@SW_SHOW)
 
-	_GUICtrlMonthCal_SetColor($idMonthCal, $MCSC_MONTHBK, $CLR_MONEYGREEN)
+	_GUICtrlMonthCal_SetColor($idMonthCal, $MCSC_MONTHBK, $CLR_DARKSEAGREEN)
 
 	; Ermittelt Kalender-Farben
 	MemoWrite(_FormatOutPut("Hintergrundfarbe, die zwischen den Monaten dargestellt wird:", _GUICtrlMonthCal_GetColorArray($idMonthCal, $MCSC_BACKGROUND)))

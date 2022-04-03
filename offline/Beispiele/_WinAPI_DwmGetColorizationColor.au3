@@ -2,7 +2,7 @@
 #include <WinAPIGdi.au3>
 
 If Not _WinAPI_DwmIsCompositionEnabled() Then
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Fehler', 'Windows Vista oder neuer mit aktiviertem Aero Themea wird benötigt.')
+	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Fehler', 'Windows Vista oder neuer mit aktiviertem Aero Themea wird benötigt.')
 	Exit
 EndIf
 

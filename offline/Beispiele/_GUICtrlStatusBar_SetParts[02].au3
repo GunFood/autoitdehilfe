@@ -1,4 +1,4 @@
-; == Exampe 2 With array of Widths
+; == Example 2 : with array of Widths
 
 #include <GUIConstantsEx.au3>
 #include <GuiStatusBar.au3>
@@ -9,12 +9,9 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGUI, $hStatus
-	Local $aPartWidth[3] = [75, 75, -1]
-
 	; Create GUI
-	$hGUI = GUICreate("StatusBar Set Parts", 400, 300)
-	$hStatus = _GUICtrlStatusBar_Create($hGUI)
+	Local $hGUI = GUICreate("StatusBar Set Parts (v" & @AutoItVersion & ")", 400, 300)
+	Local $hStatus = _GUICtrlStatusBar_Create($hGUI)
 
 	; Create memo control
 	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 396, 274, $WS_VSCROLL)
@@ -22,13 +19,14 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	; Set parts
+	Local $aPartWidth[3] = [75, 75, -1]
 	_GUICtrlStatusBar_SetParts($hStatus, -1, $aPartWidth)
 
 	;Set Text/ Get Width
 	Local $iParts = _GUICtrlStatusBar_GetCount($hStatus)
-	For $iI = 1 To $iParts
-		_GUICtrlStatusBar_SetText($hStatus, "Text " & $iI, $iI - 1)
-		MemoWrite("Part " & $iI & " width .: " & _GUICtrlStatusBar_GetWidth($hStatus, $iI - 1))
+	For $iI = 0 To $iParts - 1
+		_GUICtrlStatusBar_SetText($hStatus, "Text " & $iI, $iI)
+		MemoWrite("Part " & $iI & " width .: " & _GUICtrlStatusBar_GetWidth($hStatus, $iI))
 	Next
 
 	; Loop until the user exits.

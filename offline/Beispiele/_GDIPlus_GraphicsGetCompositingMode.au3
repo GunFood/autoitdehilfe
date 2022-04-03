@@ -21,7 +21,7 @@ Func Example()
 	_GDIPlus_GraphicsFillRect($hContext, 80, 60, 300, 300, $hBrush)
 	$iMode1 = _GDIPlus_GraphicsGetCompositingMode($hContext)
 
-	_GDIPlus_GraphicsSetCompositingMode($hContext, $GDIP_CompositingModeSourceCopy)
+	_GDIPlus_GraphicsSetCompositingMode($hContext, $GDIP_COMPOSITINGMODESOURCECOPY)
 	_GDIPlus_GraphicsFillRect($hContext, 420, 10, 300, 300, $hBrush)
 	_GDIPlus_GraphicsFillRect($hContext, 490, 60, 300, 300, $hBrush)
 	$iMode2 = _GDIPlus_GraphicsGetCompositingMode($hContext)

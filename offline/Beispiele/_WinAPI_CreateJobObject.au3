@@ -1,4 +1,3 @@
-#include <APIProcConstants.au3>
 #include <WinAPIConv.au3>
 #include <WinAPIHObj.au3>
 #include <WinAPIProc.au3>
@@ -8,11 +7,11 @@ Local Const $sTemp = @TempDir & '\Test.au3'
 ; Create temporary .au3 file
 Local $hFile = FileOpen($sTemp, 2)
 For $i = 1 To 3
-	FileWriteLine($hFile, 'Run(@SystemDir & "\calc.exe")' & @CRLF & 'Sleep(100)')
+	FileWriteLine($hFile, 'Run(@SystemDir & "\notepad.exe")' & @CRLF & 'Sleep(100)')
 Next
 FileClose($hFile)
 
-; Run 3 times the "calc.exe" and wait until you have closed all 3 processes
+; Run 3 times the "notepad.exe" and wait until you have closed all 3 processes
 _RunWaitEx(@AutoItExe & ' /AutoIt3ExecuteScript "' & $sTemp & '"')
 
 ; Delete temporary .au3 file

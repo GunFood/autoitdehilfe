@@ -15,15 +15,15 @@
 <p style="margin:2px 0 0 0;" class="funcdesc">Erzeugt eine Dialogbox, die es dem Benutzer erm&ouml;glicht, eine Farbe auszuw&auml;hlen<br /></p>
 <p class="codeheader">
 #include &lt;Misc.au3&gt;<br />
-_ChooseColor ( [$iReturnType = 0 [, $iColorRef = 0 [, $iRefType = 0 [, $hWndOwnder = 0]]]] )<br />
+_ChooseColor ( [$vReturnType = 0 [, $iColorRef = 0 [, $iRefType = 0 [, $hWndOwnder = 0]]]] )<br />
 </p>
 
 <h2>Parameter</h2>
 <table>
 <tr>
-<td style="width:15%">$iReturnType</td>
-<td style="width:85%"><strong>[optional]</strong> Bestimmt den R&uuml;ckgabetyp, g&uuml;ltige Werte sind:<br />
-0 - COLORREF RGB Farbe<br />
+<td style="width:15%">$vReturnType</td>
+<td style="width:85%"><strong>[optional]</strong> Bestimmt den R&uuml;ckgabetyp, g&uuml;ltige Werte sind: siehe Bemerkungen f&uuml;r andere Werte.<br />
+0 - COLORREF RGB Farbe (Standard)<br />
 1 - BGR hex<br />
 2 - RGB hex</td>
 </tr>
@@ -33,8 +33,8 @@ _ChooseColor ( [$iReturnType = 0 [, $iColorRef = 0 [, $iRefType = 0 [, $hWndOwnd
 </tr>
 <tr>
 <td>$iRefType</td>
-<td><strong>[optional]</strong> von $iColorRef eingelesener Typ, g&uuml;ltige Werte sind:<br />
-0 - COLORREF RGB Farbe<br />
+<td><strong>[optional]</strong> von $iColorRef eingelesener Typ, g&uuml;ltige Werte sind: siehe Bemerkungen f&uuml;r andere Werte.<br />
+0 - COLORREF RGB Farbe (Standard)<br />
 1 - BGR hex<br />
 2 - RGB hex</td>
 </tr>
@@ -48,13 +48,41 @@ _ChooseColor ( [$iReturnType = 0 [, $iColorRef = 0 [, $iRefType = 0 [, $hWndOwnd
 <table class="noborder">
 <tr>
 <td style="width:10%" class="valign-top">Erfolg:</td>
-<td style="width:90%">gew&auml;hlte Farbe</td>
+<td style="width:90%">Hex-Wert der ausgew&auml;hlten Farbe oder ein Array, das auch die benutzerdefinierten Farben enth&auml;lt</td>
 </tr>
 <tr>
 <td class="valign-top">Fehler:</td>
-<td>-1</td>
+<td>setzt @error<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-3	: vom Benutzer abgebrochene oder ung&uuml;ltige dll struct.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-4	: ung&uuml;ltiger $vReturnType Wert.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-5	: ung&uuml;ltiges $vReturnType Array.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;Other&nbsp;: Fehler zur&uuml;ckgegeben vom Dll-Aufruf.</td>
 </tr>
 </table>
+
+<h2>Bemerkungen</h2>
+<p>$vReturnType kann 0 (RGB COLORREF), 1 (Hex BGR), 2 (Hex RGB) sein,<br />
+&nbsp;&nbsp;&nbsp; -9 (gibt gespeicherte benutzerdefinierte Farben zur&uuml;ck),<br />
+&nbsp;&nbsp;&nbsp; -10 (gibt gespeicherte benutzerdefinierte Farben zur&uuml;ck und l&ouml;scht/entfernt gespeicherte benutzerdefinierte Farben),<br />
+&nbsp;&nbsp;&nbsp; oder ein Array (siehe Anmerkung unten).<br />
+    <br />
+$iRefType kann 0 (ColorRef), 1 (BGR Hex), oder 2 (RGB Hex) sein.<br />
+<br />
+$vReturnType kann ein Array[17] sein, wobei:<br />
+&nbsp;&nbsp;&nbsp; Index 0 enth&auml;lt einen Wert von:<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 0@DOUBLE_WS: COLORREF rgbcolor<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 1@DOUBLE_WS: BGR hex<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 2@DOUBLE_WS: RGB hex<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; -9@DOUBLE_WS: gibt die aktuell gespeicherten benutzerdefinierten Farben als Array[17] zur&uuml;ck,<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; und ist &uuml;brigens der Ort, an dem der R&uuml;ckgabewert bei der R&uuml;ckgabe platziert wird (wenn er als Array verwendet wird).<br />
+<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; index 1 bis 16 sind die Farben, die in Benutzerdefinierte Farben in RGB verwendet werden sollen.<br />
+        <br />
+Wenn $vReturnType ein Array ist, wird das ge&auml;nderte Array zur&uuml;ckgegeben (nicht die Farbe als Integer).<br />
+&nbsp;&nbsp;&nbsp; mit der ausgew&auml;hlten Farbe in Array[0], es sei denn, es wird abgebrochen, wodurch keine Aktualisierung erfolgt.<br />
+<br />
+&nbsp;&nbsp;&nbsp; Das Hinzuf&uuml;gen von int(10) zu $vReturnType, wenn es als Integer verwendet wird, wird auch die gespeicherten benutzerdefinierten Farben l&ouml;schen.<br />
+</p>
 
 <h2 class="bottom">Beispiel</h2>
 <script type="text/javascript">

@@ -2,7 +2,7 @@
 
 _DebugSetup()
 
-_DebugReport("message1")
+_DebugOut("message1")
 
 SomeUDF("anyfunction")
 If @error Then _DebugReportEx("user32|anyfunction", True); wird an die letzte Errormeldung angehangen
@@ -10,7 +10,7 @@ If @error Then _DebugReportEx("user32|anyfunction", True); wird an die letzte Er
 Local $iRet = SomeUDF("CloseClipboard")
 If @error Or $iRet = 0 Then _DebugReportEx("user32|CloseClipboard")
 
-_DebugReport("message2")
+_DebugOut("message2")
 
 $iRet = SomeUDF("CloseClipboard")
 If @error Or $iRet = 0 Then _DebugReportEx("user32|CloseClipboard", False, True) ; Skript wird "zerstört"

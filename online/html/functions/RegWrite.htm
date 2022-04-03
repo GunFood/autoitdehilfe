@@ -52,8 +52,8 @@ RegWrite ( "keyname" [, "valuename", "type", value] )<br />
 <td>  1 = der angegebene Schl&uuml;ssel kann nicht ge&ouml;ffnet werden<br />
 &nbsp;2 = der angegebene Hauptschl&uuml;ssel kann nicht ge&ouml;ffnet werden<br />
 &nbsp;3 = es kann keine Verbindung per Netzwerk zur Registrierung hergestellt werden<br />
--1 = der angegebene Wert kann nicht ge&ouml;ffnet werden<br />
--2 = der Wertetyp wird nicht unterst&uuml;tzt</td>
+-1&nbsp;= der angegebene Wert kann nicht ge&ouml;ffnet werden<br />
+-2&nbsp;= der Wertetyp wird nicht unterst&uuml;tzt</td>
 </tr>
 </table>
 
@@ -62,6 +62,20 @@ RegWrite ( "keyname" [, "valuename", "type", value] )<br />
 <br />
 Wenn bei einer 64-bit Windows-Version ein 64-bit spezifischer Wert oder Schl&uuml;ssel geschrieben werden soll, muss dem Hauptschl&uuml;ssel HK... ein 64 angeh&auml;ngt werden, z.B. HKLM64.<br />
 <br />
+Registry:<br />
+- HKLM\SOFTWARE\...: 64 Bit-Zweig<br />
+- HKLM\SOFTWARE\WOW6432Node\...: 32 Bit-Zweig<br />
+<br />
+Ausf&uuml;hrung als 32bit AutoIt-Programm:<br />
+- HKLM\SOFTWARE\...: HKLM\SOFTWARE\WOW6432Node... Zweig wird verwendet<br />
+- HKLM64\SOFTWARE\...: HKLM\SOFTWARE\... Zweig wird verwendet<br />
+<br />
+Ausf&uuml;hrung als 64bit AutoIt-Programm:<br />
+- HKLM\SOFTWARE\...: HKLM\SOFTWARE\... Zweig wird verwendet<br />
+- HKLM64\SOFTWARE\...: HKLM\SOFTWARE\... Zweig wird verwendet<br />
+<br />
+Details siehe <a href="https://docs.microsoft.com/de-de/troubleshoot/windows-client/deployment/view-system-registry-with-64-bit-windows" class="ext">https://docs.microsoft.com/de-de/troubleshoot/windows-client/deployment/view-system-registry-with-64-bit-windows</a><br />
+<br />
 AutoIt unterst&uuml;tzt Registry-Werte der Typen REG_BINARY, REG_SZ, REG_MULTI_SZ, REG_EXPAND_SZ, REG_QWORD und REG_DWORD.<br />
 <br />
 Um mit dem <strong>(Standard)</strong>-Wert zu operieren, muss man <strong>""</strong> (einen leeren String) als Wertname verwenden.<br />
@@ -69,6 +83,8 @@ Um mit dem <strong>(Standard)</strong>-Wert zu operieren, muss man <strong>""</s
 Wenn ein Schl&uuml;ssel vom Typ REG_MULTI_SZ geschrieben wird, m&uuml;ssen die Werte mit @LF getrennt werden. Der Schl&uuml;sselwert darf nicht mit einem @LF enden, es sei denn, man m&ouml;chte einen leeren Teilstring (siehe das Beispiel).<br />
 <br />
 Es ist m&ouml;glich, Registries im Netzwerk zu bearbeiten. Dazu ist "\\Computername\Schl&uuml;sselname" zu verwenden. Um diese Funktion verwenden zu k&ouml;nnen, muss man die entsprechenden Zugriffsrechte besitzen.<br />
+<br />
+Abh&auml;ngig vom Start-Registrierungsschl&uuml;ssel wird #RequireAdmin wie f&uuml;r den Schl&uuml;ssel "HKEY_LOCAL_MACHINE" ben&ouml;tigt.<br />
 </p>
 
 <h2>Verwandte Funktionen</h2>
@@ -84,6 +100,7 @@ alert("Das Beispiel wurde in die Zwischenablage kopiert");
 }
 }
 </script>
+<h3>Beispiel 1</h3>
 <div class="codeSnippetContainer">
 	<div class="codeSnippetContainerTabs">
 <script type="text/javascript">
@@ -135,6 +152,67 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; L&ouml;scht den tempor&auml;ren Registryschl&uuml;ssel.</span>
 <span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/RegDelete.htm"><span class="S4">RegDelete</span></a><span class="S8">(</span><span class="S7">"HKEY_CURRENT_USER\Software\AutoIt_Example"</span><span class="S8">)</span>
 <a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 2</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\RegWrite[02].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgboxConstants.au3&gt;</span>
+
+<span class="S1">;~ #RequireAdmin</span>
+
+<span class="S1">; require admin privilege</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"HKEY_LOCAL_MACHINE64\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Active Setup Temp Folders"</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iRegWrite</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/RegWrite.htm"><span class="S4">RegWrite</span></a><span class="S8">(</span><span class="S9">$sKey</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"test"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"REG_DWORD"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"1"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$iRegWrite</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_ICONWARNING</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S9">$MB_TOPMOST</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"REQUIRE Admin"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Cannot be created"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sKey</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'Return = '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iRegWrite</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'@error = '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'@extended = '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">' (0x'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Hex.htm"><span class="S4">Hex</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">')'</span><span class="S8">)</span><span class="S0"> </span><span class="S1">;### Debug MSGBOX</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_TOPMOST</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"RegWrite"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sKey</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"succesfully created"</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; clean registry</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/RegDelete.htm"><span class="S4">RegDelete</span></a><span class="S8">(</span><span class="S9">$sKey</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"test"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S1">; Does not require admin privilege</span>
+<span class="S9">$sKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"HKEY_CURRENT_USER\Software\Test"</span>
+<span class="S9">$iRegWrite</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/RegWrite.htm"><span class="S4">RegWrite</span></a><span class="S8">(</span><span class="S7">"HKEY_CURRENT_USER\Software\Test"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"test"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"REG_DWORD"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"1"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$iRegWrite</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Should not occur</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_ICONERROR</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S9">$MB_TOPMOST</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"AutoIt Error"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Cannot create"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sKey</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'Return = '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iRegWrite</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'@error = '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'@extended = '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">' (0x'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Hex.htm"><span class="S4">Hex</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">')'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/IsAdmin.htm"><span class="S4">IsAdmin</span></a><span class="S8">()</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_TOPMOST</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"RegWrite"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sKey</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" succesfully created"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"- "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sKey</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" succesfully created"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; clean registry</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/RegDelete.htm"><span class="S4">RegDelete</span></a><span class="S8">(</span><span class="S9">$sKey</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"test"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/RegDelete.htm"><span class="S4">RegDelete</span></a><span class="S8">(</span><span class="S9">$sKey</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
 <span class="S0"></span></span>
 </pre>
 </div>

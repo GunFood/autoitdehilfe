@@ -20,20 +20,20 @@ _WinAPI_RegEnumKey ( $hKey, $iIndex )<br />
 <table>
 <tr>
 <td style="width:15%">$hKey</td>
-<td style="width:85%">Handle to an open registry key. The key must have been opened with the $KEY_ENUMERATE_SUB_KEYS access<br />
-right. This handle is returned by the <a href="_WinAPI_RegCreateKey.htm">_WinAPI_RegCreateKey()</a> or <a href="_WinAPI_RegOpenKey.htm">_WinAPI_RegOpenKey()</a> function.<br />
-It can also be one of the following predefined keys.<br />
-$HKEY_CLASSES_ROOT<br />
-$HKEY_CURRENT_CONFIG<br />
-$HKEY_CURRENT_USER<br />
-$HKEY_LOCAL_MACHINE<br />
-$HKEY_PERFORMANCE_DATA<br />
-$HKEY_USERS</td>
+<td style="width:85%">Handle to an open registry key. The key must have been opened with the $KEY_ENUMERATE_SUB_KEYS access right.<br />
+This handle is returned by the <a href="_WinAPI_RegCreateKey.htm">_WinAPI_RegCreateKey()</a> or <a href="_WinAPI_RegOpenKey.htm">_WinAPI_RegOpenKey()</a> function.<br />
+It can also be one of the following predefined keys:<br />
+&nbsp;&nbsp;&nbsp; $HKEY_CLASSES_ROOT<br />
+&nbsp;&nbsp;&nbsp; $HKEY_CURRENT_CONFIG<br />
+&nbsp;&nbsp;&nbsp; $HKEY_CURRENT_USER<br />
+&nbsp;&nbsp;&nbsp; $HKEY_LOCAL_MACHINE<br />
+&nbsp;&nbsp;&nbsp; $HKEY_PERFORMANCE_DATA<br />
+&nbsp;&nbsp;&nbsp; $HKEY_USERS</td>
 </tr>
 <tr>
 <td>$iIndex</td>
-<td>The index of the subkey to retrieve. This parameter should be zero for the first call to the <a href="_WinAPI_RegEnumKey.htm">_WinAPI_RegEnumKey()</a><br />
-function and then incremented for subsequent calls.</td>
+<td>The index of the subkey to retrieve.<br />
+This parameter should be zero for the first call to the <a href="_WinAPI_RegEnumKey.htm">_WinAPI_RegEnumKey()</a> function and then incremented for subsequent calls.</td>
 </tr>
 </table>
 
@@ -41,7 +41,7 @@ function and then incremented for subsequent calls.</td>
 <table class="noborder">
 <tr>
 <td style="width:10%" class="valign-top">Success:</td>
-<td style="width:90%">The string that contains the name of the subkey.</td>
+<td style="width:90%">The string that contains the name of the subkey. The LastWriteTime of the subkey is return in @extended.</td>
 </tr>
 <tr>
 <td class="valign-top">Failure:</td>
@@ -50,16 +50,14 @@ function and then incremented for subsequent calls.</td>
 </table>
 
 <h2>Bemerkungen</h2>
-<p>To enumerate subkeys, an application should initially call the <a href="_WinAPI_RegEnumKey.htm">_WinAPI_RegEnumKey()</a> function with the $iIndex<br />
-parameter set to zero. The application should then increment the $iIndex parameter and call <a href="_WinAPI_RegEnumKey.htm">_WinAPI_RegEnumKey()</a><br />
-until there are no more subkeys (meaning the @extended flag sets to ERROR_NO_MORE_ITEMS (259)).<br />
+<p>To enumerate subkeys, an application should initially call the <a href="_WinAPI_RegEnumKey.htm">_WinAPI_RegEnumKey()</a> function with the $iIndex parameter set to zero.<br />
+The application should then increment the $iIndex parameter and call <a href="_WinAPI_RegEnumKey.htm">_WinAPI_RegEnumKey()</a> until there are no more subkeys (meaning the @extended flag sets to ERROR_NO_MORE_ITEMS (259)).<br />
 <br />
-The application can also set $iIndex to the index of the last subkey on the first call to the function and<br />
-decrement the index until the subkey with the index 0 is enumerated. To retrieve the index of the last subkey,<br />
-use the <a href="_WinAPI_RegQueryInfoKey.htm">_WinAPI_RegQueryInfoKey()</a> function.<br />
+The application can also set $iIndex to the index of the last subkey on the first call to the function and decrement the index until the subkey with the index 0 is enumerated.<br />
+To retrieve the index of the last subkey, use the <a href="_WinAPI_RegQueryInfoKey.htm">_WinAPI_RegQueryInfoKey()</a> function.<br />
 <br />
-While an application is using the <a href="_WinAPI_RegEnumKey.htm">_WinAPI_RegEnumKey()</a> function, it should not make calls to any registration<br />
-functions that might change the key being enumerated.<br />
+While an application is using the <a href="_WinAPI_RegEnumKey.htm">_WinAPI_RegEnumKey()</a> function,<br />
+it should not make calls to any registration functions that might change the key being enumerated.<br />
 </p>
 
 <h2>Verwandte Funktionen</h2>
@@ -102,25 +100,36 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
 <span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;APIRegConstants.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Date.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Debug.au3&gt;</span>
 <a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIError.au3&gt;</span>
 <a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIReg.au3&gt;</span>
 
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_RegOpenKey.htm"><span class="S15">_WinAPI_RegOpenKey</span></a><span class="S8">(</span><span class="S9">$HKEY_CLASSES_ROOT</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'CLSID'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$KEY_READ</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$MB_ICONERROR</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">),</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetErrorMessage.htm"><span class="S15">_WinAPI_GetErrorMessage</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S8">))</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a>
-<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iCount</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_RegQueryInfoKey.htm"><span class="S15">_WinAPI_RegQueryInfoKey</span></a><span class="S8">(</span><span class="S9">$hKey</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aKey</span><span class="S8">[</span><span class="S9">$iCount</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]]</span>
-<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aKey</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span>
-<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aKey</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_RegEnumKey.htm"><span class="S15">_WinAPI_RegEnumKey</span></a><span class="S8">(</span><span class="S9">$hKey</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$i</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">Example</span><span class="S8">()</span>
 
-<a class="codeSnippetLink" href="../libfunctions/_WinAPI_RegCloseKey.htm"><span class="S15">_WinAPI_RegCloseKey</span></a><span class="S8">(</span><span class="S9">$hKey</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_RegOpenKey.htm"><span class="S15">_WinAPI_RegOpenKey</span></a><span class="S8">(</span><span class="S9">$HKEY_CLASSES_ROOT</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'CLSID'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$KEY_READ</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugSetup.htm"><span class="S15">_DebugSetup</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugReport.htm"><span class="S15">_DebugReport</span></a><span class="S8">(</span><span class="S7">"! RegOpenKey @error ="</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetErrorMessage.htm"><span class="S15">_WinAPI_GetErrorMessage</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iCount</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_RegQueryInfoKey.htm"><span class="S15">_WinAPI_RegQueryInfoKey</span></a><span class="S8">(</span><span class="S9">$hKey</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aKey</span><span class="S8">[</span><span class="S9">$iCount</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]][</span><span class="S3">2</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$tLocalFILETIME</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tFileWriteTime</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aKey</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aKey</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">][</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_RegEnumKey.htm"><span class="S15">_WinAPI_RegEnumKey</span></a><span class="S8">(</span><span class="S9">$hKey</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$i</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$tFileWriteTime</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$tFileWriteTime</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$tLocalFILETIME</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_Date_Time_FileTimeToLocalFileTime.htm"><span class="S15">_Date_Time_FileTimeToLocalFileTime</span></a><span class="S8">(</span><span class="S9">$tFileWriteTime</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aKey</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">][</span><span class="S3">1</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_Date_Time_FileTimeToStr.htm"><span class="S15">_Date_Time_FileTimeToStr</span></a><span class="S8">(</span><span class="S9">$tLocalFILETIME</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
 
-<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aKey</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'_WinAPI_RegEnumKey'</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_RegCloseKey.htm"><span class="S15">_WinAPI_RegCloseKey</span></a><span class="S8">(</span><span class="S9">$hKey</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugArrayDisplay.htm"><span class="S15">_DebugArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aKey</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'_WinAPI_RegEnumKey'</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
 <span class="S0"></span></span>
 </pre>
 </div>

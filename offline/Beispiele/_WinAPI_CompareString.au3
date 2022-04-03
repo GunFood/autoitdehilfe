@@ -5,7 +5,7 @@
 #include <WinAPISys.au3>
 
 If Number(_WinAPI_GetVersion()) < 6.1 Then
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Error', 'Require Windows 7 or later.')
+	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Error', 'Require Windows 7 or later.')
 	Exit
 EndIf
 

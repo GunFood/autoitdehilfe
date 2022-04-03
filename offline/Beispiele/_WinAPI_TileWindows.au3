@@ -3,14 +3,18 @@
 #include <WinAPISysWin.au3>
 #include <WindowsConstants.au3>
 
-Local $aWnds[4]
+_Example()
 
-For $i = 0 To UBound($aWnds) - 1
-	$aWnds[$i] = GUICreate('#' & ($i + 1), 400, 400, -1, -1, BitOR($WS_CAPTION, $WS_POPUP, $WS_SIZEBOX, $WS_SYSMENU))
-	GUISetState(@SW_SHOW)
-Next
+Func _Example()
+	Local $aWnds[4]
 
-_WinAPI_TileWindows($aWnds, _WinAPI_CreateRectEx(20, 20, 600, 600))
+	For $i = 0 To UBound($aWnds) - 1
+		$aWnds[$i] = GUICreate('#' & ($i + 1), 400, 400, -1, -1, BitOR($WS_CAPTION, $WS_POPUP, $WS_SIZEBOX, $WS_SYSMENU))
+		GUISetState(@SW_SHOW)
+	Next
 
-Do
-Until GUIGetMsg() = $GUI_EVENT_CLOSE
+	_WinAPI_TileWindows($aWnds, _WinAPI_CreateRectEx(20, 20, 600, 600))
+
+	Do
+	Until GUIGetMsg() = $GUI_EVENT_CLOSE
+EndFunc   ;==>_Example

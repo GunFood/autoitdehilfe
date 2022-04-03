@@ -5,11 +5,9 @@
 Example()
 
 Func Example()
-	Local $idCombo
-
 	; Erstellt eine GUI
-	GUICreate("ComboBox: Ermittelt die aktuelle Auswahl", 400, 296)
-	$idCombo = GUICtrlCreateCombo("", 2, 2, 396, 296)
+	GUICreate("ComboBox: Ermittelt die aktuelle Auswahl (v" & @AutoItVersion & ")", 400, 296)
+	Local $idCombo = GUICtrlCreateCombo("", 2, 2, 396, 296)
 	GUISetState(@SW_SHOW)
 
 	; Fügt Dateien hinzu

@@ -17,17 +17,17 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	; Fügt die Spalten hinzu
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 0", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 1", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 2", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 3", 100)
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 4", 100)
 
 	; Zeigt das Rechteck von Spalte 1
 	$aRect = _GUICtrlHeader_GetItemRect($hHeader, 0)
-	MemoWrite("Spalte 1 links .: " & $aRect[0])
-	MemoWrite("Spalte 1 oben ..: " & $aRect[1])
-	MemoWrite("Spalte 1 rechts : " & $aRect[2])
-	MemoWrite("Spalte 1 unten .: " & $aRect[3])
+	MemoWrite("Spalte 0 links .: " & $aRect[0])
+	MemoWrite("Spalte 0 oben ..: " & $aRect[1])
+	MemoWrite("Spalte 0 rechts : " & $aRect[2])
+	MemoWrite("Spalte 0 unten .: " & $aRect[3])
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

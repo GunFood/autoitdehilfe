@@ -14,13 +14,13 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	; Fügt die Spalten hinzu
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 0", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 1", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 2", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 3", 100)
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 4", 100)
 
-	; Löscht Spalte 3
-	MsgBox($MB_SYSTEMMODAL, "Information", "Löschen von Spalte 3")
+	; Löscht Spalte 2
+	MsgBox($MB_SYSTEMMODAL, "Information", "Löschen von Spalte 2")
 	_GUICtrlHeader_DeleteItem($hHeader, 2)
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.

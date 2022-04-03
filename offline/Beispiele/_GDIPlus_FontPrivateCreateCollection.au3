@@ -7,13 +7,17 @@ Example()
 Func Example()
 	Local $hGUI, $hGraphic, $hBrush, $hFormat, $hFamily, $hFont, $tLayout, $sFontInternalName, $hCollection, $sFontFile = @WindowsDir & "\Fonts\Times.ttf"
 
+	; X64 running support
+	Local $sWow64 = ""
+	If @AutoItX64 Then $sWow64 = "\Wow6432Node"
+
 	If _WinAPI_DwmIsCompositionEnabled() Then
 		If Not @Compiled Then
 			$sFontFile = StringRegExpReplace(@AutoItExe, "(.*)\\.*", "$1")
 		Else
-			$sFontFile = StringRegExpReplace(RegRead("HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\AutoItv3", "DisplayIcon"), "(.*)\\.*", "$1")
+			$sFontFile = StringRegExpReplace(RegRead("HKLM\SOFTWARE" & $sWow64 & "\Microsoft\Windows\CurrentVersion\Uninstall\AutoItv3", "DisplayIcon"), "(.*)\\.*", "$1")
 		EndIf
-		If $sFontFile = "" Then Exit MsgBox(BitOR($MB_ICONERROR, $MB_TOPMOST), "Error", "Unable to locate SF Square Head Bold.ttf in AutoIt sub dir!")
+		If $sFontFile = "" Then Exit MsgBox(($MB_ICONERROR + $MB_TOPMOST), "Error", "Unable to locate SF Square Head Bold.ttf in AutoIt sub dir!")
 		$sFontFile &= "\Examples\Helpfile\Extras\SF Square Head Bold.ttf"
 	EndIf
 
@@ -25,7 +29,7 @@ Func Example()
 	_GDIPlus_Startup()
 	$hGraphic = _GDIPlus_GraphicsCreateFromHWND($hGUI)
 	_GDIPlus_GraphicsSetSmoothingMode($hGraphic, $GDIP_SMOOTHINGMODE_HIGHQUALITY) ;Sets the graphics object rendering quality (anti aliasing)
-	_GDIPlus_GraphicsSetTextRenderingHint($hGraphic, $GDIP_TEXTRENDERINGHINT_ANTIALIASGRIDFIT) ;set the anti aliasing for fonts
+	_GDIPlus_GraphicsSetTextRenderingHint($hGraphic, $GDIP_TEXTRENDERINGHINTANTIALIASGRIDFIT) ;set the anti aliasing for fonts
 
 	$hCollection = _GDIPlus_FontPrivateCreateCollection() ;create a PrivateFontCollection object to add fonts later
 	_GDIPlus_FontPrivateAddFont($hCollection, $sFontFile) ;add the font to the font collection

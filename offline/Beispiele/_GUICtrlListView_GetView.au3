@@ -5,11 +5,12 @@
 Example()
 
 Func Example()
-	Local $idListView
-
-	GUICreate("ListView: Ansicht ermitteln", 400, 300)
-	$idListView = GUICtrlCreateListView("", 2, 2, 394, 268)
+	GUICreate("ListView Setzt die Ansicht (v" & @AutoItVersion & ")", 400, 300)
+	Local $idListview = GUICtrlCreateListView("", 2, 2, 394, 268)
 	GUISetState(@SW_SHOW)
+
+	; Set das ANSI Format
+;~     _GUICtrlListView_SetUnicodeFormat($idListview, False)
 
 	; Fügt die Spalten hinzu
 	_GUICtrlListView_AddColumn($idListView, "Items", 100)

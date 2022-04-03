@@ -6,14 +6,17 @@
 Example_UDF_Created() ; verwendet Listview-UDF
 
 Func Example_UDF_Created()
-	Local $hGUI, $hImage, $aImage, $hListView
+	Local $iStylesEx = BitOR($LVS_EX_FULLROWSELECT, $LVS_EX_DOUBLEBUFFER)
 
-	$hGUI = GUICreate("ListView: Ermittelt das Hintergrundbild (UDF)", 600, 550)
-	$hListView = _GUICtrlListView_Create($hGUI, "", 2, 2, 596, 500, -1, -1, True) ; Der letzte Parameter führt zum Aufruf von CoInitializeEx
+	Local $hGUI = GUICreate("(UDF) ListView: Setzt das Hintergrundbild (v" & @AutoItVersion & ")", 600, 550)
+	Local $hListView = _GUICtrlListView_Create($hGUI, "", 2, 2, 596, 500, -1, -1, True)     ; Der letzte Parameter führt zum Aufruf von CoInitializeEx
 	_GUICtrlListView_SetExtendedListViewStyle($hListView, BitOR($LVS_EX_FULLROWSELECT, $LVS_EX_DOUBLEBUFFER))
 
+	; Setzt das ANSI Format
+;~     _GUICtrlListView_SetUnicodeFormat($hListView, False)
+
 	; Lädt die Bilder
-	$hImage = _GUIImageList_Create()
+	Local $hImage = _GUIImageList_Create()
 	_GUIImageList_Add($hImage, _GUICtrlListView_CreateSolidBitMap($hListView, 0xFF0000, 16, 16))
 	_GUIImageList_Add($hImage, _GUICtrlListView_CreateSolidBitMap($hListView, 0x00FF00, 16, 16))
 	_GUIImageList_Add($hImage, _GUICtrlListView_CreateSolidBitMap($hListView, 0x0000FF, 16, 16))
@@ -47,7 +50,7 @@ Func Example_UDF_Created()
 
 	; Setzt das Hintergrundbild
 	_GUICtrlListView_SetBkImage($hListView, $sFilePath)
-	$aImage = _GUICtrlListView_GetBkImage($hListView)
+	Local $aImage = _GUICtrlListView_GetBkImage($hListView)
 
 	GUISetState(@SW_SHOW)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Hintergrundbild: " & @CRLF & $aImage[1])
@@ -55,7 +58,7 @@ Func Example_UDF_Created()
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
-	DllCall('ole32.dll', 'long', 'CoUinitialize') ; Muss für jeden Aufruf von CoInitializeEx ausgeführt werden
+	DllCall('ole32.dll', 'long', 'OleUninitialize')     ; Muss für jeden Aufruf von CoInitializeEx ausgeführt werden
 
 	GUIDelete()
 	FileDelete($sFilePath)

@@ -13,8 +13,18 @@ _DebugReportVar("Array2D", $aArray2D)
 Local $aArray[7] = [1, 1.1, "string", Binary(0x010203), Ptr(-1), False, Default]
 _DebugReportVar("Array", $aArray)
 
-Local $aArray3D[5][2][10]
+Local $aArray3D[5][2][2]
+For $r = 0 To UBound($aArray3D, 1) - 1
+	For $c = 0 To UBound($aArray3D, 2) - 1
+		For $k = 0 To UBound($aArray3D, 3) - 1
+			$aArray3D[$r][$c][$k] = $r & "," & $c & "," & $k
+		Next
+	Next
+Next
 _DebugReportVar("Array3D", $aArray3D)
+
+Local $aArray4D[5][2][2][10]
+_DebugReportVar("Array4D", $aArray4D)
 
 Local $iInt = -1
 _DebugReportVar("int", $iInt)

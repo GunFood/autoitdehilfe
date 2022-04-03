@@ -9,7 +9,7 @@ Global Const $g_sPath = @TempDir & '\~TEST~'
 
 DirCreate($g_sPath)
 If Not FileExists($g_sPath) Then
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Error', 'Unable to create folder.')
+	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Error', 'Unable to create folder.')
 	Exit
 EndIf
 ShellExecute($g_sPath) ; to ease a file creation in this folder
@@ -21,7 +21,7 @@ $g_ahObj[0] = _WinAPI_FindFirstChangeNotification($g_sPath, $FILE_NOTIFY_CHANGE_
 $g_ahObj[1] = _WinAPI_FindFirstChangeNotification($g_sPath, $FILE_NOTIFY_CHANGE_DIR_NAME)
 
 If (Not $g_ahObj[0]) Or (Not $g_ahObj[1]) Then
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Error', 'Unable to create change notification.')
+	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Error', 'Unable to create change notification.')
 	Exit
 EndIf
 
@@ -44,7 +44,7 @@ While 1
 			ContinueLoop
 	EndSwitch
 	If Not _WinAPI_FindNextChangeNotification($g_ahObj[$iID]) Then
-		MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Error', 'Unexpected error.')
+		MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Error', 'Unexpected error.')
 		Exit
 	EndIf
 WEnd

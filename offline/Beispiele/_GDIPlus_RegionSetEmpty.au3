@@ -28,7 +28,11 @@ Func Example1()
 EndFunc   ;==>Example1
 
 Func Example2()
-	Run(RegRead((@AutoItX64 = True ? "HKLM\SOFTWARE\Wow6432Node\AutoIt v3\AutoIt" : "HKLM\SOFTWARE\AutoIt v3\AutoIt"), "InstallDir") & "\Au3Info.exe")
+	; X64 running support
+	Local $sWow64 = ""
+	If @AutoItX64 Then $sWow64 = "\Wow6432Node"
+
+	Run(RegRead("HKLM\SOFTWARE" & $sWow64 & "\AutoIt v3\AutoIt", "InstallDir") & "\Au3Info.exe")
 	Local $sClass = "Au3Info"
 
 	WinWait("[CLASS:" & $sClass & "]", "", 3)

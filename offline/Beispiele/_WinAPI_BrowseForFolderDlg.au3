@@ -37,7 +37,7 @@ Func _BrowseProc($hWnd, $iMsg, $wParam, $lParam)
 				ConsoleWrite($sPath & @CRLF)
 			EndIf
 		Case $BFFM_VALIDATEFAILED
-			MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Fehler', _WinAPI_GetString($wParam) & ' ist ungültig.', 0, $hWnd)
+			MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Fehler', _WinAPI_GetString($wParam) & ' ist ungültig.', 0, $hWnd)
 			Return 1
 	EndSwitch
 	Return 0

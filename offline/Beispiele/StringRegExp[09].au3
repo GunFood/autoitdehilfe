@@ -1,22 +1,15 @@
 #include <Array.au3>
 #include <Constants.au3>
 
-; ----------------- Anwendung von gierigen und faulen Wiederholungszeichen
-; Das erste * ist gierig. Es wird die längste Stelle gesucht
-$aRegExp = StringRegExp("Die Abkürzung 'ISP' heißt 'Internet Service Provider'.", ".*'(.*)'.*", 3)
-_ArrayDisplay($aRegExp)
+; ----------------- Anwendung von \b
+; Durch das Voranstellen von \b und das anhängen von \b an das Ende wird nur an der Wortgrenze gesucht.
+; "Abgrund oder folge" wird nicht gefunden, da das Wort Abgrund und nicht Grund heisst
 
-; Durch anhängen eines ? wird es faul und es wird die kürzeste Stelle gesucht
-$aRegExp = StringRegExp("Die Abkürzung 'ISP' heißt 'Internet Service Provider'.", ".*?'(.*?)'.*", 3)
-_ArrayDisplay($aRegExp)
-
-; Das erste * ist gierig. Es wird die längste Stelle gesucht
-$aRegExp = StringRegExp("12-34.abc.def@mail.de", "(.*)\.(.*)*@(.*)\.(.*)", 3)
-_ArrayDisplay($aRegExp)
-
-; Durch anhängen eines ? wird es faul und es wird die kürzeste Stelle gesucht
-$aRegExp = StringRegExp("12-34.abc.def@mail.de", "(.*?)\.(.*)*@(.*)\.(.*)", 3)
-_ArrayDisplay($aRegExp)
+$sString = _
+		"Grund oder Folge der Armut?" & @CRLF & _
+		"Fahre ich in den Abgrund oder folge ich der Straße?"
+$aResult = StringRegExp($sString, "(?i)\bgrund oder folge\b", 3)
+_ArrayDisplay($aResult, "StringRegExp Results")
 
 
 

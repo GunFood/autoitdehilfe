@@ -17,16 +17,16 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	; Fügt die Spalten hinzu
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 0", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 1", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 2", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 3", 100)
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 4", 100)
 
-	; Setzt die Ausrichtung von Spalte 1 zurück
+	; Setzt die Ausrichtung von Spalte 0 zurück
 	_GUICtrlHeader_SetItemAlign($hHeader, 0, 2)
 
-	; Zeigt die Ausrichtung von Spalte 1
-	MemoWrite("Ausrichtung von Spalte 1: " & _GUICtrlHeader_GetItemAlign($hHeader, 0))
+	; Zeigt die Ausrichtung von Spalte 0
+	MemoWrite("Ausrichtung von Spalte 0: " & _GUICtrlHeader_GetItemAlign($hHeader, 0))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

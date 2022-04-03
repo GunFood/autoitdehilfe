@@ -7,7 +7,7 @@
 #include <WindowsConstants.au3>
 
 Run(@SystemDir & '\calc.exe')
-Local $hWnd = WinWaitActive("[CLASS:CalcFrame]", '', 3)
+Local $hWnd = WinWaitActive("[CLASS:ApplicationFrameWindow]", '', 3)
 If Not $hWnd Then
 	Exit
 EndIf
@@ -48,4 +48,4 @@ GUISetState(@SW_SHOW)
 Do
 Until GUIGetMsg() = $GUI_EVENT_CLOSE
 
-WinClose("[CLASS:CalcFrame]", "")
+WinClose("[CLASS:ApplicationFrameWindow]", "")

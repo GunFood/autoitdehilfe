@@ -10,7 +10,7 @@
 Global Const $STM_SETIMAGE = 0x0172
 
 If Number(_WinAPI_GetVersion()) < 6.0 Then
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Fehler', 'Benötigt Windows Vista oder neuer.')
+	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Fehler', 'Benötigt Windows Vista oder neuer.')
 	Exit
 EndIf
 

@@ -5,11 +5,9 @@
 Example()
 
 Func Example()
-	Local $idEdit
-
 	; Erstellt eine GUI
-	GUICreate("Edit: Text ermitteln", 400, 300)
-	$idEdit = GUICtrlCreateEdit("", 2, 2, 394, 268)
+	GUICreate("Edit: Setzt und ermittelt  Text (v" & @AutoItVersion & ")", 400, 300)
+	Local $idEdit = GUICtrlCreateEdit("", 2, 2, 394, 268)
 	GUISetState(@SW_SHOW)
 
 	; Setzt den Text

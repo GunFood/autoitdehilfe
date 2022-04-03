@@ -17,7 +17,7 @@ Func Example()
 				Exit
 			Case $idButton
 				If Not $bNewStyle Then
-					GUISetStyle(BitOR($WS_POPUPWINDOW, $WS_THICKFRAME), BitOR($WS_EX_CLIENTEDGE, $WS_EX_TOOLWINDOW))
+					GUISetStyle(BitOR($WS_CAPTION, $WS_POPUPWINDOW, $WS_THICKFRAME), BitOR($WS_EX_CLIENTEDGE, $WS_EX_TOOLWINDOW))
 					GUICtrlSetData($idButton, 'Stil zurücksetzen')
 					$bNewStyle = True
 				Else

@@ -7,11 +7,9 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $tToday, $idMonthCal
-
 	; Erstellt eine GUI
-	GUICreate("MonthCal:: Heute ermitteln", 400, 300)
-	$idMonthCal = GUICtrlCreateMonthCal("", 4, 4, -1, -1, $WS_BORDER, 0x00000000)
+	GUICreate("Month Calendar Heute ermitteln bzw. setzen (v" & @AutoItVersion & ")", 400, 300)
+	Local $idMonthCal = GUICtrlCreateMonthCal("", 4, 4, -1, -1, $WS_BORDER, 0x00000000)
 
 	; Erstellt ein Memo Control
 	$g_idMemo = GUICtrlCreateEdit("", 4, 168, 392, 128, 0)
@@ -20,7 +18,7 @@ Func Example()
 
 	; Heute ermitteln bzw. setzen
 	_GUICtrlMonthCal_SetToday($idMonthCal, @YEAR, 8, 19)
-	$tToday = _GUICtrlMonthCal_GetToday($idMonthCal)
+	Local $tToday = _GUICtrlMonthCal_GetToday($idMonthCal)
 	MemoWrite("Today: " & StringFormat("%02d/%02d/%04d", DllStructGetData($tToday, "Month"), _
 			DllStructGetData($tToday, "Day"), _
 			DllStructGetData($tToday, "Year")))

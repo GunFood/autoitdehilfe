@@ -1,4 +1,5 @@
 #include <MsgBoxConstants.au3>
+#include <WinAPIError.au3>
 
 ; Ich bin der Client, starte mich nach dem Server! (Starte zuerst das TCPAccept Beispielscript).
 
@@ -21,7 +22,7 @@ Func Example()
 	If @error Then
 		; Der Server ist vermutlich offline oder der Port wurde nicht am Server geöffnet.
 		Local $iError = @error
-		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "Verbindung konnte nicht hergestellt werden, Error Code: " & $iError)
+		MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), "", "Verbindung konnte nicht hergestellt werden, Error Code: " & $iError & @CRLF & _WinAPI_GetErrorMessage($iError))
 		Return False
 	Else
 		MsgBox($MB_SYSTEMMODAL, "", "Verbindung wurde erfolgreich hergestellt.")

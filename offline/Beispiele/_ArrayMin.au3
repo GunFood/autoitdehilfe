@@ -13,4 +13,4 @@ For $i = 0 To 3
 	Next
 Next
 _ArrayDisplay($aArray, "2D Array")
-MsgBox($MB_SYSTEMMODAL, 'Minimaler numerischer Wert in Spalte 2', _ArrayMin($aArray, 1, 0, 0, 2))
+MsgBox($MB_SYSTEMMODAL, 'Minimaler numerischer Wert in Spalte 2', _ArrayMin($aArray, 1, 0, -1, 2))

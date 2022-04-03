@@ -13,57 +13,60 @@
 <p class="funcdesc">Creates the specified registry key<br /></p>
 <p class="codeheader">
 #include &lt;WinAPIReg.au3&gt;<br />
-_WinAPI_RegCreateKey ( $hKey [, $sSubKey = '' [, $iAccess = $KEY_ALL_ACCESS [, $iOptions = 0 [, $tSecurity = 0]]]] )<br />
+_WinAPI_RegCreateKey ( $vKey [, $sSubKey = '' [, $iAccess = $KEY_ALL_ACCESS [, $iOptions = 0 [, $tSecurity = 0]]]] )<br />
 </p>
 
 <h2>Parameter</h2>
 <table>
 <tr>
-<td style="width:15%">$hKey</td>
-<td style="width:85%">Handle to an open registry key. If the key already exists, the function opens it. The calling process<br />
-must have $KEY_CREATE_SUB_KEY access to the key. This handle is returned by the <a href="_WinAPI_RegCreateKey.htm">_WinAPI_RegCreateKey()</a><br />
-or <a href="_WinAPI_RegOpenKey.htm">_WinAPI_RegOpenKey()</a> function, or it can be one of the following predefined keys.<br />
-$HKEY_CLASSES_ROOT<br />
-$HKEY_CURRENT_CONFIG<br />
-$HKEY_CURRENT_USER<br />
-$HKEY_LOCAL_MACHINE<br />
-$HKEY_USERS</td>
+<td style="width:15%">$vKey</td>
+<td style="width:85%">Name of the key to be open (see remarks).<br />
+&nbsp;&nbsp;&nbsp; or<br />
+Handle to an open registry key. If the key already exists, the function opens it.<br />
+The calling process must have $KEY_CREATE_SUB_KEY access to the key.<br />
+This handle is returned by the <a href="_WinAPI_RegCreateKey.htm">_WinAPI_RegCreateKey()</a> or <a href="_WinAPI_RegOpenKey.htm">_WinAPI_RegOpenKey()</a> function,<br />
+or it can be one of the following predefined keys:<br />
+&nbsp;&nbsp;&nbsp; $HKEY_CLASSES_ROOT<br />
+&nbsp;&nbsp;&nbsp; $HKEY_CURRENT_CONFIG<br />
+&nbsp;&nbsp;&nbsp; $HKEY_CURRENT_USER<br />
+&nbsp;&nbsp;&nbsp; $HKEY_LOCAL_MACHINE<br />
+&nbsp;&nbsp;&nbsp; $HKEY_USERS</td>
 </tr>
 <tr>
 <td>$sSubKey</td>
-<td><strong>[optional]</strong> The name of a subkey that this function opens or creates. The subkey specified must be a subkey of<br />
-the key identified by the $hKey parameter; it can be up to 32 levels deep in the registry tree.<br />
-If an empty string (Default), the return is a new handle to the key specified by $hKey.</td>
+<td><strong>[optional]</strong> The name of a subkey that this function opens or creates.<br />
+The subkey specified must be a subkey of the key identified by the $vKey parameter; it can be up to 32 levels deep in the registry tree.<br />
+If an empty string (Default), the return is a new handle to the key specified by $vKey.</td>
 </tr>
 <tr>
 <td>$iAccess</td>
 <td><strong>[optional]</strong> The mask that specifies the access rights for the key.<br />
-This parameter can be one or more of the following values.<br />
-$KEY_ALL_ACCESS<br />
-$KEY_CREATE_LINK<br />
-$KEY_CREATE_SUB_KEY<br />
-$KEY_ENUMERATE_SUB_KEYS<br />
-$KEY_EXECUTE<br />
-$KEY_NOTIFY<br />
-$KEY_QUERY_VALUE<br />
-$KEY_READ<br />
-$KEY_SET_VALUE<br />
-$KEY_WOW64_32KEY<br />
-$KEY_WOW64_64KEY<br />
-$KEY_WRITE</td>
+This parameter can be one or more of the following values:<br />
+&nbsp;&nbsp;&nbsp; $KEY_ALL_ACCESS<br />
+&nbsp;&nbsp;&nbsp; $KEY_CREATE_LINK<br />
+&nbsp;&nbsp;&nbsp; $KEY_CREATE_SUB_KEY<br />
+&nbsp;&nbsp;&nbsp; $KEY_ENUMERATE_SUB_KEYS<br />
+&nbsp;&nbsp;&nbsp; $KEY_EXECUTE<br />
+&nbsp;&nbsp;&nbsp; $KEY_NOTIFY<br />
+&nbsp;&nbsp;&nbsp; $KEY_QUERY_VALUE<br />
+&nbsp;&nbsp;&nbsp; $KEY_READ<br />
+&nbsp;&nbsp;&nbsp; $KEY_SET_VALUE<br />
+&nbsp;&nbsp;&nbsp; $KEY_WOW64_32KEY for creation in the 32-bit key area<br />
+&nbsp;&nbsp;&nbsp; $KEY_WOW64_64KEY for creation un the 64-bit key area<br />
+&nbsp;&nbsp;&nbsp; $KEY_WRITE</td>
 </tr>
 <tr>
 <td>$iOptions</td>
-<td><strong>[optional]</strong> This parameter can be one of the following values.<br />
-$REG_OPTION_BACKUP_RESTORE<br />
-$REG_OPTION_CREATE_LINK<br />
-$REG_OPTION_NON_VOLATILE (Default)<br />
-$REG_OPTION_VOLATILE</td>
+<td><strong>[optional]</strong> This parameter can be one of the following values:<br />
+&nbsp;&nbsp;&nbsp; $REG_OPTION_BACKUP_RESTORE<br />
+&nbsp;&nbsp;&nbsp; $REG_OPTION_CREATE_LINK<br />
+&nbsp;&nbsp;&nbsp; $REG_OPTION_NON_VOLATILE (Default)<br />
+&nbsp;&nbsp;&nbsp; $REG_OPTION_VOLATILE</td>
 </tr>
 <tr>
 <td>$tSecurity</td>
-<td><strong>[optional]</strong> $tagSECURITY_ATTRIBUTES structure that determines whether the returned handle can be inherited by<br />
-child processes. If this parameter is 0 (Default), the handle cannot be inherited.</td>
+<td><strong>[optional]</strong> $tagSECURITY_ATTRIBUTES structure that determines whether the returned handle can be inherited by child processes.<br />
+If this parameter is 0 (Default), the handle cannot be inherited.</td>
 </tr>
 </table>
 
@@ -71,10 +74,9 @@ child processes. If this parameter is 0 (Default), the handle cannot be inherite
 <table class="noborder">
 <tr>
 <td style="width:10%" class="valign-top">Success:</td>
-<td style="width:90%">Handle to the opened or created key, @extended flag will contain one of the following<br />
-disposition values:<br />
-0 (False) - The key existed and was simply opened without being changed.<br />
-1 (True) - The key did not exist and was created.</td>
+<td style="width:90%">Handle to the opened or created key, @extended flag will contain one of the following disposition values:<br />
+0&nbsp;(False) - The key existed and was simply opened without being changed.<br />
+1&nbsp;(True) - The key did not exist and was created.</td>
 </tr>
 <tr>
 <td class="valign-top">Failure:</td>
@@ -83,11 +85,12 @@ disposition values:<br />
 </table>
 
 <h2>Bemerkungen</h2>
-<p>An application cannot create a key that is a direct child of HKEY_USERS or HKEY_LOCAL_MACHINE. An application<br />
-can create subkeys in lower levels of the HKEY_USERS or HKEY_LOCAL_MACHINE trees.<br />
+<p>$vKey can be a string containing the requested subkey in this case $sSubKey must be empty<br />
 <br />
-If the key is not one of the predefined registry keys ($HKEY_*) you must call the <a href="_WinAPI_RegCloseKey.htm">_WinAPI_RegCloseKey()</a><br />
-function after finished using the handle.<br />
+An application cannot create a key that is a direct child of $HKEY_USERS or $HKEY_LOCAL_MACHINE.<br />
+An application can create subkeys in lower levels of the $HKEY_USERS or $HKEY_LOCAL_MACHINE trees.<br />
+<br />
+If the key is not one of the predefined registry keys ($HKEY_*) you must call the <a href="_WinAPI_RegCloseKey.htm">_WinAPI_RegCloseKey()</a> function after finished using the handle.<br />
 </p>
 
 <h2>Verwandte Funktionen</h2>
@@ -97,5 +100,141 @@ function after finished using the handle.<br />
 <p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(RegCreateKeyEx);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">RegCreateKeyEx</a> in der MSDN Bibliothek.
 </p>
 
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<h3>Beispiel 1</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_RegCreateKey.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/RequireAdmin.htm"><span class="S11">#RequireAdmin</span></a>
+
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Debug.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIReg.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_DebugSetup.htm"><span class="S15">_DebugSetup</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">)</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">'SOFTWARE\Temp'</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; must run with #RequireAdmin</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sKeyroot</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"HKEY_LOCAL_MACHINE"</span>
+<span class="S1">;~ &nbsp;Local $sKeyroot = "HKEY_CURRENT_USER"</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugReport.htm"><span class="S15">_DebugReport</span></a><span class="S8">(</span><span class="S7">"- Key Creation"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sKeyroot</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"/"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sKey</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_RegCreateKey.htm"><span class="S15">_WinAPI_RegCreateKey</span></a><span class="S8">(</span><span class="S9">$sKeyroot</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sKey</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$hKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugReport.htm"><span class="S15">_DebugReport</span></a><span class="S8">(</span><span class="S7">"- Key successfully Created"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iDeleteKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_RegDeleteKey.htm"><span class="S15">_WinAPI_RegDeleteKey</span></a><span class="S8">(</span><span class="S9">$hKey</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$iDeleteKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugReport.htm"><span class="S15">_DebugReport</span></a><span class="S8">(</span><span class="S7">"- Key successfully Deleted"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugReport.htm"><span class="S15">_DebugReport</span></a><span class="S8">(</span><span class="S7">"! Key cannot be deleted @error = "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_RegCloseKey.htm"><span class="S15">_WinAPI_RegCloseKey</span></a><span class="S8">(</span><span class="S9">$hKey</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$iDeleteKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_RegDeleteKey.htm"><span class="S15">_WinAPI_RegDeleteKey</span></a><span class="S8">(</span><span class="S9">$hKey</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$iDeleteKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugReport.htm"><span class="S15">_DebugReport</span></a><span class="S8">(</span><span class="S7">"! Key Close unsuccessful"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugReport.htm"><span class="S15">_DebugReport</span></a><span class="S8">(</span><span class="S7">"- Key already deleted"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugReport.htm"><span class="S15">_DebugReport</span></a><span class="S8">(</span><span class="S7">"! Key cannot be created @error = "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">' &nbsp;&nbsp;&nbsp;Extended code: '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">' (0x'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Hex.htm"><span class="S4">Hex</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">')'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 2</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_RegCreateKey[02].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<span><span class="S1">; example with key containing subkey</span>
+
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Debug.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIReg.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_DebugSetup.htm"><span class="S15">_DebugSetup</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">)</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_RegCreateKey.htm"><span class="S15">_WinAPI_RegCreateKey</span></a><span class="S8">(</span><span class="S7">"HKEY_CURRENT_USER\Temp"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$hKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugReport.htm"><span class="S15">_DebugReport</span></a><span class="S8">(</span><span class="S7">"- Key successfully Created"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iDeleteKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_RegDeleteKey.htm"><span class="S15">_WinAPI_RegDeleteKey</span></a><span class="S8">(</span><span class="S9">$hKey</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$iDeleteKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugReport.htm"><span class="S15">_DebugReport</span></a><span class="S8">(</span><span class="S7">"- Key successfully Deleted"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugReport.htm"><span class="S15">_DebugReport</span></a><span class="S8">(</span><span class="S7">"! Key cannot be deleted @error = "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_RegCloseKey.htm"><span class="S15">_WinAPI_RegCloseKey</span></a><span class="S8">(</span><span class="S9">$hKey</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$iDeleteKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_RegDeleteKey.htm"><span class="S15">_WinAPI_RegDeleteKey</span></a><span class="S8">(</span><span class="S9">$hKey</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$iDeleteKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugReport.htm"><span class="S15">_DebugReport</span></a><span class="S8">(</span><span class="S7">"! Key Close unsuccessful"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugReport.htm"><span class="S15">_DebugReport</span></a><span class="S8">(</span><span class="S7">"- Key already deleted"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugReport.htm"><span class="S15">_DebugReport</span></a><span class="S8">(</span><span class="S7">"! Key cannot be created @error = "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
 </body>
 </html>

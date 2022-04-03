@@ -15,12 +15,12 @@ Func Example()
 	_GUICtrlListView_AddColumn($idListView, "Spalte 1", 100)
 
 	; Fügt die Items hinzu
+	_GUICtrlListView_AddItem($idListView, "Item 0")
 	_GUICtrlListView_AddItem($idListView, "Item 1")
 	_GUICtrlListView_AddItem($idListView, "Item 2")
-	_GUICtrlListView_AddItem($idListView, "Item 3")
 
 	; Wählt mehrere Items aus
-	_GUICtrlListView_SetItemSelected($idListView, 1)
+	_GUICtrlListView_SetItemSelected($idListView, 0)
 	_GUICtrlListView_SetItemSelected($idListView, 2)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Indizes der markierten Items: " & _GUICtrlListView_GetSelectedIndices($idListView))
 

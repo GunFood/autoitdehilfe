@@ -15,7 +15,7 @@
 <p style="margin:2px 0 0 0;" class="funcdesc">L&auml;dt die SQLite3.dll<br /></p>
 <p class="codeheader">
 #include &lt;SQLite.au3&gt;<br />
-_SQLite_Startup ( [$sDll_Filename = "" [, $bUTF8ErrorMsg = False [, $iForceLocal = 0 [, $hPrintCallback = $__g_hPrintCallback_SQLite]]]] )<br />
+_SQLite_Startup ( [$sDll_Filename = "" [, $bUTF8ErrorMsg = False [, $iForceLocal = 0 [, $hPrintCallback = $__g_hPrintCallback_SQLite [, $bAutoItTypeConversion = False]]]]] )<br />
 </p>
 
 <h2>Parameter</h2>
@@ -31,11 +31,15 @@ _SQLite_Startup ( [$sDll_Filename = "" [, $bUTF8ErrorMsg = False [, $iForceLocal
 <tr>
 <td>$iForceLocal</td>
 <td><strong>[optional]</strong> 1 = Nutzt die angegebene Dll-Datei. Kein Versionsvergleich. Automatisch "_x64.dll" im X64 Modus<br />
-&nbsp;&nbsp;&nbsp; 0 = Die Dll wird in @ScriptDir, @SystemDir, @WindowsDir oder @WorkingDir gesucht.</td>
+0 (Standard)= Die Dll wird in @ScriptDir, @WorkingDir, @LocalAppDataDir & "\AutoIt v3\SQLite\", @SystemDir und @WindowsDir gesucht.</td>
 </tr>
 <tr>
 <td>$hPrintCallback</td>
 <td><strong>[optional]</strong> Eine Variable die mit der Benutzerfunktion verkn&uuml;pft ist, um eine SQLite Diagnose-Nachricht abzugreifen. Standard = __SQLite_ConsoleWrite(). Siehe Bemerkungen.</td>
+</tr>
+<tr>
+<td>$bAutoItTypeConversion</td>
+<td><strong>[optional]</strong> Konvertierung von String in AutoItType-Variable erzwingen ((Standard = False). Siehe Bemerkungen.</td>
 </tr>
 </table>
 
@@ -53,17 +57,22 @@ _SQLite_Startup ( [$sDll_Filename = "" [, $bUTF8ErrorMsg = False [, $iForceLocal
 
 <h2>Bemerkungen</h2>
 <p>Wenn die #include &lt;SQLite.dll.au3&gt; eingebunden ist, wird die SQLite-Version gepr&uuml;ft.<br />
-Die SQLite-Dateien k&ouml;nnen von <a href="https://www.autoitscript.com/autoit3/pkgmgr/sqlite" class="ext">https://www.autoitscript.com/autoit3/pkgmgr/sqlite</a> heruntergeladen werden. Abgespeichert k&ouml;nnen diese in @ScriptDir, @SystemDir, @WindowsDir oder @WorkingDir werden.<br />
+Die SQLite-Dateien k&ouml;nnen von <a href="https://www.autoitscript.com/autoit3/pkgmgr/sqlite" class="ext">https://www.autoitscript.com/autoit3/pkgmgr/sqlite/sqlite3_setup_<strong><em>version</em></strong>.exe heruntergeladen werden. Abgespeichert k&ouml;nnen diese in @ScriptDir, @WorkingDir, @LocalAppDataDir & "\AutoIt v3\SQLite\" (default), @SystemDir oder @WindowsDir werden.<br />
+Zur Verwendung durch einen beliebigen Benutzer speichern Sie die SQLite-Dateien in @SystemDir oder @WindowsDir.<br />
+Um das Herunterladen der korrekten Version zu erleichtern, k&ouml;nnen Sie das Skript "Extras\AutoUpdateIt\AutoIt3SQLiteUpdate.au3" verwenden (&auml;hnlich wie AutoUpdateIt.au3 zur &Uuml;berpr&uuml;fung von AutoIt Release oder Beta).<br />
 <br />
 Wenn $bUTF8ErrorMsg ungleich 0 ist, so werden UTF8 formatierte Strings in die Konsole gedruckt.<br />
 Dies erlaubt es Anwendungen wie SciTE diese Zeichen darzustellen, falls es mit output.code.page=65001 konfiguriert ist.<br />
-Dies ist der Fall wenn SciTE unter einer nichtenglischen Version von Vista(fr) l&auml;uft.<br />
+Dies ist der Fall wenn SciTE unter einer nichtenglischen Version l&auml;uft.<br />
 <br />
 Der $hPrintCallback-Parameter gibt den Namen einer benutzerdefinierten Callback-Funktion an. An diese Funktion wird ein einzelner Parameter &uuml;bergeben, der die auszugebende Nachricht enth&auml;lt. Die Standard-Callback-Funktion ist $__g_hPrintCallback_SQLite. Diese Funktion kann gut als Beispiel f&uuml;r eine eigene Callback-Funktion dienen.<br />
+<br />
+$bAutoItTypeConversion ist n&uuml;tzlich, wenn das gesamte Skript von den <a href="_SQLite_FetchData.htm">_SQlite_FetchData()</a> AutoIt-Variablen zur&uuml;ckgeben m&ouml;chte.<br />
+Standard ist die R&uuml;ckgabe von String oder Binary AutoIt Variable.<br />
 </p>
 
 <h2>Verwandte Funktionen</h2>
-<p><a href="_SQLite_Shutdown.htm">_SQLite_Shutdown</a></p>
+<p><a href="_SQLite_Shutdown.htm">_SQLite_Shutdown</a>, <a href="_SQlite_FetchData.htm">_SQlite_FetchData</a></p>
 
 <h2 class="bottom">Beispiel</h2>
 <script type="text/javascript">
@@ -108,7 +117,7 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 
 <a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
 <span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"SQLite Fehler"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"sqlite3.dll konnte nicht geladen werden!"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Nicht gefunden in @SystemDir, @WindowsDir, @ScriptDir, @WorkingDir oder auf www.autoitscript.com"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Nicht gefunden in @ScriptDir, @WorkingDir,"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"@LocalAppDataDir\AutoIt v3\SQLite,"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"@SystemDir ode @WindowsDir"</span><span class="S8">)</span>
 <span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span>
 <a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
 <a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"SQLite3.dll geladen"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sSQliteDll</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" ("</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_SQLite_LibVersion.htm"><span class="S15">_SQLite_LibVersion</span></a><span class="S8">()</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">")"</span><span class="S8">)</span>
@@ -142,7 +151,7 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
 <pre>
-<span><span class="S1">; keine Versionsreferenz, deshalb muss die Datei in einem der folgenden Ordner existieren: @SystemDir, @WindowsDir, @ScriptDir or @WorkingDir</span>
+<span><span class="S1">; keine Versionsreferenz, deshalb muss die Datei in einem der folgenden Ordner existieren: @ScriptDir, @WorkingDir, @SystemDir oder @WindowsDir</span>
 
 <a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
 <a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;SQLite.au3&gt;</span>
@@ -151,7 +160,7 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <span class="S9">$sSQliteDll</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_SQLite_Startup.htm"><span class="S15">_SQLite_Startup</span></a><span class="S8">()</span>
 <a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
 <span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"SQLite Fehler"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"SQLite3.dll konnte nicht geladen werden!"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Nicht gefunden in @SystemDir, @WindowsDir, @ScriptDir oder @WorkingDir"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Nicht gefunden in @ScriptDir, @WorkingDir, @SystemDir oder @WindowsDir"</span><span class="S8">)</span>
 <span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span>
 <a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
 
@@ -200,51 +209,6 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
 
 <a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"SQLite3.dll gealden"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sSQliteDll</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" ("</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_SQLite_LibVersion.htm"><span class="S15">_SQLite_LibVersion</span></a><span class="S8">()</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">")"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"_SQLite_LibVersion="</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_SQLite_LibVersion.htm"><span class="S15">_SQLite_LibVersion</span></a><span class="S8">()</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
-<a class="codeSnippetLink" href="../libfunctions/_SQLite_Shutdown.htm"><span class="S15">_SQLite_Shutdown</span></a><span class="S8">()</span>
-<span class="S0"></span></span>
-</pre>
-</div>
-</div>
-</div>
-<h3>Beispiel 4</h3>
-<div class="codeSnippetContainer">
-	<div class="codeSnippetContainerTabs">
-<script type="text/javascript">
-if (document.URL.match(/^mk:@MSITStore:/i)) {
-document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
-document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_SQLite_Startup[04].au3,"></object>');
-document.write('<\/div>');
-}
-</script>
-</div>
-
-<div class="codeSnippetContainerCodeContainer">
-<div class="codeSnippetToolBar">
-<div class="codeSnippetToolBarText">
-<script type="text/javascript">
-if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
-document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext4\').innerText)">In die Zwischenablage kopieren<\/a>');
-</script>
-</div>
-</div>
-<div class="codeSnippetContainerCode" dir="ltr" id="copytext4">
-<pre>
-<span><span class="S1">; zwingender Download von www.autoitscript.com</span>
-
-<span class="S1">; #RequireAdmin ; ben&ouml;tigt, falls die Datei in @systemdir liegt</span>
-
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;SQLite.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;SQLite.dll.au3&gt;</span>
-
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sSQliteDll</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_SQLite_Startup.htm"><span class="S15">_SQLite_Startup</span></a><span class="S8">(</span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"SQLite Fehler"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"SQLite3.dll konnte nicht geladen werden!"</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span>
-<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
-
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"SQLite3.dll geladen"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sSQliteDll</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" ("</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_SQLite_LibVersion.htm"><span class="S15">_SQLite_LibVersion</span></a><span class="S8">()</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">")"</span><span class="S8">)</span>
 <a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"_SQLite_LibVersion="</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_SQLite_LibVersion.htm"><span class="S15">_SQLite_LibVersion</span></a><span class="S8">()</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
 <a class="codeSnippetLink" href="../libfunctions/_SQLite_Shutdown.htm"><span class="S15">_SQLite_Shutdown</span></a><span class="S8">()</span>
 <span class="S0"></span></span>
