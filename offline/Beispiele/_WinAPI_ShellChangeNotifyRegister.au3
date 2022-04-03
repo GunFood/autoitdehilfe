@@ -9,7 +9,7 @@ Global Const $g_sPath = @TempDir & '\~TEST~'
 
 DirCreate($g_sPath)
 If Not FileExists($g_sPath) Then
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Fehler', 'Der Ordner konnte nicht erstellt werden.')
+	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Fehler', 'Der Ordner konnte nicht erstellt werden.')
 	Exit
 EndIf
 
@@ -20,7 +20,7 @@ Local $iMsg = _WinAPI_RegisterWindowMessage('SHELLCHANGENOTIFY')
 GUIRegisterMsg($iMsg, 'WM_SHELLCHANGENOTIFY')
 Global $g_iID = _WinAPI_ShellChangeNotifyRegister($hWnd, $iMsg, $SHCNE_ALLEVENTS, BitOR($SHCNRF_INTERRUPTLEVEL, $SHCNRF_SHELLLEVEL, $SHCNRF_RECURSIVEINTERRUPT), $g_sPath, 1)
 If @error Then
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Fehler', 'Das Fenster wurde nicht registriert.')
+	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Fehler', 'Das Fenster wurde nicht registriert.')
 	Exit
 EndIf
 

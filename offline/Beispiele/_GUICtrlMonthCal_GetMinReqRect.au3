@@ -7,11 +7,9 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $tRECT, $idMonthCal
-
 	; Erstellt eine GUI
-	GUICreate("Month Calendar: Ermittelt die minimale Größe um einen kompletten Monat darzustellen", 650, 300)
-	$idMonthCal = GUICtrlCreateMonthCal("", 4, 4, -1, -1, BitOR($WS_BORDER, $MCS_MULTISELECT), 0x00000000)
+	GUICreate("Month Calendar: Ermittelt die minimale Größe um einen kompletten Monat darzustellen (v" & @AutoItVersion & ") ", 400, 300)
+	Local $idMonthCal = GUICtrlCreateMonthCal("", 4, 4, -1, -1, BitOR($WS_BORDER, $MCS_MULTISELECT), 0x00000000)
 
 	; Erstellt ein Memo Control
 	$g_idMemo = GUICtrlCreateEdit("", 4, 168, 392, 128, 0)
@@ -19,7 +17,7 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	; Ermittelt die minimale Größe um einen kompletten Monat darzustellen
-	$tRECT = _GUICtrlMonthCal_GetMinReqRect($idMonthCal)
+	Local $tRECT = _GUICtrlMonthCal_GetMinReqRect($idMonthCal)
 	MemoWrite("Mindesthöhe  : " & DllStructGetData($tRECT, "Bottom"))
 	MemoWrite("Mindestbreite: " & DllStructGetData($tRECT, "Right"))
 

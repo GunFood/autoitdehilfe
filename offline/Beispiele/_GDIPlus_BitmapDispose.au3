@@ -17,14 +17,14 @@ Func Example()
 	$g_hBitmap = _GDIPlus_BitmapCreateFromFile($sFile) ;create a bitmap object from file
 	If @error Then
 		_GDIPlus_Shutdown()
-		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "An error has occured - unable to load image!", 30)
+		MsgBox(($MB_SYSTEMMODAL + $MB_ICONHAND), "", "An error has occured - unable to load image!", 30)
 		Return False
 	EndIf
 
 	Local $sNewJPGFile = StringTrimRight($sFile, 3) & "jpg", $iAnswer = 0
 
 	If FileExists($sNewJPGFile) Then
-		$iAnswer = MsgBox(BitOR($MB_SYSTEMMODAL, $MB_YESNO, $MB_ICONQUESTION), "", '"' & $sNewJPGFile & '" already exists. Overwrite?')
+		$iAnswer = MsgBox(($MB_YESNO + $MB_ICONQUESTION + $MB_SYSTEMMODAL), "", '"' & $sNewJPGFile & '" already exists. Overwrite?')
 		If $iAnswer <> $IDYES Then
 			_ReleaseResources()
 			Return False
@@ -33,7 +33,7 @@ Func Example()
 
 	_GDIPlus_ImageSaveToFile($g_hBitmap, $sNewJPGFile) ;save image in JPG format
 	If @error Then
-		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "An error has occured - unable to save image!", 30)
+		MsgBox(($MB_SYSTEMMODAL + $MB_ICONHAND), "", "An error has occured - unable to save image!", 30)
 	Else
 		ShellExecute($sNewJPGFile)
 	EndIf

@@ -60,7 +60,7 @@ GUISetState(@SW_SHOW)
 If IsArray($aRamp) Then
 	_ArrayDisplay($aRamp, '_WinAPI_GetDeviceGammaRamp')
 Else
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Error', 'Your video board do not support loadable gamma ramps.', 0, $hForm)
+	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Error', 'Your video board do not support loadable gamma ramps.', 0, $hForm)
 EndIf
 
 Do

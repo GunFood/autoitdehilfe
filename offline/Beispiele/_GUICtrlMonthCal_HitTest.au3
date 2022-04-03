@@ -8,9 +8,8 @@ Global $g_idMonthCal, $g_idMemo, $g_hGUI
 Example()
 
 Func Example()
-
 	; Erstellt eine GUI
-	$g_hGUI = GUICreate("MonthCal: Git Test", 400, 300)
+	$g_hGUI = GUICreate("MonthCal: Hit Test (v" & @AutoItVersion & ")", 400, 300)
 	$g_idMonthCal = GUICtrlCreateMonthCal("", 4, 4, -1, -1, $WS_BORDER, 0x00000000)
 
 	; Erstellt ein Memo Control

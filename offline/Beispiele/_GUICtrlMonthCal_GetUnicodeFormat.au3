@@ -7,14 +7,12 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $idMonthCal
-
 	; Erstellt eine GUI
-	GUICreate("MonthCal: ermittelt das Unicode Format", 400, 300)
-	$idMonthCal = GUICtrlCreateMonthCal("", 4, 4, -1, -1, $WS_BORDER, 0x00000000)
+	GUICreate("MonthCal: Setzt und ermittelt das Unicode Format (v" & @AutoItVersion & ")", 440, 300)
+	Local $idMonthCal = GUICtrlCreateMonthCal("", 4, 4, -1, -1, $WS_BORDER, 0x00000000)
 
 	; Erstellt ein Memo Control
-	$g_idMemo = GUICtrlCreateEdit("", 4, 168, 392, 128, 0)
+	$g_idMemo = GUICtrlCreateEdit("", 4, 168, 432, 128, 0)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
 

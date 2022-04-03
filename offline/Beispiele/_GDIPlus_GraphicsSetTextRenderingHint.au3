@@ -13,7 +13,7 @@ Func Example()
 	_GDIPlus_Startup()
 	Local $hGraphics = _GDIPlus_GraphicsCreateFromHWND($hGUI)
 	_GDIPlus_GraphicsDrawString($hGraphics, "AutoIt rulez!", 0, 0, "Impact", 110)
-	_GDIPlus_GraphicsSetTextRenderingHint($hGraphics, $GDIP_TEXTRENDERINGHINT_ANTIALIASGRIDFIT)
+	_GDIPlus_GraphicsSetTextRenderingHint($hGraphics, $GDIP_TEXTRENDERINGHINTANTIALIASGRIDFIT)
 	_GDIPlus_GraphicsDrawString($hGraphics, "AutoIt rulez!", 0, 200, "Impact", 110)
 
 	While 1

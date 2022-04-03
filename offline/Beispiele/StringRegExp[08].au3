@@ -1,15 +1,23 @@
 #include <Array.au3>
 #include <Constants.au3>
 
-; ----------------- Anwendung von \b
-; Durch das Voranstellen von \b und das anh‰ngen von \b an das Ende wird nur an der Wortgrenze gesucht.
-; "Abgrund oder folge" wird nicht gefunden, da das Wort Abgrund und nicht Grund heisst
+; ----------------- Anwendung von Wiederholungszeichen
+; Suchmuster:
+; 2x Zahl
+; 1x .
+; 2x Zahl
+; 1x .
+; 4x Zahl
 
-$sString = _
-		"Grund oder Folge der Armut?" & @CRLF & _
-		"Fahre ich in den Abgrund oder folge ich der Straﬂe?"
-$aResult = StringRegExp($sString, "(?i)\bgrund oder folge\b", 3)
-_ArrayDisplay($aResult, "StringRegExp Results")
+Dim $array[2]
+
+$array[0] = "23.08.2010"
+$array[1] = "23.08.10"
+
+For $i = 0 To UBound($array) - 1
+	$regexp = StringRegExp($array[$i], "\d{2}\.\d{2}\.\d{4}", 3)
+	_ArrayDisplay($regexp, $array[$i])
+Next
 
 
 

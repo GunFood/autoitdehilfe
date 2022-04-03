@@ -7,11 +7,9 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $tRange, $idMonthCal
-
 	; Erstellt eine GUI
-	GUICreate("MonthCal: ermittelt die obere und untere Begrenzung des momentan ausgewählten Datumbereichs", 750, 300)
-	$idMonthCal = GUICtrlCreateMonthCal("", 4, 4, -1, -1, BitOR($WS_BORDER, $MCS_MULTISELECT), 0x00000000)
+	GUICreate("MonthCal: Setzt und ermittelt die obere und untere Begrenzung des momentan ausgewählten Datumbereichs (v" & @AutoItVersion & ")", 400, 300)
+	Local $idMonthCal = GUICtrlCreateMonthCal("", 4, 4, -1, -1, BitOR($WS_BORDER, $MCS_MULTISELECT), 0x00000000)
 
 	; Erstellt ein Memo Control
 	$g_idMemo = GUICtrlCreateEdit("", 4, 168, 392, 128, 0)
@@ -20,7 +18,7 @@ Func Example()
 
 	; Ermittelt/Setzt die obere und untere Begrenzung des momentan ausgewählten Datumbereichs
 	_GUICtrlMonthCal_SetSelRange($idMonthCal, @YEAR, @MON, 1, @YEAR, @MON, 7)
-	$tRange = _GUICtrlMonthCal_GetSelRange($idMonthCal)
+	Local $tRange = _GUICtrlMonthCal_GetSelRange($idMonthCal)
 	MemoWrite("Startdatum: " & StringFormat("%02d/%02d/%04d", DllStructGetData($tRange, "MinMonth"), _
 			DllStructGetData($tRange, "MinDay"), _
 			DllStructGetData($tRange, "MinYear")))

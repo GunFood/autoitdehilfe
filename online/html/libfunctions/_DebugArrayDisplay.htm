@@ -76,7 +76,8 @@ _DebugArrayDisplay ( Const ByRef $aArray [, $sTitle = "DebugArray" [, $sArrayRan
 <tr>
 <td class="valign-top">@error:</td>
 <td>1 - $aArray ist kein Array<br />
-2 - $aArray hat zu viele Dimensionen. Es werden nur 1D und 2D Arrays unterst&uuml;tzt</td>
+2&nbsp;- $aArray hat zu viele Dimensionen. Es werden nur 1D und 2D Arrays unterst&uuml;tzt<br />
+3&nbsp;- @error wird gesetzt, wenn die Funktion aufgerufen wird, ein _DebugReport()</td>
 </tr>
 </table>
 
@@ -144,15 +145,24 @@ Der $sArrayRange Parameter-Syntax lautet wie folgt:<table>
 Alle Spaltenwerte werden f&uuml;r 1D-Arrays ignoriert.<br />
       <br />
 $sHeader Namen (getrennt durch das aktuelle Trennzeichen) werden f&uuml;r die vielen Spalten verwendet wie es Namen gibt. Wenn keine oder nicht genug eigene Namen festgelegt werden, so wird der Standardname von "Row|Col0" f&uuml;r 1D-Arrays oder "Row|Col0|Col1|...|Col n" f&uuml;r 2D-Arrays ausgetauscht. Wenn das Array transponiert angezeigt wird, wird der Header ignoriert.<br />
+Die Variable $ARRAYDISPLAY_ROWPREFIX kann den Pr&auml;fix f&uuml;r die Zeilennummerierung ge&auml;ndert werden (Standard: #).<br />
+Um den Zahlenvergleich f&uuml;r eine bestimmte Spalte zu erzwingen, ich einfach der entsprechende Namen mit $ARRAYDISPLAY_NUMERICSORT (Standard: *) zu beenden.<br />
 <br />
 Die 4 Buttons unten bei dem Dialog haben folgende Funktionen:<br />
 Die Array-Dimensionen werden links unter dem Array angezeigt. Sie sind in rotem Text, wenn das Array transponiert ist oder nur eine Reihe von Elementen angezeigt wird - ein Tooltip zeigt das / die jeweilige(n) Ereignis(e) an.<br />
 <br />
 Falls der "verbose" Parameter in $iFlags gesetzt ist, so wird ein Splashdialog dargestellt w&auml;hrend das Array versucht ein Array mit mehr als 10000 Elementen darzustellen.<br />
 <br />
-Ein Arrayelement, das ein anderes Array enth&auml;lt, wird als {Array} angezeigt.<br />
+Ein Arrayelement, das ein anderes Array oder Map enth&auml;lt, wird als {Array} oder {Map} angezeigt.<br />
 <br />
-Ein Klick auf den Spalten-Header sortiert dieses.<br />
+Bei der Verwendung von $ARRAYDISPLAY_TRANSPOSE oder $sArrayRange wird eine Kopie von $aArray erstellt, wodurch zus&auml;tzlicher Speicher verbraucht wird.<br />
+<br />
+Ein Klick auf den Spalten-Header sortiert dieses. Bei einer gro&szlig;en Anzahl von Zeilen kann dies einige Sekunden dauern. Beim Laden wird ein ToolTip angezeigt, der darauf hinweist, dass die Sortierung einige Sekunden dauern kann.<br />
+<br />
+$hUser_Function muss so erstellt werden, dass es 2 (und nur 2) Parameter akzeptiert (siehe das Beispiel):<br />
+&nbsp;&nbsp;&nbsp; Param1 ist das anzuzeigende $aArray<br />
+&nbsp;&nbsp;&nbsp; Param2 ist ein 1D-Array der Indizes der ausgew&auml;hlten Zeilen mit einer Z&auml;hlung im Element [0].<br />
+Diese Parameter k&ouml;nnen dann innerhalb der Benutzerfunktion wie gew&uuml;nscht verwendet werden.<br />
 </p>
 
 <h2 class="bottom">Beispiel</h2>

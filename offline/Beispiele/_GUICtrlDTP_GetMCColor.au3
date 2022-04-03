@@ -8,11 +8,9 @@ Global $g_idMemo
 _Example() ; Verwendet die internen AutoIt Controls
 
 Func _Example()
-	Local $hDTP
-
 	; Erstellt eine GUI
-	GUICreate("DateTimePick: Ermittelt die Farbe des Monatskalenders", 400, 300)
-	$hDTP = GUICtrlGetHandle(GUICtrlCreateDate("", 2, 6, 190))
+	GUICreate("DateTimePick: Ermittelt / Setzt MCColor (v" & @AutoItVersion & ")", 400, 300)
+	Local $hDTP = GUICtrlGetHandle(GUICtrlCreateDate("", 2, 6, 190))
 	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
@@ -21,7 +19,7 @@ Func _Example()
 	_GUICtrlDTP_SetFormat($hDTP, "ddd MMM dd, yyyy hh:mm ttt")
 
 	; Setzt die Hintergrundfarbe des Monatskalenders
-	_GUICtrlDTP_SetMCColor($hDTP, 2, $CLR_MONEYGREEN)
+	_GUICtrlDTP_SetMCColor($hDTP, 2, $CLR_DARKSEAGREEN)
 
 	; Ermittelt die Farben des DTPs
 	MemoWrite("Hintergrund zwischen den Monaten .: " & "0x" & Hex(_GUICtrlDTP_GetMCColor($hDTP, 0), 6))
@@ -35,7 +33,7 @@ Func _Example()
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()
-EndFunc   ;==>Example
+EndFunc   ;==>_Example
 
 ; Gibt eine Zeile im Memo-Fenster aus
 Func MemoWrite($sMessage)

@@ -4,8 +4,8 @@
 #include <StringConstants.au3>
 
 ; Dateinamen
-Local $sTsvFile = FileGetShortName(_TempFile(@ScriptDir, "~", ".tsv"))
-Local $sDbFile = FileGetShortName(_TempFile(@ScriptDir, "~", ".db"))
+Local $sTsvFile = FileGetShortName(_TempFile(@TempDir, "~", ".tsv"))
+Local $sDbFile = FileGetShortName(_TempFile(@TempDir, "~", ".db"))
 
 ; Erstellt Tsv-Datei
 FileWriteLine($sTsvFile, "a" & @TAB & "b" & @TAB & "c")
@@ -29,7 +29,7 @@ If @error = 0 Then
 	_SQLite_Startup()
 	ConsoleWrite("_SQLite_LibVersion=" & _SQLite_LibVersion() & @CRLF)
 	_SQLite_Open($sDbFile)
-	_SQLite_GetTable2d(-1, "SELECT ROWID,* FROM TblImport;", $aRes, $iRows, $iColumns)
+	_SQLite_GetTable2D(-1, "SELECT ROWID,* FROM TblImport;", $aRes, $iRows, $iColumns)
 	_SQLite_Display2DResult($aRes) ; Ausgabe in die Konsole
 	_SQLite_Close()
 	_SQLite_Shutdown()

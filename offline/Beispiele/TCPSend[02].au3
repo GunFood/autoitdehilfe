@@ -2,20 +2,21 @@
 
 #include <FileConstants.au3>
 #include <MsgBoxConstants.au3>
+#include <WinAPIError.au3>
 
 Example()
 
 Func Example()
+	Local $sMsgBoxTitle = "AutoItVersion = " & @AutoItVersion
+
 	; Assign a Local variable the path of a file chosen through a dialog box.
 	Local $sFilePath = FileOpenDialog("Select a file to send", @MyDocumentsDir, "All types (*.*)", BitOR($FD_FILEMUSTEXIST, $FD_PATHMUSTEXIST))
-	Local $iError = 0
 
 	; Note: Choose a file bigger than 4 kiB otherwise the first example is enough.
 
 	; If an error occurred display the error code and return False.
 	If @error Then
-		$iError = @error
-		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONEXCLAMATION), "", "Server:" & @CRLF & "Invalid file chosen, Error code: " & $iError)
+		MsgBox(($MB_SYSTEMMODAL + $MB_ICONEXCLAMATION), $sMsgBoxTitle, "Server: Invalid file chosen" & @CRLF & " Error code: " & @error)
 		Return False
 	EndIf
 
@@ -34,8 +35,7 @@ Func Example()
 	; If an error occurred display the error code and return False.
 	If @error Then
 		; Someone is probably already listening on this IP Address and Port (script already running?).
-		$iError = @error
-		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "Server:" & @CRLF & "Could not listen, Error code: " & $iError)
+		MsgBox(($MB_SYSTEMMODAL + $MB_ICONHAND), $sMsgBoxTitle, "Server: Could not listen" & @CRLF & " Error code: " & @error & @CRLF & @CRLF & _WinAPI_GetErrorMessage(@error))
 		Return False
 	EndIf
 
@@ -48,8 +48,7 @@ Func Example()
 
 		; If an error occurred display the error code and return False.
 		If @error Then
-			$iError = @error
-			MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "Server:" & @CRLF & "Could not accept the incoming connection, Error code: " & $iError)
+			MsgBox(($MB_SYSTEMMODAL + $MB_ICONHAND), $sMsgBoxTitle, "Server: Could not accept the incoming connection" & @CRLF & " Error code: " & @error & @CRLF & _WinAPI_GetErrorMessage(@error))
 			Return False
 		EndIf
 	Until $iSocket <> -1 ;if different from -1 a client is connected.
@@ -67,7 +66,8 @@ Func Example()
 	Local $iOffset = 0
 
 	; Assign a Local variable the number representing 4 KiB.
-	Local Const $i4KiB = 4096
+	Local $i4KiB = 4096
+	If $CmdLine[0] Then $i4KiB = $CmdLine[1]
 
 	; Note: The file is send by parts of 4 KiB.
 
@@ -81,8 +81,7 @@ Func Example()
 
 		; If an error occurred display the error code and return False.
 		If @error Then
-			$iError = @error
-			MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "Server:" & @CRLF & "Could not send the data, Error code: " & $iError)
+			MsgBox(($MB_SYSTEMMODAL + $MB_ICONHAND), $sMsgBoxTitle, "Server: Could not send the data" & @CRLF & " Error code: " & @error & @CRLF & _WinAPI_GetErrorMessage(@error))
 
 			; Close the socket.
 			TCPCloseSocket($iSocket)
@@ -96,11 +95,8 @@ Func Example()
 	; Close the file handle.
 	FileClose($hFile)
 
-	; Tell the client the file is fully sent with a code.
-	TCPSend($iSocket, @CRLF & "{EOF}")
-
 	; Display the successful message.
-	MsgBox($MB_SYSTEMMODAL, "", "Server:" & @CRLF & "File sent.")
+	If $CmdLine[0] = 0 Then MsgBox($MB_SYSTEMMODAL, $sMsgBoxTitle, "Server:" & @CRLF & "File sent nbBytes=" & FileGetSize($sFilePath), 2)
 
 	; Close the socket.
 	TCPCloseSocket($iSocket)

@@ -5,7 +5,12 @@ Example()
 
 Func Example()
 	_GDIPlus_Startup()
-	Local $hImage = _GDIPlus_ImageLoadFromFile(RegRead((@AutoItX64 = True ? "HKLM\SOFTWARE\Wow6432Node\AutoIt v3\AutoIt" : "HKLM\SOFTWARE\AutoIt v3\AutoIt"), "InstallDir") & "\Examples\GUI\Torus.png")
+
+	; X64 running support
+	Local $sWow64 = ""
+	If @AutoItX64 Then $sWow64 = "\Wow6432Node"
+
+	Local $hImage = _GDIPlus_ImageLoadFromFile(RegRead("HKLM\SOFTWARE" & $sWow64 & "\AutoIt v3\AutoIt", "InstallDir") & "\Examples\GUI\Torus.png")
 	If @error Then
 		_GDIPlus_Shutdown()
 		MsgBox(16, "", "An error has occured - unable to load image!", 30)

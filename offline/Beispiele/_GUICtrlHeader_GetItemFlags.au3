@@ -17,16 +17,16 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	; Fügt die Spalten hinzu
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 0", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 1", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 2", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 3", 100)
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 4", 100)
 
 	; Setzt die Flag Informationen von Spalte 1
 	_GUICtrlHeader_SetItemFlags($hHeader, 0, 4)
 
 	; Zeigt die Flag Informationen von Spalte 1
-	MemoWrite("Flag Informationen von Spalte 1: " & _GUICtrlHeader_GetItemFlags($hHeader, 0))
+	MemoWrite("Flag Informationen von Spalte 0: " & _GUICtrlHeader_GetItemFlags($hHeader, 0))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

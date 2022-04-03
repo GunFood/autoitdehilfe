@@ -35,7 +35,7 @@ Func _Example()
 	$g_hGraphics_H = _GDIPlus_GraphicsCreateFromHWND($g_hGui_Histogram)
 	$g_hBmp_Buffer_H = _GDIPlus_BitmapCreateFromScan0(1029, 140)
 	$g_hGfx_Buffer_H = _GDIPlus_ImageGetGraphicsContext($g_hBmp_Buffer_H)
-	_GDIPlus_GraphicsSetSmoothingMode($g_hGfx_Buffer_H, 2)
+	_GDIPlus_GraphicsSetSmoothingMode($g_hGfx_Buffer_H, $GDIP_SMOOTHINGMODE_HIGHQUALITY)
 
 	Local $tHistogram = _GDIPlus_BitmapGetHistogramEx($g_hImage)
 	_DrawHistogram($tHistogram)

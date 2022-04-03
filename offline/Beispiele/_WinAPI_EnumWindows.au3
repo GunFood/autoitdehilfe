@@ -13,5 +13,5 @@ Func Example()
 		$aResult[$i - 1][3] = WinGetText($aWindows[$i][0])
 		$aResult[$i - 1][4] = WinGetProcess($aWindows[$i][0])
 	Next
-	_ArrayDisplay($aResult, "_WinAPI_EnumWindows", Default, Default, Default, Default, "#|Handle|Klasse|Titel|Text|Prozess")
+	_ArrayDisplay($aResult, "_WinAPI_EnumWindows", Default, Default, Default, "#|Handle|Klasse|Titel|Text|Prozess")
 EndFunc   ;==>Example

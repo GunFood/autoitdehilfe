@@ -13,7 +13,7 @@
 #include <WindowsConstants.au3>
 
 If (Number(_WinAPI_GetVersion()) < 6.1) Or (Not _WinAPI_DwmIsCompositionEnabled()) Then
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Error', 'Require Windows 7 or later with enabled Aero theme.')
+	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Error', 'Require Windows 7 or later with enabled Aero theme.')
 	Exit
 EndIf
 

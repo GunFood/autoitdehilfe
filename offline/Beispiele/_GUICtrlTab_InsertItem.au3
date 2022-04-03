@@ -4,11 +4,9 @@
 Example()
 
 Func Example()
-	Local $idTab
-
 	; Erstellt eine GUI
-	GUICreate("Tab-Control: Item einfügen", 400, 300)
-	$idTab = GUICtrlCreateTab(2, 2, 396, 296)
+	GUICreate("Tab-Control Item einfügen (v" & @AutoItVersion & ")", 400, 300)
+	Local $idTab = GUICtrlCreateTab(2, 2, 396, 296)
 	GUISetState(@SW_SHOW)
 
 	; Fügt Tabs hinzu

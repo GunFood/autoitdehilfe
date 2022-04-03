@@ -1,5 +1,6 @@
 #include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>
+#include <WinAPIError.au3>
 
 ; Zum starten zuerst auf "1. Server" klicken
 ; Dann durch "2. Client" eine zweite Instanz des Skripts starten
@@ -18,7 +19,7 @@ Func Example()
 
 	#Region GUI
 	Local $sTitle = "TCP Start"
-	Local $hGUI = GUICreate("TCPSend", 250, 70)
+	Local $hGUI = GUICreate($sTitle, 250, 70)
 
 	Local $idBtnServer = GUICtrlCreateButton("1. Server", 10, 10, 130, 22)
 
@@ -31,12 +32,12 @@ Func Example()
 			Case $GUI_EVENT_CLOSE
 				ExitLoop
 			Case $idBtnServer
-				WinSetTitle($sTitle, "", "TCP Server gestarted")
+				WinSetTitle($sTitle, "", "TCP Server gestartet")
 				GUICtrlSetState($idBtnClient, $GUI_HIDE)
 				GUICtrlSetState($idBtnServer, $GUI_DISABLE)
 				If Not MyTCP_Server($sIPAddress, $iPort) Then ExitLoop
 			Case $idBtnClient
-				WinSetTitle($sTitle, "", "TCP Client gestarted")
+				WinSetTitle($sTitle, "", "TCP Client gestartet")
 				GUICtrlSetState($idBtnServer, $GUI_HIDE)
 				GUICtrlSetState($idBtnClient, $GUI_DISABLE)
 				If Not MyTCP_Client($sIPAddress, $iPort) Then ExitLoop
@@ -58,7 +59,7 @@ Func MyTCP_Client($sIPAddress, $iPort)
 	If @error Then
 		; Der Server ist vermutlich offline oder der Port wurde nicht am Server geöffnet.
 		$iError = @error
-		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "Client:" & @CRLF & "Verbindung konnte nicht hergestellt werden, Error Code: " & $iError)
+		MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), "", "Client:" & @CRLF & "Verbindung konnte nicht hergestellt werden, Error Code: " & $iError & @CRLF & _WinAPI_GetErrorMessage($iError))
 		Return False
 	EndIf
 
@@ -68,7 +69,7 @@ Func MyTCP_Client($sIPAddress, $iPort)
 	; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und False zurückgegeben.
 	If @error Then
 		$iError = @error
-		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "Client:" & @CRLF & "Daten konnten nicht gesendet werden, Error Code: " & $iError)
+		MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), "", "Client:" & @CRLF & "Daten konnten nicht gesendet werden, Error Code: " & $iError & @CRLF & _WinAPI_GetErrorMessage($iError))
 		Return False
 	EndIf
 
@@ -77,6 +78,8 @@ Func MyTCP_Client($sIPAddress, $iPort)
 EndFunc   ;==>MyTCP_Client
 
 Func MyTCP_Server($sIPAddress, $iPort)
+	Local $aPos = WinGetPos("TCP Server gestartet")
+	WinMove("TCP Server gestartet", "", $aPos[0], $aPos[1] - 100)
 	; Weist einer lokalen Variable den Socket zu und bindet die angegebene IP-Adresse sowie Port mit einer maximalen Anzahl von 100 anstehenden Verbindungen.
 	Local $iListenSocket = TCPListen($sIPAddress, $iPort, 100)
 	Local $iError = 0
@@ -84,7 +87,7 @@ Func MyTCP_Server($sIPAddress, $iPort)
 	If @error Then
 		; Vielleicht lauscht bereits jemand auf dieser IP-Adresse und dem Port (läuft das Script bereits?).
 		$iError = @error
-		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "Server:" & @CRLF & "Kann nicht lauschen, Error Code: " & $iError)
+		MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), "", "Server:" & @CRLF & "Kann nicht lauschen, Error Code: " & $iError & @CRLF & _WinAPI_GetErrorMessage($iError))
 		Return False
 	EndIf
 
@@ -98,7 +101,7 @@ Func MyTCP_Server($sIPAddress, $iPort)
 		; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und False zurückgegeben.
 		If @error Then
 			$iError = @error
-			MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "Server:" & @CRLF & "Konnte die eingehende Verbindung nicht akzeptieren, Error Code: " & $iError)
+			MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), "", "Server:" & @CRLF & "Konnte die eingehende Verbindung nicht akzeptieren, Error Code: " & $iError & @CRLF & _WinAPI_GetErrorMessage($iError))
 			Return False
 		EndIf
 

@@ -103,7 +103,7 @@ Func WM_FINDMSGSTRING($hWnd, $iMsg, $wParam, $lParam)
 			EndIf
 			If @error Or ($aPos[0] = -1) Or ($aPos[1] = -1) Then
 				Local $iError = @error
-				MsgBox(BitOR($MB_ICONINFORMATION, $MB_SYSTEMMODAL), WinGetTitle($g_hDlg), 'Cannot find "' & $sFind & '" (' & $iError & ')', 0, $g_hDlg)
+				MsgBox(($MB_ICONINFORMATION + $MB_SYSTEMMODAL), WinGetTitle($g_hDlg), 'Cannot find "' & $sFind & '" (' & $iError & ')', 0, $g_hDlg)
 				Return
 			EndIf
 			; Here and below used the EM_SETSEL message directly because _GUICtrlRichEdit_SetSel() sets a focus to the Rich Edit control
@@ -116,7 +116,7 @@ Func WM_FINDMSGSTRING($hWnd, $iMsg, $wParam, $lParam)
 				$aPos = _GUICtrlRichEdit_FindTextInRange($hRichEdit, $sFind, $aPos[0], -1, BitAND($iFlags, $FR_MATCHCASE) = $FR_MATCHCASE, BitAND($iFlags, $FR_WHOLEWORD) = $FR_WHOLEWORD)
 				If ($aPos[0] = -1) Or ($aPos[1] = -1) Then
 					If $iCur = -1 Then
-						MsgBox(BitOR($MB_ICONINFORMATION, $MB_SYSTEMMODAL), WinGetTitle($g_hDlg), 'Cannot find "' & $sFind & '"', 0, $g_hDlg)
+						MsgBox(($MB_ICONINFORMATION + $MB_SYSTEMMODAL), WinGetTitle($g_hDlg), 'Cannot find "' & $sFind & '"', 0, $g_hDlg)
 						Return
 					EndIf
 					ExitLoop

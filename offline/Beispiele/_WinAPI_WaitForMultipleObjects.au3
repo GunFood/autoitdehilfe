@@ -31,6 +31,7 @@ While 1
 		Case -1 ;Error
 			ExitLoop
 	EndSwitch
+	Sleep(10)
 WEnd
 
 Func _Exit()

@@ -3,10 +3,13 @@
 #include <AutoItConstants.au3>
 #include <FileConstants.au3>
 #include <MsgBoxConstants.au3>
+#include <WinAPIError.au3>
 
 Example()
 
 Func Example()
+	Local $sMsgBoxTitle = "AutoItVersion = " & @AutoItVersion
+
 	TCPStartup() ; Start the TCP service.
 
 	; Register OnAutoItExit to be called when the script is closed.
@@ -18,23 +21,21 @@ Func Example()
 
 	; Assign a Local variable the socket and connect to a listening socket with the IP Address and Port specified.
 	Local $iSocket = TCPConnect($sIPAddress, $iPort)
-	Local $iError = 0
 
 	; If an error occurred display the error code and return False.
 	If @error Then
 		; The server is probably offline/port is not opened on the server.
-		$iError = @error
-		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "Client:" & @CRLF & "Could not connect, Error code: " & $iError)
+		MsgBox(($MB_SYSTEMMODAL + $MB_ICONHAND), $sMsgBoxTitle, "Client: Could not connect" & @CRLF & " Error code: " & @error & @CRLF & @CRLF & _WinAPI_GetErrorMessage(@error))
 		Return False
 	EndIf
 
 	; Assign a Local variable the path of the file which will be received.
-	Local $sFilePath = FileSaveDialog("Save as", @MyDocumentsDir, "All types (*.*)", BitOR($FD_PATHMUSTEXIST, $FD_PROMPTOVERWRITE))
+	Local $sFilePath = @TempDir & "\temp.dat"
+	FileDelete($sFilePath)
 
 	; If an error occurred display the error code and return False.
 	If @error Then
-		$iError = @error
-		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONEXCLAMATION), "", "Client:" & @CRLF & "Invalid file chosen, Error code: " & $iError)
+		MsgBox(($MB_SYSTEMMODAL + $MB_ICONEXCLAMATION), $sMsgBoxTitle, "Client: Invalid file chosen" & @CRLF & " Error code: " & @error & @CRLF & @CRLF & _WinAPI_GetErrorMessage(@error))
 		Return False
 	EndIf
 
@@ -42,49 +43,34 @@ Func Example()
 	Local $hFile = FileOpen($sFilePath, BitOR($FO_BINARY, $FO_OVERWRITE))
 
 	; Assign Locales Constant variables the number representing 4 KiB; the binary code for the end of the file and the length of the binary code.
-	Local Const $i4KiB = 4096, $bEOF = Binary(@CRLF & "{EOF}"), $iEOFLen = BinaryLen($bEOF)
+	Local $i4KiB = 4096
+	If $CmdLine[0] Then $i4KiB = $CmdLine[1]
 
-	; Assign a Local variable the empty binary data which will contain the binary data of the file.
-	Local $bData = Binary("")
-
-	; Assign a Local variable to store the length of the data received.
-	Local $iDataLen = 0
-
-	; Assign a Local variable a boolean.
-	Local $bEOFReached = False
-
-	Do
-		$bData = TCPRecv($iSocket, $i4KiB, $TCP_DATA_BINARY)
+	Local $dData, $nReceivedBytes = 0, $n = 0, $fDiffTime, $hTimer = TimerInit()
+	#forceref $dData
+	While 1
+		$dData = TCPRecv($iSocket, $i4KiB, $TCP_DATA_BINARY)
 
 		; If an error occurred display the error code and return False.
 		If @error Then
-			$iError = @error
-			MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "Client:" & @CRLF & "Connection lost, Error code: " & $iError)
+			MsgBox(($MB_SYSTEMMODAL + $MB_ICONHAND), $sMsgBoxTitle, "Client: Connection lost n=" & $n & @CRLF & " Error code: " & @error & @CRLF & @CRLF & _WinAPI_GetErrorMessage(@error))
 			Return False
+		ElseIf @extended = 1 Or BinaryLen($dData) = 0 Then
+			; If nothing is received
+			ExitLoop
 		EndIf
 
-		$iDataLen = BinaryLen($bData)
-
-		; If nothing is received, retry for the incoming data.
-		If $iDataLen = 0 Then ContinueLoop
-
-		; If the end of the file is reached.
-		If BinaryMid($bData, 1 + $iDataLen - $iEOFLen, $iEOFLen) = $bEOF Then
-			; Strip the EOF code from the file data.
-			$bData = BinaryMid($bData, 1, $iDataLen - $iEOFLen)
-
-			; Set the EOFReached to True.
-			$bEOFReached = True
-		EndIf
-
-		FileWrite($hFile, $bData)
-	Until $bEOFReached
-
+		$nReceivedBytes += BinaryLen($dData)
+		$n += 1
+;~ 		FileWrite($hFile, $dData) ; to be uncommented if file content to be written
+	WEnd
+	$fDiffTime = TimerDiff($hTimer)
 	; Close the file handle.
 	FileClose($hFile)
 
 	; Display the successful message.
-	MsgBox($MB_SYSTEMMODAL, "", "Client:" & @CRLF & "File received.")
+;~ 	MsgBox($MB_SYSTEMMODAL, "", "Client:" & @CRLF & "File received nbBytes=" & & FileGetSize($sFilePath))
+	MsgBox($MB_SYSTEMMODAL, $sMsgBoxTitle, "Client: receivedBytes = " & $nReceivedBytes & " packetSize = " & $i4KiB & @CRLF & "File received TCPRecv = " & Int($fDiffTime / $n * 1000) & "µs Total = " & Int($fDiffTime) & "ms nPacket = " & $n)
 
 	; Close the socket.
 	TCPCloseSocket($iSocket)

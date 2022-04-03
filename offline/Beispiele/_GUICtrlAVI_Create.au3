@@ -1,3 +1,6 @@
+; == Beispiel 1 : Erstellt mit einer UDF
+
+#include <Extras\WM_NOTIFY.au3>
 #include <GuiAVI.au3>
 #include <GUIConstantsEx.au3>
 #include <WindowsConstants.au3>
@@ -12,7 +15,7 @@ Func Example()
 	Local $hGui, $sFile = RegRead("HKEY_LOCAL_MACHINE\SOFTWARE" & $sWow64 & "\AutoIt v3\AutoIt", "InstallDir") & "\Examples\GUI\SampleAVI.avi"
 
 	; Erstellt eine GUI
-	$hGui = GUICreate("AVI: Erstellen (Extern 1)", 300, 100)
+	$hGui = GUICreate("AVI Erstellen (v" & @AutoItVersion & ")", 300, 100)
 	$g_hAVI = _GUICtrlAVI_Create($hGui, $sFile, -1, 10, 10)
 	GUISetState(@SW_SHOW)
 
@@ -33,32 +36,19 @@ EndFunc   ;==>Example
 
 Func WM_COMMAND($hWnd, $iMsg, $wParam, $lParam)
 	#forceref $hWnd, $iMsg
-	Local $hWndFrom, $iIDFrom, $iCode
-	$hWndFrom = $lParam
-	$iIDFrom = BitAND($wParam, 0xFFFF) ; Low Word
-	$iCode = BitShift($wParam, 16) ; Hi Word
+	Local $hWndFrom = $lParam
+	Local $iIDFrom = BitAND($wParam, 0xFFFF) ; Low Word
+	Local $iCode = BitShift($wParam, 16) ; Hi Word
 	Switch $hWndFrom
 		Case $g_hAVI
 			Switch $iCode
 				Case $ACN_START ; Benachrichtigt das Parent-Fenster eines AnimationsControls, dass der verknüpfte AVI-Clip gestartet wurde
-					_DebugPrint("$ACN_START" & @CRLF & "--> hWndFrom:" & @TAB & $hWndFrom & @CRLF & _
-							"-->IDFrom:" & @TAB & $iIDFrom & @CRLF & _
-							"-->Code:" & @TAB & $iCode)
+					_WM_NOTIFY_DebugInfo("$ACN_START", "hWndFrom,IDFrom", $hWndFrom, $iIDFrom)
 					; Kein Rückgabewert
 				Case $ACN_STOP ; Benachrichtigt das Parent Fenster eines AnimationsControls, dass der verknüpfte AVI-Clip gestoppt wurde
-					_DebugPrint("$ACN_STOP" & @CRLF & "--> hWndFrom:" & @TAB & $hWndFrom & @CRLF & _
-							"-->IDFrom:" & @TAB & $iIDFrom & @CRLF & _
-							"-->Code:" & @TAB & $iCode)
+					_WM_NOTIFY_DebugInfo("$ACN_STOP", "hWndFrom,IDFrom", $hWndFrom, $iIDFrom)
 					; Kein Rückgabewert
 			EndSwitch
 	EndSwitch
 	Return $GUI_RUNDEFMSG
 EndFunc   ;==>WM_COMMAND
-
-Func _DebugPrint($s_text, $sLine = @ScriptLineNumber)
-	ConsoleWrite( _
-			"!===========================================================" & @CRLF & _
-			"+======================================================" & @CRLF & _
-			"-->Zeile(" & StringFormat("%04d", $sLine) & "):" & @TAB & $s_text & @CRLF & _
-			"+======================================================" & @CRLF)
-EndFunc   ;==>_DebugPrint

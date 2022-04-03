@@ -21,7 +21,7 @@ Func Example()
 		If @error Then ExitLoop
 
 		; Zeigt den Dateinamen.
-		$iResult = MsgBox(BitOR($MB_SYSTEMMODAL, $MB_OKCANCEL), "", "Datei: " & $sFileName)
+		$iResult = MsgBox(($MB_OKCANCEL + $MB_SYSTEMMODAL), "", "Datei: " & $sFileName)
 		If $iResult <> $IDOK Then ExitLoop ; Falls der Benutzer den Abbrechen oder Schließen Button anklickt.
 	WEnd
 

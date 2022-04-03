@@ -5,7 +5,7 @@
 Example()
 
 Func Example()
-	Local $hGUI = GUICreate(StringTrimRight(@ScriptName, StringLen(".exe")), 350, 200)
+	Local $hGUI = GUICreate("ToolTip Get/Set DelayTime (v" & @AutoItVersion & ")", 350, 200)
 
 	Local $idButton = GUICtrlCreateButton("This is a button", 30, 32, 130, 28)
 	Local $hButton = GUICtrlGetHandle($idButton)
@@ -19,6 +19,7 @@ Func Example()
 	_GUIToolTip_SetDelayTime($hToolTip, $TTDT_AUTOPOP, 1500)
 	GUISetState(@SW_SHOW)
 
+	; Retrieve and display the time that the tooltip displays
 	MsgBox($MB_SYSTEMMODAL, 'Message', 'Display time : ' & _GUIToolTip_GetDelayTime($hToolTip, $TTDT_AUTOPOP) & ' ms')
 
 	While 1

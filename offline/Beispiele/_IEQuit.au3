@@ -9,6 +9,6 @@ Local $oMarquee = _IEGetObjByName($oIE, "sfmarquee")
 If IsObj($oMarquee) Then
 	MsgBox($MB_SYSTEMMODAL, "SourceForge Information", $oMarquee.innerText)
 Else
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), "SourceForge Information", "Kein sfmarquee gefunden !!!")
+	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), "SourceForge Information", "Kein sfmarquee gefunden !!!")
 EndIf
 _IEQuit($oIE)

@@ -1,59 +1,66 @@
 #include <APIRegConstants.au3>
-#include <Array.au3>
+#include <Debug.au3>
 #include <MsgBoxConstants.au3>
 #include <WinAPIError.au3>
 #include <WinAPIMem.au3>
 #include <WinAPIReg.au3>
 
-Local $aValent[19][4]
+Example()
 
-; Note that if at least one of the following value names is not found in the specified registry key, the function fails!
+Func Example()
+	Local $aValent[19][4]
 
-; HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders
+	; Note that if at least one of the following value names is not found in the specified registry key, the function fails!
 
-$aValent[0][0] = 'AppData'
-$aValent[1][0] = 'Cache'
-$aValent[2][0] = 'Cookies'
-$aValent[3][0] = 'Desktop'
-$aValent[4][0] = 'Favorites'
-$aValent[5][0] = 'History'
-$aValent[6][0] = 'Local AppData'
-$aValent[7][0] = 'My Music'
-$aValent[8][0] = 'My Pictures'
-$aValent[9][0] = 'My Video'
-$aValent[10][0] = 'NetHood'
-$aValent[11][0] = 'Personal'
-$aValent[12][0] = 'PrintHood'
-$aValent[13][0] = 'Programs'
-$aValent[14][0] = 'Recent'
-$aValent[15][0] = 'SendTo'
-$aValent[16][0] = 'Start Menu'
-$aValent[17][0] = 'Startup'
-$aValent[18][0] = 'Templates'
+	; HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders
 
-_ArrayDisplay($aValent, '_WinAPI_RegQueryMultipleValues')
+	$aValent[0][0] = 'AppData'
+	$aValent[1][0] = 'Cache'
+	$aValent[2][0] = 'Cookies'
+	$aValent[3][0] = 'Desktop'
+	$aValent[4][0] = 'Favorites'
+	$aValent[5][0] = 'History'
+	$aValent[6][0] = 'Local AppData'
+	$aValent[7][0] = 'My Music'
+	$aValent[8][0] = 'My Pictures'
+	$aValent[9][0] = 'My Video'
+	$aValent[10][0] = 'NetHood'
+	$aValent[11][0] = 'Personal'
+	$aValent[12][0] = 'PrintHood'
+	$aValent[13][0] = 'Programs'
+	$aValent[14][0] = 'Recent'
+	$aValent[15][0] = 'SendTo'
+	$aValent[16][0] = 'Start Menu'
+	$aValent[17][0] = 'Startup'
+	$aValent[18][0] = 'Templates'
 
-Local $hKey = _WinAPI_RegOpenKey($HKEY_CURRENT_USER, 'Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders', $KEY_QUERY_VALUE)
-If @error Then
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), @extended, _WinAPI_GetErrorMessage(@extended))
-	Exit
-EndIf
+	_DebugArrayDisplay($aValent, '_WinAPI_RegQueryMultipleValues')
 
-Local $pBuffer
-_WinAPI_RegQueryMultipleValues($hKey, $aValent, $pBuffer)
-If @error Then
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), @extended, _WinAPI_GetErrorMessage(@extended))
-	Exit
-EndIf
+	Local $hKey = _WinAPI_RegOpenKey($HKEY_CURRENT_USER, 'Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders', $KEY_QUERY_VALUE)
+	If @error Then
+		_DebugSetup(Default, True)
+		_DebugReport("! RegOpenKey @error =" & @error & @CRLF & @TAB & _WinAPI_GetErrorMessage(@extended) & @CRLF)
+		Exit
+	EndIf
 
-_WinAPI_RegCloseKey($hKey)
+	Local $pBuffer
+	_WinAPI_RegQueryMultipleValues($hKey, $aValent, $pBuffer)
+	If @error Then
+		_DebugSetup(Default, True)
+		_DebugReport("! RegQueryMultipleValues @error =" & @error & @CRLF & @TAB & _WinAPI_GetErrorMessage(@extended) & @CRLF)
+		Exit
+	EndIf
 
-_ArrayDisplay($aValent, '_WinAPI_RegQueryMultipleValues')
+	_WinAPI_RegCloseKey($hKey)
 
-For $i = 0 To UBound($aValent) - 1
-	$aValent[$i][2] = DllStructGetData(DllStructCreate('wchar[' & $aValent[$i][1] & ']', $aValent[$i][2]), 1)
-Next
+	_DebugArrayDisplay($aValent, '_WinAPI_RegQueryMultipleValues')
 
-_WinAPI_FreeMemory($pBuffer)
+	For $i = 0 To UBound($aValent) - 1
+		$aValent[$i][2] = DllStructGetData(DllStructCreate('wchar[' & $aValent[$i][1] & ']', $aValent[$i][2]), 1)
+	Next
 
-_ArrayDisplay($aValent, '_WinAPI_RegQueryMultipleValues')
+	_WinAPI_FreeMemory($pBuffer)
+
+	_DebugArrayDisplay($aValent, '_WinAPI_RegQueryMultipleValues')
+
+EndFunc   ;==>Example

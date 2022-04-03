@@ -8,13 +8,13 @@ Func Example()
 	Local $hImage, $sFile, $hGUI, $hGraphic, $hThumbnail, $iW_new, $iH_new
 
 	$sFile = FileOpenDialog("Bitte ein Bild auswählene", "", "Image (*.jpg;*.png;*.bmp;*.gif;*.tif)", BitOR($FD_PATHMUSTEXIST, $FD_FILEMUSTEXIST))
-	If @error Then Exit MsgBox(BitOR($MB_TOPMOST, $MB_ICONERROR), "Fehler", "Es wurde kein Bild ausgewählt", 30)
+	If @error Then Exit MsgBox(($MB_TOPMOST + $MB_ICONERROR), "Fehler", "Es wurde kein Bild ausgewählt", 30)
 
 	_GDIPlus_Startup()
 
 	$hImage = _GDIPlus_ImageLoadFromFile($sFile)
 	If @error Or Not $hImage Then
-		MsgBox(BitOR($MB_TOPMOST, $MB_ICONERROR), "Fehler", "Diese Datei wird nicht von GDIPlus unterstützt!")
+		MsgBox(($MB_TOPMOST + $MB_ICONERROR), "Fehler", "Diese Datei wird nicht von GDIPlus unterstützt!")
 	Else
 		$hGUI = GUICreate("GDI+ _GDIPlus_ImageGetThumbnail Demo", 320, 200)
 		GUISetBkColor(0x202020)

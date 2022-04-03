@@ -11,7 +11,7 @@ _SQLite_Exec(-1, "INSERT INTO tblTest VALUES ('1','1','1');" & _ ; Zeile 1
 		"INSERT INTO tblTest VALUES ('3','3','3');") ; Zeile 3
 _SQLite_Query(-1, "SELECT RowID,* FROM tblTest;", $hQuery)
 While _SQLite_FetchData($hQuery, $aRow) = $SQLITE_OK
-	$iSwitch = MsgBox(BitOR($MB_YESNO, $MB_SYSTEMMODAL), "Zeile: " & $aRow[0], $aRow[1] & "," & $aRow[2] & "," & $aRow[3] & @CRLF & _
+	$iSwitch = MsgBox(($MB_YESNO + $MB_SYSTEMMODAL), "Zeile: " & $aRow[0], $aRow[1] & "," & $aRow[2] & "," & $aRow[3] & @CRLF & _
 			"Weitere Zeile abfragen?")
 	If $iSwitch = 6 Then ; Ja
 		If $aRow[0] = 3 Then _SQLite_QueryReset($hQuery)

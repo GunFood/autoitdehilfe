@@ -4,7 +4,7 @@
 
 Local $iTheme = _WinAPI_GetThemeAppProperties()
 
-Local $hForm = GUICreate('Test ' & StringReplace(@ScriptName, '.au3', '()'), 310, 360)
+Local $hForm = GUICreate("WinAPI Sezt und ermittelt die Theme AppProperties (v" & @AutoItVersion & ")", 310, 360)
 GUISetFont(8.5, 400, 0, 'MS Shell Dlg', $hForm)
 GUICtrlCreateGroup('Gruppe', 10, 10, 140, 95)
 GUICtrlCreateCheckbox('Checkbox 1', 22, 26, 120, 23)

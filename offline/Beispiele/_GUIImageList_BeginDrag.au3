@@ -1,3 +1,4 @@
+#include <Extras\WM_NOTIFY.au3>
 #include <GUIConstantsEx.au3>
 #include <GuiImageList.au3>
 #include <GuiListView.au3>
@@ -20,9 +21,8 @@ Example()
 Func Example()
 	Local Const $iImage_width = 20
 	Local Const $iImage_height = 20
-	Local $himages, $hMain_GUI, $iIndex
 
-	$hMain_GUI = GUICreate("ImageList: Beginnt mit dem ziehen eines Bildes", 425, 400)
+	Local $hMain_GUI = GUICreate("ImageList: Beginnt mit dem ziehen eines Bildes (v" & @AutoItVersion & ")", 350, 400)
 
 	$g_hListView = _GUICtrlListView_Create($hMain_GUI, "Name|Kategorie", 5, 75, 220, 180, -1, BitOR($WS_EX_CLIENTEDGE, $WS_EX_STATICEDGE))
 	$g_iLV_Height = 180
@@ -37,17 +37,17 @@ Func Example()
 	;------------------------------------------------------
 	; Erstellt eine Imagelist
 	;------------------------------------------------------
-	$himages = _GUIImageList_Create($iImage_width, $iImage_height, 5, 1)
+	Local $hImages = _GUIImageList_Create($iImage_width, $iImage_height, 5, 1)
 	For $x = 1 To 21
-		_GUIImageList_AddIcon($himages, @SystemDir & "\shell32.dll", $x)
+		_GUIImageList_AddIcon($hImages, @SystemDir & "\shell32.dll", $x)
 	Next
 
-	_GUICtrlListView_SetImageList($g_hListView, $himages, $LVSIL_SMALL)
+	_GUICtrlListView_SetImageList($g_hListView, $hImages, $LVSIL_SMALL)
 
 	;------------------------------------------------------
 	; Event-Funktionen registrieren
 	;------------------------------------------------------
-	GUIRegisterMsg($WM_NOTIFY, "WM_NOTIFY")
+	_WM_NOTIFY_Register()
 	GUIRegisterMsg($WM_LBUTTONUP, "WM_LBUTTONUP")
 	GUIRegisterMsg($WM_MOUSEMOVE, "WM_MOUSEMOVE")
 
@@ -55,6 +55,7 @@ Func Example()
 	; Fügt Listviewitems mit Bilder hinzu
 	;------------------------------------------------------
 	Local $y = 1
+	Local $iIndex
 	For $x = 0 To 9
 		$iIndex = _GUICtrlListView_AddItem($g_hListView, "Name " & $x + 1, $y) ; Handle, String, Bilderindex
 		_GUICtrlListView_AddSubItem($g_hListView, $iIndex, "Kategorie " & $x + 1, 1, $y + 1) ; Handle, index, String, Subitem, Bilderindex
@@ -78,7 +79,7 @@ Func Example()
 		EndSwitch
 	WEnd
 
-	_GUIImageList_Destroy($himages)
+	_GUIImageList_Destroy($hImages)
 	GUIDelete()
 EndFunc   ;==>Example
 
@@ -104,7 +105,7 @@ Func _LVInsertItem($i_FromItem, $i_ToItem)
 	If @error Then Return SetError(-1, -1, -1)
 
 	; Stellt den vorherigen Status wieder her
-	_DebugPrint("$i_NewIndex = " & $i_NewIndex)
+	_WM_NOTIFY_DebugInfo("LVInsertItem", "Restore previous State $i_NewIndex = " & $i_NewIndex)
 	DllStructSetData($tStruct_LVITEM, "Mask", $LVIF_STATE)
 	DllStructSetData($tStruct_LVITEM, "Item", $i_NewIndex)
 	DllStructSetData($tStruct_LVITEM, "State", $iItem_state)
@@ -193,8 +194,6 @@ Func WM_LBUTTONUP($hWndGUI, $iMsgID, $wParam, $lParam)
 	Local $lpos = ControlGetPos($hWndGUI, "", $g_hListView)
 	Local $x = BitAND($lParam, 0xFFFF) - $lpos[0]
 	Local $y = BitShift($lParam, 16) - $lpos[1]
-	_DebugPrint("$x = " & $x)
-	_DebugPrint("$y = " & $y)
 	;------------------------------------------------------
 	; Das ziehen ist beendet
 	;------------------------------------------------------
@@ -211,7 +210,7 @@ Func WM_LBUTTONUP($hWndGUI, $iMsgID, $wParam, $lParam)
 	DllStructSetData($struct_LVHITTESTINFO, "Y", $y)
 	$g_aIndex[1] = _SendMessage($g_hListView, $LVM_HITTEST, 0, DllStructGetPtr($struct_LVHITTESTINFO), 0, "wparam", "ptr")
 	Local $flags = DllStructGetData($struct_LVHITTESTINFO, "Flags")
-	_DebugPrint("$flags: " & $flags)
+	_WM_NOTIFY_DebugInfo("WM_LBUTTONUP", "x,y,iFlags", $x, $y, $iFlags)
 	;------------------------------------------------------
 ;~ 	// Außerhalb des ListViews??
 	;------------------------------------------------------
@@ -224,7 +223,7 @@ Func WM_LBUTTONUP($hWndGUI, $iMsgID, $wParam, $lParam)
 	; Es wird sichergestellt, dass das Item mindestens 2 Items über oder unter dem Item eingefügt wird, damit keine Kopie entsteht
 	;------------------------------------------------------
 	If $g_aIndex[0] < $g_aIndex[1] - 1 Or $g_aIndex[0] > $g_aIndex[1] + 1 Then
-		_DebugPrint("To = " & $g_aIndex[1])
+		_WM_NOTIFY_DebugInfo("WM_LBUTTONUP", "To", $g_aIndex[1])
 		Local $i_NewIndex = _LVInsertItem($g_aIndex[0], $g_aIndex[1])
 		If @error Then Return SetError(-1, -1, $GUI_RUNDEFMSG)
 		Local $iFrom_index = $g_aIndex[0]
@@ -257,7 +256,6 @@ Func WM_NOTIFY($hWndGUI, $iMsgID, $wParam, $lParam)
 		Case $g_hListView
 			Switch $iCode
 				Case $LVN_BEGINDRAG
-					_DebugPrint("$LVN_BEGINDRAG")
 					$x = BitAND($lParam, 0xFFFF)
 					$y = BitShift($lParam, 16)
 					$tNMLISTVIEW = DllStructCreate($tagNMLISTVIEW, $lParam)
@@ -268,21 +266,20 @@ Func WM_NOTIFY($hWndGUI, $iMsgID, $wParam, $lParam)
 					_GUIImageList_BeginDrag($g_ahDragImageList[0], 0, 0, 0)
 
 					If @error Then Return SetError(-1, -1, $GUI_RUNDEFMSG)
-					_DebugPrint("From = " & $g_aIndex[0])
+					_WM_NOTIFY_DebugInfo("$LVN_BEGINDRAG", "From", $g_aIndex[0])
 					_GUIImageList_DragEnter($g_hListView, $x, $y)
 					_WinAPI_SetCapture($hWndGUI)
 					$g_bDragging = True
 				Case $NM_CUSTOMDRAW
-					_DebugPrint("$NM_CUSTOMDRAW")
 					$tDraw = DllStructCreate($tagNMLVCUSTOMDRAW, $lParam)
 					$iDrawStage = DllStructGetData($tDraw, "dwDrawStage")
 					$iItemSpec = DllStructGetData($tDraw, "dwItemSpec")
 					Switch $iDrawStage
 						Case $CDDS_PREPAINT
-							_DebugPrint("$CDDS_PREPAINT")
+;~ 							_WM_NOTIFY_DebugInfo("$NM_CUSTOMDRAW: $CDDS_PREPAINT")
 							Return $CDRF_NOTIFYITEMDRAW
 						Case $CDDS_ITEMPREPAINT
-							_DebugPrint("$CDDS_ITEMPREPAINT")
+;~ 							_WM_NOTIFY_DebugInfo("$NM_CUSTOMDRAW: $CDDS_ITEMPREPAINT")
 							If BitAND($iItemSpec, 1) = 1 Then
 								DllStructSetData($tDraw, "clrTextBk", $CLR_AQUA)
 							Else
@@ -295,12 +292,3 @@ Func WM_NOTIFY($hWndGUI, $iMsgID, $wParam, $lParam)
 	Return $GUI_RUNDEFMSG
 EndFunc   ;==>WM_NOTIFY
 #EndRegion Event Function(s) **********************************************************************************************
-
-Func _DebugPrint($s_Text)
-	If Not $g_iDebugIt Then Return
-	$s_Text = StringReplace($s_Text, @CRLF, @CRLF & "-->")
-	ConsoleWrite("!===========================================================" & @CRLF & _
-			"+===========================================================" & @CRLF & _
-			"-->" & $s_Text & @CRLF & _
-			"+===========================================================" & @CRLF)
-EndFunc   ;==>_DebugPrint

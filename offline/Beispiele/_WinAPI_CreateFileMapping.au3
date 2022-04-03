@@ -45,7 +45,7 @@ Func _Receiver()
 		Sleep(200)
 		$sText = DllStructGetData($tData, 1)
 		DllStructSetData($tData, 1, '')
-		If $sText Then MsgBox(BitOR($MB_ICONINFORMATION, $MB_SYSTEMMODAL), $g_sTitle & " (receiver)", "                                               " & @CRLF & $sText)
+		If $sText Then MsgBox(($MB_ICONINFORMATION + $MB_SYSTEMMODAL), $g_sTitle & " (receiver)", "                                               " & @CRLF & $sText)
 	WEnd
 	_WinAPI_UnmapViewOfFile($pAddress)
 	_WinAPI_CloseHandle($hMapping)
@@ -54,7 +54,7 @@ EndFunc   ;==>_Receiver
 Func _Sender()
 	Local $hMapping = _WinAPI_CreateFileMapping(-1, 2048, 'MyFileMapping')
 	If Not $hMapping Or @extended Then
-		MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Error', 'Unable to create file mapping (@extended=' & @extended & ').')
+		MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Error', 'Unable to create file mapping (@extended=' & @extended & ').')
 		Return
 	EndIf
 

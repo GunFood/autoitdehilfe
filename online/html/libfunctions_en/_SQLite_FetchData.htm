@@ -15,7 +15,7 @@
 <p style="margin:2px 0 0 0;" class="funcdesc">Fetches 1 row of data from a _SQLite_Query() based query<br /></p>
 <p class="codeheader">
 #include &lt;SQLite.au3&gt;<br />
-_SQLite_FetchData ( $hQuery, ByRef $aRow [, $bBinary = False [, $bDoNotFinalize = False [, $iColumns = 0]]] )<br />
+_SQLite_FetchData ( $hQuery, ByRef $aRow [, $bBinary = False [, $bDoNotFinalize = False [, $iColumns = 0 [, $bAutoItTypeConversion = False]]]] )<br />
 </p>
 
 <h2>Parameters</h2>
@@ -41,6 +41,10 @@ _SQLite_FetchData ( $hQuery, ByRef $aRow [, $bBinary = False [, $bDoNotFinalize 
 <td>$iColumns</td>
 <td><strong>[optional]</strong> Number of columns to be returned ((Default = all)</td>
 </tr>
+<tr>
+<td>$bAutoItTypeConversion</td>
+<td><strong>[optional]</strong> Force conversion from String to AutoItType variable ((Default = False). See remark.</td>
+</tr>
 </table>
 
 <h2>Return Value</h2>
@@ -56,18 +60,28 @@ _SQLite_FetchData ( $hQuery, ByRef $aRow [, $bBinary = False [, $bDoNotFinalize 
 <tr>
 <td class="valign-top">@error:</td>
 <td>-1 - SQLite reported an error (Check return value)<br />
-1 - Error calling SQLite API 'sqlite3_step'<br />
-2 - Error calling SQLite API 'sqlite3_data_count'<br />
-3 - Error calling SQLite API 'sqlite3_column_text16'<br />
-4 - Error calling SQLite API 'sqlite3_column_type'<br />
-5 - Error calling SQLite API 'sqlite3_column_bytes'<br />
-6 - Error calling SQLite API 'sqlite3_column_blob'<br />
-7 - Call prevented by SafeMode</td>
+&nbsp;1 - Error calling SQLite API 'sqlite3_step'<br />
+&nbsp;2 - Error calling SQLite API 'sqlite3_data_count'<br />
+&nbsp;3 - Error calling SQLite API 'sqlite3_column_text16'<br />
+&nbsp;4 - Error calling SQLite API 'sqlite3_column_type'<br />
+&nbsp;5 - Error calling SQLite API 'sqlite3_column_bytes'<br />
+&nbsp;6 - Error calling SQLite API 'sqlite3_column_blob'<br />
+&nbsp;7 - Call prevented by SafeMode<br />
+&nbsp;8 - Error calling SQLite API 'sqlite3_column_int64'<br />
+&nbsp;9 - Error calling SQLite API 'sqlite3_column_double'<br />
+13&nbsp;- Error calling SQLite API 'sqlite3_column_text16'<br />
+15&nbsp;- Error calling SQLite API 'sqlite3_column_bytes'<br />
+16&nbsp;- Error calling SQLite API 'sqlite3_column_blob'</td>
 </tr>
 </table>
 
+<h2>Remarks</h2>
+<p>$bAutoItTypeConversion is usefull when the whole script cannot use the <a href="_SQLite_Startup.htm">_SQlite_Startup()</a> parameter.<br />
+Default is to return String or Binary AutoIt Variable.<br />
+</p>
+
 <h2>Related</h2>
-<p><a href="_SQLite_Query.htm">_SQLite_Query</a>, <a href="_SQLite_QueryFinalize.htm">_SQLite_QueryFinalize</a></p>
+<p><a href="_SQLite_Query.htm">_SQLite_Query</a>, <a href="_SQLite_QueryFinalize.htm">_SQLite_QueryFinalize</a>, <a href="_SQlite_Startup.htm">_SQlite_Startup</a></p>
 
 <h2 class="bottom">Example</h2>
 <script type="text/javascript">
@@ -116,7 +130,7 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <a class="codeSnippetLink" href="../libfunctions/_SQLite_FetchNames.htm"><span class="S15">_SQLite_FetchNames</span></a><span class="S8">(</span><span class="S9">$hQuery</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aNames</span><span class="S8">)</span>
 <a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/StringFormat.htm"><span class="S4">StringFormat</span></a><span class="S8">(</span><span class="S7">" %-10s &nbsp;%-10s &nbsp;%-10s &nbsp;%-10s "</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aNames</span><span class="S8">[</span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$aNames</span><span class="S8">[</span><span class="S3">1</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$aNames</span><span class="S8">[</span><span class="S3">2</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$aNames</span><span class="S8">[</span><span class="S3">3</span><span class="S8">])</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
 <a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_SQLite_FetchData.htm"><span class="S15">_SQLite_FetchData</span></a><span class="S8">(</span><span class="S9">$hQuery</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aRow</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$SQLITE_OK</span><span class="S0"> </span><span class="S1">; Read Out the next Row</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/StringFormat.htm"><span class="S4">StringFormat</span></a><span class="S8">(</span><span class="S7">" %-10s &nbsp;%-10s &nbsp;%-10s &nbsp;%-10s "</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aRow</span><span class="S8">[</span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$aRow</span><span class="S8">[</span><span class="S3">1</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$aRow</span><span class="S8">[</span><span class="S3">2</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$aRow</span><span class="S8">[</span><span class="S3">3</span><span class="S8">])</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/StringFormat.htm"><span class="S4">StringFormat</span></a><span class="S8">(</span><span class="S7">" %-10s &nbsp;%-10s &nbsp;%-10s &nbsp;%-10s "</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aRow</span><span class="S8">[</span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$aRow</span><span class="S8">[</span><span class="S3">1</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$aRow</span><span class="S8">[</span><span class="S3">2</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$aRow</span><span class="S8">[</span><span class="S3">3</span><span class="S8">])</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
 <a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
 <a class="codeSnippetLink" href="../libfunctions/_SQLite_QueryFinalize.htm"><span class="S15">_SQLite_QueryFinalize</span></a><span class="S8">(</span><span class="S9">$hQuery</span><span class="S8">)</span>
 <a class="codeSnippetLink" href="../libfunctions/_SQLite_Exec.htm"><span class="S15">_SQLite_Exec</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"DROP TABLE aTest;"</span><span class="S8">)</span>

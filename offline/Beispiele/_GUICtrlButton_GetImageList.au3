@@ -8,29 +8,28 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hImage, $y = 70, $iIcon = 125, $a_idBtn[6], $aImageListInfo
-
-	GUICreate("Buttons", 510, 400)
+	GUICreate("Button: Setzen und ermitteln der ImageList (v" & @AutoItVersion & ")", 510, 400)
 	$g_idMemo = GUICtrlCreateEdit("", 119, 10, 376, 374, $WS_VSCROLL)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
 
-	$hImage = _GUIImageList_Create(32, 32, 5, 3, 6)
+	Local $hImage = _GUIImageList_Create(32, 32, 5, 3, 6)
 	For $x = 6 To 11
 		_GUIImageList_AddIcon($hImage, "shell32.dll", $x, True)
 	Next
 
+	Local $a_idBtn[6]
 	$a_idBtn[0] = GUICtrlCreateButton("Button 1", 10, 10, 90, 50)
 	_GUICtrlButton_SetImageList($a_idBtn[0], $hImage)
 
-
+	Local $y = 70, $iIcon = 125
 	For $x = 1 To 5
 		$a_idBtn[$x] = GUICtrlCreateButton("Button " & $x + 1, 10, $y, 90, 50)
 		_GUICtrlButton_SetImageList($a_idBtn[$x], _GetImageListHandle("shell32.dll", $iIcon + $x, True), $x)
 		$y += 60
 	Next
 
-
+	Local $aImageListInfo
 	For $x = 0 To 5
 		$aImageListInfo = _GUICtrlButton_GetImageList($a_idBtn[$x])
 		MemoWrite("Button " & $x + 1 & " Infos zur Imagelist" & @CRLF & "--------------------------------")

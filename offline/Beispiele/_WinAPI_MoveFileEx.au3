@@ -35,7 +35,8 @@ Func _ProgressProc($iTotalFileSize, $iTotalBytesTransferred, $iStreamSize, $iStr
 
 	Local $iPercent = Round($iTotalBytesTransferred / $iTotalFileSize * 100)
 	If $iPercent = 100 Then
-		ProgressSet($iPercent, '', 'Fertig')
+		ProgressSet($iPercent, $iPercent & "%", 'Fertig')
+		Sleep(2000)
 	Else
 		ProgressSet($iPercent, $iPercent & "%")
 	EndIf

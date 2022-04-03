@@ -32,7 +32,9 @@ Switch @extended
 	Case 18 ; ERROR_NO_MORE_FILES
 
 	Case Else
-		MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), @extended, _WinAPI_GetErrorMessage(@extended))
+		Local $iError = @error
+		Local $iExtended = @extended
+		MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), "Error = " & $iError, _WinAPI_GetErrorMessage($iExtended))
 		Exit
 EndSwitch
 

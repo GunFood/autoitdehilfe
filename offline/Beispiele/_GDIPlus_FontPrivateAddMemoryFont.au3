@@ -15,7 +15,7 @@ Func Example()
 	_GDIPlus_Startup()
 	$hGraphic = _GDIPlus_GraphicsCreateFromHWND($hGUI)
 	_GDIPlus_GraphicsSetSmoothingMode($hGraphic, $GDIP_SMOOTHINGMODE_HIGHQUALITY) ;Sets the graphics object rendering quality (anti aliasing)
-	_GDIPlus_GraphicsSetTextRenderingHint($hGraphic, $GDIP_TEXTRENDERINGHINT_ANTIALIASGRIDFIT) ;set the anti aliasing for fonts
+	_GDIPlus_GraphicsSetTextRenderingHint($hGraphic, $GDIP_TEXTRENDERINGHINTANTIALIASGRIDFIT) ;set the anti aliasing for fonts
 
 	$hCollection = _GDIPlus_FontPrivateCreateCollection() ;create a PrivateFontCollection object to add fonts later
 	$tFont = DllStructCreate('byte[' & BinaryLen($bFont) & ']') ;create byte struct to add font to collection

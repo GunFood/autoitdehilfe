@@ -14,7 +14,7 @@ Func Example()
 
 	Local $sFile = RegRead($sRegPath, "InstallDir") & "\Examples\GUI\logo4.gif"
 	If Not FileExists($sFile) Then
-		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", $sFile & " not found!", 30)
+		MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), "", $sFile & " not found!", 30)
 		Return False
 	EndIf
 
@@ -22,7 +22,7 @@ Func Example()
 	Local $hImage = _GDIPlus_ImageLoadFromFile($sFile) ;create an image object based on a file
 	If @error Then
 		_GDIPlus_Shutdown()
-		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "An error has occured - unable to load image!", 30)
+		MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), "", "An error has occured - unable to load image!", 30)
 		Return False
 	EndIf
 

@@ -29,7 +29,7 @@ While 1
 		Else
 			$sText = 'not executable file'
 		EndIf
-		MsgBox(BitOR($MB_ICONINFORMATION, $MB_SYSTEMMODAL), '_WinAPI_GetBinaryType()', '"' & _WinAPI_PathStripPath($sPath) & '" is ' & $sText & ".")
+		MsgBox(($MB_ICONINFORMATION + $MB_SYSTEMMODAL), '_WinAPI_GetBinaryType()', '"' & _WinAPI_PathStripPath($sPath) & '" is ' & $sText & ".")
 	Else
 		ExitLoop
 	EndIf

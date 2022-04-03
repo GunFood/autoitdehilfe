@@ -1,6 +1,6 @@
 #include <WinAPIShPath.au3>
 
-Local $sPath = _WinAPI_PathRelativePathTo(@ScriptDir, 1, @MyDocumentsDir, 1)
+Local $sPath = _WinAPI_PathRelativePathTo(@ScriptDir, 1, @ScriptDir & "\..", 1)
 
 ConsoleWrite('Relativer Pfad: ' & $sPath & @CRLF)
 

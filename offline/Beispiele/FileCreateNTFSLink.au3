@@ -14,12 +14,12 @@ Func Example()
 	EndIf
 
 	; Erstellt einen NTFS-Hardlink der .txt-Datei zu der .log-Datei auf dem Desktop.
-	Local $iNTFSLink = FileCreateNTFSLink($sFilePath, @DesktopDir & "\ExampleNTFSLink.log")
+	Local $iNTFSLink = FileCreateNTFSLink($sFilePath, @TempDir & "\ExampleNTFSLink.log")
 
 	; Zeigt eine Nachricht, ob der NTFS-Hardlink erstellt wurde.
 	If $iNTFSLink Then
 		; Öffnet den Desktop-Ordner.
-		ShellExecute(@DesktopDir)
+		ShellExecute(@TempDir)
 
 		MsgBox($MB_SYSTEMMODAL, "", "Der NTFS-Hardlink wurde erstellt." & @CRLF & "FileCreateNTFSLink gibt folgendes zurück: " & $iNTFSLink)
 	Else
@@ -28,5 +28,5 @@ Func Example()
 
 	; Löscht die temporären Datei.
 	FileDelete($sFilePath)
-	FileDelete(@DesktopDir & "\ExampleNTFSLink.log")
+	FileDelete(@TempDir & "\ExampleNTFSLink.log")
 EndFunc   ;==>Example

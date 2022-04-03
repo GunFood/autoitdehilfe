@@ -6,11 +6,9 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $idCombo
-
 	; Erstellt eine GUI
-	GUICreate("ComboBox: Hinweistext setzen und auslesen", 400, 296)
-	$idCombo = GUICtrlCreateCombo("", 2, 2, 396, 296)
+	GUICreate("ComboBox: Setzt und ermittelt den Hinweistext (v" & @AutoItVersion & ")", 400, 296)
+	Local $idCombo = GUICtrlCreateCombo("", 2, 2, 396, 296)
 	_GUICtrlComboBox_SetCueBanner($idCombo, "Wähle ein Item aus")
 	$g_idMemo = GUICtrlCreateEdit("", 10, 50, 376, 234, $WS_VSCROLL)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")

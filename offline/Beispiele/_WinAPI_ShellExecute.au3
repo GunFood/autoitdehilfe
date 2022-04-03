@@ -6,6 +6,8 @@ Local $sFile = InputBox('Run', 'Hier den Namen eines Programms, Ordners, Dokumen
 If $sFile Then
 	_WinAPI_ShellExecute($sFile, '', '', 'open')
 	If @error Then
-		MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Fehler', 'Öffnen fehlgeschlagen "' & $sFile & '".' & @CRLF & @CRLF & @extended)
+		Local $iError = @error
+		Local $iExtended = @extended
+		MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Fehler = ' & $iError, 'Öffnen fehlgeschlagen "' & $sFile & '".' & @CRLF & @CRLF & _WinAPI_GetErrorMessage($iExtended))
 	EndIf
 EndIf

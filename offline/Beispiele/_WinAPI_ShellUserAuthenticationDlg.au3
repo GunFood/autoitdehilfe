@@ -15,7 +15,7 @@ While 1
 		If $aData[2] Then
 			_WinAPI_ConfirmCredentials('MyScript', 0)
 		EndIf
-		MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Error', 'You have typed an incorrect login or password, it should be "AutoIt" and "123".')
+		MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Error', 'You have typed an incorrect login or password, it should be "AutoIt" and "123".')
 	Else
 		If $aData[2] Then
 			_WinAPI_ConfirmCredentials('MyScript', 1)

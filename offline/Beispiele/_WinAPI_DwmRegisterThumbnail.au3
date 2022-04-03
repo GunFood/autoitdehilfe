@@ -4,12 +4,12 @@
 #include <WinAPIMisc.au3>
 
 If Not _WinAPI_DwmIsCompositionEnabled() Then
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Error', 'Require Windows Vista or later with enabled Aero theme.')
+	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Error', 'Require Windows Vista or later with enabled Aero theme.')
 	Exit
 EndIf
 
 Run(@SystemDir & '\calc.exe')
-Local $hWnd = WinWaitActive("[CLASS:CalcFrame]", '', 3)
+Local $hWnd = WinWaitActive("[CLASS:ApplicationFrameWindow]", '', 3)
 If Not $hWnd Then
 	Exit
 EndIf
@@ -36,4 +36,4 @@ GUISetState(@SW_SHOW)
 Do
 Until GUIGetMsg() = $GUI_EVENT_CLOSE
 
-WinClose("[CLASS:CalcFrame]", "")
+WinClose("[CLASS:ApplicationFrameWindow]", "")

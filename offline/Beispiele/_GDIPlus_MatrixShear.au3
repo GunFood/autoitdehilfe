@@ -26,7 +26,7 @@ Func Example()
 	_GDIPlus_MatrixShear($hMatrix, 0.8, 0.1)
 	_GDIPlus_PathTransform($hPath, $hMatrix)
 
-	_GDIPlus_GraphicsSetSmoothingMode($hGraphic, 2) ;Sets the graphics object rendering quality (antialiasing)
+	_GDIPlus_GraphicsSetSmoothingMode($hGraphic, $GDIP_SMOOTHINGMODE_HIGHQUALITY) ;Sets the graphics object rendering quality (antialiasing)
 	_GDIPlus_GraphicsClear($hGraphic, 0xFF000000)
 	_GDIPlus_GraphicsFillPath($hGraphic, $hPath, $hBrush) ;Fill path to graphics handle (GUI)
 	_GDIPlus_GraphicsDrawPath($hGraphic, $hPath, $hPen) ;Draw path to graphics handle (GUI)

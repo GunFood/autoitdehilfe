@@ -5,7 +5,7 @@
 #include <WinAPIMisc.au3>
 
 If Not _WinAPI_DwmIsCompositionEnabled() Then
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Error', 'Require Windows Vista or later with enabled Aero theme.')
+	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Error', 'Require Windows Vista or later with enabled Aero theme.')
 	Exit
 EndIf
 

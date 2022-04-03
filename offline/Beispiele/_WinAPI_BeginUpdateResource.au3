@@ -17,7 +17,7 @@ EndIf
 
 ; Create simple executable file (MyProg.exe) in which will be added icon
 If Not FileCopy(@ScriptDir & '\Extras\MyProg.exe', $g_sExe, $FC_OVERWRITE) Then
-	If MsgBox(BitOR($MB_OKCANCEL, $MB_ICONERROR, $MB_SYSTEMMODAL), 'Error', 'Unable to copy MyProg.exe or file already exist in the current directory.') <> 1 Then
+	If MsgBox(($MB_OKCANCEL + $MB_ICONERROR + $MB_SYSTEMMODAL), 'Error', 'Unable to copy MyProg.exe or file already exist in the current directory.') <> 1 Then
 		Exit
 	EndIf
 	FileCopy(@ScriptDir & '\Extras\MyProg.exe', $g_sExe, $FC_OVERWRITE)
@@ -82,5 +82,5 @@ EndIf
 
 ; Show message if an error occurred
 If $iError Then
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Error', 'Unable to change resources.')
+	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Error', 'Unable to change resources.')
 EndIf

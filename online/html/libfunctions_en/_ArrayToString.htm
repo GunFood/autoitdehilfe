@@ -15,7 +15,7 @@
 <p style="margin:2px 0 0 0;" class="funcdesc">Places the elements of a 1D or 2D array into a single string, separated by the specified delimiters<br /></p>
 <p class="codeheader">
 #include &lt;Array.au3&gt;<br />
-_ArrayToString ( Const ByRef $aArray [, $sDelim_Col = "|" [, $iStart_Row = -1 [, $iEnd_Row = -1 [, $sDelim_Row = @CRLF [, $iStart_Col = -1 [, $iEnd_Col = -1]]]]]] )<br />
+_ArrayToString ( Const ByRef $aArray [, $sDelim_Col = "|" [, $iStart_Row = Default [, $iEnd_Row = Default [, $sDelim_Row = @CRLF [, $iStart_Col = Default [, $iEnd_Col = Default]]]]]] )<br />
 </p>
 
 <h2>Parameters</h2>
@@ -30,11 +30,11 @@ _ArrayToString ( Const ByRef $aArray [, $sDelim_Col = "|" [, $iStart_Row = -1 [,
 </tr>
 <tr>
 <td>$iStart_Row</td>
-<td><strong>[optional]</strong> Index of array row to start copy</td>
+<td><strong>[optional]</strong> Index of array row to start copy (Default = 0)</td>
 </tr>
 <tr>
 <td>$iEnd_Row</td>
-<td><strong>[optional]</strong> Index of array row to stop copy</td>
+<td><strong>[optional]</strong> Index of array row to stop copy (Default = number of Rows)</td>
 </tr>
 <tr>
 <td>$sDelim_Row</td>
@@ -42,11 +42,11 @@ _ArrayToString ( Const ByRef $aArray [, $sDelim_Col = "|" [, $iStart_Row = -1 [,
 </tr>
 <tr>
 <td>$iStart_Col</td>
-<td><strong>[optional]</strong> Index of array column to start copy (2D only)</td>
+<td><strong>[optional]</strong> Index of array column to start copy (2D only) (Default = 0)</td>
 </tr>
 <tr>
 <td>$iEnd_Col</td>
-<td><strong>[optional]</strong> Index of array column to stop copy (2D only)</td>
+<td><strong>[optional]</strong> Index of array column to stop copy (2D only) (Default = Number of Columns)</td>
 </tr>
 </table>
 
@@ -63,16 +63,20 @@ _ArrayToString ( Const ByRef $aArray [, $sDelim_Col = "|" [, $iStart_Row = -1 [,
 <tr>
 <td class="valign-top">@error:</td>
 <td>1 - $aArray is not an array<br />
-2 - $aArray is not a 1D or 2D array<br />
-3 - $iStart_Row or $iEnd_Row outside array bounds<br />
-4 - $iStart_Row greater then $iEnd_Row<br />
-5 - $iStart_Col or $iEnd_Col outside array bounds<br />
-6 - $iStart_Col greater then $iEnd_Col</td>
+2&nbsp;- $aArray is not a 1D or 2D array<br />
+3&nbsp;- $iStart_Row or $iEnd_Row outside array bounds<br />
+4&nbsp;- $iStart_Row greater then $iEnd_Row<br />
+5&nbsp;- $iStart_Col or $iEnd_Col outside array bounds<br />
+6&nbsp;- $iStart_Col greater then $iEnd_Col</td>
 </tr>
 </table>
 
+<h2>Remarks</h2>
+<p>Note that if the passed array has one of the following formats and no content - [0], [1], [0][0], [1][0], [0][1], [1][1] - this function returns an empty string. If this string is subsequently passed to _ArrayFromString(), that function cannot distinguish between these cases and will default to a single element array with no content: either [1] or [1][1] depending on the $bForce2D flag.<br />
+</p>
+
 <h2>Related</h2>
-<p><a href="_ArrayToClip.htm">_ArrayToClip</a></p>
+<p><a href="_ArrayFromString.htm">_ArrayFromString</a>, <a href="_ArrayToClip.htm">_ArrayToClip</a></p>
 
 <h2 class="bottom">Example</h2>
 <script type="text/javascript">
@@ -111,16 +115,16 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 
 <a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray</span><span class="S8">[</span><span class="S3">20</span><span class="S8">]</span>
 <a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">19</span>
-<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aArray</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$i</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aArray</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$i</span>
 <a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
 <a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"1D Array"</span><span class="S8">)</span>
 <a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Items 1-7"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_ArrayToString.htm"><span class="S15">_ArrayToString</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">7</span><span class="S8">))</span>
 
 <a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray</span><span class="S8">[</span><span class="S3">10</span><span class="S8">][</span><span class="S3">10</span><span class="S8">]</span>
 <a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">9</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$j</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">9</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aArray</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">][</span><span class="S9">$j</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"-"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$j</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$j</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">9</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aArray</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">][</span><span class="S9">$j</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"-"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$j</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
 <a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
 <a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2D Array"</span><span class="S8">)</span>
 <a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Rows 4-7, &nbsp;cols 2-5"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_ArrayToString.htm"><span class="S15">_ArrayToString</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">" :: "</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">,</span><span class="S0"> </span><span class="S3">7</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">5</span><span class="S8">))</span>

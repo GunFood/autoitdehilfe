@@ -6,7 +6,7 @@
 Example()
 
 Func Example()
-	Local $hGUI = GUICreate(StringTrimRight(@ScriptName, StringLen(".exe")), 350, 200)
+	Local $hGUI = GUICreate("ToolTip Get/Set Tip TextColor (v" & @AutoItVersion & ")", 350, 200)
 
 	Local $idAdd = GUICtrlCreateButton("Button", 30, 32, 130, 28)
 	Local $hAdd = GUICtrlGetHandle($idAdd)

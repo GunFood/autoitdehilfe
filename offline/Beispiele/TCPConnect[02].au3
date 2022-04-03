@@ -1,12 +1,15 @@
 ; == TCPConnect with timeout
 
 #include <MsgBoxConstants.au3>
+#include <WinAPIError.au3>
 
 ; I am the client, start me after the server no more than 10sec ! (The server script is the TCPAccept example script).
 
 Example()
 
 Func Example()
+	Local $sMsgBoxTitle = "AutoItVersion = " & @AutoItVersion
+
 	TCPStartup() ; Start the TCP service.
 
 	; Register OnAutoItExit to be called when the script is closed.
@@ -19,7 +22,7 @@ Func Example()
 	Opt("TCPTimeout", 1000)
 	Local $nMaxTimeout = 10 ; script will abort if no server available after 10 secondes
 
-	Local $iSocket, $iError
+	Local $iSocket, $hTimer = TimerInit()
 
 	While 1
 		; Assign a Local variable the socket and connect to a Listening socket with the IP Address and Port specified.
@@ -29,18 +32,17 @@ Func Example()
 		If @error = 10060 Then
 			; Timeout occurs try again
 			$nMaxTimeout -= 1
-			If $nMaxTimeout < 0 Then
-				MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "Could not connect, after " & 10 - $nMaxTimeout & " TimeOut")
+			If $nMaxTimeout <= 0 Then
+				MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), $sMsgBoxTitle, "Could not connect, after " & Int(TimerDiff($hTimer) / 1000) & " sec")
 				Return False
 			EndIf
 			ContinueLoop
 		ElseIf @error Then
-			$iError = @error
 			; The server is probably offline/port is not opened on the server.
-			MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "Could not connect, Error code: " & $iError)
+			MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), $sMsgBoxTitle, "Could not connect, Error code: " & @error & @CRLF & _WinAPI_GetErrorMessage(@error))
 			Return False
 		Else
-			MsgBox($MB_SYSTEMMODAL, "", "Connection successful after " & 10 - $nMaxTimeout & " TimeOut")
+			MsgBox($MB_SYSTEMMODAL, $sMsgBoxTitle, "Connection successful after " & Int(TimerDiff($hTimer) / 1000) & " sec")
 			ExitLoop
 		EndIf
 

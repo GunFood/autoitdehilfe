@@ -6,11 +6,11 @@
 Local Const $sEmf = @TempDir & '\Test.emf'
 
 If FileExists($sEmf) Then
-	If MsgBox(BitOR($MB_YESNOCANCEL, $MB_ICONQUESTION, $MB_DEFBUTTON2, $MB_SYSTEMMODAL), 'Create Enhanced Metafile', $sEmf & ' is already exists.' & @CRLF & @CRLF & 'Do you want to replace it?') <> 6 Then
+	If MsgBox(($MB_YESNOCANCEL + $MB_DEFBUTTON2 + $MB_ICONQUESTION + $MB_SYSTEMMODAL), 'Create Enhanced Metafile', $sEmf & ' is already exists.' & @CRLF & @CRLF & 'Do you want to replace it?') <> 6 Then
 		Exit
 	EndIf
 	If Not FileDelete($sEmf) Then
-		MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Create Enhanced Metafile', 'Unable to delete file.')
+		MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Create Enhanced Metafile', 'Unable to delete file.')
 		Exit
 	EndIf
 EndIf
@@ -34,6 +34,11 @@ _WinAPI_PaintRgn($hDC, $hRgn)
 _WinAPI_SelectObject($hDC, $hBrush)
 _WinAPI_SelectObject($hDC, $hPen)
 Local $hEmf = _WinAPI_CloseEnhMetaFile($hDC)
+
+; create a copy
+Local $hCopyEmf = _WinAPI_CopyEnhMetaFile($hEmf) ; copy to memory
+_WinAPI_DeleteEnhMetaFile($hCopyEmf)
+
 _WinAPI_DeleteEnhMetaFile($hEmf)
 _WinAPI_DeleteObject($hRgn)
 

@@ -37,7 +37,7 @@ Func Example()
 	WEnd
 
 	; Verwendet StringSplit um die Ausgabe von StdoutRead in ein Array zu teilen. Alle Wagenrückläufe (@CRLF) werden entfernt und @CRLF (Zeilenvorschub) wird als Trennzeichen verwendet.
-	Local $aArray = StringSplit(StringTrimRight(StringStripCR($sOutput), StringLen(@CRLF)), @CRLF)
+	Local $aArray = StringSplit(StringTrimRight(StringStripCR($sOutput), StringLen(@LF)), @LF)
 	If @error Then
 		MsgBox($MB_SYSTEMMODAL, "", "Es sieht so aus als ob es einen Fehler gab während der Suche nach allen Dateien im aktuellen Verzeichnis.")
 	Else

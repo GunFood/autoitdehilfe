@@ -29,7 +29,7 @@ Func _PopupDlg($hParent)
 	Local $idButton = GUICtrlCreateButton('Schließen', 165, 366, 70, 23)
 	Local $tRECT = _GUICtrlMenu_CalculatePopupWindowPosition(DllStructGetData($tPOINT, 1), DllStructGetData($tPOINT, 2), _WinAPI_GetWindowWidth($hDlg), _WinAPI_GetWindowHeight($hDlg))
 	If @error Then
-		MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Fehler', 'Benötigt Windows 7 oder neuer.')
+		MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Fehler', 'Benötigt Windows 7 oder neuer.')
 		Exit
 	EndIf
 	WinMove($hDlg, '', DllStructGetData($tRECT, 1), DllStructGetData($tRECT, 2))

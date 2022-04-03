@@ -1,11 +1,18 @@
 #include <Array.au3>
 #include <Constants.au3>
 
-; ----------------- Verwendung von Subpatterns
-; Das folgende Beispiel soll aufzeigen, wie ein Subpattern gespeichert wird und dieses dann später wieder verwendet wird.
-$date = '01.03.2008' ; YYYY/MM/DD
-$new = StringRegExpReplace($date, "(\d{2})\.(\d{2})\.(\d{4})", "$3/$2/$1")
-MsgBox($MB_OK, "", $new)
+; ----------------- Anwendung von ?:
+; Das folgende Beispiel soll aufzeigen, wie ein Subpattern gespeichert wird und wie nicht.
+$sString = "Mein Name ist Peter" & @CRLF
+$sString &= "Mein Name ist Karl" & @CRLF
+$sString &= "Mein Name ist Max" & @CRLF
 
+; So würde nur das Subpattern zurückgegeben werden
+$aResult = StringRegExp($sString, "Mein Name ist (Karl|Max)", 3)
+_ArrayDisplay($aResult)
+
+; Durch voranstellen von ?: wird das Subpattern nicht gespeichert und es wird der komplette Satz als Ergebnis zurückgegeben
+$aResult = StringRegExp($sString, "Mein Name ist (?:Karl|Max)", 3)
+_ArrayDisplay($aResult)
 
 

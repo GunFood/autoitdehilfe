@@ -2,8 +2,7 @@
 #include <MsgBoxConstants.au3>
 #include <WinAPIFiles.au3>
 
-; Download a file in the background.
-; Wait for the download to complete.
+; InetGet waits for the download to complete.
 
 Example()
 

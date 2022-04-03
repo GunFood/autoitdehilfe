@@ -42,11 +42,12 @@ _ArrayDisplay ( Const ByRef $aArray [, $sTitle = "ArrayDisplay" [, $sArrayRange 
 &nbsp;&nbsp;&nbsp; $ARRAYDISPLAY_VERBOSE (8) = erweitert - zeigt bei einem Fehler eine MsgBox bzw. Splashscreens w&auml;hrend gro&szlig;e Arrays verarbeitet werden<br />
 &nbsp;&nbsp;&nbsp; 16 = veraltet<br />
 &nbsp;&nbsp;&nbsp; 32 = veraltet<br />
-&nbsp;&nbsp;&nbsp; $ARRAYDISPLAY_NOROW (64) = Keine Spalte mit "Row" anzeigen</td>
+&nbsp;&nbsp;&nbsp; $ARRAYDISPLAY_NOROW (64) = Keine Spalte mit "Row" anzeigen<br />
+&nbsp;&nbsp;&nbsp; $ARRAYDISPLAY_CHECKERROR (128) = R&uuml;ckgabe wenn @error &lt;&gt; 0</td>
 </tr>
 <tr>
 <td>$vUser_Separator</td>
-<td><strong>[optional]</strong> veraltet. Wegen Skriptkompatibilit&auml;t nicht entfernt</td>
+<td><strong>[optional]</strong> veraltet. Immer Opt("GUIDataSeparatorChar") verwenden.</td>
 </tr>
 <tr>
 <td>$sHeader</td>
@@ -71,7 +72,8 @@ _ArrayDisplay ( Const ByRef $aArray [, $sTitle = "ArrayDisplay" [, $sArrayRange 
 <tr>
 <td class="valign-top">@error:</td>
 <td>1 - $aArray ist kein Array<br />
-2 - $aArray hat zu viele Dimensionen. Es werden nur 1D und 2D Arrays unterst&uuml;tzt</td>
+2&nbsp;- $aArray hat zu viele Dimensionen. Es werden nur 1D und 2D Arrays unterst&uuml;tzt<br />
+3&nbsp;- @error wird gesetzt, wenn die Funktion aufgerufen wurde</td>
 </tr>
 </table>
 
@@ -139,14 +141,18 @@ Der $sArrayRange Parameter-Syntax lautet wie folgt:<table>
 Alle Spaltenwerte werden f&uuml;r 1D-Arrays ignoriert.<br />
    <br />
 $sHeader Namen (getrennt durch das aktuelle Trennzeichen) werden f&uuml;r die vielen Spalten verwendet wie es Namen gibt. Wenn keine oder nicht genug eigene Namen festgelegt werden, so wird der Standardname von "Row|Col0" f&uuml;r 1D-Arrays oder "Row|Col0|Col1|...|Col n" f&uuml;r 2D-Arrays ausgetauscht. Wenn das Array transponiert angezeigt wird, wird der Header ignoriert.<br />
+Die Variable $ARRAYDISPLAY_ROWPREFIX kann den Pr&auml;fix f&uuml;r die Zeilennummerierung ge&auml;ndert werden (Standard: #).<br />
+Um den Zahlenvergleich f&uuml;r eine bestimmte Spalte zu erzwingen, ich einfach der entsprechende Namen mit $ARRAYDISPLAY_NUMERICSORT (Standard: *) zu beenden.<br />
 <br />
 Die Array-Dimensionen werden links unter dem Array angezeigt. Sie sind in rotem Text, wenn das Array transponiert ist oder nur eine Reihe von Elementen angezeigt wird - ein Tooltip zeigt das / die jeweilige(n) Ereignis(e) an.<br />
 <br />
 Falls der "verbose" Parameter in $iFlags gesetzt ist, so wird ein Splashdialog dargestellt w&auml;hrend das Array versucht ein Array mit mehr als 10000 Elementen darzustellen.<br />
 <br />
-Ein Arrayelement, das ein anderes Array enth&auml;lt, wird als {Array} angezeigt.<br />
+Ein Arrayelement, das ein anderes Array enth&auml;lt, wird als {Array} oder {Map} angezeigt.<br />
 <br />
-Ein Klick auf den Spalten-Header sortiert dieses.<br />
+Bei der Verwendung von $ARRAYDISPLAY_TRANSPOSE oder $sArrayRange wird eine Kopie von $aArray erstellt, wodurch zus&auml;tzlicher Speicher verbraucht wird.<br />
+<br />
+Ein Klick auf den Spalten-Header sortiert dieses. Bei einer gro&szlig;en Anzahl von Zeilen kann dies einige Sekunden dauern. Beim Laden wird ein ToolTip angezeigt, der darauf hinweist, dass die Sortierung einige Sekunden dauern kann.<br />
 </p>
 
 <h2 class="bottom">Beispiel</h2>

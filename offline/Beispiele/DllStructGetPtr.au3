@@ -17,7 +17,7 @@ Func Example()
 	; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und False zurückgegeben.
 	If @error Then
 		$iError = @error
-		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), Default, "Error in DllStructCreate, Code: " & $iError)
+		MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), Default, "Error in DllStructCreate, Code: " & $iError)
 		Return False
 	EndIf
 
@@ -29,7 +29,7 @@ Func Example()
 	; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und False zurückgegeben.
 	If @error Then
 		$iError = @error
-		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), Default, "Error in DllCall, Code: " & $iError)
+		MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), Default, "Error in DllCall, Code: " & $iError)
 		Return False
 	EndIf
 

@@ -6,10 +6,10 @@
 Example()
 
 Func Example()
-	Local $hGUI = GUICreate(StringTrimRight(@ScriptName, StringLen(".exe")), 350, 200)
+	Local $hGUI = GUICreate("ToolTip Get/Set Margin (v" & @AutoItVersion & ")", 350, 200)
 
-	Local $idAdd = GUICtrlCreateButton("Button ToolTip", 30, 32, 130, 28)
-	Local $hAdd = GUICtrlGetHandle($idAdd)
+	Local $idButton = GUICtrlCreateButton("Button ToolTip", 30, 32, 130, 28)
+	Local $hButton = GUICtrlGetHandle($idButton)
 	; Create a tooltip control
 	Local $hToolTip1 = _GUIToolTip_Create(0)
 	; If using a Windows theme setting, this will disable that for the tooltip displayed, so you can change
@@ -33,7 +33,7 @@ Func Example()
 	_GUIToolTip_AddTool($hToolTip1, 0, 'Left : ' & $aMargins[0] & @LF & _
 			'Top : ' & $aMargins[1] & @LF & _
 			'Right : ' & $aMargins[2] & @LF & _
-			'Bottom : ' & $aMargins[3], $hAdd)
+			'Bottom : ' & $aMargins[3], $hButton)
 	_GUIToolTip_SetTitle($hToolTip1, "This is the ToolTip with manually set margins")
 	; Add a tool to the second tooltip control
 	_GUIToolTip_AddTool($hToolTip2, 0, 'Left : ' & $aMargins1[0] & @LF & _

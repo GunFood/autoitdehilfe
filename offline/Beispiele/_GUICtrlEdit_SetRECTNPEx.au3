@@ -10,7 +10,7 @@ Func Example()
 	Local $sWow64 = ""
 	If @AutoItX64 Then $sWow64 = "\Wow6432Node"
 	Local $sFile = RegRead("HKEY_LOCAL_MACHINE\SOFTWARE" & $sWow64 & "\AutoIt v3\AutoIt", "InstallDir") & "\include\changelog.txt"
-	Local $aPartRightSide[6] = [50, 130, 210, 290, 378, -1], $tRECT
+	Local $aPartRightSide[6] = [50, 87, 87, 87, 87, -1], $tRECT
 
 	; Erstellt eine GUI
 	$hGui = GUICreate("Edit: Setzt das formatierte Rechteck", 520, 300)
@@ -30,7 +30,7 @@ Func Example()
 
 	; Fügt den Text hinzu
 	_GUICtrlEdit_AppendText($idEdit, FileRead($sFile))
-	_GUICtrlEdit_LineScroll($idEdit, 0, _GUICtrlEdit_GetLineCount($idEdit) * - 1)
+	_GUICtrlEdit_LineScroll($idEdit, 0, _GUICtrlEdit_GetLineCount($idEdit) * -1)
 
 	; Setzt das formatierte Rechteck in einem Mehrzeilen Edit-Control, ohne es neu zu zeichnen
 	_GUICtrlEdit_SetRectNPEx($idEdit, $tRECT)

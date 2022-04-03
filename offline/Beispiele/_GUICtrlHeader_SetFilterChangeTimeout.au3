@@ -8,15 +8,15 @@ Func Example()
 
 	; Erstellt eine GUI
 	$hGui = GUICreate("Header", 400, 300)
-	$hHeader = _GUICtrlHeader_Create($hGui)
+	$hHeader = _GUICtrlHeader_Create($hGui, $HDS_FILTERBAR)
 	_GUICtrlHeader_SetUnicodeFormat($hHeader, True)
 	GUISetState(@SW_SHOW)
 
 	; Fügt die Spalten hinzu
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 0", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 1", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 2", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 3", 100)
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 4", 100)
 
 	; Setzt das Timeoutintervall für das ändern des Filters
 	_GUICtrlHeader_SetFilterChangeTimeout($hHeader, 3000)

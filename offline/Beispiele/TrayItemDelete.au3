@@ -28,7 +28,7 @@ Func Example()
 
 			Case $idDelete
 				; Zeigt ein Nachrichtenfenster ob das 'Löschen' Item gelöscht werden soll. Falls der Rückgabewert der MsgBox der Gleiche wie $IDYES ist, dann wird das Item gelöscht.
-				If MsgBox(BitOR($MB_YESNO, $MB_SYSTEMMODAL), "", "Möchsten Sie das 'Löschen' Traymneüitem löschen?") = $IDYES Then
+				If MsgBox(($MB_YESNO + $MB_SYSTEMMODAL), "", "Möchsten Sie das 'Löschen' Traymneüitem löschen?") = $IDYES Then
 					TrayItemDelete($idDelete) ; Löscht das Traymenüitem.
 				EndIf
 

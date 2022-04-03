@@ -37,7 +37,7 @@ While 1
 			ExitLoop
 		EndIf
 	EndIf
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Fehler', 'Es konnte kein Bild geladen werden.')
+	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Fehler', 'Es konnte kein Bild geladen werden.')
 WEnd
 
 Local $hForm = GUICreate(_WinAPI_PathStripPath($sData), $W, $H)
@@ -113,7 +113,7 @@ While 1
 				_GDIPlus_ImageDispose($hObj)
 			EndIf
 			If $sData Then
-				MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Fehler', 'Es konnte kein Bild gespeichert werden.')
+				MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Fehler', 'Es konnte kein Bild gespeichert werden.')
 			EndIf
 		Case $g_aidCheck[0]
 			If GUICtrlRead($g_aidCheck[0]) = $GUI_CHECKED Then

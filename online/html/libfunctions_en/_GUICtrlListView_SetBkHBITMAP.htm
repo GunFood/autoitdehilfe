@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _GUICtrlListView_SetBkHBITMAP</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<h1>_GUICtrlListView_SetBkHBITMAP</h1>
+<p class="funcdesc">Set in the ListView a background image based on the Bitmap handle<br /></p>
+<p class="codeheader">
+#include &lt;GuiListView.au3&gt;<br />
+_GUICtrlListView_SetBkHBITMAP ( $hWnd, $hBitmap [, $iStyle = 0 [, $iXOffset = 0 [, $iYOffset = 0 [, $bDeleteBitmap = False]]]] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$hWnd</td>
+<td style="width:85%">Control ID/Handle to the control</td>
+</tr>
+<tr>
+<td>$hBitmap</td>
+<td>Handle to a HBITMAP for background</td>
+</tr>
+<tr>
+<td>$iStyle</td>
+<td><strong>[optional]</strong> Determines the background image style:<br />
+&nbsp;&nbsp;&nbsp; 0 - Normal<br />
+&nbsp;&nbsp;&nbsp; 1 - Tiled</td>
+</tr>
+<tr>
+<td>$iXOffset</td>
+<td><strong>[optional]</strong> The value to which the control's client area that the image should be offset horizontally (see remarks)</td>
+</tr>
+<tr>
+<td>$iYOffset</td>
+<td><strong>[optional]</strong> The value to which the control's client area that the image should be offset vertically (see remarks)</td>
+</tr>
+<tr>
+<td>$bDeleteBitmap</td>
+<td><strong>[optional]</strong> Specifies whether to delete the bitmap handle at the end of the function, valid values:<br />
+&nbsp;&nbsp;&nbsp; True - Bitmap will be deleted if the function succeeds<br />
+&nbsp;&nbsp;&nbsp; False - Do not delete, you must release the bitmap when you are finished using it (Default).</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">True.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>False.</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>If $hBitmap is not a handle, then the background of the element will be cleared.<br />
+<br />
+If $iStyle = 1, then the values of $iXOffset and $iYOffset will indicate the amount of the image offset relative<br />
+to the upper-left corner of the client area of the element in percent.<br />
+So for example, at 50% the drawing will be displayed in the center of the client area of the element,<br />
+at 100% it will be shifted to the right and bottom borders of the element, respectively.<br />
+<br />
+If $iStyle = 0, the values of $iXOffset and $iYOffset will indicate the amount of the offset first tile in pixels.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="_GUICtrlListView_SetBkImage.htm">_GUICtrlListView_SetBkImage</a></p>
+
+<h2>See Also</h2>
+<p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(LVM_SETBKIMAGE);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">LVM_SETBKIMAGE</a> in MSDN  Library.
+</p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<h3>Example 1</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_GUICtrlListView_SetBkHBITMAP.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GDIPlus.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GuiImageList.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GuiListView.au3&gt;</span>
+
+<span class="S0">Example_1</span><span class="S8">()</span><span class="S0"> </span><span class="S1">; use UDF built listview</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example_1</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iLVWidth</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">440</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iLVHeight</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">340</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGUI</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"(UDF Created) ListView Set Background Image &nbsp;(v"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@AutoItVersion"><span class="S6">@AutoItVersion</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">")"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">500</span><span class="S8">,</span><span class="S0"> </span><span class="S3">400</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetBkColor.htm"><span class="S4">GUISetBkColor</span></a><span class="S8">(</span><span class="S3">0x52F77E</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hListView</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_Create.htm"><span class="S15">_GUICtrlListView_Create</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">,</span><span class="S0"> </span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S3">30</span><span class="S8">,</span><span class="S0"> </span><span class="S3">30</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iLVWidth</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iLVHeight</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_SetExtendedListViewStyle.htm"><span class="S15">_GUICtrlListView_SetExtendedListViewStyle</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$LVS_EX_FULLROWSELECT</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Load images</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hImage</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GUIImageList_Create.htm"><span class="S15">_GUIImageList_Create</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUIImageList_Add.htm"><span class="S15">_GUIImageList_Add</span></a><span class="S8">(</span><span class="S9">$hImage</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_CreateSolidBitMap.htm"><span class="S15">_GUICtrlListView_CreateSolidBitMap</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xFF0000</span><span class="S8">,</span><span class="S0"> </span><span class="S3">16</span><span class="S8">,</span><span class="S0"> </span><span class="S3">16</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUIImageList_Add.htm"><span class="S15">_GUIImageList_Add</span></a><span class="S8">(</span><span class="S9">$hImage</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_CreateSolidBitMap.htm"><span class="S15">_GUICtrlListView_CreateSolidBitMap</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0x00FF00</span><span class="S8">,</span><span class="S0"> </span><span class="S3">16</span><span class="S8">,</span><span class="S0"> </span><span class="S3">16</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUIImageList_Add.htm"><span class="S15">_GUIImageList_Add</span></a><span class="S8">(</span><span class="S9">$hImage</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_CreateSolidBitMap.htm"><span class="S15">_GUICtrlListView_CreateSolidBitMap</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0x0000FF</span><span class="S8">,</span><span class="S0"> </span><span class="S3">16</span><span class="S8">,</span><span class="S0"> </span><span class="S3">16</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_SetImageList.htm"><span class="S15">_GUICtrlListView_SetImageList</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hImage</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Add columns</span>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_InsertColumn.htm"><span class="S15">_GUICtrlListView_InsertColumn</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Column 1'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">)</span>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_InsertColumn.htm"><span class="S15">_GUICtrlListView_InsertColumn</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Column 2'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">)</span>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_InsertColumn.htm"><span class="S15">_GUICtrlListView_InsertColumn</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Column 3'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">)</span>
+
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; Add items</span>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddItem.htm"><span class="S15">_GUICtrlListView_AddItem</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Row 1: Col 1'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddSubItem.htm"><span class="S15">_GUICtrlListView_AddSubItem</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Row 1: Col 2'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddSubItem.htm"><span class="S15">_GUICtrlListView_AddSubItem</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Row 1: Col 3'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddItem.htm"><span class="S15">_GUICtrlListView_AddItem</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Row 2: Col 1'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddSubItem.htm"><span class="S15">_GUICtrlListView_AddSubItem</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Row 2: Col 2'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddItem.htm"><span class="S15">_GUICtrlListView_AddItem</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Row 3: Col 1'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; Build groups</span>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_EnableGroupView.htm"><span class="S15">_GUICtrlListView_EnableGroupView</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">)</span>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_InsertGroup.htm"><span class="S15">_GUICtrlListView_InsertGroup</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Group 1'</span><span class="S8">)</span>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_InsertGroup.htm"><span class="S15">_GUICtrlListView_InsertGroup</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Group 2'</span><span class="S8">)</span>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_SetItemGroupID.htm"><span class="S15">_GUICtrlListView_SetItemGroupID</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_SetItemGroupID.htm"><span class="S15">_GUICtrlListView_SetItemGroupID</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_SetItemGroupID.htm"><span class="S15">_GUICtrlListView_SetItemGroupID</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Creates $g_hGDIBmp - Linear gradient</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGDIBmp</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> _CreateHBITMAP</span><span class="S8">(</span><span class="S9">$iLVWidth</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iLVHeight</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Sets the background image in the ListView</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_SetBkHBITMAP.htm"><span class="S15">_GUICtrlListView_SetBkHBITMAP</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hGDIBmp</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Loop until the user exits</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Do</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Until</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIDelete.htm"><span class="S4">GUIDelete</span></a><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example_UDF_Created</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _CreateHBITMAP</span><span class="S8">(</span><span class="S9">$iWidth</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iHeight</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Startup.htm"><span class="S15">_GDIPlus_Startup</span></a><span class="S8">()</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tRectF</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_RectFCreate.htm"><span class="S15">_GDIPlus_RectFCreate</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iWidth</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iHeight</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hBitmap</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BitmapCreateFromScan0.htm"><span class="S15">_GDIPlus_BitmapCreateFromScan0</span></a><span class="S8">(</span><span class="S9">$iWidth</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iHeight</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGraphics</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageGetGraphicsContext.htm"><span class="S15">_GDIPlus_ImageGetGraphicsContext</span></a><span class="S8">(</span><span class="S9">$hBitmap</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hBrush</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_LineBrushCreateFromRectWithAngle.htm"><span class="S15">_GDIPlus_LineBrushCreateFromRectWithAngle</span></a><span class="S8">(</span><span class="S9">$tRectF</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xFFFFF700</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xFF2F00FF</span><span class="S8">,</span><span class="S0"> </span><span class="S3">45</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsFillRect.htm"><span class="S15">_GDIPlus_GraphicsFillRect</span></a><span class="S8">(</span><span class="S9">$hGraphics</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iWidth</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iHeight</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hBrush</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGDIBmp</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BitmapCreateHBITMAPFromBitmap.htm"><span class="S15">_GDIPlus_BitmapCreateHBITMAPFromBitmap</span></a><span class="S8">(</span><span class="S9">$hBitmap</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageDispose.htm"><span class="S15">_GDIPlus_ImageDispose</span></a><span class="S8">(</span><span class="S9">$hBitmap</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BrushDispose.htm"><span class="S15">_GDIPlus_BrushDispose</span></a><span class="S8">(</span><span class="S9">$hBrush</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDispose.htm"><span class="S15">_GDIPlus_GraphicsDispose</span></a><span class="S8">(</span><span class="S9">$hGraphics</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Shutdown.htm"><span class="S15">_GDIPlus_Shutdown</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S9">$hGDIBmp</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_CreateHBITMAP</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Example 2</h3>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_GUICtrlListView_SetBkHBITMAP[2].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GDIPlus.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GuiImageList.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GuiListView.au3&gt;</span>
+
+<span class="S0">Example_2</span><span class="S8">()</span><span class="S0"> </span><span class="S1">; use UDF built listview</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example_2</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iGUIWidth</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">500</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iGUIHeight</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">300</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGUI</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"(UDF Created) ListView Set Background Image &nbsp;(v"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@AutoItVersion"><span class="S6">@AutoItVersion</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">")"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iGUIWidth</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iGUIHeight</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinSetTrans.htm"><span class="S4">WinSetTrans</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">,</span><span class="S0"> </span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">()</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Draws the background of the GUI</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Startup.htm"><span class="S15">_GDIPlus_Startup</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hImage</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageLoadFromFile.htm"><span class="S15">_GDIPlus_ImageLoadFromFile</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/RegRead.htm"><span class="S4">RegRead</span></a><span class="S8">(</span><span class="S7">'HKEY_CURRENT_USER\Control Panel\Desktop'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Wallpaper'</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGraphics</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsCreateFromHWND.htm"><span class="S15">_GDIPlus_GraphicsCreateFromHWND</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDrawImageRect.htm"><span class="S15">_GDIPlus_GraphicsDrawImageRect</span></a><span class="S8">(</span><span class="S9">$hGraphics</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hImage</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iGUIWidth</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iGUIHeight</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Creates $hGDIBmp</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGDIBmp</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> _CreateHBITMAP</span><span class="S8">(</span><span class="S9">$hImage</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iGUIWidth</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iGUIHeight</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDispose.htm"><span class="S15">_GDIPlus_GraphicsDispose</span></a><span class="S8">(</span><span class="S9">$hGraphics</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageDispose.htm"><span class="S15">_GDIPlus_ImageDispose</span></a><span class="S8">(</span><span class="S9">$hImage</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Shutdown.htm"><span class="S15">_GDIPlus_Shutdown</span></a><span class="S8">()</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hListView</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_Create.htm"><span class="S15">_GUICtrlListView_Create</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">30</span><span class="S8">,</span><span class="S0"> </span><span class="S3">30</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iGUIWidth</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">60</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iGUIHeight</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">60</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$LVS_REPORT</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$LVS_NOCOLUMNHEADER</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_SetExtendedListViewStyle.htm"><span class="S15">_GUICtrlListView_SetExtendedListViewStyle</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$LVS_EX_FULLROWSELECT</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_SetTextColor.htm"><span class="S15">_GUICtrlListView_SetTextColor</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0x00FF00</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Load images</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hImageList</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GUIImageList_Create.htm"><span class="S15">_GUIImageList_Create</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUIImageList_Add.htm"><span class="S15">_GUIImageList_Add</span></a><span class="S8">(</span><span class="S9">$hImageList</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_CreateSolidBitMap.htm"><span class="S15">_GUICtrlListView_CreateSolidBitMap</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xFF0000</span><span class="S8">,</span><span class="S0"> </span><span class="S3">16</span><span class="S8">,</span><span class="S0"> </span><span class="S3">16</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUIImageList_Add.htm"><span class="S15">_GUIImageList_Add</span></a><span class="S8">(</span><span class="S9">$hImageList</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_CreateSolidBitMap.htm"><span class="S15">_GUICtrlListView_CreateSolidBitMap</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xFFFF00</span><span class="S8">,</span><span class="S0"> </span><span class="S3">16</span><span class="S8">,</span><span class="S0"> </span><span class="S3">16</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUIImageList_Add.htm"><span class="S15">_GUIImageList_Add</span></a><span class="S8">(</span><span class="S9">$hImageList</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_CreateSolidBitMap.htm"><span class="S15">_GUICtrlListView_CreateSolidBitMap</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0x0000FF</span><span class="S8">,</span><span class="S0"> </span><span class="S3">16</span><span class="S8">,</span><span class="S0"> </span><span class="S3">16</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_SetImageList.htm"><span class="S15">_GUICtrlListView_SetImageList</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hImageList</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Add columns</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_InsertColumn.htm"><span class="S15">_GUICtrlListView_InsertColumn</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Column 1"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_InsertColumn.htm"><span class="S15">_GUICtrlListView_InsertColumn</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Column 2"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_InsertColumn.htm"><span class="S15">_GUICtrlListView_InsertColumn</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Column 3"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Add items</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddItem.htm"><span class="S15">_GUICtrlListView_AddItem</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Row 1: Col 1"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddSubItem.htm"><span class="S15">_GUICtrlListView_AddSubItem</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Row 1: Col 2"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddSubItem.htm"><span class="S15">_GUICtrlListView_AddSubItem</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Row 1: Col 3"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddItem.htm"><span class="S15">_GUICtrlListView_AddItem</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Row 2: Col 1"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddSubItem.htm"><span class="S15">_GUICtrlListView_AddSubItem</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Row 2: Col 2"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddItem.htm"><span class="S15">_GUICtrlListView_AddItem</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Row 3: Col 1"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Build groups</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_EnableGroupView.htm"><span class="S15">_GUICtrlListView_EnableGroupView</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_InsertGroup.htm"><span class="S15">_GUICtrlListView_InsertGroup</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Group 1"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_InsertGroup.htm"><span class="S15">_GUICtrlListView_InsertGroup</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Group 2"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_SetItemGroupID.htm"><span class="S15">_GUICtrlListView_SetItemGroupID</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_SetItemGroupID.htm"><span class="S15">_GUICtrlListView_SetItemGroupID</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_SetItemGroupID.htm"><span class="S15">_GUICtrlListView_SetItemGroupID</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Sets the background image in the ListView</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_SetBkHBITMAP.htm"><span class="S15">_GUICtrlListView_SetBkHBITMAP</span></a><span class="S8">(</span><span class="S9">$hListView</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hGDIBmp</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">30</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">30</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinSetTrans.htm"><span class="S4">WinSetTrans</span></a><span class="S8">(</span><span class="S9">$hGUI</span><span class="S8">,</span><span class="S0"> </span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S3">255</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Loop until the user exits</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Do</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Until</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIDelete.htm"><span class="S4">GUIDelete</span></a><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example_2</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _CreateHBITMAP</span><span class="S8">(</span><span class="S9">$hImage</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iWidth</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iHeight</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hBitmap</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BitmapCreateFromScan0.htm"><span class="S15">_GDIPlus_BitmapCreateFromScan0</span></a><span class="S8">(</span><span class="S9">$iWidth</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iHeight</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGraphics</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageGetGraphicsContext.htm"><span class="S15">_GDIPlus_ImageGetGraphicsContext</span></a><span class="S8">(</span><span class="S9">$hBitmap</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPLus_GraphicsDrawImageRect.htm"><span class="S15">_GDIPLus_GraphicsDrawImageRect</span></a><span class="S8">(</span><span class="S9">$hGraphics</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hImage</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iWidth</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iHeight</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hGDIBmp</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_BitmapCreateHBITMAPFromBitmap.htm"><span class="S15">_GDIPlus_BitmapCreateHBITMAPFromBitmap</span></a><span class="S8">(</span><span class="S9">$hBitmap</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageDispose.htm"><span class="S15">_GDIPlus_ImageDispose</span></a><span class="S8">(</span><span class="S9">$hBitmap</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_GraphicsDispose.htm"><span class="S15">_GDIPlus_GraphicsDispose</span></a><span class="S8">(</span><span class="S9">$hGraphics</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S9">$hGDIBmp</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_CreateHBITMAP</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -9,7 +9,7 @@ Global $g_sPath = @TempDir & '\~TEST~'
 
 DirCreate($g_sPath)
 If Not FileExists($g_sPath) Then
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Fehler', 'Ordner konnte nicht erstellt werden.')
+	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Fehler', 'Ordner konnte nicht erstellt werden.')
 	Exit
 EndIf
 
@@ -33,5 +33,5 @@ While 1
 WEnd
 
 Func OnAutoItExit()
-	DirRemove($g_sPath, 1)
+	DirRemove($g_sPath, $DIR_REMOVE)
 EndFunc   ;==>OnAutoItExit

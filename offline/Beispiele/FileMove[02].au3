@@ -6,7 +6,6 @@ Example()
 
 Func Example()
 	; Erstellt eine Konstante im lokalen Bereich des Dateipfads welcher umbenannt wird.
-	; Create a constant variable in Local scope of the filepaths that will be renamed.
 	Local Const $sSource = _WinAPI_GetTempFileName(@TempDir), _
 			$sDestination = _WinAPI_GetTempFileName(@TempDir)
 

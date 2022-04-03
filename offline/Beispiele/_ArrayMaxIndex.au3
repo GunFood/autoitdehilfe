@@ -13,4 +13,4 @@ For $i = 0 To 3
 	Next
 Next
 _ArrayDisplay($aArray, "2D Array")
-MsgBox($MB_SYSTEMMODAL, 'Index des maximalen numerischen Wertes in Spalte 2', _ArrayMaxIndex($aArray, 1, -1, -1, 2))
+MsgBox($MB_SYSTEMMODAL, 'Index des maximalen numerischen Wertes in Spalte 2', _ArrayMaxIndex($aArray, 1, 0, -1, 2))

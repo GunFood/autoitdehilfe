@@ -1,4 +1,5 @@
 #include <MsgBoxConstants.au3>
+#include <WinAPIError.au3>
 
 ; Ich bin der Server, starte mich zuerst! (Startet danach das TCPConnect Beispielscript).
 
@@ -23,7 +24,7 @@ Func Example()
 	If @error Then
 		; Vielleicht lauscht bereits jemand auf dieser IP-Adresse und dem Port (läuft das Script bereits?).
 		$iError = @error
-		MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "Es konnte nicht gelauscht werden, Error Code: " & $iError)
+		MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), "", "Es konnte nicht gelauscht werden, Error Code: " & $iError)
 		Return False
 	EndIf
 
@@ -36,7 +37,7 @@ Func Example()
 		; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und False zurückgegeben.
 		If @error Then
 			$iError = @error
-			MsgBox(BitOR($MB_SYSTEMMODAL, $MB_ICONHAND), "", "Die eingehende Verbindung wurde nicht akzeptiert, Error Code: " & $iError)
+			MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), "", "Die eingehende Verbindung wurde nicht akzeptiert, Error Code: " & $iError)
 			Return False
 		EndIf
 	Until $iSocket <> -1 ; Sollte sich dieser Wert von -1 unterscheiden so hat sich ein Client erfolgreich verbunden.

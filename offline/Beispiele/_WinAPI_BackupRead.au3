@@ -12,7 +12,7 @@ Local $hToken = _WinAPI_OpenProcessToken(BitOR($TOKEN_ADJUST_PRIVILEGES, $TOKEN_
 Local $aAdjust, $aPrivileges[2] = [$SE_BACKUP_NAME, $SE_RESTORE_NAME]
 _WinAPI_AdjustTokenPrivileges($hToken, $aPrivileges, $SE_PRIVILEGE_ENABLED, $aAdjust)
 If @error Or @extended Then
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Error', 'You do not have the required privileges.')
+	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Error', 'You do not have the required privileges.')
 	Exit
 EndIf
 
@@ -24,7 +24,7 @@ Local $pBuffer = _WinAPI_CreateBuffer($iBytes)
 Local $pContext = 0
 Local $hFile = _WinAPI_CreateFileEx($sFile, $OPEN_EXISTING, $GENERIC_READ)
 If Not _WinAPI_BackupRead($hFile, $pBuffer, $iBytes, $iBytes, $pContext, 1) Then
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Error', 'Unable to back up a file.')
+	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Error', 'Unable to back up a file.')
 	Exit
 EndIf
 _WinAPI_BackupReadAbort($pContext)
@@ -34,7 +34,7 @@ _WinAPI_CloseHandle($hFile)
 $pContext = 0
 $hFile = _WinAPI_CreateFileEx(_WinAPI_PathRenameExtension($sFile, '.bak'), $CREATE_ALWAYS, BitOR($GENERIC_WRITE, $WRITE_DAC, $WRITE_OWNER))
 If Not _WinAPI_BackupWrite($hFile, $pBuffer, $iBytes, $iBytes, $pContext, 1) Then
-	MsgBox(BitOR($MB_ICONERROR, $MB_SYSTEMMODAL), 'Error', 'Unable to restore a file.')
+	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Error', 'Unable to restore a file.')
 	Exit
 EndIf
 _WinAPI_BackupWriteAbort($pContext)

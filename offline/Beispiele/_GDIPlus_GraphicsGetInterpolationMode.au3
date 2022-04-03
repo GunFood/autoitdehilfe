@@ -23,7 +23,7 @@ Func Example()
 	_GDIPlus_GraphicsDrawImageRect($hGraphics, $hBitmap, 0, 0, $iW, $iH) ;draw captured bitmap to GUI with default system interpolation mode
 	MsgBox($MB_SYSTEMMODAL, "", "Interpolation Mode initial: " & $aIM[$iIM])
 
-	_GDIPlus_GraphicsSetInterpolationMode($hGraphics, $GDIP_INTERPOLATIONMODE_NearestNeighbor) ;change interpolation mode
+	_GDIPlus_GraphicsSetInterpolationMode($hGraphics, $GDIP_INTERPOLATIONMODE_NEARESTNEIGHBOR) ;change interpolation mode
 	_GDIPlus_GraphicsDrawImageRect($hGraphics, $hBitmap, 0, 0, $iW, $iH) ;draw again same bitmap but with different interpolation mode
 	$iIM = _GDIPlus_GraphicsGetInterpolationMode($hGraphics)
 	MsgBox($MB_SYSTEMMODAL, "", "Interpolation Mode after: " & $aIM[$iIM])

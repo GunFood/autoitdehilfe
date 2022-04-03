@@ -1,4 +1,13 @@
 #include <Debug.au3>
 
-Local $sABC = ""
-_Assert('$sABC > ""')
+_DebugSetup(Default, True)
+
+Example()
+
+Func Example()
+	Local $sABC = ""
+	#forceref $sABC
+
+	_Assert('$sABC > ""')
+	_Assert('$sABC > ""')
+EndFunc
