@@ -8,12 +8,9 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $hToolbar, $tRECT
-	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("Toolbar", 400, 300)
-	$hToolbar = _GUICtrlToolbar_Create($hGui)
+	Local $hGUI = GUICreate("Toolbar: Ermittelt das begrenzende Rechteck für einen festgelegten Toolbar Button (v" & @AutoItVersion & ")", 700, 300)
+	Local $hToolbar = _GUICtrlToolbar_Create($hGUI)
 	$g_idMemo = GUICtrlCreateEdit("", 2, 36, 396, 262, $WS_VSCROLL)
 	GUICtrlSetFont($g_idMemo, 10, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
@@ -27,6 +24,7 @@ Func Example()
 	EndSwitch
 
 	; Fügt die Buttons hinzu
+	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idNew, $STD_FILENEW)
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idOpen, $STD_FILEOPEN)
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idSave, $STD_FILESAVE)
@@ -34,7 +32,7 @@ Func Example()
 	_GUICtrlToolbar_AddButton($hToolbar, $idHelp, $STD_HELP)
 
 	; Zeigt das Rechteck des Speichern-Buttons
-	$tRECT = _GUICtrlToolbar_GetButtonRectEx($hToolbar, $e_idSave)
+	Local $tRECT = _GUICtrlToolbar_GetButtonRectEx($hToolbar, $e_idSave)
 	MemoWrite("Rechteck des Speichern-Buttons")
 	MemoWrite("----------------")
 	MemoWrite("Links .: " & DllStructGetData($tRECT, "Left"))

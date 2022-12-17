@@ -16,18 +16,18 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	; Fügt die Spalten hinzu
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 0", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 1", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 2", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 3", 100)
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 4", 100)
 
 	; Zeigt das Unicode Format
 	MemoWrite("Verwendung von Unicode Zeichen: " & _GUICtrlHeader_GetUnicodeFormat($hHeader))
 
-	; Setzt das Unicode Format
-	_GUICtrlHeader_SetUnicodeFormat($hHeader, True)
+	; Setzt das Ansi Format
+	_GUICtrlHeader_SetUnicodeFormat($hHeader, False)
 
-	; Zeigt das Unicode Format
+	; Zeigt das Ansi Format
 	MemoWrite("Verwendung von Unicode Zeichen: " & _GUICtrlHeader_GetUnicodeFormat($hHeader))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.

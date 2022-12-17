@@ -5,11 +5,9 @@
 Example()
 
 Func Example()
-	Local $idSlider
-
 	; Erstellt eine GUI
-	GUICreate("Slider: Ermittelt die maximale Position", 400, 296)
-	$idSlider = GUICtrlCreateSlider(2, 2, 396, 20, BitOR($TBS_TOOLTIPS, $TBS_AUTOTICKS, $TBS_ENABLESELRANGE))
+	GUICreate("Slider: Setzt und ermittelt die maximale Position (v" & @AutoItVersion & ")", 500, 296)
+	Local $idSlider = GUICtrlCreateSlider(2, 2, 396, 20, BitOR($TBS_TOOLTIPS, $TBS_AUTOTICKS, $TBS_ENABLESELRANGE))
 	GUISetState(@SW_SHOW)
 
 	; Ermittelt die maximale Position

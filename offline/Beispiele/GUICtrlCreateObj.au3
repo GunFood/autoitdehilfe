@@ -18,6 +18,7 @@ Func Example()
 	; Eine simple GUI für die Ausgabe erzeugen.
 	GUICreate("Embedded Web control Test", 640, 580, (@DesktopWidth - 640) / 2, (@DesktopHeight - 580) / 2, BitOR($WS_OVERLAPPEDWINDOW, $WS_CLIPSIBLINGS, $WS_CLIPCHILDREN))
 	GUICtrlCreateObj($oIE, 10, 40, 600, 360)
+	GUICtrlSetResizing(-1, $GUI_DOCKAUTO)
 	$idButton_Back = GUICtrlCreateButton("Zurück", 10, 420, 100, 30)
 	$idButton_Forward = GUICtrlCreateButton("Vor", 120, 420, 100, 30)
 	$idButton_Home = GUICtrlCreateButton("AutoIt Home", 230, 420, 100, 30)

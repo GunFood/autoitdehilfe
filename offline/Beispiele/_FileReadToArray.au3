@@ -13,11 +13,11 @@ Func Example()
 	_FileWriteFromArray($sFilePath, $aArray, Default, Default, @CRLF)
 	Sleep(1000)
 
-	; Erneutes lesen, dismal mit der Anzahl
+	; Erneutes lesen, diesmal mit der Anzahl
 	_FileReadToArray($sFilePath, $aRetArray)
 	_ArrayDisplay($aRetArray, "1D Array - Anzahl", Default, 8)
 
-	; Erneutes lesen, dismal ohne die Anzahl
+	; Erneutes lesen, diesmal ohne die Anzahl
 	_FileReadToArray($sFilePath, $aRetArray, $FRTA_NOCOUNT)
 	_ArrayDisplay($aRetArray, "1D Array - keine Anzahl", Default, 8)
 
@@ -34,11 +34,11 @@ Func Example()
 	_FileWriteFromArray($sFilePath, $aArray, Default, Default, ",")
 	Sleep(1000)
 
-	; Erneutes lesen, dismal mit der Anzahl
+	; Erneutes lesen, diesmal mit der Anzahl
 	_FileReadToArray($sFilePath, $aRetArray, Default, ",")
 	_ArrayDisplay($aRetArray, "2D Array - Anzahl", Default, 8)
 
-	; Erneutes lesen, dismal ohne die Anzahl
+	; Erneutes lesen, diesmal ohne die Anzahl
 	_FileReadToArray($sFilePath, $aRetArray, $FRTA_NOCOUNT, ",")
 	_ArrayDisplay($aRetArray, "2D Array - keine Anzahl", Default, 8)
 

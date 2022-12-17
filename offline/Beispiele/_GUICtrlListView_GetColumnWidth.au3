@@ -5,18 +5,16 @@
 Example()
 
 Func Example()
-	Local $idListView
-
-	GUICreate("ListView: Ermittelt die Spaltenbreite", 400, 300)
-	$idListView = GUICtrlCreateListView("Spalte 1|Spalte 2|Spalte 3", 2, 2, 394, 268)
+	GUICreate("ListView: Setzt und ermittelt die Spaltenbreite (v" & @AutoItVersion & ")", 500, 300)
+	Local $idListview = GUICtrlCreateListView("Column 0|Column 1|Column 2", 2, 2, 394, 268)
 	GUISetState(@SW_SHOW)
 
-	_GUICtrlListView_SetColumnWidth($idListView, 0, 100)
+	_GUICtrlListView_SetColumnWidth($idListview, 0, 100)
 
-	; Ändert die Breite von Spalte 1
-	MsgBox($MB_SYSTEMMODAL, "Information", "Spalte 1 Breite: " & _GUICtrlListView_GetColumnWidth($idListView, 0))
-	_GUICtrlListView_SetColumnWidth($idListView, 0, 150)
-	MsgBox($MB_SYSTEMMODAL, "Information", "Spalte 1 Breite: " & _GUICtrlListView_GetColumnWidth($idListView, 0))
+	; Ändert die Breite von Spalte 0
+	MsgBox($MB_SYSTEMMODAL, "Information", "Spalte 0 Breite: " & _GUICtrlListView_GetColumnWidth($idListview, 0))
+	_GUICtrlListView_SetColumnWidth($idListview, 0, 150)
+	MsgBox($MB_SYSTEMMODAL, "Information", "Spalte 0 Breite: " & _GUICtrlListView_GetColumnWidth($idListview, 0))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

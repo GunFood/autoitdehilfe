@@ -56,7 +56,7 @@ _DebugReportVar("ptr", $pPtr)
 Local $hWnd = WinActive("", "")
 _DebugReportVar("hwnd", $hWnd)
 
-Local $tDllstruct = DllStructCreate("int")
+Local $tDllstruct = DllStructCreate("int; ptr")
 _DebugReportVar("dllstruct", $tDllstruct)
 
 Local $oObj = ObjCreate("shell.application")

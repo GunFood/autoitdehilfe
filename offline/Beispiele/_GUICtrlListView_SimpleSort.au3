@@ -2,12 +2,12 @@
 #include <GUIListView.au3>
 #include <WindowsConstants.au3>
 
-Global $g_idListView, $g_bSortSense = False ; Setzt die aufsteigende Sortierung
+Global $g_idListView, $g_bSortSense = True ; Setzt die aufsteigende Sortierung
 
 Example()
 
 Func Example()
-	GUICreate("SimpleSort", 300, 300)
+	GUICreate("ListView: SimpleSort (v" & @AutoItVersion & ")", 400, 300)
 	$g_idListView = GUICtrlCreateListView("Item", 10, 10, 280, 240)
 	_GUICtrlListView_SetColumnWidth($g_idListView, 0, 260)
 	Local $idButton_Add = GUICtrlCreateButton("Item hinzufügen", 10, 260, 80, 30)

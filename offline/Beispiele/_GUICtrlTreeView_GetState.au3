@@ -6,15 +6,17 @@
 Example()
 
 Func Example()
-	Local $aidItem[10], $iRand, $idTreeView
+	GUICreate("TreeView: Setzt und ermittelt den Status (v" & @AutoItVersion & ")", 500, 300)
+
 	Local $iStyle = BitOR($TVS_EDITLABELS, $TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS, $TVS_CHECKBOXES)
-
-	GUICreate("TreeView: Status ermitteln", 400, 300)
-
-	$idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
+	Local $idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
 	GUISetState(@SW_SHOW)
 
+	; Setzt das ANSI Format
+;~     _GUICtrlTreeView_SetUnicodeFormat($idTreeView, False)
+
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
+	Local $aidItem[10]
 	For $x = 0 To 9
 		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
 		For $y = 1 To Random(2, 10, 1)
@@ -23,9 +25,10 @@ Func Example()
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)
 
-	$iRand = Random(0, 9, 1)
+	Local $iRand = Random(0, 9, 1)
 	_GUICtrlTreeView_SetSelected($idTreeView, $aidItem[$iRand])
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Status für Index %d? %s", $iRand, _GUICtrlTreeView_GetState($idTreeView, $aidItem[$iRand])))
+	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Status für Index %d? %s", 0, _GUICtrlTreeView_GetState($idTreeView)))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

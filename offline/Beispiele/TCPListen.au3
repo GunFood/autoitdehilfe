@@ -1,8 +1,11 @@
 #include <MsgBoxConstants.au3>
+#include <WinAPIError.au3>
 
 Example()
 
 Func Example()
+	Local $sMsgBoxTitle = "AutoItVersion = " & @AutoItVersion
+
 	TCPStartup() ; Startet den TCP Service.
 
 	; Registriert OnAutoItExit um es aufzurufen, wenn das Script beendet wird.
@@ -23,11 +26,10 @@ Func Example()
 	; Wenn ein Fehler aufgetaucht ist, so wird dieser angezeigt und False zurückgegeben.
 	If @error Then
 		; Vielleicht lauscht bereits jemand auf dieser IP-Adresse und dem Port (läuft das Script bereits?).
-		Local $iError = @error
-		MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), "", "Konnte nicht lauschen, Error Code: " & $iError)
+		MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), "", "Konnte nicht lauschen, Error Code: " & @error & @CRLF & @CRLF & _WinAPI_GetErrorMessage(@error))
 		Return False
 	Else
-		MsgBox($MB_SYSTEMMODAL, "", "Lauschen erfolgreich.")
+		MsgBox($MB_SYSTEMMODAL, $sMsgBoxTitle, "Lauschen erfolgreich.", 3)
 	EndIf
 
 	; Schließt den gebundenen Socket damit er von anderen Anwendungen gebunden werden kann.

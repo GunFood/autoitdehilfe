@@ -5,32 +5,28 @@
 Example()
 
 Func Example()
-	Local $hGui, $hStatus
-	Local $aParts[3] = [75, 150, -1]
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("StatusBar: Zeigen/verstecken", 400, 300)
+	Local $hGUI = GUICreate("StatusBar: Zeigen und verstecken (v" & @AutoItVersion & ")", 400, 300)
 
 	; Standard ist 1 Abschnitt und kein Text
-	$hStatus = _GUICtrlStatusBar_Create($hGui)
-	_GUICtrlStatusBar_SetParts($hStatus, $aParts)
-
+	Local $hStatus = _GUICtrlStatusBar_Create($hGUI)
 	GUISetState(@SW_SHOW)
 
 	; Abschnitte setzen
+	Local $aParts[3] = [75, 150, -1]
 	_GUICtrlStatusBar_SetParts($hStatus, $aParts)
-	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 1")
-	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 2", 1)
-	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 3", 2)
-
+	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 0")
+	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 1", 1)
+	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 2", 2)
 
 	_GUICtrlStatusBar_ShowHide($hStatus, @SW_HIDE)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Versteckt die StatusBar")
-	Sleep(1000)
+	_GUICtrlStatusBar_ShowHide($hStatus, @SW_HIDE)
+	Sleep(2000)
 
 	_GUICtrlStatusBar_ShowHide($hStatus, @SW_SHOW)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Zeigt die StatusBar")
-	Sleep(1000)
+	_GUICtrlStatusBar_ShowHide($hStatus, @SW_SHOW)
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

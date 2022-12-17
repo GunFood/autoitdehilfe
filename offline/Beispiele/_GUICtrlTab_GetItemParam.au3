@@ -1,28 +1,25 @@
+; == Mit UDF erstelltes Beispiel
 #include <GUIConstantsEx.au3>
 #include <GuiTab.au3>
 #include <MsgBoxConstants.au3>
 
-; Achtung: SetItemParam darf nicht im Zusammenhang mit Items verwendet werden, die mit GUICtrlCreateTabItem erstellt wurden
-; Param ist die ID für Items welche mit built-in Funktionen erstellt wurden
-
 Example()
 
 Func Example()
-	Local $hGui, $idTab
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("Tab-Control: Ermittelt Itemparameter (UDF)", 400, 300)
-	$idTab = _GUICtrlTab_Create($hGui, 2, 2, 396, 296)
+	Local $hGUI = GUICreate("Tab-Control: Setzt und ermittelt Itemparameter (v" & @AutoItVersion & ")", 500, 300)
+	Local $hTab = _GUICtrlTab_Create($hGUI, 2, 2, 396, 296)
+;~ 	Local $hTab = GUICtrlCreateTab(2, 2, 396, 296) ; mit der integrierten Funktion erstellt
 	GUISetState(@SW_SHOW)
 
 	; Fügt Tabs hinzu
-	_GUICtrlTab_InsertItem($idTab, 0, "Tab 1")
-	_GUICtrlTab_InsertItem($idTab, 1, "Tab 2")
-	_GUICtrlTab_InsertItem($idTab, 2, "Tab 3")
+	_GUICtrlTab_InsertItem($hTab, 0, "Tab 0")
+	_GUICtrlTab_InsertItem($hTab, 1, "Tab 1")
+	_GUICtrlTab_InsertItem($hTab, 2, "Tab 2")
 
-	; Ermittelt/Setzt Parameter für Tab 1
-	_GUICtrlTab_SetItemParam($idTab, 0, 1234)
-	MsgBox($MB_SYSTEMMODAL, "Information", "Parameter für Tab 1: " & _GUICtrlTab_GetItemParam($idTab, 0))
+	; Ermittelt/Setzt Parameter für Tab 0
+	_GUICtrlTab_SetItemParam($hTab, 0, 1234)
+	MsgBox($MB_SYSTEMMODAL, "Information", "Parameter für Tab 0: " & _GUICtrlTab_GetItemParam($hTab, 0))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

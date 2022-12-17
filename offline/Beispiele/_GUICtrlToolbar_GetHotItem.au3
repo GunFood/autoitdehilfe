@@ -10,17 +10,18 @@ Global Enum $id_New = 1000, $e_idOpen, $e_idSave, $e_idHelp
 Example()
 
 Func Example()
-	Local $hGUI, $aSize
-
 	; Erstellt eine GUI
-	$hGUI = GUICreate("Toolbar", 600, 400)
+	Local $hGUI = GUICreate('Toolbar: Setzt und ermittelt das "hot" Item Get Hot Item (v' & @AutoItVersion & ")", 600, 400)
 	$g_hToolbar = _GUICtrlToolbar_Create($hGUI)
-	$aSize = _GUICtrlToolbar_GetMaxSize($g_hToolbar)
+	Local $aSize = _GUICtrlToolbar_GetMaxSize($g_hToolbar)
 
 	$g_idMemo = GUICtrlCreateEdit("", 2, $aSize[1] + 20, 596, 396 - ($aSize[1] + 20), $WS_VSCROLL)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
 	GUIRegisterMsg($WM_NOTIFY, "_WM_NOTIFY")
+
+	; Setzt das ANSI Format
+;~     _GUICtrlToolbar_SetUnicodeFormat($hToolbar, False)
 
 	; Fügt die Standard Systembitmaps hinzu
 	_GUICtrlToolbar_AddBitmap($g_hToolbar, 1, -1, $IDB_STD_LARGE_COLOR)
@@ -34,13 +35,13 @@ Func Example()
 
 	; Ermittelt das "hot" Item
 	Local $iHotItem = _GUICtrlToolbar_GetHotItem($g_hToolbar)
-	MemoWrite("before $iHotItem= " & $iHotItem)
+	MemoWrite("vor $iHotItem= " & $iHotItem)
 
 	; Setzt das "hot" Item
 	_GUICtrlToolbar_SetHotItem($g_hToolbar, 2)
 	; Ermittelt das "hot" Item
 	$iHotItem = _GUICtrlToolbar_GetHotItem($g_hToolbar)
-	MemoWrite("after $iHotItem= " & $iHotItem)
+	MemoWrite("nach $iHotItem= " & $iHotItem)
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

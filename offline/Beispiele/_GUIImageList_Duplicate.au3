@@ -28,7 +28,7 @@ Func Example()
 	_GUICtrlListView_AddColumn($idListview, "Spalte 1", 100, "Left", 0)
 	_GUICtrlListView_AddColumn($idListview, "Spalte 2", 100, "Left", 1)
 	_GUICtrlListView_AddColumn($idListview, "Spalte 3", 100, "Left", 2)
-	_GUICtrlListView_AddColumn($idListview, "Spalte 4", 100)
+	_GUICtrlListView_AddColumn($idListview, "Spalte 4", 120)
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

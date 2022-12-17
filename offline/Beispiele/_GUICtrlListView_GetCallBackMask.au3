@@ -6,7 +6,7 @@
 Example_UDF_Created()
 
 Func Example_UDF_Created()
-	Local $hGUI = GUICreate("(UDF Created) ListView: Setzt und ermittelt die Callback-Maske (v" & @AutoItVersion & ")", 400, 300)
+	Local $hGUI = GUICreate("(UDF) ListView: Setzt und ermittelt die Callback-Maske (v" & @AutoItVersion & ")", 600, 300)
 
 	Local $hListView = _GUICtrlListView_Create($hGUI, "", 2, 2, 394, 268)
 	GUISetState(@SW_SHOW)

@@ -5,11 +5,9 @@
 Example()
 
 Func Example()
-	Local $idSlider
-
 	; Erstellt eine GUI
-	GUICreate("Slider: Ermittelt die logische Startposition des aktuell markierten Bereiches", 600, 296)
-	$idSlider = GUICtrlCreateSlider(2, 2, 396, 20, BitOR($TBS_TOOLTIPS, $TBS_AUTOTICKS, $TBS_ENABLESELRANGE))
+	GUICreate("Slider: Setzt und ermittelt die logische Startposition des aktuell markierten Bereiches (v" & @AutoItVersion & ")", 700, 296)
+	Local $idSlider = GUICtrlCreateSlider(2, 2, 396, 20, BitOR($TBS_TOOLTIPS, $TBS_AUTOTICKS, $TBS_ENABLESELRANGE))
 	GUISetState(@SW_SHOW)
 
 	; Setzt die logische Startposition des aktuell markierten Bereiches

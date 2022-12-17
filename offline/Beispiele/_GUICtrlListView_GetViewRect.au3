@@ -5,27 +5,28 @@
 Example()
 
 Func Example()
-	Local $aRect, $idListView
-
-	GUICreate("ListView: Ermittelt das begrenzende Rechteck aller Items", 500, 300)
-	$idListView = GUICtrlCreateListView("", 2, 2, 394, 268)
+	GUICreate("ListView: Ermittelt das begrenzende Rechteck aller Items (v" & @AutoItVersion & ")", 600, 300)
+	Local $idListview = GUICtrlCreateListView("", 2, 2, 394, 268)
 	GUISetState(@SW_SHOW)
 
+	; Setzt das ANSI Format
+;~     _GUICtrlListView_SetUnicodeFormat($idListview, False)
+
 	; Fügt die Spalten hinzu
-	_GUICtrlListView_AddColumn($idListView, "Items", 100)
+	_GUICtrlListView_AddColumn($idListview, "Items", 100)
 
 	; Fügt die Items hinzu
-	_GUICtrlListView_BeginUpdate($idListView)
+	_GUICtrlListView_BeginUpdate($idListview)
 	For $iI = 1 To 10
-		_GUICtrlListView_AddItem($idListView, "Item " & $iI)
+		_GUICtrlListView_AddItem($idListview, "Item " & $iI)
 	Next
-	_GUICtrlListView_EndUpdate($idListView)
+	_GUICtrlListView_EndUpdate($idListview)
 
 	; Setzt die Ansicht
-	_GUICtrlListView_SetView($idListView, 3)
+	_GUICtrlListView_SetView($idListview, 3)
 
 	; Ermittelt das begrenzende Rechteck aller Items
-	$aRect = _GUICtrlListView_GetViewRect($idListView)
+	Local $aRect = _GUICtrlListView_GetViewRect($idListview)
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Begrenzendes Rechteck: [%d, %d, %d, %d]", $aRect[0], $aRect[1], $aRect[2], $aRect[3]))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.

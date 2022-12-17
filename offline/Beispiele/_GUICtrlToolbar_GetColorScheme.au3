@@ -8,15 +8,16 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $hToolbar, $aScheme
-	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("Toolbar", 400, 300)
-	$hToolbar = _GUICtrlToolbar_Create($hGui)
+	Local $hGUI = GUICreate("Toolbar: Setzt und ermittelt die Farbe (v" & @AutoItVersion & ")", 500, 300)
+	Local $hToolbar = _GUICtrlToolbar_Create($hGUI)
 	$g_idMemo = GUICtrlCreateEdit("", 2, 36, 396, 262, $WS_VSCROLL)
 	GUICtrlSetFont($g_idMemo, 10, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
+
+	; Setzt das ANSI Format
+;~     _GUICtrlToolbar_SetUnicodeFormat($hToolbar, False)
+
 
 	; Fügt die Standard Systembitmaps hinzu
 	Switch _GUICtrlToolbar_GetBitmapFlags($hToolbar)
@@ -27,6 +28,7 @@ Func Example()
 	EndSwitch
 
 	; Fügt die Buttons hinzu
+	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idNew, $STD_FILENEW)
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idOpen, $STD_FILEOPEN)
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idSave, $STD_FILESAVE)
@@ -37,7 +39,7 @@ Func Example()
 	_GUICtrlToolbar_SetColorScheme($hToolbar, 0x00ffff, 0x800000)
 
 	; Zeigt das Farbschema
-	$aScheme = _GUICtrlToolbar_GetColorScheme($hToolbar)
+	Local $aScheme = _GUICtrlToolbar_GetColorScheme($hToolbar)
 	MemoWrite("Hervorgehoben: " & '0x' & Hex($aScheme[0], 6))
 	MemoWrite("Schatten: " & '0x' & Hex($aScheme[1], 6))
 

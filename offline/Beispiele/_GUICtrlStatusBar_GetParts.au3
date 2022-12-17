@@ -7,12 +7,9 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $hStatus
-	Local $aParts[3] = [75, 150, -1]
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("StatusBar: Anzahl von Abschnitten ermitteln", 400, 300)
-	$hStatus = _GUICtrlStatusBar_Create($hGui)
+	Local $hGUI = GUICreate("StatusBar: Setzt und ermittelt die Anzahl von Abschnitten (v" & @AutoItVersion & ")", 600, 300)
+	Local $hStatus = _GUICtrlStatusBar_Create($hGUI)
 
 	; Erstellt ein Memo Control
 	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 396, 274, $WS_VSCROLL)
@@ -20,10 +17,14 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	; Setzt/Ermittelt die Anzahl von Abschnitten
+	Local $aParts[3] = [75, 150, -1]
 	_GUICtrlStatusBar_SetParts($hStatus, $aParts)
-	$aParts = _GUICtrlStatusBar_GetParts($hStatus)
-	For $iI = 1 To $aParts[0]
-		MemoWrite("Breite Abschnitt " & $iI & " .: " & $aParts[$iI])
+
+	;Setzt Text und ermittelt die Breite
+	Local $iParts = _GUICtrlStatusBar_GetCount($hStatus)
+	For $iI = 0 To $iParts - 1
+		_GUICtrlStatusBar_SetText($hStatus, "Text " & $iI, $iI)
+		MemoWrite("Abschnitt " & $iI & " Breite .: " & _GUICtrlStatusBar_GetWidth($hStatus, $iI))
 	Next
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.

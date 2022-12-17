@@ -5,17 +5,15 @@
 Example()
 
 Func Example()
-	Local $idTab
-
 	; Erstellt eine GUI
-	GUICreate("Tab: Ermittelt den aktuellen Fokus", 400, 300)
-	$idTab = GUICtrlCreateTab(2, 2, 396, 296)
+	GUICreate("Tab: Setzt und ermittelt den aktuellen Fokus (v" & @AutoItVersion & ")", 500, 300)
+	Local $idTab = GUICtrlCreateTab(2, 2, 396, 296)
 	GUISetState(@SW_SHOW)
 
 	; Fügt Tabs hinzu
-	_GUICtrlTab_InsertItem($idTab, 0, "Tab 1")
-	_GUICtrlTab_InsertItem($idTab, 1, "Tab 2")
-	_GUICtrlTab_InsertItem($idTab, 2, "Tab 3")
+	_GUICtrlTab_InsertItem($idTab, 0, "Tab 0")
+	_GUICtrlTab_InsertItem($idTab, 1, "Tab 1")
+	_GUICtrlTab_InsertItem($idTab, 2, "Tab 2")
 
 	; Ermittelt/Setzt den aktuellen Fokus, ermittelt den Text des Tab-Items
 	_GUICtrlTab_SetCurFocus($idTab, 1)

@@ -5,11 +5,9 @@
 Example()
 
 Func Example()
-	Local $tRECT, $sRect, $idTab
-
 	; Erstellt eine GUI
-	GUICreate("Tab-Control: Ermittelt das Item RectEx", 400, 300)
-	$idTab = GUICtrlCreateTab(2, 2, 396, 296)
+	GUICreate("Tab-Control: Ermittelt das Item RectEx (v" & @AutoItVersion & ")", 500, 300)
+	Local $idTab = GUICtrlCreateTab(2, 2, 396, 296)
 	GUISetState(@SW_SHOW)
 
 	; Fügt Tabs hinzu
@@ -18,8 +16,8 @@ Func Example()
 	_GUICtrlTab_InsertItem($idTab, 2, "Tab 3")
 
 	; Ermittelt das Rechteck von Item 0
-	$tRECT = _GUICtrlTab_GetItemRectEx($idTab, 0)
-	$sRect = StringFormat("[%d, %d, %d, %d]", DllStructGetData($tRECT, "Left"), _
+	Local $tRECT = _GUICtrlTab_GetItemRectEx($idTab, 0)
+	Local $sRect = StringFormat("[%d, %d, %d, %d]", DllStructGetData($tRECT, "Left"), _
 			DllStructGetData($tRECT, "Top"), _
 			DllStructGetData($tRECT, "Right"), _
 			DllStructGetData($tRECT, "Bottom"))

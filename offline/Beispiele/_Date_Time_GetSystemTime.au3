@@ -4,27 +4,25 @@
 #include <WinAPIError.au3>
 #include <WindowsConstants.au3>
 
-; Unter Vista muß die Windows API "SetSystemTime" möglicherweise von der Systemsicherheit ausgenommen werden
+; Unter und über Vista muß die Windows API "SetLocalTime" möglicherweise von der Systemsicherheit ausgenommen werden
 
 Global $g_idMemo
 
 Example()
 
 Func Example()
-	Local $tCur, $tNew
-
 	; Erstellt die GUI
-	GUICreate("Zeit", 400, 300)
+	GUICreate("Datum Zeit: Setzt und ermittelt die Systemzeit (v" & @AutoItVersion & ")", 400, 300)
 	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 396, 296, $WS_VSCROLL)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
 
 	; Auslesen der aktuellen Systemzeit
-	$tCur = _Date_Time_GetSystemTime()
+	Local $tCur = _Date_Time_GetSystemTime()
 	MemoWrite("Aktuelle/s System Zeit/Datum .: " & _Date_Time_SystemTimeToDateTimeStr($tCur))
 
 	; Setzt eine neue Systemzeit
-	$tNew = _Date_Time_EncodeSystemTime(8, 19, @YEAR, 3, 10, 45)
+	Local $tNew = _Date_Time_EncodeSystemTime(8, 19, @YEAR, 3, 10, 45)
 	If Not _Date_Time_SetSystemTime($tNew) Then
 		MsgBox($MB_SYSTEMMODAL, "Fehler", "Die Systemzeit kann nicht gesetzt werden" & @CRLF & @CRLF & _WinAPI_GetLastErrorMessage())
 		Exit

@@ -5,11 +5,9 @@
 Example()
 
 Func Example()
-	Local $idSlider
-
 	; Erstellt eine GUI
-	GUICreate("Slider: Ermittelt die Anzahl logischer Positionen", 550, 296)
-	$idSlider = GUICtrlCreateSlider(2, 2, 546, 20, BitOR($TBS_TOOLTIPS, $TBS_AUTOTICKS, $TBS_ENABLESELRANGE))
+	GUICreate("Slider: Setzt und ermittelt die Anzahl logischer Positionen (v" & @AutoItVersion & ")", 600, 296)
+	Local $idSlider = GUICtrlCreateSlider(2, 2, 396, 20, BitOR($TBS_TOOLTIPS, $TBS_AUTOTICKS, $TBS_ENABLESELRANGE))
 	GUISetState(@SW_SHOW)
 
 	; Ermittelt die Anzahl von logischen Position, die der Slider abfahren kann

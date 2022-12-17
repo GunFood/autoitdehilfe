@@ -6,21 +6,20 @@
 Example()
 
 Func Example()
-	Local $aidItem[6], $hRandomItem, $idTreeView
+	GUICreate("TreeView: Setzt und ermittelt, ob das Item den Fokus hat (v" & @AutoItVersion & ")", 600, 300)
+
 	Local $iStyle = BitOR($TVS_EDITLABELS, $TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS, $TVS_CHECKBOXES)
-
-	GUICreate("TreeView: Ermittelt, ob das Item den Fokus hat", 400, 300)
-
-	$idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
+	Local $idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
 	GUISetState(@SW_SHOW)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
+	Local $aidItem[6]
 	For $x = 0 To UBound($aidItem) - 1
 		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x + 1), $idTreeView)
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)
 
-	$hRandomItem = Random(0, UBound($aidItem) - 1, 1)
+	Local $hRandomItem = Random(0, UBound($aidItem) - 1, 1)
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Hat Item %d den Fokus? %s", $hRandomItem, _GUICtrlTreeView_GetFocused($idTreeView, $aidItem[$hRandomItem])))
 	_GUICtrlTreeView_SetFocused($idTreeView, $aidItem[$hRandomItem])
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Hat Item %d den Fokus? %s", $hRandomItem, _GUICtrlTreeView_GetFocused($idTreeView, $aidItem[$hRandomItem])))

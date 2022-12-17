@@ -5,11 +5,9 @@
 Example()
 
 Func Example()
-	Local $idSlider
-
 	; Erstellt eine GUI
-	GUICreate("Slider: Ermittelt die Länge des Sliders", 400, 296)
-	$idSlider = GUICtrlCreateSlider(2, 2, 396, 25, BitOR($TBS_TOOLTIPS, $TBS_AUTOTICKS, $TBS_FIXEDLENGTH))
+	GUICreate("Slider: Setzt und ermittelt die Länge des Sliders (v" & @AutoItVersion & ")", 500, 296)
+	Local $idSlider = GUICtrlCreateSlider(2, 2, 396, 25, BitOR($TBS_TOOLTIPS, $TBS_AUTOTICKS, $TBS_FIXEDLENGTH))
 	GUISetState(@SW_SHOW)
 
 	; Ermittelt die Länge des Sliders

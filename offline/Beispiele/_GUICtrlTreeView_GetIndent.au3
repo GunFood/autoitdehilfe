@@ -7,15 +7,13 @@
 Example()
 
 Func Example()
-	Local $hImage, $idTreeView
+	GUICreate("TreeView: Setzt und ermittelt die Einrückung (v" & @AutoItVersion & ")", 500, 300)
+
 	Local $iStyle = BitOR($TVS_EDITLABELS, $TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS, $TVS_CHECKBOXES)
-
-	GUICreate("TreeView: Ermittelt die Einrückung", 400, 300)
-
-	$idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
+	Local $idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
 	GUISetState(@SW_SHOW)
 
-	$hImage = _GUIImageList_Create(16, 16, 5, 3)
+	Local $hImage = _GUIImageList_Create(16, 16, 5, 3)
 	_GUIImageList_AddIcon($hImage, "shell32.dll", 110)
 	_GUIImageList_AddIcon($hImage, "shell32.dll", 131)
 	_GUIImageList_AddIcon($hImage, "shell32.dll", 165)
@@ -26,7 +24,7 @@ Func Example()
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
 	For $x = 0 To _GUIImageList_GetImageCount($hImage) - 1
-		_GUICtrlTreeView_Add($idTreeView, 0, StringFormat("[%02d] Neues Item", $x + 1), $x, $x)
+		_GUICtrlTreeView_Add($idTreeView, 0, StringFormat("[%02d] Neues Item", $x), $x, $x)
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)
 

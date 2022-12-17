@@ -5,31 +5,33 @@
 Example()
 
 Func Example()
-	Local $iI, $iTimer, $idListView
-
 	; Erstellt eine GUI
-	GUICreate("ListView: Fügt ein Item aus einem Array hinzu", 500, 300)
-	$idListView = GUICtrlCreateListView("", 2, 2, 394, 268)
+	GUICreate("ListView: Fügt ein Item aus einem Array hinzu (v" & @AutoItVersion & ")", 500, 300)
+	Local $idListview = GUICtrlCreateListView("", 2, 2, 394, 268)
 	GUISetState(@SW_SHOW)
 
-	; Fügt eine Spalte hinzu
-	_GUICtrlListView_AddColumn($idListView, "Items", 100)
-	_GUICtrlListView_AddColumn($idListView, "SubItems 1", 100)
-	_GUICtrlListView_AddColumn($idListView, "SubItems 2", 100)
-	_GUICtrlListView_AddColumn($idListView, "SubItems 3", 100)
+	; Setzt das ANSI Format
+;~     _GUICtrlListView_SetUnicodeFormat($idListview, False)
 
-	_GUICtrlListView_SetItemCount($idListView, 5000)
+	; Fügt eine Spalte hinzu
+	_GUICtrlListView_AddColumn($idListview, "Items", 100)
+	_GUICtrlListView_AddColumn($idListview, "SubItems 1", 100)
+	_GUICtrlListView_AddColumn($idListview, "SubItems 2", 100)
+	_GUICtrlListView_AddColumn($idListview, "SubItems 3", 100)
+
+	_GUICtrlListView_SetItemCount($idListview, 5000)
 
 	; 1. Spalte wird befüllt
 	Local $aItems[5000][1]
 	For $iI = 0 To UBound($aItems) - 1
 		$aItems[$iI][0] = "Item " & $iI
 	Next
-	$iTimer = TimerInit()
-	_GUICtrlListView_AddArray($idListView, $aItems)
-	MsgBox($MB_SYSTEMMODAL, "Information", "Füllzeit: " & TimerDiff($iTimer) / 1000 & " Sekunden")
+	Local $hTimer = TimerInit()
+	_GUICtrlListView_AddArray($idListview, $aItems)
+	MsgBox($MB_SYSTEMMODAL, "Information", "Füllzeit: " & TimerDiff($hTimer) / 1000 & " Sekunden")
 
-	_GUICtrlListView_DeleteAllItems(GUICtrlGetHandle($idListView)) ; Items die mit UDF Funktionen hinzugefügt wurden können auch mit UDF Funktionen wieder gelöscht werden
+	_GUICtrlListView_DeleteAllItems(GUICtrlGetHandle($idListview)) ; Items die mit UDF Funktionen hinzugefügt wurden können auch mit UDF Funktionen wieder gelöscht werden
+	_GUICtrlListView_DeleteAllItems($idListview) ; Items die mit UDF Funktionen hinzugefügt wurden können auch mit UDF Funktionen wieder gelöscht werden
 
 	; 4. Spalte wird befüllt
 	Dim $aItems[5000][4]
@@ -39,9 +41,9 @@ Func Example()
 		$aItems[$iI][2] = "Item " & $iI & "-2"
 		$aItems[$iI][3] = "Item " & $iI & "-3"
 	Next
-	$iTimer = TimerInit()
-	_GUICtrlListView_AddArray($idListView, $aItems)
-	MsgBox($MB_SYSTEMMODAL, "Information", "Füllzeit: " & TimerDiff($iTimer) / 1000 & " Sekunden")
+	Local $hTimer2 = TimerInit()
+	_GUICtrlListView_AddArray($idListview, $aItems)
+	MsgBox($MB_SYSTEMMODAL, "Information", "Füllzeit: " & TimerDiff($hTimer2) / 1000 & " Sekunden")
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

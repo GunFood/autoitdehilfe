@@ -10,7 +10,7 @@ Func Example()
 	Local $hGui, $hImage, $aItem, $hCombo
 
 	; Erstellt eine GUI
-	$hGui = GUICreate("ComboBoxEx: Ermittelt Attribute eines Items", 400, 300)
+	$hGui = GUICreate("ComboBoxEx: Setzt und ermittelt Attribute eines Items (v" & @AutoItVersion & ")", 600, 300)
 	$hCombo = _GUICtrlComboBoxEx_Create($hGui, "", 2, 2, 394, 100)
 	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
@@ -29,7 +29,7 @@ Func Example()
 	_GUICtrlComboBoxEx_SetImageList($hCombo, $hImage)
 
 	For $x = 0 To 8
-		_GUICtrlComboBoxEx_AddString($hCombo, StringFormat("%03d : Zufallstring", Random(1, 100, 1)), $x, $x)
+		_GUICtrlComboBoxEx_AddString($hCombo, StringFormat("%03d : String", $x), $x, $x)
 	Next
 
 	; Setzt den Einrückwert der Items 1 und 3
@@ -43,6 +43,14 @@ Func Example()
 	MemoWrite("0-basierender Itemstatusbilderindex ........: " & $aItem[4])
 	MemoWrite("0-basierender Itembilder-Overlay-Index: ....: " & $aItem[5])
 	MemoWrite("Anwendungsspezifischer Wert ................: " & $aItem[6])
+
+
+	; Ändert Item 1
+	MsgBox($MB_SYSTEMMODAL, "Information", "Ändert Item 1")
+	_GUICtrlComboBoxEx_SetItem($hCombo, "Neues Item 1", 1)
+
+	; Zegit das Dropdown
+	_GUICtrlComboBoxEx_ShowDropDown($hCombo, True)
 
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE

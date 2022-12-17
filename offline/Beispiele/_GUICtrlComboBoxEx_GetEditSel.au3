@@ -8,16 +8,14 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $hImage, $aSel, $hCombo
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("ComboBoxEx: Ermittelt die Position des Startzeichens und des Endzeichens der aktuellen Markierung", 800, 300)
-	$hCombo = _GUICtrlComboBoxEx_Create($hGui, "", 2, 2, 394, 70, BitOR($CBS_SIMPLE, $WS_VSCROLL, $WS_BORDER))
+	Local $hGUI = GUICreate("ComboBoxEx: Setzt und ermittelt die Position des Startzeichens und des Endzeichens der aktuellen Markierung (v" & @AutoItVersion & ")", 800, 300)
+	Local $hCombo = _GUICtrlComboBoxEx_Create($hGUI, "", 2, 2, 394, 70, BitOR($CBS_SIMPLE, $WS_VSCROLL, $WS_BORDER))
 	$g_idMemo = GUICtrlCreateEdit("", 2, 72, 396, 226, 0)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
 
-	$hImage = _GUIImageList_Create(16, 16, 5, 3)
+	Local $hImage = _GUIImageList_Create(16, 16, 5, 3)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", 110)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", 131)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", 165)
@@ -31,17 +29,17 @@ Func Example()
 
 	; Fügt Strings hinzu
 	For $x = 0 To 8
-		_GUICtrlComboBoxEx_AddString($hCombo, StringFormat("%03d : Zufallstring", Random(1, 100, 1)), $x, $x)
+		_GUICtrlComboBoxEx_AddString($hCombo, StringFormat("%03d : String", $x), $x, $x)
 	Next
 
 	; Wählt einen String in der Liste einer ComboBox aus
-	_GUICtrlComboBoxEx_SetCurSel($hCombo, Random(0, 8, 1))
+	_GUICtrlComboBoxEx_SetCurSel($hCombo, 5)
 
 	; Wählt Zeichen im Edit-Control einer ComboBox aus
 	_GUICtrlComboBoxEx_SetEditSel($hCombo, 0, 4)
 
 	; Ermittelt die Position des Startzeichens und des Endzeichens der aktuellen Markierung in einem Edit-Control einer ComboBox
-	$aSel = _GUICtrlComboBoxEx_GetEditSel($hCombo)
+	Local $aSel = _GUICtrlComboBoxEx_GetEditSel($hCombo)
 	MemoWrite(StringFormat("Ausgewähltes Item: [%d][%d]", $aSel[0], $aSel[1]))
 
 	Do

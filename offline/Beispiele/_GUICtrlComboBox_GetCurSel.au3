@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	; Erstellt eine GUI
-	GUICreate("ComboBox: Ermittelt die aktuelle Auswahl (v" & @AutoItVersion & ")", 400, 296)
+	GUICreate("ComboBox: Ermittelt die aktuelle Auswahl (v" & @AutoItVersion & ")", 500, 296)
 	Local $idCombo = GUICtrlCreateCombo("", 2, 2, 396, 296)
 	GUISetState(@SW_SHOW)
 

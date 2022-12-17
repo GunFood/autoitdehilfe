@@ -8,7 +8,7 @@ Example()
 
 Func Example()
 	; Erstellt eine GUI
-	GUICreate("MonthCal: Setzt und ermittelt das Unicode Format (v" & @AutoItVersion & ")", 440, 300)
+	GUICreate("MonthCal: Setzt und ermittelt das Unicode Format (v" & @AutoItVersion & ")", 540, 300)
 	Local $idMonthCal = GUICtrlCreateMonthCal("", 4, 4, -1, -1, $WS_BORDER, 0x00000000)
 
 	; Erstellt ein Memo Control

@@ -6,7 +6,7 @@
 Example()
 
 Func Example()
-	GUICreate("ListView: Ermittelt die Anzahl von Arbeitsflächen (v" & @AutoItVersion & ")", 400, 300)
+	GUICreate("ListView: Ermittelt die Anzahl von Arbeitsflächen (v" & @AutoItVersion & ")", 500, 300)
 	Local $idListview = GUICtrlCreateListView("", 2, 2, 394, 268)
 
 	GUICtrlSetStyle($idListview, $LVS_ICON)

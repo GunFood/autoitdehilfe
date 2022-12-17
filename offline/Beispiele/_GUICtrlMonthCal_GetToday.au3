@@ -8,7 +8,7 @@ Example()
 
 Func Example()
 	; Erstellt eine GUI
-	GUICreate("Month Calendar Heute ermitteln bzw. setzen (v" & @AutoItVersion & ")", 400, 300)
+	GUICreate("Month Calendar: Setzt und ermittelt Heute (v" & @AutoItVersion & ")", 450, 300)
 	Local $idMonthCal = GUICtrlCreateMonthCal("", 4, 4, -1, -1, $WS_BORDER, 0x00000000)
 
 	; Erstellt ein Memo Control

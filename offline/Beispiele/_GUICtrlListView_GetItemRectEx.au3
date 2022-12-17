@@ -6,22 +6,23 @@
 Example()
 
 Func Example()
-	Local $tRECT, $idListView
-
-	GUICreate("ListView: Ermittelt das begrenzende Rechteck", 400, 300)
-	$idListView = GUICtrlCreateListView("", 2, 2, 394, 268)
+	GUICreate("ListView: Ermittelt das begrenzende Rechteck (v" & @AutoItVersion & ")", 500, 300)
+	Local $idListview = GUICtrlCreateListView("", 2, 2, 394, 268)
 	GUISetState(@SW_SHOW)
 
+	; Setzt das ANSI Format
+;~     _GUICtrlListView_SetUnicodeFormat($idListview, False)
+
 	; Fügt die Spalten hinzu
-	_GUICtrlListView_AddColumn($idListView, "Items", 100)
+	_GUICtrlListView_AddColumn($idListview, "Items", 100)
 
 	; Fügt die Items hinzu
-	_GUICtrlListView_AddItem($idListView, "Item 1")
-	_GUICtrlListView_AddItem($idListView, "Item 2")
-	_GUICtrlListView_AddItem($idListView, "Item 3")
+	_GUICtrlListView_AddItem($idListview, "Item 1")
+	_GUICtrlListView_AddItem($idListview, "Item 2")
+	_GUICtrlListView_AddItem($idListview, "Item 3")
 
 	; Ermittelt das begrenzende Rechteck für Item 2
-	$tRECT = _GUICtrlListView_GetItemRectEx($idListView, 1)
+	Local $tRECT = _GUICtrlListView_GetItemRectEx($idListview, 1)
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Rechteck für Item 2 : [%d, %d, %d, %d]", DllStructGetData($tRECT, "Left"), _
 			DllStructGetData($tRECT, "Top"), DllStructGetData($tRECT, "Right"), DllStructGetData($tRECT, "Bottom")))
 

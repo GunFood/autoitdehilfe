@@ -4,18 +4,16 @@
 Example()
 
 Func Example()
-	Local $hGui, $hHeader
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("Header", 400, 300)
-	$hHeader = _GUICtrlHeader_Create($hGui)
+	Local $hGUI = GUICreate("Header: Item einfügen (v" & @AutoItVersion & ")", 400, 300)
+	Local $hHeader = _GUICtrlHeader_Create($hGUI)
 	_GUICtrlHeader_SetUnicodeFormat($hHeader, True)
 	GUISetState(@SW_SHOW)
 
 	; Fügt die Spalten hinzu
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 0", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 1", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 2", 100)
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 3", 100)
 
 	; Neue Spalte einfügen
 	_GUICtrlHeader_InsertItem($hHeader, 1, "Spalte X", 100, 2)

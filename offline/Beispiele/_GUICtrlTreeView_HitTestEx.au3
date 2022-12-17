@@ -9,13 +9,14 @@ Global $g_hImage, $g_hStateImage
 Example()
 
 Func Example()
-	Local $ahItem[10], $aidChildItem[30], $iYItem = 0, $iYRand, $iXRand, $idTreeView
+	GUICreate("TreeView: Gibt Informationen über den Ort eines Punktes (v" & @AutoItVersion & ")", 600, 300)
+
 	Local $iStyle = BitOR($TVS_EDITLABELS, $TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS)
-
-	GUICreate("TreeView: Gibt Informationen über den Ort eines Punktes", 600, 300)
-
-	$idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
+	Local $idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
 	GUISetState(@SW_SHOW)
+
+	; Setzt das ANSI Format
+;~     _GUICtrlTreeView_SetUnicodeFormat($idTreeView, False)
 
 	_CreateNormalImageList()
 	_GUICtrlTreeView_SetNormalImageList($idTreeView, $g_hImage)
@@ -24,6 +25,7 @@ Func Example()
 	_GUICtrlTreeView_SetStateImageList($idTreeView, $g_hStateImage)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
+	Local $ahItem[10], $aidChildItem[30], $iYItem = 0
 	For $x = 0 To 9
 		$ahItem[$x] = _GUICtrlTreeView_Add($idTreeView, 0, StringFormat("[%02d] Neues Item", $x), 4, 5)
 		_GUICtrlTreeView_SetStateImageIndex($idTreeView, $ahItem[$x], 1)
@@ -38,8 +40,8 @@ Func Example()
 	_GUICtrlTreeView_SelectItem($idTreeView, $ahItem[0])
 	_GUICtrlTreeView_SetStateImageIndex($idTreeView, $ahItem[0], 2)
 
-	$iYRand = Random(0, 268, 1)
-	$iXRand = Random(0, 396, 1)
+	Local $iYRand = Random(0, 268, 1)
+	Local $iXRand = Random(0, 396, 1)
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Hit TestEx (%d, %d): %s", $iXRand, $iYRand, _GetHitString(_GUICtrlTreeView_HitTestEx($idTreeView, $iXRand, $iYRand))))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.

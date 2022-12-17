@@ -7,16 +7,14 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $hImage, $hCombo
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("ComboBoxEx: Ermittelt das Handle der Imagelist", 400, 300)
-	$hCombo = _GUICtrlComboBoxEx_Create($hGui, "", 2, 2, 394, 100)
+	Local $hGUI = GUICreate("CComboBoxEx: Setzt und ermittelt das Handle der Imagelist (v" & @AutoItVersion & ")", 600, 300)
+	Local $hCombo = _GUICtrlComboBoxEx_Create($hGUI, "", 2, 2, 394, 100)
 	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
 
-	$hImage = _GUIImageList_Create(16, 16, 5, 3)
+	Local $hImage = _GUIImageList_Create(16, 16, 5, 3)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", 110)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", 131)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", 165)
@@ -27,6 +25,10 @@ Func Example()
 	_GUIImageList_Add($hImage, _GUICtrlComboBoxEx_CreateSolidBitMap($hCombo, 0x00FF00, 16, 16))
 	_GUIImageList_Add($hImage, _GUICtrlComboBoxEx_CreateSolidBitMap($hCombo, 0x0000FF, 16, 16))
 	_GUICtrlComboBoxEx_SetImageList($hCombo, $hImage)
+	;Setzt die ImageList
+	Local $hPrevlist = _GUICtrlComboBoxEx_SetImageList($hCombo, $hImage)
+	MemoWrite("Vorheriges Handle der ImageList: " & $hPrevlist & _
+			" IsPtr = " & IsPtr($hPrevlist) & " IsHWnd = " & IsHWnd($hPrevlist))
 
 	For $x = 0 To 8
 		_GUICtrlComboBoxEx_AddString($hCombo, StringFormat("%03d : Zufallstring", Random(1, 100, 1)), $x, $x)

@@ -6,11 +6,9 @@
 Example()
 
 Func Example()
-	Local $idCombo
-
 	; Erstellt eine GUI
-	GUICreate("ComboBox: Ermittelt den horizontalen Scrollbereich", 450, 296)
-	$idCombo = GUICtrlCreateCombo("", 2, 2, 396, 296, BitOR($CBS_SIMPLE, $CBS_DISABLENOSCROLL, $WS_HSCROLL))
+	GUICreate("ComboBox: Setzt und ermittelt den horizontalen Scrollbereich (v" & @AutoItVersion & ")", 620, 296)
+	Local $idCombo = GUICtrlCreateCombo("", 2, 2, 416, 296, BitOR($CBS_SIMPLE, $CBS_DISABLENOSCROLL, $WS_HSCROLL))
 	GUISetState(@SW_SHOW)
 
 	; Fügt Dateien hinzu

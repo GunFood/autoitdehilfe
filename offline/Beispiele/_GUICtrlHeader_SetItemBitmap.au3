@@ -26,17 +26,17 @@ Func Example()
 	_GUICtrlHeader_SetImageList($hHeader, $hImage)
 
 	; Fügt die Spalten hinzu
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 1", 100, 0, 0)
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 2", 100, 0, 1)
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 3", 100, 0, 2)
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 4", 100)
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 0", 100, 0, 0)
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 1", 100, 0, 1)
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 2", 100, 0, 2)
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 3", 100)
 
-	; Setzt das Bitmap für Spalte 4
+	; Setzt das Bitmap für Spalte 3
 	_GUICtrlHeader_SetItemBitmap($hHeader, 3, _WinAPI_CreateSolidBitmap($hGui, 0xFF00FF, 11, 11))
 	_GUICtrlHeader_SetItemDisplay($hHeader, 3, 1 + 8)
 
-	; Zeigt das Bitmap-Handle von Spalte 4
-	MemoWrite("Bitmap-Handle von Spalte 4: " & "0x" & Hex(_GUICtrlHeader_GetItemBitmap($hHeader, 3)))
+	; Zeigt das Bitmap-Handle von Spalte 3
+	MemoWrite("Bitmap-Handle von Spalte 3: " & "0x" & Hex(_GUICtrlHeader_GetItemBitmap($hHeader, 3)))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

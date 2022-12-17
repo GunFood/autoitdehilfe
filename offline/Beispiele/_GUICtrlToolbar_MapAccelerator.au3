@@ -3,16 +3,12 @@
 #include <WinAPIConstants.au3>
 #include <WindowsConstants.au3>
 
-
 Example()
 
 Func Example()
-	Local $hGui, $hToolbar, $aStrings[4], $iCmdID
-	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("Toolbar", 400, 300)
-	$hToolbar = _GUICtrlToolbar_Create($hGui)
+	Local $hGUI = GUICreate("Toolbar: Zeigt die ID des Button an welches zu dem festgelegten Shortcutbuchstaben gehört (v" & @AutoItVersion & ")", 800, 300)
+	Local $hToolbar = _GUICtrlToolbar_Create($hGUI)
 	GUISetState(@SW_SHOW)
 
 	; Fügt die Standard Systembitmaps hinzu
@@ -24,12 +20,14 @@ Func Example()
 	EndSwitch
 
 	; Fügt Strings hinzu
+	Local $aStrings[4]
 	$aStrings[0] = _GUICtrlToolbar_AddString($hToolbar, "&Neu Button")
 	$aStrings[1] = _GUICtrlToolbar_AddString($hToolbar, "&Öffnen Button")
 	$aStrings[2] = _GUICtrlToolbar_AddString($hToolbar, "&Speichern Button")
 	$aStrings[3] = _GUICtrlToolbar_AddString($hToolbar, "&Hilfe Button")
 
 	; Fügt die Buttons hinzu
+	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idNew, $STD_FILENEW, $aStrings[0])
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idOpen, $STD_FILEOPEN, $aStrings[1])
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idSave, $STD_FILESAVE, $aStrings[2])

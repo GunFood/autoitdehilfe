@@ -5,16 +5,14 @@
 Example()
 
 Func Example()
-	Local $idTreeView
+	GUICreate("TreeView: Aktiviert und deaktiviert die Aktualisierung (v" & @AutoItVersion & ")", 500, 300)
+
 	Local $iStyle = BitOR($TVS_EDITLABELS, $TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS, $TVS_CHECKBOXES)
-
-	GUICreate("TreeView: Aktualisierung deaktivieren", 400, 300)
-
-	$idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
+	Local $idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
 	GUISetState(@SW_SHOW)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
-	For $x = 1 To 100
+	For $x = 0 To 100
 		_GUICtrlTreeView_Add($idTreeView, 0, StringFormat("[%02d] Neues Item", $x))
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)

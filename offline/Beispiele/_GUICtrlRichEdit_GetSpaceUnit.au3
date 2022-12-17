@@ -7,15 +7,15 @@ Global $g_idLblMsg
 Example()
 
 Func Example()
-	Local $hGui, $iMsg, $idBtnNext, $hRichEdit, $iStep = 0
-	$hGui = GUICreate("Beispiel (" & StringTrimRight(@ScriptName, 4) & ")", 340, 350, -1, -1)
-	$hRichEdit = _GUICtrlRichEdit_Create($hGui, "", 10, 10, 320, 220, _
+	Local $hGui = GUICreate("RichEdit: Setzt und ermittelt die Abstände (v" & @AutoItVersion & ")", 460, 350, -1, -1)
+	Local $hRichEdit = _GUICtrlRichEdit_Create($hGui, "This is a test.", 10, 10, 340, 220, _
 			BitOR($ES_MULTILINE, $WS_VSCROLL, $ES_AUTOVSCROLL))
 	$g_idLblMsg = GUICtrlCreateLabel("", 10, 235, 300, 60)
-	$idBtnNext = GUICtrlCreateButton("Weiter", 270, 310, 40, 30)
+	Local $idBtnNext = GUICtrlCreateButton("Next", 270, 310, 40, 30)
 	GUISetState(@SW_SHOW)
 
 	_GUICtrlRichEdit_SetText($hRichEdit, "Absatz 1")
+	Local $iMsg, $iStep = 0
 	While True
 		$iMsg = GUIGetMsg()
 		Select

@@ -4,6 +4,10 @@
 #include <WinAPISysWin.au3>
 #include <WindowsConstants.au3>
 
+If Not @Compiled Then Exit MsgBox($MB_ICONWARNING, "_WinAPI_CreatePen Beispielskript", _
+		"Wenn das Skript von SciTE aus ausgeführt wird, funktioniert es nicht richtig, weil SciTE den Bildschirm aktualisiert. Daher wird das Kreuz nicht vollständig gezeichnet und verschwindet in einem Sekundenbruchteil!" & _
+		@CRLF & @CRLF & "Bitte das Skript kompilieren und die Exe ausführen.")
+
 ShowCross(@DesktopWidth / 2, @DesktopHeight / 2, 20, 2, 0xFF, 3000)
 
 Func ShowCross($iStart_x, $iStart_y, $iLength, $iWidth, $iColor, $iTime)

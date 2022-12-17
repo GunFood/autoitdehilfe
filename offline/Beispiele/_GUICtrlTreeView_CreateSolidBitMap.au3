@@ -6,15 +6,13 @@
 Example()
 
 Func Example()
-	Local $hImage, $idTreeView
+	GUICreate("TreeView: Erstellt ein vollfarbiges Bitmap (v" & @AutoItVersion & ")", 500, 300)
+
 	Local $iStyle = BitOR($TVS_EDITLABELS, $TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS, $TVS_CHECKBOXES)
-
-	GUICreate("TreeView: Erstellt ein vollfarbiges Bitmap", 400, 300)
-
-	$idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
+	Local $idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
 	GUISetState(@SW_SHOW)
 
-	$hImage = _GUIImageList_Create()
+	Local $hImage = _GUIImageList_Create()
 	_GUIImageList_Add($hImage, _GUICtrlTreeView_CreateSolidBitMap($idTreeView, 0xFF0000, 16, 16))
 	_GUIImageList_Add($hImage, _GUICtrlTreeView_CreateSolidBitMap($idTreeView, 0x00FF00, 16, 16))
 	_GUIImageList_Add($hImage, _GUICtrlTreeView_CreateSolidBitMap($idTreeView, 0x0000FF, 16, 16))
@@ -24,7 +22,7 @@ Func Example()
 	_GUICtrlTreeView_SetNormalImageList($idTreeView, $hImage)
 
 	For $x = 0 To _GUIImageList_GetImageCount($hImage) - 1
-		_GUICtrlTreeView_Add($idTreeView, 0, StringFormat("[%02d] Neues Item", $x + 1), $x, $x + 3)
+		_GUICtrlTreeView_Add($idTreeView, 0, StringFormat("[%02d] Neues Item", $x), $x, $x + 3)
 	Next
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.

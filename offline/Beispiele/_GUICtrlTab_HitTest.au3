@@ -5,11 +5,9 @@
 Example()
 
 Func Example()
-	Local $aHit, $idTab
-
 	; Erstellt die GUI
-	GUICreate("_GUICtrlTab_HitTest", 400, 300)
-	$idTab = GUICtrlCreateTab(2, 2, 396, 296)
+	GUICreate("_GUICtrlTab_HitTest (v" & @AutoItVersion & ")", 400, 300)
+	Local $idTab = GUICtrlCreateTab(2, 2, 396, 296)
 	GUISetState(@SW_SHOW)
 
 	; Fügt Tabs hinzu
@@ -18,7 +16,7 @@ Func Example()
 	_GUICtrlTab_InsertItem($idTab, 2, "Tab 3")
 
 	; Lagetest
-	$aHit = _GUICtrlTab_HitTest($idTab, 80, 10)
+	Local $aHit = _GUICtrlTab_HitTest($idTab, 80, 10)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Der Punkt [80,10] liegt über Tab " & $aHit[0])
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.

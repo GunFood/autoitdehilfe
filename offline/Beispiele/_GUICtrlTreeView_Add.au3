@@ -6,15 +6,16 @@
 Example()
 
 Func Example()
-	Local $ahItem, $hImage, $iImage, $idTreeView
+	GUICreate("TreeView: Hinzufügen (v" & @AutoItVersion & ")", 400, 300)
+
 	Local $iStyle = BitOR($TVS_EDITLABELS, $TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS, $TVS_CHECKBOXES)
-
-	GUICreate("TreeView: Hinzufügen", 400, 300)
-
-	$idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
+	Local $idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
 	GUISetState(@SW_SHOW)
 
-	$hImage = _GUIImageList_Create(16, 16, 5, 3)
+	; Setzt das ANSI Format
+;~     _GUICtrlTreeView_SetUnicodeFormat($idTreeView, False)
+
+	Local $hImage = _GUIImageList_Create(16, 16, 5, 3)
 	_GUIImageList_AddIcon($hImage, "shell32.dll", 110)
 	_GUIImageList_AddIcon($hImage, "shell32.dll", 131)
 	_GUIImageList_AddIcon($hImage, "shell32.dll", 165)
@@ -24,10 +25,11 @@ Func Example()
 	_GUICtrlTreeView_SetNormalImageList($idTreeView, $hImage)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
-	For $x = 1 To Random(2, 10, 1)
+	Local $hItem, $iImage
+	For $x = 0 To 5
 		$iImage = Random(0, 5, 1)
 		$ahItem = _GUICtrlTreeView_Add($idTreeView, 0, StringFormat("[%02d] Neues Item", $x), $iImage, $iImage)
-		For $y = 1 To Random(2, 10, 1)
+		For $y = 0 To 3
 			$iImage = Random(0, 5, 1)
 			_GUICtrlTreeView_AddChild($idTreeView, $ahItem, StringFormat("[%02d] Neues Child", $y), $iImage, $iImage)
 		Next

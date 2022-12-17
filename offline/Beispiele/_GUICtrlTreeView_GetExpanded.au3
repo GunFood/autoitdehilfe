@@ -6,15 +6,14 @@
 Example()
 
 Func Example()
-	Local $aidItem[6], $hRandomItem, $idTreeView
+	GUICreate("TreeView: Ermittelt ob das Item ausgeklappt ist (v" & @AutoItVersion & ")", 500, 300)
+
 	Local $iStyle = BitOR($TVS_EDITLABELS, $TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS, $TVS_CHECKBOXES)
-
-	GUICreate("TreeView: Ermittelt ob das Item ausgeklappt ist", 400, 300)
-
-	$idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
+	Local $idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
 	GUISetState(@SW_SHOW)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
+	Local $aidItem[6]
 	For $x = 0 To UBound($aidItem) - 1
 		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
 		For $y = 0 To 2
@@ -23,7 +22,7 @@ Func Example()
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)
 
-	$hRandomItem = Random(0, UBound($aidItem) - 1, 1)
+	Local $hRandomItem = Random(0, UBound($aidItem) - 1, 1)
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Item %d ausgeklappt? %s", $hRandomItem, _GUICtrlTreeView_GetExpanded($idTreeView, $aidItem[$hRandomItem])))
 	_GUICtrlTreeView_Expand($idTreeView, $aidItem[$hRandomItem])
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Item %d ausgeklappt? %s", $hRandomItem, _GUICtrlTreeView_GetExpanded($idTreeView, $aidItem[$hRandomItem])))

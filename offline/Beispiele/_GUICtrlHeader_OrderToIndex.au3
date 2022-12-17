@@ -17,13 +17,13 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	; Fügt die Spalten hinzu
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 0", 125)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 1", 125)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 2", 125)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 3", 125)
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 4", 125)
 
-	; Zeigt den Index des Items an Stelle 3
-	MemoWrite("Stelle 3 Index: " & _GUICtrlHeader_OrderToIndex($hHeader, 2))
+	; Zeigt den Index des Items an Stelle 2
+	MemoWrite("Stelle 2 Index: " & _GUICtrlHeader_OrderToIndex($hHeader, 2))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

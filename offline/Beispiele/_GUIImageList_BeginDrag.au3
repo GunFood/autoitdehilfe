@@ -22,7 +22,7 @@ Func Example()
 	Local Const $iImage_width = 20
 	Local Const $iImage_height = 20
 
-	Local $hMain_GUI = GUICreate("ImageList: Beginnt mit dem ziehen eines Bildes (v" & @AutoItVersion & ")", 350, 400)
+	Local $hMain_GUI = GUICreate("ImageList: Beginnt mit dem ziehen eines Bildes (v" & @AutoItVersion & ")", 550, 400)
 
 	$g_hListView = _GUICtrlListView_Create($hMain_GUI, "Name|Kategorie", 5, 75, 220, 180, -1, BitOR($WS_EX_CLIENTEDGE, $WS_EX_STATICEDGE))
 	$g_iLV_Height = 180

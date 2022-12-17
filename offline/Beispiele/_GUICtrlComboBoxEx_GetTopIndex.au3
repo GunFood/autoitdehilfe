@@ -5,18 +5,16 @@
 Example()
 
 Func Example()
-	Local $hGui, $hCombo
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("ComboBoxEx: Ermittelt das erste sichtbare Item", 600, 300)
-	$hCombo = _GUICtrlComboBoxEx_Create($hGui, "", 2, 2, 394, 100, $CBS_SIMPLE)
+	Local $hGUI = GUICreate("ComboBoxEx: Setzt und ermittelt das erste sichtbare Item (v" & @AutoItVersion & ")", 600, 300)
+	Local $hCombo = _GUICtrlComboBoxEx_Create($hGUI, "", 2, 2, 394, 100, $CBS_SIMPLE)
 	GUISetState(@SW_SHOW)
 
 	_GUICtrlComboBoxEx_InitStorage($hCombo, 150, 300)
 	_GUICtrlComboBoxEx_BeginUpdate($hCombo)
 
 	For $x = 0 To 149
-		_GUICtrlComboBoxEx_AddString($hCombo, StringFormat("%03d : Zufallstring", Random(1, 100, 1)))
+		_GUICtrlComboBoxEx_AddString($hCombo, StringFormat("%03d : String", $x))
 	Next
 	_GUICtrlComboBoxEx_EndUpdate($hCombo)
 

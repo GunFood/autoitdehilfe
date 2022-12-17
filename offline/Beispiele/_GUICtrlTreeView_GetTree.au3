@@ -9,14 +9,12 @@ Global $g_hImage, $g_hStateImage
 Example()
 
 Func Example()
-	Local $ahItem[10], $aidChildItem[30], $iYItem = 0, $iRand, $idTreeView
-	Local $iStyle = BitOR($TVS_EDITLABELS, $TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS)
-
 	Opt("GUIDataSeparatorChar", "\")
 
-	GUICreate("TreeView: Tree ermitteln", 400, 300)
+	GUICreate("TreeView: Ermittelt den Tree (v" & @AutoItVersion & ")", 400, 300)
 
-	$idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
+	Local $iStyle = BitOR($TVS_EDITLABELS, $TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS)
+	Local $idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
 	GUISetState(@SW_SHOW)
 
 	_CreateNormalImageList()
@@ -26,26 +24,25 @@ Func Example()
 	_GUICtrlTreeView_SetStateImageList($idTreeView, $g_hStateImage)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
+	Local $ahItem[10], $aidChildItem[30], $iYItem = 0
 	For $x = 0 To 9
-		$ahItem[$x] = _GUICtrlTreeView_Add($idTreeView, 0, StringFormat("[%02d] Neues Item", $x), 4, 5)
+		$ahItem[$x] = _GUICtrlTreeView_Add($idTreeView, 0, StringFormat("[%02d] Item", $x), 4, 5)
 		_GUICtrlTreeView_SetStateImageIndex($idTreeView, $ahItem[$x], 1)
 		For $y = 1 To 3
-			$aidChildItem[$iYItem] = _GUICtrlTreeView_AddChild($idTreeView, $ahItem[$x], StringFormat("[%02d] Neues Child", $y), 0, 3)
+			$aidChildItem[$iYItem] = _GUICtrlTreeView_AddChild($idTreeView, $ahItem[$x], StringFormat("[%02d] Child", $y), 0, 3)
 			_GUICtrlTreeView_SetStateImageIndex($idTreeView, $aidChildItem[$iYItem], 1)
 			$iYItem += 1
 		Next
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)
 
-	_GUICtrlTreeView_SelectItem($idTreeView, $ahItem[0])
-	_GUICtrlTreeView_SetStateImageIndex($idTreeView, $ahItem[0], 2)
+	_GUICtrlTreeView_SelectItem($idTreeView, $aidChildItem[6])
 
-	MsgBox($MB_SYSTEMMODAL, "Information", "Tree für den Child-Index 2: " & _GUICtrlTreeView_GetTree($idTreeView, $aidChildItem[2]))
+	MsgBox($MB_SYSTEMMODAL, "Information", "Tree für den Child-Index 6: " & _GUICtrlTreeView_GetTree($idTreeView, $aidChildItem[6]))
 	_GUICtrlTreeView_SelectItem($idTreeView, $aidChildItem[2])
 
-	$iRand = Random(0, 29, 1)
-	_GUICtrlTreeView_SelectItem($idTreeView, $aidChildItem[$iRand])
-	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Tree für den markierten Child-Index %d: %s", $iRand, _GUICtrlTreeView_GetTree($idTreeView)))
+	_GUICtrlTreeView_SelectItem($idTreeView, Null)
+	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Tree für den markierten Root-Index %d: %s", _GUICtrlTreeView_GetTree($idTreeView)))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

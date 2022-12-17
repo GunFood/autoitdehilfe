@@ -7,11 +7,9 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $tLOGFONT, $hFont, $hDTP
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("DateTimePick: Ermittelt die Schriftart des Monatskalenders", 400, 300)
-	$hDTP = _GUICtrlDTP_Create($hGui, 2, 6, 190)
+	Local $hGui = GUICreate("DateTimePick: Setzt und ermittelt die Schriftart des Monatskalenders (v" & @AutoItVersion & ")", 600, 300)
+	Local $hDTP = _GUICtrlDTP_Create($hGui, 2, 6, 190)
 	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
@@ -20,17 +18,16 @@ Func Example()
 	_GUICtrlDTP_SetFormat($hDTP, "ddd MMM dd, yyyy hh:mm ttt")
 
 	; Erstellt eine neue Schrift für das Monats-Control
-	$tLOGFONT = DllStructCreate($tagLOGFONT)
+	Local $tLOGFONT = DllStructCreate($tagLOGFONT)
 	DllStructSetData($tLOGFONT, "Height", 13)
 	DllStructSetData($tLOGFONT, "Weight", 400)
 	DllStructSetData($tLOGFONT, "FaceName", "Verdana")
-	$hFont = _WinAPI_CreateFontIndirect($tLOGFONT)
+	Local $hFont = _WinAPI_CreateFontIndirect($tLOGFONT)
 	_GUICtrlDTP_SetMCFont($hDTP, $hFont)
 
 	; Ermittelt das Schrifthandle des Monats-Control
-	GUICtrlSetData($g_idMemo, "Schrithandle: " & "0x" & Hex(_GUICtrlDTP_GetMCFont($hDTP), 6), 1)
-	GUICtrlSetData($g_idMemo, " IsPtr=" & IsPtr(_GUICtrlDTP_GetMCFont($hDTP)), 1)
-	GUICtrlSetData($g_idMemo, " IsHwnd=" & IsHWnd(_GUICtrlDTP_GetMCFont($hDTP)) & @CRLF, 1)
+	MemoWrite("Schrifthandle: " & "0x" & Hex(_GUICtrlDTP_GetMCFont($hDTP), 6))
+	MemoWrite("IsPtr  = " & IsPtr(_GUICtrlDTP_GetMCFont($hDTP)) & " IsHWnd  = " & IsHWnd(_GUICtrlDTP_GetMCFont($hDTP)))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

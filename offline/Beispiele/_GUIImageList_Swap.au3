@@ -27,8 +27,8 @@ Func Example()
 
 	; Fügt die Spalten hinzu
 	_GUICtrlListView_AddColumn($idListview, "Spalte 1", 120)
-	_GUICtrlListView_AddColumn($idListview, "Spalte 2", 100)
-	_GUICtrlListView_AddColumn($idListview, "Spalte 3", 100)
+	_GUICtrlListView_AddColumn($idListview, "Spalte 2", 120)
+	_GUICtrlListView_AddColumn($idListview, "Spalte 3", 120)
 
 	; Fügt die Items hinzu
 	_GUICtrlListView_AddItem($idListview, "Zeile 1: Spalte 1", 0)

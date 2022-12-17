@@ -5,17 +5,15 @@
 Example()
 
 Func Example()
-	Local $idTab
-
 	; Erstellt eine GUI
-	GUICreate("Tab-Control: Ermittelt den aktuell ausgewählten Tab", 400, 300)
-	$idTab = GUICtrlCreateTab(2, 2, 396, 296)
+	GUICreate("Tab-Control: Setzt und ermittelt den aktuell ausgewählten Tab (v" & @AutoItVersion & ")", 600, 300)
+	Local $idTab = GUICtrlCreateTab(2, 2, 396, 296)
 	GUISetState(@SW_SHOW)
 
 	; Fügt Tabs hinzu
-	_GUICtrlTab_InsertItem($idTab, 0, "Tab 1")
-	_GUICtrlTab_InsertItem($idTab, 1, "Tab 2")
-	_GUICtrlTab_InsertItem($idTab, 2, "Tab 3")
+	_GUICtrlTab_InsertItem($idTab, 0, "Tab 0")
+	_GUICtrlTab_InsertItem($idTab, 1, "Tab 1")
+	_GUICtrlTab_InsertItem($idTab, 2, "Tab 2")
 
 	; Ermittelt/Setzt den aktuell ausgewählten Tab
 	_GUICtrlTab_SetCurSel($idTab, 1)

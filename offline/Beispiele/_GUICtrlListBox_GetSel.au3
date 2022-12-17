@@ -5,17 +5,15 @@
 Example()
 
 Func Example()
-	Local $idListBox
-
 	; Erstellt eine GUI
-	GUICreate("ListBox: Ermittelt, ob ein Item markiert ist", 400, 296)
-	$idListBox = GUICtrlCreateList("", 2, 2, 396, 296, BitOR($LBS_STANDARD, $LBS_EXTENDEDSEL))
+	GUICreate('ListBox: Setzt und ermittelt den "markier-Status" eines Items (v' & @AutoItVersion & ")", 600, 296)
+	Local $idListBox = GUICtrlCreateList("", 2, 2, 396, 296, BitOR($LBS_STANDARD, $LBS_EXTENDEDSEL))
 	GUISetState(@SW_SHOW)
 
 	; Fügt Strings hinzu
 	_GUICtrlListBox_BeginUpdate($idListBox)
-	For $iI = 1 To 9
-		_GUICtrlListBox_AddString($idListBox, StringFormat("%03d : Zufallstring", Random(1, 100, 1)))
+	For $iI = 0 To 9
+		_GUICtrlListBox_AddString($idListBox, StringFormat("%03d : String", $iI))
 	Next
 	_GUICtrlListBox_EndUpdate($idListBox)
 
@@ -25,7 +23,7 @@ Func Example()
 	_GUICtrlListBox_SetSel($idListBox, 5)
 
 	; Ermittelt den "markier-Status" eines Items
-	MsgBox(8156, "Information", "Item 5 ausgewählt: " & _GUICtrlListBox_GetSel($idListBox, 4))
+	MsgBox(8156, "Information", "Item 4 ausgewählt: " & _GUICtrlListBox_GetSel($idListBox, 4))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

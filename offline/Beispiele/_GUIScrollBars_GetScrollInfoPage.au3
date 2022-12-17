@@ -8,7 +8,7 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGUI = GUICreate("ScrollBars Setzt udn ermittelt die Scroll InfoPage (v" & @AutoItVersion & ")", 400, 400, -1, -1, BitOR($WS_MINIMIZEBOX, $WS_CAPTION, $WS_POPUP, $WS_SYSMENU, $WS_SIZEBOX))
+	Local $hGUI = GUICreate("ScrollBars Setzt und ermittelt die Scroll InfoPage (v" & @AutoItVersion & ")", 500, 400, -1, -1, BitOR($WS_MINIMIZEBOX, $WS_CAPTION, $WS_POPUP, $WS_SYSMENU, $WS_SIZEBOX))
 	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 380, 380, BitOR($WS_HSCROLL, $WS_VSCROLL))
 	GUICtrlSetResizing($g_idMemo, $GUI_DOCKALL)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")

@@ -12,16 +12,14 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $aOld, $aNew
-
 	; Erstellt eine GUI
-	GUICreate("Zeit", 400, 500)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 396, 456, $WS_VSCROLL)
+	GUICreate("Datum Zeit: Setzt und ermittelt die Zoneninformationen (v" & @AutoItVersion & ")", 460, 460)
+	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 456, 456, $WS_VSCROLL)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
 
 	; Zeigt Infos über die aktuelle Zeitzone
-	$aOld = _Date_Time_GetTimeZoneInformation()
+	Local $aOld = _Date_Time_GetTimeZoneInformation()
 	ShowTimeZoneInformation($aOld, "Current")
 
 	; Setzt die neue Zeitzone. Nur Namenupdates
@@ -31,7 +29,7 @@ Func Example()
 	EndIf
 
 	; Zeigt Infos über die neue Zeitzone
-	$aNew = _Date_Time_GetTimeZoneInformation()
+	Local $aNew = _Date_Time_GetTimeZoneInformation()
 	ShowTimeZoneInformation($aNew, "New")
 
 	; Setzt auf originale Zeitzone zurück

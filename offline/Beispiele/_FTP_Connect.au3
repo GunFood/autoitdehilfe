@@ -4,7 +4,7 @@
 _Example()
 
 Func _Example()
-	Local $sServer = 'ftp.csx.cam.ac.uk' ; UNIVERSITY OF CAMBRIDGE ANONYMOUS FTP SERVER
+	Local $sServer = 'speedtest.tele2.net'
 	Local $sUsername = ''
 	Local $sPass = ''
 

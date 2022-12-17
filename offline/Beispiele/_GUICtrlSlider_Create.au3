@@ -1,3 +1,6 @@
+; == Example : Erstellit mit der UDF
+
+#include <Extras\WM_NOTIFY.au3>
 #include <GuiConstantsEx.au3>
 #include <GuiSlider.au3>
 #include <WindowsConstants.au3>
@@ -10,11 +13,11 @@ Func Example()
 	Local $hGui
 
 	; Erstellt eine GUI
-	$hGui = GUICreate("Slider: Erstellen (UDF)", 400, 296)
+	$hGui = GUICreate("Slider Erstellen (v" & @AutoItVersion & ")", 400, 296)
 	$g_hSlider = _GUICtrlSlider_Create($hGui, 2, 2, 396, 20, BitOR($TBS_TOOLTIPS, $TBS_AUTOTICKS))
 	GUISetState(@SW_SHOW)
 
-	GUIRegisterMsg($WM_NOTIFY, "WM_NOTIFY")
+	_WM_NOTIFY_Register()
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
@@ -24,31 +27,19 @@ EndFunc   ;==>Example
 
 Func WM_NOTIFY($hWnd, $iMsg, $wParam, $lParam)
 	#forceref $hWnd, $iMsg, $wParam
-	Local $hWndFrom, $iIDFrom, $iCode, $tNMHDR, $hWndSlider
-	$hWndSlider = $g_hSlider
+	Local $hWndSlider = $g_hSlider
 	If Not IsHWnd($g_hSlider) Then $hWndSlider = GUICtrlGetHandle($g_hSlider)
 
-	$tNMHDR = DllStructCreate($tagNMHDR, $lParam)
-	$hWndFrom = HWnd(DllStructGetData($tNMHDR, "hWndFrom"))
-	$iIDFrom = DllStructGetData($tNMHDR, "IDFrom")
-	$iCode = DllStructGetData($tNMHDR, "Code")
+	Local $tNMHDR = DllStructCreate($tagNMHDR, $lParam)
+	Local $hWndFrom = HWnd(DllStructGetData($tNMHDR, "hWndFrom"))
+	Local $iCode = DllStructGetData($tNMHDR, "Code")
 	Switch $hWndFrom
 		Case $hWndSlider
 			Switch $iCode
 				Case $NM_RELEASEDCAPTURE ; Das Control bemerkt, wenn die Maustaste wieder losgelassen wird
-					_DebugPrint("$NM_RELEASEDCAPTURE" & @CRLF & "--> hWndFrom:" & @TAB & $hWndFrom & @CRLF & _
-							"-->IDFrom:" & @TAB & $iIDFrom & @CRLF & _
-							"-->Code:" & @TAB & $iCode)
+					_WM_NOTIFY_DebugEvent("$NM_RELEASEDCAPTURE", $tagNMHDR, $lParam, "hWndFrom,IDFrom")
 					; Kein Rückgabewert
 			EndSwitch
 	EndSwitch
 	Return $GUI_RUNDEFMSG
 EndFunc   ;==>WM_NOTIFY
-
-Func _DebugPrint($s_text, $sLine = @ScriptLineNumber)
-	ConsoleWrite( _
-			"!===========================================================" & @CRLF & _
-			"+======================================================" & @CRLF & _
-			"-->Zeile(" & StringFormat("%04d", $sLine) & "):" & @TAB & $s_text & @CRLF & _
-			"+======================================================" & @CRLF)
-EndFunc   ;==>_DebugPrint

@@ -5,28 +5,26 @@
 Example()
 
 Func Example()
-	Local $idListView
-
-	GUICreate("ListView: Ermittelt, ob das Item den Fokus besitzt", 450, 300)
-	$idListView = GUICtrlCreateListView("", 2, 2, 394, 268)
+	GUICreate("ListView: Setzt den Foucs des Item und ermittelt, ob das Item den Fokus besitzt (v" & @AutoItVersion & ")", 700, 300)
+	Local $idListview = GUICtrlCreateListView("", 2, 2, 394, 268)
 	GUISetState(@SW_SHOW)
 
 	; Fügt die Spalten hinzu
-	_GUICtrlListView_AddColumn($idListView, "Spalte 1", 100)
-	_GUICtrlListView_AddColumn($idListView, "Spalte 2", 100)
-	_GUICtrlListView_AddColumn($idListView, "Spalte 3", 100)
+	_GUICtrlListView_AddColumn($idListview, "Spalte 0", 120)
+	_GUICtrlListView_AddColumn($idListview, "Spalte 1", 120)
+	_GUICtrlListView_AddColumn($idListview, "Spalte 2", 120)
 
 	; Fügt die Items hinzu
-	_GUICtrlListView_AddItem($idListView, "Zeile 1: Spalte 1", 0)
-	_GUICtrlListView_AddSubItem($idListView, 0, "Zeile 1: Spalte 2", 1)
-	_GUICtrlListView_AddSubItem($idListView, 0, "Zeile 1: Spalte 3", 2)
-	_GUICtrlListView_AddItem($idListView, "Zeile 2: Spalte 1", 1)
-	_GUICtrlListView_AddSubItem($idListView, 1, "Zeile 2: Spalte 2", 1)
-	_GUICtrlListView_AddItem($idListView, "Zeile 3: Spalte 1", 2)
+	_GUICtrlListView_AddItem($idListview, "Zeile 0: Spalte 0", 0)
+	_GUICtrlListView_AddSubItem($idListview, 0, "Zeile 0: Spalte 1", 1)
+	_GUICtrlListView_AddSubItem($idListview, 0, "Zeile 0: Spalte 2", 2)
+	_GUICtrlListView_AddItem($idListview, "Zeile 1: Spalte 0", 1)
+	_GUICtrlListView_AddSubItem($idListview, 1, "Zeile 1: Spalte 1", 1)
+	_GUICtrlListView_AddItem($idListview, "Zeile 2: Spalte 0", 2)
 
-	; Item 2 erhält den Fokus
-	_GUICtrlListView_SetItemFocused($idListView, 1)
-	MsgBox($MB_SYSTEMMODAL, "Information", "Item 2 hat den Fokus: " & _GUICtrlListView_GetItemFocused($idListView, 1))
+	; Item 1 erhält den Fokus
+	_GUICtrlListView_SetItemFocused($idListview, 1)
+	MsgBox($MB_SYSTEMMODAL, "Information", "Item 1 hat den Fokus: " & _GUICtrlListView_GetItemFocused($idListview, 1))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

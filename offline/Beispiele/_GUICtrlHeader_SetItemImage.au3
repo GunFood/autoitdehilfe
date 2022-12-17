@@ -26,21 +26,21 @@ Func Example()
 	_GUICtrlHeader_SetImageList($hHeader, $hImage)
 
 	; Fügt die Spalten hinzu
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 1", 100, 0, 0)
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 2", 100, 0, 1)
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 3", 100, 0, 2)
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 4", 100)
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 0", 100, 0, 0)
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 1", 100, 0, 1)
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 2", 100, 0, 2)
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 3", 100)
 
-	; Zeigt das Bild von Spalte 1
-	MemoWrite("Bild von Spalte 1: " & _GUICtrlHeader_GetItemImage($hHeader, 0))
+	; Zeigt das Bild von Spalte 0
+	MemoWrite("Bild von Spalte 0: " & _GUICtrlHeader_GetItemImage($hHeader, 0))
 
 	Sleep(1000)
 
-	; Setzt das Bild von Spalte 1
+	; Setzt das Bild von Spalte 0
 	_GUICtrlHeader_SetItemImage($hHeader, 0, 2)
 
-	; Zeigt das Bild von Spalte 1
-	MemoWrite("Bild von Spalte 1: " & _GUICtrlHeader_GetItemImage($hHeader, 0))
+	; Zeigt das Bild von Spalte 0
+	MemoWrite("Bild von Spalte 0: " & _GUICtrlHeader_GetItemImage($hHeader, 0))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

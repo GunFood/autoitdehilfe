@@ -5,11 +5,9 @@
 Example()
 
 Func Example()
-	Local $hGui, $hCombo
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("ComboBoxEx: String einfügen", 400, 300)
-	$hCombo = _GUICtrlComboBoxEx_Create($hGui, "", 2, 2, 394, 100)
+	Local $hGUI = GUICreate("ComboBoxEx: String einfügen (v" & @AutoItVersion & ")", 400, 300)
+	Local $hCombo = _GUICtrlComboBoxEx_Create($hGUI, "", 2, 2, 394, 100)
 	GUISetState(@SW_SHOW)
 
 	; Fügt Dateien hinzu
@@ -23,6 +21,9 @@ Func Example()
 
 	; Einen String einfügen
 	_GUICtrlComboBoxEx_InsertString($hCombo, "eingefügter Text", 1)
+
+	; Zeigt das Dropdown
+	_GUICtrlComboBoxEx_ShowDropDown($hCombo, True)
 
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE

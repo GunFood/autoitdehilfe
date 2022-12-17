@@ -8,7 +8,7 @@ Example()
 
 Func Example()
 	; Erstellt eine GUI
-	GUICreate("Month Calendar: Ermittelt die minimale Größe um einen kompletten Monat darzustellen (v" & @AutoItVersion & ") ", 400, 300)
+	GUICreate("Month Calendar: Ermittelt die minimale Größe um einen kompletten Monat darzustellen (v" & @AutoItVersion & ") ", 700, 300)
 	Local $idMonthCal = GUICtrlCreateMonthCal("", 4, 4, -1, -1, BitOR($WS_BORDER, $MCS_MULTISELECT), 0x00000000)
 
 	; Erstellt ein Memo Control

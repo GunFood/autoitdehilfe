@@ -10,13 +10,11 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hButton, $hGui
-
-	$hGui = GUICreate("Buttons", 400, 400)
+	Local $hGUI = GUICreate("Button: Setzt und ermittelt den Text der Notiz (v" & @AutoItVersion & ")", 500, 400)
 	$g_idMemo = GUICtrlCreateEdit("", 10, 75, 390, 315, $WS_VSCROLL)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
 
-	$hButton = _GUICtrlButton_Create($hGui, "Button 1", 10, 10, 210, 45, BitOR($BS_COMMANDLINK, $BS_DEFPUSHBUTTON, $BS_PUSHLIKE))
+	Local $hButton = _GUICtrlButton_Create($hGUI, "Button 1", 10, 10, 160, 60, BitOR($BS_COMMANDLINK, $BS_DEFCOMMANDLINK))
 	_GUICtrlButton_SetNote($hButton, "Dies ist ein Test unter Vista!")
 
 	GUISetState(@SW_SHOW)

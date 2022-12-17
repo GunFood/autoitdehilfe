@@ -5,13 +5,11 @@
 Example()
 
 Func Example()
-	Local $idInput, $idInput2, $idSlider
-
 	; Erstellt eine GUI
-	GUICreate("Slider: Ermittelt das Handle zu einem Buddy ", 400, 296)
-	$idSlider = GUICtrlCreateSlider(95, 2, 205, 20, BitOR($TBS_TOOLTIPS, $TBS_AUTOTICKS, $TBS_ENABLESELRANGE))
-	$idInput = GUICtrlCreateInput("0", 2, 25, 90, 20)
-	$idInput2 = GUICtrlCreateInput("0", 2, 25, 90, 20)
+	GUICreate("Slider: Setzt und ermittelt das Handle zu einem Buddyy (v" & @AutoItVersion & ")", 600, 296)
+	Local $idSlider = GUICtrlCreateSlider(95, 2, 205, 20, BitOR($TBS_TOOLTIPS, $TBS_AUTOTICKS, $TBS_ENABLESELRANGE))
+	Local $idInput = GUICtrlCreateInput("0", 2, 25, 90, 20)
+	Local $idInput2 = GUICtrlCreateInput("0", 2, 25, 90, 20)
 	GUISetState(@SW_SHOW)
 
 	; Setzt das Handle zu einem Buddy (links))

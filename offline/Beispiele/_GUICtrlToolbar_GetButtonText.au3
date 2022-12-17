@@ -8,13 +8,10 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $hToolbar
-	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("Toolbar", 400, 300)
-	$hToolbar = _GUICtrlToolbar_Create($hGui)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 36, 396, 262, $WS_VSCROLL)
+	Local $hGUI = GUICreate("Toolbar: setzt und ermittelt den Text des Buttons (v" & @AutoItVersion & ")", 500, 300)
+	Local $hToolbar = _GUICtrlToolbar_Create($hGUI)
+	$g_idMemo = GUICtrlCreateEdit("", 2, 60, 396, 238, $WS_VSCROLL)
 	GUICtrlSetFont($g_idMemo, 10, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
 
@@ -26,12 +23,23 @@ Func Example()
 			_GUICtrlToolbar_AddBitmap($hToolbar, 1, -1, $IDB_STD_LARGE_COLOR)
 	EndSwitch
 
+	; F+ügt Strings hinzu
+	Local $aStrings[4]
+	$aStrings[0] = _GUICtrlToolbar_AddString($hToolbar, "&Neu")
+	$aStrings[1] = _GUICtrlToolbar_AddString($hToolbar, "&Öffnen")
+	$aStrings[2] = _GUICtrlToolbar_AddString($hToolbar, "&Speichern")
+	$aStrings[3] = _GUICtrlToolbar_AddString($hToolbar, "&Hilfe")
+
 	; Fügt die Buttons hinzu
-	_GUICtrlToolbar_AddButton($hToolbar, $e_idNew, $STD_FILENEW)
-	_GUICtrlToolbar_AddButton($hToolbar, $e_idOpen, $STD_FILEOPEN)
-	_GUICtrlToolbar_AddButton($hToolbar, $e_idSave, $STD_FILESAVE)
+		Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
+	_GUICtrlToolbar_AddButton($hToolbar, $e_idNew, $STD_FILENEW, $aStrings[0])
+	_GUICtrlToolbar_AddButton($hToolbar, $e_idOpen, $STD_FILEOPEN, $aStrings[1])
+	_GUICtrlToolbar_AddButton($hToolbar, $e_idSave, $STD_FILESAVE, $aStrings[2])
 	_GUICtrlToolbar_AddButtonSep($hToolbar)
-	_GUICtrlToolbar_AddButton($hToolbar, $idHelp, $STD_HELP)
+	_GUICtrlToolbar_AddButton($hToolbar, $idHelp, $STD_HELP, $aStrings[3])
+
+	; Zeigt den Text des Speichern-Buttons
+	MemoWrite("Text des Speichern-Buttons: " & _GUICtrlToolbar_GetButtonText($hToolbar, $e_idSave))
 
 	; Ändert den Text des Speichern-Buttons
 	_GUICtrlToolbar_SetButtonText($hToolbar, $e_idSave, "&Schließen")

@@ -4,16 +4,12 @@
 #include <WinAPIConstants.au3>
 #include <WindowsConstants.au3>
 
-
 Example()
 
 Func Example()
-	Local $hGui, $hToolbar
-	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("Toolbar", 400, 300)
-	$hToolbar = _GUICtrlToolbar_Create($hGui)
+	Local $hGUI = GUICreate("Toolbar: Setzt und ermittelt den Index des Bitmaps (v" & @AutoItVersion & ")", 500, 300)
+	Local $hToolbar = _GUICtrlToolbar_Create($hGUI)
 	GUISetState(@SW_SHOW)
 
 	; Fügt die Standard Systembitmaps hinzu
@@ -25,6 +21,7 @@ Func Example()
 	EndSwitch
 
 	; Fügt die Buttons hinzu
+	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idNew, $STD_FILENEW)
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idOpen, $STD_FILEOPEN)
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idSave, $STD_FILESAVE)

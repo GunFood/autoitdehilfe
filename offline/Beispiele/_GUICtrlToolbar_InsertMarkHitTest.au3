@@ -8,12 +8,9 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $hToolbar, $aStrings[4], $aRect, $aMark
-	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("Toolbar", 400, 300)
-	$hToolbar = _GUICtrlToolbar_Create($hGui)
+	Local $hGUI = GUICreate("Ermittelt die Einfügemarken-Informationen für einen Punkt (v" & @AutoItVersion & ")", 600, 300)
+	Local $hToolbar = _GUICtrlToolbar_Create($hGUI)
 	$g_idMemo = GUICtrlCreateEdit("", 2, 36, 396, 262, $WS_VSCROLL)
 	GUICtrlSetFont($g_idMemo, 10, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
@@ -27,12 +24,14 @@ Func Example()
 	EndSwitch
 
 	; Fügt Strings hinzu
+	Local $aStrings[4]
 	$aStrings[0] = _GUICtrlToolbar_AddString($hToolbar, "&Neu Button")
 	$aStrings[1] = _GUICtrlToolbar_AddString($hToolbar, "&Öffnen Button")
 	$aStrings[2] = _GUICtrlToolbar_AddString($hToolbar, "&Speichern Button")
 	$aStrings[3] = _GUICtrlToolbar_AddString($hToolbar, "&Hilfe Button")
 
 	; Fügt die Buttons hinzu
+	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idNew, $STD_FILENEW, $aStrings[0])
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idOpen, $STD_FILEOPEN, $aStrings[1])
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idSave, $STD_FILESAVE, $aStrings[2])
@@ -43,12 +42,12 @@ Func Example()
 	_GUICtrlToolbar_SetInsertMark($hToolbar, 1, 1)
 
 	; Ermittelt die Einfügemarken-Informationen für Punkt 1
-	$aMark = _GUICtrlToolbar_InsertMarkHitTest($hToolbar, 0, 0)
+	Local $aMark = _GUICtrlToolbar_InsertMarkHitTest($hToolbar, 0, 0)
 	MemoWrite("Index .............................: " & $aMark[0])
 	MemoWrite("Position im Verhältnis zum Button .: " & $aMark[1])
 
 	; Ermittelt die Einfügemarken-Informationen für Punkt 2
-	$aRect = _GUICtrlToolbar_GetButtonRect($hToolbar, $e_idSave)
+	Local $aRect = _GUICtrlToolbar_GetButtonRect($hToolbar, $e_idSave)
 	$aMark = _GUICtrlToolbar_InsertMarkHitTest($hToolbar, $aRect[0], $aRect[1])
 	MemoWrite("Index .............................: " & $aMark[0])
 	MemoWrite("Position im Verhältnis zum Button .: " & $aMark[1])

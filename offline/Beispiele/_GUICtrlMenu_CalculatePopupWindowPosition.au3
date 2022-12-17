@@ -4,7 +4,7 @@
 #include <WinAPIConv.au3>
 #include <WinAPISysWin.au3>
 
-Local $hForm = GUICreate('Test ' & StringReplace(@ScriptName, '.au3', '()'), 400, 400)
+Local $hForm = GUICreate('Test ' & StringReplace(@ScriptName, '.au3', '()'), 500, 400)
 Local $idButton = GUICtrlCreateButton('Neues Fenster', 145, 366, 110, 23)
 GUISetState(@SW_SHOW)
 

@@ -2,8 +2,8 @@
 #include <MsgBoxConstants.au3>
 #include <WinAPIFiles.au3>
 
-; Download einer Datei im Hintergrund.
-; Wartet bis der Download vollständig ist.
+; InetGet downloaded eine Datei im Hintergrund.
+; Das AutoIt Skript prüft in einer Schleife, ob der Download vollständig ist.
 
 Example()
 

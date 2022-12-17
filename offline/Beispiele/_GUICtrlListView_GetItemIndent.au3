@@ -6,31 +6,32 @@
 Example()
 
 Func Example()
-	Local $hImage, $idListView
-
-	GUICreate("ListView: Ermittelt die Einrückung", 400, 300)
-	$idListView = GUICtrlCreateListView("", 2, 2, 394, 268)
+	GUICreate("ListView: Setzt und ermittelt die Einrückung (v" & @AutoItVersion & ")", 500, 300)
+	Local $idListview = GUICtrlCreateListView("", 2, 2, 394, 268)
 	GUISetState(@SW_SHOW)
 
+	; Setzt das ANSI Format
+;~     _GUICtrlListView_SetUnicodeFormat($idListview, False)
+
 	; Lädt die Bilder
-	$hImage = _GUIImageList_Create()
-	_GUIImageList_Add($hImage, _GUICtrlListView_CreateSolidBitMap($idListView, 0xFF0000, 16, 16))
-	_GUIImageList_Add($hImage, _GUICtrlListView_CreateSolidBitMap($idListView, 0x00FF00, 16, 16))
-	_GUIImageList_Add($hImage, _GUICtrlListView_CreateSolidBitMap($idListView, 0x0000FF, 16, 16))
-	_GUICtrlListView_SetImageList($idListView, $hImage, 1)
+	Local $hImage = _GUIImageList_Create()
+	_GUIImageList_Add($hImage, _GUICtrlListView_CreateSolidBitMap($idListview, 0xFF0000, 16, 16))
+	_GUIImageList_Add($hImage, _GUICtrlListView_CreateSolidBitMap($idListview, 0x00FF00, 16, 16))
+	_GUIImageList_Add($hImage, _GUICtrlListView_CreateSolidBitMap($idListview, 0x0000FF, 16, 16))
+	_GUICtrlListView_SetImageList($idListview, $hImage, 1)
 
 	; Fügt die Spalten hinzu
-	_GUICtrlListView_AddColumn($idListView, "Items", 100)
+	_GUICtrlListView_AddColumn($idListview, "Items", 100)
 
 	; Fügt die Items hinzu
-	_GUICtrlListView_AddItem($idListView, "Item 1", 0)
-	_GUICtrlListView_AddItem($idListView, "Item 2", 1)
-	_GUICtrlListView_AddItem($idListView, "Item 3", 2)
+	_GUICtrlListView_AddItem($idListview, "Item 0", 0)
+	_GUICtrlListView_AddItem($idListview, "Item 1", 1)
+	_GUICtrlListView_AddItem($idListview, "Item 2", 2)
 
 	; Items einrücken
-	_GUICtrlListView_SetItemIndent($idListView, 1, 1)
-	_GUICtrlListView_SetItemIndent($idListView, 2, 2)
-	MsgBox($MB_SYSTEMMODAL, "Information", "Einrückung von Item 2: " & _GUICtrlListView_GetItemIndent($idListView, 1))
+	_GUICtrlListView_SetItemIndent($idListview, 1, 1)
+	_GUICtrlListView_SetItemIndent($idListview, 2, 2)
+	MsgBox($MB_SYSTEMMODAL, "Information", "Einrückung von Item 1: " & _GUICtrlListView_GetItemIndent($idListview, 1))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

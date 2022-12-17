@@ -7,7 +7,7 @@ Example()
 
 Func Example()
 	; Erstellt eine GUI
-	GUICreate("ComboBox: Setzt und ermittelt den String (v" & @AutoItVersion & ")", 400, 296)
+	GUICreate("ComboBox: Setzt und ermittelt den String (v" & @AutoItVersion & ")", 500, 296)
 	Local $idCombo = GUICtrlCreateCombo("", 2, 2, 396, 296)
 	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
@@ -15,7 +15,7 @@ Func Example()
 
 	; Fügt Dateien hinzu
 	_GUICtrlComboBox_BeginUpdate($idCombo)
-	_GUICtrlComboBox_AddDir($idCombo, @WindowsDir & "*.exe")
+	_GUICtrlComboBox_AddDir($idCombo, @WindowsDir & "\*.exe")
 	_GUICtrlComboBox_EndUpdate($idCombo)
 
 	; Wählt ein Item aus

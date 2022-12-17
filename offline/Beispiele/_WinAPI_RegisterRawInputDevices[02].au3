@@ -1,4 +1,3 @@
-#AutoIt3Wrapper_AutoIt3Dir=e:\trunk.SVN\bin
 #include <GUIConstants.au3>
 #include <GuiEdit.au3>
 #include <WinAPISys.au3>

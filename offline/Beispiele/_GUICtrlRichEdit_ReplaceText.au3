@@ -5,15 +5,15 @@
 Example()
 
 Func Example()
-	Local $hGui, $iMsg, $idBtnNext, $iStep = 0, $g_idLblMsg, $g_hRichEdit
-	$hGui = GUICreate("Beispiel (" & StringTrimRight(@ScriptName, 4) & ")", 320, 350, -1, -1)
-	$hRichEdit = _GUICtrlRichEdit_Create($hGui, '', 10, 10, 300, 220, _
+	Local $hGui = GUICreate("RichEdit: Ersetzt Text (v" & @AutoItVersion & ")", 340, 350, -1, -1)
+	Local $hRichEdit = _GUICtrlRichEdit_Create($hGui, "This is a test.", 10, 10, 320, 220, _
 			BitOR($ES_MULTILINE, $WS_VSCROLL, $ES_AUTOVSCROLL))
-	$g_idLblMsg = GUICtrlCreateLabel("", 10, 235, 300, 60)
-	$idBtnNext = GUICtrlCreateButton("Weiter", 270, 310, 40, 30)
+	Local $idLblMsg = GUICtrlCreateLabel("", 10, 235, 300, 60)
+	Local $idBtnNext = GUICtrlCreateButton("Weiter", 270, 310, 40, 30)
 	GUISetState(@SW_SHOW)
 
 	_GUICtrlRichEdit_SetText($hRichEdit, "Erster Absatz")
+	Local $iMsg, $iStep = 0
 	While True
 		$iMsg = GUIGetMsg()
 		Select
@@ -28,11 +28,11 @@ Func Example()
 						_GUICtrlRichEdit_SetSel($hRichEdit, 0, 6)
 					Case 2
 						_GUICtrlRichEdit_ReplaceText($hRichEdit, "1.")
-						GUICtrlSetData($g_idLblMsg, "Der Text wurde ersetzt")
+						GUICtrlSetData($idLblMsg, "Der Text wurde ersetzt")
 					Case 3
 						_GUICtrlRichEdit_SetSel($hRichEdit, 0, 3)
 						_GUICtrlRichEdit_ReplaceText($hRichEdit, "")
-						GUICtrlSetData($g_idLblMsg, '"1." wurde gelöscht')
+						GUICtrlSetData($idLblMsg, '"1." wurde gelöscht')
 						GUICtrlSetState($idBtnNext, $GUI_DISABLE)
 				EndSwitch
 		EndSelect

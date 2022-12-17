@@ -9,21 +9,23 @@ Global $g_hImage, $g_hStateImage
 Example()
 
 Func Example()
-	Local $ahItem[10], $aidChildItem[30], $iYItem = 0, $iRand, $idTreeView
+	GUICreate("TreeView: Index (v" & @AutoItVersion & ")", 400, 300)
+
 	Local $iStyle = BitOR($TVS_EDITLABELS, $TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS)
-
-	GUICreate("TreeView: Index", 400, 370)
-
-	$idTreeView = GUICtrlCreateTreeView(2, 2, 396, 368, $iStyle, $WS_EX_CLIENTEDGE)
+	Local $idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
 	GUISetState(@SW_SHOW)
 
 	_CreateNormalImageList()
 	_GUICtrlTreeView_SetNormalImageList($idTreeView, $g_hImage)
 
+	; Setzt das ANSI Format
+;~ 	_GUICtrlTreeView_SetUnicodeFormat($idTreeView, False)
+
 	_CreateStateImageList()
 	_GUICtrlTreeView_SetStateImageList($idTreeView, $g_hStateImage)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
+	Local $ahItem[10], $aidChildItem[30], $iYItem = 0
 	For $x = 4 To 0 Step -1
 		$ahItem[$x] = _GUICtrlTreeView_Add($idTreeView, 0, StringFormat("[Item-Index %02d]", $x), 4, 5)
 		_GUICtrlTreeView_SetStateImageIndex($idTreeView, $ahItem[$x], 1)
@@ -35,7 +37,7 @@ Func Example()
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)
 
-	$iRand = Random(0, 14, 1)
+	Local $iRand = Random(0, 29, 1)
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Index des Child-Items an Position %d (bei 0 beginnend):" & @CRLF & "%d", $iRand, _GUICtrlTreeView_Index($idTreeView, $aidChildItem[$iRand])))
 	_GUICtrlTreeView_SelectItem($idTreeView, $aidChildItem[$iRand])
 

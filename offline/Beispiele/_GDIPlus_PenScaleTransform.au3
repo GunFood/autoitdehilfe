@@ -1,4 +1,3 @@
-;~ #AutoIt3Wrapper_AutoIt3Dir=e:\trunk.SVN\bin
 #include <GDIPlus.au3>
 #include <GUIConstantsEx.au3>
 

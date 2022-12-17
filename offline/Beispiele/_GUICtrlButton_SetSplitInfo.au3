@@ -1,3 +1,4 @@
+#include <Extras\WM_NOTIFY.au3>
 #include <GuiButton.au3>
 #include <GUIConstantsEx.au3>
 #include <GuiMenu.au3>
@@ -10,22 +11,20 @@ Global $g_hBtn, $g_idMemo, $g_hBtn2
 Example()
 
 Func Example()
-	Local $hGui, $aInfo
-
-	$hGui = GUICreate("Buttons", 400, 400)
+	Local $hGUI = GUICreate('Button: Informationen für ein "Split"-Button-Control (v' & @AutoItVersion & ")", 600, 400)
 	$g_idMemo = GUICtrlCreateEdit("", 10, 100, 390, 284, $WS_VSCROLL)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
 
-	$g_hBtn = _GUICtrlButton_Create($hGui, "Split Button", 10, 10, 120, 30, $BS_SPLITBUTTON)
+	$g_hBtn = _GUICtrlButton_Create($hGUI, "Split Button", 10, 10, 120, 30, $BS_SPLITBUTTON)
 	_GUICtrlButton_SetSplitInfo($g_hBtn)
-	$g_hBtn = _GUICtrlButton_Create($hGui, "Split Button 2", 10, 50, 120, 30, $BS_SPLITBUTTON)
+	$g_hBtn = _GUICtrlButton_Create($hGUI, "Split Button 2", 10, 50, 120, 30, $BS_SPLITBUTTON)
 
 	GUIRegisterMsg($WM_COMMAND, "WM_COMMAND")
-	GUIRegisterMsg($WM_NOTIFY, "WM_NOTIFY")
+	_WM_NOTIFY_Register($g_idMemo)
 
 	GUISetState(@SW_SHOW)
 
-	$aInfo = _GUICtrlButton_GetSplitInfo($g_hBtn)
+	Local $aInfo = _GUICtrlButton_GetSplitInfo($g_hBtn)
 	MemoWrite("Split Info" & @CRLF & "----------------")
 	For $x = 0 To 3
 		MemoWrite("$ainfo[" & $x & "] = " & $aInfo[$x])
@@ -50,32 +49,26 @@ EndFunc   ;==>MemoWrite
 Func WM_NOTIFY($hWnd, $iMsg, $wParam, $lParam)
 	#forceref $hWnd, $iMsg, $wParam
 	Local Const $BCN_HOTITEMCHANGE = -1249
-	Local $tNMBHOTITEM = DllStructCreate("hwnd hWndFrom;int IDFrom;int Code;dword dwFlags", $lParam)
-	Local $nNotifyCode = DllStructGetData($tNMBHOTITEM, "Code")
-	Local $nID = DllStructGetData($tNMBHOTITEM, "IDFrom")
-	Local $hCtrl = DllStructGetData($tNMBHOTITEM, "hWndFrom")
+	Local $tagNMBHOTITEM = $tagNMHDR & ";dword dwFlags"
+	Local $tNMBHOTITEM = DllStructCreate($tagNMBHOTITEM, $lParam)
+	Local $iCode = DllStructGetData($tNMBHOTITEM, "Code")
+	Local $hWndFrom = DllStructGetData($tNMBHOTITEM, "hWndFrom")
 	Local $iFlags = DllStructGetData($tNMBHOTITEM, "dwFlags")
 	Local $sText = ""
 
-	Switch $nNotifyCode
-		Case $BCN_HOTITEMCHANGE ; Win XP und neuer
+	Switch $iCode
+		Case $BCN_HOTITEMCHANGE     ; Win XP und neuer
+			$sText = "Text=" & _GUICtrlButton_GetText($hWndFrom)
 			If BitAND($iFlags, 0x10) = 0x10 Then
-				$sText = "$BCN_HOTITEMCHANGE - Eintreten: " & @CRLF
+				_WM_NOTIFY_DebugEvent("$BCN_HOTITEMCHANGE - Eintreten", $tagNMBHOTITEM, $lParam, "IDFrom", $sText)
 
 			ElseIf BitAND($iFlags, 0x20) = 0x20 Then
-				$sText = "$BCN_HOTITEMCHANGE - Verlassen: " & @CRLF
+				_WM_NOTIFY_DebugEvent("$BCN_HOTITEMCHANGE - Verlassen", $tagNMBHOTITEM, $lParam, "IDFrom", $sText)
+
 			EndIf
-			MemoWrite($sText & _
-					"-----------------------------" & @CRLF & _
-					"WM_NOTIFY - Infos:" & @CRLF & _
-					"-----------------------------" & @CRLF & _
-					"Code" & @TAB & ":" & $nNotifyCode & @CRLF & _
-					"CtrlID" & @TAB & ":" & $nID & @CRLF & _
-					"CtrlHWnd:" & $hCtrl & @CRLF & _
-					_GUICtrlButton_GetText($hCtrl) & @CRLF)
 		Case $BCN_DROPDOWN
 			MemoWrite("$BCN_DROPDOWN")
-			_Popup_Menu($hCtrl)
+			_Popup_Menu($hWndFrom)
 	EndSwitch
 	Return $GUI_RUNDEFMSG
 EndFunc   ;==>WM_NOTIFY
@@ -103,38 +96,38 @@ EndFunc   ;==>_Popup_Menu
 Func WM_COMMAND($hWnd, $iMsg, $wParam, $lParam)
 	#forceref $hWnd, $iMsg
 	Local $nNotifyCode = BitShift($wParam, 16)
-	Local $nID = BitAND($wParam, 0x0000FFFF)
+	Local $iCode = BitShift($wParam, 16)
 	Local $hCtrl = $lParam
-	Local $sText = ""
+	Local $sCode, $sText
 
 	Switch $hCtrl
 		Case $g_hBtn, $g_hBtn2
-			Switch $nNotifyCode
+			Switch $iCode
 				Case $BN_CLICKED
-					$sText = "$BN_CLICKED" & @CRLF
+					$sCode = "$BN_CLICKED"
 				Case $BN_PAINT
-					$sText = "$BN_PAINT" & @CRLF
-				Case $BN_PUSHED, $BN_HILITE
-					$sText = "$BN_PUSHED, $BN_HILITE" & @CRLF
-				Case $BN_UNPUSHED, $BN_UNHILITE
-					$sText = "$BN_UNPUSHED" & @CRLF
+					$sCode = "$BN_PAINT"
+				Case $BN_PUSHED
+					$sCode = "$BN_PUSHED"
+				Case $BN_HILITE
+					$sCode = "$BN_HILITE"
+				Case $BN_UNPUSHED
+					$sCode = "$BN_UNPUSHED"
+				Case $BN_UNHILITE
+					$sCode = "$BN_UNHILITE"
 				Case $BN_DISABLE
-					$sText = "$BN_DISABLE" & @CRLF
-				Case $BN_DBLCLK, $BN_DOUBLECLICKED
-					$sText = "$BN_DBLCLK, $BN_DOUBLECLICKED" & @CRLF
+					$sCode = "$BN_DISABLE"
+				Case $BN_DBLCLK
+					$sCode = "$BN_DBLCLK"
+				Case $BN_DOUBLECLICKED
+					$sCode = "$BN_DOUBLECLICKED"
 				Case $BN_SETFOCUS
-					$sText = "$BN_SETFOCUS" & @CRLF
+					$sCode = "$BN_SETFOCUS"
 				Case $BN_KILLFOCUS
-					$sText = "$BN_KILLFOCUS" & @CRLF
+					$sCode = "$BN_KILLFOCUS"
 			EndSwitch
-			MemoWrite($sText & _
-					"-----------------------------" & @CRLF & _
-					"WM_COMMAND - Infos:" & @CRLF & _
-					"-----------------------------" & @CRLF & _
-					"Code" & @TAB & ":" & $nNotifyCode & @CRLF & _
-					"CtrlID" & @TAB & ":" & $nID & @CRLF & _
-					"CtrlHWnd:" & $hCtrl & @CRLF & _
-					_GUICtrlButton_GetText($hCtrl) & @CRLF)
+			$sText = "Text=" & _GUICtrlButton_GetText($hCtrl)
+			_WM_NOTIFY_DebugEvent($sCode, $tagNMHDR, $lParam, "IDFrom", $sText)
 			Return 0 ; Nur zurückgeben, wenn auf den Button geklickt
 	EndSwitch
 	; Ausführung der standardmässigen, internen AutoIt3 Nachrichtenkommandos.

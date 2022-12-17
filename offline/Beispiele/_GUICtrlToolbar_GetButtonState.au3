@@ -8,12 +8,9 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $hToolbar
-	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("Toolbar", 400, 300)
-	$hToolbar = _GUICtrlToolbar_Create($hGui)
+	Local $hGUI = GUICreate("Toolbar: Setzt und ermittelt Informationen über den Status eines festgelegten Buttons (v" & @AutoItVersion & ")", 700, 300)
+	Local $hToolbar = _GUICtrlToolbar_Create($hGUI)
 	$g_idMemo = GUICtrlCreateEdit("", 2, 36, 396, 262, $WS_VSCROLL)
 	GUICtrlSetFont($g_idMemo, 10, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
@@ -27,6 +24,7 @@ Func Example()
 	EndSwitch
 
 	; Fügt die Buttons hinzu
+	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idNew, $STD_FILENEW)
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idOpen, $STD_FILEOPEN)
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idSave, $STD_FILESAVE)
@@ -39,7 +37,8 @@ Func Example()
 	Sleep(1000)
 
 	; Setzt den Status des Speichern-Buttons
-	_GUICtrlToolbar_SetButtonState($hToolbar, $e_idSave, BitOR($TBSTATE_ENABLED, $TBSTATE_PRESSED))
+	Local $bBalloon = _GUICtrlToolbar_SetButtonState($hToolbar, $e_idSave, BitOR($TBSTATE_ENABLED, $TBSTATE_PRESSED))
+	MemoWrite("Setzt den Status des Buttons: " & $bBalloon)
 
 	; Zeigt den Status des Speichern-Buttons
 	MemoWrite("Status des Speichern-Buttons: " & _GUICtrlToolbar_GetButtonState($hToolbar, $e_idSave))

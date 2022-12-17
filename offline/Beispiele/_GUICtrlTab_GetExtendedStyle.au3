@@ -5,17 +5,15 @@
 Example()
 
 Func Example()
-	Local $idTab
-
 	; Erstellt eine GUI
-	GUICreate("Tab-Control: Ermittelt den erweiterten Stil", 400, 300)
-	$idTab = GUICtrlCreateTab(2, 2, 396, 296, BitOR($TCS_BUTTONS, $TCS_FLATBUTTONS))
+	GUICreate("Tab-Control: Setzt und ermittelt den erweiterten Stil (v" & @AutoItVersion & ")", 500, 300)
+	Local $idTab = GUICtrlCreateTab(2, 2, 396, 296, BitOR($TCS_BUTTONS, $TCS_FLATBUTTONS))
 	GUISetState(@SW_SHOW)
 
 	; Fügt Tabs hinzu
-	_GUICtrlTab_InsertItem($idTab, 0, "Tab 1")
-	_GUICtrlTab_InsertItem($idTab, 1, "Tab 2")
-	_GUICtrlTab_InsertItem($idTab, 2, "Tab 3")
+	_GUICtrlTab_InsertItem($idTab, 0, "Tab 0")
+	_GUICtrlTab_InsertItem($idTab, 1, "Tab 1")
+	_GUICtrlTab_InsertItem($idTab, 2, "Tab 2")
 
 	; Ermittelt/Setzt den erweiterten Stil
 	_GUICtrlTab_SetExtendedStyle($idTab, $TCS_EX_FLATSEPARATORS)

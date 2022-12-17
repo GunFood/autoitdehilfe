@@ -7,16 +7,14 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $hImage, $hCombo
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("ComboBoxEx: Ermittelt die minimal erlaubte Breite der ListBox", 400, 300)
-	$hCombo = _GUICtrlComboBoxEx_Create($hGui, "", 2, 2, 394, 100)
+	Local $hGUI = GUICreate("ComboBoxEx: Setzt und ermittelt die minimal erlaubte Breite der ListBox (v" & @AutoItVersion & ")", 600, 300)
+	Local $hCombo = _GUICtrlComboBoxEx_Create($hGUI, "", 2, 2, 394, 100)
 	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
 
-	$hImage = _GUIImageList_Create(16, 16, 5, 3)
+	Local $hImage = _GUIImageList_Create(16, 16, 5, 3)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", 110)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", 131)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", 165)
@@ -29,7 +27,7 @@ Func Example()
 	_GUICtrlComboBoxEx_SetImageList($hCombo, $hImage)
 
 	For $x = 0 To 8
-		_GUICtrlComboBoxEx_AddString($hCombo, StringFormat("%03d : Zufallstring", Random(1, 100, 1)), $x, $x)
+		_GUICtrlComboBoxEx_AddString($hCombo, StringFormat("%03d : String", $x), $x, $x)
 	Next
 
 	; Ermittelt die minimal erlaubte Breite der ListBox

@@ -6,15 +6,13 @@
 Example()
 
 Func Example()
-	Local $hGui, $hImage, $iImage, $hCombo
-
 	; Erstellt eine GUI und eine ComboBox
-	$hGui = GUICreate("ComboBoxEx: Bildindex für den markierten Zustand eines Items ermitteln", 520, 300)
-	$hCombo = _GUICtrlComboBoxEx_Create($hGui, "", 2, 2, 394, 100)
+	Local $hGUI = GUICreate("ComboBoxEx: Setzt und ermittelt den Bildindex für den markierten Zustand eines Items (v" & @AutoItVersion & ")", 700, 300)
+	Local $hCombo = _GUICtrlComboBoxEx_Create($hGUI, "", 2, 2, 394, 100)
 	GUISetState(@SW_SHOW)
 
 	; Imagelist erstellen
-	$hImage = _GUIImageList_Create(16, 16, 5, 3)
+	Local $hImage = _GUIImageList_Create(16, 16, 5, 3)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", 110)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", 131)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", 165)
@@ -28,9 +26,10 @@ Func Example()
 
 	; ComboBox füllen
 	_GUICtrlComboBoxEx_BeginUpdate($hCombo)
+	Local $iImage
 	For $x = 0 To 149
 		$iImage = Random(0, 8, 1)
-		_GUICtrlComboBoxEx_AddString($hCombo, StringFormat("%03d : Zufallstring", Random(1, 100, 1)), $iImage, $iImage)
+		_GUICtrlComboBoxEx_AddString($hCombo, StringFormat("%03d : String", $x), $iImage, $iImage)
 	Next
 	_GUICtrlComboBoxEx_EndUpdate($hCombo)
 

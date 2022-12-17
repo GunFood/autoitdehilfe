@@ -8,7 +8,7 @@ Example()
 
 Func Example()
 	; Erstellt eine GUI
-	GUICreate("MonthCal: Setzt und ermittelt den ersten Tag der Woche (v" & @AutoItVersion & ")", 420, 300)
+	GUICreate("MonthCal: Setzt und ermittelt den ersten Tag der Woche (v" & @AutoItVersion & ")", 520, 300)
 	Local $idMonthCal = GUICtrlCreateMonthCal("", 4, 4, -1, -1, $WS_BORDER, 0x00000000)
 
 	; Erstellt ein Memo Control

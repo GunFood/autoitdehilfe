@@ -5,15 +5,13 @@
 Example()
 
 Func Example()
-	Local $hWndTT, $idSlider
-
 	; Erstellt eine GUI
-	GUICreate("Slider: Ermittelt das Handle zum ToolTip-Control", 500, 296)
-	$idSlider = GUICtrlCreateSlider(2, 2, 396, 20, BitOR($TBS_TOOLTIPS, $TBS_AUTOTICKS, $TBS_ENABLESELRANGE))
+	GUICreate("Slider: Setzt und ermittelt das Handle zum ToolTip-Control (v" & @AutoItVersion & ")", 600, 296)
+	Local $idSlider = GUICtrlCreateSlider(2, 2, 396, 20, BitOR($TBS_TOOLTIPS, $TBS_AUTOTICKS, $TBS_ENABLESELRANGE))
 	GUISetState(@SW_SHOW)
 
 	; Ermittelt das Handle zum ToolTip-Control
-	$hWndTT = _GUICtrlSlider_GetToolTips($idSlider)
+	Local $hWndTT = _GUICtrlSlider_GetToolTips($idSlider)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Handle des ToolTips: " & $hWndTT)
 
 	; Weist dem Slider-Control ein ToolTip-Control zu

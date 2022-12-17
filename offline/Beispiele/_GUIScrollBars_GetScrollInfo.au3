@@ -8,9 +8,7 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGuiMsg, $hGui, $tSCROLLINFO = DllStructCreate($tagSCROLLINFO)
-
-	$hGui = GUICreate("ScrollBar: Beispiel", 400, 400, -1, -1, BitOR($WS_MINIMIZEBOX, $WS_CAPTION, $WS_POPUP, $WS_SYSMENU, $WS_SIZEBOX))
+	Local $hGUI = GUICreate("ScrollBars: Setzt und ermittelt die Parameter der Scrollbar (v" & @AutoItVersion & ")", 600, 400, -1, -1, BitOR($WS_MINIMIZEBOX, $WS_CAPTION, $WS_POPUP, $WS_SYSMENU, $WS_SIZEBOX))
 	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 380, 360, BitOR($WS_HSCROLL, $WS_VSCROLL))
 	GUICtrlSetResizing($g_idMemo, $GUI_DOCKALL)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
@@ -18,11 +16,12 @@ Func Example()
 
 	GUISetState(@SW_SHOW)
 
-	_GUIScrollBars_Init($hGui)
+	_GUIScrollBars_Init($hGUI)
 
+	Local $tSCROLLINFO = DllStructCreate($tagSCROLLINFO)
 	DllStructSetData($tSCROLLINFO, "cbSize", DllStructGetSize($tSCROLLINFO))
-	DllStructSetData($tSCROLLINFO, "fMask", $_SCROLLBARCONSTANTS_SIF_ALL)
-	_GUIScrollBars_GetScrollInfo($hGui, $SB_HORZ, $tSCROLLINFO)
+	DllStructSetData($tSCROLLINFO, "fMask", $SIF_ALL)
+	_GUIScrollBars_GetScrollInfo($hGUI, $SB_HORZ, $tSCROLLINFO)
 	MemoWrite("Horizontal" & @CRLF & "--------------------------------------")
 	MemoWrite("nPage....: " & DllStructGetData($tSCROLLINFO, "nPage"))
 	MemoWrite("nPos.....: " & DllStructGetData($tSCROLLINFO, "nPos"))
@@ -31,8 +30,8 @@ Func Example()
 	MemoWrite("nTrackPos: " & DllStructGetData($tSCROLLINFO, "nTrackPos"))
 
 	DllStructSetData($tSCROLLINFO, "cbSize", DllStructGetSize($tSCROLLINFO))
-	DllStructSetData($tSCROLLINFO, "fMask", $_SCROLLBARCONSTANTS_SIF_ALL)
-	_GUIScrollBars_GetScrollInfo($hGui, $SB_VERT, $tSCROLLINFO)
+	DllStructSetData($tSCROLLINFO, "fMask", $SIF_ALL)
+	_GUIScrollBars_GetScrollInfo($hGUI, $SB_VERT, $tSCROLLINFO)
 	MemoWrite(@CRLF & "Vertikal" & @CRLF & "--------------------------------------")
 	MemoWrite("nPage....: " & DllStructGetData($tSCROLLINFO, "nPage"))
 	MemoWrite("nPos.....: " & DllStructGetData($tSCROLLINFO, "nPos"))
@@ -40,10 +39,34 @@ Func Example()
 	MemoWrite("nMax.....: " & DllStructGetData($tSCROLLINFO, "nMax"))
 	MemoWrite("nTrackPos: " & DllStructGetData($tSCROLLINFO, "nTrackPos"))
 
-	While 1
-		$hGuiMsg = GUIGetMsg()
+	; Stellt den Bereich des vertikalen Bildlaufs und der Seitengröße ein
+	DllStructSetData($tSCROLLINFO, "fMask", $SIF_RANGE)
+	DllStructSetData($tSCROLLINFO, "nMin", 5)
+	DllStructSetData($tSCROLLINFO, "nMax", 80)
+	_GUIScrollBars_SetScrollInfo($hGUI, $SB_VERT, $tSCROLLINFO)
 
-		Switch $hGuiMsg
+	; Stellt den Bereich des horizontalen Bildlaufs und der Seitengröße ein
+	DllStructSetData($tSCROLLINFO, "fMask", $SIF_RANGE)
+	DllStructSetData($tSCROLLINFO, "nMin", 10)
+	DllStructSetData($tSCROLLINFO, "nMax", 120)
+	_GUIScrollBars_SetScrollInfo($hGUI, $SB_HORZ, $tSCROLLINFO)
+
+	DllStructSetData($tSCROLLINFO, "cbSize", DllStructGetSize($tSCROLLINFO))
+	DllStructSetData($tSCROLLINFO, "fMask", $SIF_ALL)
+	_GUIScrollBars_GetScrollInfo($hGUI, $SB_HORZ, $tSCROLLINFO)
+	MemoWrite(@CRLF & "Horizontal geändert" & @CRLF & "--------------------------------------")
+	MemoWrite("nMin.....: " & DllStructGetData($tSCROLLINFO, "nMin"))
+	MemoWrite("nMax.....: " & DllStructGetData($tSCROLLINFO, "nMax"))
+
+	DllStructSetData($tSCROLLINFO, "cbSize", DllStructGetSize($tSCROLLINFO))
+	DllStructSetData($tSCROLLINFO, "fMask", $SIF_ALL)
+	_GUIScrollBars_GetScrollInfo($hGUI, $SB_VERT, $tSCROLLINFO)
+	MemoWrite(@CRLF & "Vertikal geändert" & @CRLF & "--------------------------------------")
+	MemoWrite("nMin.....: " & DllStructGetData($tSCROLLINFO, "nMin"))
+	MemoWrite("nMax.....: " & DllStructGetData($tSCROLLINFO, "nMax"))
+
+	While 1
+		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE
 				ExitLoop
 		EndSwitch

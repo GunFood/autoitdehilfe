@@ -6,7 +6,7 @@
 Example()
 
 Func Example()
-	GUICreate("ListView: Setzt und ermittelt die Hintergrundfarbe (v" & @AutoItVersion & ")", 400, 300)
+	GUICreate("ListView: Setzt und ermittelt die Hintergrundfarbe (v" & @AutoItVersion & ")", 500, 300)
 	Local $idListView = GUICtrlCreateListView("", 2, 2, 394, 268)
 	GUISetState(@SW_SHOW)
 

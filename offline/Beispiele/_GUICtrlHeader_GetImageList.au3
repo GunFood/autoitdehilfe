@@ -8,28 +8,29 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $hHeader, $hImage
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("Header", 400, 300)
-	$hHeader = _GUICtrlHeader_Create($hGui)
+	Local $hGUI = GUICreate("Header: Setzt und ermittelt die  ImageList (v" & @AutoItVersion & ")", 500, 300)
+	Local $hHeader = _GUICtrlHeader_Create($hGUI)
 	_GUICtrlHeader_SetUnicodeFormat($hHeader, True)
 	$g_idMemo = GUICtrlCreateEdit("", 2, 24, 396, 274, 0)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
 
 	; Erstellt eine Imagelist mit Bildern
-	$hImage = _GUIImageList_Create(11, 11)
-	_GUIImageList_Add($hImage, _WinAPI_CreateSolidBitmap($hGui, 0xFF0000, 11, 11))
-	_GUIImageList_Add($hImage, _WinAPI_CreateSolidBitmap($hGui, 0x00FF00, 11, 11))
-	_GUIImageList_Add($hImage, _WinAPI_CreateSolidBitmap($hGui, 0x0000FF, 11, 11))
-	_GUICtrlHeader_SetImageList($hHeader, $hImage)
+	Local $hImage = _GUIImageList_Create(11, 11)
+	_GUIImageList_Add($hImage, _WinAPI_CreateSolidBitmap($hGUI, 0xFF0000, 11, 11))
+	_GUIImageList_Add($hImage, _WinAPI_CreateSolidBitmap($hGUI, 0x00FF00, 11, 11))
+	_GUIImageList_Add($hImage, _WinAPI_CreateSolidBitmap($hGUI, 0x0000FF, 11, 11))
+	Local $hPrevImageList = _GUICtrlHeader_SetImageList($hHeader, $hImage)
+
+	MemoWrite("Vorheriges Handle der Imagelist ....: " & "0x" & Hex($hPrevImageList))
+	MemoWrite("IsPtr = " & IsPtr($hPrevImageList) & " IsHWnd = " & IsHWnd($hPrevImageList))
 
 	; Fügt die Spalten hinzu
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 1", 100, 0, 0)
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 2", 100, 0, 1)
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 3", 100, 0, 2)
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 4", 100)
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 0", 100, 0, 0)
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 1", 100, 0, 1)
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 2", 100, 0, 2)
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 3", 100)
 
 	; Zeigt Informationen über das Header-Control
 	MemoWrite("Handle der Imagelist ....: " & "0x" & Hex(_GUICtrlHeader_GetImageList($hHeader)))

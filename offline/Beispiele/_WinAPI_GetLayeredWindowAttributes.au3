@@ -12,7 +12,7 @@ _WinAPI_SetLayeredWindowAttributes($hGui, 0x010101)
 GUISetState(@SW_SHOW)
 
 Local $hGuicontrol = GUICreate("ControlGUI", 300, 400, 100, 100)
-Local $idCheckTrans = GUICtrlCreateCheckbox("Transparente Farbe 0xABCDEF (markiert) OdeR 0x010101", 10, 10)
+Local $idCheckTrans = GUICtrlCreateCheckbox("Transparente Farbe 0xABCDEF (markiert) oder 0x010101", 10, 10)
 Local $idCheckBorder = GUICtrlCreateCheckbox("POPUP-Stil", 10, 30)
 GUICtrlCreateLabel("Transparenz für mehrlagiges GUI", 10, 50)
 Local $idSlTrans = GUICtrlCreateSlider(10, 70, 200, 30)

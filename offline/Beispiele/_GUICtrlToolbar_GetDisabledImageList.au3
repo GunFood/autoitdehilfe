@@ -9,39 +9,39 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $hToolbar, $hNormal, $hDisabled, $hHot
-	Local Enum $idRed = 1000, $idGreen, $idBlue
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("Toolbar", 400, 300)
+	Local $hGUI = GUICreate("Toolbar: Setzt und ermittelt die deaktivierte Imagelist (v" & @AutoItVersion & ")", 520, 300)
 	GUISetBkColor(0xffff00)
-	$hToolbar = _GUICtrlToolbar_Create($hGui)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 36, 396, 262, $WS_VSCROLL)
+	Local $hToolbar = _GUICtrlToolbar_Create($hGUI)
+	$g_idMemo = GUICtrlCreateEdit("", 2, 36, 416, 262, $WS_VSCROLL)
 	GUICtrlSetFont($g_idMemo, 10, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
 
 	; Erstellt eine normale Imagelist
-	$hNormal = _GUIImageList_Create(32, 24)
-	_GUIImageList_Add($hNormal, _WinAPI_CreateSolidBitmap($hGui, 0xFF0000, 32, 24))
-	_GUIImageList_Add($hNormal, _WinAPI_CreateSolidBitmap($hGui, 0x00FF00, 32, 24))
-	_GUIImageList_Add($hNormal, _WinAPI_CreateSolidBitmap($hGui, 0x0000FF, 32, 24))
+	Local $hNormal = _GUIImageList_Create(32, 24)
+	_GUIImageList_Add($hNormal, _WinAPI_CreateSolidBitmap($hGUI, 0xFF0000, 32, 24))
+	_GUIImageList_Add($hNormal, _WinAPI_CreateSolidBitmap($hGUI, 0x00FF00, 32, 24))
+	_GUIImageList_Add($hNormal, _WinAPI_CreateSolidBitmap($hGUI, 0x0000FF, 32, 24))
 	_GUICtrlToolbar_SetImageList($hToolbar, $hNormal)
 
 	; Erstellt eine deaktivierte Imagelist
-	$hDisabled = _GUIImageList_Create(32, 24)
-	_GUIImageList_Add($hDisabled, _WinAPI_CreateSolidBitmap($hGui, 0xCCCCCC, 32, 24))
-	_GUIImageList_Add($hDisabled, _WinAPI_CreateSolidBitmap($hGui, 0xCCCCCC, 32, 24))
-	_GUIImageList_Add($hDisabled, _WinAPI_CreateSolidBitmap($hGui, 0xCCCCCC, 32, 24))
-	_GUICtrlToolbar_SetDisabledImageList($hToolbar, $hDisabled)
+	Local $hDisabled = _GUIImageList_Create(32, 24)
+	_GUIImageList_Add($hDisabled, _WinAPI_CreateSolidBitmap($hGUI, 0xCCCCCC, 32, 24))
+	_GUIImageList_Add($hDisabled, _WinAPI_CreateSolidBitmap($hGUI, 0xCCCCCC, 32, 24))
+	_GUIImageList_Add($hDisabled, _WinAPI_CreateSolidBitmap($hGUI, 0xCCCCCC, 32, 24))
+	Local $hPrevImageList = _GUICtrlToolbar_SetDisabledImageList($hToolbar, $hDisabled)
+	MemoWrite("Vorheriges Handle der deaktivierten Imagelist .: 0x" & Hex($hPrevImageList))
+	MemoWrite("IsPtr = " & IsPtr($hPrevImageList) & " IsHWnd = " & IsHWnd($hPrevImageList))
 
 	; Erstellt eine 'hot' Imagelist
-	$hHot = _GUIImageList_Create(32, 24)
-	_GUIImageList_Add($hHot, _WinAPI_CreateSolidBitmap($hGui, 0x111111, 32, 24))
-	_GUIImageList_Add($hHot, _WinAPI_CreateSolidBitmap($hGui, 0x888888, 32, 24))
-	_GUIImageList_Add($hHot, _WinAPI_CreateSolidBitmap($hGui, 0xAAAAAA, 32, 24))
+	Local $hHot = _GUIImageList_Create(32, 24)
+	_GUIImageList_Add($hHot, _WinAPI_CreateSolidBitmap($hGUI, 0x111111, 32, 24))
+	_GUIImageList_Add($hHot, _WinAPI_CreateSolidBitmap($hGUI, 0x888888, 32, 24))
+	_GUIImageList_Add($hHot, _WinAPI_CreateSolidBitmap($hGUI, 0xAAAAAA, 32, 24))
 	_GUICtrlToolbar_SetHotImageList($hToolbar, $hHot)
 
 	; Fügt die Buttons hinzu
+	Local Enum $idRed = 1000, $idGreen, $idBlue
 	_GUICtrlToolbar_AddButton($hToolbar, $idRed, 0)
 	_GUICtrlToolbar_AddButton($hToolbar, $idGreen, 1)
 	_GUICtrlToolbar_AddButton($hToolbar, $idBlue, 2)

@@ -7,16 +7,14 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $hImage, $hCombo
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("ComboBoxEx: Ermittelt, ob die Standardbenutzeroberfläche oder die erweiterte Benutzeroberfläche verwendet wird", 850, 300)
-	$hCombo = _GUICtrlComboBoxEx_Create($hGui, "", 2, 2, 394, 100)
+	Local $hGUI = GUICreate("ComboBoxEx: Setzt und ermittelt, ob die Standardbenutzeroberfläche oder die erweiterte Benutzeroberfläche verwendet wird (v" & @AutoItVersion & ")", 900, 300)
+	Local $hCombo = _GUICtrlComboBoxEx_Create($hGUI, "", 2, 2, 394, 100)
 	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
 
-	$hImage = _GUIImageList_Create(16, 16, 5, 3)
+	Local $hImage = _GUIImageList_Create(16, 16, 5, 3)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", 110)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", 131)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", 165)

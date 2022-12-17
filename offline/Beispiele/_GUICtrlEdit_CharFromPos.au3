@@ -16,7 +16,7 @@ Func Example()
 
 	$aCharPos = _GUICtrlEdit_CharFromPos($idEdit, $x, $y)
 
-	MsgBox($MB_SYSTEMMODAL, "Information (Alle Werte sind 0-basierend!)", StringFormat("Indes des Zeichens, das dem Punkt [%d,%d] am nächsten liegt: [%2d]", $x, $y, $aCharPos[0]) & @CRLF & _
+	MsgBox($MB_SYSTEMMODAL, "Information (Alle Werte sind 0-basierend!)", StringFormat("Index des Zeichens, das dem Punkt [%d,%d] am nächsten liegt: [%2d]", $x, $y, $aCharPos[0]) & @CRLF & _
 			StringFormat("Zeile, die dem Punkt [%d,%d] am nächsten liegt: [%2d]", $x, $y, $aCharPos[1]))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.

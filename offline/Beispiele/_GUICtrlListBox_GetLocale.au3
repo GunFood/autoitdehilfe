@@ -5,11 +5,9 @@
 Example()
 
 Func Example()
-	Local $idListBox
-
 	; Erstellt eine GUI
-	GUICreate("ListBox: Ermittelt das Gebietsschema", 400, 296)
-	$idListBox = GUICtrlCreateList("", 2, 2, 396, 296)
+	GUICreate("ListBox: Setzt und ermittelt das Gebietsschema (v" & @AutoItVersion & ")", 500, 296)
+	Local $idListBox = GUICtrlCreateList("", 2, 2, 396, 296)
 	GUISetState(@SW_SHOW)
 
 	; Zeigt die Gebietsschema-Einstellung, den Ländercode und die Sprach-Identifizierer an

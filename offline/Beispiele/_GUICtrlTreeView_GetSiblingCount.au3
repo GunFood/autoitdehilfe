@@ -6,19 +6,21 @@
 Example()
 
 Func Example()
-	Local $aidItem[100], $aidChildItem[100], $iRand, $iChildRand, $iYItem, $idTreeView
+	GUICreate("TreeView: Ermittelt die Anzahl von Items, die sich auf der gleichen Ebene befinden (v" & @AutoItVersion & ")", 700, 300)
+
 	Local $iStyle = BitOR($TVS_EDITLABELS, $TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS, $TVS_CHECKBOXES)
-
-	GUICreate("TreeView: Ermittelt die Anzahl von Items, die sich auf der gleichen Ebene befinden", 700, 300)
-
-	$idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
+	Local $idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
 	GUISetState(@SW_SHOW)
 
+	; Setzt das ANSI Format
+;~ 	_GUICtrlTreeView_SetUnicodeFormat($idTreeView, False)
+
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
-	$iRand = Random(2, 9, 1)
+	Local $aidItem[100], $aidChildItem[100], $iRand, $iChildRand, $iYItem
+	$iRand = 6
 	For $x = 0 To $iRand
 		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
-		$iChildRand = Random(0, 9, 1)
+		$iChildRand = 3 ;Random(0, 3, 1)
 		For $y = 0 To $iChildRand
 			$aidChildItem[$iYItem] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $y), $aidItem[$x])
 			$iYItem += 1
@@ -26,12 +28,13 @@ Func Example()
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)
 
-	$iRand = Random(0, 9)
+	$iRand = 5 ;Random(0, 9)
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Items auf der gleichen Ebene wie Item Index %d: %d", $iRand, _GUICtrlTreeView_GetSiblingCount($idTreeView, $aidItem[$iRand])))
 
-	$iRand = Random(0, 99)
+	$iRand = 7 ;Random(0, 12)
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Items auf der gleichen Ebene wie Item Index %d: %d", $iRand, _GUICtrlTreeView_GetSiblingCount($idTreeView, $aidChildItem[$iRand])))
 	_GUICtrlTreeView_Expand($idTreeView, _GUICtrlTreeView_GetParentHandle($idTreeView, $aidChildItem[$iRand]))
+	_GUICtrlTreeView_SelectItem($idTreeView, $aidChildItem[$iRand])
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

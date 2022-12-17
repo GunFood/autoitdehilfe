@@ -26,9 +26,11 @@ Func _Example_Defaults()
 		Switch GUIGetMsg()
 			Case $id_Dialog
 				$aFile = _WinAPI_GetSaveFileName() ; Standard
-				If $aFile[0] = 0 Then
+				If @error Then
+					Local $iError = @error
+					Local $iExtended = @extended
 					$sError = _WinAPI_CommDlgExtendedError()
-					MemoWrite("CommDlgExtendedError (" & @error & "): " & $sError)
+					MemoWrite("CommDlgExtendedError (" & $iError & "/" & $iExtended & "): " & $sError)
 				Else
 					For $x = 1 To $aFile[0]
 						MemoWrite($aFile[$x])
@@ -57,9 +59,11 @@ Func _Example_ExplorerStyle()
 				$aFile = _WinAPI_GetSaveFileName("Mein Datei-Speichern-Dialog", _
 						"Textdatei (*.txt)|AutoIt-Datei (*.au3)", ".", _
 						"", "au3", 2, 0, 0, $hGui)
-				If $aFile[0] = 0 Then
+				If @error Then
+					Local $iError = @error
+					Local $iExtended = @extended
 					$sError = _WinAPI_CommDlgExtendedError()
-					MemoWrite("CommDlgExtendedError (" & @error & "): " & $sError)
+					MemoWrite("CommDlgExtendedError (" & $iError & "/" & $iExtended & "): " & $sError)
 				Else
 					For $x = 1 To $aFile[0]
 						MemoWrite($aFile[$x])
@@ -88,9 +92,11 @@ Func _Example_OldStyle()
 				$aFile = _WinAPI_GetSaveFileName("Mein Datei-Speichern-Dialog", _
 						"Textdatei (*.txt)|AutoIt-Datei (*.au3)", ".", "", _
 						"", 2, $OFN_ALLOWMULTISELECT, 0, $hGui)
-				If $aFile[0] = 0 Then
+				If @error Then
+					Local $iError = @error
+					Local $iExtended = @extended
 					$sError = _WinAPI_CommDlgExtendedError()
-					MemoWrite("CommDlgExtendedError (" & @error & "): " & $sError)
+					MemoWrite("CommDlgExtendedError (" & $iError & "/" & $iExtended & "): " & $sError)
 				Else
 					For $x = 1 To $aFile[0]
 						MemoWrite($aFile[$x])
@@ -119,9 +125,11 @@ Func _Example_ExplorerStyle_NoPlaceBar()
 				$aFile = _WinAPI_GetSaveFileName("Mein Datei-Speichern-Dialog", _
 						"Textdatei (*.txt)|AutoIt-Datei (*.au3)", ".", "", _
 						"", 2, 0, $OFN_EX_NOPLACESBAR, $hGui)
-				If $aFile[0] = 0 Then
+				If @error Then
+					Local $iError = @error
+					Local $iExtended = @extended
 					$sError = _WinAPI_CommDlgExtendedError()
-					MemoWrite("CommDlgExtendedError (" & @error & "): " & $sError)
+					MemoWrite("CommDlgExtendedError (" & $iError & "/" & $iExtended & "): " & $sError)
 				Else
 					For $x = 1 To $aFile[0]
 						MemoWrite($aFile[$x])

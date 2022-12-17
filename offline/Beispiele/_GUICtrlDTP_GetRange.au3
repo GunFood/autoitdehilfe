@@ -6,11 +6,9 @@ Global $g_idMemo, $g_aRange[14] = [True, @YEAR, 1, 1, 21, 45, 32, True, @YEAR, 1
 Example()
 
 Func Example()
-	Local $hDTP
-
 	; Erstellt eine GUI
-	GUICreate("DateTimePick: Ermittelt den Bereich", 400, 300)
-	$hDTP = GUICtrlGetHandle(GUICtrlCreateDate("", 2, 6, 190))
+	GUICreate("DateTimePick: Setzt und ermittelt den Bereich (v" & @AutoItVersion & ")", 500, 300)
+	Local $hDTP = GUICtrlGetHandle(GUICtrlCreateDate("", 2, 6, 190))
 	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
@@ -23,7 +21,7 @@ Func Example()
 
 	; Zeigt den Datumsbereich an
 	$g_aRange = _GUICtrlDTP_GetRange($hDTP)
-	MemoWrite("Minimales Datum: " & GetDateStr())
+	MemoWrite("Minimales Datum: " & GetDateStr(0))
 	MemoWrite("Maximales Datum: " & GetDateStr(7))
 	MemoWrite("Minimale Zeit .: " & GetTimeStr(4))
 	MemoWrite("Maximale Zeit .: " & GetTimeStr(11))

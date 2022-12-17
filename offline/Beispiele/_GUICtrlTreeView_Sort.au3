@@ -8,15 +8,16 @@ Global $g_hImage, $g_hStateImage
 Example()
 
 Func Example()
-	Local $aidItem[10], $iX = 9, $iY = 29, $idTreeView
-	Local $iStyle = BitOR($TVS_EDITLABELS, $TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS)
-
 	GUICreate("TreeView: Sortieren", 400, 300)
+
+	Local $iStyle = BitOR($TVS_EDITLABELS, $TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS)
+	Local $idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
 
 	$idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
 	GUISetState(@SW_SHOW)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
+	Local $aidItem[10], $iX = 9, $iY = 29
 	For $x = 0 To 9
 		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $iX), $idTreeView)
 		$iX -= 1

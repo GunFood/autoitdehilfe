@@ -8,15 +8,17 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $hToolbar, $bUnicode
 	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
 
 	; Erstellt eine GUI
-	$hGui = GUICreate("Toolbar", 400, 300)
-	$hToolbar = _GUICtrlToolbar_Create($hGui)
+	Local $hGUI = GUICreate("Toolbar (v" & @AutoItVersion & ")", 400, 300)
+	Local $hToolbar = _GUICtrlToolbar_Create($hGUI)
 	$g_idMemo = GUICtrlCreateEdit("", 2, 36, 396, 262, $WS_VSCROLL)
 	GUICtrlSetFont($g_idMemo, 10, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
+
+	; Setzt das ANSI Format
+;~     _GUICtrlToolbar_SetUnicodeFormat($hToolbar, False)
 
 	; Fügt die Standard Systembitmaps hinzu
 	Switch _GUICtrlToolbar_GetBitmapFlags($hToolbar)
@@ -34,7 +36,7 @@ Func Example()
 	_GUICtrlToolbar_AddButton($hToolbar, $idHelp, $STD_HELP)
 
 	; Zeigt das Unicode Format
-	$bUnicode = _GUICtrlToolbar_GetUnicodeFormat($hToolbar)
+	Local $bUnicode = _GUICtrlToolbar_GetUnicodeFormat($hToolbar)
 	MemoWrite("Unicode format .: " & $bUnicode)
 
 	; Ändert das Unicode Format

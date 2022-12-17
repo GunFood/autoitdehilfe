@@ -7,11 +7,9 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $tRange, $idMonthCal
-
 	; Erstellt eine GUI
-	GUICreate("MonthCal: ermittelt das minimal und maximal erlaubte Datum", 550, 300)
-	$idMonthCal = GUICtrlCreateMonthCal("", 4, 4, -1, -1, BitOR($WS_BORDER, $MCS_MULTISELECT), 0x00000000)
+	GUICreate("MonthCal: Setzt und ermittelt das minimal und maximal erlaubte Datum (v" & @AutoItVersion & ")", 700, 300)
+	Local $idMonthCal = GUICtrlCreateMonthCal("", 4, 4, -1, -1, BitOR($WS_BORDER, $MCS_MULTISELECT), 0x00000000)
 
 	; Erstellt ein Memo Control
 	$g_idMemo = GUICtrlCreateEdit("", 4, 168, 392, 128, 0)
@@ -20,7 +18,7 @@ Func Example()
 
 	; Ermittelt/Setzt das minimal und maximal erlaubte Datum
 	_GUICtrlMonthCal_SetRange($idMonthCal, @YEAR, 1, 1, @YEAR, 12, 31)
-	$tRange = _GUICtrlMonthCal_GetRange($idMonthCal)
+	Local $tRange = _GUICtrlMonthCal_GetRange($idMonthCal)
 	MemoWrite("minimal auswählbares Datum: " & StringFormat("%02d/%02d/%04d", DllStructGetData($tRange, "MinMonth"), _
 			DllStructGetData($tRange, "MinDay"), _
 			DllStructGetData($tRange, "MinYear")))

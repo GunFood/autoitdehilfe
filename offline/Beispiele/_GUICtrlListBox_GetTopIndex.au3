@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	; Erstellt eine GUI
-	GUICreate("List Box: Setzt und ermittelt den Index des ersten sichtbaren Items (v" & @AutoItVersion & ")", 400, 296)
+	GUICreate("List Box: Setzt und ermittelt den Index des ersten sichtbaren Items (v" & @AutoItVersion & ")", 600, 296)
 	Local $idListBox = GUICtrlCreateList("", 2, 2, 396, 296)
 	GUISetState(@SW_SHOW)
 

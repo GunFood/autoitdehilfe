@@ -6,16 +6,15 @@
 Example()
 
 Func Example()
-	Local $idItem, $idTreeView
+	GUICreate("TreeView: Ermittelt die Anzahl (v" & @AutoItVersion & ")", 400, 300)
+
 	Local $iStyle = BitOR($TVS_EDITLABELS, $TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS, $TVS_CHECKBOXES)
-
-	GUICreate("TreeView: Ermittelt die Anzahl", 400, 300)
-
-	$idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
+	Local $idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
 	GUISetState(@SW_SHOW)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
-	For $x = 0 To Random(10, 20, 1)
+	Local $idItem
+	For $x = 0 To 15
 		$idItem = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
 		For $y = 0 To 2
 			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $y), $idItem)

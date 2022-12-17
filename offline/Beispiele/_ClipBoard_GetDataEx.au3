@@ -1,3 +1,5 @@
+; == Besipiel 1 verwendet _ClipBoard_SetData()
+
 #include <Clipboard.au3>
 #include <GUIConstantsEx.au3>
 #include <WinAPIError.au3>
@@ -8,17 +10,16 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $id_SetData, $id_GetData, $hMemory, $tData
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("Zwischenablage", 600, 450)
+	Local $hGUI = GUICreate("Zwischenablage: Setzt und ermittelt DataEx (v" & @AutoItVersion & ")", 600, 450)
 	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 596, 396, $WS_VSCROLL)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
-	$id_SetData = GUICtrlCreateButton("Schreibt Daten in die Zwischenablage", 50, 410, 220, 30)
-	$id_GetData = GUICtrlCreateButton("Holt Daten aus der Zwischenablage", 300, 410, 220, 30)
+	Local $id_SetData = GUICtrlCreateButton("Schreibt Daten in die Zwischenablage", 50, 410, 220, 30)
+	Local $id_GetData = GUICtrlCreateButton("Holt Daten aus der Zwischenablage", 300, 410, 220, 30)
 	GUISetState(@SW_SHOW)
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
+	Local $hMemory, $tData
 	While 1
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE
@@ -27,7 +28,7 @@ Func Example()
 				_ClipBoard_SetData("ClipBoard Testdaten")
 			Case $id_GetData
 				; Öffnet die Zwischenablage
-				If _ClipBoard_Open($hGui) Then
+				If _ClipBoard_Open($hGUI) Then
 
 					; Liest Text aus der Zwischenablage
 					$hMemory = _ClipBoard_GetDataEx($CF_TEXT)

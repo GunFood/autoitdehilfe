@@ -7,14 +7,12 @@
 Example()
 
 Func Example()
-	Local $hGui, $hImage, $hCombo
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("ComboBoxEx: Ermittelt den Index des momentan markierten Items", 500, 300)
-	$hCombo = _GUICtrlComboBoxEx_Create($hGui, "", 2, 2, 394, 100, BitOR($CBS_SIMPLE, $WS_VSCROLL, $WS_BORDER))
+	Local $hGUI = GUICreate("ComboBoxEx: Setzt und ermittelt den Index des momentan markierten Items (v" & @AutoItVersion & ")", 700, 300)
+	Local $hCombo = _GUICtrlComboBoxEx_Create($hGUI, "", 2, 2, 394, 100, BitOR($CBS_SIMPLE, $WS_VSCROLL, $WS_BORDER))
 	GUISetState(@SW_SHOW)
 
-	$hImage = _GUIImageList_Create(16, 16, 5, 3)
+	Local $hImage = _GUIImageList_Create(16, 16, 5, 3)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", 110)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", 131)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", 165)
@@ -30,7 +28,7 @@ Func Example()
 
 	_GUICtrlComboBoxEx_BeginUpdate($hCombo)
 	For $x = 0 To 99
-		_GUICtrlComboBoxEx_AddString($hCombo, StringFormat("%03d : Zufallsstring", $x), Random(0, 8, 1), Random(0, 8, 1), Random(0, 8, 1))
+		_GUICtrlComboBoxEx_AddString($hCombo, StringFormat("%03d : Zufallstring", $x), Random(0, 8, 1), Random(0, 8, 1), Random(0, 8, 1))
 	Next
 	_GUICtrlComboBoxEx_EndUpdate($hCombo)
 

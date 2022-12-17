@@ -7,12 +7,11 @@ Global $g_idLblMsg, $g_hRichEdit
 Example()
 
 Func Example()
-	Local $hGui, $iMsg, $idBtnNext, $iStep = 0
-	$hGui = GUICreate("Beispiel (" & StringTrimRight(@ScriptName, 4) & ")", 320, 350, -1, -1)
-	$g_hRichEdit = _GUICtrlRichEdit_Create($hGui, "", 10, 10, 300, 220, _
+	Local $hGui = GUICreate("RichEdit: Setzt und ermittelt ide Scrollposition (v" & @AutoItVersion & ")", 460, 350, -1, -1)
+	$g_hRichEdit = _GUICtrlRichEdit_Create($hGui, "", 10, 10, 340, 220, _
 			BitOR($ES_MULTILINE, $WS_VSCROLL, $ES_AUTOVSCROLL))
 	$g_idLblMsg = GUICtrlCreateLabel("", 10, 235, 300, 60)
-	$idBtnNext = GUICtrlCreateButton("Weiter", 270, 310, 40, 30)
+	Local $idBtnNext = GUICtrlCreateButton("Weiter", 270, 310, 40, 30)
 	GUISetState(@SW_SHOW)
 
 	_GUICtrlRichEdit_SetText($g_hRichEdit, "Absatz 1")
@@ -21,6 +20,7 @@ Func Example()
 	Next
 	Report("0. Zuerst ans Ende verschoben, um den Einfügepunkt zu zeigen")
 
+	Local $iMsg, $iStep = 0
 	While True
 		$iMsg = GUIGetMsg()
 		Select

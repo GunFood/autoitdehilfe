@@ -6,16 +6,15 @@
 Example()
 
 Func Example()
-	Local $hStatusBar, $idEdit, $hGui
 	Local $sWow64 = ""
 	If @AutoItX64 Then $sWow64 = "\Wow6432Node"
 	Local $sFile = RegRead("HKEY_LOCAL_MACHINE\SOFTWARE" & $sWow64 & "\AutoIt v3\AutoIt", "InstallDir") & "\include\changelog.txt"
 	Local $aPartRightSide[3] = [190, 378, -1], $aMargins
 
 	; Erstellt eine GUI
-	$hGui = GUICreate("Edit: Ermittelt die Ränder", 400, 300)
-	$idEdit = GUICtrlCreateEdit("", 2, 2, 394, 268, BitOR($ES_WANTRETURN, $WS_VSCROLL))
-	$hStatusBar = _GUICtrlStatusBar_Create($hGui, $aPartRightSide)
+	Local $hGUI = GUICreate("Edit: Setzt und ermittelt die Ränder (v" & @AutoItVersion & ")", 500, 300)
+	Local $idEdit = GUICtrlCreateEdit("", 2, 2, 394, 268, BitOR($ES_WANTRETURN, $WS_VSCROLL))
+	Local $hStatusBar = _GUICtrlStatusBar_Create($hGUI, $aPartRightSide)
 	_GUICtrlStatusBar_SetIcon($hStatusBar, 2, 97, "shell32.dll")
 	GUISetState(@SW_SHOW)
 

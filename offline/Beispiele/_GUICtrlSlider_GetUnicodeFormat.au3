@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	; Erstellt eine GUI
-	GUICreate("Slider: Setzt und ermittelt das Unicode Format (v" & @AutoItVersion & ")", 400, 296)
+	GUICreate("Slider: Setzt und ermittelt das Unicode Format (v" & @AutoItVersion & ")", 500, 296)
 	Local $idSlider = GUICtrlCreateSlider(2, 2, 396, 20, BitOR($TBS_TOOLTIPS, $TBS_AUTOTICKS, $TBS_ENABLESELRANGE))
 	GUISetState(@SW_SHOW)
 

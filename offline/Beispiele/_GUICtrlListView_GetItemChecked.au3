@@ -5,29 +5,30 @@
 Example()
 
 Func Example()
-	Local $idListView
-
-	GUICreate("ListView: Ermittelt den Status, ob das Item angehakt ist oder nicht", 400, 300)
-	$idListView = GUICtrlCreateListView("", 2, 2, 394, 268)
-	_GUICtrlListView_SetExtendedListViewStyle($idListView, BitOR($LVS_EX_FULLROWSELECT, $LVS_EX_CHECKBOXES))
+	GUICreate("ListView: Setzt den angehakt-Status und ermittelt den Status, ob das Item angehakt ist oder nicht (v" & @AutoItVersion & ")", 800, 300)
+	Local $idListview = GUICtrlCreateListView("", 2, 2, 394, 268)
+	_GUICtrlListView_SetExtendedListViewStyle($idListview, BitOR($LVS_EX_FULLROWSELECT, $LVS_EX_CHECKBOXES))
 	GUISetState(@SW_SHOW)
 
+	; Setzt das ANSI Format
+;~     _GUICtrlListView_SetUnicodeFormat($idListview, False)
+
 	; Fügt die Spalten hinzu
-	_GUICtrlListView_AddColumn($idListView, "Spalte 1", 100)
-	_GUICtrlListView_AddColumn($idListView, "Spalte 2", 100)
-	_GUICtrlListView_AddColumn($idListView, "Spalte 3", 100)
+	_GUICtrlListView_AddColumn($idListview, "Spalte 0", 120)
+	_GUICtrlListView_AddColumn($idListview, "Spalte 1", 120)
+	_GUICtrlListView_AddColumn($idListview, "Spalte 2", 120)
 
 	; Fügt die Items hinzu
-	_GUICtrlListView_AddItem($idListView, "Zeile 1: Spalte 1", 0)
-	_GUICtrlListView_AddSubItem($idListView, 0, "Zeile 1: Spalte 2", 1)
-	_GUICtrlListView_AddSubItem($idListView, 0, "Zeile 1: Spalte 3", 2)
-	_GUICtrlListView_AddItem($idListView, "Zeile 2: Spalte 1", 1)
-	_GUICtrlListView_AddSubItem($idListView, 1, "Zeile 2: Spalte 2", 1)
-	_GUICtrlListView_AddItem($idListView, "Zeile 3: Spalte 1", 2)
+	_GUICtrlListView_AddItem($idListview, "Zeile 0: Spalte 0", 0)
+	_GUICtrlListView_AddSubItem($idListview, 0, "Zeile 0: Spalte 1", 1)
+	_GUICtrlListView_AddSubItem($idListview, 0, "Zeile 0: Spalte 2", 2)
+	_GUICtrlListView_AddItem($idListview, "Zeile 1: Spalte 0", 1)
+	_GUICtrlListView_AddSubItem($idListview, 1, "Zeile 1: Spalte 1", 1)
+	_GUICtrlListView_AddItem($idListview, "Zeile 2: Spalte 0", 2)
 
-	; Hakt Item 2 an
-	_GUICtrlListView_SetItemChecked($idListView, 1)
-	MsgBox($MB_SYSTEMMODAL, "Information", "Item 2 angehakt: " & _GUICtrlListView_GetItemChecked($idListView, 1))
+	; Hakt Item 1 an
+	_GUICtrlListView_SetItemChecked($idListview, 1)
+	MsgBox($MB_SYSTEMMODAL, "Information", "Item 1 angehakt: " & _GUICtrlListView_GetItemChecked($idListview, 1))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

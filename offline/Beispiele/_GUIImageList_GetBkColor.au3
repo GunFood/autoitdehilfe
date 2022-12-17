@@ -7,16 +7,15 @@
 Example()
 
 Func Example()
-	Local $idListview, $hImage
-	Local $iStylesEx = BitOR($LVS_EX_GRIDLINES, $LVS_EX_FULLROWSELECT, $LVS_EX_SUBITEMIMAGES)
+	GUICreate("ImageList: Setzt und ermittel die aktuelle Hintergrundfarbe (v" & @AutoItVersion & ")", 600, 300)
+	Local $idListview = GUICtrlCreateListView("", 2, 2, 394, 268, BitOR($LVS_SHOWSELALWAYS, $LVS_NOSORTHEADER, $LVS_REPORT))
 
-	GUICreate("ImageList: aktuelle Hintergrundfarbe für eine Imagelist ermitteln", 400, 300)
-	$idListview = GUICtrlCreateListView("", 2, 2, 394, 268, BitOR($LVS_SHOWSELALWAYS, $LVS_NOSORTHEADER, $LVS_REPORT))
+	Local $iStylesEx = BitOR($LVS_EX_GRIDLINES, $LVS_EX_FULLROWSELECT, $LVS_EX_SUBITEMIMAGES)
 	_GUICtrlListView_SetExtendedListViewStyle($idListview, $iStylesEx)
 	GUISetState(@SW_SHOW)
 
 	; Lädt die Bilder
-	$hImage = _GUIImageList_Create(16, 16, 5, 3)
+	Local $hImage = _GUIImageList_Create(16, 16, 5, 3)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", 110)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", 131)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", 165)
@@ -31,8 +30,8 @@ Func Example()
 
 	; Fügt die Spalten hinzu
 	_GUICtrlListView_AddColumn($idListview, "Spalte 1", 120)
-	_GUICtrlListView_AddColumn($idListview, "Spalte 2", 100)
-	_GUICtrlListView_AddColumn($idListview, "Spalte 3", 100)
+	_GUICtrlListView_AddColumn($idListview, "Spalte 2", 120)
+	_GUICtrlListView_AddColumn($idListview, "Spalte 3", 120)
 
 	; Fügt die Items hinzu
 	_GUICtrlListView_AddItem($idListview, "Zeile 1: Spalte 1", 0)

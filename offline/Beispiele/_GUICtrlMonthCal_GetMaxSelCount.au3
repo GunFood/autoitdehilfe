@@ -8,7 +8,7 @@ Example()
 
 Func Example()
 	; Erstellt eine GUI
-	GUICreate("MonthCal: Setzt und ermittelt den maximal markierbaren Datumsbereich (v" & @AutoItVersion & ")", 420, 300)
+	GUICreate("MonthCal: Setzt und ermittelt den maximal markierbaren Datumsbereich (v" & @AutoItVersion & ")", 620, 300)
 	Local $idMonthCal = GUICtrlCreateMonthCal("", 4, 4, -1, -1, BitOR($WS_BORDER, $MCS_MULTISELECT), 0x00000000)
 
 	; Erstellt ein Memo Control

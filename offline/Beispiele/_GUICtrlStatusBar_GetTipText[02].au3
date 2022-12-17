@@ -1,3 +1,5 @@
+; == Beispiel 2 direkte Verwendung der Symboldatei
+
 #include <GUIConstantsEx.au3>
 #include <GuiStatusBar.au3>
 #include <WindowsConstants.au3>
@@ -7,12 +9,9 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $hStatus
-	Local $aParts[4] = [75, 150, 300, 400]
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("(Beispiel 2) StatusBar: Ermittelt den Tiptext", 400, 300)
-	$hStatus = _GUICtrlStatusBar_Create($hGui, -1, "", $SBARS_TOOLTIPS)
+	Local $hGUI = GUICreate("StatusBar: Ermittelt den Tiptext (v" & @AutoItVersion & ")", 400, 300)
+	Local $hStatus = _GUICtrlStatusBar_Create($hGUI, -1, "", $SBARS_TOOLTIPS)
 
 	; Erstellt ein Memo Control
 	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 396, 274, $WS_VSCROLL)
@@ -20,6 +19,7 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	; Setzt die Abschnitte
+	Local $aParts[4] = [75, 150, 300, 400]
 	_GUICtrlStatusBar_SetParts($hStatus, $aParts)
 	_GUICtrlStatusBar_SetText($hStatus, "Erzwungene Tips werden anzeigt, wenn der Text nicht in die Box passt", 1)
 
@@ -33,8 +33,8 @@ Func Example()
 	MemoWrite("Den Mauszeiger über den Abschnitten halten, um den Tipp anzuzeigen." & @CRLF)
 
 	; Zeigt den Tiptext
-	MemoWrite("Tiptext 1 .: " & _GUICtrlStatusBar_GetTipText($hStatus, 0) & @CRLF)
-	MemoWrite("Tiptext 2 .: " & _GUICtrlStatusBar_GetTipText($hStatus, 1))
+	MemoWrite("Tiptext 0 .: " & _GUICtrlStatusBar_GetTipText($hStatus, 0) & @CRLF)
+	MemoWrite("Tiptext 1 .: " & _GUICtrlStatusBar_GetTipText($hStatus, 1))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

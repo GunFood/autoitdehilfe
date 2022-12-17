@@ -7,11 +7,14 @@ Example() ; Ein ListView Control erstellt mit der ListView UDF.
 Func Example()
 	Local $aItems[10][3]
 
-	Local $hGUI = GUICreate("ListView: Löscht alle Items (UDF)", 400, 300)
+	Local $hGUI = GUICreate("(UDF) ListView: Löscht alle Items (v" & @AutoItVersion & ")", 400, 300)
 	Local $hListView = _GUICtrlListView_Create($hGUI, "Spalte1|Spalte2|Spalte3", 2, 2, 394, 268)
 
 	; Zeigt die GUI
 	GUISetState(@SW_SHOW)
+
+	; Setzt das ANSI Format
+;~     _GUICtrlListView_SetUnicodeFormat($hListView, False)
 
 	; 3 Spalten laden
 	For $iI = 0 To UBound($aItems) - 1
@@ -33,4 +36,4 @@ Func Example()
 
 	; Löscht die GUI und alle Controls
 	GUIDelete()
-EndFunc   ;==>Example_UDF_Created
+EndFunc   ;==>Example

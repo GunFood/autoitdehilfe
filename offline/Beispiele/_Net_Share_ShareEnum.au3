@@ -3,7 +3,7 @@
 #include <NetShare.au3>
 #include <WindowsConstants.au3>
 
-#RequireAdmin ; wird für _Net_Share_ShareAdd() benötigt
+#RequireAdmin ; wird für _Net_Share_ShareAdd() benötigt, falls erforderlich
 
 Global $g_idMemo
 
@@ -12,6 +12,7 @@ Example()
 Func Example()
 	Local $iI, $aInfo
 	Local Const $sShareName = "AutoIt Share"
+	Local Const $sResourcePath = "C:\"
 
 	; Erstellt eine GUI
 	GUICreate("NetShare", 400, 300)
@@ -21,10 +22,11 @@ Func Example()
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
 
+	Local $bShareAdded = False
 	; Prüfen, ob die Freigabe existiert
-	If _Net_Share_ShareCheck(@ComputerName, $sShareName) = -1 Then
+	If _Net_Share_ShareCheck(@ComputerName, $sResourcePath) = -1 Then
 		; Eine Freigabe auf dem lokalen Computer erstellen
-		_Net_Share_ShareAdd(@ComputerName, $sShareName, 0, "C:\", "AutoIt Share Comment")
+		$bShareAdded = _Net_Share_ShareAdd(@ComputerName, $sShareName, 0, $sResourcePath, "AutoIt Share Comment")
 		If @error Then MsgBox($MB_SYSTEMMODAL, "Information", "Fehler beim Hinzufügen der Freigabe : " & @error)
 		MemoWrite("Freigabe hinzugefügt")
 	Else
@@ -46,10 +48,12 @@ Func Example()
 		MemoWrite()
 	Next
 
-	; Freigabe entfernen
-	_Net_Share_ShareDel(@ComputerName, $sShareName)
-	If @error Then MsgBox($MB_SYSTEMMODAL, "Information", "Fehler beim Entfernen der Freigabe : " & @error)
-	MemoWrite("Freigabe entfernt")
+	If $bShareAdded Then
+		; Freigabe entfernen
+		_Net_Share_ShareDel(@ComputerName, $sShareName)
+		If @error Then MsgBox($MB_SYSTEMMODAL, "Information", "Fehler beim Entfernen der Freigabe : " & @error)
+		MemoWrite("Freigabe entfernt")
+	EndIf
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

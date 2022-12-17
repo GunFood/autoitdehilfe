@@ -5,19 +5,21 @@
 Example()
 
 Func Example()
-	Local $hGUI, $hHandleBefore, $hStatus
-	Local $aParts[3] = [75, 150, -1]
-
 	; Erstellt eine GUI
-	$hGUI = GUICreate("StatusBar: Löschen", 400, 300)
+	Local $hGUI = GUICreate("StatusBar: Löschen (v" & @AutoItVersion & ")", 400, 300)
 
 	; Standard ist 1 Abschnitt und kein Text
-	$hStatus = _GUICtrlStatusBar_Create($hGUI)
+	Local $hStatus = _GUICtrlStatusBar_Create($hGUI)
+
+	Local $aParts[3] = [75, 150, -1]
 	_GUICtrlStatusBar_SetParts($hStatus, $aParts)
+	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 0")
+	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 1", 1)
+	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 2", 2)
 
 	GUISetState(@SW_SHOW)
 
-	$hHandleBefore = $hStatus
+	Local $hHandleBefore = $hStatus
 	MsgBox($MB_SYSTEMMODAL, "Information", "Das Control des folgenden Handles wird gelöscht: " & $hStatus)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Control gelöscht: " & _GUICtrlStatusBar_Destroy($hStatus) & @CRLF & _
 			"Handle vor dem löschen: " & $hHandleBefore & @CRLF & _

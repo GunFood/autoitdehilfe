@@ -7,13 +7,11 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $aInfo, $hStatus
-	Local $aParts[3] = [75, 150, -1]
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("StatusBar: Ränder ermitteln", 400, 300)
+	Local $hGUI = GUICreate("StatusBar: Ränder ermitteln (v" & @AutoItVersion & ")", 400, 300)
 
-	$hStatus = _GUICtrlStatusBar_Create($hGui)
+	Local $hStatus = _GUICtrlStatusBar_Create($hGUI)
+	Local $aParts[3] = [75, 150, -1]
 	_GUICtrlStatusBar_SetParts($hStatus, $aParts)
 
 	; Erstellt ein Memo Control
@@ -22,7 +20,7 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	; Ermittelt die aktuelle Breite des horizontalen und vertikalen Randes
-	$aInfo = _GUICtrlStatusBar_GetBorders($hStatus)
+	Local $aInfo = _GUICtrlStatusBar_GetBorders($hStatus)
 	MemoWrite("Breite des horizontalen Randes ...........: " & $aInfo[0])
 	MemoWrite("Breite des vertikalen Randes .............: " & $aInfo[1])
 	MemoWrite("Breite des Randes zwischen den Rechtecken : " & $aInfo[2])

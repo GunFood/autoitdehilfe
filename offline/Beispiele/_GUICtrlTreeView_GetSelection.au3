@@ -6,15 +6,14 @@
 Example()
 
 Func Example()
-	Local $aidItem[10], $iRand, $idTreeView
+	GUICreate("TreeView: Ermittelt das Handle des markierten Items (v" & @AutoItVersion & ")", 500, 300)
+
 	Local $iStyle = BitOR($TVS_EDITLABELS, $TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS, $TVS_CHECKBOXES)
-
-	GUICreate("TreeView: Ermittelt das Handle des markierten Items", 400, 300)
-
-	$idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
+	Local $idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
 	GUISetState(@SW_SHOW)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
+	Local $aidItem[10]
 	For $x = 0 To 9
 		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
 		For $y = 1 To Random(2, 10, 1)
@@ -23,7 +22,7 @@ Func Example()
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)
 
-	$iRand = Random(0, 9, 1)
+	Local $iRand = Random(0, 9, 1)
 	_GUICtrlTreeView_SelectItem($idTreeView, $aidItem[$iRand])
 	MsgBox($MB_SYSTEMMODAL, "Information", "Handle des markierten Items: " & _GUICtrlTreeView_GetSelection($idTreeView))
 

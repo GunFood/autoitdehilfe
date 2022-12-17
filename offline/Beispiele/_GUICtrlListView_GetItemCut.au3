@@ -7,7 +7,7 @@ Example()
 Func Example()
 	Local $idListView
 
-	GUICreate("ListView: Setzt und ermittelt, ob das Item dargestellt wird, als wäre es in einer Ausschneide Operation", 400, 300)
+	GUICreate("ListView: Setzt und ermittelt, ob das Item dargestellt wird, als wäre es in einer Ausschneide Operation", 700, 300)
 	$idListView = GUICtrlCreateListView("", 2, 2, 394, 268)
 	GUISetState(@SW_SHOW)
 

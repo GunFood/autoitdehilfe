@@ -1,6 +1,6 @@
 #include <FTPEx.au3>
 
-Local $sServer = 'ftp.csx.cam.ac.uk'
+Local $sServer = 'speedtest.tele2.net'
 Local $sUsername = ''
 Local $sPass = ''
 

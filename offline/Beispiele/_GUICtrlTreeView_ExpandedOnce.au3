@@ -6,15 +6,14 @@
 Example()
 
 Func Example()
-	Local $aidItem[5], $idTreeView
+	GUICreate("TreeView: Wurde die Itemliste der Child-Items mindestens einmal aufgeklappt? (v" & @AutoItVersion & ")", 700, 300)
+
 	Local $iStyle = BitOR($TVS_EDITLABELS, $TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS, $TVS_CHECKBOXES)
-
-	GUICreate("TreeView: Wurde die Itemliste der Child-Items mindestens einmal aufgeklappt?", 600, 300)
-
-	$idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
+	Local $idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
 	GUISetState(@SW_SHOW)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
+	Local $aidItem[5]
 	For $x = 0 To 4
 		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
 		For $y = 0 To 2

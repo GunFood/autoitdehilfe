@@ -26,24 +26,24 @@ Func Example()
 	_GUICtrlHeader_SetImageList($hHeader, $hImage)
 
 	; Fügt die Spalten hinzu
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 1", 100, 0, 0)
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 2", 100, 0, 1)
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 3", 100, 0, 2)
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 4", 100)
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 0", 100, 0, 0)
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 1", 100, 0, 1)
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 2", 100, 0, 2)
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 3", 100)
 
-	; Setzt das Format von Spalte 1
+	; Setzt das Format von Spalte 0
 	_GUICtrlHeader_SetItemFormat($hHeader, 0, BitOR($HDF_CENTER, $HDF_STRING))
 
-	; Zeigt das Format von Spalte 1
-	MemoWrite("Format von Spalte 1: " & "0x" & Hex(_GUICtrlHeader_GetItemFormat($hHeader, 0)))
+	; Zeigt das Format von Spalte 0
+	MemoWrite("Format von Spalte 0: " & "0x" & Hex(_GUICtrlHeader_GetItemFormat($hHeader, 0)))
 
 	Sleep(1000)
 
-	; Setzt das Format von Spalte 1 zurück
+	; Setzt das Format von Spalte 0 zurück
 	_GUICtrlHeader_SetItemFormat($hHeader, 0, BitOR($HDF_LEFT, $HDF_STRING, $HDF_IMAGE))
 
-	; Zeigt das Format von Spalte 1
-	MemoWrite("Format von Spalte 1: " & "0x" & Hex(_GUICtrlHeader_GetItemFormat($hHeader, 0)))
+	; Zeigt das Format von Spalte 0
+	MemoWrite("Format von Spalte 0: " & "0x" & Hex(_GUICtrlHeader_GetItemFormat($hHeader, 0)))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

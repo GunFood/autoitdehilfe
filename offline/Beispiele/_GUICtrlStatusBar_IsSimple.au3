@@ -7,13 +7,11 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $hStatus
-	Local $aParts[3] = [75, 150, -1]
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("StatusBar: Einfacher Modus aktiv?", 400, 300)
+	Local $hGUI = GUICreate("StatusBar: Einfacher Modus aktiv? bzw. setzt den einfachen Modus (v" & @AutoItVersion & ")", 600, 300)
 
-	$hStatus = _GUICtrlStatusBar_Create($hGui)
+	Local $hStatus = _GUICtrlStatusBar_Create($hGUI)
+	Local $aParts[3] = [75, 150, -1]
 	_GUICtrlStatusBar_SetParts($hStatus, $aParts)
 
 	; Erstellt ein Memo Control

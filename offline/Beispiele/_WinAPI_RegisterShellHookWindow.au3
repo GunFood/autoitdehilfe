@@ -3,10 +3,10 @@
 
 Opt('TrayAutoPause', 0)
 
-OnAutoItExitRegister('OnAutoItExit')
+OnAutoItExitRegister(OnAutoItExit)
 
 Global $g_hForm = GUICreate('')
-GUIRegisterMsg(_WinAPI_RegisterWindowMessage('SHELLHOOK'), 'WM_SHELLHOOK')
+GUIRegisterMsg(_WinAPI_RegisterWindowMessage('SHELLHOOK'), WM_SHELLHOOK)
 _WinAPI_RegisterShellHookWindow($g_hForm)
 
 While 1

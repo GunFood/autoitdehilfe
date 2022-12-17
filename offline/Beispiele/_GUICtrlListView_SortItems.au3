@@ -3,22 +3,23 @@
 #include <GuiListView.au3>
 #include <WindowsConstants.au3>
 
-Global $g_idListView
-
 _Example1()
 
 Func _Example1()
-	Local $hImage, $aIcons[3] = [0, 3, 6]
+	Local $aIcons[3] = [0, 3, 6]
 	Local $iExWindowStyle = BitOR($WS_EX_DLGMODALFRAME, $WS_EX_CLIENTEDGE)
 	Local $iExListViewStyle = BitOR($LVS_EX_FULLROWSELECT, $LVS_EX_SUBITEMIMAGES, $LVS_EX_GRIDLINES, $LVS_EX_CHECKBOXES, $LVS_EX_DOUBLEBUFFER)
 
-	GUICreate("ListView: Sortieren", 300, 200)
+	GUICreate("ListView: Sortieren (v" & @AutoItVersion & ")", 400, 200)
 
-	$g_idListView = GUICtrlCreateListView("Spalte 1|Spalte 2|Spalte 3", 10, 10, 280, 180, -1, $iExWindowStyle)
-	_GUICtrlListView_SetExtendedListViewStyle($g_idListView, $iExListViewStyle)
+	Local $idListView = GUICtrlCreateListView("Spalte1|Spalte2|Spalte3", 10, 10, 280, 180, -1, $iExWindowStyle)
+	_GUICtrlListView_SetExtendedListViewStyle($idListView, $iExListViewStyle)
+
+	; Setzt das ANSI Format
+;~     _GUICtrlListView_SetUnicodeFormat($idListView, False)
 
 	; Lädt die Bilder
-	$hImage = _GUIImageList_Create(18, 18, 5, 3)
+	Local $hImage = _GUIImageList_Create(18, 18, 5, 3)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", -7)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", -12)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", -3)
@@ -28,27 +29,27 @@ Func _Example1()
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", -9)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", -10)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", -11)
-	_GUICtrlListView_SetImageList($g_idListView, $hImage, 1)
+	_GUICtrlListView_SetImageList($idListView, $hImage, 1)
 
-	_AddRow($g_idListView, "ABC|000666|10.05.2004", $aIcons)
-	_AddRow($g_idListView, "DEF|444|11.05.2005", $aIcons, 1)
-	_AddRow($g_idListView, "CDE|555|12.05.2004", $aIcons, 2)
+	_AddRow($idListView, "ABC|000666|10.05.2004", $aIcons)
+	_AddRow($idListView, "DEF|444|11.05.2005", $aIcons, 1)
+	_AddRow($idListView, "CDE|555|12.05.2004", $aIcons, 2)
 
 	GUISetState(@SW_SHOW)
 
-	_GUICtrlListView_RegisterSortCallBack($g_idListView)
+	_GUICtrlListView_RegisterSortCallBack($idListView)
 
 	While 1
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE
 				ExitLoop
-			Case $g_idListView
+			Case $idListView
 				; Anstoßen der Callback-Sortierfunktion
-				_GUICtrlListView_SortItems($g_idListView, GUICtrlGetState($g_idListView))
+				_GUICtrlListView_SortItems($idListView, GUICtrlGetState($idListView))
 		EndSwitch
 	WEnd
 
-	_GUICtrlListView_UnRegisterSortCallBack($g_idListView)
+	_GUICtrlListView_UnRegisterSortCallBack($idListView)
 	GUIDelete()
 EndFunc   ;==>_Example1
 

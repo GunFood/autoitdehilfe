@@ -7,11 +7,9 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $hStatus
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("StatusBar: Ermittelt das Unicode Format", 400, 300)
-	$hStatus = _GUICtrlStatusBar_Create($hGui)
+	Local $hGUI = GUICreate("StatusBar: Setzt und ermittelt das Unicode Format (v" & @AutoItVersion & ")", 400, 300)
+	Local $hStatus = _GUICtrlStatusBar_Create($hGUI)
 
 	; Erstellt ein Memo Control
 	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 396, 274, $WS_VSCROLL)

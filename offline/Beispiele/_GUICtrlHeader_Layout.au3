@@ -18,10 +18,10 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	; Fügt die Spalten hinzu
+	_GUICtrlHeader_AddItem($hHeader, "Spalte 0", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 1", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 2", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 3", 100)
-	_GUICtrlHeader_AddItem($hHeader, "Spalte 4", 100)
 
 	; Ermittelt die korrekte Größe und Position des Controls
 	$tRECT = _WinAPI_GetClientRect($hGui)

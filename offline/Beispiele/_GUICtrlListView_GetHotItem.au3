@@ -1,3 +1,4 @@
+#include <Extras\WM_NOTIFY.au3>
 #include <GuiConstantsEx.au3>
 #include <GuiListView.au3>
 #include <GuiStatusBar.au3>
@@ -8,32 +9,34 @@ Global $g_idListView, $g_hStatus
 Example()
 
 Func Example()
-	Local $hGui
-
-	$hGui = GUICreate("ListView: Ermittelt den Index des 'hot' Items", 392, 322)
+	Local $hGUI = GUICreate("ListView: Ermittelt den Index des 'hot' Items (v" & @AutoItVersion & ")", 392, 322)
 
 	$g_idListView = GUICtrlCreateListView("", 2, 2, 394, 268)
 	$g_idListView = GUICtrlGetHandle($g_idListView)
 	_GUICtrlListView_SetExtendedListViewStyle($g_idListView, BitOR($LVS_EX_FULLROWSELECT, $LVS_EX_GRIDLINES, $LVS_EX_TRACKSELECT))
-	$g_hStatus = _GUICtrlStatusBar_Create($hGui)
+	$g_hStatus = _GUICtrlStatusBar_Create($hGUI)
 	_GUICtrlStatusBar_SetSimple($g_hStatus, True)
 	GUISetState(@SW_SHOW)
 
 	; Fügt die Spalten hinzu
+	_GUICtrlListView_AddColumn($g_idListView, "Spalte 0", 120)
 	_GUICtrlListView_AddColumn($g_idListView, "Spalte 1", 120)
 	_GUICtrlListView_AddColumn($g_idListView, "Spalte 2", 120)
-	_GUICtrlListView_AddColumn($g_idListView, "Spalte 3", 120)
 
 	; Fügt die Items hinzu
-	_GUICtrlListView_AddItem($g_idListView, "Zeile 1: Spalte 1")
-	_GUICtrlListView_AddSubItem($g_idListView, 0, "Zeile 1: Spalte 2", 1)
-	_GUICtrlListView_AddSubItem($g_idListView, 0, "Zeile 1: Spalte 3", 2)
-	_GUICtrlListView_AddItem($g_idListView, "Zeile 2: Spalte 1")
-	_GUICtrlListView_AddSubItem($g_idListView, 1, "Zeile 2: Spalte 2", 1)
-	_GUICtrlListView_AddItem($g_idListView, "Zeile 3: Spalte 1")
+	_GUICtrlListView_InsertItem($g_idListView, "Zeile 0: Spalte 0", -1, 0)
+	_GUICtrlListView_AddSubItem($g_idListView, 0, "Zeile 0: Spalte 1", 1, 1)
+	_GUICtrlListView_AddSubItem($g_idListView, 0, "Zeile 0: Spalte 2", 2, 2)
+	_GUICtrlListView_InsertItem($g_idListView, "Zeile 1: Spalte 0", -1, 1)
+	_GUICtrlListView_AddSubItem($g_idListView, 1, "Zeile 1: Spalte 1", 1, 2)
+	_GUICtrlListView_InsertItem($g_idListView, "Zeile 2: Spalte 0", -1, 2)
+
+	; Setzt das "hot" Item
+	_GUICtrlListView_SetHotItem($g_idListView, 1)
+	MsgBox($MB_SYSTEMMODAL, "Information", "Hot Item: " & _GUICtrlListView_GetHotItem($g_idListView))
 
 	; Registriert WM_NOTIFY-Ereignisse
-	GUIRegisterMsg($WM_NOTIFY, "WM_NOTIFY")
+	_WM_NOTIFY_Register()
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
@@ -48,154 +51,52 @@ EndFunc   ;==>ListView_HOTTRACK
 
 Func WM_NOTIFY($hWnd, $iMsg, $wParam, $lParam)
 	#forceref $hWnd, $iMsg, $wParam
-	Local $hWndFrom, $iIDFrom, $iCode, $tNMHDR, $hWndListView, $tInfo
-	$hWndListView = $g_idListView
+	Local $hWndListView = $g_idListView
 	If Not IsHWnd($g_idListView) Then $hWndListView = GUICtrlGetHandle($g_idListView)
 
-	$tNMHDR = DllStructCreate($tagNMHDR, $lParam)
-	$hWndFrom = HWnd(DllStructGetData($tNMHDR, "hWndFrom"))
-	$iIDFrom = DllStructGetData($tNMHDR, "IDFrom")
-	$iCode = DllStructGetData($tNMHDR, "Code")
+	Local $tNMHDR = DllStructCreate($tagNMHDR, $lParam)
+	Local $hWndFrom = HWnd(DllStructGetData($tNMHDR, "hWndFrom"))
+	Local $iCode = DllStructGetData($tNMHDR, "Code")
 	Switch $hWndFrom
 		Case $hWndListView
 			Switch $iCode
 				Case $LVN_COLUMNCLICK ; Es wurde auf eine Spalte geklickt
-					$tInfo = DllStructCreate($tagNMLISTVIEW, $lParam)
-					_DebugPrint("$LVN_COLUMNCLICK" & @CRLF & "-->hWndFrom:" & @TAB & $hWndFrom & @CRLF & _
-							"-->IDFrom:" & @TAB & $iIDFrom & @CRLF & _
-							"-->Code:" & @TAB & $iCode & @CRLF & _
-							"-->Item:" & @TAB & DllStructGetData($tInfo, "Item") & @CRLF & _
-							"-->SubItem:" & @TAB & DllStructGetData($tInfo, "SubItem") & @CRLF & _
-							"-->NewState:" & @TAB & DllStructGetData($tInfo, "NewState") & @CRLF & _
-							"-->OldState:" & @TAB & DllStructGetData($tInfo, "OldState") & @CRLF & _
-							"-->Changed:" & @TAB & DllStructGetData($tInfo, "Changed") & @CRLF & _
-							"-->ActionX:" & @TAB & DllStructGetData($tInfo, "ActionX") & @CRLF & _
-							"-->ActionY:" & @TAB & DllStructGetData($tInfo, "ActionY") & @CRLF & _
-							"-->Param:" & @TAB & DllStructGetData($tInfo, "Param"))
+					_WM_NOTIFY_DebugEvent("$LVN_COLUMNCLICK", $tagNMLISTVIEW, $lParam, "IDFrom,,Item,SubItem,NewState,OldState,Changed,ActionX,ActionY,Param")
 					; Kein Rückgabewert
 				Case $LVN_DELETEITEM ; Ein Item soll gelöscht werden
-					$tInfo = DllStructCreate($tagNMLISTVIEW, $lParam)
-					_DebugPrint("$LVN_DELETEITEM" & @CRLF & "-->hWndFrom:" & @TAB & $hWndFrom & @CRLF & _
-							"-->IDFrom:" & @TAB & $iIDFrom & @CRLF & _
-							"-->Code:" & @TAB & $iCode & @CRLF & _
-							"-->Item:" & @TAB & DllStructGetData($tInfo, "Item") & @CRLF & _
-							"-->SubItem:" & @TAB & DllStructGetData($tInfo, "SubItem") & @CRLF & _
-							"-->NewState:" & @TAB & DllStructGetData($tInfo, "NewState") & @CRLF & _
-							"-->OldState:" & @TAB & DllStructGetData($tInfo, "OldState") & @CRLF & _
-							"-->Changed:" & @TAB & DllStructGetData($tInfo, "Changed") & @CRLF & _
-							"-->ActionX:" & @TAB & DllStructGetData($tInfo, "ActionX") & @CRLF & _
-							"-->ActionY:" & @TAB & DllStructGetData($tInfo, "ActionY") & @CRLF & _
-							"-->Param:" & @TAB & DllStructGetData($tInfo, "Param"))
+					_WM_NOTIFY_DebugEvent("$LVN_DELETEITEM", $tagNMLISTVIEW, $lParam, "IDFrom,,Item,SubItem,NewState,OldState,Changed,ActionX,ActionY,Param")
 					; Kein Rückgabewert
 				Case $LVN_HOTTRACK ; Wird von einem ListView gesendet, wenn der Benutzer die Maus über ein Item bewegt
-					$tInfo = DllStructCreate($tagNMLISTVIEW, $lParam)
+					Local $tInfo = DllStructCreate($tagNMLISTVIEW, $lParam)
 					ListView_HOTTRACK(DllStructGetData($tInfo, "SubItem"))
-;~ 					_DebugPrint("$LVN_HOTTRACK" & @CRLF & "-->hWndFrom:" & @TAB & $hWndFrom & @CRLF & _
-;~ 							"-->IDFrom:" & @TAB & $iIDFrom & @CRLF & _
-;~ 							"-->Code:" & @TAB & $iCode & @CRLF & _
-;~ 							"-->Item:" & @TAB & DllStructGetData($tInfo, "Item") & @CRLF & _
-;~ 							"-->SubItem:" & @TAB & DllStructGetData($tInfo, "SubItem") & @CRLF & _
-;~ 							"-->NewState:" & @TAB & DllStructGetData($tInfo, "NewState") & @CRLF & _
-;~ 							"-->OldState:" & @TAB & DllStructGetData($tInfo, "OldState") & @CRLF & _
-;~ 							"-->Changed:" & @TAB & DllStructGetData($tInfo, "Changed") & @CRLF & _
-;~ 							"-->ActionX:" & @TAB & DllStructGetData($tInfo, "ActionX") & @CRLF & _
-;~ 							"-->ActionY:" & @TAB & DllStructGetData($tInfo, "ActionY") & @CRLF & _
-;~ 							"-->Param:" & @TAB & DllStructGetData($tInfo, "Param"))
 					Return 0 ; Erlaubt dem ListView, seine normale "Verfolgen und Auswählen"-Operation durchzuführen
 					;Return 1 ; Das Item wird nicht ausgewählt
 				Case $LVN_KEYDOWN ; Eine Taste wurde gedrückt
-					$tInfo = DllStructCreate($tagNMLVKEYDOWN, $lParam)
-					_DebugPrint("$LVN_KEYDOWN" & @CRLF & "-->hWndFrom:" & @TAB & $hWndFrom & @CRLF & _
-							"-->IDFrom:" & @TAB & $iIDFrom & @CRLF & _
-							"-->Code:" & @TAB & $iCode & @CRLF & _
-							"-->VKey:" & @TAB & DllStructGetData($tInfo, "VKey") & @CRLF & _
-							"-->Flags:" & @TAB & DllStructGetData($tInfo, "Flags"))
+					_WM_NOTIFY_DebugEvent("$LVN_KEYDOWN", $tagNMLVKEYDOWN, $lParam, "IDFrom,,VKey,Flags")
 					; Kein Rückgabewert
 				Case $NM_CLICK ; Wird vom ListView gesendet, wenn der Benutzer ein Item mit der linken Maustaste anklickt
-					$tInfo = DllStructCreate($tagNMITEMACTIVATE, $lParam)
-					_DebugPrint("$NM_CLICK" & @CRLF & "-->hWndFrom:" & @TAB & $hWndFrom & @CRLF & _
-							"-->IDFrom:" & @TAB & $iIDFrom & @CRLF & _
-							"-->Code:" & @TAB & $iCode & @CRLF & _
-							"-->Index:" & @TAB & DllStructGetData($tInfo, "Index") & @CRLF & _
-							"-->SubItem:" & @TAB & DllStructGetData($tInfo, "SubItem") & @CRLF & _
-							"-->NewState:" & @TAB & DllStructGetData($tInfo, "NewState") & @CRLF & _
-							"-->OldState:" & @TAB & DllStructGetData($tInfo, "OldState") & @CRLF & _
-							"-->Changed:" & @TAB & DllStructGetData($tInfo, "Changed") & @CRLF & _
-							"-->ActionX:" & @TAB & DllStructGetData($tInfo, "ActionX") & @CRLF & _
-							"-->ActionY:" & @TAB & DllStructGetData($tInfo, "ActionY") & @CRLF & _
-							"-->lParam:" & @TAB & DllStructGetData($tInfo, "lParam") & @CRLF & _
-							"-->KeyFlags:" & @TAB & DllStructGetData($tInfo, "KeyFlags"))
+					_WM_NOTIFY_DebugEvent("$NM_CLICK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,ActionX,ActionY,lParam,KeyFlags")
 					; Kein Rückgabewert
 				Case $NM_DBLCLK ; Wird vom ListView gesendet, wenn der Benutzer ein Item mit der linken Maustaste doppelklickt
-					$tInfo = DllStructCreate($tagNMITEMACTIVATE, $lParam)
-					_DebugPrint("$NM_DBLCLK" & @CRLF & "-->hWndFrom:" & @TAB & $hWndFrom & @CRLF & _
-							"-->IDFrom:" & @TAB & $iIDFrom & @CRLF & _
-							"-->Code:" & @TAB & $iCode & @CRLF & _
-							"-->Index:" & @TAB & DllStructGetData($tInfo, "Index") & @CRLF & _
-							"-->SubItem:" & @TAB & DllStructGetData($tInfo, "SubItem") & @CRLF & _
-							"-->NewState:" & @TAB & DllStructGetData($tInfo, "NewState") & @CRLF & _
-							"-->OldState:" & @TAB & DllStructGetData($tInfo, "OldState") & @CRLF & _
-							"-->Changed:" & @TAB & DllStructGetData($tInfo, "Changed") & @CRLF & _
-							"-->ActionX:" & @TAB & DllStructGetData($tInfo, "ActionX") & @CRLF & _
-							"-->ActionY:" & @TAB & DllStructGetData($tInfo, "ActionY") & @CRLF & _
-							"-->lParam:" & @TAB & DllStructGetData($tInfo, "lParam") & @CRLF & _
-							"-->KeyFlags:" & @TAB & DllStructGetData($tInfo, "KeyFlags"))
+					_WM_NOTIFY_DebugEvent("$NM_DBLCLK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,ActionX,ActionY,lParam,KeyFlags")
 					; Kein Rückgabewert
 				Case $NM_KILLFOCUS ; Das Control hat den Eingabefokus verloren
-					_DebugPrint("$NM_KILLFOCUS" & @CRLF & "-->hWndFrom:" & @TAB & $hWndFrom & @CRLF & _
-							"-->IDFrom:" & @TAB & $iIDFrom & @CRLF & _
-							"-->Code:" & @TAB & $iCode)
+					_WM_NOTIFY_DebugEvent("$NM_KILLFOCUS", $tagNMHDR, $lParam, "hWndFrom,IDFrom")
 					; Kein Rückgabewert
 				Case $NM_RCLICK ; Wird vom ListView gesendet, wenn der Benutzer ein Item mit der rechten Maustaste anklickt
-					$tInfo = DllStructCreate($tagNMITEMACTIVATE, $lParam)
-					_DebugPrint("$NM_RCLICK" & @CRLF & "-->hWndFrom:" & @TAB & $hWndFrom & @CRLF & _
-							"-->IDFrom:" & @TAB & $iIDFrom & @CRLF & _
-							"-->Code:" & @TAB & $iCode & @CRLF & _
-							"-->Index:" & @TAB & DllStructGetData($tInfo, "Index") & @CRLF & _
-							"-->SubItem:" & @TAB & DllStructGetData($tInfo, "SubItem") & @CRLF & _
-							"-->NewState:" & @TAB & DllStructGetData($tInfo, "NewState") & @CRLF & _
-							"-->OldState:" & @TAB & DllStructGetData($tInfo, "OldState") & @CRLF & _
-							"-->Changed:" & @TAB & DllStructGetData($tInfo, "Changed") & @CRLF & _
-							"-->ActionX:" & @TAB & DllStructGetData($tInfo, "ActionX") & @CRLF & _
-							"-->ActionY:" & @TAB & DllStructGetData($tInfo, "ActionY") & @CRLF & _
-							"-->lParam:" & @TAB & DllStructGetData($tInfo, "lParam") & @CRLF & _
-							"-->KeyFlags:" & @TAB & DllStructGetData($tInfo, "KeyFlags"))
+					_WM_NOTIFY_DebugEvent("$NM_RCLICK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,ActionX,ActionY,lParam,KeyFlags")
 					;Return 1 ; Verhindert die weitere Standard-Nachrichtenbehandlung
 					Return 0 ; Erlaubt die weitere Standard-Nachrichtenbehandlung
 				Case $NM_RDBLCLK ; Wird vom ListView gesendet, wenn der Benutzer ein Item mit der rechten Maustaste doppelklickt
-					$tInfo = DllStructCreate($tagNMITEMACTIVATE, $lParam)
-					_DebugPrint("$NM_RDBLCLK" & @CRLF & "-->hWndFrom:" & @TAB & $hWndFrom & @CRLF & _
-							"-->IDFrom:" & @TAB & $iIDFrom & @CRLF & _
-							"-->Code:" & @TAB & $iCode & @CRLF & _
-							"-->Index:" & @TAB & DllStructGetData($tInfo, "Index") & @CRLF & _
-							"-->SubItem:" & @TAB & DllStructGetData($tInfo, "SubItem") & @CRLF & _
-							"-->NewState:" & @TAB & DllStructGetData($tInfo, "NewState") & @CRLF & _
-							"-->OldState:" & @TAB & DllStructGetData($tInfo, "OldState") & @CRLF & _
-							"-->Changed:" & @TAB & DllStructGetData($tInfo, "Changed") & @CRLF & _
-							"-->ActionX:" & @TAB & DllStructGetData($tInfo, "ActionX") & @CRLF & _
-							"-->ActionY:" & @TAB & DllStructGetData($tInfo, "ActionY") & @CRLF & _
-							"-->lParam:" & @TAB & DllStructGetData($tInfo, "lParam") & @CRLF & _
-							"-->KeyFlags:" & @TAB & DllStructGetData($tInfo, "KeyFlags"))
+					_WM_NOTIFY_DebugEvent("$NM_RDBLCLK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,ActionX,ActionY,lParam,KeyFlags")
 					; Kein Rückgabewert
 				Case $NM_RETURN ; Das Control hat den Eingabefokus und der Benutzer hat die ENTER-Taste gedrückt
-					_DebugPrint("$NM_RETURN" & @CRLF & "-->hWndFrom:" & @TAB & $hWndFrom & @CRLF & _
-							"-->IDFrom:" & @TAB & $iIDFrom & @CRLF & _
-							"-->Code:" & @TAB & $iCode)
+					_WM_NOTIFY_DebugEvent("$NM_RETURN", $tagNMHDR, $lParam, "hWndFrom,IDFrom")
 					; Kein Rückgabewert
 				Case $NM_SETFOCUS ; Das Control hat den Eingabefokus erhalten
-					_DebugPrint("$NM_SETFOCUS" & @CRLF & "-->hWndFrom:" & @TAB & $hWndFrom & @CRLF & _
-							"-->IDFrom:" & @TAB & $iIDFrom & @CRLF & _
-							"-->Code:" & @TAB & $iCode)
+					_WM_NOTIFY_DebugEvent("$NM_SETFOCUS", $tagNMHDR, $lParam, "hWndFrom,IDFrom")
 					; Kein Rückgabewert
 			EndSwitch
 	EndSwitch
 	Return $GUI_RUNDEFMSG
 EndFunc   ;==>WM_NOTIFY
-
-Func _DebugPrint($s_text, $sLine = @ScriptLineNumber)
-	ConsoleWrite( _
-			"!===========================================================" & @CRLF & _
-			"+======================================================" & @CRLF & _
-			"-->Zeile(" & StringFormat("%04d", $sLine) & "):" & @TAB & $s_text & @CRLF & _
-			"+======================================================" & @CRLF)
-EndFunc   ;==>_DebugPrint

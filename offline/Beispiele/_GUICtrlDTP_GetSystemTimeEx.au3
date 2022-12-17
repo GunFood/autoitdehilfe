@@ -6,11 +6,9 @@ Global $g_idMemo, $g_tDate
 Example()
 
 Func Example()
-	Local $hDTP
-
 	; Erstellt eine GUI
-	GUICreate("DateTimePick: Ermittelt die Systemzeit mit System TimeEx", 400, 300)
-	$hDTP = GUICtrlGetHandle(GUICtrlCreateDate("", 2, 6, 190))
+	GUICreate("DateTimePick: Ermittelt die Systemzeit mit System TimeEx (v" & @AutoItVersion & ")", 600, 300)
+	Local $hDTP = GUICtrlGetHandle(GUICtrlCreateDate("", 2, 6, 190))
 	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)

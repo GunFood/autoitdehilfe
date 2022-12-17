@@ -9,7 +9,7 @@ Func Example()
 	Local $idListBox
 
 	; Erstellt eine GUI
-	GUICreate("ListBox: Ermittelt die horizontale Ausdehnung", 400, 296)
+	GUICreate("ListBox: Setzt und ermittelt die horizontale Ausdehnung (v" & @AutoItVersion & ")", 600, 296)
 	$idListBox = GUICtrlCreateList("", 2, 2, 396, 296, BitOR($WS_BORDER, $WS_VSCROLL, $LBS_NOTIFY, $LBS_DISABLENOSCROLL, $WS_HSCROLL))
 	GUISetState(@SW_SHOW)
 

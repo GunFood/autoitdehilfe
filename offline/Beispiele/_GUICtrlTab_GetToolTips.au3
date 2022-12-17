@@ -6,24 +6,22 @@
 Example()
 
 Func Example()
-	Local $hGui, $hTool, $idTab
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("Tab-Control: Ermittelt die ToolTips", 400, 300)
-	$idTab = _GUICtrlTab_Create($hGui, 2, 2, 396, 296)
+	Local $hGUI = GUICreate("Tab-Control: Setzt und ermittelt die ToolTips (v" & @AutoItVersion & ")", 500, 300)
+	Local $hTab = _GUICtrlTab_Create($hGUI, 2, 2, 396, 296)
 	GUISetState(@SW_SHOW)
 
 	; Fügt Tabs hinzu
-	_GUICtrlTab_InsertItem($idTab, 0, "Tab 1")
-	_GUICtrlTab_InsertItem($idTab, 1, "Tab 2")
-	_GUICtrlTab_InsertItem($idTab, 2, "Tab 3")
+	_GUICtrlTab_InsertItem($hTab, 0, "Tab 0")
+	_GUICtrlTab_InsertItem($hTab, 1, "Tab 1")
+	_GUICtrlTab_InsertItem($hTab, 2, "Tab 2")
 
 	; Ermittelt/Setzt die ToolTips
-	$hTool = _GUIToolTip_Create($idTab)
-	_GUICtrlTab_SetToolTips($idTab, $hTool)
+	Local $hTool = _GUIToolTip_Create($hTab)
+	_GUICtrlTab_SetToolTips($hTab, $hTool)
 
-	MsgBox($MB_SYSTEMMODAL, "Information", "ToolTip Handle: 0x" & _GUICtrlTab_GetToolTips($idTab) & @CRLF & _
-			"IsPtr = " & IsPtr(_GUICtrlTab_GetToolTips($idTab)) & " IsHwnd = " & IsHWnd(_GUICtrlTab_GetToolTips($idTab)))
+	MsgBox($MB_SYSTEMMODAL, "Information", "ToolTip Handle: 0x" & _GUICtrlTab_GetToolTips($hTab) & @CRLF & _
+			"IsPtr = " & IsPtr(_GUICtrlTab_GetToolTips($hTab)) & " IsHwnd = " & IsHWnd(_GUICtrlTab_GetToolTips($hTab)))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

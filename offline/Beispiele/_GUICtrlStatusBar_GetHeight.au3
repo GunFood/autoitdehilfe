@@ -7,13 +7,11 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $hStatus
-	Local $aParts[3] = [75, 150, -1]
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("StatusBar: Höhe ermitteln", 400, 300)
+	Local $hGUI = GUICreate("StatusBar: Ermittelt die Höhe / Breite (v" & @AutoItVersion & ")", 500, 300)
 
-	$hStatus = _GUICtrlStatusBar_Create($hGui)
+	Local $hStatus = _GUICtrlStatusBar_Create($hGUI)
+	Local $aParts[3] = [75, 150, -1]
 	_GUICtrlStatusBar_SetParts($hStatus, $aParts)
 
 	; Erstellt ein Memo Control
@@ -23,9 +21,9 @@ Func Example()
 
 	; Ermittelt die Höhe/Breite der einzelnen Abschnitte
 	MemoWrite("Höhe der Abschnitte .: " & _GUICtrlStatusBar_GetHeight($hStatus))
-	MemoWrite("Breite von Abschnitt 1 .: " & _GUICtrlStatusBar_GetWidth($hStatus, 0))
-	MemoWrite("Breite von Abschnitt 2 .: " & _GUICtrlStatusBar_GetWidth($hStatus, 1))
-	MemoWrite("Breite von Abschnitt 3 .: " & _GUICtrlStatusBar_GetWidth($hStatus, 2))
+	MemoWrite("Breite von Abschnitt 0 .: " & _GUICtrlStatusBar_GetWidth($hStatus, 0))
+	MemoWrite("Breite von Abschnitt 1 .: " & _GUICtrlStatusBar_GetWidth($hStatus, 1))
+	MemoWrite("Breite von Abschnitt 2 .: " & _GUICtrlStatusBar_GetWidth($hStatus, 2))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

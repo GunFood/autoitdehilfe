@@ -5,7 +5,7 @@
 Example()
 
 Func Example()
-	GUICreate("ListView Setzt die Ansicht (v" & @AutoItVersion & ")", 400, 300)
+	GUICreate("ListView: Setzt die Ansicht (v" & @AutoItVersion & ")", 400, 300)
 	Local $idListview = GUICtrlCreateListView("", 2, 2, 394, 268)
 	GUISetState(@SW_SHOW)
 

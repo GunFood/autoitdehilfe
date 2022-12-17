@@ -2,11 +2,13 @@
 #include <GUIConstantsEx.au3>
 #include <ProgressConstants.au3>
 
-Global $g_sRemoteFile = "/pub/software/databases/rt/SRPMS/ucs-local-modperl-2.0.3-1.src.rpm"
+;~ Global $g_sRemoteFile = "pub/papers/graphics/research/skin.qt"
+Global $g_sRemoteFile = "20MB.zip"
 Global $g_sLocalFile = @TempDir & "\temp.tmp"
 FileDelete($g_sLocalFile)
 
-Local $sServer = 'ftp.csx.cam.ac.uk'
+;~ Local $sServer = 'ftp.cs.brown.edu' ; Brown Computer Science
+Local $sServer = 'speedtest.tele2.net' ; Tele2 Speedtest Service
 Local $sUsername = ''
 Local $sPass = ''
 

@@ -5,11 +5,9 @@
 Example()
 
 Func Example()
-	Local $idEdit
-
 	; Erstellt eine GUI
-	GUICreate("Edit: Ermittelt das Passwortzeichen", 400, 300)
-	$idEdit = GUICtrlCreateInput("Test des eingebauten PW-Eingabe-Controls", 2, 2, 394, 25, $ES_PASSWORD)
+	GUICreate("Edit: Setzt und ermittelt das Passwortzeichen (v" & @AutoItVersion & ")", 500, 300)
+	Local $idEdit = GUICtrlCreateInput("Test des eingebauten PW-Eingabe-Controls", 2, 2, 394, 25, $ES_PASSWORD)
 	GUISetState(@SW_SHOW)
 
 	MsgBox(8192 + 64, "Information", "Passwortzeichen: " & _GUICtrlEdit_GetPasswordChar($idEdit))

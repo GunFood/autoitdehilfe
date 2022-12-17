@@ -5,21 +5,21 @@
 Example()
 
 Func Example()
-	Local $a_Order, $idListView
-
-	GUICreate("ListView: Reihenfolge der Spalten ermitteln", 400, 300)
-	$idListView = GUICtrlCreateListView("Spalte 1|Spalte 2|Spalte 3|Spalte 4", 2, 2, 394, 268)
-	_GUICtrlListView_SetExtendedListViewStyle($idListView, $LVS_EX_HEADERDRAGDROP)
-	_GUICtrlListView_SetColumnWidth($idListView, 0, 100)
-	_GUICtrlListView_SetColumnWidth($idListView, 1, 100)
-	_GUICtrlListView_SetColumnWidth($idListView, 2, 100)
-	_GUICtrlListView_SetColumnWidth($idListView, 3, 100)
+	GUICreate("ListView: Setzt und ermittelt die Spaltenreihenfolge (v" & @AutoItVersion & ")", 500, 300)
+	Local $idListview = GUICtrlCreateListView("Column 0|Column 1|Column 2|Column 3", 2, 2, 394, 268)
 	GUISetState(@SW_SHOW)
 
-	_GUICtrlListView_SetColumnOrder($idListView, "3|2|0|1")
+	; Setzt das ANSI Format
+;~     _GUICtrlListView_SetUnicodeFormat($idListview, False)
 
-	$a_Order = StringSplit(_GUICtrlListView_GetColumnOrder($idListView), "|")
-	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Reihenfolge der Spalten: [%d, %d, %d, %d]", $a_Order[1], $a_Order[2], $a_Order[3], $a_Order[4]))
+	; Setzt die Spaltenreihenfolge
+	MsgBox($MB_SYSTEMMODAL, "Information", "Änderung der Spaltenreihenfolge")
+
+	_GUICtrlListView_SetColumnOrder($idListview, "3|2|0|1")
+
+	; Ermittelt die Spaltenreihenfolge
+	Local $a_Order = _GUICtrlListView_GetColumnOrderArray($idListview)
+	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Spaltenreihenfolge: [%d, %d, %d, %d]", $a_Order[1], $a_Order[2], $a_Order[3], $a_Order[4]))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

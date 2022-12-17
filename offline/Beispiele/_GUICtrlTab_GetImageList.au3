@@ -7,28 +7,26 @@
 Example()
 
 Func Example()
-	Local $hGui, $hImage, $idTab
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("Tab-Control: Ermittelt die Imagelist", 400, 300)
-	$idTab = _GUICtrlTab_Create($hGui, 2, 2, 396, 296)
+	Local $hGUI = GUICreate("Tab-Control: Setzt und ermittelt die Imagelist (v" & @AutoItVersion & ")", 500, 300)
+	Local $hTab = _GUICtrlTab_Create($hGUI, 2, 2, 396, 296)
 	GUISetState(@SW_SHOW)
 
 	; Erstellt die Bilder
-	$hImage = _GUIImageList_Create()
-	_GUIImageList_Add($hImage, _WinAPI_CreateSolidBitmap($hGui, 0xFF0000, 16, 16))
-	_GUIImageList_Add($hImage, _WinAPI_CreateSolidBitmap($hGui, 0x00FF00, 16, 16))
-	_GUIImageList_Add($hImage, _WinAPI_CreateSolidBitmap($hGui, 0x0000FF, 16, 16))
-	_GUICtrlTab_SetImageList($idTab, $hImage)
+	Local $hImage = _GUIImageList_Create()
+	_GUIImageList_Add($hImage, _WinAPI_CreateSolidBitmap($hGUI, 0xFF0000, 16, 16))
+	_GUIImageList_Add($hImage, _WinAPI_CreateSolidBitmap($hGUI, 0x00FF00, 16, 16))
+	_GUIImageList_Add($hImage, _WinAPI_CreateSolidBitmap($hGUI, 0x0000FF, 16, 16))
+	$hImage = _GUICtrlTab_SetImageList($hTab, $hImage)
 
 	; Fügt Tabs hinzu
-	_GUICtrlTab_InsertItem($idTab, 0, "Tab 1", 0)
-	_GUICtrlTab_InsertItem($idTab, 1, "Tab 2", 1)
-	_GUICtrlTab_InsertItem($idTab, 2, "Tab 3", 2)
+	_GUICtrlTab_InsertItem($hTab, 0, "Tab 0", 0)
+	_GUICtrlTab_InsertItem($hTab, 1, "Tab 1", 1)
+	_GUICtrlTab_InsertItem($hTab, 2, "Tab 2", 2)
 
 	; Zeigt das Handle der Imagelist
-	MsgBox($MB_SYSTEMMODAL, "Information", "Handle der Imagelist: 0x" & Hex(_GUICtrlTab_GetImageList($idTab)) & @CRLF & _
-			"IsPtr = " & IsPtr(_GUICtrlTab_GetImageList($idTab)) & " IsHwnd = " & IsHWnd(_GUICtrlTab_GetImageList($idTab)))
+	MsgBox($MB_SYSTEMMODAL, "Information", "Handle der Imagelist: 0x" & Hex($hImage) & @CRLF & _
+			"IsPtr = " & IsPtr($hImage) & " IsHWnd = " & IsHWnd($hImage))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

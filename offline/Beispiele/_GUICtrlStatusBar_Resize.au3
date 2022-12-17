@@ -11,14 +11,15 @@ Func Example()
 	Local $aParts[3] = [75, 150, -1]
 
 	; Erstellt eine GUI
-	$hGui = GUICreate("StatusBar: Größenänderung", 400, 300, -1, -1, $WS_SIZEBOX)
+	Local $hGui = GUICreate("StatusBar Größenänderung (v" & @AutoItVersion & ")", 400, 300, -1, -1, $WS_OVERLAPPEDWINDOW)
 
 	; Setzt die Abschnitte
 	$g_hStatus = _GUICtrlStatusBar_Create($hGui)
+	Local $aParts[3] = [75, 150, -1]
 	_GUICtrlStatusBar_SetParts($g_hStatus, $aParts)
-	_GUICtrlStatusBar_SetText($g_hStatus, "Part 1")
-	_GUICtrlStatusBar_SetText($g_hStatus, "Part 2", 1)
-	_GUICtrlStatusBar_SetText($g_hStatus, "Part 3", 2)
+	_GUICtrlStatusBar_SetText($g_hStatus, "Part 0")
+	_GUICtrlStatusBar_SetText($g_hStatus, "Part 1", 1)
+	_GUICtrlStatusBar_SetText($g_hStatus, "Part 2", 2)
 
 	GUISetState(@SW_SHOW)
 

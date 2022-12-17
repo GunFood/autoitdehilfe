@@ -8,18 +8,20 @@
 Example()
 
 Func Example()
-	Global $hGUI, $iI, $hListView
-
 	; Erstellt eine GUI
-	$hGUI = GUICreate("(UDF) ListView: Sucht ein Item mit einem bestimmten Parameter", 550, 300)
-	$hListView = _GUICtrlListView_Create($hGUI, "", 2, 2, 544, 268)
+	Local $hGUI = GUICreate("(UDF) ListView: Sucht ein Item mit einem bestimmten Parameter (v" & @AutoItVersion & ")", 600, 300)
+	Local $hListView = _GUICtrlListView_Create($hGUI, "", 2, 2, 394, 268)
 	GUISetState(@SW_SHOW)
+
+	; Setzt das ANSI Format
+;~     _GUICtrlListView_SetUnicodeFormat($hListView, False)
 
 	; Fügt die Spalten hinzu
 	_GUICtrlListView_AddColumn($hListView, "Items", 100)
 
 	; Fügt die Items hinzu
 	_GUICtrlListView_BeginUpdate($hListView)
+	Local $iI
 	For $iI = 1 To 100
 		_GUICtrlListView_AddItem($hListView, "Item " & $iI)
 	Next

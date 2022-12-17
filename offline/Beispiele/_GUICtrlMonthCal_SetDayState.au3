@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	; Erstellt eine GUI
-	GUICreate("Month Calendar: Setzt den Datumsstatus (v" & @AutoItVersion & ")", 400, 300)
+	GUICreate("Month Calendar: Setzt den Datumsstatus (v" & @AutoItVersion & ")", 500, 300)
 	Local $idMonthCal = GUICtrlCreateMonthCal("", 4, 4, -1, -1, BitOR($WS_BORDER, $MCS_DAYSTATE), 0x00000000)
 
 	; Ermittelt die Nummer der in dem Kalender angezeigten Monate. Normal ist die Zahl 3.

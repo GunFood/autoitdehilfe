@@ -6,11 +6,9 @@
 Example()
 
 Func Example()
-	Local $idCombo
-
 	; Erstellt eine GUI
-	GUICreate("ComboBox: Ermittelt den Top Index", 400, 296)
-	$idCombo = GUICtrlCreateCombo("", 2, 2, 396, 296, BitOR($CBS_SIMPLE, $CBS_DISABLENOSCROLL, $WS_VSCROLL))
+	GUICreate("ComboBox: Setzt und ermittelt den Top Index (v" & @AutoItVersion & ")", 500, 296)
+	Local $idCombo = GUICtrlCreateCombo("", 2, 2, 396, 296, BitOR($CBS_SIMPLE, $CBS_DISABLENOSCROLL, $WS_VSCROLL))
 	GUISetState(@SW_SHOW)
 
 	; Fügt Dateien hinzu

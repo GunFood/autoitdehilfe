@@ -1,3 +1,5 @@
+; == Beispiel 2 direkte Verwendung mit Icon-Datei
+
 #include <GUIConstantsEx.au3>
 #include <GuiStatusBar.au3>
 #include <WindowsConstants.au3>
@@ -7,12 +9,9 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $hStatus
-	Local $aParts[4] = [75, 150, 300, 400]
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("StatusBar: Icon ermitteln (Beispiel 2)", 400, 300)
-	$hStatus = _GUICtrlStatusBar_Create($hGui)
+	Local $hGUI = GUICreate("StatusBar: Setzt und ermittelt das Icon (v" & @AutoItVersion & ")", 500, 300)
+	Local $hStatus = _GUICtrlStatusBar_Create($hGUI)
 
 	; Erstellt ein Memo Control
 	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 396, 274, $WS_VSCROLL)
@@ -20,17 +19,18 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	; Abschnitte setzen
+	Local $aParts[4] = [75, 150, 300, 400]
 	_GUICtrlStatusBar_SetParts($hStatus, $aParts)
-	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 1")
-	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 2", 1)
+	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 0")
+	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 1", 1)
 
 	; Setzt die Icons
 	_GUICtrlStatusBar_SetIcon($hStatus, 0, 23, "shell32.dll")
 	_GUICtrlStatusBar_SetIcon($hStatus, 1, 40, "shell32.dll")
 
 	; Zeigt die Handles der Icons
-	MemoWrite("Handle vom Icon von Abschnitt 1 .: 0x" & Hex(_GUICtrlStatusBar_GetIcon($hStatus, 0)))
-	MemoWrite("Handle vom Icon von Abschnitt 2 .: 0x" & Hex(_GUICtrlStatusBar_GetIcon($hStatus, 1)))
+	MemoWrite("Handle vom Icon von Abschnitt 0 .: 0x" & Hex(_GUICtrlStatusBar_GetIcon($hStatus, 0)))
+	MemoWrite("Handle vom Icon von Abschnitt 1 .: 0x" & Hex(_GUICtrlStatusBar_GetIcon($hStatus, 1)))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

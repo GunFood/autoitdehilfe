@@ -9,7 +9,7 @@ _Example() ; Verwendet die internen AutoIt Controls
 
 Func _Example()
 	; Erstellt eine GUI
-	GUICreate("DateTimePick: Ermittelt / Setzt MCColor (v" & @AutoItVersion & ")", 400, 300)
+	GUICreate("DateTimePick: Setzt und ermittelt MCColor (v" & @AutoItVersion & ")", 450, 300)
 	Local $hDTP = GUICtrlGetHandle(GUICtrlCreateDate("", 2, 6, 190))
 	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")

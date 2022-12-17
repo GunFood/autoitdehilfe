@@ -5,10 +5,12 @@
 
 ; This example NEED TO BE ADAPTED to valid $g_sRemoteFile/$sServer/$sUsername/$sPass
 
-Global $g_sRemoteFile = "/pub/software/databases/rt/SRPMS/ucs-local-modperl-2.0.3-1.src.rpm"
+;~ Global $g_sRemoteFile = "pub/papers/graphics/research/skin.qt"
+Global $g_sRemoteFile = "upload/temp.tmp"
 Global $g_sLocalFile = @TempDir & "\temp.tmp"
 
-Local $sServer = 'ftp.csx.cam.ac.uk'
+;~ Local $sServer = 'ftp.cs.brown.edu' ; Brown Computer Science
+Local $sServer = 'speedtest.tele2.net' ; Tele2 Speedtest Service
 Local $sUsername = ''
 Local $sPass = ''
 

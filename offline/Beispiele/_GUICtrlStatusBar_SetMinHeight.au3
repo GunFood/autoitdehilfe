@@ -4,19 +4,17 @@
 Example()
 
 Func Example()
-	Local $hGui, $hStatus
-	Local $aParts[3] = [75, 150, -1]
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("StatusBar: Setzt die minimale Höhe", 400, 300)
-	$hStatus = _GUICtrlStatusBar_Create($hGui)
+	Local $hGUI = GUICreate("StatusBar: Setzt die minimale Höhe (v" & @AutoItVersion & ")", 500, 300)
+	Local $hStatus = _GUICtrlStatusBar_Create($hGUI)
 	GUISetState(@SW_SHOW)
 
 	; Setzt die Abschnitte
+	Local $aParts[3] = [75, 150, -1]
 	_GUICtrlStatusBar_SetParts($hStatus, $aParts)
-	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 1")
-	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 2", 1)
-	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 3", 2)
+	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 0")
+	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 1", 1)
+	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 2", 2)
 
 	; Setzt die minimale Höhe
 	_GUICtrlStatusBar_SetMinHeight($hStatus, 30)

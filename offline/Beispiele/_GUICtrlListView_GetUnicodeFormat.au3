@@ -5,19 +5,18 @@
 Example()
 
 Func Example()
-	Local $idListView
-
-	GUICreate("ListView: Ermittelt das Unicode Format", 400, 300)
-	$idListView = GUICtrlCreateListView("", 2, 2, 394, 268)
+	GUICreate("ListView: Setzt und ermittelt das Unicode Format (v" & @AutoItVersion & ")", 400, 300)
+	Local $idListview = GUICtrlCreateListView("", 2, 2, 394, 268)
 	GUISetState(@SW_SHOW)
 
 	; Fügt die Spalten hinzu
-	_GUICtrlListView_AddColumn($idListView, "Items", 100)
+	_GUICtrlListView_AddColumn($idListview, "Items", 100)
 
 	; Setzt das Unicode Format
-	MsgBox($MB_SYSTEMMODAL, "Information", "Unicode: " & _GUICtrlListView_GetUnicodeFormat($idListView))
-	_GUICtrlListView_SetUnicodeFormat($idListView, True)
-	MsgBox($MB_SYSTEMMODAL, "Information", "Unicode: " & _GUICtrlListView_GetUnicodeFormat($idListView))
+	_GUICtrlListView_SetUnicodeFormat($idListview, False)
+	MsgBox($MB_SYSTEMMODAL, "Information", "Unicode: " & _GUICtrlListView_GetUnicodeFormat($idListview))
+	_GUICtrlListView_SetUnicodeFormat($idListview, True)
+	MsgBox($MB_SYSTEMMODAL, "Information", "Unicode: " & _GUICtrlListView_GetUnicodeFormat($idListview))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

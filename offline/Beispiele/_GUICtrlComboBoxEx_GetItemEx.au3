@@ -7,16 +7,14 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $hImage, $tItem, $sText, $iLen, $hCombo
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("ComboBoxEx: Ermittelt Item-Attribute", 400, 300)
-	$hCombo = _GUICtrlComboBoxEx_Create($hGui, "", 2, 2, 394, 100)
+	Local $hGUI = GUICreate("ComboBoxEx: Ermittelt Item-Attribute (v" & @AutoItVersion & ")", 500, 300)
+	Local $hCombo = _GUICtrlComboBoxEx_Create($hGUI, "", 2, 2, 394, 100)
 	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
 
-	$hImage = _GUIImageList_Create(16, 16, 5, 3)
+	Local $hImage = _GUIImageList_Create(16, 16, 5, 3)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", 110)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", 131)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", 165)
@@ -29,21 +27,22 @@ Func Example()
 	_GUICtrlComboBoxEx_SetImageList($hCombo, $hImage)
 
 	For $x = 0 To 8
-		_GUICtrlComboBoxEx_AddString($hCombo, StringFormat("%03d : Zufallstring", Random(1, 100, 1)), $x, $x)
+		_GUICtrlComboBoxEx_AddString($hCombo, StringFormat("%03d : String", $x), $x, $x)
 	Next
 
 	; Setzt den Itemabstand (Einrückung)
 	_GUICtrlComboBoxEx_SetItemIndent($hCombo, 1, 1)
 
 	; Erzeugt die Struktur
-	$tItem = DllStructCreate($tagCOMBOBOXEXITEM)
+	Local $tItem = DllStructCreate($tagCOMBOBOXEXITEM)
 	; Setzt die Maske für das Gewünschte
 	DllStructSetData($tItem, "Mask", BitOR($CBEIF_IMAGE, $CBEIF_INDENT, $CBEIF_LPARAM, $CBEIF_SELECTEDIMAGE, $CBEIF_OVERLAY))
 	; Setzt den Index des gewünschten Items
 	DllStructSetData($tItem, "Item", 3)
 
 	_GUICtrlComboBoxEx_GetItemEx($hCombo, $tItem)
-	$iLen = _GUICtrlComboBoxEx_GetItemText($hCombo, 1, $sText)
+	Local $sText
+	Local $iLen = _GUICtrlComboBoxEx_GetItemText($hCombo, 1, $sText)
 	MemoWrite("Item Text: " & $sText)
 	MemoWrite("Länge des Item-Textes ......................: " & $iLen)
 	MemoWrite("Anzahl der Bildbreiten bis zur Einrückung ..: " & DllStructGetData($tItem, "Indent"))
@@ -51,6 +50,18 @@ Func Example()
 	MemoWrite("0-basierender Itemstatusbilderindex ........: " & DllStructGetData($tItem, "SelectedImage"))
 	MemoWrite("0-basierender Itembilder-Overlay-Index: ....: " & DllStructGetData($tItem, "OverlayImage"))
 	MemoWrite("Anwendungsspezifischer Wert ................: " & DllStructGetData($tItem, "Param"))
+
+	; Ändert Item 1
+	MsgBox($MB_SYSTEMMODAL, "Information", "Ändert Item 1")
+	$tItem = DllStructCreate($tagCOMBOBOXEXITEM)
+	DllStructSetData($tItem, "Mask", $CBEIF_INDENT)
+	DllStructSetData($tItem, "Item", 1)
+	DllStructSetData($tItem, "Indent", 2)
+
+	_GUICtrlComboBoxEx_SetItemEx($hCombo, $tItem)
+
+	; Zegit das Dropdown
+	_GUICtrlComboBoxEx_ShowDropDown($hCombo, True)
 
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE

@@ -5,10 +5,8 @@
 Example()
 
 Func Example()
-	Local $hGui, $hIPAddress
-
-	$hGui = GUICreate("IpAddress: IP Adresse ermitteln (String)", 400, 300)
-	$hIPAddress = _GUICtrlIpAddress_Create($hGui, 10, 10)
+	Local $hGui = GUICreate("IpAddress: Setzt und ermittelt die IP Adresse ermitteln (String) (v" & @AutoItVersion & ")", 600, 300)
+	Local $hIPAddress = _GUICtrlIpAddress_Create($hGui, 10, 10)
 	GUISetState(@SW_SHOW)
 
 	_GUICtrlIpAddress_Set($hIPAddress, "24.168.2.128")

@@ -5,26 +5,28 @@
 Example()
 
 Func Example()
-	Local $aInfo, $idListView
-
-	GUICreate("ListView: Attribute der Spalte ermitteln", 400, 300)
-	$idListView = GUICtrlCreateListView("Spalte1|Spalte2|Spalte3", 2, 2, 394, 268)
-	_GUICtrlListView_SetExtendedListViewStyle($idListView, BitOR($LVS_EX_FULLROWSELECT, $LVS_EX_CHECKBOXES))
-	_GUICtrlListView_SetColumnWidth($idListView, 0, 100)
+	GUICreate("ListView: Attribute der Spalte ermitteln (v" & @AutoItVersion & ")", 500, 300)
+	Local $idListview = GUICtrlCreateListView("col0|col1|col2", 2, 2, 394, 268)
+	$idListview = GUICtrlCreateListView("Spalte1|Spalte2|Spalte3", 2, 2, 394, 268)
+	_GUICtrlListView_SetExtendedListViewStyle($idListview, BitOR($LVS_EX_FULLROWSELECT, $LVS_EX_CHECKBOXES))
+	_GUICtrlListView_SetColumnWidth($idListview, 0, 100)
 	GUISetState(@SW_SHOW)
 
-	GUICtrlCreateListViewItem("Index0|Daten1|mehr1", $idListView)
-	GUICtrlCreateListViewItem("Index1|Daten2|mehr2", $idListView)
-	GUICtrlCreateListViewItem("Index2|Daten3|mehr3", $idListView)
-	GUICtrlCreateListViewItem("Index3|Daten4|mehr4", $idListView)
-	GUICtrlCreateListViewItem("Index4|Daten5|mehr5", $idListView)
+	; Setzt das ANSI Format
+;~     _GUICtrlListView_SetUnicodeFormat($idListview, False)
+
+	GUICtrlCreateListViewItem("Index0|Daten0|mehr0", $idListview)
+	GUICtrlCreateListViewItem("Index1|Daten1|mehr1", $idListview)
+	GUICtrlCreateListViewItem("Index2|Daten2|mehr2", $idListview)
+	GUICtrlCreateListViewItem("Index3|Daten3|mehr3", $idListview)
+	GUICtrlCreateListViewItem("Index4|Daten4|mehr4", $idListview)
 
 	; Ändert die Attribute einer Spalte
-	$aInfo = _GUICtrlListView_GetColumn($idListView, 0)
-	MsgBox($MB_SYSTEMMODAL, "Information", "Spalte 1 Breite: " & $aInfo[4])
-	_GUICtrlListView_SetColumn($idListView, 0, "New Spalte 1", 150)
-	$aInfo = _GUICtrlListView_GetColumn($idListView, 0)
-	MsgBox($MB_SYSTEMMODAL, "Information", "Spalte 1 Breite: " & $aInfo[4])
+	Local $aInfo = _GUICtrlListView_GetColumn($idListview, 0)
+	MsgBox($MB_SYSTEMMODAL, "Information", "Spalte 0 Breite: " & $aInfo[4])
+	_GUICtrlListView_SetColumn($idListview, 0, "New Spalte 0", 150)
+	$aInfo = _GUICtrlListView_GetColumn($idListview, 0)
+	MsgBox($MB_SYSTEMMODAL, "Information", "Spalte 0 Breite: " & $aInfo[4])
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

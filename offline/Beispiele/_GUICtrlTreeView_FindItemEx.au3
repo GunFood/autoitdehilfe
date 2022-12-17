@@ -6,16 +6,18 @@
 Example()
 
 Func Example()
-	Local $aidItem[10], $hItemFound, $idTmp_item, $idTreeView
-	Local $iStyle = BitOR($TVS_EDITLABELS, $TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS, $TVS_CHECKBOXES)
-
-	GUICreate("TreeView: Ermittelt ein Item", 400, 300)
+	GUICreate("TreeView: Ermittelt ein Item (v" & @AutoItVersion & ")", 400, 300)
 	Opt("GUIDataSeparatorChar", "\")
 
-	$idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
+	Local $iStyle = BitOR($TVS_EDITLABELS, $TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS, $TVS_CHECKBOXES)
+	Local $idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
 	GUISetState(@SW_SHOW)
 
+	; Setzt das ANSI Format
+;~     _GUICtrlTreeView_SetUnicodeFormat($idTreeView, False)
+
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
+	Local $aidItem[10], $idTmp_item
 	For $x = 0 To 3
 		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
 		For $y = 0 To 2
@@ -31,7 +33,7 @@ Func Example()
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)
 
-	$hItemFound = _GUICtrlTreeView_FindItemEx($idTreeView, "[03] Neues Item\[02] Neues Item\Suchst du nach mir?")
+	Local $hItemFound = _GUICtrlTreeView_FindItemEx($idTreeView, "[03] Neues Item\[02] Neues Item\Suchst du nach mir?")
 	If $hItemFound Then
 		_GUICtrlTreeView_SelectItem($idTreeView, $hItemFound)
 		MsgBox($MB_SYSTEMMODAL, "Information", "Item gefunden:" & @CRLF & "Handle: " & $hItemFound & @CRLF & "Text: " & _GUICtrlTreeView_GetText($idTreeView, $hItemFound))

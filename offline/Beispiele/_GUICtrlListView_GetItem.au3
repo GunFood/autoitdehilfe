@@ -7,18 +7,25 @@ Example()
 Func Example()
 	Local $aItem, $idListView
 
-	GUICreate("ListView: Item ermitteln", 400, 300)
+	GUICreate("ListView: Setzt und ermittelt das Item (v" & @AutoItVersion & ")", 500, 300)
 
-	$idListView = GUICtrlCreateListView("Items", 2, 2, 394, 268)
+	$idListView = GUICtrlCreateListView("", 2, 2, 394, 268)
 	GUISetState(@SW_SHOW)
 
+	; Fügt Spalten hinzu
+	_GUICtrlListView_AddColumn($idListView, "Items", 100)
+
+	GUICtrlCreateListViewItem("Zeile 0", $idListView)
 	GUICtrlCreateListViewItem("Zeile 1", $idListView)
 	GUICtrlCreateListViewItem("Zeile 2", $idListView)
-	GUICtrlCreateListViewItem("Zeile 3", $idListView)
 
-	; Setzt den Text von dem Item 2
+	; Setzt den Text von dem Item 1
 	$aItem = _GUICtrlListView_GetItem($idListView, 1)
-	MsgBox($MB_SYSTEMMODAL, "Information", "Item 2 Text: " & $aItem[3])
+	MsgBox($MB_SYSTEMMODAL, "Information", "Item 1 Text: " & $aItem[3])
+
+	; Ändert Item 1
+	MsgBox($MB_SYSTEMMODAL, "Information", "Item 1 wird geändert")
+	_GUICtrlListView_SetItem($idListView, "Neues Item 1", 1)
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

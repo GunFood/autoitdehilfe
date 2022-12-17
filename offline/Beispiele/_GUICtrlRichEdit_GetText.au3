@@ -7,17 +7,17 @@ Global $g_idLblMsg
 Example()
 
 Func Example()
-	Local $hGui, $hRichEdit, $iMsg
-	$hGui = GUICreate("Beispiel (" & StringTrimRight(@ScriptName, 4) & ")", 320, 350, -1, -1)
-	$hRichEdit = _GUICtrlRichEdit_Create($hGui, "Dies ist ein Test.", 10, 10, 300, 220, _
+	Local $hGui = GUICreate("RichEdit: Setzt und ermittelt Text (v" & @AutoItVersion & ")", 440, 350, -1, -1)
+	Local $hRichEdit = _GUICtrlRichEdit_Create($hGui, "Dies ist ein Test.", 10, 10, 320, 220, _
 			BitOR($ES_MULTILINE, $WS_VSCROLL, $ES_AUTOVSCROLL))
 	$g_idLblMsg = GUICtrlCreateLabel("", 10, 235, 300, 60)
 	GUISetState(@SW_SHOW)
 
-	_GUICtrlRichEdit_AppendText($hRichEdit, @CR & "Dies ist angehängter Text.")
+	_GUICtrlRichEdit_SetText($hRichEdit, "Dies ist angehängter Text.")
 
-	Report("Inhalt: " & @CR & @CR & _GUICtrlRichEdit_GetText($hRichEdit))
+	Report("Inhalt: " & @CRLF & @CRLF & _GUICtrlRichEdit_GetText($hRichEdit))
 
+	Local $iMsg
 	While True
 		$iMsg = GUIGetMsg()
 		Select

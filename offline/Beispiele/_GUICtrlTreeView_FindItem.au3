@@ -6,35 +6,38 @@
 Example()
 
 Func Example()
-	Local $aidItem[10], $hItemFound, $idTreeView
+	GUICreate("TreeView: Item suchen (v" & @AutoItVersion & ")", 400, 300)
+
 	Local $iStyle = BitOR($TVS_EDITLABELS, $TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS, $TVS_CHECKBOXES)
-
-	GUICreate("TreeView: Item suchen", 400, 300)
-
-	$idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
+	Local $idTreeview = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
 	GUISetState(@SW_SHOW)
 
-	_GUICtrlTreeView_BeginUpdate($idTreeView)
+	; Setzt das ANSI Format
+;~     _GUICtrlTreeView_SetUnicodeFormat($idTreeview, False)
+
+	_GUICtrlTreeView_BeginUpdate($idTreeview)
+	Local $aidItem[10]
 	For $x = 0 To 3
-		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
+		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeview)
 		For $y = 0 To 2
 			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $y), $aidItem[$x])
 		Next
 	Next
-	$aidItem[4] = GUICtrlCreateTreeViewItem(StringFormat("Suchst du nach mir?", $x), $idTreeView)
+	$aidItem[4] = GUICtrlCreateTreeViewItem(StringFormat("Suchst du nach mir?", $x), $idTreeview)
 	For $x = 5 To 9
-		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
+		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeview)
 		For $y = 0 To 2
 			GUICtrlCreateTreeViewItem(StringFormat("[%02d] NeuesItem", $y), $aidItem[$x])
 		Next
 	Next
-	_GUICtrlTreeView_EndUpdate($idTreeView)
+	_GUICtrlTreeView_EndUpdate($idTreeview)
 
-	$hItemFound = _GUICtrlTreeView_FindItem($idTreeView, "Suchst du nach mir?")
+	Local $hItemFound = _GUICtrlTreeView_FindItem($idTreeview, "Suchst du nach mir?")
 	If $hItemFound Then
-		MsgBox($MB_SYSTEMMODAL, "Information", "Item gefunden:" & @CRLF & "Handle: " & $hItemFound & @CRLF & "Text: " & _GUICtrlTreeView_GetText($idTreeView, $hItemFound))
+		_GUICtrlTreeView_SelectItem($idTreeview, $hItemFound)
+		MsgBox($MB_SYSTEMMODAL, "Information", "Item gefunden:" & @CRLF & "Handle: " & $hItemFound & @CRLF & "Text: " & _GUICtrlTreeView_GetText($idTreeview, $hItemFound))
 	Else
-		MsgBox($MB_SYSTEMMODAL, "Information", "Nicht gefunden")
+		MsgBox($MB_SYSTEMMODAL + $MB_ICONERROR, "Information", "Nicht gefunden")
 	EndIf
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.

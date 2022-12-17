@@ -5,23 +5,30 @@
 Example()
 
 Func Example()
-	Local $aPos, $idListView
-
-	GUICreate("ListView: Ermittelt die Itemposition", 400, 300)
-	$idListView = GUICtrlCreateListView("", 2, 2, 394, 268)
+	GUICreate("ListView: Ermittelt die Itemposition (v" & @AutoItVersion & ")", 500, 300)
+	Local $idListview = GUICtrlCreateListView("", 2, 2, 394, 268)
 	GUISetState(@SW_SHOW)
 
+	; Setzt das ANSI Format
+;~     _GUICtrlListView_SetUnicodeFormat($idListview, False)
+
+
 	; Fügt die Spalten hinzu
-	_GUICtrlListView_AddColumn($idListView, "Items", 100)
+	_GUICtrlListView_AddColumn($idListview, "Items", 100)
 
 	; Fügt die Items hinzu
-	_GUICtrlListView_AddItem($idListView, "Item 1")
-	_GUICtrlListView_AddItem($idListView, "Item 2")
-	_GUICtrlListView_AddItem($idListView, "Item 3")
+	_GUICtrlListView_AddItem($idListview, "Item 0")
+	_GUICtrlListView_AddItem($idListview, "Item 1")
+	_GUICtrlListView_AddItem($idListview, "Item 2")
 
 	; Ermittelt die Position von Item 2
-	$aPos = _GUICtrlListView_GetItemPosition($idListView, 1)
-	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Item 2 Position : [%d, %d]", $aPos[0], $aPos[1]))
+	Local $aPos = _GUICtrlListView_GetItemPosition($idListview, 1)
+	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Item 1 Position : [%d, %d]", $aPos[0], $aPos[1]))
+
+	; Setzt die Iconansicht
+	_GUICtrlListView_SetView($idListview, 3)
+	MsgBox($MB_SYSTEMMODAL, "Information", "Item 1 verschieben")
+	_GUICtrlListView_SetItemPosition($idListview, 1, 100, 100)
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

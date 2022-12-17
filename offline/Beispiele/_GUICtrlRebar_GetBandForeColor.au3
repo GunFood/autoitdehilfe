@@ -9,19 +9,18 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $idBtnExit, $hReBar, $hToolbar, $idInput
-	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
-
-	$hGui = GUICreate("Rebar", 400, 396, -1, -1, BitOR($WS_MINIMIZEBOX, $WS_CAPTION, $WS_POPUP, $WS_SYSMENU, $WS_MAXIMIZEBOX))
+	Local $hGui = GUICreate("Rebar: Setzt die Vordergrundfarbe der Gruppe (v" & @AutoItVersion & ")", 500, 396, -1, -1, BitOR($WS_MINIMIZEBOX, $WS_CAPTION, $WS_POPUP, $WS_SYSMENU, $WS_MAXIMIZEBOX))
 
 	; Erstellt ein Rebar-Control
-	$hReBar = _GUICtrlRebar_Create($hGui, BitOR($CCS_TOP, $WS_BORDER, $RBS_VARHEIGHT, $RBS_AUTOSIZE, $RBS_BANDBORDERS))
+	Local $hReBar = _GUICtrlRebar_Create($hGui, BitOR($CCS_TOP, $WS_BORDER, $RBS_VARHEIGHT, $RBS_AUTOSIZE, $RBS_BANDBORDERS))
 
-	$g_idMemo = GUICtrlCreateEdit("", 2, 100, 396, 250, $WS_VSCROLL)
+	$g_idMemo = GUICtrlCreateEdit("", 2, 30, 396, 320, $WS_VSCROLL)
+
 	GUICtrlSetFont($g_idMemo, 10, 400, 0, "Courier New")
 
 	; Erstellt eine Toolbar in der Rebar
-	$hToolbar = _GUICtrlToolbar_Create($hGui, BitOR($TBSTYLE_FLAT, $CCS_NORESIZE, $CCS_NOPARENTALIGN))
+	Local $hToolbar = _GUICtrlToolbar_Create($hGui, BitOR($TBSTYLE_FLAT, $CCS_NORESIZE, $CCS_NOPARENTALIGN))
+
 
 	; Fügt die Standard Systembitmaps hinzu
 	Switch _GUICtrlToolbar_GetBitmapFlags($hToolbar)
@@ -32,6 +31,8 @@ Func Example()
 	EndSwitch
 
 	; Fügt die Buttons hinzu
+	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
+
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idNew, $STD_FILENEW)
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idOpen, $STD_FILEOPEN)
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idSave, $STD_FILESAVE)
@@ -39,7 +40,8 @@ Func Example()
 	_GUICtrlToolbar_AddButton($hToolbar, $idHelp, $STD_HELP)
 
 	; Erstellt eine Inputbox in der Rebar
-	$idInput = GUICtrlCreateInput("Input-Control", 0, 0, 120, 20)
+	Local $idInput = GUICtrlCreateInput("Input-Control", 0, 0, 120, 20)
+
 
 	; Fügt eine Gruppe mit dem Control hinzu
 	_GUICtrlRebar_AddBand($hReBar, GUICtrlGetHandle($idInput), 120, 200, "Name:")
@@ -58,7 +60,7 @@ Func Example()
 		MemoWrite("Vordergrundfarbe: " & _GUICtrlRebar_GetBandForeColor($hReBar, $x))
 	Next
 
-	$idBtnExit = GUICtrlCreateButton("Exit", 150, 360, 100, 25)
+	Local $idBtnExit = GUICtrlCreateButton("Exit", 150, 360, 100, 25)
 	GUICtrlSetState($idBtnExit, $GUI_DEFBUTTON)
 	GUICtrlSetState($idBtnExit, $GUI_FOCUS)
 

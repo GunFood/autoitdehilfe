@@ -7,16 +7,17 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGUI, $hImage, $aDrag, $hListView
+	Local $hGUI = GUICreate("(UDF) ListView: Erstellt eine Imagelist für das bestimmte Item (v" & @AutoItVersion & ")", 600, 300)
 
-	$hGUI = GUICreate("(UDF) ListView: Erstellt eine Imagelist für das bestimmte Item", 500, 300)
-
-	$hListView = _GUICtrlListView_Create($hGUI, "", 2, 2, 394, 268)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 124, 396, 174, 0)
+	Local $hListView = _GUICtrlListView_Create($hGUI, "", 2, 2, 494, 118)
+	$g_idMemo = GUICtrlCreateEdit("", 2, 124, 496, 174, 0)
 	GUISetState(@SW_SHOW)
 
+	; Setzt das ANSI Format
+;~     _GUICtrlListView_SetUnicodeFormat($hListView, False)
+
 	; Lädt die Bilder
-	$hImage = _GUIImageList_Create()
+	Local $hImage = _GUIImageList_Create()
 	_GUIImageList_Add($hImage, _GUICtrlListView_CreateSolidBitMap($hListView, 0xFF0000, 16, 16))
 	_GUIImageList_Add($hImage, _GUICtrlListView_CreateSolidBitMap($hListView, 0x00FF00, 16, 16))
 	_GUIImageList_Add($hImage, _GUICtrlListView_CreateSolidBitMap($hListView, 0x0000FF, 16, 16))
@@ -33,7 +34,7 @@ Func Example()
 	_GUICtrlListView_AddItem($hListView, "Blau", 2)
 
 	; Erstellt eine Imagelist für das bestimmte Item
-	$aDrag = _GUICtrlListView_CreateDragImage($hListView, 0)
+	Local $aDrag = _GUICtrlListView_CreateDragImage($hListView, 0)
 	_GUICtrlListView_DrawDragImage($hListView, $aDrag)
 
 	MemoWrite("Drag Image Handle = 0x" & Hex($aDrag[0]) & " IsPtr = " & IsPtr($aDrag[0]) & " IsHWnd = " & IsHWnd($aDrag[0]))

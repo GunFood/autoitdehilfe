@@ -5,20 +5,21 @@
 #include <WinAPIConstants.au3>
 #include <WindowsConstants.au3>
 
-Global Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
+Global Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $e_idHelp
 
 Example()
 
 Func Example()
-	Local $hGui, $hToolbar, $hToolTip
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("Toolbar", 400, 300)
-	$hToolbar = _GUICtrlToolbar_Create($hGui)
+	Local $hGUI = GUICreate("Toolbar: Setzt und ermittelt ToolTips (v" & @AutoItVersion & ")", 500, 300)
+	Local $hToolbar = _GUICtrlToolbar_Create($hGUI)
 	GUISetState(@SW_SHOW)
 
+	; Setzt das ANSI Format
+;~     _GUICtrlToolbar_SetUnicodeFormat($hToolbar, False)
+
 	; Erstellt eine ToolTip
-	$hToolTip = _GUIToolTip_Create($hToolbar)
+	Local $hToolTip = _GUIToolTip_Create($hToolbar)
 	_GUICtrlToolbar_SetToolTips($hToolbar, $hToolTip)
 
 	; Fügt die Standard-Systembitmaps hinzu
@@ -37,8 +38,7 @@ Func Example()
 	_GUICtrlToolbar_AddButton($hToolbar, $idHelp, $STD_HELP)
 
 	; Zeigt das Handle des ToolTips
-	MsgBox($MB_SYSTEMMODAL, "Information", "Handle des ToolTips .: 0x" & Hex(_GUICtrlToolbar_GetToolTips($hToolbar)) & @CRLF & _
-			"IsPtr = " & IsPtr(_GUICtrlToolbar_GetToolTips($hToolbar)) & " IsHWnd = " & IsHWnd(_GUICtrlToolbar_GetToolTips($hToolbar)))
+	MsgBox($MB_SYSTEMMODAL, "Information", "Handle des ToolTip .: 0x" & Hex(_GUICtrlToolbar_GetToolTips($hToolbar)))
 
 	GUIRegisterMsg($WM_NOTIFY, "WM_NOTIFY")
 
@@ -49,7 +49,7 @@ EndFunc   ;==>Example
 
 ; Verarbeitet die WM_NOTIFY Nachricht
 Func WM_NOTIFY($hWnd, $iMsg, $wParam, $lParam)
-	#forceref $hWnd, $iMsg, $wParam, $lParam
+	#forceref $hWnd, $iMsg, $wParam
 	Local $tInfo, $iID, $iCode
 
 	$tInfo = DllStructCreate($tagNMTTDISPINFO, $lParam)

@@ -1,3 +1,6 @@
+; == Beispiel 1 : _GUICtrlEdit_AppendText()
+
+#include <Extras\WM_NOTIFY.au3>
 #include <GUIConstantsEx.au3>
 #include <GuiEdit.au3>
 #include <WinAPIConv.au3>
@@ -8,11 +11,9 @@ Global $g_hEdit
 _Example1()
 
 Func _Example1()
-	Local $hGui
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("Edit: Erstellen", 400, 300)
-	$g_hEdit = _GUICtrlEdit_Create($hGui, "Dies ist ein Test" & @CRLF & "Noch eine Zeile", 2, 2, 394, 268)
+	Local $hGUI = GUICreate("Edit: Erstellen (v" & @AutoItVersion & ")", 400, 300)
+	$g_hEdit = _GUICtrlEdit_Create($hGUI, "Dies ist ein Test" & @CRLF & "Noch eine Zeile", 2, 2, 394, 268)
 	GUISetState(@SW_SHOW)
 
 	GUIRegisterMsg($WM_COMMAND, "WM_COMMAND")
@@ -27,48 +28,34 @@ EndFunc   ;==>_Example1
 
 Func WM_COMMAND($hWnd, $iMsg, $wParam, $lParam)
 	#forceref $hWnd, $iMsg
-	Local $hWndFrom, $iIDFrom, $iCode, $hWndEdit
+	Local $hWndEdit = $g_hEdit
 	If Not IsHWnd($g_hEdit) Then $hWndEdit = GUICtrlGetHandle($g_hEdit)
-	$hWndFrom = $lParam
-	$iIDFrom = _WinAPI_LoWord($wParam)
-	$iCode = _WinAPI_HiWord($wParam)
+	Local $hWndFrom = $lParam
+	Local $iIDFrom = _WinAPI_LoWord($wParam)
+	Local $iCode = _WinAPI_HiWord($wParam)
 	Switch $hWndFrom
 		Case $g_hEdit, $hWndEdit
 			Switch $iCode
 				Case $EN_ALIGN_LTR_EC ; Gesendet, wenn der Benutzer die Textausrichtung im Input-Control zu Links nach Rechts gewechselt hat
-					_DebugPrint("$EN_ALIGN_LTR_EC" & @CRLF & "--> hWndFrom:" & @TAB & $hWndFrom & @CRLF & _
-							"-->IDFrom:" & @TAB & $iIDFrom & @CRLF & _
-							"-->Code:" & @TAB & $iCode)
+					_WM_NOTIFY_DebugInfo("$EN_ALIGN_LTR_EC", "hWndFrom,IDFrom", $hWndFrom, $iIDFrom)
 					; Kein Rückgabewert
 				Case $EN_ALIGN_RTL_EC ; Gesendet, wenn der Benutzer die Textausrichtung im Input-Control zu Rechts nach Links gewechselt hat
-					_DebugPrint("$EN_ALIGN_RTL_EC" & @CRLF & "--> hWndFrom:" & @TAB & $hWndFrom & @CRLF & _
-							"-->IDFrom:" & @TAB & $iIDFrom & @CRLF & _
-							"-->Code:" & @TAB & $iCode)
+					_WM_NOTIFY_DebugInfo("$EN_ALIGN_RTL_EC", "hWndFrom,IDFrom", $hWndFrom, $iIDFrom)
 					; Kein Rückgabewert
 				Case $EN_CHANGE ; Gesendet, wenn der Benutzer eine Aktion ausgeführt hat, die möglicherweise Text im Input-Control geändert hat
-					_DebugPrint("$EN_CHANGE" & @CRLF & "--> hWndFrom:" & @TAB & $hWndFrom & @CRLF & _
-							"-->IDFrom:" & @TAB & $iIDFrom & @CRLF & _
-							"-->Code:" & @TAB & $iCode)
+					_WM_NOTIFY_DebugInfo("$EN_CHANGE", "hWndFrom,IDFrom", $hWndFrom, $iIDFrom)
 					; Kein Rückgabewert
 				Case $EN_ERRSPACE ; Gesendet, wenn ein Input-Control nicht genug Speicher reservieren konnte, um der Anforderung dessen zu entsprechen
-					_DebugPrint("$EN_ERRSPACE" & @CRLF & "--> hWndFrom:" & @TAB & $hWndFrom & @CRLF & _
-							"-->IDFrom:" & @TAB & $iIDFrom & @CRLF & _
-							"-->Code:" & @TAB & $iCode)
+					_WM_NOTIFY_DebugInfo("$EN_ERRSPACE", "hWndFrom,IDFrom", $hWndFrom, $iIDFrom)
 					; Kein Rückgabewert
 				Case $EN_HSCROLL ; Gesendet, wenn der Benutzer auf die horizontale Scrollbar des Input-Controls klickt
-					_DebugPrint("$EN_HSCROLL" & @CRLF & "--> hWndFrom:" & @TAB & $hWndFrom & @CRLF & _
-							"-->IDFrom:" & @TAB & $iIDFrom & @CRLF & _
-							"-->Code:" & @TAB & $iCode)
+					_WM_NOTIFY_DebugInfo("$EN_HSCROLL", "hWndFrom,IDFrom", $hWndFrom, $iIDFrom)
 					; Kein Rückgabewert
 				Case $EN_KILLFOCUS ; Gesendet, wenn ein Input-Control den Tastaturfokus verliert
-					_DebugPrint("$EN_KILLFOCUS" & @CRLF & "--> hWndFrom:" & @TAB & $hWndFrom & @CRLF & _
-							"-->IDFrom:" & @TAB & $iIDFrom & @CRLF & _
-							"-->Code:" & @TAB & $iCode)
+					_WM_NOTIFY_DebugInfo("$EN_KILLFOCUS", "hWndFrom,IDFrom", $hWndFrom, $iIDFrom)
 					; Kein Rückgabewert
 				Case $EN_MAXTEXT ; Gesendet, wenn das aktuelle Einfügen von Text die festgelegte Anzahl von Zeichen für das Input-Control überschritten hat
-					_DebugPrint("$EN_MAXTEXT" & @CRLF & "--> hWndFrom:" & @TAB & $hWndFrom & @CRLF & _
-							"-->IDFrom:" & @TAB & $iIDFrom & @CRLF & _
-							"-->Code:" & @TAB & $iCode)
+					_WM_NOTIFY_DebugInfo("$EN_MAXTEXT", "hWndFrom,IDFrom", $hWndFrom, $iIDFrom)
 					; Diese Nachricht wird ebenso gesendet, wenn ein Input-Control nicht den Stil $ES_AUTOHSCROLL besitzt und die Anzahl der einzufügenden
 					; Zeichen die Breite des Input-Controls überschreitet.
 					; Diese Nachricht wird ebenso gesendet, wenn ein Input-Control nicht den Stil $ES_AUTOHSCROLL besitzt und die gesamte Anzahl der Zeilen,
@@ -76,29 +63,15 @@ Func WM_COMMAND($hWnd, $iMsg, $wParam, $lParam)
 
 					; Kein Rückgabewert
 				Case $EN_SETFOCUS ; Gesendet, wenn ein Input-Control den Tastaturfokus erhält
-					_DebugPrint("$EN_SETFOCUS" & @CRLF & "--> hWndFrom:" & @TAB & $hWndFrom & @CRLF & _
-							"-->IDFrom:" & @TAB & $iIDFrom & @CRLF & _
-							"-->Code:" & @TAB & $iCode)
+					_WM_NOTIFY_DebugInfo("$EN_SETFOCUS", "hWndFrom,IDFrom", $hWndFrom, $iIDFrom)
 					; Kein Rückgabewert
 				Case $EN_UPDATE ; Gesendet, wenn ein Input-Control davor ist, sich zu neuzuzeichnen
-					_DebugPrint("$EN_UPDATE" & @CRLF & "--> hWndFrom:" & @TAB & $hWndFrom & @CRLF & _
-							"-->IDFrom:" & @TAB & $iIDFrom & @CRLF & _
-							"-->Code:" & @TAB & $iCode)
+					_WM_NOTIFY_DebugInfo("$EN_UPDATE", "hWndFrom,IDFrom", $hWndFrom, $iIDFrom)
 					; Kein Rückgabewert
 				Case $EN_VSCROLL ; Gesendet, wenn der Benutzer auf die vertikale Scrollbar des Input-Controls klickt oder wenn der Benutzer das Mausrad über dem Input-Control rollt
-					_DebugPrint("$EN_VSCROLL" & @CRLF & "--> hWndFrom:" & @TAB & $hWndFrom & @CRLF & _
-							"-->IDFrom:" & @TAB & $iIDFrom & @CRLF & _
-							"-->Code:" & @TAB & $iCode)
+					_WM_NOTIFY_DebugInfo("$EN_VSCROLL", "hWndFrom,IDFrom", $hWndFrom, $iIDFrom)
 					; Kein Rückgabewert
 			EndSwitch
 	EndSwitch
 	Return $GUI_RUNDEFMSG
 EndFunc   ;==>WM_COMMAND
-
-Func _DebugPrint($s_text, $sLine = @ScriptLineNumber)
-	ConsoleWrite( _
-			"!===========================================================" & @CRLF & _
-			"+======================================================" & @CRLF & _
-			"-->Zeile(" & StringFormat("%04d", $sLine) & "):" & @TAB & $s_text & @CRLF & _
-			"+======================================================" & @CRLF)
-EndFunc   ;==>_DebugPrint

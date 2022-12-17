@@ -6,22 +6,21 @@
 Example()
 
 Func Example()
-	Local $hStatusBar, $idEdit, $hGui
 	Local $sWow64 = ""
 	If @AutoItX64 Then $sWow64 = "\Wow6432Node"
 	Local $sFile = RegRead("HKEY_LOCAL_MACHINE\SOFTWARE" & $sWow64 & "\AutoIt v3\AutoIt", "InstallDir") & "\include\changelog.txt"
-	Local $aPartRightSide[6] = [50, 130, 210, 290, 378, -1], $aRect
 
 	; Erstellt eine GUI
-	$hGui = GUICreate("Edit: Ermittelt das formatierte Rechteck", 400, 300)
-	$idEdit = GUICtrlCreateEdit("", 2, 2, 394, 268, BitOR($ES_WANTRETURN, $WS_VSCROLL))
-	$hStatusBar = _GUICtrlStatusBar_Create($hGui, $aPartRightSide)
+	Local $hGUI = GUICreate("Edit: Setzt und ermittelt das formatierte Rechteck (v" & @AutoItVersion & ")", 500, 300)
+	Local $idEdit = GUICtrlCreateEdit("", 2, 2, 394, 268, BitOR($ES_WANTRETURN, $WS_VSCROLL))
+	Local $aPartRightSide[6] = [50, 75, 75, 75, 75, -1]
+	Local $hStatusBar = _GUICtrlStatusBar_Create($hGUI, $aPartRightSide)
 	_GUICtrlStatusBar_SetIcon($hStatusBar, 5, 97, "shell32.dll")
 	_GUICtrlStatusBar_SetText($hStatusBar, "Rect")
 	GUISetState(@SW_SHOW)
 
 	; Ermittelt das formatierte Rechteck
-	$aRect = _GUICtrlEdit_GetRECT($idEdit)
+	Local $aRect = _GUICtrlEdit_GetRECT($idEdit)
 	$aRect[0] += 10
 	$aRect[1] += 10
 	$aRect[2] -= 10
@@ -32,7 +31,7 @@ Func Example()
 
 	; Fügt den Text hinzu
 	_GUICtrlEdit_AppendText($idEdit, FileRead($sFile))
-	_GUICtrlEdit_LineScroll($idEdit, 0, _GUICtrlEdit_GetLineCount($idEdit) * - 1)
+	_GUICtrlEdit_LineScroll($idEdit, 0, _GUICtrlEdit_GetLineCount($idEdit) * -1)
 
 	; Ermittelt das formatierte Rechteck
 	$aRect = _GUICtrlEdit_GetRECT($idEdit)

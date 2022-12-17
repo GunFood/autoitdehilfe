@@ -8,11 +8,9 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $idMonthCal
-
 	; Erstellt eine GUI
-	GUICreate("MonthCal: Farbe ermitteln", 400, 300)
-	$idMonthCal = GUICtrlCreateMonthCal("", 4, 4, -1, -1, $WS_BORDER, 0x00000000)
+	GUICreate("MonthCal: Setzt und ermittelt die Farbe (v" & @AutoItVersion & ")", 500, 300)
+	Local $idMonthCal = GUICtrlCreateMonthCal("", 4, 4, -1, -1, $WS_BORDER, 0x00000000)
 
 	; Erstellt ein Memo Control
 	$g_idMemo = GUICtrlCreateEdit("", 4, 188, 392, 128, 0)
@@ -21,7 +19,6 @@ Func Example()
 
 	; Ermittelt/Setzt die Kalenderfarbe
 	MemoWrite("Hintergrund: 0x" & Hex(_GUICtrlMonthCal_GetColor($idMonthCal, $MCSC_MONTHBK), 6))
-	; _GUICtrlMonthCal_SetColor($idMonthCal, $MCSC_MONTHBK, $CLR_MONEYGREEN)
 	_GUICtrlMonthCal_SetColor($idMonthCal, $MCSC_TEXT, 0xB02B00)
 	_GUICtrlMonthCal_SetColor($idMonthCal, $MCSC_TITLEBK, 0x5EFFFE)
 	_GUICtrlMonthCal_SetColor($idMonthCal, $MCSC_TITLETEXT, 0x0000FF)

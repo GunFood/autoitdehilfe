@@ -9,7 +9,7 @@ Global $g_hImage, $g_hStateImage
 Example()
 
 Func Example()
-	GUICreate("TreeView: Ermittelt die Ebene eines Items (v" & @AutoItVersion & ")", 400, 300)
+	GUICreate("TreeView: Ermittelt die Ebene eines Items (v" & @AutoItVersion & ")", 500, 300)
 
 	Local $iStyle = BitOR($TVS_EDITLABELS, $TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS)
 	Local $idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)

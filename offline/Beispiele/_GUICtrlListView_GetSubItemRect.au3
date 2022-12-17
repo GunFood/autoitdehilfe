@@ -5,7 +5,7 @@
 Example()
 
 Func Example()
-	GUICreate("ListView: Ermittelt Informationen über das begrenzende Rechteck eines Items (v" & @AutoItVersion & ")", 400, 300)
+	GUICreate("ListView: Ermittelt Informationen über das begrenzende Rechteck eines Items (v" & @AutoItVersion & ")", 700, 300)
 	Local $idListview = GUICtrlCreateListView("", 2, 2, 394, 268)
 	GUISetState(@SW_SHOW)
 
@@ -13,9 +13,9 @@ Func Example()
 ;~     _GUICtrlListView_SetUnicodeFormat($idListview, False)
 
 	; Fügt die Spalten hinzu
-	_GUICtrlListView_AddColumn($idListview, "Spalte 1", 100)
-	_GUICtrlListView_AddColumn($idListview, "Spalte 2", 100)
-	_GUICtrlListView_AddColumn($idListview, "Spalte 3", 100)
+	_GUICtrlListView_AddColumn($idListview, "Spalte 1", 120)
+	_GUICtrlListView_AddColumn($idListview, "Spalte 2", 120)
+	_GUICtrlListView_AddColumn($idListview, "Spalte 3", 120)
 
 	; Fügt die Items hinzu
 	_GUICtrlListView_AddItem($idListview, "Zeile 1: Spalte 1")

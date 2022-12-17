@@ -6,7 +6,7 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui = GUICreate("IP Address: Setzt und ermittelt die IP-Adresse (v" & @AutoItVersion & ")", 400, 300)
+	Local $hGui = GUICreate("IP Address: Setzt und ermittelt die IP-Adresse (v" & @AutoItVersion & ")", 500, 300)
 	Local $hIPAddress = _GUICtrlIpAddress_Create($hGui, 2, 4, 125, 20)
 
 	$g_idMemo = GUICtrlCreateEdit("", 2, 28, 396, 270, 0)

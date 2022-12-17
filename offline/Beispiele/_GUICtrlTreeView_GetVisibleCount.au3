@@ -6,12 +6,10 @@
 Example()
 
 Func Example()
-	Local $idTreeView
+	GUICreate("TreeView: Gibt die Anzahl von Items zurück, die komplett sichtbar sind (v" & @AutoItVersion & ")", 600, 300)
+
 	Local $iStyle = BitOR($TVS_EDITLABELS, $TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS)
-
-	GUICreate("TreeView: Gibt die Anzahl von Items zurück, die komplett sichtbar sind", 550, 300)
-
-	$idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
+	Local $idTreeView = GUICtrlCreateTreeView(2, 2, 396, 268, $iStyle, $WS_EX_CLIENTEDGE)
 	GUISetState(@SW_SHOW)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)

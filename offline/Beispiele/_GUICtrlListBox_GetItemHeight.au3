@@ -5,17 +5,15 @@
 Example()
 
 Func Example()
-	Local $idListBox
-
 	; Erstellt eine GUI
-	GUICreate("ListBox: Ermittelt die Itemhöhe", 400, 296)
-	$idListBox = GUICtrlCreateList("", 2, 2, 396, 296)
+	GUICreate("ListBox: Setzt und ermittelt die Itemhöhe (v" & @AutoItVersion & ")", 500, 296)
+	Local $idListBox = GUICtrlCreateList("", 2, 2, 396, 296)
 	GUISetState(@SW_SHOW)
 
 	; Fügt Strings hinzu
 	_GUICtrlListBox_BeginUpdate($idListBox)
-	For $iI = 1 To 9
-		_GUICtrlListBox_AddString($idListBox, StringFormat("%03d : Zufallstring", Random(1, 100, 1)))
+	For $iI = 0 To 9
+		_GUICtrlListBox_AddString($idListBox, StringFormat("%03d : String", $iI))
 	Next
 	_GUICtrlListBox_EndUpdate($idListBox)
 

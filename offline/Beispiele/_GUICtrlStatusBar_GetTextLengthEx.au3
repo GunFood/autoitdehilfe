@@ -7,12 +7,9 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Global $hGui, $iI, $hStatus
-	Global $aParts[3] = [75, 150, -1]
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("StatusBar: Ermittelt die Textlänge", 400, 300)
-	$hStatus = _GUICtrlStatusBar_Create($hGui, $SBT_NOBORDERS)
+	Local $hGUI = GUICreate("StatusBar: Ermittelt die Textlänge (v" & @AutoItVersion & ")", 400, 300)
+	Local $hStatus = _GUICtrlStatusBar_Create($hGUI, $SBT_NOBORDERS)
 
 	; Erstellt ein Memo Control
 	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 396, 274, $WS_VSCROLL)
@@ -20,10 +17,11 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	; Setzt die Abschnitte
+	Local $aParts[3] = [75, 150, -1]
 	_GUICtrlStatusBar_SetParts($hStatus, $aParts)
-	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 1", 0, $SBT_POPOUT)
-	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 2", 1, $SBT_NOBORDERS)
-	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 3", 2, $SBT_NOTABPARSING)
+	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 0", 0, $SBT_POPOUT)
+	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 1", 1, $SBT_NOBORDERS)
+	_GUICtrlStatusBar_SetText($hStatus, "Abschnitt 2", 2, $SBT_NOTABPARSING)
 
 
 	; Ermittelt Textinformationen

@@ -8,17 +8,17 @@ Global $g_idListView, $g_idListView2
 Example()
 
 Func Example()
-	Local $hImage, $aIcons[3] = [0, 3, 6]
+	Local $aIcons[3] = [0, 3, 6]
 	Local $iExWindowStyle = BitOR($WS_EX_DLGMODALFRAME, $WS_EX_CLIENTEDGE)
 	Local $iExListViewStyle = BitOR($LVS_EX_FULLROWSELECT, $LVS_EX_SUBITEMIMAGES, $LVS_EX_GRIDLINES, $LVS_EX_CHECKBOXES, $LVS_EX_DOUBLEBUFFER)
 
-	GUICreate("ListView: Sortieren (Behandelt Zahlen als Strings)", 450, 200, 100)
+	GUICreate("ListView: Sortieren (Behandelt Zahlen als Strings) (v" & @AutoItVersion & ")", 500, 200, 100)
 
 	$g_idListView = GUICtrlCreateListView("Spalte 1|Spalte 2|Spalte 3", 10, 10, 430, 180, -1, $iExWindowStyle)
 	_GUICtrlListView_SetExtendedListViewStyle($g_idListView, $iExListViewStyle)
 
 	; Lädt die Bilder
-	$hImage = _GUIImageList_Create(18, 18, 5, 3)
+	Local $hImage = _GUIImageList_Create(18, 18, 5, 3)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", -7)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", -12)
 	_GUIImageList_AddIcon($hImage, @SystemDir & "\shell32.dll", -3)
@@ -36,7 +36,10 @@ Func Example()
 
 	GUISetState(@SW_SHOW)
 
-	GUICreate("ListView: Sortieren (Behandelt Zahlen als Ziffern)", 400, 200, 560)
+	; Setzt das ANSI Format
+;~     _GUICtrlListView_SetUnicodeFormat($g_idListView, False)
+
+	GUICreate("ListView: Sortieren (Behandelt Zahlen als Ziffern)", 500, 200, 660)
 
 	$g_idListView2 = GUICtrlCreateListView("Spalte 1|Spalte 2|Spalte 3", 10, 10, 380, 180, -1, $iExWindowStyle)
 	_GUICtrlListView_SetExtendedListViewStyle($g_idListView2, $iExListViewStyle)
@@ -47,6 +50,9 @@ Func Example()
 	_AddRow($g_idListView2, "CDE|555|12.05.2004", $aIcons, 2)
 
 	GUISetState(@SW_SHOW)
+
+	; Setzt das ANSI Format
+;~     _GUICtrlListView_SetUnicodeFormat($g_idListView, False)
 
 	_GUICtrlListView_RegisterSortCallBack($g_idListView, 0)
 	_GUICtrlListView_RegisterSortCallBack($g_idListView2)
@@ -99,5 +105,5 @@ Func _WM_NOTIFY($hWnd, $iMsg, $wParam, $lParam)
 					; Kein Rückgabewert
 			EndSwitch
 	EndSwitch
-	Return $__LISTVIEWCONSTANT_GUI_RUNDEFMSG
+	Return $GUI_RUNDEFMSG
 EndFunc   ;==>_WM_NOTIFY

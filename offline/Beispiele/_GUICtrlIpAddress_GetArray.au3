@@ -6,14 +6,13 @@ Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $aIP[4] = [24, 168, 2, 128], $hIPAddress
-
-	$hGui = GUICreate("IpAddress: IP Adresse ermitteln (Array)", 400, 300)
-	$hIPAddress = _GUICtrlIpAddress_Create($hGui, 2, 4, 125, 20)
+	Local $hGui = GUICreate("IpAddress: Setzt und ermittelt die IP Adresse (Array) (v" & @AutoItVersion & ")", 500, 300)
+	Local $hIPAddress = _GUICtrlIpAddress_Create($hGui, 2, 4, 125, 20)
 	$g_idMemo = GUICtrlCreateEdit("", 2, 28, 396, 270, 0)
 	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
 
+	Local $aIP[4] = [24, 168, 2, 128]
 	_GUICtrlIpAddress_SetArray($hIPAddress, $aIP)
 
 	$aIP = _GUICtrlIpAddress_GetArray($hIPAddress)

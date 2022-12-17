@@ -1,4 +1,4 @@
-#RequireAdmin ; Für Änderungen im System
+#RequireAdmin ; erforderlich, wenn im Benutzermodus gearbeitet wird
 
 #include <MsgBoxConstants.au3>
 #include <Security.au3>
@@ -14,10 +14,17 @@ If $hToken Then
 		;... Hier alle Funktionen hinein, die mit dem Token arbeiten ...
 		MsgBox($MB_SYSTEMMODAL, "TokenPrivileges", $SE_DEBUG_NAME & " aktiviert!")
 		; Deaktivieren:
-		_Security__SetPrivilege($hToken, $SE_DEBUG_NAME, False)
-		MsgBox($MB_SYSTEMMODAL, "TokenPrivileges", $SE_DEBUG_NAME & " deaktiviert!")
+		If _Security__SetPrivilege($hToken, $SE_DEBUG_NAME, False) Then
+			MsgBox($MB_SYSTEMMODAL, "TokenPrivileges", $SE_DEBUG_NAME & " deaktiviert!")
+		Else
+			MsgBox($MB_ICONERROR + $MB_SYSTEMMODAL, "TokenPrivileges", $SE_DEBUG_NAME & " deaktiviert FAILED!")
+		EndIf
+	Else
+		MsgBox($MB_ICONERROR + $MB_SYSTEMMODAL, "TokenPrivileges", $SE_DEBUG_NAME & " aktiviert FAILED!")
 	EndIf
 
-	; Handle schließen:
+	; Handle schließen
 	_WinAPI_CloseHandle($hToken)
+Else
+	MsgBox($MB_ICONERROR + $MB_SYSTEMMODAL, "OpenProcessToken", "TOKEN_ALL_ACCESS FAILED!")
 EndIf
