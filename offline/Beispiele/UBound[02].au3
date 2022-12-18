@@ -4,19 +4,19 @@ _Example()
 
 Func _Example()
 
-	ConsoleWrite("> $aTest_1_Empty_Array" & @CRLF)
+	ConsoleWrite("> $aTest_1_Leeres_Array" & @CRLF)
 	Local $aTest_1_Empty_Array[]
 	ConsoleWrite(UBound($aTest_1_Empty_Array, $UBOUND_DIMENSIONS) & @CRLF)
 	ConsoleWrite(UBound($aTest_1_Empty_Array, $UBOUND_ROWS) & @CRLF)
 	ConsoleWrite(UBound($aTest_1_Empty_Array, $UBOUND_COLUMNS) & @CRLF)
 
-	ConsoleWrite("> $aTest_2_Empty_1D" & @CRLF)
+	ConsoleWrite("> $aTest_2_Leeres_1D" & @CRLF)
 	Local $aTest_2_Empty_1D[0]
 	ConsoleWrite(UBound($aTest_2_Empty_1D, $UBOUND_DIMENSIONS) & @CRLF)
 	ConsoleWrite(UBound($aTest_2_Empty_1D, $UBOUND_ROWS) & @CRLF)
 	ConsoleWrite(UBound($aTest_2_Empty_1D, $UBOUND_COLUMNS) & @CRLF)
 
-	ConsoleWrite("> $aTest_3_Empty_2D" & @CRLF)
+	ConsoleWrite("> $aTest_3_Leeres_2D" & @CRLF)
 	Local $aTest_3_Empty_2D[0][5]
 	ConsoleWrite(UBound($aTest_3_Empty_2D, $UBOUND_DIMENSIONS) & @CRLF)
 	ConsoleWrite(UBound($aTest_3_Empty_2D, $UBOUND_ROWS) & @CRLF)

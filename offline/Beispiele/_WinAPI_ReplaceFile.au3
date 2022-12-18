@@ -13,15 +13,15 @@ For $i = 1 To 10000
 Next
 FileClose($hFile)
 
-Local $sNewFile = @TempDir & '\TestNew.tmp'
+Local $sNewFile = @TempDir & '\TestNeu.tmp'
 FileCopy($sFile, $sNewFile)
 If Not _WinAPI_ReplaceFile($sNewFile, $sFile) Then
-	_WinAPI_ShowLastError('Error replacing no backup : ' & $sFile)
+	_WinAPI_ShowLastError('Fehler beim Ersetzen einer nicht vorhandenen Sicherung : ' & $sFile)
 EndIf
 
 FileCopy($sNewFile, $sFile, 1)
 If Not _WinAPI_ReplaceFile($sNewFile, $sFile, @TempDir & '\TestBackup.tmp') Then
-	_WinAPI_ShowLastError('Error replacing : ' & $sFile)
+	_WinAPI_ShowLastError('Fehler beim Ersetzen : ' & $sFile)
 EndIf
 
 FileDelete(@TempDir & '\Test*.tmp')

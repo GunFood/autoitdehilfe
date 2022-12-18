@@ -2,7 +2,8 @@
 #include <FTPEx.au3>
 #include <MsgBoxConstants.au3>
 
-Local $sServer = 'speedtest.tele2.net'
+;~ Local $sServer = 'ftp.cs.brown.edu' ; Brown Computer Science
+Local $sServer = 'speedtest.tele2.net' ; Tele2 Speedtest Service
 Local $sUsername = ''
 Local $sPass = ''
 

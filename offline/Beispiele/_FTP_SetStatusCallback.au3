@@ -5,7 +5,8 @@
 
 _DebugSetup(StringTrimRight(@ScriptName, StringLen(".exe")) & ' example', True)
 
-Local $sServer = 'ftp.mozilla.org'
+;~ Local $sServer = 'ftp.cs.brown.edu' ; Brown Computer Science
+Local $sServer = 'speedtest.tele2.net' ; Tele2 Speedtest Service
 Local $sUsername = ''
 Local $sPass = ''
 

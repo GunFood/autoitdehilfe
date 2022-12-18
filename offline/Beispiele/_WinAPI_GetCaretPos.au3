@@ -3,7 +3,7 @@
 
 _DebugSetup('Test', True)
 
-GUICreate("test caret")
+GUICreate("Test Caret")
 GUICtrlCreateInput("", 10, 10)
 GUISetState()
 

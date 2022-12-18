@@ -8,28 +8,28 @@
 Example()
 
 Func Example()
-	Local $hGUI = GUICreate("ListView Set Info Tip (v" & @AutoItVersion & ")", 400, 300)
+	Local $hGUI = GUICreate("ListView: Setzt den Infotip (v" & @AutoItVersion & ")", 400, 300)
 	_WinAPI_SetThemeAppProperties($STAP_ALLOW_CONTROLS)
 	_SendMessage($hGUI, $WM_THEMECHANGED)
 
 	Local $idListview = GUICtrlCreateListView("", 2, 2, 394, 268)
 	GUISetState(@SW_SHOW)
 
-	; Set ANSI format
+	; Setzt das ANSI Format
 ;~     _GUICtrlListView_SetUnicodeFormat($idListview, False)
 
-	; Add columns
+	; Fügt Spalten hinzu
 	_GUICtrlListView_AddColumn($idListview, "Items", 100)
 
-	; Add items
+	; Fügt Items hinzu
 	GUICtrlCreateListViewItem("Item 0", $idListview)
 	GUICtrlCreateListViewItem("Item 1", $idListview)
 	GUICtrlCreateListViewItem("Item 2", $idListview)
 
-	; Change item 1
+	; Ändert Item 1
 	_GUICtrlListView_SetInfoTip($idListview, 1, "InfoTip Item 1")
 
-	; Loop until the user exits.
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

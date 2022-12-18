@@ -1,13 +1,14 @@
 #include <FTPEx.au3>
 
-Local $sServer = 'speedtest.tele2.net'
+;~ Local $sServer = 'ftp.cs.brown.edu' ; Brown Computer Science
+Local $sServer = 'speedtest.tele2.net' ; Tele2 Speedtest Service
 Local $sUsername = ''
 Local $sPass = ''
 
 Local $hOpen = _FTP_Open('MyFTP Control')
 Local $hConn = _FTP_Connect($hOpen, $sServer, $sUsername, $sPass)
 
-Local $aFile = _FTP_ListToArray($hConn, 2)
+Local $aFile = _FTP_ListToArray($hConn, 0)
 ConsoleWrite('$NbFound = ' & $aFile[0] & '  -> Fehlercode: ' & @error & @CRLF)
 ConsoleWrite('$FileName = ' & $aFile[1] & @CRLF)
 

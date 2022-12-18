@@ -4,14 +4,14 @@
 #include <WinAPISys.au3>
 
 If Number(_WinAPI_GetVersion()) < 6.0 Then
-	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Error', 'Require Windows Vista or later.')
+	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Fehler', 'Benötigt Windows Vista oder neuer.')
 	Exit
 EndIf
 
 If _WinAPI_IsInternetConnected() Then
-	ConsoleWrite('Internet is already connected.' & @CRLF)
+	ConsoleWrite('Internet ist bereits verbunden.' & @CRLF)
 	Exit
 EndIf
 
-; Launch the Get Connected wizard within the calling application to enable Internet connectivity
+; Startet den Assistenten "Get Connected" innerhalb der anrufenden Anwendung, um die Internetverbindung zu aktivieren
 _WinAPI_GetConnectedDlg(1, 1 + 4)

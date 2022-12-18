@@ -1,8 +1,8 @@
 #include <MsgBoxConstants.au3>
 
-Local $mMap[] ; Declare a map.
+Local $mMap[] ; Eine Map deklarieren.
 If IsMap($mMap) Then
-	MsgBox($MB_SYSTEMMODAL, "", "The variable is a map")
+	MsgBox($MB_SYSTEMMODAL, "", "Die Variable ist eine Map")
 Else
-	MsgBox($MB_SYSTEMMODAL, "", "The variable is not a map")
+	MsgBox($MB_SYSTEMMODAL, "", "Die Variable ist keine Map")
 EndIf

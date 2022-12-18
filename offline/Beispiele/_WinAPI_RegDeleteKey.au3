@@ -12,15 +12,15 @@ Func Example()
 	Local $sSubKey = "SOFTWARE\MyApp"
 
 	Local $sMyKey = $sKey & "\" & $sSubKey
-	_DebugReport('@@ Debug(' & @ScriptLineNumber & ') : $sMyKey = ' & $sMyKey & @CRLF & '>Error code: ' & @error & '    Extended code: ' & @extended & ' (0x' & Hex(@extended) & ')' & @CRLF) ;### Debug Console
+	_DebugReport('@@ Debug(' & @ScriptLineNumber & ') : $sMyKey = ' & $sMyKey & @CRLF & '>Fehlercode: ' & @error & '    Erweiterter Code: ' & @extended & ' (0x' & Hex(@extended) & ')' & @CRLF) ;### Debug Konsole
 
 	Local $hOpenKey = _WinAPI_RegCreateKey($sMyKey)
-	_DebugReport('@@ Debug(' & @ScriptLineNumber & ') : $hOpenKey = ' & $hOpenKey & @CRLF & '>Error code: ' & @error & '    Extended code: ' & @extended & ' (0x' & Hex(@extended) & ')' & @CRLF) ;### Debug Console
+	_DebugReport('@@ Debug(' & @ScriptLineNumber & ') : $hOpenKey = ' & $hOpenKey & @CRLF & '>Fehlercode: ' & @error & '    Erweiterter Code: ' & @extended & ' (0x' & Hex(@extended) & ')' & @CRLF) ;### Debug Konsole
 
 	Local $iRegDelete = _WinAPI_RegDeleteKey($hOpenKey)
-	_DebugReport('@@ Debug(' & @ScriptLineNumber & ') : $iRegDelete = ' & $iRegDelete & @CRLF & '>Error code: ' & @error & '    Extended code: ' & @extended & ' (0x' & Hex(@extended) & ')' & @CRLF) ;### Debug Console
+	_DebugReport('@@ Debug(' & @ScriptLineNumber & ') : $iRegDelete = ' & $iRegDelete & @CRLF & '>Fehlercode: ' & @error & '    Erweiterter Code: ' & @extended & ' (0x' & Hex(@extended) & ')' & @CRLF) ;### Debug Konsole
 
 	Local $iRegClose = _WinAPI_RegCloseKey($hOpenKey)
-	_DebugReport('@@ Debug(' & @ScriptLineNumber & ') : $iRegClose = ' & $iRegClose & @CRLF & '>Error code: ' & @error & '    Extended code: ' & @extended & ' (0x' & Hex(@extended) & ')' & @CRLF) ;### Debug Console
+	_DebugReport('@@ Debug(' & @ScriptLineNumber & ') : $iRegClose = ' & $iRegClose & @CRLF & '>Fehlercode: ' & @error & '    Erweiterter Code: ' & @extended & ' (0x' & Hex(@extended) & ')' & @CRLF) ;### Debug Konsole
 
 EndFunc   ;==>Example

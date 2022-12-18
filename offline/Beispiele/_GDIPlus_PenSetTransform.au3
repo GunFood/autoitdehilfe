@@ -15,8 +15,7 @@ Func Example()
 	Local $hPen = _GDIPlus_PenCreate(0xFF4488FF, 2, 0)
 	_GDIPlus_GraphicsDrawRect($hGraphic, 20, 20, 300, 320, $hPen)
 
-	;Scale the pen width by a factor of 10 in the horizontal
-	;direction and a factor of 5 in the vertical direction
+	;Skaliert die Stiftbreite um den Faktor 10 in der horizontalen Richtung und deb Faktor 5 in der vertikalen Richtung
 	Local $hMatrix = _GDIPlus_MatrixCreate2(10, 0, 0, 5, 0, 0)
 	_GDIPlus_PenSetTransform($hPen, $hMatrix)
 	_GDIPlus_GraphicsDrawRect($hGraphic, 340, 20, 300, 320, $hPen)

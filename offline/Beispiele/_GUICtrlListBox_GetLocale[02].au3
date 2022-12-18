@@ -7,20 +7,20 @@
 Example()
 
 Func Example()
-	; Create GUI
-	GUICreate("List Box Get/Set Locale (v" & @AutoItVersion & ")", 400, 296)
+	; Erstellt eine GUI
+	GUICreate("ListBox: Setzt und ermittelt das Gebietsschema  (v" & @AutoItVersion & ")", 500, 296)
 	Local $idListBox = GUICtrlCreateList("", 2, 2, 396, 296)
 	GUISetState(@SW_SHOW)
 
 	Local $iLocale = _WinAPI_MAKELCID(_WinAPI_MAKELANGID($LANG_DUTCH, $SUBLANG_DUTCH), $SORT_DEFAULT)
 
-	MsgBox($MB_SYSTEMMODAL, "Information", "Previous Locale: " & _GUICtrlListBox_SetLocale($idListBox, $iLocale))
+	MsgBox($MB_SYSTEMMODAL, "Information", "bisheriges Gebietsschema: " & _GUICtrlListBox_SetLocale($idListBox, $iLocale))
 
 	$iLocale = _WinAPI_MAKELCID(_WinAPI_MAKELANGID($LANG_ENGLISH, $SUBLANG_ENGLISH_US), $SORT_DEFAULT)
 
-	MsgBox($MB_SYSTEMMODAL, "Information", "Previous Locale: " & _GUICtrlListBox_SetLocale($idListBox, $iLocale))
+	MsgBox($MB_SYSTEMMODAL, "Information", "bisheriges Gebietsschema: " & _GUICtrlListBox_SetLocale($idListBox, $iLocale))
 
-	; Loop until the user exits.
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()

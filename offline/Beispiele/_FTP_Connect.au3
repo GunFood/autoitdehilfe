@@ -4,7 +4,8 @@
 _Example()
 
 Func _Example()
-	Local $sServer = 'speedtest.tele2.net'
+;~ 	Local $sServer = 'ftp.cs.brown.edu' ; Brown Computer Science
+	Local $sServer = 'speedtest.tele2.net' ; Tele2 Speedtest Service
 	Local $sUsername = ''
 	Local $sPass = ''
 

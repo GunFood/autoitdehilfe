@@ -2,7 +2,7 @@
 #include <GuiListView.au3>
 #include <WinAPISysWin.au3>
 
-Example() ; A ListView control created with an external ListView
+Example() ; Ein ListView-Steuerelement, das mit einem externen ListView erstellt wurde
 
 Func Example()
 	Local $sExternalScript = StringReplace(@ScriptName, "[2]", "")
@@ -11,13 +11,13 @@ Func Example()
 
 	Local $hListView = _WinAPI_EnumChildWindows($hWin)[1][0]
 
-	; Get rect of Group ID 2
-	Local $aInfo = _GUICtrlListView_GetGroupRect($hListview, 2)
-	MsgBox($MB_SYSTEMMODAL, "Information (external)", "Rect :" & @TAB & @TAB & @TAB & @CRLF & _
-			@TAB & "Left..: " & $aInfo[0] & @CRLF & _
-			@TAB & "Top...: " & $aInfo[1] & @CRLF & _
-			@TAB & "Right.: " & $aInfo[2] & @CRLF & _
-			@TAB & "Bottom: " & $aInfo[3])
+	; Ermittelt das Rechteck der Gruppen-ID 2
+	Local $aInfo = _GUICtrlListView_GetGroupRect($hListView, 2)
+	MsgBox($MB_SYSTEMMODAL, "Information (extern)", "Rechteck :" & @TAB & @TAB & @TAB & @CRLF & _
+			@TAB & "Links..: " & $aInfo[0] & @CRLF & _
+			@TAB & "Oben...: " & $aInfo[1] & @CRLF & _
+			@TAB & "Rechts.: " & $aInfo[2] & @CRLF & _
+			@TAB & "Unten..: " & $aInfo[3])
 
 	ProcessClose($iPID)
 

@@ -1,9 +1,12 @@
 ; Option 3, globale Rückgabe, alter AutoIt-Stil
 
-#include <MsgBoxConstants.au3>
+#include <Array.au3>
 #include <StringConstants.au3>
 
 Local $aArray = StringRegExp('<test>a</test> <test>b</test> <test>c</Test>', '(?i)<test>(.*?)</test>', $STR_REGEXPARRAYGLOBALMATCH)
-For $i = 0 To UBound($aArray) - 1
-	MsgBox($MB_SYSTEMMODAL, "RegExp-Test mit Option 3 - " & $i, $aArray[$i])
-Next
+#cs
+	1. Capturing Gruppe (.*?)
+	. Findet jedes einzelne Zeichen außer, standardmäßig, eines Zeilenumbruchs
+	*? findet Zeichen zwischen null und unbegrenzt oft, aber so wenig wie möglich, Erweiterung nach Bedarf (träge)
+#ce
+_ArrayDisplay($aArray, "Option 3 Ergebnisse")

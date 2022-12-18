@@ -1,17 +1,20 @@
-#include <FTPEx.au3>
+#include "FTPEx.au3"
 
-Local $sServer = 'speedtest.tele2.net'
+;~ Local $sServer = 'ftp.cs.brown.edu' ; Brown Computer Science
+Local $sServer = 'speedtest.tele2.net' ; Tele2 Speedtest Service
 Local $sUsername = ''
 Local $sPass = ''
 
 Local $hOpen = _FTP_Open('MyFTP Control')
 Local $hConn = _FTP_Connect($hOpen, $sServer, $sUsername, $sPass)
 
+;~ Local $sRemoteDir = "/pub/papers/graphics/research/"
+Local $sRemoteDir = "/"
 Local $h_Handle
-Local $aFile = _FTP_FindFileFirst($hConn, "/pub/software/programming/pcre/", $h_Handle)
+Local $aFile = _FTP_FindFileFirst($hConn, $sRemoteDir, $h_Handle)
 ConsoleWrite('$sFileName = ' & $aFile[10] & ' attribute = ' & $aFile[1] & '  -> Fehlercode: ' & @error & ' extended: ' & @extended & @CRLF)
 
-Local $sDirset = _FTP_DirSetCurrent($hConn, "/pub/software/programming/pcre/")
+Local $sDirset = _FTP_DirSetCurrent($hConn, $sRemoteDir)
 ConsoleWrite('$sDirset = ' & $sDirset & '  -> Fehlercode: ' & @error & ' extended: ' & @extended & @CRLF)
 
 Local $iFileSize = _FTP_FileGetSize($hConn, $aFile[10])
