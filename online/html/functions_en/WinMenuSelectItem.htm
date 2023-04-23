@@ -3,15 +3,62 @@
 <head>
 <title>Function WinMenuSelectItem</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Function Reference</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">WinMenuSelectItem</h1><br />
-<a href="../functions/WinMenuSelectItem.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Show description in</div><br />
+<div class="top"><h1>WinMenuSelectItem</h1><div>
+<div id="flagtext">Show description in</div>
+<div id="flaglink"> <a href="../functions/WinMenuSelectItem.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_de.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Invokes a menu item of a window.<br /></p>
 <p class="codeheader">
 WinMenuSelectItem ( "title", "text", "item" [, "item" [, "item" [, "item" [, "item" [, "item" [, "item"]]]]]] )<br />
@@ -21,11 +68,11 @@ WinMenuSelectItem ( "title", "text", "item" [, "item" [, "item" [, "item" [, "it
 <table>
 <tr>
 <td style="width:15%">title</td>
-<td style="width:85%">The title/hWnd/class of the window to select the item. See <a href="../intro/windowsadvanced.htm">Title special definition</a>.</td>
+<td style="width:85%">The title/hWnd/class of the window to select the item. See <a href="../intro/windowsadvanced.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Title special definition</a>.</td>
 </tr>
 <tr>
 <td>text</td>
-<td>The text of the window to select the item. See <a href="../intro/windowsbasic.htm#specialtext">Text special definition</a>.</td>
+<td>The text of the window to select the item. See <a href="../intro/windowsbasic.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#specialtext>Text special definition</a>.</td>
 </tr>
 <tr>
 <td>item</td>
@@ -72,11 +119,11 @@ WinMenuSelectItem ( "title", "text", "item" [, "item" [, "item" [, "item" [, "it
 <h2>Remarks</h2>
 <p>You should note that underlined menu items actually contain a & character to indicate the underlining. Thus, the menu item <strong><u>F</u>ile</strong> would actually require the text "&File", and <strong>Con<u>v</u>ert</strong> would require "Con&vert" You can access menu items up to six levels deep; and the window can be inactive, minimized, and/or even hidden.<br />
 <br />
-<a href="WinMenuSelectItem.htm">WinMenuSelectItem()</a> will only work on standard menus. Unfortunately, many menus in use today are actually custom written or toolbars "pretending" to be menus. This is true for most Microsoft applications.<br />
+<a href="WinMenuSelectItem.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">WinMenuSelectItem()</a> will only work on standard menus. Unfortunately, many menus in use today are actually custom written or toolbars "pretending" to be menus. This is true for most Microsoft applications.<br />
 </p>
 
 <h2>Related</h2>
-<p><a href="ControlCommand.htm">ControlCommand</a>, <a href="Send.htm">Send</a></p>
+<p><a href="ControlCommand.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ControlCommand</a>, <a href="Send.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Send</a></p>
 
 <h2 class="bottom">Example</h2>
 <script type="text/javascript">
@@ -112,7 +159,7 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <pre>
 <span><span class="S1">; This will select File and then Page Setup in notepad</span>
 
-<a class="codeSnippetLink" href="../functions/WinMenuSelectItem.htm"><span class="S4">WinMenuSelectItem</span></a><span class="S8">(</span><span class="S7">"[CLASS:Notepad]"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"&amp;File"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Page Set&amp;up..."</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/WinMenuSelectItem.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">WinMenuSelectItem</span></a><span class="S8">(</span><span class="S7">"[CLASS:Notepad]"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"&amp;File"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Page Set&amp;up..."</span><span class="S8">)</span>
 <span class="S0"></span></span>
 </pre>
 </div>

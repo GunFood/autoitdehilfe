@@ -3,15 +3,62 @@
 <head>
 <title>Funktion WinMove</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Funktionreferenz</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">WinMove</h1><br />
-<a href="../functions_en/WinMove.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<div class="top"><h1>WinMove</h1><div>
+<div id="flagtext">Beschreibung anzeigen in</div>
+<div id="flaglink"> <a href="../functions_en/WinMove.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_en.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Verschiebt oder und &auml;ndert die Gr&ouml;&szlig;e eines Fensters.<br /></p>
 <p class="codeheader">
 WinMove ( "title", "text", x, y [, width [, height [, speed]]] )<br />
@@ -21,7 +68,7 @@ WinMove ( "title", "text", x, y [, width [, height [, speed]]] )<br />
 <table>
 <tr>
 <td style="width:15%">title</td>
-<td style="width:85%">Der Titel / das Handle / die Klasse des zu ver&auml;ndernden Fensters. Siehe <a href="../intro/windowsadvanced.htm">Erweiterte Fenstertiteldefinition</a>.</td>
+<td style="width:85%">Der Titel / das Handle / die Klasse des zu ver&auml;ndernden Fensters. Siehe <a href="../intro/windowsadvanced.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Erweiterte Fenstertiteldefinition</a>.</td>
 </tr>
 <tr>
 <td>text</td>
@@ -62,18 +109,18 @@ WinMove ( "title", "text", x, y [, width [, height [, speed]]] )<br />
 </table>
 
 <h2>Bemerkungen</h2>
-<p><a href="WinMove.htm">WinMove()</a> arbeitet zwar nicht mit minimierten, wohl aber mit versteckten Fenstern.<br />
+<p><a href="WinMove.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">WinMove()</a> arbeitet zwar nicht mit minimierten, wohl aber mit versteckten Fenstern.<br />
 Werden die Breite sehr gro&szlig; oder die H&ouml;he sehr klein (oder negativ) angegeben, kann das Fenster nicht kleiner als 112 x 27 Pixel werden. Ist die Breite und H&ouml;he sehr gro&szlig; angegeben, kann das Fenster nicht gr&ouml;&szlig;er als ca. [12+@DesktopWidth] x [12+@DesktopHeight] Pixel werden.<br />
 Negative Werte sind f&uuml;r die X- und Y-Koordinaten erlaubt. Damit kann ein Fenster auch aus dem Bildschirm hinaus bewegt werden. Ist es nun ein Programm, welches sich an seine letzte Fensterposition erinnert, wird das Fenster am Fensterrand erscheinen, aber noch voll auf dem Bildschirm.<br />
 Falls mehrere Fenster das Kriterium erf&uuml;llen, wird das zuletzt aktive Fenster genommen.<br />
 <br />
-Werden x und y mit "default" angegeben (<a href="../keywords/Default.htm">Schl&uuml;sselwort Default</a>) wird nur die Fenstergr&ouml;&szlig;e ge&auml;ndert.<br />
+Werden x und y mit "default" angegeben (<a href="../keywords/Default.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Schl&uuml;sselwort Default</a>) wird nur die Fenstergr&ouml;&szlig;e ge&auml;ndert.<br />
 <br />
 Wenn "speed" angegeben ist, wird die Bewegung mit der neuen Gr&ouml;&szlig;e vollzogen.<br />
 </p>
 
 <h2>Verwandte Funktionen</h2>
-<p><a href="WinActivate.htm">WinActivate</a>, <a href="WinClose.htm">WinClose</a>, <a href="WinGetClientSize.htm">WinGetClientSize</a>, <a href="WinGetPos.htm">WinGetPos</a>, <a href="WinSetState.htm">WinSetState</a></p>
+<p><a href="WinActivate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">WinActivate</a>, <a href="WinClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">WinClose</a>, <a href="WinGetClientSize.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">WinGetClientSize</a>, <a href="WinGetPos.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">WinGetPos</a>, <a href="WinSetState.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">WinSetState</a></p>
 
 <h2 class="bottom">Beispiel</h2>
 <script type="text/javascript">
@@ -109,31 +156,31 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <pre>
 <span><span class="S0">Example</span><span class="S8">()</span>
 
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Startet den Editor</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Run.htm"><span class="S4">Run</span></a><span class="S8">(</span><span class="S7">"notepad.exe"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Run.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Run</span></a><span class="S8">(</span><span class="S7">"notepad.exe"</span><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Wartet maximal 10 Sekunden bis das Editorfenster erscheint.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hWnd</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/WinWait.htm"><span class="S4">WinWait</span></a><span class="S8">(</span><span class="S7">"[CLASS:Notepad]"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hWnd</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/WinWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">WinWait</span></a><span class="S8">(</span><span class="S7">"[CLASS:Notepad]"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Ermittelt die Position als auch die H&ouml;he und Breite des aktiven Fensters. Dies wird verwendet wenn das Fenster wieder in die urspr&uuml;ngliche Position zur&uuml;ckverschoben werden soll.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aPos</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/WinGetPos.htm"><span class="S4">WinGetPos</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aPos</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/WinGetPos.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">WinGetPos</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Verschiebt den Editor auf die X-Position von 0 und Y-Position von 0 und setzt die H&ouml;he auf 200 und Breite auf 200.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinMove.htm"><span class="S4">WinMove</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinMove.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">WinMove</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">,</span><span class="S0"> </span><span class="S3">200</span><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Wartet 2 Sekunden um neue Position des Editorfensters darzustellen.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">2000</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">2000</span><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Verschiebt das Editorfenster zur&uuml;ck auf die urspr&uuml;ngliche Position durch die Verwendung des von WinGetPos zur&uuml;ckgegebenen Arrays.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinMove.htm"><span class="S4">WinMove</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aPos</span><span class="S8">[</span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$aPos</span><span class="S8">[</span><span class="S3">1</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$aPos</span><span class="S8">[</span><span class="S3">2</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$aPos</span><span class="S8">[</span><span class="S3">3</span><span class="S8">])</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinMove.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">WinMove</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aPos</span><span class="S8">[</span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$aPos</span><span class="S8">[</span><span class="S3">1</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$aPos</span><span class="S8">[</span><span class="S3">2</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$aPos</span><span class="S8">[</span><span class="S3">3</span><span class="S8">])</span>
 
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Wartet 2 Sekunden um urspr&uuml;ngliche Position des Editorfensters darzustellen.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">2000</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">2000</span><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Schlie&szlig;t das Editorfenster durch die Verwendung des von WinWait zur&uuml;ckgegebenen Handles.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinClose.htm"><span class="S4">WinClose</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">WinClose</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
 <span class="S0"></span></span>
 </pre>
 </div>

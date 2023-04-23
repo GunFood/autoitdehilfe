@@ -3,14 +3,61 @@
 <head>
 <title>Funktion _WinAPI_EnumProcessModules</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Funktionreferenz</h1>
 <hr style="height:0px">
-<h1>_WinAPI_EnumProcessModules</h1>
-<p class="funcdesc">Retrieves a handle and name for each module in the specified process<br /></p>
+<div class="top"><h1>_WinAPI_EnumProcessModules</h1><div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
+<p style="margin:2px 0 0 0;" class="funcdesc">Retrieves a handle and name for each module in the specified process<br /></p>
 <p class="codeheader">
 #include &lt;WinAPIProc.au3&gt;<br />
 _WinAPI_EnumProcessModules ( [$iPID = 0 [, $iFlag = 0]] )<br />
@@ -51,12 +98,12 @@ Constants are defined in APIProcConstants.au3</td>
 
 <h2>Bemerkungen</h2>
 <p>This function does not retrieve handles for modules that were loaded with the $LOAD_LIBRARY_AS_DATAFILE flag.<br />
-For more information, see <a href="_WinAPI_LoadLibraryEx.htm">_WinAPI_LoadLibraryEx()</a>.<br />
+For more information, see <a href="_WinAPI_LoadLibraryEx.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_LoadLibraryEx()</a>.<br />
 <br />
-Do not call <a href="_WinAPI_CloseHandle.htm">_WinAPI_CloseHandle()</a> on any of the handles returned by this function.<br />
+Do not call <a href="_WinAPI_CloseHandle.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_CloseHandle()</a> on any of the handles returned by this function.<br />
 The information comes from a snapshot, so there are no resources to be freed.<br />
 <br />
-If <a href="_WinAPI_EnumProcessModules.htm">_WinAPI_EnumProcessModules()</a> is called from a 32-bit application running on WOW64, it can only enumerate the modules of a 32-bit process.<br />
+If <a href="_WinAPI_EnumProcessModules.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_EnumProcessModules()</a> is called from a 32-bit application running on WOW64, it can only enumerate the modules of a 32-bit process.<br />
 If the process is a 64-bit process, this function fails and the last error code is ERROR_PARTIAL_COPY (299).<br />
 </p>
 
@@ -96,19 +143,19 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIProc.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPISys.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIProc.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPISys.au3&gt;</span>
 
-<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S8">(</span><a class="codeSnippetLink" href="../functions/Number.htm"><span class="S4">Number</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetVersion.htm"><span class="S15">_WinAPI_GetVersion</span></a><span class="S8">())</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;</span></a><span class="S0"> </span><span class="S3">6.0</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">And</span></a><span class="S0"> </span><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@AutoItX64"><span class="S6">@AutoItX64</span></a><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">((</span><span class="S9">$MB_ICONERROR</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">),</span><span class="S0"> </span><span class="S7">'Fehler'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Dieses Beispiel funktioniert bei einem 64-bit System nur in Windows Vista oder neuer.'</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a>
-<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<a class="codeSnippetLink" href="../keywords/If.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">If</span></a><span class="S0"> </span><span class="S8">(</span><a class="codeSnippetLink" href="../functions/Number.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Number</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetVersion.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_WinAPI_GetVersion</span></a><span class="S8">())</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">&lt;</span></a><span class="S0"> </span><span class="S3">6.0</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">And</span></a><span class="S0"> </span><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@AutoItX64><span class="S6">@AutoItX64</span></a><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">((</span><span class="S9">$MB_ICONERROR</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">+</span></a><span class="S0"> </span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">),</span><span class="S0"> </span><span class="S7">'Fehler'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Dieses Beispiel funktioniert bei einem 64-bit System nur in Windows Vista oder neuer.'</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Exit</span></a>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndIf</span></a>
 
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_EnumProcessModules.htm"><span class="S15">_WinAPI_EnumProcessModules</span></a><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_EnumProcessModules.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_WinAPI_EnumProcessModules</span></a><span class="S8">()</span>
 
-<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aData</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'_WinAPI_EnumProcessModules'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_ArrayDisplay.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_ArrayDisplay</span></a><span class="S8">(</span><span class="S9">$aData</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'_WinAPI_EnumProcessModules'</span><span class="S8">)</span>
 <span class="S0"></span></span>
 </pre>
 </div>

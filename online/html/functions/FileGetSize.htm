@@ -3,15 +3,62 @@
 <head>
 <title>Funktion FileGetSize</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Funktionreferenz</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">FileGetSize</h1><br />
-<a href="../functions_en/FileGetSize.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<div class="top"><h1>FileGetSize</h1><div>
+<div id="flagtext">Beschreibung anzeigen in</div>
+<div id="flaglink"> <a href="../functions_en/FileGetSize.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_en.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Gibt die Gr&ouml;&szlig;e einer Datei in Bytes zur&uuml;ck.<br /></p>
 <p class="codeheader">
 FileGetSize ( "filename" )<br />
@@ -43,7 +90,7 @@ Die Division (Teilung) des Ergebnisses durch 1024 ergibt die Gr&ouml;&szlig;e in
 </p>
 
 <h2>Verwandte Funktionen</h2>
-<p><a href="DriveSpaceTotal.htm">DriveSpaceTotal</a>, <a href="FileGetAttrib.htm">FileGetAttrib</a>, <a href="FileGetTime.htm">FileGetTime</a>, <a href="FileGetVersion.htm">FileGetVersion</a></p>
+<p><a href="DriveSpaceTotal.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">DriveSpaceTotal</a>, <a href="FileGetAttrib.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">FileGetAttrib</a>, <a href="FileGetTime.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">FileGetTime</a>, <a href="FileGetVersion.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">FileGetVersion</a></p>
 
 <h2 class="bottom">Beispiel</h2>
 <script type="text/javascript">
@@ -77,26 +124,26 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
 
 <span class="S0">Example</span><span class="S8">()</span>
 
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Ermittelt die Dateigr&ouml;&szlig;e (in bytes) der AutoIt Startdatei.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iFileSize</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileGetSize.htm"><span class="S4">FileGetSize</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@AutoItExe"><span class="S6">@AutoItExe</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iFileSize</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileGetSize.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">FileGetSize</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@AutoItExe><span class="S6">@AutoItExe</span></a><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Zeigt die Dateigr&ouml;&szlig;e und konvertiert diese in eine lesbare Form.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> ByteSuffix</span><span class="S8">(</span><span class="S9">$iFileSize</span><span class="S8">))</span>
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> ByteSuffix</span><span class="S8">(</span><span class="S9">$iFileSize</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
 
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> ByteSuffix</span><span class="S8">(</span><span class="S9">$iBytes</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iIndex</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[</span><span class="S7">' bytes'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">' KB'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">' MB'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">' GB'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">' TB'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">' PB'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">' EB'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">' ZB'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">' YB'</span><span class="S8">]</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S9">$iBytes</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&gt;</span></a><span class="S0"> </span><span class="S3">1023</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$iIndex</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+=</span></a><span class="S0"> </span><span class="S3">1</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$iBytes</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">/=</span></a><span class="S0"> </span><span class="S3">1024</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Round.htm"><span class="S4">Round</span></a><span class="S8">(</span><span class="S9">$iBytes</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$aArray</span><span class="S8">[</span><span class="S9">$iIndex</span><span class="S8">]</span>
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;ByteSuffix</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Func</span></a><span class="S0"> ByteSuffix</span><span class="S8">(</span><span class="S9">$iBytes</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iIndex</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aArray</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[</span><span class="S7">' bytes'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">' KB'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">' MB'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">' GB'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">' TB'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">' PB'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">' EB'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">' ZB'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">' YB'</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">While</span></a><span class="S0"> </span><span class="S9">$iBytes</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">&gt;</span></a><span class="S0"> </span><span class="S3">1023</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$iIndex</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">+=</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$iBytes</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">/=</span></a><span class="S0"> </span><span class="S3">1024</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">WEnd</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Round.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Round</span></a><span class="S8">(</span><span class="S9">$iBytes</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$aArray</span><span class="S8">[</span><span class="S9">$iIndex</span><span class="S8">]</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;ByteSuffix</span>
 <span class="S0"></span></span>
 </pre>
 </div>

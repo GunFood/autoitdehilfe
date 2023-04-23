@@ -3,15 +3,62 @@
 <head>
 <title>Funktion _NamedPipes_CreateNamedPipe</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Funktionreferenz</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_NamedPipes_CreateNamedPipe</h1><br />
-<a href="../libfunctions_en/_NamedPipes_CreateNamedPipe.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<div class="top"><h1>_NamedPipes_CreateNamedPipe</h1><div>
+<div id="flagtext">Beschreibung anzeigen in</div>
+<div id="flaglink"> <a href="../libfunctions_en/_NamedPipes_CreateNamedPipe.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_en.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Erzeugt die Instanz einer Named Pipe (FIFO)<br /></p>
 <p class="codeheader">
 #include &lt;NamedPipes.au3&gt;<br />
@@ -104,7 +151,7 @@ Au&szlig;erdem erh&auml;lt jeder andere Benutzer Lesezugriff.</td>
 </table>
 
 <h2>Verwandte Funktionen</h2>
-<p><a href="$tagSECURITY_ATTRIBUTES.htm">$tagSECURITY_ATTRIBUTES</a>, <a href="_NamedPipes_ConnectNamedPipe.htm">_NamedPipes_ConnectNamedPipe</a>, <a href="_NamedPipes_CreatePipe.htm">_NamedPipes_CreatePipe</a></p>
+<p><a href="$tagSECURITY_ATTRIBUTES.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">$tagSECURITY_ATTRIBUTES</a>, <a href="_NamedPipes_ConnectNamedPipe.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_NamedPipes_ConnectNamedPipe</a>, <a href="_NamedPipes_CreatePipe.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_NamedPipes_CreatePipe</a></p>
 
 <h2>Siehe auch</h2>
 <p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(CreateNamedPipe);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">CreateNamedPipe</a> in der MSDN Bibliothek.

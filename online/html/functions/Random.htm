@@ -3,15 +3,62 @@
 <head>
 <title>Funktion Random</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Funktionreferenz</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">Random</h1><br />
-<a href="../functions_en/Random.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<div class="top"><h1>Random</h1><div>
+<div id="flagtext">Beschreibung anzeigen in</div>
+<div id="flaglink"> <a href="../functions_en/Random.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_en.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Erzeugt eine pseudozuf&auml;llige Flie&szlig;kommazahl.<br /></p>
 <p class="codeheader">
 Random ( [Min = 0 [, Max = 1 [, Flag = 0]]] )<br />
@@ -50,7 +97,7 @@ Random ( [Min = 0 [, Max = 1 [, Flag = 0]]] )<br />
 <br />
 Das Ergebnis liegt im Bereich von Min bis INKLUSIVE Max bei Verwendung von Integer (aber kleiner Max bei Verwendung von Flie&szlig;kommazahlen).<br />
 <br />
-Wenn Min und Max gleich gro&szlig;, dann liefert <a href="Random.htm">Random()</a> diesen Wert zur&uuml;ck. @error wird in diesem Fall nicht gesetzt.<br />
+Wenn Min und Max gleich gro&szlig;, dann liefert <a href="Random.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Random()</a> diesen Wert zur&uuml;ck. @error wird in diesem Fall nicht gesetzt.<br />
 <br />
 Wenn Integer verwendet werden, so muss Max-Min kleiner als 2^31 sein.<br />
 <br />
@@ -58,7 +105,7 @@ Wenn Integer verwendet werden, so muss Max-Min kleiner als 2^31 sein.<br />
 <br />
 Diese Funktion nutzt den"Mersenne Twister " Zufallszahlengenerator, MT19937, geschrieben von Takuji Nishimura, Makoto Matsumoto, Shawn Cokus, Matthe Bellew und Isaku Wada.<br />
 <br />
-Der "Mersenne Twister" ist ein Algorithmus f&uuml;r das Generieren von Zufallszahlen. Er wurde in Anbetracht der M&auml;ngel verschiedener anderer Generatoren entwickelt. Der Zyklus, 2<sup>19937</sup>-1, und der Verlauf der Gleichverteilung, 623 Dimensionen, sind hier weitaus gr&ouml;&szlig;er. Ausserdem ist der Generator schnell. Er vermeidet Multiplikation und Division, und er profitiert von Cachespeichern und Pipelines. Weitere Informationen auf der Webseite der Entwickler unter <a href="http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html">http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html</a><br />
+Der "Mersenne Twister" ist ein Algorithmus f&uuml;r das Generieren von Zufallszahlen. Er wurde in Anbetracht der M&auml;ngel verschiedener anderer Generatoren entwickelt. Der Zyklus, 2<sup>19937</sup>-1, und der Verlauf der Gleichverteilung, 623 Dimensionen, sind hier weitaus gr&ouml;&szlig;er. Ausserdem ist der Generator schnell. Er vermeidet Multiplikation und Division, und er profitiert von Cachespeichern und Pipelines. Weitere Informationen auf der Webseite der Entwickler unter <a href="http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html</a><br />
 <br />
 Copyright (C) 1997 - 2002, Makoto Matsumoto and Takuji Nishimura, All rights reserved.<br />
 <br />
@@ -74,7 +121,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS"AS IS " AND 
 </p>
 
 <h2>Verwandte Funktionen</h2>
-<p><a href="Round.htm">Round</a>, <a href="SRandom.htm">SRandom</a></p>
+<p><a href="Round.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Round</a>, <a href="SRandom.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">SRandom</a></p>
 
 <h2 class="bottom">Beispiel</h2>
 <script type="text/javascript">
@@ -109,18 +156,18 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
 
 <span class="S1">; M&uuml;nze werfen</span>
 <span class="S0">Example</span><span class="S8">()</span>
 
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Random.htm"><span class="S4">Random</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><span class="S1">; Liefert einen Wert zwischen 0 und 1</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Die Seite der M&uuml;nze lautet: Kopf"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Wenn der Randominteger 1 ist, wurde Kopf geworfen</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Die Seite der M&uuml;nze lautet: Zahl"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Wenn der Randominteger 0 ist, wurde Zahl geworfen</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Random.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Random</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Then</span></a><span class="S0"> </span><span class="S1">; Liefert einen Wert zwischen 0 und 1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Die Seite der M&uuml;nze lautet: Kopf"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Wenn der Randominteger 1 ist, wurde Kopf geworfen</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Die Seite der M&uuml;nze lautet: Zahl"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Wenn der Randominteger 0 ist, wurde Zahl geworfen</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndIf</span></a>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
 <span class="S0"></span></span>
 </pre>
 </div>
@@ -149,15 +196,15 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
 
 <span class="S1">; Wirft einen W&uuml;rfel.</span>
 
 <span class="S0">Example</span><span class="S8">()</span>
 
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Der W&uuml;rfel zeigt die Zahl "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Random.htm"><span class="S4">Random</span></a><span class="S8">(</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">6</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"."</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Gibt einen Integer zwischen 1 und 6 zur&uuml;ck.</span>
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Der W&uuml;rfel zeigt die Zahl "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Random.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Random</span></a><span class="S8">(</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">6</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"."</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Gibt einen Integer zwischen 1 und 6 zur&uuml;ck.</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
 <span class="S0"></span></span>
 </pre>
 </div>
@@ -186,19 +233,19 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext3">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
 
 <span class="S1">; Erstellt einen Zufallstext.</span>
 
 <span class="S0">Example</span><span class="S8">()</span>
 
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sText</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">""</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Random.htm"><span class="S4">Random</span></a><span class="S8">(</span><span class="S3">5</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Gibt einen Integer zwischen 5 und 20 zur&uuml;ck. Dieser Integer entspricht der L&auml;nge des Strings.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sText</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Chr.htm"><span class="S4">Chr</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/Random.htm"><span class="S4">Random</span></a><span class="S8">(</span><span class="S3">65</span><span class="S8">,</span><span class="S0"> </span><span class="S3">122</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">))</span><span class="S0"> </span><span class="S1">; Gibt einen Integer zwischen 65 und 122 zur&uuml;ck. Dies entspricht den ASCII-Zeichen zwischen einen kleingeschriebenen a und gro&szlig;geschriebenen Z.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Der Zufallsstring lautet: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sText</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Zeigt den String.</span>
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sText</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">""</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Random.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Random</span></a><span class="S8">(</span><span class="S3">5</span><span class="S8">,</span><span class="S0"> </span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Gibt einen Integer zwischen 5 und 20 zur&uuml;ck. Dieser Integer entspricht der L&auml;nge des Strings.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sText</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Chr.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Chr</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/Random.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Random</span></a><span class="S8">(</span><span class="S3">65</span><span class="S8">,</span><span class="S0"> </span><span class="S3">122</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">))</span><span class="S0"> </span><span class="S1">; Gibt einen Integer zwischen 65 und 122 zur&uuml;ck. Dies entspricht den ASCII-Zeichen zwischen einen kleingeschriebenen a und gro&szlig;geschriebenen Z.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Der Zufallsstring lautet: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sText</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Zeigt den String.</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
 <span class="S0"></span></span>
 </pre>
 </div>

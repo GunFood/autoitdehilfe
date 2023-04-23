@@ -3,7 +3,52 @@
 <head>
   <title>COM Reference</title>
   <meta charset="utf-8">
-  <link href="../css/default.css" rel="stylesheet">
+  <link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
   <style type="text/css">
 td.c2 {width:85%}
   td.c1 {width:15%}
@@ -163,10 +208,10 @@ $oExcel.Quit ; Quit Excel
   <p>&nbsp;</p>
   <p>You can also find some COM resources on the internet (not AutoIt related):</p>
   <p><a href="http://msdn.microsoft.com/en-us/library/ms694363.aspx" target="_blank">http://msdn.microsoft.com/en-us/library/ms694363.aspx</a> (introduction)</p>
-  <p><a href="http://www.garybeene.com/vb/tut-obj.htm" target="_blank">http://www.garybeene.com/vb/tut-obj.htm</a> (about Objects in Visual Basic)</p>
+  <p><a href="http://www.garybeene.com/vb/tut-obj.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" target="_blank">http://www.garybeene.com/vb/tut-obj.htm</a> (about Objects in Visual Basic)</p>
   <p><a href="http://java.sun.com/docs/books/tutorial/java/concepts/" target="_blank">http://java.sun.com/docs/books/tutorial/java/concepts/</a> (Using objects in Java)</p>
   <p><a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms686915.aspx" target="_blank">http://msdn.microsoft.com/en-us/library/windows/desktop/ms686915.aspx</a> (Object Events in C++)</p>
-  <p><a href="http://www.garybeene.com/vb/tut-err.htm" target="_blank">http://www.garybeene.com/vb/tut-err.htm</a> (Error handling in Visual Basic)</p>
+  <p><a href="http://www.garybeene.com/vb/tut-err.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" target="_blank">http://www.garybeene.com/vb/tut-err.htm</a> (Error handling in Visual Basic)</p>
   <h1>COM Events</h1>
   <p>Normal COM Automation mainly uses one-way communication. You 'ask' the Object for any properties or results from a Method. However a COM Object can also 'talk back' to your script when it suits it.</p>
   <p>This could be very handy in case you need to wait for some COM-related action to happen.</p>
@@ -213,8 +258,8 @@ Func IEEvent_BeforeNavigate($sURL, $iFlags, $sTargetFrameName, $dPostData, $sHea
 EndFunc   ;==>IEEvent_BeforeNavigate
 @@End@@
 
-  <p>Click <a href="IE6Example.htm" target="_blank"><strong>here</strong></a> to view the complete script.</p>
-  <p>The main line in this script is: <span>$EventObject = <a href="../functions/ObjEvent.htm">ObjEvent</a> ($oIE, "IEEvent_", ...)</span>.<br />
+  <p>Click <a href="IE6Example.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" target="_blank"><strong>here</strong></a> to view the complete script.</p>
+  <p>The main line in this script is: <span>$EventObject = <a href="../functions/ObjEvent.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ObjEvent</a> ($oIE, "IEEvent_", ...)</span>.<br />
   This function takes the object $<span>oIE</span> and reroutes it's events to AutoIt functions whose names start with <span>IEEvent_</span>. The third parameter is optional. It is used when an Object has multiple Event interfaces and you don't want
   AutoIt to choose one automatically.<br />
   <br />
@@ -320,7 +365,7 @@ EndFunc   ;==>ErrFunc
   <p><img src="../images/oleview1.png" alt=""></p>
   <p>&nbsp;</p>
   <p>In the left-hand pane you see all the COM Interfaces that have been defined for this object. We talk about those later. Take a closer look at the right column. It contains a lot of information about this object that can be useful in an AutoIt script. Most important is the
-  "<span>VersionIndependentProgID</span>". This is the name to be used in an <a href="../functions/ObjCreate.htm">ObjCreate()</a>, <a href="../functions/ObjGet.htm">ObjGet()</a> or <a href="../functions/ObjEvent.htm">ObjEvent()</a>. Furthermore it contains the directory and filename that contains the object. This can be an EXE, a DLL or an OCX file.
+  "<span>VersionIndependentProgID</span>". This is the name to be used in an <a href="../functions/ObjCreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ObjCreate()</a>, <a href="../functions/ObjGet.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ObjGet()</a> or <a href="../functions/ObjEvent.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ObjEvent()</a>. Furthermore it contains the directory and filename that contains the object. This can be an EXE, a DLL or an OCX file.
   <span>InProcServer32</span> means that the object runs in the same thread as your script (in-process). When you see <span>LocalServer32</span>, the object runs as a separate process. The object must also contain a type library (the lines following
   "<span>TypeLib=</span>"), otherwise it can't be used in an AutoIt script.</p>
   <p>The interfaces in the left-hand pane provide various ways of interacting with the object. Some are used for storage (IStorage, IPersist), others for embedding in a GUI (IOleObject, IOleControl). AutoIt uses the <span>IDispatch</span> interface for

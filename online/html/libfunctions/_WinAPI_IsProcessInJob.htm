@@ -3,14 +3,61 @@
 <head>
 <title>Funktion _WinAPI_IsProcessInJob</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Funktionreferenz</h1>
 <hr style="height:0px">
-<h1>_WinAPI_IsProcessInJob</h1>
-<p class="funcdesc">Determines whether the process is running in the specified job<br /></p>
+<div class="top"><h1>_WinAPI_IsProcessInJob</h1><div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
+<p style="margin:2px 0 0 0;" class="funcdesc">Determines whether the process is running in the specified job<br /></p>
 <p class="codeheader">
 #include &lt;WinAPIProc.au3&gt;<br />
 _WinAPI_IsProcessInJob ( $hProcess [, $hJob = 0] )<br />
@@ -37,13 +84,13 @@ $PROCESS_QUERY_LIMITED_INFORMATION access right.</td>
 </tr>
 <tr>
 <td class="valign-top">False:</td>
-<td>the process is not running in the job, call <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> to get extended error information.</td>
+<td>the process is not running in the job, call <a href="_WinAPI_GetLastError.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_GetLastError()</a> to get extended error information.</td>
 </tr>
 </table>
 
 <h2>Bemerkungen</h2>
 <p>An application cannot obtain a handle to the job object in which it is running unless it has the name of the job<br />
-object. However, an application can call the <a href="_WinAPI_QueryInformationJobObject.htm">_WinAPI_QueryInformationJobObject()</a> function with 0 to obtain<br />
+object. However, an application can call the <a href="_WinAPI_QueryInformationJobObject.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_QueryInformationJobObject()</a> function with 0 to obtain<br />
 information about the job object.<br />
 </p>
 

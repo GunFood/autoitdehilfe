@@ -1,140 +1,278 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Sprachreferenz - Datentypen</title>
-	<meta charset="utf-8">
-	<link href="../css/default.css" rel="stylesheet">
-</head>
-<body>
-	<h1>Sprachreferenz - Datentypen</h1>
-	<p>In AutoIt gibt es nur einen Datentyp, namens <strong>Variant</strong>. Ein Variant kann numerische oder Zeichendaten enthalten und entscheidet &uuml;ber deren Nutzung, abh&auml;ngig von der Situation, in der diese Daten genutzt werden. Zum Beispiel, wenn versucht wird zwei Variants zu multiplizieren, werden sie als Zahlen behandelt, wenn versucht wird zwei Variants zu verketten (verbinden), werden sie als Zeichenketten behandelt.</p>
-	<p>Einige Beispiele:</p>
-	<p>10 * 20 entspricht der <strong>Zahl</strong> 200 (<strong>*</strong> wird genutzt um zwei Zahlen zu multiplizieren)</p>
-	<p>10 * "20" entspricht der <strong>Zahl</strong> 200</p>
-	<p>"10" * "20" entspricht der <strong>Zahl</strong> 200</p>
-	<p>10 & 20 entspricht der <strong>Zeichenkette</strong> "1020" (<strong>&</strong> wird genutzt um Zeichenketten zu verbinden)</p>
-	<p></p>
-	<p>Wenn eine Zeichenkette als Zahl benutzt wird, wird ein impliziter Aufruf von <strong><a href="../functions/Number.htm">Number()</a></strong> vollzogen. Sollte die Zeichenkette nun keine g&uuml;ltige Zahl enthalten, wird angenommen, dass der Wert 0 entspricht. Zum Beispiel,</p>
-	<p>10 * "fgh" entspricht der Zahl <strong>0</strong>.</p>
-	<p>Wenn eine Zeichenkette als Wahrheitswert (boolean) benutzt wird und es ist eine leere Zeichenkette "" , wird angenommen, dass der Wert "nicht wahr" (false) entspricht (siehe unten). Zum Beispiel,</p>
-	<p>NOT "" entspricht dem Wahrheitswert <strong>True</strong>.</p>
-	<h2>Zahlen</h2>
-	<p>Zahlen k&ouml;nnen standardm&auml;&szlig;ige Zahlen sein, wie <strong>2</strong>, <strong>4.566</strong>, und <strong>-7</strong>.</p>
-	<p>Wissenschaftliche Schreibweise wird ebenso unterst&uuml;tzt; deshalb kann <strong>1.5e3</strong> anstatt <strong>1500</strong> geschrieben werden.</p>
-	<p>Integer (ganze Zahlen) k&ouml;nnen gleichwohl in hexadezimaler Schreibweise repr&auml;sentiert werden, dem Integer voranstellend <strong>0x</strong> wie in <strong>0x409</strong> oder <strong>0x4fff</strong> (wenn Hex-Notation genutzt wird sind nur 32-bit Zahlen g&uuml;ltig).</p>
-	<h2>Zeichenketten (Strings)</h2>
-	<p>Zeichenketten sind in doppelten Anf&uuml;hrungszeichen eingeschlossen, wie <strong>"diese"</strong>. Wenn eine Zeichenkette doppelte Anf&uuml;hrungszeichen enthalten soll schreibt man es zweifach wie:</p>
-	<p><strong>"Hier ist ein ""doppeltes Anf&uuml;hrungszeichen"" - OK ?"</strong></p>
-	<p>Einfache Anf&uuml;hrungszeichen k&ouml;nnen ebenso genutzt werden wie <strong>'diese'</strong> und <strong>'Hier ist ein ' 'einfaches Anf&uuml;hrungszeichen' ' - OK ?'</strong></p>
-	<p></p>
-	<p>Anf&uuml;hrungszeichen k&ouml;nnen f&uuml;r einfacheren Umgang gemischt werden, z. Bsp. um Verdoppelung zu vermeiden, damit das gew&uuml;nschte Ergebnis erreicht wird. Zum Beispiel, wenn mehrere doppelte Anf&uuml;hrungszeichen in einer Zeichenkette enthalten sind, dann sollte man einfache Anf&uuml;hrungszeichen f&uuml;r die Deklaration nutzen:</p>
-	<p><strong>'Dieser "Satz" enth&auml;lt "viele" "doppelte Anf&uuml;hrungszeichen", nicht wahr?'</strong></p>
-	<p>ist wesentlich einfacher als:</p>
-	<p><strong>"Dieser ""Satz"" enth&auml;lt ""viele"" "doppelte Anf&uuml;hrungszeichen", nicht wahr?"</strong></p>
-	<p>Bei Auswertung von Zeichenketten, k&ouml;nnen diese Env oder Var Variablen repr&auml;sentieren, gem&auml;&szlig; der <a href="../functions/AutoItSetOption.htm#ExpandEnvStrings">Opt()</a> Funktionsdefinition.</p>
-	<p>Alle AutoIt Strings verwenden UTF-16 (geanuer gesagt UCS-2) Codierung.</p>
-	<h2>Wahrheitswerte (Booleans)</h2>
-	<p>Wahrheitswerte (Booleans) sind <strong>logische</strong> Werte. Es existieren nur zwei Zust&auml;nde: <strong>wahr</strong>(True) und <strong>nicht wahr</strong>(False).<br>
-	<br>
-	Sie k&ouml;nnen in Zuweisungen von Variablen genutzt werden, zusammen mit den Boolean Operatoren <strong>and</strong>, <strong>or</strong> und <strong>not</strong>.<br>
-	<br>
-	Beispiel:<br>
-	$bBoolean1 = True<br>
-	$bBoolean2 = False<br>
-	$bBoolean3 = $bBoolean1 And $bBoolean2<br>
-	<br>
-	Das Ergebnis in $bBoolean3 ist demnach <strong>False</strong><br>
-	<br>
-	$bBoolean1 = False<br>
-	$bBoolean2 = Not $bBoolean1<br>
-	<br>
-	Das Ergebnis in $bBoolean2 ist demnach <strong>True</strong><br>
-	<br>
-	<br>
-	Falls ein Boolean zusammen mit Zahlen verwendet werden, gelten folgende Regeln:<br>
-	<br>
-	Ein Wert 0 entspricht dem Boolean von <strong>False</strong><br>
-	Jede andere Zahl entspricht dem Boolean von <strong>True</strong><br>
-	<br>
-	Beispiel:<br>
-	$iNumber1 = 0<br>
-	$bBoolean1 = true<br>
-	$bBoolean2 = $iNumber1 und $bBoolean1<br>
-	<br>
-	Das Ergebnis in $bBoolean2 ist demnach <strong>False</strong><br>
-	<br>
-	<br>
-	Wenn arithmetische zusammen mit Wahrheitswerten genutzt werden (<strong>was nicht ratsam ist!</strong>), gelten folgende Regeln:<br>
-	<br>
-	Ein Boolean true wird konvertiert, in den numerischen Wert <strong>1</strong><br>
-	Ein Boolean false wird konvertiert, in den numerischen Wert <strong>0</strong><br>
-	<br>
-	Beispiel:<br>
-	$bBoolean1 = true<br>
-	$iNumber1 = 100<br>
-	$iNumber2 = $bBoolean1 + $iNumber1<br>
-	<br>
-	Das Ergebnis in $iNumber2 ist der numerischen Wert 101<br>
-	<br>
-	<br>
-	Wenn Zeichenketten zusammen mit Wahrheitswerten genutzt werden, werden diese wie folgt konvertiert:<br>
-	<br>
-	Ein Boolean true enth&auml;lt die Zeichen <strong>"True"</strong><br>
-	Ein Boolean false enth&auml;lt die Zeichen <strong>"False"</strong><br>
-	<br>
-	Beispiel:<br>
-	$bBoolean1=true<br>
-	$String1="Test ist: "<br>
-	$String2=$String1 & $bBoolean1<br>
-	<br>
-	Das Ergebnis in $String2 ist die Zeichenkette "Test ist: True"<br>
-	<br>
-	Umgekehrt ist es anders. Wenn Zeichenketten mit Wahrheitswerten verglichen werden, gelten folgende Regeln:<br>
-	Nur eine leere Zeichenkette ("") ist ein Boolean <strong>False</strong><br>
-	Jede andere Zeichenkette mit Werten (einschlie&szlig;lich einer Zeichenkette wie "0") ist ein Boolean <strong>True</strong><br></p>
-	<h2>Bin&auml;rdaten</h2>
-	<p>Bin&auml;rdaten k&ouml;nnen jegliche Bitwerte aufnehmen. Sie werden in ihre hexadezimale Repr&auml;sentation konvertiert, wenn sie in einer Zeichenkette gespeichert werden. Beispiel:<br>
-	$dBin = Binary ("abc")<br>
-	$sString = String ($dBin) ; "0x616263"</p><br>
-	<h2>Zeiger (Pointer)</h2>
-	<p>Zeigertypen enthalten eine 32bittige oder 64bittige Speicheradresse, je nach dem davon abh&auml;ngig, ob die 32bit oder 64bit Version von AutoIt genutzt wird. Sie werden in ihre hexadezimale Repr&auml;sentation konvertiert, wenn sie in einer Zeichenkette gespeichert werden. Fensterhandles (HWnd) wie von <a href="../functions/WinGetHandle.htm">WinGetHandle</a> zur&uuml;ckgegeben, sind Zeigertypen.<br>
-	<br>
-	Variablen die mit <a href="../functions/DllStructCreate.htm">DllStructCreate()</a> erstellt wurden, k&ouml;nnen als Pointer verwendet werden, wenn ein 'struct*' Typ in <a href="../functions/DllCall.htm">DllCall()</a> verwendet wird.<br>
-	Falls ein Pointer durch <a href="../functions/DllStructGetPtr.htm">DllStructGetPtr()</a> definiert wurde, kann ein solcher Parameter mit einem 'struct*' Typ &uuml;bergeben werden.</p>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Language Reference - Datatypes</title>
+    <link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
 
-	<h2>Datentypen und Einstufungen</h2>
-	<p>Die folgende Tabelle zeigt die internen Variant Datentypen und deren Einstufung.</p>
-	<table>
-		<tr>
-			<th>Sub-Datentyp</th>
-			<th>Einstufung und Bemerkungen</th>
-		</tr>
-		<tr>
-			<td>Int32</td>
-			<td>Ein 32bit vorzeichenbehafteter Integer (Ganzzahl).</td>
-		</tr>
-		<tr>
-			<td>Int64</td>
-			<td>Ein 64bit vorzeichenbehafteter Integer (Ganzzahl)</td>
-		</tr>
-		<tr>
-			<td>Double</td>
-			<td>Eine doppelt-pr&auml;zise Flie&szlig;komma Zahl (double).</td>
-		</tr>
-		<tr>
-			<td>Zeichenkette</td>
-			<td>Kann bis zu 2147483647 Zeichen aufnehmen.</td>
-		</tr>
-		<tr>
-			<td>Bin&auml;rdaten</td>
-			<td>Bin&auml;rdaten k&ouml;nnen bis zu 2147483647 Bytes aufnehmen.</td>
-		</tr>
-		<tr>
-			<td>Zeiger</td>
-			<td>Ein Zeiger auf eine Speicheradresse. 32 Bit oder 64 Bit abh&auml;ngig von der genutzten AutoIt Version.</td>
-		</tr>
-	</table>
-	<p></p>
-	<p>Manche Funktionen in AutoIt arbeiten ausschlie&szlig;lich mit 32bittigen Zahlen (z. B. <a href="../functions/BitAND.htm">BitAND</a>) und konvertieren diese automatisch - Diese Funktionen sind dokumentiert, wenn erforderlich.</p>
-</body>
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
+  </head>
+  <body>
+    <h1>Language Reference - Datatypes</h1>
+    <p>AutoIt uses a <strong>Variant</strong> implementation to represent
+      variables and constants. Variables and constants can contain numeric or
+      string data and AutoIt decides how to interpret the datatype depending on
+      the situation, although you can force a particular datatype if required.</p>
+    <p>This means that if you use a mathematical operator on 2 variables they
+      will be treated as numbers; if you concatenate (join) them they will be
+      treated as strings. Note that the datatype of the result of the operation
+      may not be the same as that of the original variables:</p>
+    <p>For example, using <strong>*</strong> to multiply two values returns a
+      number</p>
+    <p style="margin-left: 40px;">10 * 20 : results in the number 200<br>
+      10 * "20" : results in the number 200<br>
+      "10" * "20" : results in the number 200</p>
+    <div style="margin-left: 40px;"> </div>
+    <p>Whereas using <strong>&amp;</strong> to concatenate (join) two values
+      returns a string</p>
+    <p style="margin-left: 40px;">10 &amp; 20 : results in the string "1020"</p>
+    <p>In each case an implicit call to the <strong><a href="../functions/Number.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Number()</a></strong>
+      or <strong><a href="../functions/String.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">String()</a></strong>
+      function is made to convert the value to the appropriate type, which may
+      result in unexpected results. For instance, if a string value does not
+      contain a valid number, it will be assumed to equal 0. For example,</p>
+    <p style="margin-left: 40px;">10 * "fgh" : results in the number 0.</p>
+    <p>Beware of this automatic conversion as it can cause problems if you do
+      not explicitly declare the exact datatype of the content of a variable.
+      For example, values read from an .ini file are ALWAYS strings and so a
+      simple comparison between them can lead to peculiar results as strings are
+      compared alphabetically:</p>
+    <p style="margin-left: 40px;">"11" will be considered less than "2"</p>
+    <p>rather then numerically</p>
+    <p style="margin-left: 40px;">11 is considered greater than 2</p>
+    <p>You are advised to make use of the <strong><a href="../functions/Number.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Number()</a></strong>
+      and <strong><a href="../functions/String.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">String()</a></strong>
+      functions to force the contents of variables and constants into the same
+      format before carrying out any comparisons between them.</p>
+    <p>Remember that <strong><a href="../functions/VarGetType.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">VarGetType()</a></strong>
+      can be used to ascertain the actual datatype of variables, literals and
+      constants.</p>
+    <h2>Numbers</h2>
+    <p>Supported types are signed integers and floating-point: Int32, Int64 and
+      Double. Bitsize of an integer depends on its magnitude and is
+      automatically adjusted.</p>
+    <p>Numbers can be standard decimal numbers: <strong>2</strong>, <strong>4.566</strong>,
+      <strong>-7</strong>.</p>
+    <p>Scientific notation is also supported: i.e. <strong>1.5e3</strong>
+      instead of <strong>1500</strong>.</p>
+    <p>Integers (whole numbers) can also be represented in hexadecimal notation
+      by preceding the integer with <strong>0x</strong>: e.g. <strong>0x409</strong>
+      or <strong>0x4fff</strong>.</p>
+    <p><strong>Enum</strong> is a keyword of the language but is not a datatype
+      per se, since enumerated values directly map to integers.</p>
+    <h2>Strings</h2>
+    <p>Native AutoIt <strong><a href="../intro/unicode.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#encoding>string</a></strong>
+      use the UCS2 character set (the first 64k codepoints of Unicode, also
+      called the BMP). They are enclosed in double-quotes like <strong>"this"</strong>.</p>
+    <p style="margin-left: 40px;">$s = "abc"<br>
+      $s = "déçu"<br>
+      $s = "" ; An empty string</p>
+    <div style="margin-left: 40px;"> </div>
+    <p>If you want a string to actually contain a double-quote use it twice:</p>
+    <p><strong>"here is a ""double-quote"" - ok?"</strong></p>
+    <p>You can also use single-quotes like <strong>'this'</strong> and <strong>'here
+        is a ' 'single-quote' '</strong> - ok?' </p>
+    <p>You can mix quote types to make for easier working and to avoid having to
+      double-up your quotes to get what you want. For example if you want to use
+      a lot of double-quotes in your strings then you should use single-quotes
+      for declaring them:</p>
+    <p><strong>'This "sentence" contains "lots" of "double-quotes" does it not?'</strong></p>
+    <p>is much simpler than:</p>
+    <p><strong>"This ""sentence"" contains ""lots"" of ""double-quotes"" does it
+        not?"</strong></p>
+    <p>When evaluated, strings can have Env variables or Var variables
+      substitution according to <a href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#ExpandEnvStrings>Opt()</a>
+      function definition.</p>
+    <p>It is recommended to use UTF8 for source file encoding. See <here> (to
+        be written) for more details on how to convert strings to/from UCS2,
+        UTF8, etc and how to deal with codepages.</here></p>
+    <h2>Booleans</h2>
+    <p>Booleans are <strong>logical</strong> values and only two exist: <strong>True</strong>
+      and <strong>False</strong>. They can be assigned to variables and
+      constants and used with the Boolean operators <strong>And</strong>, <strong>Or</strong>
+      and <strong>Not</strong>. </p>
+    <p>Examples:</p>
+    <p style="margin-left: 40px;"> $bBoolean1 = True<br>
+      $bBoolean2 = False<br>
+      $bBoolean3 = $bBoolean1 And $bBoolean2 : results in $bBoolean3 = False</p>
+    <p style="margin-left: 40px;">
+    </p>
+    <p style="margin-left: 40px;">$bBoolean1 = False<br>
+      $bBoolean2 = Not $bBoolean1 : results in $bBoolean2 = True</p>
+    <div style="margin-left: 40px;">
+    </div>
+    <p>Strings and numbers can be used as Booleans. An empty string "" equals
+      Boolean <strong>False</strong> as does the number 0. Any other number
+      value will be equal to Boolean <strong>True</strong></p>
+    <p>Example:</p>
+    <p style="margin-left: 40px;">
+      $iNumber1 = 0<br>
+      $bBoolean1 = True<br>
+      $bBoolean2 = $iNumber1 And $bBoolean1 : results in $bBoolean2 = False</p>
+    <div style="margin-left: 40px;"> </div>
+    <p>It is <strong>strongly</strong> advised not to use Booleans in
+      arithmetic expressions, but the following rules apply in this case:</p>
+    <p>A Boolean <strong>True</strong> will be converted into the numeric value
+      1<br>
+      A Boolean <strong>False</strong> will be converted into the numeric value
+      0</p>
+    <p>Example:</p>
+    <p style="margin-left: 40px;"> $bBoolean1 = True<br>
+      $iNumber1 = 100<br>
+      $iNumber2 = $bBoolean1 + $iNumber1 : results in $iNumber2 = 101</p>
+    <div style="margin-left: 40px;"> </div>
+    <p>Concatenating Booleans with strings converts the Boolean value into the
+      appropriate string: "<strong>True</strong>" or "<strong>False</strong>":</p>
+    <p>Example:</p>
+    <p style="margin-left: 40px;"> $bBoolean1 = True<br>
+      $sString1 = "Test is: "<br>
+      $sString2 = $sString1 &amp; $bBoolean1 : results in $sString2 = "Test is:
+      True"</p>
+    <div style="margin-left: 40px;"> </div>
+    <p>However, when using string comparisons with Boolean values, the following
+      rules apply:</p>
+    <p>Only an empty string ("") will be a Boolean <strong>False</strong>.<br>
+      Any other string values (including a string equal "0") will be a Boolean <strong>True</strong>.</p>
+    <h2>Binary</h2>
+    <p>Binary type can store any byte value. they are converted in hexadecimal
+      representation when stored in a string variable. Example:</p>
+    <p style="margin-left: 40px;">$dBin = Binary("abc")<br>
+      $sString = String($dBin) : results in $sString = "0x616263"</p>
+    <div style="margin-left: 40px;"> </div>
+    <h2>Pointer</h2>
+    <p>Pointer types store a memory address which is 32bits or 64bits depending
+      on if the 32bit or 64-bit version of AutoIt is used. They are converted to
+      hexadecimal representation when stored in a string variable. Window
+      handles (HWnd) as returned from <strong><a href="../functions/WinGetHandle.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">WinGetHandle()</a></strong>
+      are a pointer type.</p>
+    <p>Variables created with <strong><a href="../functions/DllStructCreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">DllStructCreate()</a></strong>
+      can be used as pointer if a 'struct*' type in the DllCall() is used. A
+      pointer defined by <strong><a href="../functions/DllStructGetPtr.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">DllStructGetPtr()</a></strong>
+      can be passed to such parameter with a 'struct*' type.</p>
+    <h2>DllStruct</h2>
+    <p>This datatype is used for mapping AutoIt data to C/C++ structs for
+      invoking functions in DLLs.</p>
+    <h2>Keyword</h2>
+    <p>AutoIt uses 4 Keywords as datatypes</p>
+    <p><strong>True</strong>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Boolean True -
+      e.g. 7 = 7<br>
+      <strong>False</strong>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; Boolean False - e.g.
+      5 &gt;= 14<br>
+      <strong>Default</strong>&nbsp;&nbsp; Only used for assigning a default
+      value to optional arguments of a function.<br>
+      <strong>Null</strong>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; An unknown
+      value. (Note this keyword is NOT part of a 3-valued logic as in other
+      languages such as SQL).</p>
+    <h2>Object</h2>
+    <p><strong><a href="../intro/ComRef.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Object</a></strong> refers to a
+      "Component Object Model" as used by Microsoft. Creating an object allows
+      you to use Autoit code to interact with it using the object's various
+      properties and/or methods. See <here> for more discussion on using COM
+        within AutoIt.</here></p>
+    <h2>Function and User Function</h2>
+    <p>AutoIt has both native <strong><a href="../intro/lang_functions.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">functions</a></strong>
+      and user-defined functions - the former being part of the core AutoIt code
+      while the later are written as AutoIt scripts either within an include
+      library file or by you within your own script. Both types are first-class
+      objects and can be assigned to a variable, or used as a parameter and/or
+      return value from another function. See <here> for more details.</here></p>
+    <h2>Arrays and Maps</h2>
+    <p>AutoIt has 2 types of data collection variables: <strong><a href="../intro/lang_variables.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#ArrayMaps>Array
+          and Maps</a></strong>.</p>
+    <p>Arrays are much faster for random access and can have multiple dimensions
+      - a dimension size is fixed at the initially declared value (although it
+      can be altered using <strong><a href="../functions/ReDim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ReDim()</a></strong>).
+      Arrays are indexed using integer values referring to the order of elements
+      and start at element[0] - elements can be extracted using the integer
+      index or iterated by a simple For...Next loop.</p>
+    <p>Maps are better for records/dictionary type access and have a single
+      dimension. They are indexed using either integer or string keys (integers
+      do not refer to the order of elements) and are dynamically resized as
+      values are added or removed. A value can only be accessed by using the
+      original key - these keys can be iterated using the <strong><a href="../functions/MapKeys.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">MapKeys()</a></strong>
+      function.</p>
+    <p>See <here> for more details.</here></p>
+    <h2>Datatypes and Ranges</h2>
+    <p>The following table shows the internal variant datatypes and their
+      ranges.</p>
+    <table>
+      <tbody>
+        <tr>
+          <th>Data Sub-type</th>
+          <th>Range and Notes</th>
+        </tr>
+        <tr>
+          <td>Int32</td>
+          <td>A 32bit signed integer number.</td>
+        </tr>
+        <tr>
+          <td>Int64</td>
+          <td>A 64bit signed integer number</td>
+        </tr>
+        <tr>
+          <td>Double</td>
+          <td>A double-precision floating point number.</td>
+        </tr>
+        <tr>
+          <td>String</td>
+          <td>Can contain strings of up to 2147483647 characters.</td>
+        </tr>
+        <tr>
+          <td>Binary</td>
+          <td>Binary data, can contain up to 2147483647 bytes.</td>
+        </tr>
+        <tr>
+          <td>Pointer</td>
+          <td>A memory address pointer. 32bit or 64bit depending on the version
+            of AutoIt used.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Some functions in AutoIt only work with 32-bit numbers (e.g. <a href="../functions/BitAND.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">BitAND()</a>
+      ) and are converted automatically - these functions are documented where
+      required.</p>
+  </body>
 </html>

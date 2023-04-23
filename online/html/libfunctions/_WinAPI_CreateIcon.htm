@@ -3,15 +3,62 @@
 <head>
 <title>Funktion _WinAPI_CreateIcon</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Funktionreferenz</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_WinAPI_CreateIcon</h1><br />
-<a href="../libfunctions_en/_WinAPI_CreateIcon.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<div class="top"><h1>_WinAPI_CreateIcon</h1><div>
+<div id="flagtext">Beschreibung anzeigen in</div>
+<div id="flaglink"> <a href="../libfunctions_en/_WinAPI_CreateIcon.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_en.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Erzeugt ein Icon mit der angegebenen Gr&ouml;&szlig;e, Farbe und Bitmuster.<br /></p>
 <p class="codeheader">
 #include &lt;WinAPIIcons.au3&gt;<br />
@@ -58,16 +105,16 @@ _WinAPI_CreateIcon ( $hInstance, $iWidth, $iHeight, $iPlanes, $iBitsPixel, $pAND
 </tr>
 <tr>
 <td class="valign-top">Fehler:</td>
-<td>0. Es ist <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> aufzurufen um erweiterte Fehlerinformationen zu erhalten.</td>
+<td>0. Es ist <a href="_WinAPI_GetLastError.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_GetLastError()</a> aufzurufen um erweiterte Fehlerinformationen zu erhalten.</td>
 </tr>
 </table>
 
 <h2>Bemerkungen</h2>
-<p>Wenn die Arbeit mit dem Icon fertig ist, sollte man sie mit der <a href="_WinAPI_DestroyIcon.htm">_WinAPI_DestroyIcon()</a> Funktion zerst&ouml;ren.<br />
+<p>Wenn die Arbeit mit dem Icon fertig ist, sollte man sie mit der <a href="_WinAPI_DestroyIcon.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_DestroyIcon()</a> Funktion zerst&ouml;ren.<br />
 </p>
 
 <h2>Verwandte Funktionen</h2>
-<p><a href="_WinAPI_DestroyIcon.htm">_WinAPI_DestroyIcon</a></p>
+<p><a href="_WinAPI_DestroyIcon.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_DestroyIcon</a></p>
 
 <h2>Siehe auch</h2>
 <p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(CreateIcon);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">CreateIcon</a> in der MSDN Bibliothek.
@@ -105,11 +152,11 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;StaticConstants.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIIcons.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;StaticConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIIcons.au3&gt;</span>
 
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$sANDBits</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">_</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$sANDBits</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">_</span>
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FF FF FF'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FF C3 FF'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FF 00 FF'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
@@ -143,7 +190,7 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF F8 03 FF'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'FF FC 3F FF'</span>
 
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$sXORBits</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">_</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$sXORBits</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">_</span>
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
@@ -178,26 +225,26 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'00 00 00 00'</span>
 
 <span class="S1">; Create AND bitmask structure</span>
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$bData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Binary.htm"><span class="S4">Binary</span></a><span class="S8">(</span><span class="S7">'0x'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringStripWS.htm"><span class="S4">StringStripWS</span></a><span class="S8">(</span><span class="S9">$sANDBits</span><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">))</span>
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tANDBits</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">'byte['</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BinaryLen.htm"><span class="S4">BinaryLen</span></a><span class="S8">(</span><span class="S9">$bData</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">']'</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tANDBits</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$bData</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$bData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Binary.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Binary</span></a><span class="S8">(</span><span class="S7">'0x'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringStripWS.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">StringStripWS</span></a><span class="S8">(</span><span class="S9">$sANDBits</span><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tANDBits</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">'byte['</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BinaryLen.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">BinaryLen</span></a><span class="S8">(</span><span class="S9">$bData</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">']'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tANDBits</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$bData</span><span class="S8">)</span>
 
 <span class="S1">; Create XOR bitmask structure</span>
-<span class="S9">$bData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Binary.htm"><span class="S4">Binary</span></a><span class="S8">(</span><span class="S7">'0x'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringStripWS.htm"><span class="S4">StringStripWS</span></a><span class="S8">(</span><span class="S9">$sXORBits</span><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">))</span>
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tXORBits</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">'byte['</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BinaryLen.htm"><span class="S4">BinaryLen</span></a><span class="S8">(</span><span class="S9">$bData</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">']'</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tXORBits</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$bData</span><span class="S8">)</span>
+<span class="S9">$bData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Binary.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Binary</span></a><span class="S8">(</span><span class="S7">'0x'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringStripWS.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">StringStripWS</span></a><span class="S8">(</span><span class="S9">$sXORBits</span><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tXORBits</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">'byte['</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BinaryLen.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">BinaryLen</span></a><span class="S8">(</span><span class="S9">$bData</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">']'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tXORBits</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$bData</span><span class="S8">)</span>
 
 <span class="S1">; Create monochrome icon (32x32)</span>
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hIcon</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateIcon.htm"><span class="S15">_WinAPI_CreateIcon</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">32</span><span class="S8">,</span><span class="S0"> </span><span class="S3">32</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tANDBits</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tXORBits</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hIcon</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateIcon.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_WinAPI_CreateIcon</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">32</span><span class="S8">,</span><span class="S0"> </span><span class="S3">32</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tANDBits</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tXORBits</span><span class="S8">)</span>
 
 <span class="S1">; Create GUI</span>
-<a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">'Test '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringReplace.htm"><span class="S4">StringReplace</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@ScriptName"><span class="S6">@ScriptName</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">'.au3'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'()'</span><span class="S8">),</span><span class="S0"> </span><span class="S3">128</span><span class="S8">,</span><span class="S0"> </span><span class="S3">128</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../functions/GUICtrlCreateIcon.htm"><span class="S4">GUICtrlCreateIcon</span></a><span class="S8">(</span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">48</span><span class="S8">,</span><span class="S0"> </span><span class="S3">48</span><span class="S8">,</span><span class="S0"> </span><span class="S3">32</span><span class="S8">,</span><span class="S0"> </span><span class="S3">32</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../functions/GUICtrlSendMsg.htm"><span class="S4">GUICtrlSendMsg</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$STM_SETIMAGE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hIcon</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUICreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">'Test '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringReplace.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">StringReplace</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@ScriptName><span class="S6">@ScriptName</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">'.au3'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'()'</span><span class="S8">),</span><span class="S0"> </span><span class="S3">128</span><span class="S8">,</span><span class="S0"> </span><span class="S3">128</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUICtrlCreateIcon.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">GUICtrlCreateIcon</span></a><span class="S8">(</span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">48</span><span class="S8">,</span><span class="S0"> </span><span class="S3">48</span><span class="S8">,</span><span class="S0"> </span><span class="S3">32</span><span class="S8">,</span><span class="S0"> </span><span class="S3">32</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUICtrlSendMsg.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">GUICtrlSendMsg</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$STM_SETIMAGE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hIcon</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/GUISetState.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@SW_SHOW><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
 
-<a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Do</span></a>
-<a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Until</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+<a class="codeSnippetLink" href="../keywords/Do.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Do</span></a>
+<a class="codeSnippetLink" href="../keywords/Do.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Until</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
 <span class="S0"></span></span>
 </pre>
 </div>

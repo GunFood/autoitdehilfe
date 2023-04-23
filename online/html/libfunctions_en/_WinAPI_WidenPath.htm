@@ -3,14 +3,61 @@
 <head>
 <title>Function _WinAPI_WidenPath</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Function Reference</h1>
 <hr style="height:0px">
-<h1>_WinAPI_WidenPath</h1>
-<p class="funcdesc">Redefines the current path as the area that would be painted if the path were stroked<br /></p>
+<div class="top"><h1>_WinAPI_WidenPath</h1><div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
+<p style="margin:2px 0 0 0;" class="funcdesc">Redefines the current path as the area that would be painted if the path were stroked<br /></p>
 <p class="codeheader">
 #include &lt;WinAPIGdi.au3&gt;<br />
 _WinAPI_WidenPath ( $hDC )<br />
@@ -39,10 +86,10 @@ _WinAPI_WidenPath ( $hDC )<br />
 <h2>Remarks</h2>
 <p>The device context identified by the $hDC parameter must contain a closed path.<br />
 <br />
-The <a href="_WinAPI_WidenPath.htm">_WinAPI_WidenPath()</a> function is successful only if the current pen has a width, in device units, of more than one.<br />
+The <a href="_WinAPI_WidenPath.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_WidenPath()</a> function is successful only if the current pen has a width, in device units, of more than one.<br />
 <br />
 Any Bezier curves in the path are converted to sequences of straight lines approximating the widened curves.<br />
-As such, no Bezier curves remain in the path after <a href="_WinAPI_WidenPath.htm">_WinAPI_WidenPath()</a> is called.<br />
+As such, no Bezier curves remain in the path after <a href="_WinAPI_WidenPath.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_WidenPath()</a> is called.<br />
 </p>
 
 <h2>See Also</h2>

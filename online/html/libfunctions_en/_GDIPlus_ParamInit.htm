@@ -3,15 +3,62 @@
 <head>
 <title>Function _GDIPlus_ParamInit</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Function Reference</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_GDIPlus_ParamInit</h1><br />
-<a href="../libfunctions/_GDIPlus_ParamInit.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Show description in</div><br />
+<div class="top"><h1>_GDIPlus_ParamInit</h1><div>
+<div id="flagtext">Show description in</div>
+<div id="flaglink"> <a href="../libfunctions/_GDIPlus_ParamInit.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_de.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Allocate an empty encoder parameter list<br /></p>
 <p class="codeheader">
 #include &lt;GDIPlus.au3&gt;<br />
@@ -40,11 +87,11 @@ _GDIPlus_ParamInit ( $iCount )<br />
 
 <h2>Remarks</h2>
 <p>In order to pass parameters to any of the encoder functions, you must use an encoder parameter list.<br />
-This function is used to allocate an encoder parameter list that can then be passed to <a href="_GDIPlus_ParamAdd.htm">_GDIPlus_ParamAdd()</a> to add the actual parameters.<br />
+This function is used to allocate an encoder parameter list that can then be passed to <a href="_GDIPlus_ParamAdd.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_GDIPlus_ParamAdd()</a> to add the actual parameters.<br />
 </p>
 
 <h2>Related</h2>
-<p><a href="$tagGDIPENCODERPARAM.htm">$tagGDIPENCODERPARAM</a>, <a href="$tagGDIPENCODERPARAMS.htm">$tagGDIPENCODERPARAMS</a>, <a href="_GDIPlus_ParamAdd.htm">_GDIPlus_ParamAdd</a></p>
+<p><a href="$tagGDIPENCODERPARAM.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">$tagGDIPENCODERPARAM</a>, <a href="$tagGDIPENCODERPARAMS.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">$tagGDIPENCODERPARAMS</a>, <a href="_GDIPlus_ParamAdd.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_GDIPlus_ParamAdd</a></p>
 
 <h2 class="bottom">Example</h2>
 <script type="text/javascript">
@@ -78,40 +125,40 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GDIPlus.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;ScreenCapture.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GDIPlus.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;ScreenCapture.au3&gt;</span>
 
 <span class="S0">Example</span><span class="S8">()</span>
 
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hImage</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sCLSID</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tData</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tParams</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hImage</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sCLSID</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tData</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tParams</span>
 
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Capture screen</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ScreenCapture_Capture.htm"><span class="S15">_ScreenCapture_Capture</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@MyDocumentsDir"><span class="S6">@MyDocumentsDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"\GDIPlus_Image.jpg"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_ScreenCapture_Capture.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_ScreenCapture_Capture</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@MyDocumentsDir><span class="S6">@MyDocumentsDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"\GDIPlus_Image.jpg"</span><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Initialize GDI+ library</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Startup.htm"><span class="S15">_GDIPlus_Startup</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Startup.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_GDIPlus_Startup</span></a><span class="S8">()</span>
 
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Load image</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$hImage</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageLoadFromFile.htm"><span class="S15">_GDIPlus_ImageLoadFromFile</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@MyDocumentsDir"><span class="S6">@MyDocumentsDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"\GDIPlus_Image.jpg"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$hImage</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageLoadFromFile.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_GDIPlus_ImageLoadFromFile</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@MyDocumentsDir><span class="S6">@MyDocumentsDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"\GDIPlus_Image.jpg"</span><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Get JPEG encoder CLSID</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sCLSID</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_EncodersGetCLSID.htm"><span class="S15">_GDIPlus_EncodersGetCLSID</span></a><span class="S8">(</span><span class="S7">"JPG"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sCLSID</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_EncodersGetCLSID.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_GDIPlus_EncodersGetCLSID</span></a><span class="S8">(</span><span class="S7">"JPG"</span><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Set up parameters for 90 degree rotation</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$tData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">"int Data"</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tData</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Data"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GDIP_EVTTRANSFORMROTATE90</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$tParams</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ParamInit.htm"><span class="S15">_GDIPlus_ParamInit</span></a><span class="S8">(</span><span class="S3">1</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ParamAdd.htm"><span class="S15">_GDIPlus_ParamAdd</span></a><span class="S8">(</span><span class="S9">$tParams</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GDIP_EPGTRANSFORMATION</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GDIP_EPTLONG</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetPtr.htm"><span class="S4">DllStructGetPtr</span></a><span class="S8">(</span><span class="S9">$tData</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Data"</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$tData</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">"int Data"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tData</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Data"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GDIP_EVTTRANSFORMROTATE90</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$tParams</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ParamInit.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_GDIPlus_ParamInit</span></a><span class="S8">(</span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ParamAdd.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_GDIPlus_ParamAdd</span></a><span class="S8">(</span><span class="S9">$tParams</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GDIP_EPGTRANSFORMATION</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GDIP_EPTLONG</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetPtr.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructGetPtr</span></a><span class="S8">(</span><span class="S9">$tData</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Data"</span><span class="S8">))</span>
 
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Save image with rotation</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageSaveToFileEx.htm"><span class="S15">_GDIPlus_ImageSaveToFileEx</span></a><span class="S8">(</span><span class="S9">$hImage</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@MyDocumentsDir"><span class="S6">@MyDocumentsDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"\GDIPlus_Image2.jpg"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sCLSID</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tParams</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_ImageSaveToFileEx.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_GDIPlus_ImageSaveToFileEx</span></a><span class="S8">(</span><span class="S9">$hImage</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@MyDocumentsDir><span class="S6">@MyDocumentsDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"\GDIPlus_Image2.jpg"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sCLSID</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tParams</span><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Shut down GDI+ library</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Shutdown.htm"><span class="S15">_GDIPlus_Shutdown</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GDIPlus_Shutdown.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_GDIPlus_Shutdown</span></a><span class="S8">()</span>
 
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ShellExecute.htm"><span class="S4">ShellExecute</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@MyDocumentsDir"><span class="S6">@MyDocumentsDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"\GDIPlus_Image2.jpg"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ShellExecute.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">ShellExecute</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@MyDocumentsDir><span class="S6">@MyDocumentsDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"\GDIPlus_Image2.jpg"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
 <span class="S0"></span></span>
 </pre>
 </div>

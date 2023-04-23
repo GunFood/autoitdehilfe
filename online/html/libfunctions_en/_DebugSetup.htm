@@ -3,15 +3,62 @@
 <head>
 <title>Function _DebugSetup</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Function Reference</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_DebugSetup</h1><br />
-<a href="../libfunctions/_DebugSetup.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Show description in</div><br />
+<div class="top"><h1>_DebugSetup</h1><div>
+<div id="flagtext">Show description in</div>
+<div id="flaglink"> <a href="../libfunctions/_DebugSetup.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_de.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Setup up a debug session using a specific reporting type<br /></p>
 <p class="codeheader">
 #include &lt;Debug.au3&gt;<br />
@@ -69,15 +116,15 @@ string - name of specific report function to be used.</td>
 <p>If a specific reporting function is registered then on AutoIt exit it is called without parameters.<br />
 <br />
 You can only start one debug session at a time in the running script.<br />
-You can debug several concurrent scripts using the same debugging session, just use the same $sTitle when calling <a href="_DebugSetup.htm">_DebugSetup()</a>. All <a href="_DebugOut.htm">_DebugOut()</a> will go to the same debugging session.<br />
+You can debug several concurrent scripts using the same debugging session, just use the same $sTitle when calling <a href="_DebugSetup.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_DebugSetup()</a>. All <a href="_DebugOut.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_DebugOut()</a> will go to the same debugging session.<br />
 <br />
-Commenting out the <a href="_DebugSetup.htm">_DebugSetup()</a> call will effectively disable all the calls to _Debug...(), but you may want to remove the calls to all _Debug...() functions before making a release version of your script.<br />
+Commenting out the <a href="_DebugSetup.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_DebugSetup()</a> call will effectively disable all the calls to _Debug...(), but you may want to remove the calls to all _Debug...() functions before making a release version of your script.<br />
 <br />
 If the "Report Log Window" type is used then the script will end only when closing the report window.<br />
 </p>
 
 <h2>Related</h2>
-<p><a href="_DebugOut.htm">_DebugOut</a>, <a href="_DebugReport.htm">_DebugReport</a>, <a href="_DebugReportEx.htm">_DebugReportEx</a>, <a href="_DebugReportVar.htm">_DebugReportVar</a></p>
+<p><a href="_DebugOut.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_DebugOut</a>, <a href="_DebugReport.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_DebugReport</a>, <a href="_DebugReportEx.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_DebugReportEx</a>, <a href="_DebugReportVar.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_DebugReportVar</a></p>
 
 <h2 class="bottom">Example</h2>
 <script type="text/javascript">
@@ -111,7 +158,7 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><span class="S2">#cs ----------------------------------------------------------------------------</span>
+<span><span class="S11">#cs</span><span class="S2"> ----------------------------------------------------------------------------</span>
 
 <span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; AutoIt Version: 3.2.8.1</span>
 <span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; Author: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;David Nuttall</span>
@@ -119,17 +166,17 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; Script Function:</span>
 <span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; Base script to show functionality of Debug functions.</span>
 
-<span class="S2">#ce ----------------------------------------------------------------------------</span>
+<span class="S11">#ce</span><span class="S2"> ----------------------------------------------------------------------------</span>
 
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Debug.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Debug.au3&gt;</span>
 
-<a class="codeSnippetLink" href="../libfunctions/_DebugSetup.htm"><span class="S15">_DebugSetup</span></a><span class="S8">(</span><span class="S7">"Check Excel"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">; start displaying debug environment</span>
-<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">4</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinActivate.htm"><span class="S4">WinActivate</span></a><span class="S8">(</span><span class="S7">"Microsoft Excel"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugSetup.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_DebugSetup</span></a><span class="S8">(</span><span class="S7">"Check Excel"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">True</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">; start displaying debug environment</span>
+<a class="codeSnippetLink" href="../keywords/For.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">4</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinActivate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">WinActivate</span></a><span class="S8">(</span><span class="S7">"Microsoft Excel"</span><span class="S8">)</span>
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; interact with Excel</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Send.htm"><span class="S4">Send</span></a><span class="S8">(</span><span class="S7">"</span><span class="S10">{Down}</span><span class="S7">"</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugOut.htm"><span class="S15">_DebugOut</span></a><span class="S8">(</span><span class="S7">"Moved Mouse Down"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; forces debug notepad window to take control</span>
-<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Send.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Send</span></a><span class="S8">(</span><span class="S7">"</span><span class="S10">{Down}</span><span class="S7">"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugOut.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_DebugOut</span></a><span class="S8">(</span><span class="S7">"Moved Mouse Down"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; forces debug notepad window to take control</span>
+<a class="codeSnippetLink" href="../keywords/For.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Next</span></a>
 <span class="S0"></span></span>
 </pre>
 </div>

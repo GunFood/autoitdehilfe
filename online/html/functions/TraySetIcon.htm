@@ -3,15 +3,62 @@
 <head>
 <title>Funktion TraySetIcon</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Funktionreferenz</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">TraySetIcon</h1><br />
-<a href="../functions_en/TraySetIcon.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<div class="top"><h1>TraySetIcon</h1><div>
+<div id="flagtext">Beschreibung anzeigen in</div>
+<div id="flaglink"> <a href="../functions_en/TraySetIcon.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_en.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">&Auml;ndert das Trayicon.<br /></p>
 <p class="codeheader">
 TraySetIcon ( [filename [, iconID]] )<br />
@@ -34,7 +81,7 @@ Keine.<br />
 
 
 <h2>Bemerkungen</h2>
-<p>Um das Standardicon wiederherzustellen, ist die Funktion ohne Parameter zu verwenden: <a href="TraySetIcon.htm">TraySetIcon()</a>.<br />
+<p>Um das Standardicon wiederherzustellen, ist die Funktion ohne Parameter zu verwenden: <a href="TraySetIcon.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">TraySetIcon()</a>.<br />
 <br />
 Die Angabe einer positiven Zahl bezieht sich auf den "string-equivalenten" Iconindex. Das erste Icon hat den Index "0".<br />
 Die Angabe einer negativen Zahl f&uuml;hrt zu numerischem "Index"-Verhalten, wobei das erste Icon den Index 1 erh&auml;lt. Einige DLLs k&ouml;nnen Icons enthalten, die nur mit negativen Nummern entpackt werden.<br />
@@ -43,7 +90,7 @@ Der iconfile-Parameter kann auf "blank", "info", "question", "stop" oder "warnin
 </p>
 
 <h2>Verwandte Funktionen</h2>
-<p><a href="TraySetPauseIcon.htm">TraySetPauseIcon</a>, <a href="TraySetState.htm">TraySetState</a></p>
+<p><a href="TraySetPauseIcon.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">TraySetPauseIcon</a>, <a href="TraySetState.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">TraySetState</a></p>
 
 <h2 class="bottom">Beispiel</h2>
 <script type="text/javascript">
@@ -77,39 +124,39 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;TrayConstants.au3&gt;</span><span class="S0"> </span><span class="S1">; wird f&uuml;r die $TRAY_ICONSTATE_SHOW Konstante ben&ouml;tigt.</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;TrayConstants.au3&gt;</span><span class="S0"> </span><span class="S1">; wird f&uuml;r die $TRAY_ICONSTATE_SHOW Konstante ben&ouml;tigt.</span>
 
-<a class="codeSnippetLink" href="../keywords/NoTrayIcon.htm"><span class="S11">#NoTrayIcon</span></a>
+<a class="codeSnippetLink" href="../keywords/NoTrayIcon.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#NoTrayIcon</span></a>
 
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"TrayMenuMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Die Standard Traymen&uuml;eintr&auml;ge (Skript pausieren/beenden) werden nicht angezeigt und die Items werden nicht angehakt wenn diese ausgew&auml;hlt werden. Verwendet wurden die Optionen 1 und 2 f&uuml;r TrayMenuMode.</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"TrayMenuMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Die Standard Traymen&uuml;eintr&auml;ge (Skript pausieren/beenden) werden nicht angezeigt und die Items werden nicht angehakt wenn diese ausgew&auml;hlt werden. Verwendet wurden die Optionen 1 und 2 f&uuml;r TrayMenuMode.</span>
 
 <span class="S0">Example</span><span class="S8">()</span>
 
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idExit</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/TrayCreateItem.htm"><span class="S4">TrayCreateItem</span></a><span class="S8">(</span><span class="S7">"Beenden"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idExit</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/TrayCreateItem.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">TrayCreateItem</span></a><span class="S8">(</span><span class="S7">"Beenden"</span><span class="S8">)</span>
 
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/TraySetState.htm"><span class="S4">TraySetState</span></a><span class="S8">(</span><span class="S9">$TRAY_ICONSTATE_SHOW</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Zeigt das Traymen&uuml;.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/TraySetState.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">TraySetState</span></a><span class="S8">(</span><span class="S9">$TRAY_ICONSTATE_SHOW</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Zeigt das Traymen&uuml;.</span>
 
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hTimer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/TimerInit.htm"><span class="S4">TimerInit</span></a><span class="S8">()</span><span class="S0"> </span><span class="S1">; Startet den Timer und speichert das Handle in einer Variable.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$fDiff</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iIndex</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hTimer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/TimerInit.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">TimerInit</span></a><span class="S8">()</span><span class="S0"> </span><span class="S1">; Startet den Timer und speichert das Handle in einer Variable.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$fDiff</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iIndex</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
 
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$fDiff</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/TimerDiff.htm"><span class="S4">TimerDiff</span></a><span class="S8">(</span><span class="S9">$hTimer</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Ermittelt den Zeitunterschied zu dem vorherigen Aufruf von TimerInit</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$fDiff</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&gt;</span></a><span class="S0"> </span><span class="S3">1000</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><span class="S1">; Falls der Unterschied gr&ouml;&szlig;er als eine Sekunden ist, so wird das Traymen&uuml;icon ge&auml;ndert.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$fDiff</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/TimerDiff.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">TimerDiff</span></a><span class="S8">(</span><span class="S9">$hTimer</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Ermittelt den Zeitunterschied zu dem vorherigen Aufruf von TimerInit</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$fDiff</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">&gt;</span></a><span class="S0"> </span><span class="S3">1000</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Then</span></a><span class="S0"> </span><span class="S1">; Falls der Unterschied gr&ouml;&szlig;er als eine Sekunden ist, so wird das Traymen&uuml;icon ge&auml;ndert.</span>
 
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$iIndex</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><a class="codeSnippetLink" href="../functions/Random.htm"><span class="S4">Random</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Negativ um die Ordinalnummerierung zu verwenden</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/TraySetToolTip.htm"><span class="S4">TraySetToolTip</span></a><span class="S8">(</span><span class="S7">"Aktuell wird das Icon shell32.dll, "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iIndex</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" verwendet."</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Setzt den Traymnen&uuml; Tooltip mit Informationen &uuml;ber den Iconindex.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/TraySetIcon.htm"><span class="S4">TraySetIcon</span></a><span class="S8">(</span><span class="S7">"shell32.dll"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iIndex</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Setzt das Traymnen&uuml;icon mit der shell32.dll und einer Zufallsindexzahl.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$hTimer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/TimerInit.htm"><span class="S4">TimerInit</span></a><span class="S8">()</span><span class="S0"> </span><span class="S1">; Setzt den Timer zur&uuml;ck.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$iIndex</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">-</span></a><a class="codeSnippetLink" href="../functions/Random.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Random</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Negativ um die Ordinalnummerierung zu verwenden</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/TraySetToolTip.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">TraySetToolTip</span></a><span class="S8">(</span><span class="S7">"Aktuell wird das Icon shell32.dll, "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iIndex</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" verwendet."</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Setzt den Traymnen&uuml; Tooltip mit Informationen &uuml;ber den Iconindex.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/TraySetIcon.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">TraySetIcon</span></a><span class="S8">(</span><span class="S7">"shell32.dll"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iIndex</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Setzt das Traymnen&uuml;icon mit der shell32.dll und einer Zufallsindexzahl.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$hTimer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/TimerInit.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">TimerInit</span></a><span class="S8">()</span><span class="S0"> </span><span class="S1">; Setzt den Timer zur&uuml;ck.</span>
 
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndIf</span></a>
 
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/TrayGetMsg.htm"><span class="S4">TrayGetMsg</span></a><span class="S8">()</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$idExit</span><span class="S0"> </span><span class="S1">; Beendet die Schleife.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Switch</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/TrayGetMsg.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">TrayGetMsg</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$idExit</span><span class="S0"> </span><span class="S1">; Beendet die Schleife.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">ExitLoop</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndSwitch</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">WEnd</span></a>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
 <span class="S0"></span></span>
 </pre>
 </div>

@@ -3,28 +3,73 @@
 <head>
   <title>GDI Referenz</title>
   <meta charset="utf-8">
-  <link href="../css/default.css" rel="stylesheet">
+  <link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1>GDI Referenz</h1>
 <ul>
-      <li><a href="WinAPIEx BitMaps Management.htm">BitMaps Management</a></li>
-      <li><a href="WinAPIEx Brush & Pen Management.htm">Brush & Pen Management</a></li>
-      <li><a href="WinAPIEx Clipping Management.htm">Clipping Management</a></li>
-      <li><a href="WinAPIEx Colors Management.htm">Colors Management</a></li>
-      <li><a href="WinAPIEx Coordinate & Transform Management.htm">Coordinate & Transform Management</a></li>
-      <li><a href="WinAPIEx Desktop Window Manager Management.htm">Desktop Window Manager Management</a></li>
-      <li><a href="WinAPIEx DeviceContext Management.htm">DeviceContext Management</a></li>
-      <li><a href="WinAPIEx Font & Text Management.htm">Font & Text Management</a></li>
-      <li><a href="WinAPIEx Line & Curve Management.htm">Line & Curve Management</a></li>
-      <li><a href="WinAPIEx MetaFiles Management.htm">MetaFiles Management</a></li>
-      <li><a href="WinAPIEx Monitors Management.htm">Monitors Management</a></li>
-      <li><a href="WinAPIEx Paint & Draw Management.htm">Paint & Draw Management</a></li>
-      <li><a href="WinAPIEx Path Management.htm">Path Management</a></li>
-      <li><a href="WinAPIEx Rectangle Management.htm">Rectangle Management</a></li>
-      <li><a href="WinAPIEx Regions Management.htm">Regions Management</a></li>
-      <li><a href="WinAPIEx Shape Management.htm">Shape Management</a></li>
+      <li><a href="WinAPIEx BitMaps Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">BitMaps Management</a></li>
+      <li><a href="WinAPIEx Brush & Pen Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Brush & Pen Management</a></li>
+      <li><a href="WinAPIEx Clipping Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Clipping Management</a></li>
+      <li><a href="WinAPIEx Colors Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Colors Management</a></li>
+      <li><a href="WinAPIEx Coordinate & Transform Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Coordinate & Transform Management</a></li>
+      <li><a href="WinAPIEx Desktop Window Manager Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Desktop Window Manager Management</a></li>
+      <li><a href="WinAPIEx DeviceContext Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">DeviceContext Management</a></li>
+      <li><a href="WinAPIEx Font & Text Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Font & Text Management</a></li>
+      <li><a href="WinAPIEx Line & Curve Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Line & Curve Management</a></li>
+      <li><a href="WinAPIEx MetaFiles Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">MetaFiles Management</a></li>
+      <li><a href="WinAPIEx Monitors Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Monitors Management</a></li>
+      <li><a href="WinAPIEx Paint & Draw Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Paint & Draw Management</a></li>
+      <li><a href="WinAPIEx Path Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Path Management</a></li>
+      <li><a href="WinAPIEx Rectangle Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Rectangle Management</a></li>
+      <li><a href="WinAPIEx Regions Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Regions Management</a></li>
+      <li><a href="WinAPIEx Shape Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Shape Management</a></li>
 </ul>
 
 </body>

@@ -1,20 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Function Notes</title>
+  <title>Funktionshinweise</title>
   <meta charset="utf-8">
-  <link href="css/default.css" rel="stylesheet">
+  <link href="css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', 'css/' + this.theme);
+				document.getElementById('toggleButton').src = 'images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 <body>
-  <h1>Function Notes</h1>
-  <p>Functions in AutoIt are first class objects. Among other things, that means you can assign a function to a variable, pass it around as an argument or return from another function.<br />
-  Aside from certain specific scope-regarding declaration rules (being that the names of the built-in functions are <em>reserved</em> and of UDFs' can be overwritten only locally), the names of functions do not have special status in the language.</p>
+  <h1>Funktionshinweise</h1>
+  <p>Funktionen in AutoIt sind Objekte erster Klasse. Das bedeutet unter anderem, dass Sie eine Funktion einer Variablen zuweisen, sie als Argument weitergeben oder von einer anderen Funktion zur&uuml;ckkehren k&ouml;nnen.<br />
+Abgesehen von bestimmten, den Funktionsumfang betreffenden Deklarationsregeln (n&auml;mlich dass die Namen der eingebauten Funktionen <em>reserviert</em> sind und die von UDFs nur lokal &uuml;berschrieben werden k&ouml;nnen), haben die Namen von Funktionen keinen besonderen Status in der Sprache.</p>
 @@SyntaxHighlighting@@
 #include <MsgBoxConstants.au3>
 
 Local $vFunc = MsgBox
 
-$vFunc($MB_OK, "Hi there!", "Lovely day today.")
+$vFunc($MB_OK, "Hallo zusammen!", "Schöner Tag heute.")
 @@End@@
   <p>&nbsp;</p>
 @@SyntaxHighlighting@@
@@ -25,38 +70,39 @@ Func _Test()
 EndFunc
 @@End@@
   <p>&nbsp;</p>
-<strong>Optional parameters</strong><br />
+<strong>Optionale Parameter</strong><br />
   <br />
-  <p>Many functions contain optional parameters that can be omitted. If you wish to specify an optional parameter, however, all preceding parameters must be specified!<br />
-  For example, consider <em><a href="functions/Run.htm">Run</a> ( "filename", ["workingdir" [, flag]] )</em>. If you wish to specify the <em>flag</em>, you <strong>must</strong> specify a <em>workingdir</em>.<br />
-<p>When an optional parameter needs to be defined and is preceded by one or more optional parameters, the default value must be given for that parameter. Generally speaking functions should accept the <a href="keywords/Default.htm">Default</a> keyword when you wish to use the default parameter. See the corresponding optional parameter description for more details.</p>
+  <p>
+Viele Funktionen enthalten optionale Parameter, die weggelassen werden k&ouml;nnen. Wenn Sie jedoch einen optionalen Parameter angeben wollen, m&uuml;ssen alle vorangehenden Parameter angegeben werden!br />
+Ein Beispiel: <em><a href="functions/Run.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Run</a> ("Dateiname", ["Arbeitsverzeichnis" [, Flag]] )</em>. Wenn Sie das <em>Flag</em> angeben wollen, <strong>m&uuml;ssen</strong> Sie ein <em>Arbeitsverzeichnis</em> angeben.<br />
+<p>Wenn ein optionaler Parameter definiert werden muss und ihm ein oder mehrere optionale Parameter vorangestellt sind, muss der Standardwert f&uuml;r diesen Parameter angegeben werden. Im Allgemeinen sollten Funktionen das Schl&uuml;sselwort <a href="keywords/Default.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Default</a> akzeptieren, wenn Sie den Standardparameter verwenden m&ouml;chten. Siehe die entsprechende Beschreibung der optionalen Parameter f&uuml;r weitere Details.</p>
   <br />
-  Many Win___ functions contain an optional parameter "text". This parameter is intended to help differentiate between windows that have identical titles.<br />
+Viele Win___-Funktionen enthalten einen optionalen Parameter "text". Dieser Parameter soll helfen, zwischen Fenstern mit identischen Titeln zu unterscheiden.<br />
   <br />
-<strong>Success/failure indication of internal AutoIt functions</strong><br />
+<strong>Erfolgs-/Misserfolgsanzeige von internen AutoIt-Funktionen</strong><br />
   <br />
-  Some functions use the <strong>Return value</strong> to indicate success/failure, others set the <strong>@error flag</strong>. Some do both....<br />
+Einige Funktionen verwenden den <strong>R&uuml;ckgabewert</strong> zur Anzeige von Erfolg/Fehlschlag, andere setzen das <strong>@error-Flag</strong>. Einige tun beides....<br />
   <br />
-  If the <strong>Return value</strong> method is used, the Help file will specify the expected value for success/failure - but the success value is typically non-zero to allow easy to read code...<br />
+Wenn die <strong>R&uuml;ckgabewert</strong>-Methode verwendet wird, gibt die Hilfedatei den erwarteten Wert f&uuml;r Erfolg/Misserfolg an - aber der Erfolgswert ist typischerweise ungleich Null, damit der Code leicht zu lesen ist...<br />
 @@SyntaxHighlighting@@
-If SomeUserFunc() Then ;...function worked.
-If Not SomeUserFunc() Then ;...function failed.
+If SomeUserFunc() Then ;... Die Funktion wurde erfolgreich beendet.
+If Not SomeUserFunc() Then ;... Die Funktion wurde mit einem Fehler beendet.
 @@End@@
   <br />
   <br />
-  When the documentation states that the return value = none, AutoIt always returns a value to avoid errors. 1 is usually the value returned, but you should not depend on this return value.<br />
+Wenn die Dokumentation angibt, dass der R&uuml;ckgabewert = none ist, gibt AutoIt immer einen Wert zur&uuml;ck, um Fehler zu vermeiden. Normalerweise wird der Wert 1 zur&uuml;ckgegeben, aber Sie sollten sich nicht auf diesen R&uuml;ckgabewert verlassen.<br />
   <br />
-  If the <strong>@error flag</strong> method is used, @error = 0 always indicates success. Other @error values indicate a problem and are defined in the Help file for the function.<br />
+Wenn die <strong>@error-Flag</strong>-Methode verwendet wird, bedeutet @error = 0 immer einen Erfolg. Andere @error-Werte weisen auf ein Problem hin und sind in der Hilfedatei f&uuml;r die Funktion definiert.<br />
 @@SyntaxHighlighting@@
 Local $sFileRead = FileReadLine("C:\someFile.txt")
-If @error = -1 Then ; End-of-file was reached.
+If @error = -1 Then ; Ende-der-Datei wurde erreicht.
 @@End@@
   <br />
   <br />
-  If a function uses the <strong>@error flag</strong> method, the flag should be checked immediately after the function returns as @error will be reset to 0 when entering the next function. No attempt to use or access the function return value should be made if the @error flag has been set as in that case the return value is generally undefined...<br />
+Wenn eine Funktion die <strong>@error-Flag</strong>-Methode verwendet, sollte die Flagge sofort nach der R&uuml;ckkehr der Funktion &uuml;berpr&uuml;ft werden, da @error bei der Eingabe der n&auml;chsten Funktion auf 0 zur&uuml;ckgesetzt wird. Es sollte nicht versucht werden, den R&uuml;ckgabewert der Funktion zu verwenden oder darauf zuzugreifen, wenn das @error-Flag gesetzt wurde, da der R&uuml;ckgabewert in diesem Fall im Allgemeinen undefiniert ist...<br />
   <br />
-  <strong>Success/failure indication of user-written functions</strong><br />
+  <strong>Erfolgs-/Misserfolgsanzeige von benutzergeschriebenen Funktionen</strong><br />
   <br />
-  The return value, @error, and @extended macros are normally set by the author using the <a href="keywords/Func.htm">Return</a>/<a href="SetError.htm">SetError</a>/<a href="SetExtended.htm">SetExtended</a> functions within the code. See the documentation for the specific user-written library to determine the specific values that are used.<br />
+Die Makros f&uuml;r den R&uuml;ckgabewert, @error und @extended werden normalerweise vom Autor mit den Funktionen <a href="keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Return</a>/<a href="SetError.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">SetError</a>/<a href="SetExtended.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">SetExtended</a> innerhalb des Codes gesetzt. Welche Werte verwendet werden, entnehmen Sie bitte der Dokumentation der jeweiligen benutzerdefinierten Bibliothek.<br />
 </body>
 </html>

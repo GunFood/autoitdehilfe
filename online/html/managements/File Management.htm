@@ -3,7 +3,52 @@
 <head>
   <title>Benutzerdefinierte Funktionen</title>
   <meta charset="utf-8">
-  <link href="../css/default.css" rel="stylesheet">
+  <link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
@@ -20,63 +65,63 @@ Ein Klick auf einen Funktionsnamen liefert eine detaillierte Beschreibung.</p>
   <th style="width:75%">Beschreibung</th>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FileCountLines.htm">_FileCountLines</a></td>
+<td><a href="..\..\html\libfunctions\_FileCountLines.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FileCountLines</a></td>
 <td>Gibt die Anzahl der Zeilen in der angegebenen Datei zur&uuml;ck<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FileCreate.htm">_FileCreate</a></td>
+<td><a href="..\..\html\libfunctions\_FileCreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FileCreate</a></td>
 <td>Erstellt eine Datei oder setzt die L&auml;nge der angegebenen Datei auf 0 zur&uuml;ck<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FileListToArray.htm">_FileListToArray</a></td>
+<td><a href="..\..\html\libfunctions\_FileListToArray.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FileListToArray</a></td>
 <td>Listet Dateien und/oder Ordner eines bestimmten Ordners mit Platzhalteroptionen auf (Dateiplatzhalter  und &auml;hnlich zu "dir" mit der Option "/B" unter DOS)<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FileListToArrayRec.htm">_FileListToArrayRec</a></td>
+<td><a href="..\..\html\libfunctions\_FileListToArrayRec.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FileListToArrayRec</a></td>
 <td>Listet Dateien und/oder Ordner im angegebenen Pfad mit optionaler Rekursion um das Level festzulegen und einer Ergebnissortierung mit der M&ouml;glichkeit, eine Platzhalterauswahl zu verwenden (Dateiplatzhalter).<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FilePrint.htm">_FilePrint</a></td>
+<td><a href="..\..\html\libfunctions\_FilePrint.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FilePrint</a></td>
 <td>Druckt eine reine Text-Datei<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FileReadToArray.htm">_FileReadToArray</a></td>
+<td><a href="..\..\html\libfunctions\_FileReadToArray.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FileReadToArray</a></td>
 <td>Liest die angegebene Datei in ein 1D oder 2D Array ein<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FileWriteFromArray.htm">_FileWriteFromArray</a></td>
+<td><a href="..\..\html\libfunctions\_FileWriteFromArray.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FileWriteFromArray</a></td>
 <td>Schreibt ein Array in die angegebene Datei<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FileWriteLog.htm">_FileWriteLog</a></td>
+<td><a href="..\..\html\libfunctions\_FileWriteLog.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FileWriteLog</a></td>
 <td>Schreibt das aktuelle Datum, die aktuelle Zeit und den angegebenen Text in eine Log Datei<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FileWriteToLine.htm">_FileWriteToLine</a></td>
+<td><a href="..\..\html\libfunctions\_FileWriteToLine.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FileWriteToLine</a></td>
 <td>Schreibt Text in eine bestimmte Zeile einer Datei<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_PathFull.htm">_PathFull</a></td>
+<td><a href="..\..\html\libfunctions\_PathFull.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_PathFull</a></td>
 <td>Erstellt einen Pfad basierend auf dem relativen Pfad, der vom Benutzer &uuml;bergegeben wird. Der neue absolute Pfad wird zur&uuml;ckgegeben<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_PathGetRelative.htm">_PathGetRelative</a></td>
+<td><a href="..\..\html\libfunctions\_PathGetRelative.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_PathGetRelative</a></td>
 <td>Gibt den relativen Pfad zu einem Verzeichnis zur&uuml;ck<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_PathMake.htm">_PathMake</a></td>
+<td><a href="..\..\html\libfunctions\_PathMake.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_PathMake</a></td>
 <td>Erstellt einen Pfad aus einem Laufwerk, Verzeichnis, Dateinamen und einer Dateierweiterung<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_PathSplit.htm">_PathSplit</a></td>
+<td><a href="..\..\html\libfunctions\_PathSplit.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_PathSplit</a></td>
 <td>Teilt einen Pfad in Laufwerk, Verzeichnis, Dateinamen und Dateierweiterung auf. Falls ein Teil des Pfades fehlt, wird ein leerer String gesetzt<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_ReplaceStringInFile.htm">_ReplaceStringInFile</a></td>
+<td><a href="..\..\html\libfunctions\_ReplaceStringInFile.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_ReplaceStringInFile</a></td>
 <td>Ersetzt einen Teilstring in einer Datei<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_TempFile.htm">_TempFile</a></td>
+<td><a href="..\..\html\libfunctions\_TempFile.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_TempFile</a></td>
 <td>Generiert einen Namen f&uuml;r eine tempor&auml;re Datei. Diese Datei existiert garantiert noch nicht<br /></td>
 </tr>
 </table>

@@ -3,15 +3,64 @@
 <head>
 <title>Funktion MapKeys</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <div class="experimental">Diese Funktion ist experimentell. Es kann sein, dass sie nicht funktioniert oder Fehler enthält. Außerdem kann es sein, dass sie ohne Hinweis geändert oder entfernt wird.<br /><br />BITTE KEINE FEHLER ODER NEUE GEWÜNSCHTE FEATURE FÜR DIE FUNKTION MELDEN. VERWENDUNG AUF EIGENE GEFAHR</div><br />
 <h1 class="small">Funktionreferenz</h1>
 <hr style="height:0px">
-<h1>MapKeys</h1>
-<p class="funcdesc">Returns an array holding the keys within a Map.<br /></p>
+<div class="top"><h1>MapKeys</h1><div>
+<div id="flagtext">Beschreibung anzeigen in</div>
+<div id="flaglink"> <a href="../functions_en/MapKeys.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_en.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
+<p style="margin:2px 0 0 0;" class="funcdesc">Gibt ein Array zur&uuml;ck, das die Schl&uuml;ssel einer Map enth&auml;lt.<br /></p>
 <p class="codeheader">
 MapKeys ( map )<br />
 </p>
@@ -20,24 +69,24 @@ MapKeys ( map )<br />
 <table>
 <tr>
 <td style="width:15%">map</td>
-<td style="width:85%">An existing Map</td>
+<td style="width:85%">Eine bestehende Map</td>
 </tr>
 </table>
 
 <h2>R&uuml;ckgabewert</h2>
 <table class="noborder">
 <tr>
-<td style="width:10%" class="valign-top">Success:</td>
-<td style="width:90%">a 1 dimension array containing the keys.</td>
+<td style="width:10%" class="valign-top">Erfolg:</td>
+<td style="width:90%"></td>
 </tr>
 <tr>
-<td class="valign-top">Failure:</td>
-<td>a zero based array and sets the @error flag to non-zero</td>
+<td class="valign-top">Fehler:</td>
+<td></td>
 </tr>
 </table>
 
 <h2>Bemerkungen</h2>
-<p>The returned array can be used to iterate the values held within the Map<br />
+<p>Das zur&uuml;ckgegebene Array kann verwendet werden, um die in der Map enthaltenen Werte zu iterieren.<br />
 </p>
 
 <h2 class="bottom">Beispiel</h2>
@@ -72,25 +121,25 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
 
-<span class="S0">Example</span><span class="S8">()</span>
+<span class="S0">Beispiel</span><span class="S8">()</span>
 
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
-<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Declare a map and assign with various keys value pairs.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$mMap</span><span class="S8">[]</span>
-<span class="S0">&nbsp; &nbsp; </span><span class="S9">$mMap</span><span class="S8">[</span><span class="S3">1</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Integer One"</span><span class="S0"> </span><span class="S1">; Integer value as a key.</span>
-<span class="S0">&nbsp; &nbsp; </span><span class="S9">$mMap</span><span class="S8">[</span><span class="S7">"2"</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"String Two"</span><span class="S0"> </span><span class="S1">; String value representing an integer as a key. This is a string not an integer.</span>
-<span class="S0">&nbsp; &nbsp; MapAppend</span><span class="S8">(</span><span class="S9">$mMap</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Integer Two"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Append a value using the next available integer, which is 2 in this case.</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Func</span></a><span class="S0"> Beispiel</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Deklariert eine Map und belegt sie mit verschiedenen Schl&uuml;ssel-Wert-Paaren.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$mMap</span><span class="S8">[]</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$mMap</span><span class="S8">[</span><span class="S3">1</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Integer Eins"</span><span class="S0"> </span><span class="S1">; Integer-Wert als Schl&uuml;ssel.</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$mMap</span><span class="S8">[</span><span class="S7">"2"</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"String Zwei"</span><span class="S0"> </span><span class="S1">; String-Wert, der eine ganze Zahl als Schl&uuml;ssel darstellt. Dies ist ein String und keine ganze Zahl.</span>
+<span class="S0">&nbsp; &nbsp; MapAppend</span><span class="S8">(</span><span class="S9">$mMap</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Integer Zwei"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Anh&auml;ngen eines Wertes unter Verwendung der n&auml;chsten verf&uuml;gbaren ganzen Zahl, die in diesem Fall 2 ist.</span>
 
-<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Retrieve the keys contained in the map. A zero-based one-dimensional array is returned.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aMapKeys</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> MapKeys</span><span class="S8">(</span><span class="S9">$mMap</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$vKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/ForInNext.htm"><span class="S5">In</span></a><span class="S0"> </span><span class="S9">$aMapKeys</span><span class="S0"> </span><span class="S1">; Or a For loop can be used as well.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Key: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$vKey</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span><span class="S0"> </span><span class="S1">; The key.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Value: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$mMap</span><span class="S8">[</span><span class="S9">$vKey</span><span class="S8">]</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span><span class="S0"> </span><span class="S1">; Use the array value of MapKeys() to display the value of the key.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Variable Type: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/VarGetType.htm"><span class="S4">VarGetType</span></a><span class="S8">(</span><span class="S9">$vKey</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">; Display the variable type of the key i.e. integer or string.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Ruft die in der Map enthaltenen Schl&uuml;ssel ab. Es wird ein nullbasiertes eindimensionales Array zur&uuml;ckgegeben.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aMapKeys</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> MapKeys</span><span class="S8">(</span><span class="S9">$mMap</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$vKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/ForInNext.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">In</span></a><span class="S0"> </span><span class="S9">$aMapKeys</span><span class="S0"> </span><span class="S1">; Es kann aber auch eine For-Schleife verwendet werden.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Schl&uuml;ssel: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$vKey</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span><span class="S0"> </span><span class="S1">; Der Schl&uuml;ssel.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Wert: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$mMap</span><span class="S8">[</span><span class="S9">$vKey</span><span class="S8">]</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span><span class="S0"> </span><span class="S1">; Verwendet den Array-Wert von MapKeys(), um den Wert des Schl&uuml;ssels anzuzeigen.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Variablentyp: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/VarGetType.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">VarGetType</span></a><span class="S8">(</span><span class="S9">$vKey</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">; Zeigt den Variablentyp des Schl&uuml;ssels an, d.h. Ganzzahl oder String.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Next</span></a>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Beispiel</span>
 <span class="S0"></span></span>
 </pre>
 </div>

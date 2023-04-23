@@ -3,12 +3,57 @@
 <head>
   <title>Running Scripts</title>
   <meta charset="utf-8">
-  <link href="../css/default.css" rel="stylesheet">
+  <link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 <body>
   <h1>Running Scripts</h1>
   <p>When you start AutoIt you will be asked to open a <strong>script file</strong>. A script file is a simple text file containing AutoIt keywords and functions that tell AutoIt what you want it to do. Script files are created in a simple text
-  editor such as <strong>notepad.exe</strong> but there is a much better <a href="editors.htm">alternative</a> in a specially modified version of the SciTE editor.<br /></p>
+  editor such as <strong>notepad.exe</strong> but there is a much better <a href="editors.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">alternative</a> in a specially modified version of the SciTE editor.<br /></p>
   <p>Although AutoIt v3 scripts are just plain-text files they are usually given the file extension <strong>.au3</strong> to differentiate between a script and a plain text file. If you used the full installer to install AutoIt you can execute an
   AutoIt script simply by double-clicking it. There are also various options to open, edit, or compile a script if you right-click on the <strong>.au3</strong> file.</p>
   <p>&nbsp;</p>

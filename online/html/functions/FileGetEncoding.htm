@@ -3,15 +3,62 @@
 <head>
 <title>Funktion FileGetEncoding</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Funktionreferenz</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">FileGetEncoding</h1><br />
-<a href="../functions_en/FileGetEncoding.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<div class="top"><h1>FileGetEncoding</h1><div>
+<div id="flagtext">Beschreibung anzeigen in</div>
+<div id="flaglink"> <a href="../functions_en/FileGetEncoding.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_en.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Ermittelt die Text-Kodierung einer Datei.<br /></p>
 <p class="codeheader">
 FileGetEncoding ( "filehandle/filename" [, mode = 1] )<br />
@@ -21,13 +68,13 @@ FileGetEncoding ( "filehandle/filename" [, mode = 1] )<br />
 <table>
 <tr>
 <td style="width:15%">filehandle/filename</td>
-<td style="width:85%">Das Handle einer Datei, wie es durch einen vorherigen Aufruf von <a href="FileOpen.htm">FileOpen()</a> zur&uuml;ckgegeben wurde. Alternativ kann als erster Parameter auch ein Dateiname als Zeichenfolge verwendet werden.</td>
+<td style="width:85%">Das Handle einer Datei, wie es durch einen vorherigen Aufruf von <a href="FileOpen.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">FileOpen()</a> zur&uuml;ckgegeben wurde. Alternativ kann als erster Parameter auch ein Dateiname als Zeichenfolge verwendet werden.</td>
 </tr>
 <tr>
 <td>mode</td>
 <td><strong>[optional]</strong> Der zu nutzende UTF8 Erkennungsmodus.<br />
 &nbsp;&nbsp;&nbsp; $FE_ENTIRE_UTF8 (1) = Untersucht ganze Dateien nach UTF8 Sequenzen. (Standard)<br />
-&nbsp;&nbsp;&nbsp; $FE_PARTIALFIRST_UTF8 (2) = Untersucht den ersten Teil einer Datei nach UTF8 Sequenzen. (Der Gleiche, den <a href="FileOpen.htm">FileOpen()</a> standardm&auml;&szlig;ig nutzt)<br />
+&nbsp;&nbsp;&nbsp; $FE_PARTIALFIRST_UTF8 (2) = Untersucht den ersten Teil einer Datei nach UTF8 Sequenzen. (Der Gleiche, den <a href="FileOpen.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">FileOpen()</a> standardm&auml;&szlig;ig nutzt)<br />
 <br />
 Die Konstanten sind in FileConstants.au3 definiert.</td>
 </tr>
@@ -37,7 +84,7 @@ Die Konstanten sind in FileConstants.au3 definiert.</td>
 <table class="noborder">
 <tr>
 <td style="width:10%" class="valign-top">Erfolg:</td>
-<td style="width:90%">Die Dateikodierung unter Verwendung der gleichen Werte wie die <a href="FileOpen.htm">FileOpen()</a> Funktion.<br />
+<td style="width:90%">Die Dateikodierung unter Verwendung der gleichen Werte wie die <a href="FileOpen.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">FileOpen()</a> Funktion.<br />
 &nbsp;&nbsp;&nbsp;&nbsp;$FO_UTF16_LE&nbsp;(32) = UTF16 Little Endian.<br />
 &nbsp;&nbsp;&nbsp;&nbsp;$FO_UTF16_BE&nbsp;(64) = UTF16 Big Endian.<br />
 &nbsp;&nbsp;&nbsp;&nbsp;$FO_UTF8&nbsp;(128) = UTF8 (mit BOM).<br />
@@ -54,13 +101,13 @@ Die&nbsp;Konstanten sind in FileConstants.au3 definiert.<br />
 
 <h2>Bemerkungen</h2>
 <p>Wenn der Dateiname anstatt eines Dateihandles angegeben wird, wird die Datei w&auml;hrend des Funktionsaufrufes nur ge&ouml;ffnet und geschlossen.<br />
-Achtung: Dateihandles und Dateinamen nicht gleichzeitig verwenden! Beispielsweise &ouml;ffnet man die Datei nicht mit <a href="FileOpen.htm">FileOpen()</a> und benutzt dann den Dateinamen in dieser Funktion. Entweder man verwendet Dateihandles oder Dateinamen in den eigenen Routinen, nicht beides zusammen!<br />
+Achtung: Dateihandles und Dateinamen nicht gleichzeitig verwenden! Beispielsweise &ouml;ffnet man die Datei nicht mit <a href="FileOpen.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">FileOpen()</a> und benutzt dann den Dateinamen in dieser Funktion. Entweder man verwendet Dateihandles oder Dateinamen in den eigenen Routinen, nicht beides zusammen!<br />
 <br />
-Wird ein Dateihandle verwendet, hat der "mode" Parameter keinen Effekt - der <a href="FileOpen.htm">FileOpen()</a> Modus ist vorrangig.<br />
+Wird ein Dateihandle verwendet, hat der "mode" Parameter keinen Effekt - der <a href="FileOpen.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">FileOpen()</a> Modus ist vorrangig.<br />
 </p>
 
 <h2>Verwandte Funktionen</h2>
-<p><a href="FileOpen.htm">FileOpen</a>, <a href="FileRead.htm">FileRead</a>, <a href="FileReadLine.htm">FileReadLine</a>, <a href="FileWrite.htm">FileWrite</a>, <a href="FileWriteLine.htm">FileWriteLine</a></p>
+<p><a href="FileOpen.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">FileOpen</a>, <a href="FileRead.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">FileRead</a>, <a href="FileReadLine.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">FileReadLine</a>, <a href="FileWrite.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">FileWrite</a>, <a href="FileWriteLine.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">FileWriteLine</a></p>
 
 <h2 class="bottom">Beispiel</h2>
 <script type="text/javascript">
@@ -94,18 +141,18 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
 
 <span class="S0">Example</span><span class="S8">()</span>
 
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iEncoding</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileGetEncoding.htm"><span class="S4">FileGetEncoding</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@ScriptFullPath"><span class="S6">@ScriptFullPath</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">; Liest die Zeichenkodierung der Scriptdatei aus</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Error"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Konnte keine Kodierung auslesen."</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"FileGetEncoding"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Der zur&uuml;ckgegebene Wert ist: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iEncoding</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Der zur&uuml;ckgegebene Wert f&uuml;r dieses Beispiel sollte 0 bzw. $FO_ANSI sein.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iEncoding</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileGetEncoding.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">FileGetEncoding</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@ScriptFullPath><span class="S6">@ScriptFullPath</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">; Liest die Zeichenkodierung der Scriptdatei aus</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@error><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Error"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Konnte keine Kodierung auslesen."</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"FileGetEncoding"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Der zur&uuml;ckgegebene Wert ist: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iEncoding</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Der zur&uuml;ckgegebene Wert f&uuml;r dieses Beispiel sollte 0 bzw. $FO_ANSI sein.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndIf</span></a>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
 <span class="S0"></span></span>
 </pre>
 </div>

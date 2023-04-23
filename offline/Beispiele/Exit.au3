@@ -1,3 +1,0 @@
-; sehr einfaches Skript
-
-Exit

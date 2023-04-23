@@ -3,15 +3,62 @@
 <head>
 <title>Function _viExecCommand</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Function Reference</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_viExecCommand</h1><br />
-<a href="../libfunctions/_viExecCommand.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Show description in</div><br />
+<div class="top"><h1>_viExecCommand</h1><div>
+<div id="flagtext">Show description in</div>
+<div id="flaglink"> <a href="../libfunctions/_viExecCommand.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_de.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Send a Command/Query to an Instrument/Device through the VISA interface (GPIB / TCP)<br /></p>
 <p class="codeheader">
 #include &lt;Visa.au3&gt;<br />
@@ -29,9 +76,9 @@ An example descriptor is "GPIB::20::0".<br />
 This function supports all valid VISA descriptors, including GPIB, TCP, VXI and Serial Interface instruments (ASRL).<br />
 A detailed explanation of VISA descriptors is shown in the Remarks section of this function.<br />
 As a SHORTCUT you can also use a STRING containing the address number (e.g. "20") of a GPIB instrument instead of typing the full descriptor (in that case, "GPIB::20::0")<br />
-* INTEGER -&gr; A VISA session handle is an integer value returned by <a href="_viOpen.htm">_viOpen()</a>.<br />
-It is recommended that instead you use <a href="_viOpen.htm">_viOpen()</a> and VISA session handles instead of descriptors if you plan to communicate repeteadly with an Instrument or Device, as otherwise each time that you contact the instrument you would incur the overhead of opening and closing the communication link.<br />
-Once you are done using the instrument you must remember to close the link with <a href="_viClose.htm">_viClose()</a>.</td>
+* INTEGER -&gr; A VISA session handle is an integer value returned by <a href="_viOpen.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_viOpen()</a>.<br />
+It is recommended that instead you use <a href="_viOpen.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_viOpen()</a> and VISA session handles instead of descriptors if you plan to communicate repeteadly with an Instrument or Device, as otherwise each time that you contact the instrument you would incur the overhead of opening and closing the communication link.<br />
+Once you are done using the instrument you must remember to close the link with <a href="_viClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_viClose()</a>.</td>
 </tr>
 <tr>
 <td>$sCommand</td>
@@ -44,7 +91,7 @@ When the command is a QUERY the function will automatically wait for the instrum
 <td><strong>[optional]</strong> The operation timeout in MILISECONDS.<br />
 This is mostly important for QUERIES only.<br />
 If it is not specified the last set timeout will be used. If it was never set before the default timeout (which depends on the VISA implementation) will be used.<br />
-Timeouts can also be set separatelly with the <a href="_viSetTimeout.htm">_viSetTimeout()</a> function.<br />
+Timeouts can also be set separatelly with the <a href="_viSetTimeout.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_viSetTimeout()</a> function.<br />
 Depending on the bus type (GPIB, TCP, etc) the timeout might not be set to the exact value that you request. Instead the closest valid timeout bigger than the one that you requested will be used.</td>
 </tr>
 <tr>
@@ -152,7 +199,7 @@ GPIB-VXI::9::INSTR&nbsp;&nbsp;&nbsp; A VXI device at logical address 9 in a<br /
 </p>
 
 <h2>Related</h2>
-<p><a href="_viClose.htm">_viClose</a>, <a href="_viFindGpib.htm">_viFindGpib</a>, <a href="_viGpibBusReset.htm">_viGpibBusReset</a>, <a href="_viGTL.htm">_viGTL</a>, <a href="_viOpen.htm">_viOpen</a>, <a href="_viSetAttribute.htm">_viSetAttribute</a>, <a href="_viSetTimeout.htm">_viSetTimeout</a></p>
+<p><a href="_viClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_viClose</a>, <a href="_viFindGpib.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_viFindGpib</a>, <a href="_viGpibBusReset.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_viGpibBusReset</a>, <a href="_viGTL.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_viGTL</a>, <a href="_viOpen.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_viOpen</a>, <a href="_viSetAttribute.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_viSetAttribute</a>, <a href="_viSetTimeout.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_viSetTimeout</a></p>
 
 <h2 class="bottom">Example</h2>
 <script type="text/javascript">
@@ -193,43 +240,43 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <span class="S1">; with _viOpen and _viClose.</span>
 <span class="S1">; It also shows the _viGTL function</span>
 
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Visa.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Visa.au3&gt;</span>
 
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$h_Session</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$h_Session</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
 
 <span class="S1">; Query the ID of the instrument in GPIB address 3</span>
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Simple GPIB query using a VISA Descriptor"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$s_Answer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_viExecCommand.htm"><span class="S15">_viExecCommand</span></a><span class="S8">(</span><span class="S7">"GPIB::3::0"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"*IDN?"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10000</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; 10 secs timeout</span>
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"GPIB QUERY result"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$s_Answer</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Show the answer</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Simple GPIB query using a VISA Descriptor"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$s_Answer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_viExecCommand.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_viExecCommand</span></a><span class="S8">(</span><span class="S7">"GPIB::3::0"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"*IDN?"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10000</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; 10 secs timeout</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"GPIB QUERY result"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$s_Answer</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Show the answer</span>
 
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 2"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Go to LOCAL using VISA Descriptor"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../libfunctions/_viGTL.htm"><span class="S15">_viGTL</span></a><span class="S8">(</span><span class="S7">"GPIB::1::0"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Go to local (exit remote control mode)</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 2"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Go to LOCAL using VISA Descriptor"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_viGTL.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_viGTL</span></a><span class="S8">(</span><span class="S7">"GPIB::1::0"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Go to local (exit remote control mode)</span>
 
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 3"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Simple GPIB query using a VISA address shortcut"</span><span class="S8">)</span>
-<span class="S9">$s_Answer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_viExecCommand.htm"><span class="S15">_viExecCommand</span></a><span class="S8">(</span><span class="S7">"1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"*IDN?"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; The address MUST BE A STRING</span>
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"GPIB QUERY result"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$s_Answer</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Show the answer</span>
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Info"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Now let's use _viOpen and _viClose"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 3"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Simple GPIB query using a VISA address shortcut"</span><span class="S8">)</span>
+<span class="S9">$s_Answer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_viExecCommand.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_viExecCommand</span></a><span class="S8">(</span><span class="S7">"1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"*IDN?"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; The address MUST BE A STRING</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"GPIB QUERY result"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$s_Answer</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Show the answer</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Info"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Now let's use _viOpen and _viClose"</span><span class="S8">)</span>
 
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 4"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Open the instrument connection with _viOpen"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$h_Instr</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_viOpen.htm"><span class="S15">_viOpen</span></a><span class="S8">(</span><span class="S3">3</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Instrument Handle obtained"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$h_Instr = "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$h_Instr</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Show the Session Handle</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 4"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Open the instrument connection with _viOpen"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$h_Instr</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_viOpen.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_viOpen</span></a><span class="S8">(</span><span class="S3">3</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Instrument Handle obtained"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$h_Instr = "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$h_Instr</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Show the Session Handle</span>
 <span class="S1">; Query the instrument</span>
 
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 5"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Query the instrument using the VISA instrument handle"</span><span class="S8">)</span>
-<span class="S9">$s_Answer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_viExecCommand.htm"><span class="S15">_viExecCommand</span></a><span class="S8">(</span><span class="S9">$h_Instr</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"*IDN?"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; $h_Instr is NOT A STRING now!</span>
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"GPIB QUERY result"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$s_Answer</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Show the answer</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 5"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Query the instrument using the VISA instrument handle"</span><span class="S8">)</span>
+<span class="S9">$s_Answer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_viExecCommand.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_viExecCommand</span></a><span class="S8">(</span><span class="S9">$h_Instr</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"*IDN?"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; $h_Instr is NOT A STRING now!</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"GPIB QUERY result"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$s_Answer</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Show the answer</span>
 <span class="S1">; Query again. There is no need to OPEN the link again</span>
 
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 6"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Query again. There is no need to OPEN the link again"</span><span class="S8">)</span>
-<span class="S9">$s_Answer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_viExecCommand.htm"><span class="S15">_viExecCommand</span></a><span class="S8">(</span><span class="S9">$h_Instr</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"*IDN?"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"GPIB QUERY result"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$s_Answer</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Show the answer</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 6"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Query again. There is no need to OPEN the link again"</span><span class="S8">)</span>
+<span class="S9">$s_Answer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_viExecCommand.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_viExecCommand</span></a><span class="S8">(</span><span class="S9">$h_Instr</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"*IDN?"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"GPIB QUERY result"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$s_Answer</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Show the answer</span>
 
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 7"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Go to LOCAL using VISA instrument handle"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../libfunctions/_viGTL.htm"><span class="S15">_viGTL</span></a><span class="S8">(</span><span class="S9">$h_Instr</span><span class="S8">)</span><span class="S1">; Go to local (this is optional)</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 7"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Go to LOCAL using VISA instrument handle"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_viGTL.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_viGTL</span></a><span class="S8">(</span><span class="S9">$h_Instr</span><span class="S8">)</span><span class="S1">; Go to local (this is optional)</span>
 
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 8"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Close the Instrument connection using _viClose"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../libfunctions/_viClose.htm"><span class="S15">_viClose</span></a><span class="S8">(</span><span class="S9">$h_Instr</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Close the instrument connection</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 8"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Close the Instrument connection using _viClose"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_viClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_viClose</span></a><span class="S8">(</span><span class="S9">$h_Instr</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Close the instrument connection</span>
 <span class="S0"></span></span>
 </pre>
 </div>

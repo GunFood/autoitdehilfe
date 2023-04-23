@@ -3,15 +3,62 @@
 <head>
 <title>Funktion _IEImgClick</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Funktionreferenz</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_IEImgClick</h1><br />
-<a href="../libfunctions_en/_IEImgClick.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<div class="top"><h1>_IEImgClick</h1><div>
+<div id="flagtext">Beschreibung anzeigen in</div>
+<div id="flaglink"> <a href="../libfunctions_en/_IEImgClick.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_en.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Simuliert einen Mausklick auf ein Bild. Das Bild kann durch einen Teil des Wertes der Attribute alt, name oder src identifiziert werden<br /></p>
 <p class="codeheader">
 #include &lt;IE.au3&gt;<br />
@@ -80,7 +127,7 @@ _IEImgClick ( ByRef $oObject, $sLinkText [, $sMode = "src" [, $iIndex = 0 [, $iW
 </p>
 
 <h2>Verwandte Funktionen</h2>
-<p><a href="_IEFormImageClick.htm">_IEFormImageClick</a>, <a href="_IEImgGetCollection.htm">_IEImgGetCollection</a>, <a href="_IELoadWait.htm">_IELoadWait</a></p>
+<p><a href="_IEFormImageClick.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IEFormImageClick</a>, <a href="_IEImgGetCollection.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IEImgGetCollection</a>, <a href="_IELoadWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IELoadWait</a></p>
 
 <h2 class="bottom">Beispiel</h2>
 <script type="text/javascript">
@@ -115,12 +162,12 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
 
 <span class="S1">; Klickt auf ein Bild (Tag img) anhand eines Alternativtextes (Attribut alt)</span>
 
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IE_Example.htm"><span class="S15">_IE_Example</span></a><span class="S8">(</span><span class="S7">"basic"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../libfunctions/_IEImgClick.htm"><span class="S15">_IEImgClick</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"AutoIt Homepage Image"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"alt"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IE_Example.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IE_Example</span></a><span class="S8">(</span><span class="S7">"basic"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_IEImgClick.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IEImgClick</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"AutoIt Homepage Image"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"alt"</span><span class="S8">)</span>
 <span class="S0"></span></span>
 </pre>
 </div>
@@ -149,12 +196,12 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
 
 <span class="S1">; Klickt auf ein Bild (IMG) anhand des Namens</span>
 
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IE_Example.htm"><span class="S15">_IE_Example</span></a><span class="S8">(</span><span class="S7">"basic"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../libfunctions/_IEImgClick.htm"><span class="S15">_IEImgClick</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"AutoItImage"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"id"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; f&uuml;r HTML5-Seiten ist "name" zu verwenden</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IE_Example.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IE_Example</span></a><span class="S8">(</span><span class="S7">"basic"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_IEImgClick.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IEImgClick</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"AutoItImage"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"id"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; f&uuml;r HTML5-Seiten ist "name" zu verwenden</span>
 <span class="S0"></span></span>
 </pre>
 </div>
@@ -183,12 +230,12 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext3">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
 
 <span class="S1">; Klickt auf ein Bild (IMG) anhand eines Teilstrings des Quelltextes</span>
 
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IE_Example.htm"><span class="S15">_IE_Example</span></a><span class="S8">(</span><span class="S7">"basic"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../libfunctions/_IEImgClick.htm"><span class="S15">_IEImgClick</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"autoit_6_240x100.jpg"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"src"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IE_Example.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IE_Example</span></a><span class="S8">(</span><span class="S7">"basic"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_IEImgClick.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IEImgClick</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"autoit_6_240x100.jpg"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"src"</span><span class="S8">)</span>
 <span class="S0"></span></span>
 </pre>
 </div>
@@ -217,12 +264,12 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext4">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
 
 <span class="S1">; Klickt auf ein Bild (IMG) anhand eines kompletten Strings des Quelltextes</span>
 
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IE_Example.htm"><span class="S15">_IE_Example</span></a><span class="S8">(</span><span class="S7">"basic"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../libfunctions/_IEImgClick.htm"><span class="S15">_IEImgClick</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"http://www.autoitscript.com/images/logo_autoit_210x72.png"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IE_Example.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IE_Example</span></a><span class="S8">(</span><span class="S7">"basic"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_IEImgClick.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IEImgClick</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"http://www.autoitscript.com/images/logo_autoit_210x72.png"</span><span class="S8">)</span>
 <span class="S0"></span></span>
 </pre>
 </div>

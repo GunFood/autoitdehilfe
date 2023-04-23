@@ -3,14 +3,59 @@
 <head>
   <title>Funktionen</title>
   <meta charset="utf-8">
-  <link href="../css/default.css" rel="stylesheet">
+  <link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
-<h1>GUI-Parameter Funktionsreferenz</h1>
+<div class="top"><h1>GUI-Parameter Funktionsreferenz</h1><div>
 <p>Es folgt eine Liste der Funktionen die in AutoIt verfügbar sind.
 Ein Klick auf einen Funktionsnamen liefert eine detaillierte Beschreibung.</p>
-<p>Siehe <a href="../guiref/GUIConstants.htm">Include-Dateien der Gui-Konstanten</a> wenn man die verwandte Steuerelement-Konstanten verwenden will.</p>
+<p>Siehe <a href="../guiref/GUIConstants.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Include-Dateien der Gui-Konstanten</a> wenn man die verwandte Steuerelement-Konstanten verwenden will.</p>
 <p>&nbsp;</p>
 
 <table>
@@ -19,43 +64,43 @@ Ein Klick auf einen Funktionsnamen liefert eine detaillierte Beschreibung.</p>
   <th style="width:75%">Beschreibung</th>
 </tr>
 <tr>
-<td><a href="..\..\html\functions\GUISetAccelerators.htm">GUISetAccelerators</a></td>
+<td><a href="..\..\html\functions\GUISetAccelerators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUISetAccelerators</a></td>
 <td>Setzt eine Tabelle mit Zugriffstasten in einem GUI Fenster.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\functions\GUISetBkColor.htm">GUISetBkColor</a></td>
+<td><a href="..\..\html\functions\GUISetBkColor.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUISetBkColor</a></td>
 <td>Setzt die Hintergrundfarbe des GUI-Fensters.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\functions\GUISetCoord.htm">GUISetCoord</a></td>
+<td><a href="..\..\html\functions\GUISetCoord.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUISetCoord</a></td>
 <td>Legt die absoluten Koordinaten f&uuml;r das n&auml;chste Control fest.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\functions\GUISetCursor.htm">GUISetCursor</a></td>
+<td><a href="..\..\html\functions\GUISetCursor.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUISetCursor</a></td>
 <td>Legt das Mauszeiger-Icon f&uuml;r ein GUI-Fenster fest.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\functions\GUISetFont.htm">GUISetFont</a></td>
+<td><a href="..\..\html\functions\GUISetFont.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUISetFont</a></td>
 <td>Legt die Standardschriftart eines GUI-Fensters fest.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\functions\GUISetHelp.htm">GUISetHelp</a></td>
+<td><a href="..\..\html\functions\GUISetHelp.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUISetHelp</a></td>
 <td>Bestimmt eine ausf&uuml;hrbare Datei, die gestartet wird sobald die F1-Taste gedr&uuml;ckt wird.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\functions\GUISetIcon.htm">GUISetIcon</a></td>
+<td><a href="..\..\html\functions\GUISetIcon.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUISetIcon</a></td>
 <td>Setzt das Icon, das in einem GUI-Fenster angezeigt wird.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\functions\GUISetOnEvent.htm">GUISetOnEvent</a></td>
+<td><a href="..\..\html\functions\GUISetOnEvent.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUISetOnEvent</a></td>
 <td>Definiert eine vom Benutzer geschriebene Funktion, die aufgerufen wird, wenn ein Control angeklickt wird.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\functions\GUISetState.htm">GUISetState</a></td>
+<td><a href="..\..\html\functions\GUISetState.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUISetState</a></td>
 <td>Ver&auml;ndert den Status eines GUI-Fensters.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\functions\GUISetStyle.htm">GUISetStyle</a></td>
+<td><a href="..\..\html\functions\GUISetStyle.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUISetStyle</a></td>
 <td>&Auml;ndert den Stil eines GUI-Fensters.<br /></td>
 </tr>
 </table>

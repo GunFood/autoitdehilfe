@@ -3,15 +3,62 @@
 <head>
 <title>Function _Crypt_DeriveKey</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Function Reference</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_Crypt_DeriveKey</h1><br />
-<a href="../libfunctions/_Crypt_DeriveKey.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Show description in</div><br />
+<div class="top"><h1>_Crypt_DeriveKey</h1><div>
+<div id="flagtext">Show description in</div>
+<div id="flaglink"> <a href="../libfunctions/_Crypt_DeriveKey.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_de.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Creates a key from algorithm and password<br /></p>
 <p class="codeheader">
 #include &lt;Crypt.au3&gt;<br />
@@ -55,7 +102,7 @@ _Crypt_DeriveKey ( $vPassword, $iAlgID [, $iHashPasswordID = $CALG_MD5] )<br />
 </table>
 
 <h2>Remarks</h2>
-<p>The key needs to be destroyed with <a href="_Crypt_DestroyKey.htm">_Crypt_DestroyKey()</a>.<br />
+<p>The key needs to be destroyed with <a href="_Crypt_DestroyKey.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Crypt_DestroyKey()</a>.<br />
 <br />
 &nbsp;&nbsp;&nbsp; <a id="CipheringAlgoID"></a><strong>Encryption Algorithm ID</strong><br />
 <br />
@@ -182,7 +229,7 @@ _Crypt_DeriveKey ( $vPassword, $iAlgID [, $iHashPasswordID = $CALG_MD5] )<br />
 </table></p>
 
 <h2>Related</h2>
-<p><a href="_Crypt_DecryptData.htm">_Crypt_DecryptData</a>, <a href="_Crypt_DecryptFile.htm">_Crypt_DecryptFile</a>, <a href="_Crypt_DestroyKey.htm">_Crypt_DestroyKey</a>, <a href="_Crypt_EncryptData.htm">_Crypt_EncryptData</a>, <a href="_Crypt_EncryptFile.htm">_Crypt_EncryptFile</a></p>
+<p><a href="_Crypt_DecryptData.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Crypt_DecryptData</a>, <a href="_Crypt_DecryptFile.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Crypt_DecryptFile</a>, <a href="_Crypt_DestroyKey.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Crypt_DestroyKey</a>, <a href="_Crypt_EncryptData.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Crypt_EncryptData</a>, <a href="_Crypt_EncryptFile.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Crypt_EncryptFile</a></p>
 
 <h2>See Also</h2>
 <p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(CryptDeriveKey);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">CryptDeriveKey</a> in MSDN  Library.
@@ -220,25 +267,25 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Crypt.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Crypt.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
 
 <span class="S0">Example</span><span class="S8">()</span>
 
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aStringsToEncrypt</span><span class="S8">[</span><span class="S3">6</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[</span><span class="S7">"AutoIt"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"SciTE"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Crypt"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">".au3"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">42</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"42"</span><span class="S8">]</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sOutput</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">""</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aStringsToEncrypt</span><span class="S8">[</span><span class="S3">6</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[</span><span class="S7">"AutoIt"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"SciTE"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Crypt"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">".au3"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">42</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"42"</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sOutput</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">""</span>
 
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_Crypt_DeriveKey.htm"><span class="S15">_Crypt_DeriveKey</span></a><span class="S8">(</span><span class="S7">"CryptPassword"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$CALG_RC4</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Declare a password string and algorithm to create a cryptographic key.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_Crypt_DeriveKey.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_Crypt_DeriveKey</span></a><span class="S8">(</span><span class="S7">"CryptPassword"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$CALG_RC4</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Declare a password string and algorithm to create a cryptographic key.</span>
 
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$vText</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/ForInNext.htm"><span class="S5">In</span></a><span class="S0"> </span><span class="S9">$aStringsToEncrypt</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sOutput</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><span class="S9">$vText</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" = "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_Crypt_EncryptData.htm"><span class="S15">_Crypt_EncryptData</span></a><span class="S8">(</span><span class="S9">$vText</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hKey</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$CALG_USERKEY</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S1">; Encrypt the text with the cryptographic key.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$vText</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/ForInNext.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">In</span></a><span class="S0"> </span><span class="S9">$aStringsToEncrypt</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sOutput</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><span class="S9">$vText</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@TAB><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" = "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_Crypt_EncryptData.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_Crypt_EncryptData</span></a><span class="S8">(</span><span class="S9">$vText</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hKey</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$CALG_USERKEY</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S1">; Encrypt the text with the cryptographic key.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Next</span></a>
 
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Encrypted data"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sOutput</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Encrypted data"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sOutput</span><span class="S8">)</span>
 
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_Crypt_DestroyKey.htm"><span class="S15">_Crypt_DestroyKey</span></a><span class="S8">(</span><span class="S9">$hKey</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Destroy the cryptographic key.</span>
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_Crypt_DestroyKey.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_Crypt_DestroyKey</span></a><span class="S8">(</span><span class="S9">$hKey</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Destroy the cryptographic key.</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
 <span class="S0"></span></span>
 </pre>
 </div>

@@ -3,24 +3,69 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <title>Language Reference - ControlIDs and Handles</title>
-    <link href="../css/default.css" rel="stylesheet">
+    <link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
   </head>
   <body>
     <h1>Language Reference - ControlIDs and Handles</h1>
     <p>There is a fundamental difference between creating controls using the
-      native functions of AutoIt ( <b><a href="../functions/GUICtrlCreate%20Management.htm">GUICtrlCreate*()
+      native functions of AutoIt ( <b><a href="../functions/GUICtrlCreate%20Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreate*()
           </a></b>) and creating similar controls using the UDFs (<b>
         _GUICtrl*_Create() </b>). The former return a ControlID - a simple
       integer value which is actually an index number to an internal AutoIt
       array which looks after all AutoIt created controls. UDFs return a handle
       - a 32 or 64 bit pointer which is a unique windows ID for all things that
       Windows creates. Of course the native-created controls have handles too
-      (that is why you have the <b><a href="../functions/GUICtrlGetHandle.htm">GUICtrlGetHandle()</a></b>
+      (that is why you have the <b><a href="../functions/GUICtrlGetHandle.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlGetHandle()</a></b>
       function) but AutoIt shields the user from them. </p>
     <p>AutoIt tries to make life simple for you by using ControlIDs to identify
       its native controls. You can use these ControlIDs in the native GUI
-      modifying functions (e.g. <b><a href="../functions/GUICtrlUpdate Management.htm">GUICtrlSet*()</a></b>
-      ) and when looking for events caused by these controls in a <b><a href="../functions/GUIGetMsg.htm">GUIGetMsg()</a></b>
+      modifying functions (e.g. <b><a href="../functions/GUICtrlUpdate Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlSet*()</a></b>
+      ) and when looking for events caused by these controls in a <b><a href="../functions/GUIGetMsg.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUIGetMsg()</a></b>
       or OnEvent modes. And you can use these ControlIDs in nearly all of the
       related control UDF functions - the function will take care of the
       conversion into the corresponding handle automatically. </p>

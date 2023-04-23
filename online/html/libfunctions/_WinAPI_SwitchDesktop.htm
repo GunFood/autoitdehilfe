@@ -3,14 +3,61 @@
 <head>
 <title>Funktion _WinAPI_SwitchDesktop</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Funktionreferenz</h1>
 <hr style="height:0px">
-<h1>_WinAPI_SwitchDesktop</h1>
-<p class="funcdesc">Makes the specified desktop visible and activates it<br /></p>
+<div class="top"><h1>_WinAPI_SwitchDesktop</h1><div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
+<p style="margin:2px 0 0 0;" class="funcdesc">Makes the specified desktop visible and activates it<br /></p>
 <p class="codeheader">
 #include &lt;WinAPISys.au3&gt;<br />
 _WinAPI_SwitchDesktop ( $hDesktop )<br />
@@ -37,7 +84,7 @@ _WinAPI_SwitchDesktop ( $hDesktop )<br />
 </table>
 
 <h2>Bemerkungen</h2>
-<p>The <a href="_WinAPI_SwitchDesktop.htm">_WinAPI_SwitchDesktop()</a> function fails if the desktop belongs to an invisible window station. This function<br />
+<p>The <a href="_WinAPI_SwitchDesktop.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_SwitchDesktop()</a> function fails if the desktop belongs to an invisible window station. This function<br />
 also fails when called from a process that is associated with a secured desktop such as the WinLogon and ScreenSaver<br />
 desktops. Processes that are associated with a secured desktop include custom UserInit processes. Such calls<br />
 typically fail with an "access denied" error.<br />
@@ -79,38 +126,38 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIMem.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIProc.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPISys.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIMem.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIProc.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPISys.au3&gt;</span>
 
 <span class="S1">; Retrieve a handle to the current desktop and create a new desktop named "MyDesktop"</span>
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hPrev</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetThreadDesktop.htm"><span class="S15">_WinAPI_GetThreadDesktop</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetCurrentThreadId.htm"><span class="S15">_WinAPI_GetCurrentThreadId</span></a><span class="S8">())</span>
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hDesktop</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateDesktop.htm"><span class="S15">_WinAPI_CreateDesktop</span></a><span class="S8">(</span><span class="S7">'MyDesktop'</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$DESKTOP_CREATEWINDOW</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$DESKTOP_SWITCHDESKTOP</span><span class="S8">))</span>
-<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><span class="S9">$hDesktop</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">((</span><span class="S9">$MB_ICONERROR</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">),</span><span class="S0"> </span><span class="S7">'Error'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Unable to create desktop.'</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm"><span class="S5">Exit</span></a>
-<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hPrev</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetThreadDesktop.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_WinAPI_GetThreadDesktop</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetCurrentThreadId.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_WinAPI_GetCurrentThreadId</span></a><span class="S8">())</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hDesktop</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateDesktop.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_WinAPI_CreateDesktop</span></a><span class="S8">(</span><span class="S7">'MyDesktop'</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitOR.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$DESKTOP_CREATEWINDOW</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$DESKTOP_SWITCHDESKTOP</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../keywords/If.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Not</span></a><span class="S0"> </span><span class="S9">$hDesktop</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">((</span><span class="S9">$MB_ICONERROR</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">+</span></a><span class="S0"> </span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">),</span><span class="S0"> </span><span class="S7">'Error'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Unable to create desktop.'</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Exit.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Exit</span></a>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndIf</span></a>
 
 <span class="S1">; Switch to the newly created desktop</span>
-<a class="codeSnippetLink" href="../libfunctions/_WinAPI_SwitchDesktop.htm"><span class="S15">_WinAPI_SwitchDesktop</span></a><span class="S8">(</span><span class="S9">$hDesktop</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_SwitchDesktop.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_WinAPI_SwitchDesktop</span></a><span class="S8">(</span><span class="S9">$hDesktop</span><span class="S8">)</span>
 
 <span class="S1">; Run "notepad.exe" on "MyDesktop" and wait until a process will not be closed by user</span>
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$pText</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateString.htm"><span class="S15">_WinAPI_CreateString</span></a><span class="S8">(</span><span class="S7">'MyDesktop'</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tProcess</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><a class="codeSnippetLink" href="$tagPROCESS_INFORMATION.htm"><span class="S9">$tagPROCESS_INFORMATION</span></a><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tStartup</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><a class="codeSnippetLink" href="$tagSTARTUPINFO.htm"><span class="S9">$tagSTARTUPINFO</span></a><span class="S8">)</span>
-<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tStartup</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Size'</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetSize.htm"><span class="S4">DllStructGetSize</span></a><span class="S8">(</span><span class="S9">$tStartup</span><span class="S8">))</span>
-<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tStartup</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Desktop'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$pText</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateProcess.htm"><span class="S15">_WinAPI_CreateProcess</span></a><span class="S8">(</span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@SystemDir"><span class="S6">@SystemDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'\notepad.exe'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$CREATE_NEW_PROCESS_GROUP</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tStartup</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tProcess</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ProcessWaitClose.htm"><span class="S4">ProcessWaitClose</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$tProcess</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'ProcessID'</span><span class="S8">))</span>
-<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$pText</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateString.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_WinAPI_CreateString</span></a><span class="S8">(</span><span class="S7">'MyDesktop'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tProcess</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><a class="codeSnippetLink" href="$tagPROCESS_INFORMATION.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S9">$tagPROCESS_INFORMATION</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tStartup</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><a class="codeSnippetLink" href="$tagSTARTUPINFO.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S9">$tagSTARTUPINFO</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tStartup</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Size'</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetSize.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructGetSize</span></a><span class="S8">(</span><span class="S9">$tStartup</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tStartup</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Desktop'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$pText</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/If.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_CreateProcess.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_WinAPI_CreateProcess</span></a><span class="S8">(</span><span class="S7">''</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@SystemDir><span class="S6">@SystemDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'\notepad.exe'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$CREATE_NEW_PROCESS_GROUP</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tStartup</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$tProcess</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ProcessWaitClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">ProcessWaitClose</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$tProcess</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'ProcessID'</span><span class="S8">))</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndIf</span></a>
 
 <span class="S1">; Switch to previous desktop and close "MyDesktop"</span>
-<a class="codeSnippetLink" href="../libfunctions/_WinAPI_SwitchDesktop.htm"><span class="S15">_WinAPI_SwitchDesktop</span></a><span class="S8">(</span><span class="S9">$hPrev</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../libfunctions/_WinAPI_CloseDesktop.htm"><span class="S15">_WinAPI_CloseDesktop</span></a><span class="S8">(</span><span class="S9">$hDesktop</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_SwitchDesktop.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_WinAPI_SwitchDesktop</span></a><span class="S8">(</span><span class="S9">$hPrev</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_CloseDesktop.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_WinAPI_CloseDesktop</span></a><span class="S8">(</span><span class="S9">$hDesktop</span><span class="S8">)</span>
 
 <span class="S1">; Free memory allocated for a string</span>
-<a class="codeSnippetLink" href="../libfunctions/_WinAPI_FreeMemory.htm"><span class="S15">_WinAPI_FreeMemory</span></a><span class="S8">(</span><span class="S9">$pText</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_WinAPI_FreeMemory.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_WinAPI_FreeMemory</span></a><span class="S8">(</span><span class="S9">$pText</span><span class="S8">)</span>
 <span class="S0"></span></span>
 </pre>
 </div>

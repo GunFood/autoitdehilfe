@@ -3,14 +3,59 @@
 <head>
   <title>Funktionen</title>
   <meta charset="utf-8">
-  <link href="../css/default.css" rel="stylesheet">
+  <link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
-<h1>GUI Funktionsreferenz</h1>
+<div class="top"><h1>GUI Funktionsreferenz</h1><div>
 <p>Es folgt eine Liste der Funktionen die in AutoIt verfügbar sind.
 Ein Klick auf einen Funktionsnamen liefert eine detaillierte Beschreibung.</p>
-<p>Siehe <a href="../guiref/GUIConstants.htm">Include-Dateien der Gui-Konstanten</a> wenn man die verwandte Steuerelement-Konstanten verwenden will.</p>
+<p>Siehe <a href="../guiref/GUIConstants.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Include-Dateien der Gui-Konstanten</a> wenn man die verwandte Steuerelement-Konstanten verwenden will.</p>
 <p>&nbsp;</p>
 
 <table>
@@ -19,59 +64,59 @@ Ein Klick auf einen Funktionsnamen liefert eine detaillierte Beschreibung.</p>
   <th style="width:75%">Beschreibung</th>
 </tr>
 <tr>
-<td><a href="..\..\html\functions\GUICreate.htm">GUICreate</a></td>
+<td><a href="..\..\html\functions\GUICreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICreate</a></td>
 <td>Erstellt ein GUI-Fenster.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\functions\GUICtrlGetHandle.htm">GUICtrlGetHandle</a></td>
+<td><a href="..\..\html\functions\GUICtrlGetHandle.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlGetHandle</a></td>
 <td>Gibt den Handle f&uuml;r ein Control und einige (Item-)Sonder-Handles (Menu, ContextMenu, TreeViewItem) zur&uuml;ck.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\functions\GUICtrlGetState.htm">GUICtrlGetState</a></td>
+<td><a href="..\..\html\functions\GUICtrlGetState.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlGetState</a></td>
 <td>Liefert den aktuellen Status eines Controls.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\functions\GUICtrlRead.htm">GUICtrlRead</a></td>
+<td><a href="..\..\html\functions\GUICtrlRead.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlRead</a></td>
 <td>Liest den Status oder die Daten eines Controls.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\functions\GUICtrlRecvMsg.htm">GUICtrlRecvMsg</a></td>
+<td><a href="..\..\html\functions\GUICtrlRecvMsg.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlRecvMsg</a></td>
 <td>Schickt eine Nachricht an ein Control und bringt Informationen in lParam zur&uuml;ck.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\functions\GUICtrlSendMsg.htm">GUICtrlSendMsg</a></td>
+<td><a href="..\..\html\functions\GUICtrlSendMsg.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlSendMsg</a></td>
 <td>Schickt eine Nachricht an ein Control.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\functions\GUICtrlSendToDummy.htm">GUICtrlSendToDummy</a></td>
+<td><a href="..\..\html\functions\GUICtrlSendToDummy.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlSendToDummy</a></td>
 <td>Sendet eine Nachricht an ein Dummy-Control.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\functions\GUIDelete.htm">GUIDelete</a></td>
+<td><a href="..\..\html\functions\GUIDelete.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUIDelete</a></td>
 <td>L&ouml;scht ein GUI Fenster und alle enthaltenen Controls.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\functions\GUIGetCursorInfo.htm">GUIGetCursorInfo</a></td>
+<td><a href="..\..\html\functions\GUIGetCursorInfo.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUIGetCursorInfo</a></td>
 <td>Erfragt die Position des Mauszeigers relativ zum GUI-Fenster.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\functions\GUIGetMsg.htm">GUIGetMsg</a></td>
+<td><a href="..\..\html\functions\GUIGetMsg.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUIGetMsg</a></td>
 <td>Fragt die GUI nach aufgetretenen Ereignissen (events) ab.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\functions\GUIGetStyle.htm">GUIGetStyle</a></td>
+<td><a href="..\..\html\functions\GUIGetStyle.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUIGetStyle</a></td>
 <td>Erfragt den Stil GUI-Fensters.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\functions\GUIRegisterMsg.htm">GUIRegisterMsg</a></td>
+<td><a href="..\..\html\functions\GUIRegisterMsg.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUIRegisterMsg</a></td>
 <td>Registriert eine benutzerdefinierte Funktion f&uuml;r eine Windows-Message-ID (WM_MSG).<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\functions\GUIStartGroup.htm">GUIStartGroup</a></td>
+<td><a href="..\..\html\functions\GUIStartGroup.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUIStartGroup</a></td>
 <td>Legt fest, dass alle Controls, die anschlie&szlig;end erzeugt werden, zu einer Gruppe zusammengefasst werden.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\functions\GUISwitch.htm">GUISwitch</a></td>
+<td><a href="..\..\html\functions\GUISwitch.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUISwitch</a></td>
 <td>&Auml;ndert die Wahl des aktuellen Fensters, auf welches GUI-Funktionen angewendet werden k&ouml;nnen.<br /></td>
 </tr>
 </table>

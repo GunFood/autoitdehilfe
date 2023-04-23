@@ -3,15 +3,62 @@
 <head>
 <title>Funktion _MemGlobalAlloc</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Funktionreferenz</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_MemGlobalAlloc</h1><br />
-<a href="../libfunctions_en/_MemGlobalAlloc.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<div class="top"><h1>_MemGlobalAlloc</h1><div>
+<div id="flagtext">Beschreibung anzeigen in</div>
+<div id="flaglink"> <a href="../libfunctions_en/_MemGlobalAlloc.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_en.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Reserviert eine festgelegte Anzahl von Bytes aus dem Heap<br /></p>
 <p class="codeheader">
 #include &lt;Memory.au3&gt;<br />
@@ -30,7 +77,7 @@ _MemGlobalAlloc ( $iBytes [, $iFlags = 0] )<br />
 &nbsp;&nbsp;&nbsp; $GMEM_FIXED - Stellt statischen Speicher bereit. Der R&uuml;ckgabewert ist ein Zeiger.<br />
 &nbsp;&nbsp;&nbsp; $GMEM_MOVEABLE - Stellt dynamischen Speicher bereit. Speicherbl&ouml;cke werden nie im physikalischen Speicher verschoben, sehr wohl aber innerhalb des Standard-Heaps.<br />
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Der R&uuml;ckgabewert ist ein Handle zum Speicherobjekt.<br />
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Um das Handle in einen Zeiger zu konvertieren, muss man die <a href="_MemGlobalLock.htm">_MemGlobalLock()</a> Funktion nutzen.<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Um das Handle in einen Zeiger zu konvertieren, muss man die <a href="_MemGlobalLock.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_MemGlobalLock()</a> Funktion nutzen.<br />
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Dieser Wert kann nicht mit $GMEM_FIXED kombiniert werden.<br />
 &nbsp;&nbsp;&nbsp; $GMEM_ZEROINIT - Initialisiert Speicherinhalte auf Null<br />
 &nbsp;&nbsp;&nbsp; $GHND - Kombiniert $GMEM_MOVEABLE mit $GMEM_ZEROINIT<br />
@@ -54,15 +101,15 @@ _MemGlobalAlloc ( $iBytes [, $iFlags = 0] )<br />
 <p>Das Windows Memory Management bietet keinen separaten lokalen und globalen Heap.<br />
 Wenn diese Funktion erfolgreich ist, stellt sie zumindest die Menge des angeforderten Speichers bereit.<br />
 Wenn der tats&auml;chliche Betrag h&ouml;her ist als der angeforderte, kann der Prozess den kompletten Betrag verwenden.<br />
-Zur Bestimmung der tats&auml;chlichen Anzahl von zugeteilten Bytes, muss die <a href="_MemGlobalSize.htm">_MemGlobalSize()</a> Funktion genutzt werden.<br />
+Zur Bestimmung der tats&auml;chlichen Anzahl von zugeteilten Bytes, muss die <a href="_MemGlobalSize.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_MemGlobalSize()</a> Funktion genutzt werden.<br />
 Wenn der Heap nicht ausreichend freien Speicher enth&auml;lt, um die Anfrage zu erf&uuml;llen, gibt diese Funktion NULL zur&uuml;ck.<br />
 Speicher welcher mit dieser Funktion bereitgestellt wurde, ist an einer 8-Byte Grenze ausgerichtet.<br />
-F&uuml;r das Ausf&uuml;hren von dynamisch generiertem Code, nutzen sie die <a href="_MemVirtualAlloc.htm">_MemVirtualAlloc()</a> Funktion um Speicher bereitzustellen, und die _Mem_VirtualProtect Funktion um $PAGE_EXECUTE Zugriff zu gew&auml;hren.<br />
-Um den Speicher freizugeben, m&uuml;ssen sie die <a href="_MemGlobalFree.htm">_MemGlobalFree()</a> Funktion nutzen.<br />
+F&uuml;r das Ausf&uuml;hren von dynamisch generiertem Code, nutzen sie die <a href="_MemVirtualAlloc.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_MemVirtualAlloc()</a> Funktion um Speicher bereitzustellen, und die _Mem_VirtualProtect Funktion um $PAGE_EXECUTE Zugriff zu gew&auml;hren.<br />
+Um den Speicher freizugeben, m&uuml;ssen sie die <a href="_MemGlobalFree.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_MemGlobalFree()</a> Funktion nutzen.<br />
 </p>
 
 <h2>Verwandte Funktionen</h2>
-<p><a href="_MemGlobalFree.htm">_MemGlobalFree</a>, <a href="_MemGlobalLock.htm">_MemGlobalLock</a>, <a href="_MemGlobalSize.htm">_MemGlobalSize</a>, <a href="_MemVirtualAlloc.htm">_MemVirtualAlloc</a></p>
+<p><a href="_MemGlobalFree.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_MemGlobalFree</a>, <a href="_MemGlobalLock.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_MemGlobalLock</a>, <a href="_MemGlobalSize.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_MemGlobalSize</a>, <a href="_MemVirtualAlloc.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_MemVirtualAlloc</a></p>
 
 <h2>Siehe auch</h2>
 <p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(GlobalAlloc);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">GlobalAlloc</a> in der MSDN Bibliothek.

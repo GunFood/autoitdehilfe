@@ -3,15 +3,62 @@
 <head>
 <title>Function DllStructGetData</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Function Reference</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">DllStructGetData</h1><br />
-<a href="../functions/DllStructGetData.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Show description in</div><br />
+<div class="top"><h1>DllStructGetData</h1><div>
+<div id="flagtext">Show description in</div>
+<div id="flaglink"> <a href="../functions/DllStructGetData.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_de.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Returns the data of an element of the struct.<br /></p>
 <p class="codeheader">
 DllStructGetData ( Struct, Element [, index = Default] )<br />
@@ -21,15 +68,15 @@ DllStructGetData ( Struct, Element [, index = Default] )<br />
 <table>
 <tr>
 <td style="width:15%">Struct</td>
-<td style="width:85%">The struct returned by <a href="DllStructCreate.htm">DllStructCreate()</a>.</td>
+<td style="width:85%">The struct returned by <a href="DllStructCreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">DllStructCreate()</a>.</td>
 </tr>
 <tr>
 <td>Element</td>
-<td>Which element of the struct you want to access, starting at 1 or the element name as defined in <a href="DllStructCreate.htm">DllStructCreate()</a>.</td>
+<td>Which element of the struct you want to access, starting at 1 or the element name as defined in <a href="DllStructCreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">DllStructCreate()</a>.</td>
 </tr>
 <tr>
 <td>index</td>
-<td><strong>[optional]</strong> For elements that are defined by [] this specifies the 1-based index to retrieve. If omitted or the <a href="../keywords/Default.htm">Default keyword</a> then for char[n], wchar[n] and byte[n] all elements are retrieved (Useful for quick retrieval).<br />
+<td><strong>[optional]</strong> For elements that are defined by [] this specifies the 1-based index to retrieve. If omitted or the <a href="../keywords/Default.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Default keyword</a> then for char[n], wchar[n] and byte[n] all elements are retrieved (Useful for quick retrieval).<br />
 <strong>Not used for non [] elements.</strong></td>
 </tr>
 </table>
@@ -46,7 +93,7 @@ DllStructGetData ( Struct, Element [, index = Default] )<br />
 </tr>
 <tr>
 <td class="valign-top">@error:</td>
-<td>1 = Struct not a valid struct returned by <a href="DllStructCreate.htm">DllStructCreate()</a>.<br />
+<td>1 = Struct not a valid struct returned by <a href="DllStructCreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">DllStructCreate()</a>.<br />
 2&nbsp;= Element out of range or unknown.<br />
 3&nbsp;= Index out of range.<br />
 4&nbsp;= Element data type is unknown<br />
@@ -55,13 +102,13 @@ DllStructGetData ( Struct, Element [, index = Default] )<br />
 </table>
 
 <h2>Remarks</h2>
-<p>When the element is char or char[n], wchar or wchar[n] the data returned is always a <a href="String.htm">String()</a>,<br />
+<p>When the element is char or char[n], wchar or wchar[n] the data returned is always a <a href="String.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">String()</a>,<br />
 when the element is byte[n] and index is omitted the data returned is a binary type,<br />
 otherwise it always returns the best fit AutoIt datatype corresponding to the type of the individual element (e.g. byte returns Int32, float returns Double).<br />
 </p>
 
 <h2>Related</h2>
-<p><a href="DllStructCreate.htm">DllStructCreate</a>, <a href="DllStructSetData.htm">DllStructSetData</a></p>
+<p><a href="DllStructCreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">DllStructCreate</a>, <a href="DllStructSetData.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">DllStructSetData</a></p>
 
 <h2 class="bottom">Example</h2>
 <script type="text/javascript">
@@ -95,12 +142,12 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
 
 <span class="S0">Example</span><span class="S8">()</span>
 
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S2">#cs Comments:</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S11">#cs</span><span class="S2"> Comments:</span>
 <span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; Create the following structure (C language):</span>
 <span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; struct {</span>
 <span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; int var1;</span>
@@ -114,52 +161,52 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; \ int &nbsp;&nbsp;&nbsp;\ byte &nbsp;&nbsp;\ uint &nbsp;&nbsp;\ char &nbsp;&nbsp;\</span>
 <span class="S2">&nbsp; &nbsp; &nbsp; &nbsp;  \ &nbsp;&nbsp;var1 \ &nbsp;&nbsp;var2 \ &nbsp;&nbsp;var3 \ &nbsp;&nbsp;var4 \</span>
 <span class="S2">&nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;------------------------------------</span>
-<span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; #ce</span>
+<span class="S2">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S11">#ce</span>
 
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Assign a Local constant variable the definition of a structure (read carefully the DllStructCreate remarks).</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><a class="codeSnippetLink" href="$tagSTRUCT1.htm"><span class="S9">$tagSTRUCT1</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"struct;int var1;byte var2;uint var3;char var4[128];endstruct"</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Const</span></a><span class="S0"> </span><a class="codeSnippetLink" href="$tagSTRUCT1.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S9">$tagSTRUCT1</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"struct;int var1;byte var2;uint var3;char var4[128];endstruct"</span>
 
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Note: The tag variable is declared as Constant because its value will never change for any script execution.</span>
 
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Assign a Local variable the structure.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tSTRUCT1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><a class="codeSnippetLink" href="$tagSTRUCT1.htm"><span class="S9">$tagSTRUCT1</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tSTRUCT1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><a class="codeSnippetLink" href="$tagSTRUCT1.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S9">$tagSTRUCT1</span></a><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; If an error occurred display the error code and return False.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Error in DllStructCreate, Code: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@error><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Error in DllStructCreate, Code: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@error><span class="S6">@error</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">False</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndIf</span></a>
 
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Set the data of the element var1 (int) in the $tSTRUCT1.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tSTRUCT1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"var1"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Or 1 instead of "var1".</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tSTRUCT1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"var1"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Or 1 instead of "var1".</span>
 
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Set the data of the element var2 (byte) in the $tSTRUCT1.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tSTRUCT1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">255</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Or "var2" instead of 2.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tSTRUCT1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">255</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Or "var2" instead of 2.</span>
 
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Set the data of the element var3 (uint) in the $tSTRUCT1.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tSTRUCT1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"var3"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; The -1 (signed int) will be typecasted to unsigned int.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tSTRUCT1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"var3"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">-</span></a><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; The -1 (signed int) will be typecasted to unsigned int.</span>
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Or 3 instead of "var3".</span>
 
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Set the data of the element var4 (char) in the $tSTRUCT1.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tSTRUCT1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"var4"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Hello"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Or 4 instead of "var4".</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tSTRUCT1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"var4"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Hello"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Or 4 instead of "var4".</span>
 
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Note: This element can contain up to 128 characters.</span>
 
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Change the data of the element var4 (char) in the $tSTRUCT1, at the index 1 of the char array (1 based index).</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tSTRUCT1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"var4"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Asc.htm"><span class="S4">Asc</span></a><span class="S8">(</span><span class="S7">"h"</span><span class="S8">),</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructSetData.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tSTRUCT1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"var4"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Asc.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Asc</span></a><span class="S8">(</span><span class="S7">"h"</span><span class="S8">),</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Display the results.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Struct Size: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetSize.htm"><span class="S4">DllStructGetSize</span></a><span class="S8">(</span><span class="S9">$tSTRUCT1</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Struct pointer: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetPtr.htm"><span class="S4">DllStructGetPtr</span></a><span class="S8">(</span><span class="S9">$tSTRUCT1</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Data:"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$tSTRUCT1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span><span class="S0"> </span><span class="S1">; Or "var1" instead of 1.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$tSTRUCT1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"var2"</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span><span class="S0"> </span><span class="S1">; Or 2 instead of "var2".</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$tSTRUCT1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span><span class="S0"> </span><span class="S1">; Or "var3" instead of 3.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$tSTRUCT1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">))</span><span class="S0"> </span><span class="S1">; Or "var4" instead of 4.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Struct Size: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetSize.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructGetSize</span></a><span class="S8">(</span><span class="S9">$tSTRUCT1</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Struct pointer: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructGetPtr.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructGetPtr</span></a><span class="S8">(</span><span class="S9">$tSTRUCT1</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"Data:"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$tSTRUCT1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span><span class="S0"> </span><span class="S1">; Or "var1" instead of 1.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$tSTRUCT1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"var2"</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span><span class="S0"> </span><span class="S1">; Or 2 instead of "var2".</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$tSTRUCT1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span><span class="S0"> </span><span class="S1">; Or "var3" instead of 3.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/DllStructGetData.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllStructGetData</span></a><span class="S8">(</span><span class="S9">$tSTRUCT1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">))</span><span class="S0"> </span><span class="S1">; Or "var4" instead of 4.</span>
 
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Release the resources used by the structure.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$tSTRUCT1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$tSTRUCT1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
 <span class="S0"></span></span>
 </pre>
 </div>

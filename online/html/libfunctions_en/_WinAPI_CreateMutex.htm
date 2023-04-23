@@ -3,15 +3,62 @@
 <head>
 <title>Function _WinAPI_CreateMutex</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Function Reference</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_WinAPI_CreateMutex</h1><br />
-<a href="../libfunctions/_WinAPI_CreateMutex.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Show description in</div><br />
+<div class="top"><h1>_WinAPI_CreateMutex</h1><div>
+<div id="flagtext">Show description in</div>
+<div id="flaglink"> <a href="../libfunctions/_WinAPI_CreateMutex.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_de.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Creates or opens a named or unnamed mutex object<br /></p>
 <p class="codeheader">
 #include &lt;WinAPIProc.au3&gt;<br />
@@ -45,31 +92,31 @@ If this parameter is 0 (Default), the mutex gets a default security descriptor.<
 </tr>
 <tr>
 <td class="valign-top">Failure:</td>
-<td>0, call <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> to get extended error information.</td>
+<td>0, call <a href="_WinAPI_GetLastError.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_GetLastError()</a> to get extended error information.</td>
 </tr>
 </table>
 
 <h2>Remarks</h2>
-<p>If the mutex is a named mutex and the object existed before this function call, the return value is a handle to the existing object, <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> returns ERROR_ALREADY_EXISTS (183), $bInitial is ignored, and the calling thread is not granted ownership.<br />
-However, if the caller has limited access rights, the function will fail with ERROR_ACCESS_DENIED (5) and the caller should use the <a href="_WinAPI_OpenMutex.htm">_WinAPI_OpenMutex()</a> function.<br />
+<p>If the mutex is a named mutex and the object existed before this function call, the return value is a handle to the existing object, <a href="_WinAPI_GetLastError.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_GetLastError()</a> returns ERROR_ALREADY_EXISTS (183), $bInitial is ignored, and the calling thread is not granted ownership.<br />
+However, if the caller has limited access rights, the function will fail with ERROR_ACCESS_DENIED (5) and the caller should use the <a href="_WinAPI_OpenMutex.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_OpenMutex()</a> function.<br />
 <br />
 Any process can specify the mutex-object handle in a call to one of the wait functions.<br />
 The single-object wait functions return when the state of the specified object is signaled.<br />
 The multiple-object wait functions can be instructed to return either when any one or when all of the specified objects are signaled.<br />
 When a wait function returns, the waiting thread is released to continue its execution.<br />
 <br />
-Two or more processes can call <a href="_WinAPI_CreateMutex.htm">_WinAPI_CreateMutex()</a> to create the same named mutex.<br />
+Two or more processes can call <a href="_WinAPI_CreateMutex.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_CreateMutex()</a> to create the same named mutex.<br />
 The first process actually creates the mutex, and subsequent processes with sufficient access rights simply open a handle to the existing mutex.<br />
 This enables multiple processes to get handles of the same mutex, while relieving the user of the responsibility of ensuring that the creating process is started first.<br />
 When using this technique, you should set the $bInitial parameter to False; otherwise, it can be difficult to be certain which process has initial ownership.<br />
 <br />
-Use the <a href="_WinAPI_CloseHandle.htm">_WinAPI_CloseHandle()</a> function to close the handle.<br />
+Use the <a href="_WinAPI_CloseHandle.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_CloseHandle()</a> function to close the handle.<br />
 The system closes the handle automatically when the process terminates.<br />
 The mutex object is destroyed when its last handle has been closed.<br />
 </p>
 
 <h2>Related</h2>
-<p><a href="_WinAPI_CloseHandle.htm">_WinAPI_CloseHandle</a>, <a href="_WinAPI_OpenMutex.htm">_WinAPI_OpenMutex</a></p>
+<p><a href="_WinAPI_CloseHandle.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_CloseHandle</a>, <a href="_WinAPI_OpenMutex.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_OpenMutex</a></p>
 
 <h2>See Also</h2>
 <p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(CreateMutex);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">CreateMutex</a> in MSDN  Library.

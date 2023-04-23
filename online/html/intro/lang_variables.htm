@@ -3,7 +3,52 @@
 <head>
 	<title>Sprachreferenz - Variablen</title>
 	<meta charset="utf-8">
-	<link href="../css/default.css" rel="stylesheet">
+	<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
@@ -30,13 +75,13 @@
 	<p>Hinweis : Bei Variablennamen wird die Gro&szlig;-/Kleinschreibung nicht ber&uuml;cksichtigt: 
        <strong>MyVariable()</strong> ist dasselbe wie <strong>MyvARiAblE()</strong></p>
 
-	<p>Jede Variable wird als Datentyp <a href="lang_datatypes.htm">Variant</a> gespeichert.</p>
+	<p>Jede Variable wird als Datentyp <a href="lang_datatypes.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Variant</a> gespeichert.</p>
 
 	<p>Um die Pflege des Skripts zu erleichtern wird vorgeschlagen, eine  <a href="#VariableNaming">Standardkonvention f&uuml;r die Benennung von Variablen</a> zu verwenden.</p>
 
 	<h2>Deklaration von Variablen</h2>
 
-	<p>Variablen werden deklariert und erstellt mit dem Schl&uuml;sselwort <a href="../keywords/Dim.htm">Local</a> und <a href="../keywords/Dim.htm">Global</a> - <a href="../keywords/Dim.htm">Dim</a> kann auch verwendet werden, 
+	<p>Variablen werden deklariert und erstellt mit dem Schl&uuml;sselwort <a href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Local</a> und <a href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Global</a> - <a href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Dim</a> kann auch verwendet werden, 
        obwohl dies nicht empfohlen wird bzw. als veraltet gilt.</p>
 
 @@SyntaxHighlighting@@
@@ -60,14 +105,14 @@ $vVariable = "Erstellen und Zuweisen"
 
 	<h2>Deklaration von Konstanten</h2>
 
-	<p>Konstanten werden mit dem Schl&uuml;sselwort <a href="../keywords/Dim.htm">Const</a> deklariert und m&uuml;ssen mit einem Wert initialisiert werden:<br></p>
+	<p>Konstanten werden mit dem Schl&uuml;sselwort <a href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Const</a> deklariert und m&uuml;ssen mit einem Wert initialisiert werden:<br></p>
 
 @@SyntaxHighlighting@@
 Const $iConst1 = 1, $iConst2 = 12
 @@End@@
 
 
-	<p>Konstanten k&ouml;nnen auch mit dem Schl&uuml;sselwort <a href="../keywords/Enum.htm">Enum</a> deklariert und initialisiert werden:</p>
+	<p>Konstanten k&ouml;nnen auch mit dem Schl&uuml;sselwort <a href="../keywords/Enum.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Enum</a> deklariert und initialisiert werden:</p>
 
 @@SyntaxHighlighting@@
 Enum $eConst1 = 1, $eConst2, $eConst3 ; 1, 2, 3
@@ -86,19 +131,18 @@ Enum Step *2 $eMult1, $eMult2, $eMult4 ; 1, 2, 4
        deklariert, existiert sie im <strong>globalen</strong> G&uuml;ltigkeitsbereich und kann von 
        &uuml;berall im Skript gelesen oder ge&auml;ndert werden.</p>
 
-	<p>Wenn eine Variable <em>innerhalb</em> einer <a href="lang_functions.htm">Funktion</a> deklariert wird, 
+	<p>Wenn eine Variable <em>innerhalb</em> einer <a href="lang_functions.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Funktion</a> deklariert wird, 
        befindet sie sich im <strong>lokalen</strong> G&uuml;ltigkeitsbereich und kann nur <em>innerhalb der selben Funktion</em> 
        verwendet werden. Variablen, die innerhalb von Funktionen erzeugt werden, werden automatisch zerst&ouml;rt, wenn die Funktion endet.</p>
 
-
-	<p>Wenn Variablen mit <a href="../keywords/Dim.htm">Dim</a> deklariert oder in einer Funktion zugewiesen werden, 
+	<p>Wenn Variablen mit <a href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Dim</a> deklariert oder in einer Funktion zugewiesen werden, 
        haben sie standardm&auml;&szlig;ig einen <strong>lokalen</strong> G&uuml;ltigkeitsbereich <strong>es sei denn, </strong> es gibt eine globale Variable mit demselben
-       Namen (in diesem Fall wird die globale Variable wiederverwendet). Dies kann mit den Schl&uuml;sselw&ouml;rtern <a href="../keywords/Dim.htm">Lokal</a> 
-       und <a href="../keywords/Dim.htm">Global</a> ge&auml;ndert werden, um den gew&uuml;nschten G&uuml;ltigkeitsbereich zu <strong>erzwingen</strong>.</p>
+       Namen (in diesem Fall wird die globale Variable wiederverwendet). Dies kann mit den Schl&uuml;sselw&ouml;rtern <a href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Lokal</a> 
+       und <a href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Global</a> ge&auml;ndert werden, um den gew&uuml;nschten G&uuml;ltigkeitsbereich zu <strong>erzwingen</strong>.</p>
 
-	<p>Siehe <a href="../keywords/Static.htm">Static</a> f&uuml;r Details zur Verwendung dieses Schl&uuml;sselworts als Teil der G&uuml;ltigkeitsbereich-Deklaration.</p>
+	<p>Siehe <a href="../keywords/Static.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Static</a> f&uuml;r Details zur Verwendung dieses Schl&uuml;sselworts als Teil der G&uuml;ltigkeitsbereich-Deklaration.</p>
 
-
+	<a id="ArrayMaps"></a>
 	<h2>Arrays und Maps</h2>
 
 	<p>AutoIt verf&uuml;gt &uuml;ber 2 Arten von Datensammlungsvariablen (Collections): <strong>Arrays und Maps</strong>.</p>
@@ -116,23 +160,23 @@ Enum Step *2 $eMult1, $eMult2, $eMult4 ; 1, 2, 4
        Gr&ouml;&szlig;e angepasst, sobald Werte hinzugef&uuml;gt oder entfernt werden. Auf einen Wert kann nur 
        mit dem urspr&uuml;nglichen Schl&uuml;ssel zugegriffen werden - diese Schl&uuml;ssel k&ouml;nnen mit der 
        Funktion MapKeys iteriert werden.</p>
-	
-	<p>Beide, Arrays und Maps, verwenden eine &auml;hnliche Syntax, daher ist Vorsicht geboten, 
-       um sicherzustellen, dass die Variable den richtigen Datentyp hat - dies wird durch 
-       die erste Deklarationszeile f&uuml;r die Variable festgelegt:</p>
 
-	<p>Die Verwendung einer leeren [ ] deklariert eine Map:</p>
 
-@@SyntaxHighlighting@@
-Local $mVar[] ; eine Map
-@@End@@
 
+	<h2>Arrays</h2>
+    
+	<p>Ein Array ist eine Variable, die eine Reihe von Datenelementen enth&auml;lt. Auf jedes Element 
+       in dieser Variablen kann &uuml;ber eine Indexnummer zugegriffen werden, die sich auf die Position
+       des Elements innerhalb des Arrays bezieht - in AutoIt ist das erste Element eines Arrays immer 
+       Element [0]. Array-Elemente werden in einer definierten Reihenfolge gespeichert und k&ouml;nnen sortiert werden.<br>
+	<br>
 
 	<p>Das F&uuml;llen der [ ] mit einer Dimensionsgr&ouml;&szlig;e deklariert ein Array:</p>
 
 @@SyntaxHighlighting@@
 Local $aVar[3] ; ein Array
 @@End@@
+<br>
 
 
 	<p>Die Zuweisung von Elementwerten bei der Deklaration macht die Variable zu einem Array - diese drei Zeilen sind funktional gleichwertig:</p>
@@ -142,14 +186,6 @@ Local $vVar[3] = [1, 2, 3] ; ein Array
 Local $vVar[] = [1, 2, 3] ; ein Array
 Local $vVar = [1, 2, 3] ; ein Array
 @@End@@
-
-
-	<h2>Arrays</h2>
-
-	<p>Ein Array ist eine Variable, die eine Reihe von Datenelementen enth&auml;lt. Auf jedes Element 
-       in dieser Variablen kann &uuml;ber eine Indexnummer zugegriffen werden, die sich auf die Position
-       des Elements innerhalb des Arrays bezieht - in AutoIt ist das erste Element eines Arrays immer 
-       Element [0]. Array-Elemente werden in einer definierten Reihenfolge gespeichert und k&ouml;nnen sortiert werden.<br>
 	<br>
 	Ein Beispiel:<br>
 	<br>
@@ -199,7 +235,7 @@ $aArray[1][1] = "Unten-rechts"
 	<br>
 	Es k&ouml;nnen bis zu 64 Dimensionen in einem Array verwendet werden. Die Gesamtzahl der Eintr&auml;ge darf nicht gr&ouml;&szlig;er als 2^24 (16 777 216) sein.<br>
 	<br>
-	Arrays m&uuml;ssen vor der Verwendung deklariert werden, indem ihr G&uuml;ltigkeitsbereich mit den Schl&uuml;sselw&ouml;rtern '<a href="../keywords/Dim.htm">Global/Local/Static</a>' festgelegt wird.
+	Arrays m&uuml;ssen vor der Verwendung deklariert werden, indem ihr G&uuml;ltigkeitsbereich mit den Schl&uuml;sselw&ouml;rtern '<a href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Global/Local/Static</a>' festgelegt wird.
     Zudem muss entweder die Gr&ouml;&szlig;e angegeben und/oder Elemente zugewiesen werden.<br></p>
 
 @@SyntaxHighlighting@@
@@ -233,6 +269,8 @@ $sString = ($aContainer[0])[1] ; $sString enthält "B"
 
 
 	<h2>Maps</h2>
+    
+	<div class="experimental">Diese Funktion ist experimentell. Es kann sein, dass sie nicht funktioniert oder Fehler enth&auml;lt. Au&szlig;erdem kann es sein, dass sie ohne Hinweis ge&auml;ndert oder entfernt wird..<br /><br />BITTE KEINE FEHLER ODER NEUE GEW&Uuml;NSCHTE FEATURE F&Uuml;R DIE FUNKTION MELDEN.</div><br />
 
 	<p>Eine Map ist eine Variable, die eine Reihe von Datenelementen enth&auml;lt, die jeweils 
        aus einer Schl&uuml;ssel/Wertpaarung bestehen. Auf ein Element kann nur &uuml;ber einen Schl&uuml;ssel
@@ -241,6 +279,12 @@ $sString = ($aContainer[0])[1] ; $sString enthält "B"
        der Map - diese stehen in keiner definierten Reihenfolge und k&ouml;nnen nicht sortiert werden.
        Bei String-Schl&uuml;sseln wird, nahezu einmalig in AutoIt, zwischen Gro&szlig;- und Kleinschreibung unterschieden -
 	   <strong>"MyKey"</strong> ist nicht dasselbe wie <strong>"mykey"</strong>.<br>
+       
+	<p>Die Verwendung von leeren [ ] deklariert eine Map:</p>
+
+@@SyntaxHighlighting@@
+Local $mVar[] ; Eine Map
+@@End@@
 	<br>
 	Ein Beispiel:<br>
 	<br>
@@ -276,7 +320,7 @@ $mMap["3"] = "String 3"
 @@End@@
 
 
-	<p>Maps m&uuml;ssen vor der Verwendung deklariert werden, indem ihr G&uuml;ltigkeitsbereich mit den Schl&uuml;sselw&ouml;rtern  '<a href="../keywords/Dim.htm">Global/Local/Static</a>' festgelegt wird.</p>
+	<p>Maps m&uuml;ssen vor der Verwendung deklariert werden, indem ihr G&uuml;ltigkeitsbereich mit den Schl&uuml;sselw&ouml;rtern  '<a href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Global/Local/Static</a>' festgelegt wird.</p>
 
 @@SyntaxHighlighting@@
 Local $mControls[]
@@ -375,6 +419,11 @@ $sString = $mContainer.Bin["Internal"]
 	<td> $nNumber = 0</td>
 </tr>
 <tr>
+	<td> o </td>
+	<td> Objekte </td>
+	<td> $oShell = ObjCreate("shell.application")</td>
+</tr>
+<tr>
 	<td> p </td>
 	<td> Zeiger (Pointer) </td>
 	<td> $pRect = DllStructGetPtr($tRECT)</td>
@@ -419,18 +468,19 @@ $sString = $mContainer.Bin["Internal"]
 </table>
 
 	<p>Beispiele:</p>
-<div class="mw-highlight mw-content-ltr" dir="ltr"><pre><span class="c1">; Einer lokalen Variablen den Integerwert 7 zuweisen</span>
-<span class="nb">Local</span> <span class="nv">$iWeekDays</span> <span class="o">=</span> <span class="mi">7</span>
+@@SyntaxHighlighting@@
+; Weist einer lokalen Variablen die ganze Zahl 7 zu
+$iWeekDays = 7
 
-<span class="c1">; Einer lokalen Variablen den Wert von Pi zuweisen</span>
-<span class="nb">Local</span> <span class="nv">$fPi</span> <span class="o">=</span> <span class="mf">3.14159265358979</span>
+; Weist einer lokalen Variablen den wert von Pi zu
+$fPi = 3.14159265358979
 
-<span class="c1">; Einer lokalen Variablen ein Array von Zeichenketten zuweisen</span>
-<span class="nb">Local</span> <span class="nv">$asArray</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>'<span class="n">Montag</span>'<span class="p">,</span> '<span class="n">Dienstag</span>'<span class="p">,</span> '<span class="n">Mittwoch</span>'<span class="p">,</span> '<span class="n">Donnerstag</span>'<span class="p">,</span> '<span class="n">Freitag</span>'<span class="p">,</span> '<span class="n">Samstag</span>'<span class="p">,</span> '<span class="n">Sonntag</span>'<span class="p">]</span>
+; Weist einer lokalen Variablen ein Array mit Strings zu
+Local $asArray[7] = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
 
-<span class="c1">; Einer lokalen Variablen ein Array von Zahlen zuweisen</span>
-<span class="nb">Local</span> <span class="nv">$anArray</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
-</pre></div>
+; Weist einer lokalen Variablen ein Array mit Zahlrn zu
+Local $anArray[4] = [0, 0.25, 3 / 4, 12]
+@@End@@
 
 	<h2>Initialisierung von Variablen</h2>
 	<p>Bei der Initialisierung von Variablen gibt es mehrere Punkte zu beachten. Es ist keine gute Praxis, 
@@ -441,14 +491,16 @@ $sString = $mContainer.Bin["Internal"]
        so wenig Speicher wie m&ouml;glich verbrauchen.</p>
 
 	<p>Beispiele:</p>
-<div class="mw-highlight mw-content-ltr" dir="ltr"><pre><span class="c1">; Inkonsistente Datentypen werden als sch&auml;dlich angesehen</span>
-<span class="nb">Local</span> <span class="nv">$iInteger</span> <span class="o">=</span> <span class="s">"0"</span>
-<span class="nb">Local</span> <span class="nv">$sString</span> <span class="o">=</span> <span class="n">False</span>
+@@SyntaxHighlighting@@
+; Inkonsistente Datentypen werden als schlecht angesehen
+Local $iInteger = "0"
+Local $sString = False
 
-<span class="c1">; Korrekte Initialisierung</span>
-<span class="nb">Local</span> <span class="nv">$iInteger</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="nb">Local</span> <span class="nv">$sString</span> <span class="o">=</span> ''
-</pre></div>
+; Richtige Initialisierung
+Local $iInteger = 0
+Local $sString = ""
+@@End@@
+
 
 <p><br></p>
 	<p>In der folgenden Tabelle sind f&uuml;r jeden Datentyp empfohlene Standardwerte angegeben. 
@@ -488,14 +540,14 @@ $sString = $mContainer.Bin["Internal"]
 <p><br></p>
 	<p>Beispiel:</p>
 
-<div class="mw-highlight mw-content-ltr" dir="ltr"><pre><span class="c1">; Deklarieren und Initialisieren einer Variablen mit dem empfohlenen Standardwert</span>
-<span class="nb">Local</span> <span class="nv">$vUndefined</span> <span class="o">=</span> <span class="n">Null</span> <span class="c1">; Dies ben&ouml;tigt nicht viel Speicherplatz</span>
+@@SyntaxHighlighting@@
+; Deklariert und initialisiert eine Variable mit dem empfohlenen Standardwert
+Local $vUndefined = Null
 
-<span class="c1">; Einige Zeit sp&auml;ter:</span>
-<span class="nv">$vUndefined</span> <span class="o">=</span> <span class="mh">0xB0AD1CEA</span> <span class="c1">; Bei Bedarf einen geeigneten Wert zuweisen</span>
-</pre></div>
+; Einige Zeit später
+$vUndefined = 0xB0AD1CEA ; Bei Bedarf einen geeigneten Wert zuweisen
+@@End@@
 
-<p><br></p>
 	<p>Um den Platzbedarf zu reduzieren, k&ouml;nnen mehrere Variablen in einer Zeile deklariert werden. 
        Bei der Deklaration mehrerer Variablen in einer Zeile ist es generell empfehlenswert, sich an die
        Deklaration eines Datentyps pro Zeile zu halten. Die Absicht hierbei ist, den Code in Zukunft 
@@ -503,16 +555,16 @@ $sString = $mContainer.Bin["Internal"]
        Gegebenheiten variieren.</p>
 
 	<p>Beispiel:</p>
-<div class="mw-highlight mw-content-ltr" dir="ltr"><pre><span class="c1">; Nicht zu empfehlen</span>
-<span class="nb">Local</span> <span class="nv">$sString</span> <span class="o">=</span> <span class="s">""</span><span class="p">,</span> <span class="nv">$iInteger</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">$asArray</span> <span class="o">=</span> <span class="p">[</span><span class="s">"a"</span><span class="p">,</span><span class="s">"b"</span><span class="p">,</span><span class="s">"c"</span><span class="p">]</span> <span class="c1">; unterschiedliche Datentypen</span>
+@@SyntaxHighlighting@@
+; Nicht empfohlen
+Local $sString = "", $iInteger = 0, $asArray = ["a","b","c"] ; Gemischte Datentypen
 
-<span class="c1">; Empfehlenswert</span>
-<span class="nb">Local</span> <span class="nv">$iLeft</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="nv">$iTop</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1">; Integers</span>
-<span class="nb">Local</span> <span class="nv">$idButton_Go</span> <span class="o">=</span> <span class="nf">GUICtrlCreateButton</span><span class="p">(</span><span class="s">"Go"</span><span class="p">,</span> <span class="nv">$iLeft</span><span class="p">,</span> <span class="nv">$iTop</span><span class="p">)</span> <span class="c1">; ControlIds</span>
-<span class="nb">Local</span> <span class="nv">$idButton_Quit</span> <span class="o">=</span> <span class="nf">GUICtrlCreateButton</span><span class="p">(</span><span class="s">"Quit"</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="c1">; ControlIds</span>
-</pre></div>
+; Empfohlen
+Local $iLeft = 10, $iTop = 10 ; Integer
+Local $idButton_Go = GUICtrlCreateButton("Go", $iLeft, $iTop) ; ControlIds
+Local $idButton_Quit = GUICtrlCreateButton("Quit", 50, 10) ; ControlIds
+@@End@@
 
-<p><br></p>
 	<p>In einigen Sprachen ist es zwingend erforderlich, Variablen bei der Deklaration zu initialisieren. 
        Bei AutoIt ist dies jedoch nicht der Fall. Bez&uuml;glich des Datentyps sollten Variablen, die deklariert
        werden ohne sie zu initialisieren, als undefiniert betrachtet werden.</p>
@@ -535,8 +587,6 @@ $sString = $mContainer.Bin["Internal"]
 </table>
 
 <p>Mit dieser Methode vermeiden Sie unerw&uuml;nschte Neuzuweisungen.</p><p>
-
-
 
 
 </body>

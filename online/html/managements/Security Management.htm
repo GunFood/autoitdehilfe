@@ -3,7 +3,52 @@
 <head>
   <title>Benutzerdefinierte Funktionen</title>
   <meta charset="utf-8">
-  <link href="../css/default.css" rel="stylesheet">
+  <link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
@@ -20,79 +65,79 @@ Ein Klick auf einen Funktionsnamen liefert eine detaillierte Beschreibung.</p>
   <th style="width:75%">Beschreibung</th>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Security__AdjustTokenPrivileges.htm">_Security__AdjustTokenPrivileges</a></td>
+<td><a href="..\..\html\libfunctions\_Security__AdjustTokenPrivileges.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Security__AdjustTokenPrivileges</a></td>
 <td>Aktiviert oder deaktiviert Rechte in einem Access Token<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Security__CreateProcessWithToken.htm">_Security__CreateProcessWithToken</a></td>
+<td><a href="..\..\html\libfunctions\_Security__CreateProcessWithToken.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Security__CreateProcessWithToken</a></td>
 <td>Erstellt einen neuen Prozess mit dem dazugeh&ouml;rigen prim&auml;ren Thread, welcher mit den Sicherheitseinstellungen des angegebenen Tokens ausgef&uuml;hrt wird.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Security__DuplicateTokenEx.htm">_Security__DuplicateTokenEx</a></td>
+<td><a href="..\..\html\libfunctions\_Security__DuplicateTokenEx.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Security__DuplicateTokenEx</a></td>
 <td>Erstellt ein neues Zugriffstoken als Duplikat eines existierenden Tokens<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Security__GetAccountSid.htm">_Security__GetAccountSid</a></td>
+<td><a href="..\..\html\libfunctions\_Security__GetAccountSid.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Security__GetAccountSid</a></td>
 <td>Gibt den "Security Identifier" (SID) f&uuml;r ein Konto zur&uuml;ck<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Security__GetLengthSid.htm">_Security__GetLengthSid</a></td>
+<td><a href="..\..\html\libfunctions\_Security__GetLengthSid.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Security__GetLengthSid</a></td>
 <td>Gibt die L&auml;nge einer g&uuml;ltigen SID in Bytes zur&uuml;ck<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Security__GetTokenInformation.htm">_Security__GetTokenInformation</a></td>
+<td><a href="..\..\html\libfunctions\_Security__GetTokenInformation.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Security__GetTokenInformation</a></td>
 <td>Gibt den angegebenen Typ an Informationen &uuml;ber ein Access Token zur&uuml;ck<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Security__ImpersonateSelf.htm">_Security__ImpersonateSelf</a></td>
+<td><a href="..\..\html\libfunctions\_Security__ImpersonateSelf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Security__ImpersonateSelf</a></td>
 <td>Erh&auml;lt einen Access Token, der den Security-Kontext des aufgerufenen Prozesses verk&ouml;rpert<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Security__IsValidSid.htm">_Security__IsValidSid</a></td>
+<td><a href="..\..\html\libfunctions\_Security__IsValidSid.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Security__IsValidSid</a></td>
 <td>Pr&uuml;ft die G&uuml;ltigkeit einer SID<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Security__LookupAccountName.htm">_Security__LookupAccountName</a></td>
+<td><a href="..\..\html\libfunctions\_Security__LookupAccountName.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Security__LookupAccountName</a></td>
 <td>Ermittelt einen Sicherheits-Identifizierer (SID) f&uuml;r das Konto und den Namen der Dom&auml;ne<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Security__LookupAccountSid.htm">_Security__LookupAccountSid</a></td>
+<td><a href="..\..\html\libfunctions\_Security__LookupAccountSid.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Security__LookupAccountSid</a></td>
 <td>Gibt den Namen des Kontos f&uuml;r eine SID zur&uuml;ck<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Security__LookupPrivilegeValue.htm">_Security__LookupPrivilegeValue</a></td>
+<td><a href="..\..\html\libfunctions\_Security__LookupPrivilegeValue.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Security__LookupPrivilegeValue</a></td>
 <td>Erfragt den lokal beschr&auml;nkten Identifizierer (LUID) f&uuml;r einen privilegierten Wert in Form eines 64bit Integers<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Security__OpenProcessToken.htm">_Security__OpenProcessToken</a></td>
+<td><a href="..\..\html\libfunctions\_Security__OpenProcessToken.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Security__OpenProcessToken</a></td>
 <td>Gibt das mit dem Prozess verbundene Prozess Token zur&uuml;ck<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Security__OpenThreadToken.htm">_Security__OpenThreadToken</a></td>
+<td><a href="..\..\html\libfunctions\_Security__OpenThreadToken.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Security__OpenThreadToken</a></td>
 <td>&Ouml;ffnet das Access-Token, welches mit einem Thread verbunden ist<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Security__OpenThreadTokenEx.htm">_Security__OpenThreadTokenEx</a></td>
+<td><a href="..\..\html\libfunctions\_Security__OpenThreadTokenEx.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Security__OpenThreadTokenEx</a></td>
 <td>&Ouml;ffnet das Access-Token, welches mit einem Thread verbunden ist und personifiziert den Sicherheitskontext des Client-Prozesses, falls notwendig<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Security__SetPrivilege.htm">_Security__SetPrivilege</a></td>
+<td><a href="..\..\html\libfunctions\_Security__SetPrivilege.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Security__SetPrivilege</a></td>
 <td>Aktiviert oder deaktiviert Rechte in einem lokalen Token<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Security__SetTokenInformation.htm">_Security__SetTokenInformation</a></td>
+<td><a href="..\..\html\libfunctions\_Security__SetTokenInformation.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Security__SetTokenInformation</a></td>
 <td>Setzt verschiedene Eigenschaften eines Tokens<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Security__SidToStringSid.htm">_Security__SidToStringSid</a></td>
+<td><a href="..\..\html\libfunctions\_Security__SidToStringSid.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Security__SidToStringSid</a></td>
 <td>Konvertiert eine bin&auml;re SID in einen String<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Security__SidTypeStr.htm">_Security__SidTypeStr</a></td>
+<td><a href="..\..\html\libfunctions\_Security__SidTypeStr.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Security__SidTypeStr</a></td>
 <td>Konvertiert ein SID-Typ in eine String-Form<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Security__StringSidToSid.htm">_Security__StringSidToSid</a></td>
+<td><a href="..\..\html\libfunctions\_Security__StringSidToSid.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Security__StringSidToSid</a></td>
 <td>Konvertiert einen String in eine bin&auml;re SID<br /></td>
 </tr>
 </table>

@@ -3,15 +3,62 @@
 <head>
 <title>Funktion ProcessWait</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Funktionreferenz</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">ProcessWait</h1><br />
-<a href="../functions_en/ProcessWait.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<div class="top"><h1>ProcessWait</h1><div>
+<div id="flagtext">Beschreibung anzeigen in</div>
+<div id="flaglink"> <a href="../functions_en/ProcessWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_en.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Pausiert das Skript, bis der genannte Prozess existiert.<br /></p>
 <p class="codeheader">
 ProcessWait ( "process" [, timeout = 0] )<br />
@@ -53,7 +100,7 @@ Diese Funktion arbeitet nicht f&uuml;r alte 16-Bit Programme die unter der Windo
 </p>
 
 <h2>Verwandte Funktionen</h2>
-<p><a href="ProcessClose.htm">ProcessClose</a>, <a href="ProcessExists.htm">ProcessExists</a>, <a href="ProcessList.htm">ProcessList</a>, <a href="ProcessWaitClose.htm">ProcessWaitClose</a>, <a href="RunAsWait.htm">RunAsWait</a>, <a href="RunWait.htm">RunWait</a>, <a href="WinGetProcess.htm">WinGetProcess</a>, <a href="WinWait.htm">WinWait</a>, <a href="WinWaitActive.htm">WinWaitActive</a></p>
+<p><a href="ProcessClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ProcessClose</a>, <a href="ProcessExists.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ProcessExists</a>, <a href="ProcessList.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ProcessList</a>, <a href="ProcessWaitClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ProcessWaitClose</a>, <a href="RunAsWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">RunAsWait</a>, <a href="RunWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">RunWait</a>, <a href="WinGetProcess.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">WinGetProcess</a>, <a href="WinWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">WinWait</a>, <a href="WinWaitActive.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">WinWaitActive</a></p>
 
 <h2 class="bottom">Beispiel</h2>
 <script type="text/javascript">
@@ -89,7 +136,7 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <pre>
 <span><span class="S1">; Wartet auf den Notepad Prozess</span>
 
-<a class="codeSnippetLink" href="../functions/ProcessWait.htm"><span class="S4">ProcessWait</span></a><span class="S8">(</span><span class="S7">"notepad.exe"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/ProcessWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">ProcessWait</span></a><span class="S8">(</span><span class="S7">"notepad.exe"</span><span class="S8">)</span>
 <span class="S0"></span></span>
 </pre>
 </div>

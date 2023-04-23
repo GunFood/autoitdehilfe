@@ -3,7 +3,52 @@
 <head>
   <title>#pragma compile</title>
   <meta charset="utf-8">
-  <link href="../css/default.css" rel="stylesheet">
+  <link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 <body>
   <h1>Pragma Compile Directives</h1>
@@ -54,7 +99,7 @@
     <tr>
       <td>Compression</td>
       <td>1, 3, 5, 7, 9</td>
-	  <td>Sets the compiled executable <a href="../functions/FileInstall.htm">FileInstall()</a> resources compression.</td>
+	  <td>Sets the compiled executable <a href="../functions/FileInstall.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">FileInstall()</a> resources compression.</td>
       <td>#pragma compile(Compression, 3)</td>
     </tr>
     <tr>
@@ -72,7 +117,7 @@
     <tr>
       <td>inputboxres</td>
       <td>true, false (default)</td>
-	  <td>Includes/omits the <a href="../functions/InputBox.htm">InputBox()</a> resources from the compiled executable.</td>
+	  <td>Includes/omits the <a href="../functions/InputBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">InputBox()</a> resources from the compiled executable.</td>
       <td>#pragma compile(inputboxres, false)</td>
     </tr>
     <tr>

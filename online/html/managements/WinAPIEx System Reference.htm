@@ -3,26 +3,71 @@
 <head>
   <title>System Referenz</title>
   <meta charset="utf-8">
-  <link href="../css/default.css" rel="stylesheet">
+  <link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1>System Referenz</h1>
 <ul>
-      <li><a href="WinAPIEx Administration Management.htm">Administration Management</a></li>
-      <li><a href="WinAPIEx Automation Management.htm">Automation Management</a></li>
-      <li><a href="WinAPIEx Buffer Management.htm">Buffer Management</a></li>
-      <li><a href="WinAPIEx Clipboards Management.htm">Clipboards Management</a></li>
-      <li><a href="WinAPIEx Controls Management.htm">Controls Management</a></li>
-      <li><a href="WinAPIEx DLLLib Management.htm">DLLLib Management</a></li>
-      <li><a href="WinAPIEx Heap Management.htm">Heap Management</a></li>
-      <li><a href="WinAPIEx Power Management.htm">Power Management</a></li>
-      <li><a href="WinAPIEx Station & Desktop Management.htm">Station & Desktop Management</a></li>
-      <li><a href="WinAPIEx SysInfo Management.htm">SysInfo Management</a></li>
-      <li><a href="WinAPIEx User Keyboard Input Management.htm">User Keyboard Input Management</a></li>
-      <li><a href="WinAPIEx User Mouse Input Management.htm">User Mouse Input Management</a></li>
-      <li><a href="WinAPIEx User Raw Input Management.htm">User Raw Input Management</a></li>
-      <li><a href="WinAPIEx Windows Management.htm">Windows Management</a></li>
+      <li><a href="WinAPIEx Administration Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Administration Management</a></li>
+      <li><a href="WinAPIEx Automation Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Automation Management</a></li>
+      <li><a href="WinAPIEx Buffer Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Buffer Management</a></li>
+      <li><a href="WinAPIEx Clipboards Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Clipboards Management</a></li>
+      <li><a href="WinAPIEx Controls Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Controls Management</a></li>
+      <li><a href="WinAPIEx DLLLib Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">DLLLib Management</a></li>
+      <li><a href="WinAPIEx Heap Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Heap Management</a></li>
+      <li><a href="WinAPIEx Power Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Power Management</a></li>
+      <li><a href="WinAPIEx Station & Desktop Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Station & Desktop Management</a></li>
+      <li><a href="WinAPIEx SysInfo Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">SysInfo Management</a></li>
+      <li><a href="WinAPIEx User Keyboard Input Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">User Keyboard Input Management</a></li>
+      <li><a href="WinAPIEx User Mouse Input Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">User Mouse Input Management</a></li>
+      <li><a href="WinAPIEx User Raw Input Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">User Raw Input Management</a></li>
+      <li><a href="WinAPIEx Windows Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Windows Management</a></li>
 </ul>
 
 </body>

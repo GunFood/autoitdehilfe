@@ -3,15 +3,62 @@
 <head>
 <title>Function _DebugReportEx</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Function Reference</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_DebugReportEx</h1><br />
-<a href="../libfunctions/_DebugReportEx.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Show description in</div><br />
+<div class="top"><h1>_DebugReportEx</h1><div>
+<div id="flagtext">Show description in</div>
+<div id="flaglink"> <a href="../libfunctions/_DebugReportEx.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_de.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Writes to a debugging session a formatted message<br /></p>
 <p class="codeheader">
 #include &lt;Debug.au3&gt;<br />
@@ -26,7 +73,7 @@ _DebugReportEx ( $sData [, $bLastError = False [, $bExit = False]] )<br />
 </tr>
 <tr>
 <td>$bLastError</td>
-<td><strong>[optional]</strong> True if <a href="_WinAPI_GetLastErrorMessage.htm">_WinAPI_GetLastErrorMessage()</a> must be append to the data being reported</td>
+<td><strong>[optional]</strong> True if <a href="_WinAPI_GetLastErrorMessage.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_GetLastErrorMessage()</a> must be append to the data being reported</td>
 </tr>
 <tr>
 <td>$bExit</td>
@@ -53,16 +100,16 @@ _DebugReportEx ( $sData [, $bLastError = False [, $bExit = False]] )<br />
 3 - report "unable to find FUNCTION in DLL".<br />
 <br />
 If $sData is does not contain a "|" or @error not as specified above the reported message will not be formated.<br />
-If no <a href="_DebugSetup.htm">_DebugSetup()</a> have been issued the function always returns.<br />
+If no <a href="_DebugSetup.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_DebugSetup()</a> have been issued the function always returns.<br />
 @error of the caller is preserved.<br />
-@extended can be set to Windows API <a href="_WinNet_GetLastError.htm">_WinNet_GetLastError()</a> if $bLastError = True.<br />
+@extended can be set to Windows API <a href="_WinNet_GetLastError.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinNet_GetLastError()</a> if $bLastError = True.<br />
 Otherwise it is preserved.<br />
 <br />
-Each time <a href="_DebugReportEx.htm">_DebugReportEx()</a> is called, the output is put on its own line.<br />
+Each time <a href="_DebugReportEx.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_DebugReportEx()</a> is called, the output is put on its own line.<br />
 </p>
 
 <h2>Related</h2>
-<p><a href="_DebugSetup.htm">_DebugSetup</a></p>
+<p><a href="_DebugSetup.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_DebugSetup</a></p>
 
 <h2 class="bottom">Example</h2>
 <script type="text/javascript">
@@ -96,30 +143,30 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Debug.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Debug.au3&gt;</span>
 
-<a class="codeSnippetLink" href="../libfunctions/_DebugSetup.htm"><span class="S15">_DebugSetup</span></a><span class="S8">()</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugSetup.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_DebugSetup</span></a><span class="S8">()</span>
 
-<a class="codeSnippetLink" href="../libfunctions/_DebugOut.htm"><span class="S15">_DebugOut</span></a><span class="S8">(</span><span class="S7">"message1"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugOut.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_DebugOut</span></a><span class="S8">(</span><span class="S7">"message1"</span><span class="S8">)</span>
 
 <span class="S0">SomeUDF</span><span class="S8">(</span><span class="S7">"anyfunction"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_DebugReportEx.htm"><span class="S15">_DebugReportEx</span></a><span class="S8">(</span><span class="S7">"user32|anyfunction"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">)</span><span class="S1">; with last error message appended</span>
+<a class="codeSnippetLink" href="../keywords/If.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@error><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_DebugReportEx.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_DebugReportEx</span></a><span class="S8">(</span><span class="S7">"user32|anyfunction"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">True</span></a><span class="S8">)</span><span class="S1">; with last error message appended</span>
 
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iRet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> SomeUDF</span><span class="S8">(</span><span class="S7">"CloseClipboard"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Or</span></a><span class="S0"> </span><span class="S9">$iRet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_DebugReportEx.htm"><span class="S15">_DebugReportEx</span></a><span class="S8">(</span><span class="S7">"user32|CloseClipboard"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iRet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> SomeUDF</span><span class="S8">(</span><span class="S7">"CloseClipboard"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/If.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@error><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Or</span></a><span class="S0"> </span><span class="S9">$iRet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_DebugReportEx.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_DebugReportEx</span></a><span class="S8">(</span><span class="S7">"user32|CloseClipboard"</span><span class="S8">)</span>
 
-<a class="codeSnippetLink" href="../libfunctions/_DebugOut.htm"><span class="S15">_DebugOut</span></a><span class="S8">(</span><span class="S7">"message2"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugOut.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_DebugOut</span></a><span class="S8">(</span><span class="S7">"message2"</span><span class="S8">)</span>
 
-<span class="S9">$iRet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> SomeUDF</span><span class="S8">(</span><span class="S7">"CloseClipboard"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Or</span></a><span class="S0"> </span><span class="S9">$iRet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_DebugReportEx.htm"><span class="S15">_DebugReportEx</span></a><span class="S8">(</span><span class="S7">"user32|CloseClipboard"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">; Script will be terminated</span>
+<span class="S9">$iRet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> SomeUDF</span><span class="S8">(</span><span class="S7">"CloseClipboard"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/If.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@error><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Or</span></a><span class="S0"> </span><span class="S9">$iRet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_DebugReportEx.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_DebugReportEx</span></a><span class="S8">(</span><span class="S7">"user32|CloseClipboard"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">False</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">True</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">; Script will be terminated</span>
 
-<a class="codeSnippetLink" href="../libfunctions/_DebugReport.htm"><span class="S15">_DebugReport</span></a><span class="S8">(</span><span class="S7">"message3"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; will not be reported</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReport.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_DebugReport</span></a><span class="S8">(</span><span class="S7">"message3"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; will not be reported</span>
 
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> SomeUDF</span><span class="S8">(</span><span class="S9">$sFunc</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllCall.htm"><span class="S4">DllCall</span></a><span class="S8">(</span><span class="S7">"user32.dll"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"int"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFunc</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/SetError.htm"><span class="S4">SetError</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S9">$aResult</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span>
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;SomeUDF</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Func</span></a><span class="S0"> SomeUDF</span><span class="S8">(</span><span class="S9">$sFunc</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllCall.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">DllCall</span></a><span class="S8">(</span><span class="S7">"user32.dll"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"int"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sFunc</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@error><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/SetError.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">SetError</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@error><span class="S6">@error</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@extended><span class="S6">@extended</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Return</span></a><span class="S0"> </span><span class="S9">$aResult</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;SomeUDF</span>
 <span class="S0"></span></span>
 </pre>
 </div>

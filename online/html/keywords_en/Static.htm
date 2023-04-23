@@ -3,15 +3,62 @@
 <head>
 <title>Keyword Static</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Keyword Reference</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">Static</h1><br />
-<a href="../keywords/Static.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Show description in</div><br />
+<div class="top"><h1>Static</h1><div>
+<div id="flagtext">Show description in</div>
+<div id="flaglink"> <a href="../keywords/Static.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_de.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Declare a static variable or create a static array.<br /></p>
 <p class="codeheader">
 <strong>Static</strong> [Scope] $variable [ = initializer ]<br />
@@ -41,15 +88,15 @@
 <h2>Remarks</h2>
 <p>The Static keyword can appear on the line before the optional scope specifier, or after. e.g. <strong>Local Static</strong> or <strong>Static Local</strong> are both acceptable.<br />
 <br />
-If the scope specifier <strong>Local</strong> is used, then the static variable is visible and usable only in the function in which it is declared and it's resolved in the environment of execution (logical scope). This means that conditionally declared variable is visible only when declaration condition is met. If the scope specifier <strong>Global</strong> is used, then the static variable is visible and usable in all parts of the script; in this regard, a Global Static has very little difference from a Global variable. If the scope specifier is not used, then the static variable will be created in the local scope; in this way, Static is similar to <a href="Dim.htm">Dim</a>.<br />
+If the scope specifier <strong>Local</strong> is used, then the static variable is visible and usable only in the function in which it is declared and it's resolved in the environment of execution (logical scope). This means that conditionally declared variable is visible only when declaration condition is met. If the scope specifier <strong>Global</strong> is used, then the static variable is visible and usable in all parts of the script; in this regard, a Global Static has very little difference from a Global variable. If the scope specifier is not used, then the static variable will be created in the local scope; in this way, Static is similar to <a href="Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Dim</a>.<br />
 <br />
 The difference between Local and Static is variable lifetime. Local variables are only stored while the function is called and are visible only within the function in which they are declared; when the function returns, all its local variables are released. Static variables are likewise visible only in the function in which they are declared, but they continue to exist, retaining their last value, after the function finishes execution. When looking for variables, the local scope is checked first and then the global scope second.<br />
 <br />
-The Static keyword performs similar functions to the <a href="Dim.htm">Global/Local/Dim</a> keywords.<br />
+The Static keyword performs similar functions to the <a href="Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Global/Local/Dim</a> keywords.<br />
 <ol><li>They all declare a variable before you use it.</li><br />
 <li>They all can create an array.</li></ol><br />
 <br />
-<strong>Note</strong>: Static variables <em>must</em> be declared using the <strong>Static</strong> keyword prior to use, no matter how AutoItSetOption("<a href="../functions/AutoItSetOption.htm#MustDeclareVars">MustDeclareVars</a>") is set. Static variables can not be <strong><a href="Dim.htm">Const</a></strong>.<br />
+<strong>Note</strong>: Static variables <em>must</em> be declared using the <strong>Static</strong> keyword prior to use, no matter how AutoItSetOption("<a href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#MustDeclareVars>MustDeclareVars</a>") is set. Static variables can not be <strong><a href="Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Const</a></strong>.<br />
 <br />
 You can also declare multiple static variables on a single line:<br />
 <p class="code">Static $a, $b, $c</p><br />
@@ -58,15 +105,15 @@ And initialize the variables:<br />
 <br />
 When initializing a static variable, the initialization value is evaluated and assigned only the first time, when the variable is created. On all subsequent passes, the initializer is ignored.<br />
 <br />
-See <a href="Dim.htm">Local</a> for more information about using arrays, which has all the same functionality as in Local, except for:<br />
+See <a href="Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Local</a> for more information about using arrays, which has all the same functionality as in Local, except for:<br />
 <ol><li>Reinitializing a Static variable has no effect.</li><br />
 <li>You can not change a static variable to a local or global variable nor vice-versa.</li></ol><br />
 <br />
-If you want to resize an array use <a href="ReDim.htm">ReDim</a>.<br />
+If you want to resize an array use <a href="ReDim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ReDim</a>.<br />
 </p>
 
 <h2>Related</h2>
-<p><a href="../functions/AutoItSetOption.htm#MustDeclareVars">AutoItSetOption</a>, <a href="Dim.htm">Local</a>, <a href="ReDim.htm">ReDim</a>, <a href="../functions/UBound.htm">UBound</a></p>
+<p><a href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#MustDeclareVars>AutoItSetOption</a>, <a href="Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Local</a>, <a href="ReDim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ReDim</a>, <a href="../functions/UBound.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">UBound</a></p>
 
 <h2 class="bottom">Example</h2>
 <script type="text/javascript">
@@ -101,7 +148,7 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
 
 <span class="S1">; Call the Example function to initialize the Static variable in Local scope.</span>
 <span class="S0">Example</span><span class="S8">()</span>
@@ -109,13 +156,13 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <span class="S1">; Call the Example function a second time to show that the variable has retained the data we last assigned to it.</span>
 <span class="S0">Example</span><span class="S8">()</span>
 
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Static.htm"><span class="S5">Static</span></a><span class="S0"> </span><span class="S9">$sString</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"This is a line of text which is declared using a Static variable in Local scope."</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Static.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Static</span></a><span class="S0"> </span><span class="S9">$sString</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"This is a line of text which is declared using a Static variable in Local scope."</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"The variable $sString will now be visible to this function only and until the script closes."</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sString</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sString</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"If using just Local scope this string wouldn't be visible if this function was called multiple times, but since we're using the Static keyword"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sString</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sString</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"If using just Local scope this string wouldn't be visible if this function was called multiple times, but since we're using the Static keyword"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">"the variable $sString will retain the data last assigned to it."</span>
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
 <span class="S0"></span></span>
 </pre>
 </div>
@@ -144,26 +191,26 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
 
 <span class="S0">Example</span><span class="S8">()</span>
 
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; SomeFunc</span><span class="S8">()</span><span class="S0"> </span><span class="S1">; This will display a message box of 1, 1.</span>
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; SomeFunc</span><span class="S8">()</span><span class="S0"> </span><span class="S1">; This will display a message box of 1, 2.</span>
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; SomeFunc</span><span class="S8">()</span><span class="S0"> </span><span class="S1">; This will display a message box of 1, 3.</span>
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
 
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> SomeFunc</span><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Func</span></a><span class="S0"> SomeFunc</span><span class="S8">()</span>
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; This initialises a Static variable in Local scope. When a variable is declared just in Local scope (within a Function,)</span>
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; it's destroyed when the Function ends/returns. This isn't the case for a Static variable. The variable can't be</span>
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; accessed from anywhere else in the script apart from the Function it was declared in.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Static.htm"><span class="S5">Static</span></a><span class="S0"> </span><span class="S9">$vVariableThatIsStatic</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$vVariableThatIsLocal</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$vVariableThatIsLocal</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><span class="S1">; This will always be 1 as it was destroyed once returned from SomeFunc.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$vVariableThatIsStatic</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><span class="S1">; This will increase by 1.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$vVariableThatIsLocal</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$vVariableThatIsStatic</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;SomeFunc</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Static.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Static</span></a><span class="S0"> </span><span class="S9">$vVariableThatIsStatic</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$vVariableThatIsLocal</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$vVariableThatIsLocal</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">+=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><span class="S1">; This will always be 1 as it was destroyed once returned from SomeFunc.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$vVariableThatIsStatic</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">+=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><span class="S1">; This will increase by 1.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$vVariableThatIsLocal</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$vVariableThatIsStatic</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;SomeFunc</span>
 <span class="S0"></span></span>
 </pre>
 </div>

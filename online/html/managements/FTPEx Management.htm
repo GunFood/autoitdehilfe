@@ -3,7 +3,52 @@
 <head>
   <title>Benutzerdefinierte Funktionen</title>
   <meta charset="utf-8">
-  <link href="../css/default.css" rel="stylesheet">
+  <link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
@@ -20,119 +65,119 @@ Ein Klick auf einen Funktionsnamen liefert eine detaillierte Beschreibung.</p>
   <th style="width:75%">Beschreibung</th>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_Close.htm">_FTP_Close</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_Close.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_Close</a></td>
 <td>Beendet die _FTP_Open oder _FTP_Connect() Sitzung<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_Command.htm">_FTP_Command</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_Command.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_Command</a></td>
 <td>Sendet einen Befehl zum FTP Server<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_Connect.htm">_FTP_Connect</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_Connect.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_Connect</a></td>
 <td>Verbindet zu einem FTP Server<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_DecodeInternetStatus.htm">_FTP_DecodeInternetStatus</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_DecodeInternetStatus.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_DecodeInternetStatus</a></td>
 <td>Decodiert einen empfangenen Internet Status<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_DirCreate.htm">_FTP_DirCreate</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_DirCreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_DirCreate</a></td>
 <td>Erstellt ein Verzeichnis auf dem Ftp-Server<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_DirDelete.htm">_FTP_DirDelete</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_DirDelete.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_DirDelete</a></td>
 <td>L&ouml;scht ein Verzeichnis auf einem FTP-Server<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_DirGetCurrent.htm">_FTP_DirGetCurrent</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_DirGetCurrent.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_DirGetCurrent</a></td>
 <td>Liefert das zur Zeit aktuelle Verzeichnis des FTP-Servers zur&uuml;ck<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_DirPutContents.htm">_FTP_DirPutContents</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_DirPutContents.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_DirPutContents</a></td>
 <td>Legt den Inhalt eines lokalen Verzeichnisses auf einem FTP-Server ab. Arbeit rekursiv, wenn gew&uuml;nscht<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_DirSetCurrent.htm">_FTP_DirSetCurrent</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_DirSetCurrent.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_DirSetCurrent</a></td>
 <td>Wechselt das zur Zeit aktuelle Verzeichnis des FTP-Servers<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_FileClose.htm">_FTP_FileClose</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_FileClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_FileClose</a></td>
 <td>Schlie&szlig;t das Handle, welches von _FTP_FileOpen() zur&uuml;ckgegeben wurde<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_FileDelete.htm">_FTP_FileDelete</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_FileDelete.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_FileDelete</a></td>
 <td>L&ouml;scht eine Datei von einem FTP Server<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_FileGet.htm">_FTP_FileGet</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_FileGet.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_FileGet</a></td>
 <td>L&auml;dt eine Datei vom FTP-Server<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_FileGetSize.htm">_FTP_FileGetSize</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_FileGetSize.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_FileGetSize</a></td>
 <td>Ermittelt die Dateigr&ouml;&szlig;e einer Datei auf einem FTP Server<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_FileOpen.htm">_FTP_FileOpen</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_FileOpen.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_FileOpen</a></td>
 <td>Leitet den Zugang zu einer Datei auf einem FTP Server ein, um zu lesen oder zu schreiben<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_FilePut.htm">_FTP_FilePut</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_FilePut.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_FilePut</a></td>
 <td>Sendet eine Datei an einen FTP Server<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_FileRead.htm">_FTP_FileRead</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_FileRead.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_FileRead</a></td>
 <td>Liest Daten des Handles, das mit _FTP_FileOpen() erzeugt wurde<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_FileRename.htm">_FTP_FileRename</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_FileRename.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_FileRename</a></td>
 <td>Benennt eine Datei auf einem FTP Server um<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_FileTimeLoHiToStr.htm">_FTP_FileTimeLoHiToStr</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_FileTimeLoHiToStr.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_FileTimeLoHiToStr</a></td>
 <td>Konvertiert Lo-und HiDWORD einer FileTime-Struktur zu einem String<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_FindFileClose.htm">_FTP_FindFileClose</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_FindFileClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_FindFileClose</a></td>
 <td>Schlie&szlig;t das Handle von FindFile<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_FindFileFirst.htm">_FTP_FindFileFirst</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_FindFileFirst.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_FindFileFirst</a></td>
 <td>Sucht die erste Datei auf einem FTP-Server<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_FindFileNext.htm">_FTP_FindFileNext</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_FindFileNext.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_FindFileNext</a></td>
 <td>Sucht die n&auml;chste Datei auf einem FTP-Server<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_GetLastResponseInfo.htm">_FTP_GetLastResponseInfo</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_GetLastResponseInfo.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_GetLastResponseInfo</a></td>
 <td>Ermittelt die letzte Fehlerbeschreibung oder Serverantwort des Threads, der diese Funktion aufruft<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_ListToArray.htm">_FTP_ListToArray</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_ListToArray.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_ListToArray</a></td>
 <td>Listet Dateinamen und/oder Verzeichnisse des aktuellen Remoteverzeichnisses<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_ListToArray2D.htm">_FTP_ListToArray2D</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_ListToArray2D.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_ListToArray2D</a></td>
 <td>Listet Namen und Gr&ouml;&szlig;en der Dateien des aktuellen Remoteverzeichnisses<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_ListToArrayEx.htm">_FTP_ListToArrayEx</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_ListToArrayEx.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_ListToArrayEx</a></td>
 <td>Listet Name, Gr&ouml;&szlig;e, Attribute und Zeiten der Dateien/Verzeichnisse des aktuellen Remoteverzeichnisses<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_Open.htm">_FTP_Open</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_Open.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_Open</a></td>
 <td>&Ouml;ffnet eine FTP Sitzung<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_ProgressDownload.htm">_FTP_ProgressDownload</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_ProgressDownload.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_ProgressDownload</a></td>
 <td>L&auml;dt eine Datei im Bin&auml;rmodus herunter und zeigt entweder ein Fortschrittsfenster an oder ruft dazu eine Benutzerfunktion auf<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_ProgressUpload.htm">_FTP_ProgressUpload</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_ProgressUpload.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_ProgressUpload</a></td>
 <td>L&auml;dt eine Datei im Bin&auml;rmodus hoch und zeigt einen Fortschrittsbalken, bzw. ruft eine benutzerdefinierte Funktion auf<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_FTP_SetStatusCallback.htm">_FTP_SetStatusCallback</a></td>
+<td><a href="..\..\html\libfunctions\_FTP_SetStatusCallback.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_SetStatusCallback</a></td>
 <td>Registriert eine Callback-Funktion, die von den WinINet-Funktionen aufgerufen werden kann, wenn ein Fortschritt w&auml;hrend der Abarbeitung erfolgt<br /></td>
 </tr>
 </table>

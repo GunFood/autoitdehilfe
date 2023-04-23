@@ -2,10 +2,100 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<link href="css/default.css" rel="stylesheet">
+	<link href="css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', 'css/' + this.theme);
+				document.getElementById('toggleButton').src = 'images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 	<title>GUI-Referenz - GUI-Konzepte</title>
 	<meta charset="utf-8">
-	<link href="../css/default.css" rel="stylesheet">
+	<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 	<style type="text/css">
 	   span.c1 {text-decoration: underline}
 	</style>
@@ -323,12 +413,12 @@
 	<p>Hier ein Beispiel eines einzigen GUI-Fensters, das viele der verf&uuml;gbaren Controls enth&auml;lt. Man sieht, dass selbst komplexe und detaillierte GUIs m&ouml;glich sind!</p>
 	<p><img alt="" src="../images/SampleGuiScreenshot.png"></p>
 	<p></p>
-	<p>Controls werden mit der <a href="../functions/GUICtrlCreate%20Management.htm">GUICtrlCreate...</a>-Funktionsgruppe erzeugt. Wenn ein Control erzeugt wird, wird eine <strong>Control-ID</strong> (Identifizierer des Controls) zur&uuml;ckgegeben. Das wichtigste, was man &uuml;ber diese Control-ID wissen muss:</p>
+	<p>Controls werden mit der <a href="../functions/GUICtrlCreate%20Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreate...</a>-Funktionsgruppe erzeugt. Wenn ein Control erzeugt wird, wird eine <strong>Control-ID</strong> (Identifizierer des Controls) zur&uuml;ckgegeben. Das wichtigste, was man &uuml;ber diese Control-ID wissen muss:</p>
 	<p></p>
 	<ul>
 		<li>Die Control-ID ist eine positive Zahl (also eine Ganzzahl gr&ouml;&szlig;er als 0)</li>
 		<li>Jede Control-ID wird nur einmal vergeben, selbst wenn es mehrere Fenster gibt.</li>
-		<li>Die Control-ID ist derselbe Wert, den das <a href="../intro/au3spy.htm">AutoIt Window Info Tool</a> anzeigt.</li>
+		<li>Die Control-ID ist derselbe Wert, den das <a href="../intro/au3spy.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">AutoIt Window Info Tool</a> anzeigt.</li>
 	</ul>
 	<h2>Basis-GUI-Funktionen</h2>
 	<p>Es folgenden die Funktionen, die man am h&auml;ufigsten zum Entwurf einer GUI ben&ouml;tigt. Es sind nur die einfachen Funktionen, es gibt noch viele weitere, die es erlauben, detaillierte GUIs zu erzeugen.</p>
@@ -339,48 +429,48 @@
 		</tr>
 		<tr>
 			<td>
-				<a href="../functions/GUICreate.htm">GUICreate</a>
+				<a href="../functions/GUICreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICreate</a>
 			</td>
 			<td>Erzeugt ein Fenster.</td>
 		</tr>
 		<tr>
 			<td>
-				<a href="../functions/GUICtrlCreate%20Management.htm">GUICtrlCreate...</a>
+				<a href="../functions/GUICtrlCreate%20Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreate...</a>
 			</td>
 			<td>Erzeugt verschiedene Controls in einem Fenster.</td>
 		</tr>
 		<tr>
 			<td>
-				<a href="../functions/GUISetState.htm">GUISetState</a>
+				<a href="../functions/GUISetState.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUISetState</a>
 			</td>
 			<td>Zeigt oder versteckt ein Fenster.</td>
 		</tr>
 		<tr>
 			<td>
-				<a href="../functions/GUIGetMsg.htm">GUIGetMsg</a>
+				<a href="../functions/GUIGetMsg.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUIGetMsg</a>
 			</td>
 			<td>Findet heraus, ob ein GUI-Ereignis aufgetreten ist (nur im MessageLoop-Modus).</td>
 		</tr>
 		<tr>
 			<td>
-				<a href="../functions/GUICtrlRead.htm">GUICtrlRead</a>
+				<a href="../functions/GUICtrlRead.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlRead</a>
 			</td>
 			<td>Liest Daten aus einem Control.</td>
 		</tr>
 		<tr>
 			<td>
-				<a href="../functions/GUICtrlSetData.htm">GUICtrlSetData</a>
+				<a href="../functions/GUICtrlSetData.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlSetData</a>
 			</td>
 			<td>Setzt/ver&auml;ndert Daten in einem Control.</td>
 		</tr>
 		<tr>
 			<td>
-				<a href="../functions/GUICtrlUpdate%20Management.htm">GUICtrlUpdate...</a>
+				<a href="../functions/GUICtrlUpdate%20Management.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlUpdate...</a>
 			</td>
 			<td>Ver&auml;ndert verschiedene Eigenschaften von Controls (Farbe, Stil, etc.).</td>
 		</tr>
 	</table><br>
-	<p>Man muss #include f&uuml;r die Standard-GUI notwendigen Konstanten in sein Skript einf&uuml;gen. Es gibt auch <a href="GUIConstants.htm">andere Dateien</a> die Konstanten enthalten je nachdem welche Controls man in seiner GUI erzeugt.</p>
+	<p>Man muss #include f&uuml;r die Standard-GUI notwendigen Konstanten in sein Skript einf&uuml;gen. Es gibt auch <a href="GUIConstants.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">andere Dateien</a> die Konstanten enthalten je nachdem welche Controls man in seiner GUI erzeugt.</p>
 	<p></p>
 	<p>Erzeugen wir zun&auml;chst ein Fenster mit dem Titel "Hallo Welt" und setzen die Gr&ouml;&szlig;e auf 200 mal 100 Pixel. Wenn ein neues Fenster erzeugt wird, ist es zun&auml;chst versteckt - wir m&uuml;ssen es also noch anzeigen ("show"):</p>
 @@SyntaxHighlighting@@
@@ -407,19 +497,19 @@ Sleep(2000)
 	<p></p>
 	<h2>GUI-Ereignis-Modi</h2>
 	<p>Wie oben erw&auml;hnt gibt es zwei grundlegende GUI-Modi: den <strong>MessageLoop</strong>Modus und den <strong>OnEvent</strong> Modus. Die Modi sind einfach zwei verschiedene Wege, um auf GUI-Ereignisse zu reagieren. Welchen Modus man w&auml;hlt, h&auml;ngt von der <em>pers&ouml;nlichen Vorliebe</em> ab und bis zu einem gewissen Grad davon, welchen GUI-Typ man erzeugen will. Mit beiden Modi kann man jedes gew&uuml;nschte GUI erzeugen, aber manchmal ist ein Modus passender f&uuml;r eine Aufgabe als der andere.</p>
-	<p>Der &uuml;bliche (Standard) Modus ist der MessageLoop Modus. Um auf den OnEvent Modus umzuschalten ist <a href="../functions/AutoItSetOption.htm#GUIOnEventMode">Opt("GUIOnEventMode", 1)</a> zu verwenden.</p>
+	<p>Der &uuml;bliche (Standard) Modus ist der MessageLoop Modus. Um auf den OnEvent Modus umzuschalten ist <a href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#GUIOnEventMode>Opt("GUIOnEventMode", 1)</a> zu verwenden.</p>
 	<p></p>
 	<p></p>
 	<p><strong>MessageLoop Modus (Standard)</strong></p>
-	<p>Im MessageLoop Modus wird das Skript die meiste Zeit in einer engen Schleife verbringen. Diese Schleife wird einfach st&auml;ndig das GUI mit der <a href="../functions/GUIGetMsg.htm">GUIGetMsg</a> Funktion abfragen. Wenn ein Ereignis aufgetreten ist, zeigt der R&uuml;ckgabewert der GUIGetMsg Funktion die Details an (ein Button wurde angeklickt, das GUI wurde geschlossen, etc.).</p>
+	<p>Im MessageLoop Modus wird das Skript die meiste Zeit in einer engen Schleife verbringen. Diese Schleife wird einfach st&auml;ndig das GUI mit der <a href="../functions/GUIGetMsg.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUIGetMsg</a> Funktion abfragen. Wenn ein Ereignis aufgetreten ist, zeigt der R&uuml;ckgabewert der GUIGetMsg Funktion die Details an (ein Button wurde angeklickt, das GUI wurde geschlossen, etc.).</p>
 	<p>In diesem Modus wird man nur von Ereignissen erfahren solange man aktiv immer wieder die GUIGetMsg Funktion aufruft; deshalb muss man sicherstellen, dass man sie viele Male pro Sekunde aufruft, sonst wird das GUI nicht reagieren.</p>
 	<p><em>Dieser Modus ist am besten f&uuml;r GUIs geeignet, wenn das GUI der "K&ouml;nig" ist und man nur auf Benutzeraktionen wartet.</em></p>
-	<p>Auf <a href="GUIRef_MessageLoopMode.htm">dieser Seite</a> findet man eine detailliertere Erkl&auml;rung des <a href="GUIRef_MessageLoopMode.htm">MessageLoop Modus</a>.</p>
+	<p>Auf <a href="GUIRef_MessageLoopMode.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">dieser Seite</a> findet man eine detailliertere Erkl&auml;rung des <a href="GUIRef_MessageLoopMode.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">MessageLoop Modus</a>.</p>
 	<p></p>
 	<p><strong>OnEvent Modus</strong></p>
 	<p>Anstatt das GUI st&auml;ndig abzufragen, um herauszufinden ob etwas passiert ist, l&auml;sst man im OnEvent Modus das GUI zeitweise das Skript anhalten und eine vordefinierte Funktion aufrufen, um das Ereignis zu behandeln. Wenn zum Beispiel ein Nutzer auf Button1 klickt, h&auml;lt das GUI dein Hauptskript an und ruft eine vorher von dir definierte Funktion auf, die f&uuml;r Button1 zust&auml;ndig ist. Wenn diese Funktion abgearbeitet ist, wird das Hauptskript fortgesetzt. Dieser Modus ist &auml;hnlich wie die Visual Basic Formular-Methode.</p>
 	<p><em>Dieser Modus ist am besten f&uuml;r GUIs geeignet, wenn das GUI weniger wichtig ist und dein Skript zus&auml;tzlich zum GUI andere Aufgaben zu erf&uuml;llen hat.</em></p>
-	<p>Auf <a href="GUIRef_OnEventMode.htm">dieser Seite</a> findet man eine detailliertere Erkl&auml;rung des <a href="GUIRef_OnEventMode.htm">OnEvent</a> Modus.</p>
+	<p>Auf <a href="GUIRef_OnEventMode.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">dieser Seite</a> findet man eine detailliertere Erkl&auml;rung des <a href="GUIRef_OnEventMode.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">OnEvent</a> Modus.</p>
 
 </body>
 </html>

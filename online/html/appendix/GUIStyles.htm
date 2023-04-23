@@ -3,7 +3,52 @@
 <head>
 	<title>GUI-Stile f&uuml;r Controls</title>
 	<meta charset="utf-8">
-	<link href="../css/default.css" rel="stylesheet">
+	<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 	<style type="text/css">
 	th.c2 {width:9%}
 	 th.c1 {width:22%}
@@ -32,7 +77,7 @@
 			<td>Standard/erzwungen f&uuml;r die GUI-Erstellung</td>
 			<td></td>
 			<td>
-				$GUI_SS_DEFAULT_GUI siehe <a href="../functions/GUICreate.htm">GUICreate</a> function.
+				$GUI_SS_DEFAULT_GUI siehe <a href="../functions/GUICreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICreate</a> function.
 			</td>
 		</tr>
 		<tr>
@@ -189,7 +234,7 @@
 			<td>$WS_EX_ACCEPTFILES</td>
 			<td>0x00000010</td>
 			<td>
-				Erlaubt einem Texteingabefeld (edit oder input control) innerhalb des erzeugten GUI-Fensters, Dateinamen per drag & drop zu empfangen. Das Eingabefeld muss zus&auml;tzlich den Status $GUI_ACCEPTFILES besitzen, der mit <a href="../functions/GUICtrlSetState.htm">GUICtrlSetState</a> gesetzt wird.
+				Erlaubt einem Texteingabefeld (edit oder input control) innerhalb des erzeugten GUI-Fensters, Dateinamen per drag & drop zu empfangen. Das Eingabefeld muss zus&auml;tzlich den Status $GUI_ACCEPTFILES besitzen, der mit <a href="../functions/GUICtrlSetState.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlSetState</a> gesetzt wird.
 			</td>
 		</tr>
 		<tr>
@@ -198,14 +243,14 @@
 			<td>Erzwingt ein Top-Level-Fenster auf der Taskleiste, wenn das Fenster sichtbar ist.</td>
 		</tr>
 		<tr>
-			<td>$WS_EX_COMPOSITED</td>
-			<td>0x02000000</td>
-			<td>Zeichnet alle Nachfahren eines Fensters von unten nach oben mit double-buffering.</td>
-		</tr>
-		<tr>
 			<td>$WS_EX_CLIENTEDGE</td>
 			<td>0x00000200</td>
 			<td>Legt fest, dass ein Fenster einen Rahmen mit abgesenkten Kanten hat.</td>
+		</tr>
+		<tr>
+			<td>$WS_EX_COMPOSITED</td>
+			<td>0x02000000</td>
+			<td>Zeichnet alle Nachfahren eines Fensters von unten nach oben mit double-buffering.</td>
 		</tr>
 		<tr>
 			<td>$WS_EX_CONTEXTHELP</td>
@@ -213,19 +258,39 @@
 			<td>Bindet ein Fragezeichen in die Titelleiste des Fensters ein. Kann nicht zusammen mit den Stilen WS_MAXIMIZEBOX oder WS_MINIMIZEBOX verwendet werden.</td>
 		</tr>
 		<tr>
+			<td>$WS_EX_CONTROLPARENT</td>
+			<td>0x00010000</td>
+			<td>Das Fenster selbst enth&auml;lt Unterfenster, die bei der Navigation im Dialogfeld mit einbezogen werden. Wenn dieser Stil angegeben ist, rekursiert der Dialogmanager in die Unterfenster dieses Fensters, wenn er Navigationsoperationen durchf&uuml;hrt, wie z. B. die Handhabung der TAB-Taste, einer Pfeiltaste oder eines Tastatur-Merkmals.</td>
+		</tr>
+		<tr>
 			<td>$WS_EX_DLGMODALFRAME</td>
 			<td>0x00000001</td>
 			<td>Erzeugt ein Fenster mit einem doppelten Rahmen; das Fenster kann - optional - mit einer Titelleiste erzeugt werden, indem der Stil WS_CAPTION als dwStyle-Parameter gesetzt wird.</td>
 		</tr>
 		<tr>
+			<td>$WS_EX_LAYERED</td>
+			<td>0x00080000</td>
+			<td>Erstellt ein Fenster mit mehreren Schichten. Es ist zu beachten, dass dieser Stil nicht f&uuml;r „child“-Fenster verwendet werden kann.</td>
+		</tr>
+		<tr>
 			<td>$WS_EX_LAYOUTRTL</td>
-			<td>0x400000</td>
+			<td>0x00400000</td>
 			<td>Legt fest, dass ein Fenster das Layout von rechts nach links (RTL) anstelle standardm&auml;&szlig;ig links nach rechts hat (LTR).</td>
+		</tr>
+		<tr>
+			<td>$WS_EX_LEFT</td>
+			<td>0x00000000</td>
+			<td>Wenn die Shell-Sprache Hebr&auml;isch, Arabisch oder eine andere Sprache ist, die die Ausrichtung in Leserichtung unterst&uuml;tzt, befindet sich die vertikale Bildlaufleiste (falls vorhanden) links vom Client-Bereich. Bei anderen Sprachen wird der Stil ignoriert.</td>
 		</tr>
 		<tr>
 			<td>$WS_EX_LEFTSCROLLBAR</td>
 			<td>0x00004000</td>
-			<td>Plaziert den vertikalen Scroll-Balken (sofern vorhanden) auf die linke Seite des Fensters.</td>
+			<td>Plaziert den vertikalen Scroll-Balken (sofern vorhanden) links vom Client-Bereich.</td>
+		</tr>
+		<tr>
+			<td>$WS_EX_LTRREADING</td>
+			<td>0x00000000</td>
+			<td>Der Fenstertext wird in der Lesereihenfolge von links nach rechts angezeigt. Dies ist die Standardeinstellung.</td>
 		</tr>
 		<tr>
 			<td>$WS_EX_MDICHILD</td>
@@ -233,14 +298,63 @@
 			<td>Erstellt ein child-Fenster, welches sich beim verschieben des Parent-Fensters genauso mitverschiebt (Simulation eines MDI-Fensters; maximieren/minimieren sind nicht nachgemacht).</td>
 		</tr>
 		<tr>
+     <td>$WS_EX_NOACTIVATE</td>
+			<td>0x08000000</td>
+			<td>Ein Fenster der obersten Ebene, das mit diesem Stil erstellt wurde, wird nicht zum Vordergrundfenster, wenn der Benutzer darauf klickt. Das System bringt dieses Fenster nicht in den Vordergrund, wenn der Benutzer das Vordergrundfenster minimiert oder schlie&szlig;t.
+Das Fenster sollte nicht durch programmatischen Zugriff oder &uuml;ber Tastaturnavigation durch barrierefreie Technologie wie der Kommentator aktiviert werden.
+Um das Fenster zu aktivieren, ist die Funktion SetActiveWindow oder SetForegroundWindow zu verwenden.
+Das Fenster wird standardm&auml;&szlig;ig nicht in der Taskleiste angezeigt. Um zu erzwingen, dass das Fenster in der Taskleiste erscheint, ist der Stil WS_EX_APPWINDOW zu verwenden.</td>
+		</tr>
+		<tr>
+			<td>$WS_EX_NOINHERITLAYOUT</td>
+			<td>0x00100000</td>
+			<td>Das Fenster gibt sein Fensterlayout nicht an seine untergeordneten Fenster weiter.</td>
+		</tr>
+		<tr>
+			<td>$WS_EX_NOPARENTNOTIFY</td>
+			<td>0x00000004</td>
+			<td>Das mit diesem Stil erstellte untergeordnete Fenster sendet die WM_PARENTNOTIFY-Nachricht nicht an sein &uuml;bergeordnetes Fenster, wenn es erstellt oder zerst&ouml;rt wird.</td>
+		</tr>
+		<tr>
+			<td>$WS_EX_NOREDIRECTIONBITMAP</td>
+			<td>0x00200000</td>
+			<td>Das Fenster wird nicht auf eine Umleitungsfl&auml;che gerendert. Dies gilt f&uuml;r Fenster, die keinen sichtbaren Inhalt haben oder die andere Mechanismen als Oberfl&auml;chen verwenden, um ihr Bildmaterial bereitzustellen.</td>
+		</tr>
+		<tr>
 			<td>$WS_EX_OVERLAPPEDWINDOW</td>
 			<td>0x00000300</td>
 			<td>Kombination aus den Stilen WS_EX_CLIENTEDGE und WS_EX_WINDOWEDGE.</td>
 		</tr>
 		<tr>
+			<td>$WS_EX_PALETTEWINDOW</td>
+			<td>0x00000188</td>
+			<td>Kombiniert die Stile WS_EX_WINDOWEDGE, WS_EX_TOOLWINDOW und WS_EX_TOPMOST. Das Fenster ist ein Palettenfenster, ein Dialogfeld ohne Modell, das eine Reihe von Befehlen pr&auml;sentiert.</td>
+    </tr>
+    <tr>
+			<td>$WS_EX_RIGHT</td>
+			<td>0x00001000</td>
+			<td>Das Fenster hat generische "rechtsb&uuml;ndige" Eigenschaften. Dies h&auml;ngt von der Fensterklasse ab. Dieser Stil wirkt sich nur aus, wenn die Shell-Sprache Hebr&auml;isch, Arabisch oder eine andere Sprache ist, die die Ausrichtung nach der Leseordnung unterst&uuml;tzt; andernfalls wird der Stil ignoriert.
+Die Verwendung des Stils WS_EX_RIGHT f&uuml;r statische oder Bearbeitungssteuerelemente hat die gleiche Wirkung wie die Verwendung des Stils SS_RIGHT bzw. ES_RIGHT. Die Verwendung dieses Stils mit Schaltfl&auml;chensteuerelementen hat die gleiche Wirkung wie die Verwendung der Stile BS_RIGHT und BS_RIGHTBUTTON.</td>
+		</tr>
+		<tr>
+			<td>$WS_EX_RIGHTSCROLLBAR</td>
+			<td>0x00000000</td>
+			<td>Die vertikale Bildlaufleiste (falls vorhanden) befindet sich rechts vom Client-Bereich. Dies ist die Standardeinstellung.</td>
+		</tr>
+		<tr>
+			<td>$WS_EX_RTLREADING</td>
+			<td>0x00002000</td>
+			<td>Wenn die Shell-Sprache Hebr&auml;isch, Arabisch oder eine andere Sprache ist, die eine Leseausrichtung unterst&uuml;tzt, wird der Fenstertext mit den Eigenschaften der Leseausrichtung von rechts nach links angezeigt. Bei anderen Sprachen wird der Stil ignoriert.</td>
+		</tr>
+		<tr>
 			<td>$WS_EX_STATICEDGE</td>
 			<td>0x00020000</td>
 			<td>Erstellt ein Fenster mit einem 3D-Rahmen-Stil, das f&uuml;r Felder gedacht ist, die keine Eintr&auml;ge vom Nutzer akzeptieren.</td>
+		</tr>
+		<tr>
+			<td>$WS_EX_TOOLWINDOW</td>
+			<td>0x00000080</td>
+			<td>Erzeugt ein Toolbar-Fenster (tool window); also ein Fenster, das als schwebende Symbolleiste verwendet werden soll. Eine Toolbar hat eine Titelleiste, die k&uuml;rzer ist als normale Titelleisten, und der Fenstertitel wird mit einer kleineren Schrift angezeigt. Eine Toolbar erscheint nicht in der Taskleiste oder im Dialogfeld, das erscheint, wenn der Nutzer die Tastenkombination ALT+TAB dr&uuml;ckt. Wenn ein solches Fenster ein System-Men&uuml; hat, wird kein Icon daf&uuml;r auf der Titelleiste angezeigt. Das System-Men&uuml; l&auml;sst sich aber mit ALT+SPACE sichtbar machen.</td>
 		</tr>
 		<tr>
 			<td>$WS_EX_TOPMOST</td>
@@ -253,19 +367,9 @@
 			<td>Das Fenster erscheint transparent, wenn die &uuml;berlagerten Teile von darunterliegenden Fenstern schon gezeichnet wurden.</td>
 		</tr>
 		<tr>
-			<td>$WS_EX_TOOLWINDOW</td>
-			<td>0x00000080</td>
-			<td>Erzeugt ein Toolbar-Fenster (tool window); also ein Fenster, das als schwebende Symbolleiste verwendet werden soll. Eine Toolbar hat eine Titelleiste, die k&uuml;rzer ist als normale Titelleisten, und der Fenstertitel wird mit einer kleineren Schrift angezeigt. Eine Toolbar erscheint nicht in der Taskleiste oder im Dialogfeld, das erscheint, wenn der Nutzer die Tastenkombination ALT+TAB dr&uuml;ckt. Wenn ein solches Fenster ein System-Men&uuml; hat, wird kein Icon daf&uuml;r auf der Titelleiste angezeigt. Das System-Men&uuml; l&auml;sst sich aber mit ALT+SPACE sichtbar machen.</td>
-		</tr>
-		<tr>
 			<td>$WS_EX_WINDOWEDGE</td>
 			<td>0x00000100</td>
 			<td>Legt fest, dass ein Fenster einen Rahmen mit erh&ouml;hter Kante hat.</td>
-		</tr>
-		<tr>
-			<td>$WS_EX_LAYERED</td>
-			<td>0x00080000</td>
-			<td>Erstellt ein Fenster mit mehreren Schichten. Es ist zu beachten, dass dieser Stil nicht f&uuml;r „child“-Fenster verwendet werden kann.</td>
 		</tr>
 		<tr>
 			<td>$GUI_WS_EX_PARENTDRAG</td>
@@ -296,7 +400,7 @@
 			<td>Standard/erzwungen</td>
 			<td></td>
 			<td>
-				siehe <a href="../functions/GUICtrlCreateCheckbox.htm">GUICtrlCreateCheckbox</a> Funktion.
+				siehe <a href="../functions/GUICtrlCreateCheckbox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreateCheckbox</a> Funktion.
 			</td>
 		</tr>
 		<tr>
@@ -373,7 +477,7 @@
 			<td>Standard/erzwungen</td>
 			<td></td>
 			<td>
-				siehe <a href="../functions/GUICtrlCreateButton.htm">GUICtrlCreateButton</a>, <a href="../functions/GUICtrlCreateCheckbox.htm">GUICtrlCreateCheckbox</a> und <a href="../functions/GUICtrlCreateRadio.htm">GUICtrlCreateRadio</a> Funktionen.
+				siehe <a href="../functions/GUICtrlCreateButton.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreateButton</a>, <a href="../functions/GUICtrlCreateCheckbox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreateCheckbox</a> und <a href="../functions/GUICtrlCreateRadio.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreateRadio</a> Funktionen.
 			</td>
 		</tr>
 		<tr>
@@ -447,11 +551,10 @@
 			</td>
 		</tr>
 		<tr>
-		<tr>
 			<td>Standard/erzwungen</td>
 			<td></td>
 			<td>
-				$GUI_SS_DEFAULT_COMBO siehe <a href="../functions/GUICtrlCreateCombo.htm">GUICtrlCreateCombo</a> Funktion.
+				$GUI_SS_DEFAULT_COMBO siehe <a href="../functions/GUICtrlCreateCombo.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreateCombo</a> Funktion.
 			</td>
 		</tr>
 		<tr>
@@ -528,7 +631,7 @@
 			<td>Standard/erzwungen</td>
 			<td></td>
 			<td>
-				$GUI_SS_DEFAULT_LIST siehe <a href="../functions/GUICtrlCreateList.htm">GUICtrlCreateList</a> Funktion.
+				$GUI_SS_DEFAULT_LIST siehe <a href="../functions/GUICtrlCreateList.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreateList</a> Funktion.
 			</td>
 		</tr>
 		<tr>
@@ -590,7 +693,7 @@
 			<td>Standard/erzwungen</td>
 			<td></td>
 			<td>
-				$GUI_SS_DEFAULT_EDIT, $GUI_SS_DEFAULT_INPUT siehe <a href="../functions/GUICtrlCreateEdit.htm">GUICtrlCreateEdit</a> oder <a href="../functions/GUICtrlCreateInput.htm">GUICtrlCreateInput</a> Funktion.
+				$GUI_SS_DEFAULT_EDIT, $GUI_SS_DEFAULT_INPUT siehe <a href="../functions/GUICtrlCreateEdit.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreateEdit</a> oder <a href="../functions/GUICtrlCreateInput.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreateInput</a> Funktion.
 			</td>
 		</tr>
 		<tr>
@@ -687,13 +790,13 @@
 			<td>$PBS_SMOOTH</td>
 			<td>0x01</td>
 			<td>Zeigt den Fortschritt als kontinuierlichen Balken anstatt des standardm&auml;&szlig;ig unterteilten Balkens.</td>
-			<strong>Beachte</strong> Dieser Stil wird nur im Windows-Klassik-Thema unterst&uuml;tzt. Alle anderen Themons werden sich unabh&auml;ngig mit oder ohne diesen Stil nicht &auml;ndern.</td>
+			<strong>Beachte</strong> Dieser Stil wird nur im Windows-Klassik-Thema unterst&uuml;tzt. Alle anderen Themen werden sich unabh&auml;ngig mit oder ohne diesen Stil nicht &auml;ndern.<br>
 		</tr>
 		<tr>
 			<td>$PBS_SMOOTHREVERSE</td>
 			<td>0x10</td>
 			<td>Zeigt den Forschrittstatus mit einem glatten R&uuml;ckw&auml;rts&uuml;bergang dar, wenn von einem h&ouml;hren in einen niedrigeren Wert gewechselt wird. Standardm&auml;&szlig;ig springt das Control zu dem nierigeren Wert.<br>
-			<strong>Note</strong> Dieser Stil wird nur von Windows Vista und neuer unterst&uuml;tzt.</td>
+			<strong>Beachte</strong> Dieser Stil wird nur von Windows Vista und neuer unterst&uuml;tzt.</td>
 		</tr>
 		<tr>
 			<td>$PBS_VERTICAL</td>
@@ -724,7 +827,7 @@
 			<td>Standard/erzwungen</td>
 			<td></td>
 			<td>
-				$GUI_SS_DEFAULT_UPDOWN siehe <a href="../functions/GUICtrlCreateUpdown.htm">GUICtrlCreateUpdown</a> Funktion.
+				$GUI_SS_DEFAULT_UPDOWN siehe <a href="../functions/GUICtrlCreateUpdown.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreateUpdown</a> Funktion.
 			</td>
 		</tr>
 		<tr>
@@ -781,7 +884,7 @@
 			<td>Standard/erzwungen</td>
 			<td></td>
 			<td>
-				$GUI_SS_DEFAULT_LABEL, $GUI_SS_DEFAULT_ICON, $GUI_SS_DEFAULT_PIC siehe <a href="../functions/GUICtrlCreateLabel.htm">GUICtrlCreateLabel</a>, <a href="../functions/GUICtrlCreateIcon.htm">GUICtrlCreateIcon</a>, <a href="../functions/GUICtrlCreatePic.htm">GUICtrlCreatePic</a> Funktionen.
+				$GUI_SS_DEFAULT_LABEL, $GUI_SS_DEFAULT_ICON, $GUI_SS_DEFAULT_PIC siehe <a href="../functions/GUICtrlCreateLabel.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreateLabel</a>, <a href="../functions/GUICtrlCreateIcon.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreateIcon</a>, <a href="../functions/GUICtrlCreatePic.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreatePic</a> Funktionen.
 			</td>
 		</tr>
 		<tr>
@@ -904,7 +1007,7 @@
 			<td>Standard/erzwungen</td>
 			<td></td>
 			<td>
-				siehe <a href="../functions/GUICtrlCreateTab.htm">GUICtrlCreateTab</a> Funktion.
+				siehe <a href="../functions/GUICtrlCreateTab.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreateTab</a> Funktion.
 			</td>
 		</tr>
 		<tr>
@@ -1031,7 +1134,7 @@
 			<td>Standard/erzwungen</td>
 			<td></td>
 			<td>
-				$GUI_SS_DEFAULT_AVI siehe <a href="../functions/GUICtrlCreateAvi.htm">GUICtrlCreateAvi</a> Funktion.
+				$GUI_SS_DEFAULT_AVI siehe <a href="../functions/GUICtrlCreateAvi.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreateAvi</a> Funktion.
 			</td>
 		</tr>
 		<tr>
@@ -1078,7 +1181,7 @@
 			<td>Standard/erzwungen</td>
 			<td></td>
 			<td>
-				$GUI_SS_DEFAULT_DATE siehe <a href="../functions/GUICtrlCreateDate.htm">GUICtrlCreateDate</a> Funktion.
+				$GUI_SS_DEFAULT_DATE siehe <a href="../functions/GUICtrlCreateDate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreateDate</a> Funktion.
 			</td>
 		</tr>
 		<tr>
@@ -1135,7 +1238,7 @@
 			<td>Standard/erzwungen</td>
 			<td></td>
 			<td>
-				siehe <a href="../functions/GUICtrlCreateMonthCal.htm">GUICtrlCreateMonthCal</a> Funktion.
+				siehe <a href="../functions/GUICtrlCreateMonthCal.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreateMonthCal</a> Funktion.
 			</td>
 		</tr>
 		<tr>
@@ -1177,7 +1280,7 @@
 			<td>Standard/erzwungen</td>
 			<td></td>
 			<td>
-				$GUI_SS_DEFAULT_TREEVIEW siehe <a href="../functions/GUICtrlCreateTreeView.htm">GUICtrlCreateTreeView</a> Funktion.
+				$GUI_SS_DEFAULT_TREEVIEW siehe <a href="../functions/GUICtrlCreateTreeView.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreateTreeView</a> Funktion.
 			</td>
 		</tr>
 		<tr>
@@ -1269,7 +1372,7 @@
 			<td>Standard/erzwungen</td>
 			<td></td>
 			<td>
-				$GUI_SS_DEFAULT_SLIDER siehe <a href="../functions/GUICtrlCreateSlider.htm">GUICtrlCreateSlider</a> Funktion.
+				$GUI_SS_DEFAULT_SLIDER siehe <a href="../functions/GUICtrlCreateSlider.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreateSlider</a> Funktion.
 			</td>
 		</tr>
 		<tr>
@@ -1346,7 +1449,7 @@
 			<td>Standard/erzwungen</td>
 			<td></td>
 			<td>
-				$GUI_SS_DEFAULT_LISTVIEW siehe <a href="../functions/GUICtrlCreateListView.htm">GUICtrlCreateListView</a> Funktion.
+				$GUI_SS_DEFAULT_LISTVIEW siehe <a href="../functions/GUICtrlCreateListView.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreateListView</a> Funktion.
 			</td>
 		</tr>
 		<tr>

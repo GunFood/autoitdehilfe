@@ -3,15 +3,62 @@
 <head>
 <title>Funktion RunAs</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Funktionreferenz</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">RunAs</h1><br />
-<a href="../functions_en/RunAs.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<div class="top"><h1>RunAs</h1><div>
+<div id="flagtext">Beschreibung anzeigen in</div>
+<div id="flaglink"> <a href="../functions_en/RunAs.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_en.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Startet ein externes Programm im Kontext eines anderen Benutzers.<br /></p>
 <p class="codeheader">
 RunAs ( "username", "domain", "password", logon_flag, "program" [, "workingdir" [, show_flag [, opt_flag]]] )<br />
@@ -84,24 +131,24 @@ Die Konstanten sind in "AutoItConstants.au3" definiert.</td>
 <h2>Bemerkungen</h2>
 <p>Pfade mit Leerzeichen m&uuml;ssen in Anf&uuml;hrungszeichen gesetzt werden.<br />
 <br />
-Es ist wichtig, ein Arbeitsverzeichnis anzugeben, f&uuml;r den der Benutzer Zugriffsrechte hat, in dessen Kontext der Prozess ausgef&uuml;hrt wird, anderenfalls schl&auml;gt der Aufruf der Funktion <a href="RunAs.htm">RunAs()</a> fehl.<br />
+Es ist wichtig, ein Arbeitsverzeichnis anzugeben, f&uuml;r den der Benutzer Zugriffsrechte hat, in dessen Kontext der Prozess ausgef&uuml;hrt wird, anderenfalls schl&auml;gt der Aufruf der Funktion <a href="RunAs.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">RunAs()</a> fehl.<br />
 <br />
-Es ist empfehlenswert, nur dann das "fremde" Benutzerprofil zu verwenden, wenn es auch wirklich ben&ouml;tigt wird. Es besteht eine geringe Wahrscheinlichkeit, dass das Profil unter bestimmten Bedingungen im Speicher h&auml;ngen bleibt. Wenn ein Skript <a href="RunAs.htm">RunAs()</a> benutzt, um einen Prozess unter dem SYSTEM-Account zu starten (z.B. um als Dienst zu fungieren), und ein Benutzerprofil ist aktiv, muss daf&uuml;r gesorgt werden, dass das Skript nicht beendet wird, bevor der Child-Prozess geschlossen wurde.<br />
+Es ist empfehlenswert, nur dann das "fremde" Benutzerprofil zu verwenden, wenn es auch wirklich ben&ouml;tigt wird. Es besteht eine geringe Wahrscheinlichkeit, dass das Profil unter bestimmten Bedingungen im Speicher h&auml;ngen bleibt. Wenn ein Skript <a href="RunAs.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">RunAs()</a> benutzt, um einen Prozess unter dem SYSTEM-Account zu starten (z.B. um als Dienst zu fungieren), und ein Benutzerprofil ist aktiv, muss daf&uuml;r gesorgt werden, dass das Skript nicht beendet wird, bevor der Child-Prozess geschlossen wurde.<br />
 <br />
-Wenn man als Administrator angemeldet ist, muss der Service 'Sekund&auml;re Anmeldung' (<a href="RunAs.htm">RunAs()</a>) aktiv sein, sonst schl&auml;gt die Funktion fehl. Dies gilt nicht, wenn das SYSTEM-Konto aktiv ist.<br />
+Wenn man als Administrator angemeldet ist, muss der Service 'Sekund&auml;re Anmeldung' (<a href="RunAs.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">RunAs()</a>) aktiv sein, sonst schl&auml;gt die Funktion fehl. Dies gilt nicht, wenn das SYSTEM-Konto aktiv ist.<br />
 <br />
-Nach dem Start des angeforderten Programms wird das Skript weiter ausgef&uuml;hrt. Soll die Ausf&uuml;hrung des Skripts angehalten werden, bis das gestartete Programm beendet ist, so ist statt der <a href="RunAs.htm">RunAs()</a> Funktion die <a href="RunAsWait.htm">RunAsWait()</a> Funktion zu verwenden.<br />
+Nach dem Start des angeforderten Programms wird das Skript weiter ausgef&uuml;hrt. Soll die Ausf&uuml;hrung des Skripts angehalten werden, bis das gestartete Programm beendet ist, so ist statt der <a href="RunAs.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">RunAs()</a> Funktion die <a href="RunAsWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">RunAsWait()</a> Funktion zu verwenden.<br />
 <br />
-Das Bereitstellen der Standard-I/O-Parameter mit den geeigneten Werten ist Voraussetzung f&uuml;r die Interaktion des Child-Prozesses mit den Funktionen <a href="StderrRead.htm">StderrRead()</a>, <a href="StdinWrite.htm">StdinWrite()</a> und <a href="StdoutRead.htm">StdoutRead()</a>.<br />
+Das Bereitstellen der Standard-I/O-Parameter mit den geeigneten Werten ist Voraussetzung f&uuml;r die Interaktion des Child-Prozesses mit den Funktionen <a href="StderrRead.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StderrRead()</a>, <a href="StdinWrite.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdinWrite()</a> und <a href="StdoutRead.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdoutRead()</a>.<br />
 Um mehrere I/O-Streams zu verwalten, kombiniert man die „Flag“-Werte (oder man benutzt $STDERR_CHILD, $STDIN_CHILD & $STDOUT_CHILD, die in Constants.au3 definiert sind).<br />
 <br />
 Um die I/O-Streams zu schlie&szlig;en, m&uuml;ssen folgende Bedingungen erf&uuml;llt sein: <br />
 1) Der Child-Prozess hat seine Seite des Streams geschlossen (das ist der Fall, wenn der Child-Prozess geschlossen wird). <br />
 2) AutoIt muss gekaperte Streams auslesen, bis keine Daten mehr enthalten sind. <br />
-3) Wenn STDIN dem Child-Prozess zugewiesen ist, muss <a href="StdinWrite.htm">StdinWrite()</a> aufgerufen werden, um den Stream zu schlie&szlig;en. Sobald alle Streams als nicht mehr ben&ouml;tigt erkannt werden, werden alle intern verwendeten Ressourcen automatisch freigegeben.<br />
-<a href="StdioClose.htm">StdioClose()</a> kann verwendet werden, um das Schlie&szlig;en der STDIO-Streams zu erzwingen.<br />
+3) Wenn STDIN dem Child-Prozess zugewiesen ist, muss <a href="StdinWrite.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdinWrite()</a> aufgerufen werden, um den Stream zu schlie&szlig;en. Sobald alle Streams als nicht mehr ben&ouml;tigt erkannt werden, werden alle intern verwendeten Ressourcen automatisch freigegeben.<br />
+<a href="StdioClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdioClose()</a> kann verwendet werden, um das Schlie&szlig;en der STDIO-Streams zu erzwingen.<br />
 <br />
-<a href="StdioClose.htm">StdioClose()</a> kann verwendet werden, um die STDIO-Streams zu erzwingen..<br />
+<a href="StdioClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdioClose()</a> kann verwendet werden, um die STDIO-Streams zu erzwingen..<br />
 <br />
 Die 'logon_flags' mit Profil (0 oder 1) und Netzwerk-Authentifizierung (2) sind inkompatibel. Wenn beide in Kombination benutzt werden, kann das zu unvorhersehbaren Ergebnissen f&uuml;hren!<br />
 <br />
@@ -109,7 +156,7 @@ Aufgrund eines Problems, das Windows XP mit der Fenstererzeugung hat, kann die S
 </p>
 
 <h2>Verwandte Funktionen</h2>
-<p><a href="ProcessClose.htm">ProcessClose</a>, <a href="Run.htm">Run</a>, <a href="RunAsWait.htm">RunAsWait</a>, <a href="RunWait.htm">RunWait</a>, <a href="ShellExecute.htm">ShellExecute</a>, <a href="ShellExecuteWait.htm">ShellExecuteWait</a>, <a href="StderrRead.htm">StderrRead</a>, <a href="StdinWrite.htm">StdinWrite</a>, <a href="StdioClose.htm">StdioClose</a>, <a href="StdoutRead.htm">StdoutRead</a></p>
+<p><a href="ProcessClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ProcessClose</a>, <a href="Run.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Run</a>, <a href="RunAsWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">RunAsWait</a>, <a href="RunWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">RunWait</a>, <a href="ShellExecute.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ShellExecute</a>, <a href="ShellExecuteWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ShellExecuteWait</a>, <a href="StderrRead.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StderrRead</a>, <a href="StdinWrite.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdinWrite</a>, <a href="StdioClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdioClose</a>, <a href="StdoutRead.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdoutRead</a></p>
 
 <h2 class="bottom">Beispiel</h2>
 <script type="text/javascript">
@@ -143,27 +190,27 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;AutoItConstants.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;AutoItConstants.au3&gt;</span>
 
 <span class="S0">Example</span><span class="S8">()</span>
 
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Hier den Benutzername und Passwort eingeben, die dem System entsprechen.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sUserName</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Benutzername"</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sPassword</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Passwort"</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sUserName</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Benutzername"</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sPassword</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Passwort"</span>
 
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Startet den Editor mit einem maximierten Fenster. Der Editor l&auml;uft unter dem obigen Benutzer.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iPID</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/RunAs.htm"><span class="S4">RunAs</span></a><span class="S8">(</span><span class="S9">$sUserName</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@ComputerName"><span class="S6">@ComputerName</span></a><span class="S8">,</span><span class="S0"> </span><span class="S9">$sPassword</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$RUN_LOGON_NOPROFILE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"notepad.exe"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOWMAXIMIZED"><span class="S6">@SW_SHOWMAXIMIZED</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iPID</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/RunAs.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">RunAs</span></a><span class="S8">(</span><span class="S9">$sUserName</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@ComputerName><span class="S6">@ComputerName</span></a><span class="S8">,</span><span class="S0"> </span><span class="S9">$sPassword</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$RUN_LOGON_NOPROFILE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"notepad.exe"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@SW_SHOWMAXIMIZED><span class="S6">@SW_SHOWMAXIMIZED</span></a><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Wartet 10 Sekunden bis das Editorfenster erscheint.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinWait.htm"><span class="S4">WinWait</span></a><span class="S8">(</span><span class="S7">"[CLASS:Notepad]"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">WinWait</span></a><span class="S8">(</span><span class="S7">"[CLASS:Notepad]"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Wartet 2 Sekunden.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">2000</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">2000</span><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Schlie&szlig;t den Editor Prozess mit Hilfe der PID die durch RunAs zur&uuml;ckgegeben wurde.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ProcessClose.htm"><span class="S4">ProcessClose</span></a><span class="S8">(</span><span class="S9">$iPID</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ProcessClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">ProcessClose</span></a><span class="S8">(</span><span class="S9">$iPID</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
 <span class="S0"></span></span>
 </pre>
 </div>

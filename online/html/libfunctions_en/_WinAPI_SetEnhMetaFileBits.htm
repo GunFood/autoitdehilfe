@@ -3,14 +3,61 @@
 <head>
 <title>Function _WinAPI_SetEnhMetaFileBits</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Function Reference</h1>
 <hr style="height:0px">
-<h1>_WinAPI_SetEnhMetaFileBits</h1>
-<p class="funcdesc">Creates a memory-based enhanced-format metafile from the specified data<br /></p>
+<div class="top"><h1>_WinAPI_SetEnhMetaFileBits</h1><div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
+<p style="margin:2px 0 0 0;" class="funcdesc">Creates a memory-based enhanced-format metafile from the specified data<br /></p>
 <p class="codeheader">
 #include &lt;WinAPIGdi.au3&gt;<br />
 _WinAPI_SetEnhMetaFileBits ( $pData, $iLength )<br />
@@ -21,7 +68,7 @@ _WinAPI_SetEnhMetaFileBits ( $pData, $iLength )<br />
 <tr>
 <td style="width:15%">$pData</td>
 <td style="width:85%">A pointer to the buffer that contains the enhanced-metafile data. To obtain the metafile data, call the<br />
-<a href="_WinAPI_GetEnhMetaFileBits.htm">_WinAPI_GetEnhMetaFileBits()</a> function.</td>
+<a href="_WinAPI_GetEnhMetaFileBits.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_GetEnhMetaFileBits()</a> function.</td>
 </tr>
 <tr>
 <td>$iLength</td>
@@ -43,11 +90,11 @@ _WinAPI_SetEnhMetaFileBits ( $pData, $iLength )<br />
 
 <h2>Remarks</h2>
 <p>When the application no longer needs an enhanced-metafile handle, it should delete the handle by calling the<br />
-<a href="_WinAPI_DeleteEnhMetaFile.htm">_WinAPI_DeleteEnhMetaFile()</a> function.<br />
+<a href="_WinAPI_DeleteEnhMetaFile.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_DeleteEnhMetaFile()</a> function.<br />
 </p>
 
 <h2>Related</h2>
-<p><a href="_WinAPI_DeleteEnhMetaFile.htm">_WinAPI_DeleteEnhMetaFile</a>, <a href="_WinAPI_GetEnhMetaFileBits.htm">_WinAPI_GetEnhMetaFileBits</a></p>
+<p><a href="_WinAPI_DeleteEnhMetaFile.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_DeleteEnhMetaFile</a>, <a href="_WinAPI_GetEnhMetaFileBits.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_GetEnhMetaFileBits</a></p>
 
 <h2>See Also</h2>
 <p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(SetEnhMetaFileBits);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">SetEnhMetaFileBits</a> in MSDN  Library.

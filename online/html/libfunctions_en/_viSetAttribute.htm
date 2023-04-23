@@ -3,15 +3,62 @@
 <head>
 <title>Function _viSetAttribute</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Function Reference</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_viSetAttribute</h1><br />
-<a href="../libfunctions/_viSetAttribute.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Show description in</div><br />
+<div class="top"><h1>_viSetAttribute</h1><div>
+<div id="flagtext">Show description in</div>
+<div id="flaglink"> <a href="../libfunctions/_viSetAttribute.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_de.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Set any VISA attribute This function, which is called by _viSetTimeout, can ALSO be used to set the other VISA specific attributes. Read the VISA documentation for more information and a list of VISA attributes and their corresponding values<br /></p>
 <p class="codeheader">
 #include &lt;Visa.au3&gt;<br />
@@ -23,7 +70,7 @@ _viSetAttribute ( $hSession, $iAttribute, $iValue )<br />
 <tr>
 <td style="width:15%">$hSession</td>
 <td style="width:85%">A VISA descriptor (STRING) OR a VISA session handle (INTEGER).<br />
-See the Remarks of the <a href="_viExecCommand.htm">_viExecCommand()</a> for more info.</td>
+See the Remarks of the <a href="_viExecCommand.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_viExecCommand()</a> for more info.</td>
 </tr>
 <tr>
 <td>$iAttribute</td>
@@ -91,11 +138,11 @@ or&nbsp;a NON ZERO value representing the VISA error code (see the VISA programm
 As for all the VISA functions the VISA libraries must be installed (you can check whether visa32.dll is in {WINDOWS}\system32).<br />
 You onlly need a GPIB card (such as a National Instruments NI PCI-GPIB card or an Agilent 82350B PCI High-Performance GPIB card) if you use the GPIB related functions.<br />
 <br />
-* For a detailed description of the most common VISA DESCRIPTORS look at the Remarks of the help on the <a href="_viExecCommand.htm">_viExecCommand()</a> function<br />
+* For a detailed description of the most common VISA DESCRIPTORS look at the Remarks of the help on the <a href="_viExecCommand.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_viExecCommand()</a> function<br />
 </p>
 
 <h2>Related</h2>
-<p><a href="_viClose.htm">_viClose</a>, <a href="_viExecCommand.htm">_viExecCommand</a>, <a href="_viOpen.htm">_viOpen</a>, <a href="_viSetTimeout.htm">_viSetTimeout</a></p>
+<p><a href="_viClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_viClose</a>, <a href="_viExecCommand.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_viExecCommand</a>, <a href="_viOpen.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_viOpen</a>, <a href="_viSetTimeout.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_viSetTimeout</a></p>
 
 <h2 class="bottom">Example</h2>
 <script type="text/javascript">
@@ -135,27 +182,27 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <span class="S1">; It shows how to use the _viSetAttribute. In this example we use _viSetAttribute</span>
 <span class="S1">; instead of _viSetTimeout to set the GPIB timeout of a _viExecCommand operation.</span>
 
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Visa.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Visa.au3&gt;</span>
 
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$h_Session</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$h_Session</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
 
 <span class="S1">; Query the ID of the instrument in GPIB address 3</span>
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Simple GPIB query with explicit TIMEOUT set"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$s_Answer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_viExecCommand.htm"><span class="S15">_viExecCommand</span></a><span class="S8">(</span><span class="S7">"GPIB::3::0"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"*IDN?"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10000</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; 10 secs timeout</span>
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"GPIB QUERY result"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$s_Answer</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Show the answer</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Simple GPIB query with explicit TIMEOUT set"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$s_Answer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_viExecCommand.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_viExecCommand</span></a><span class="S8">(</span><span class="S7">"GPIB::3::0"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"*IDN?"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10000</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; 10 secs timeout</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"GPIB QUERY result"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$s_Answer</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Show the answer</span>
 
 <span class="S1">; This is the same as using the _viSetAttribute function first:</span>
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 2"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"_vOpen + timeout using _viSetAttribute + GPIB query"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$h_Instr</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_viOpen.htm"><span class="S15">_viOpen</span></a><span class="S8">(</span><span class="S3">3</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 2"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"_vOpen + timeout using _viSetAttribute + GPIB query"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$h_Instr</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_viOpen.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_viOpen</span></a><span class="S8">(</span><span class="S3">3</span><span class="S8">)</span>
 <span class="S1">; NOTE - This is the same as: _viSetTimeout($h_Instr, 10000)</span>
-<a class="codeSnippetLink" href="../libfunctions/_viSetAttribute.htm"><span class="S15">_viSetAttribute</span></a><span class="S8">(</span><span class="S9">$h_Instr</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$VI_ATTR_TMO_VALUE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10000</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; 10000 ms = 10 secs</span>
+<a class="codeSnippetLink" href="../libfunctions/_viSetAttribute.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_viSetAttribute</span></a><span class="S8">(</span><span class="S9">$h_Instr</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$VI_ATTR_TMO_VALUE</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10000</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; 10000 ms = 10 secs</span>
 
-<span class="S9">$s_Answer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_viExecCommand.htm"><span class="S15">_viExecCommand</span></a><span class="S8">(</span><span class="S9">$h_Instr</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"*IDN?"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; No need to set the timeout now</span>
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"GPIB QUERY result"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$s_Answer</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Show the answer</span>
+<span class="S9">$s_Answer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_viExecCommand.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_viExecCommand</span></a><span class="S8">(</span><span class="S9">$h_Instr</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"*IDN?"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; No need to set the timeout now</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"GPIB QUERY result"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$s_Answer</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Show the answer</span>
 
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 3"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Close the Instrument connection using _viClose"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../libfunctions/_viClose.htm"><span class="S15">_viClose</span></a><span class="S8">(</span><span class="S9">$h_Instr</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Close the instrument connection</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Step 3"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Close the Instrument connection using _viClose"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_viClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_viClose</span></a><span class="S8">(</span><span class="S9">$h_Instr</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Close the instrument connection</span>
 <span class="S0"></span></span>
 </pre>
 </div>

@@ -3,15 +3,62 @@
 <head>
 <title>Funktion _viFindGpib</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Funktionreferenz</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_viFindGpib</h1><br />
-<a href="../libfunctions_en/_viFindGpib.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<div class="top"><h1>_viFindGpib</h1><div>
+<div id="flagtext">Beschreibung anzeigen in</div>
+<div id="flaglink"> <a href="../libfunctions_en/_viFindGpib.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_en.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Sendet einen Befehl/Abfrage an ein Instrument/Ger&auml;t durch das VISA-Interface (GPIB / TCP)<br /></p>
 <p class="codeheader">
 #include &lt;Visa.au3&gt;<br />
@@ -22,7 +69,7 @@ _viFindGpib ( ByRef $aDescriptorList, ByRef $aIDNList [, $iShow_Search_Results =
 <table>
 <tr>
 <td style="width:15%">$aDescriptorList</td>
-<td style="width:85%">Gibt ein Array des VISA resource descriptors von dem Instrument, das am GPIB-Anschluss gefunden wurde, zur&uuml;ck (F&uuml;r mehr Informationen siehe die Bemerkungen zu der Funktion <a href="_viExecCommand.htm">_viExecCommand()</a>)</td>
+<td style="width:85%">Gibt ein Array des VISA resource descriptors von dem Instrument, das am GPIB-Anschluss gefunden wurde, zur&uuml;ck (F&uuml;r mehr Informationen siehe die Bemerkungen zu der Funktion <a href="_viExecCommand.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_viExecCommand()</a>)</td>
 </tr>
 <tr>
 <td>$aIDNList</td>
@@ -50,11 +97,11 @@ Der Standard ist 0, d.h. die Ergebnisse werden nicht angezeigt.</td>
 <h2>Bemerkungen</h2>
 <p>Wie f&uuml;r alle VISA Funktionen m&uuml;ssen die VISA Bibliotheken installiert sein (es muss die visa32.dll in {WINDOWS}\system32 vorhanden ist) und eine GPIB-Karte (wie z.B. National Instruments NI PCI-GPIB-Karte oder die Agilent 82350B PCI High-Performance GPIB-Karte) installiert sein.<br />
 <br />
-* Eine detaillierte Beschreibung der bekanntesten VISA DESCRIPTORS ist in den Bemerkungen zu der Funktion <a href="_viExecCommand.htm">_viExecCommand()</a> zu finden.<br />
+* Eine detaillierte Beschreibung der bekanntesten VISA DESCRIPTORS ist in den Bemerkungen zu der Funktion <a href="_viExecCommand.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_viExecCommand()</a> zu finden.<br />
 </p>
 
 <h2>Verwandte Funktionen</h2>
-<p><a href="_viClose.htm">_viClose</a>, <a href="_viExecCommand.htm">_viExecCommand</a>, <a href="_viGpibBusReset.htm">_viGpibBusReset</a>, <a href="_viGTL.htm">_viGTL</a>, <a href="_viOpen.htm">_viOpen</a></p>
+<p><a href="_viClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_viClose</a>, <a href="_viExecCommand.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_viExecCommand</a>, <a href="_viGpibBusReset.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_viGpibBusReset</a>, <a href="_viGTL.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_viGTL</a>, <a href="_viOpen.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_viOpen</a></p>
 
 <h2 class="bottom">Beispiel</h2>
 <script type="text/javascript">
@@ -90,10 +137,10 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <pre>
 <span><span class="S1">; Dieses Beispiel macht eine Suche auf dem GPIB-Bus und zeigt das Ergebnis in einer MsgBox.</span>
 
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Visa.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Visa.au3&gt;</span>
 
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$a_descriptor_list</span><span class="S8">[</span><span class="S3">1</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$a_idn_list</span><span class="S8">[</span><span class="S3">1</span><span class="S8">]</span>
-<a class="codeSnippetLink" href="../libfunctions/_viFindGpib.htm"><span class="S15">_viFindGpib</span></a><span class="S8">(</span><span class="S9">$a_descriptor_list</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$a_idn_list</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$a_descriptor_list</span><span class="S8">[</span><span class="S3">1</span><span class="S8">],</span><span class="S0"> </span><span class="S9">$a_idn_list</span><span class="S8">[</span><span class="S3">1</span><span class="S8">]</span>
+<a class="codeSnippetLink" href="../libfunctions/_viFindGpib.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_viFindGpib</span></a><span class="S8">(</span><span class="S9">$a_descriptor_list</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$a_idn_list</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
 <span class="S0"></span></span>
 </pre>
 </div>

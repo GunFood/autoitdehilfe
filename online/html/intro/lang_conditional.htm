@@ -3,29 +3,74 @@
 <head>
 	<title>Sprachreferenz - Konditionelle Ausdr&uuml;cke</title>
 	<meta charset="utf-8">
-	<link href="../css/default.css" rel="stylesheet">
+	<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 <body>
 	<h1>Sprachreferenz - Konditionelle Ausdr&uuml;cke</h1>
 	<p>Oft ist erw&uuml;nscht, dass ein Skript abh&auml;ngig vom Ergebnis einer oder mehrerer Bedingungen unterschiedlich reagiert. Ist eine Zahl gr&ouml;&szlig;er als eine andere? Beinhaltet ein String einen bestimmten Teil-String?</p>
-	<p>Bedingungen (Konditionen) werden als <strong>True</strong> (wahr, non-zero, nicht-null) oder <strong>False</strong> (falsch, zero, Null) ausgewertet. Bedingungen nutzen im Allgemeinen <a href="lang_operators.htm">Vergleichsoperatoren</a> wie z.B. <strong>==</strong>, <strong>&lt;&gt;</strong>, <strong>&gt;=</strong>.</p>
+	<p>Bedingungen (Konditionen) werden als <strong>True</strong> (wahr, non-zero, nicht-null) oder <strong>False</strong> (falsch, zero, Null) ausgewertet. Bedingungen nutzen im Allgemeinen <a href="lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Vergleichsoperatoren</a> wie z.B. <strong>==</strong>, <strong>&lt;&gt;</strong>, <strong>&gt;=</strong>.</p>
 	<p></p>
 	<p>Folgende konditionelle Ausdr&uuml;cke sind in AutoIt verf&uuml;gbar:</p>
 	<ul>
 		<li>
-			<a href="../keywords/IfElseEndIf.htm">If...Then...Else</a>
+			<a href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">If...Then...Else</a>
 		</li>
 		<li>
-			<a href="../keywords/Select.htm">Select...Case</a>
+			<a href="../keywords/Select.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Select...Case</a>
 		</li>
 		<li>
-			<a href="../keywords/Switch.htm">Switch...Case</a>
+			<a href="../keywords/Switch.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Switch...Case</a>
 		</li>
 		<li>
-			<a href="../keywords/Ternary.htm">Ternary</a>
+			<a href="../keywords/Ternary.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Ternary</a>
 		</li>
 	</ul>
-	<p>Alle diese vier Ausdr&uuml;cke sind &auml;hnlich und entscheiden welcher Code abh&auml;ngig von den Bedingungnen ausgef&uuml;hrt wird . Hier im Beispiel eine <a href="../keywords/IfElseEndIf.htm">If-Abfrage</a>, die eine <a href="../functions/MsgBox.htm">Message Box</a> abh&auml;ngig vom Wert einer Variable zeigt</p>
+	<p>Alle diese vier Ausdr&uuml;cke sind &auml;hnlich und entscheiden welcher Code abh&auml;ngig von den Bedingungnen ausgef&uuml;hrt wird . Hier im Beispiel eine <a href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">If-Abfrage</a>, die eine <a href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Message Box</a> abh&auml;ngig vom Wert einer Variable zeigt</p>
 @@SyntaxHighlighting@@
 #include <MsgBoxConstants.au3>
 
@@ -41,7 +86,7 @@ EndIf
 @@End@@
 
   <p>&nbsp;</p>
-	<p>Eine <a href="../keywords/Select.htm">Select</a>-Abfrage ist sehr &auml;hnlich, aber wird normalerweise nur benutzt, wenn man eine gro&szlig;e Anzahl von Bedingungen testen m&ouml;chten. Diese Abfrage ist meist k&uuml;rzer als eine entsprechende If/Else-Konstruktion, z.B.:</p>
+	<p>Eine <a href="../keywords/Select.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Select</a>-Abfrage ist sehr &auml;hnlich, aber wird normalerweise nur benutzt, wenn man eine gro&szlig;e Anzahl von Bedingungen testen m&ouml;chten. Diese Abfrage ist meist k&uuml;rzer als eine entsprechende If/Else-Konstruktion, z.B.:</p>
 @@SyntaxHighlighting@@
 #include <MsgBoxConstants.au3>
 
@@ -66,7 +111,7 @@ EndSelect
 @@End@@
 
   <p>&nbsp;</p>
-	<p>Eine <a href="../keywords/Switch.htm">Switch</a>-Anweisung ist einer Select-Anweisung recht &auml;hnlich, wird aber meist dann verwendet, wenn man den gleichen Ausdruck gegen viele verschiedene Werte testen will.</p>
+	<p>Eine <a href="../keywords/Switch.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Switch</a>-Anweisung ist einer Select-Anweisung recht &auml;hnlich, wird aber meist dann verwendet, wenn man den gleichen Ausdruck gegen viele verschiedene Werte testen will.</p>
 @@SyntaxHighlighting@@
 #include <MsgBoxConstants.au3>
 
@@ -95,7 +140,7 @@ EndSwitch
 
 	<p>Bei jeder dieser Strukturen wird der erste Ausdruck der wahr ist dessen Befehle ausgef&uuml;hrt. Alle folgenden Bedingungen und deren zugeh&ouml;rigen Befehle werden ignoriert.</p>
   <p>&nbsp;</p>
-  <p>Eine <a href="../keywords/Ternary.htm">Ternary</a>-Anweisung kann verwendet werden, wess es eine einfache bin&auml;re Wahl geben soll. Dies vermeidet unn&ouml;tige Skriptzeilen die bei den anderen obigen Anweisungen notwendig sind.</p>
+  <p>Eine <a href="../keywords/Ternary.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Ternary</a>-Anweisung kann verwendet werden, wess es eine einfache bin&auml;re Wahl geben soll. Dies vermeidet unn&ouml;tige Skriptzeilen die bei den anderen obigen Anweisungen notwendig sind.</p>
 @@SyntaxHighlighting@@
 #include <MsgBoxConstants.au3>
 

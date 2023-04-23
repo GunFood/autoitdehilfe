@@ -3,15 +3,62 @@
 <head>
 <title>Funktion _GUICtrlListView_SetItemFocused</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Funktionreferenz</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_GUICtrlListView_SetItemFocused</h1><br />
-<a href="../libfunctions_en/_GUICtrlListView_SetItemFocused.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<div class="top"><h1>_GUICtrlListView_SetItemFocused</h1><div>
+<div id="flagtext">Beschreibung anzeigen in</div>
+<div id="flaglink"> <a href="../libfunctions_en/_GUICtrlListView_SetItemFocused.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_en.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Legt fest, ob das Item den Fokus besitzt<br /></p>
 <p class="codeheader">
 #include &lt;GuiListView.au3&gt;<br />
@@ -47,11 +94,11 @@ _GUICtrlListView_SetItemFocused ( $hWnd, $iIndex [, $bEnabled = True] )<br />
 </table>
 
 <h2>Bemerkungen</h2>
-<p><a href="../guiref/GUIRef.htm">- - - - - - - - Erkl&auml;rung der Controls - - - - - - - -</a><br />
+<p><a href="../guiref/GUIRef.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">- - - - - - - - Erkl&auml;rung der Controls - - - - - - - -</a><br />
 </p>
 
 <h2>Verwandte Funktionen</h2>
-<p><a href="_GUICtrlListView_GetItemFocused.htm">_GUICtrlListView_GetItemFocused</a></p>
+<p><a href="_GUICtrlListView_GetItemFocused.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_GUICtrlListView_GetItemFocused</a></p>
 
 <h2 class="bottom">Beispiel</h2>
 <script type="text/javascript">
@@ -85,41 +132,39 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GuiListView.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GuiListView.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
 
 <span class="S0">Example</span><span class="S8">()</span>
 
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idListView</span>
-
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"ListView: Ermittelt, ob das Item den Fokus besitzt"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">450</span><span class="S8">,</span><span class="S0"> </span><span class="S3">300</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; </span><span class="S9">$idListView</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateListView.htm"><span class="S4">GUICtrlCreateListView</span></a><span class="S8">(</span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">394</span><span class="S8">,</span><span class="S0"> </span><span class="S3">268</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"ListView: Setzt den Foucs des Item und ermittelt, ob das Item den Fokus besitzt (v"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@AutoItVersion><span class="S6">@AutoItVersion</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">")"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">700</span><span class="S8">,</span><span class="S0"> </span><span class="S3">300</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$idListview</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateListView.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">GUICtrlCreateListView</span></a><span class="S8">(</span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S3">394</span><span class="S8">,</span><span class="S0"> </span><span class="S3">268</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@SW_SHOW><span class="S6">@SW_SHOW</span></a><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; F&uuml;gt die Spalten hinzu</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddColumn.htm"><span class="S15">_GUICtrlListView_AddColumn</span></a><span class="S8">(</span><span class="S9">$idListView</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Spalte 1"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddColumn.htm"><span class="S15">_GUICtrlListView_AddColumn</span></a><span class="S8">(</span><span class="S9">$idListView</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Spalte 2"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddColumn.htm"><span class="S15">_GUICtrlListView_AddColumn</span></a><span class="S8">(</span><span class="S9">$idListView</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Spalte 3"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddColumn.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_GUICtrlListView_AddColumn</span></a><span class="S8">(</span><span class="S9">$idListview</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Spalte 0"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">120</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddColumn.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_GUICtrlListView_AddColumn</span></a><span class="S8">(</span><span class="S9">$idListview</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Spalte 1"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">120</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddColumn.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_GUICtrlListView_AddColumn</span></a><span class="S8">(</span><span class="S9">$idListview</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Spalte 2"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">120</span><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; F&uuml;gt die Items hinzu</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddItem.htm"><span class="S15">_GUICtrlListView_AddItem</span></a><span class="S8">(</span><span class="S9">$idListView</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Zeile 1: Spalte 1"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddSubItem.htm"><span class="S15">_GUICtrlListView_AddSubItem</span></a><span class="S8">(</span><span class="S9">$idListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Zeile 1: Spalte 2"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddSubItem.htm"><span class="S15">_GUICtrlListView_AddSubItem</span></a><span class="S8">(</span><span class="S9">$idListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Zeile 1: Spalte 3"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddItem.htm"><span class="S15">_GUICtrlListView_AddItem</span></a><span class="S8">(</span><span class="S9">$idListView</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Zeile 2: Spalte 1"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddSubItem.htm"><span class="S15">_GUICtrlListView_AddSubItem</span></a><span class="S8">(</span><span class="S9">$idListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Zeile 2: Spalte 2"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddItem.htm"><span class="S15">_GUICtrlListView_AddItem</span></a><span class="S8">(</span><span class="S9">$idListView</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Zeile 3: Spalte 1"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddItem.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_GUICtrlListView_AddItem</span></a><span class="S8">(</span><span class="S9">$idListview</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Zeile 0: Spalte 0"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddSubItem.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_GUICtrlListView_AddSubItem</span></a><span class="S8">(</span><span class="S9">$idListview</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Zeile 0: Spalte 1"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddSubItem.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_GUICtrlListView_AddSubItem</span></a><span class="S8">(</span><span class="S9">$idListview</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Zeile 0: Spalte 2"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddItem.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_GUICtrlListView_AddItem</span></a><span class="S8">(</span><span class="S9">$idListview</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Zeile 1: Spalte 0"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddSubItem.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_GUICtrlListView_AddSubItem</span></a><span class="S8">(</span><span class="S9">$idListview</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Zeile 1: Spalte 1"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_AddItem.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_GUICtrlListView_AddItem</span></a><span class="S8">(</span><span class="S9">$idListview</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Zeile 2: Spalte 0"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
 
-<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Item 2 erh&auml;lt den Fokus</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_SetItemFocused.htm"><span class="S15">_GUICtrlListView_SetItemFocused</span></a><span class="S8">(</span><span class="S9">$idListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Information"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Item 2 hat den Fokus: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_GetItemFocused.htm"><span class="S15">_GUICtrlListView_GetItemFocused</span></a><span class="S8">(</span><span class="S9">$idListView</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Item 1 erh&auml;lt den Fokus</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_SetItemFocused.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_GUICtrlListView_SetItemFocused</span></a><span class="S8">(</span><span class="S9">$idListview</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Information"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Item 1 hat den Fokus: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_GUICtrlListView_GetItemFocused.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_GUICtrlListView_GetItemFocused</span></a><span class="S8">(</span><span class="S9">$idListview</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">))</span>
 
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI ausl&ouml;st.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Do</span></a>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Until</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIDelete.htm"><span class="S4">GUIDelete</span></a><span class="S8">()</span>
-<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Do.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Do</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Do.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Until</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIDelete.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">GUIDelete</span></a><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
 <span class="S0"></span></span>
 </pre>
 </div>

@@ -2,7 +2,52 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <link href="../css/default.css" rel="stylesheet">
+  <link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
   <title>Sprachreferenz - Operatoren</title>
 </head>
 <body>
@@ -62,7 +107,8 @@
     <tr>
       <td class="S8 center">-</td>
       <td>Zwei Zahlen subtrahieren. Z. B. <strong class="S3">20</strong> <strong class="S8">-</strong> <strong class="S3">10</strong> (<em>das Ergebnis ist 10</em>)<br/>
-      Wirkt auch als einstelliges Minus (setzt den negativen Wert einer Variablen)</td>
+      Wirkt auch als einstelliges Minus (setzt den negativen Wert einer Variablen)<br/>
+      Siehe nachstehende Erl&auml;uterung</td>
     </tr>
     <tr>
       <td class="S8 center">*</td>
@@ -82,7 +128,7 @@
     </tr>
     <tr>
       <td class="S8 center">=</td>
-      <td>Pr&uuml;ft, ob zwei Werte gleich sind. Z. B. <a href="../keywords/IfElseEndIf.htm"><strong class="S5">If</strong></a> <strong class="S9">$vVar</strong> <strong class="S8">=</strong> <strong class="S3">5</strong> <a href="../keywords/IfElseEndIf.htm"><strong class="S5">Then</strong></a> (<em>true falls $vVar 5 entspricht</em>). <strong>Gro&szlig;- und Kleinschreibung wird nicht ber&uuml;cksichtigt</strong>, falls Strings verwendet werden. Weiter unten gibt es Informationen zum Vergleich mit gemischten Datentypen.</td>
+      <td>Pr&uuml;ft, ob zwei Werte gleich sind. Z. B. <a href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><strong class="S5">If</strong></a> <strong class="S9">$vVar</strong> <strong class="S8">=</strong> <strong class="S3">5</strong> <a href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><strong class="S5">Then</strong></a> (<em>true falls $vVar 5 entspricht</em>). <strong>Gro&szlig;- und Kleinschreibung wird nicht ber&uuml;cksichtigt</strong>, falls Strings verwendet werden. Weiter unten gibt es Informationen zum Vergleich mit gemischten Datentypen.</td>
     </tr>
     <tr>
       <td class="S8 center">==</td>
@@ -132,9 +178,9 @@
       <td><strong>Bedingter Operator</strong></td>
     </tr>
     <tr>
-      <td class="S8 center"><a href="../keywords/Ternary.htm">? :</a></td>
-      <td>Es ist ein Ausdruck auszuw&auml;hlen z. B. <strong>$condition <a href="../keywords/Ternary.htm">?</a> $expression1 <a href="../keywords/Ternary.htm">:</a> $expression2</strong>  (<em>$expression1 wenn $condition True ist oder
-      $expression2 False ist</em>) Ein Beispiel ist beim <a href="../keywords/Ternary.htm">Ternary</a> Operator zu finden.</td>
+      <td class="S8 center"><a href="../keywords/Ternary.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">? :</a></td>
+      <td>Es ist ein Ausdruck auszuw&auml;hlen z. B. <strong>$condition <a href="../keywords/Ternary.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">?</a> $expression1 <a href="../keywords/Ternary.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">:</a> $expression2</strong>  (<em>$expression1 wenn $condition True ist oder
+      $expression2 False ist</em>) Ein Beispiel ist beim <a href="../keywords/Ternary.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Ternary</a> Operator zu finden.</td>
     </tr>
   </table>
 
@@ -154,14 +200,15 @@
   <p>  <strong class="S3">2</strong> <strong class="S8">+</strong> <strong class="S3">40</strong>  (entspricht <strong class="S3">42</strong>)</p>
   <p>Da der <strong class="S8">*</strong> eine h&ouml;here Priorit&auml;t besitzt als das <strong class="S8">+</strong> wird er <strong>vor</strong> der Addition verwendet. (Punktrechnung vor Strichrechnung)</p>
 
-  <p>Man kann Klammern verwenden, um zu erzwingen, dass dieser Bereich des Ausdrucks zuerst behandelt werden soll.</p>
+  <p>Obwohl der Vorrang der Operatoren in den meisten F&auml;llen ausreichen sollte, wird empfohlen, Klammern zu verwenden, um die Reihenfolge der Auswertung zu erzwingen, wenn das Ergebnis kritisch ist oder der Ausdruck komplex ist.</p>
   <p>Z. B. <strong class="S8">(</strong><strong class="S3">2</strong> <strong class="S8">+</strong> <strong class="S3">4</strong><strong class="S8">) *</strong> <strong class="S3">10</strong> entspricht <strong class="S3">60</strong>.</p>
+  Dies gilt insbesondere f&uuml;r den <strong class="S8">-</strong> Operator, der sowohl f&uuml;r <strong>bin&auml;re Subtraktion</strong> (Subtraktion von 2 Zahlen) als auch f&uuml;r die <strong>un&auml;re Negation</strong> (Setzen des Negativs eines Wertes) verwendet werden kann. Die Verwendung von Klammern wird in diesem Fall dringend empfohlen, um Verwechslungen zu vermeiden.
 
-  <h2>Kurzschlussauswertung</h2>
+  <h2>Kurze Zusammenfassung</h2>
   <p>Folgendes ist zu beachten, wenn die logischen Operatoren AND, OR verwendet werden:</p>
-  <p>Z. B. <a class="le" href="../keywords/If.htm"><strong class="S5">If</strong></a> <strong class="S4">MyFunc1</strong><strong class="S8">()</strong> <strong class="S5">Or</strong> <strong class="S4">MyFunc2</strong><strong class="S8">()</strong>
+  <p>Z. B. <a class="le" href="../keywords/If.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><strong class="S5">If</strong></a> <strong class="S4">MyFunc1</strong><strong class="S8">()</strong> <strong class="S5">Or</strong> <strong class="S4">MyFunc2</strong><strong class="S8">()</strong>
   <strong class="S5">Then</strong>   (<em><strong class="S4">MyFunc2</strong><strong class="S8">()</strong> wird nicht aufgerufen, falls <strong class="S4">MyFunc1</strong><strong class="S8">()</strong> true zur&uuml;ckgibt</em>)</p>
-  <p>Z. B. <a class="le" href="../keywords/If.htm"><strong class="S5">If</strong></a> <strong class="S4">MyFunc1</strong><strong class="S8">()</strong> <strong class="S5">And</strong> <strong class="S4">MyFunc2</strong><strong class="S8">()</strong>
+  <p>Z. B. <a class="le" href="../keywords/If.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><strong class="S5">If</strong></a> <strong class="S4">MyFunc1</strong><strong class="S8">()</strong> <strong class="S5">And</strong> <strong class="S4">MyFunc2</strong><strong class="S8">()</strong>
   <strong class="S5">Then</strong>   (<em><strong class="S4">MyFunc2</strong><strong class="S8">()</strong> wird nicht aufgerufen, falls <strong class="S4">MyFunc1</strong><strong class="S8">()</strong> false zur&uuml;ckgibt</em>)</p>
 
   <h2>Vergleich gemischter Datentypen</h2>

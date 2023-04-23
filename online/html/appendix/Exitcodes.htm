@@ -3,11 +3,56 @@
 <head>
 	<title>AutoIt3 schwerwiegende Fehler Exitcodes</title>
 	<meta charset="utf-8">
-	<link href="../css/default.css" rel="stylesheet">
+	<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 <body>
 	<h1>AutoIt3 schwerwiegende Fehler Exitcodes</h1>
-	<p>Es folgt eine Liste der AutoIt-Exitcodes, die zur&uuml;ckgegeben werden, wenn ein schwerwiegender Fehler auftritt und Opt("OnExitCode",1) gesetzt ist (Voreinstellung).</p>
+	<p>Es folgt eine Liste der AutoIt-Exitcodes, die zur&uuml;ckgegeben werden, wenn ein schwerwiegender Fehler auftritt und Opt("SetExitCode", 1) gesetzt ist (Voreinstellung).</p>
 	<table>
 		<tr>
 			<th>R&uuml;ckgabewert</th>
@@ -15,7 +60,7 @@
 		</tr>
 		<tr>
 			<td>0x7FFFF068</td>
-			<td>Skript konnte nicht ge&ouml;ffnet werden.</td>
+			<td>"EndWith" fehlt nach "With".</td>
 		</tr>
 		<tr>
 			<td>0x7FFFF069</td>
@@ -23,7 +68,7 @@
 		</tr>
 		<tr>
 			<td>0x7FFFF06A</td>
-			<td>Zeile konnte nicht &uuml;bersetzt werden.</td>
+			<td>"With" fehlt vor "EndWith".</td>
 		</tr>
 		<tr>
 			<td>0x7FFFF06B</td>
@@ -91,11 +136,11 @@
 		</tr>
 		<tr>
 			<td>0x7FFFF07B</td>
-			<td>Format der Indizes der Array-Variablen ist fehlerhaft.</td>
+			<td>Indizes der Array-Variablen sind fehlerhaft formatiert.</td>
 		</tr>
 		<tr>
 			<td>0x7FFFF07C</td>
-			<td>Index ohne Array-Variable.</td>
+			<td>Indizes bei nicht zug&auml;nglichen Variablen verwendet.</td>
 		</tr>
 		<tr>
 			<td>0x7FFFF07D</td>
@@ -107,7 +152,7 @@
 		</tr>
 		<tr>
 			<td>0x7FFFF07F</td>
-			<td>Keine Variable angegeben f&uuml;r "Dim", "Local", "Global" oder "Const".</td>
+			<td>Keine Variable angegeben f&uuml;r "Dim", "Local", "Global", "Static" oder "Const".</td>
 		</tr>
 		<tr>
 			<td>0x7FFFF080</td>
@@ -138,8 +183,12 @@
 			<td>Unbekanntes Makro.</td>
 		</tr>
 		<tr>
-			<td>0x7FFFF087</td>
-			<td>Kann externes Programm nicht ausf&uuml;hren.</td>
+			<td>0x7FFFF088</td>
+			<td>Liste der laufenden Prozesse kann nicht abgerufen werden.</td>
+		</tr>
+		<tr>
+			<td>0x7FFFF08A</td>
+			<td>Ung&uuml;ltiges Element in einer DllStruct.</td>
 		</tr>
 		<tr>
 			<td>0x7FFFF08B</td>
@@ -150,12 +199,16 @@
 			<td>Internetbibliothek konnte nicht geladen werden.</td>
 		</tr>
 		<tr>
+			<td>0x7FFFF08D</td>
+			<td>Die Anweisung "Struct" hat kein passendes "EndStruct".</td>
+		</tr>
+		<tr>
 			<td>0x7FFFF08E</td>
 			<td>Datei konnte nicht ge&ouml;ffnet werden, da die maximale Anzahl ge&ouml;ffneter Dateien &uuml;berschritten wurde.</td>
 		</tr>
 		<tr>
 			<td>0x7FFFF08F</td>
-			<td>Ung&uuml;ltiges Datei-Handle &uuml;bergeben.</td>
+			<td>>"ContinueLoop"-Anweisung ohne passende "While"-, "Do"- oder "For"-Anweisung.</td>
 		</tr>
 		<tr>
 			<td>0x7FFFF090</td>
@@ -203,15 +256,15 @@
 		</tr>
 		<tr>
 			<td>0x7FFFF09B</td>
-			<td>Kann nicht auf die API-Schnittstelle f&uuml;r RunAs zugreifen.</td>
+			<td>Vorhandene Variablen k&ouml;nnen nicht statisch gemacht werden.</td>
 		</tr>
 		<tr>
 			<td>0x7FFFF09C</td>
-			<td>Dem String fehlt ein abschlie&szlig;endes " oder '.</td>
+			<td>Statische Variablen k&ouml;nnen nicht in regul&auml;re Variablen umgewandelt werden.</td>
 		</tr>
 		<tr>
-			<td>0x7FFFF09E</td>
-			<td>Falsches Macro- oder Variablenformat.</td>
+			<td>0x7FFFF09D</td>
+			<td>Schlecht formatierte Enum-Anweisung.</td>
 		</tr>
 		<tr>
 			<td>0x7FFFF09F</td>
@@ -226,12 +279,24 @@
 			<td>"If" ben&ouml;tigt ein "Then".</td>
 		</tr>
 		<tr>
+			<td>0x7FFFF0A2</td>
+			<td>Schlecht formulierte Struct-Anweisung.</td>
+		</tr>
+		<tr>
 			<td>0x7FFFF0A3</td>
 			<td>Kann Konstanten keine Werte zuweisen.</td>
 		</tr>
 		<tr>
 			<td>0x7FFFF0A4</td>
 			<td>Kann erzeugte Variablen nicht in Konstanten umwandeln.</td>
+		</tr>
+		<tr>
+			<td>0x7FFFF0A5</td>
+			<td>Nur Variablen vom Typ "Objekt" in einer "With"-Anweisung zul&auml;ssig.</td>
+		</tr>
+		<tr>
+			<td>0x7FFFF0A6</td>
+			<td>Die DllCall()-Typen "long_ptr", "int_ptr" und "short_ptr" sind veraltet. Es ist stattdessen "long*", "int*" und "short*" zu verwenden.</td>
 		</tr>
 		<tr>
 			<td>0x7FFFF0A7</td>
@@ -298,16 +363,24 @@
 			<td>Zusicherung fehlgeschlagen!</td>
 		</tr>
 		<tr>
-			<td>0x7FFFF0B7</td>
-			<td>AutoIt hat einen Absturz beim Aufruf von DllCall festgestellt.</td>
-		</tr>
-		<tr>
 			<td>0x7FFFF0B8</td>
 			<td>Veraltete(r) Funktion oder Parameter.</td>
 		</tr>
 		<tr>
 			<td>0x7FFFF0B9</td>
 			<td>Ung&uuml;ltiger Exitcode (reserviert f&uuml;r AutoIt-interne Zwecke).</td>
+		</tr>
+		<tr>
+			<td>0x7FFFF0BA</td>
+			<td>Auf die Variable kann nicht auf diese Weise zugegriffen werden.</td>
+		</tr>
+		<tr>
+			<td>0x7FFFF0BB</td>
+			<td>Func Neuzuweisung nicht erlaubt.</td>
+		</tr>
+		<tr>
+			<td>0x7FFFF0BC</td>
+			<td>Func-Neuzuordnung auf globaler Ebene nicht erlaubt.</td>
 		</tr>
 	</table>
 </body>

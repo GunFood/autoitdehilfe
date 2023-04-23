@@ -3,7 +3,52 @@
 <head>
   <title>Benutzerdefinierte Funktionen</title>
   <meta charset="utf-8">
-  <link href="../css/default.css" rel="stylesheet">
+  <link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
@@ -20,47 +65,47 @@ Ein Klick auf einen Funktionsnamen liefert eine detaillierte Beschreibung.</p>
   <th style="width:75%">Beschreibung</th>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_CLSIDFromProgID.htm">_WinAPI_CLSIDFromProgID</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_CLSIDFromProgID.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_CLSIDFromProgID</a></td>
 <td>Sucht nach einer CLSID in der Registrierung, der eine ProgID zugewiesen wurde<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_CoInitialize.htm">_WinAPI_CoInitialize</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_CoInitialize.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_CoInitialize</a></td>
 <td>Initialisiert die COM-Bibliothek zur Verwendung durch den aufrufenden Prozess<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_CoTaskMemAlloc.htm">_WinAPI_CoTaskMemAlloc</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_CoTaskMemAlloc.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_CoTaskMemAlloc</a></td>
 <td>Weist einen Block des Aufgabenspeichers zu.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_CoTaskMemFree.htm">_WinAPI_CoTaskMemFree</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_CoTaskMemFree.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_CoTaskMemFree</a></td>
 <td>Gibt einen Block des Aufgabenspeichers frei<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_CoTaskMemRealloc.htm">_WinAPI_CoTaskMemRealloc</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_CoTaskMemRealloc.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_CoTaskMemRealloc</a></td>
 <td>&Auml;ndert die Gr&ouml;&szlig;e eines zuvor zugewiesenen Blocks des Aufgabenspeichers<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_CoUninitialize.htm">_WinAPI_CoUninitialize</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_CoUninitialize.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_CoUninitialize</a></td>
 <td>Schlie&szlig;t die COM-Bibliothek f&uuml;r den aktuellen Prozess<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_CreateGUID.htm">_WinAPI_CreateGUID</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_CreateGUID.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_CreateGUID</a></td>
 <td>Erstellt eine globale eindeutige Kennung (globally unique identifier GUID).<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_CreateStreamOnHGlobal.htm">_WinAPI_CreateStreamOnHGlobal</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_CreateStreamOnHGlobal.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_CreateStreamOnHGlobal</a></td>
 <td>Erzeugt ein Streamobjekt welches ein Speicherhandle verwendet um die Inhalte des Streams zu speichern.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_GetHGlobalFromStream.htm">_WinAPI_GetHGlobalFromStream</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_GetHGlobalFromStream.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_GetHGlobalFromStream</a></td>
 <td>Ruft das globale Speicherhandle zu einem Stream ab<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_ProgIDFromCLSID.htm">_WinAPI_ProgIDFromCLSID</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_ProgIDFromCLSID.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_ProgIDFromCLSID</a></td>
 <td>Ruft die ProgID f&uuml;r eine bestimmte CLSID ab<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_ReleaseStream.htm">_WinAPI_ReleaseStream</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_ReleaseStream.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_ReleaseStream</a></td>
 <td>Gibt ein Stream-Objekt frei<br /></td>
 </tr>
 </table>

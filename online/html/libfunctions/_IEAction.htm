@@ -3,15 +3,62 @@
 <head>
 <title>Funktion _IEAction</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Funktionreferenz</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_IEAction</h1><br />
-<a href="../libfunctions_en/_IEAction.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<div class="top"><h1>_IEAction</h1><div>
+<div id="flagtext">Beschreibung anzeigen in</div>
+<div id="flaglink"> <a href="../libfunctions_en/_IEAction.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_en.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">F&uuml;hrt einige einfache Aktionen im Browser aus<br /></p>
 <p class="codeheader">
 #include &lt;IE.au3&gt;<br />
@@ -158,7 +205,7 @@ _IEAction ( ByRef $oObject, $sAction )<br />
 </table></p>
 
 <h2>Verwandte Funktionen</h2>
-<p><a href="_IELoadWait.htm">_IELoadWait</a>, <a href="_IEPropertySet.htm">_IEPropertySet</a></p>
+<p><a href="_IELoadWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IELoadWait</a>, <a href="_IEPropertySet.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IEPropertySet</a></p>
 
 <h2 class="bottom">Beispiel</h2>
 <script type="text/javascript">
@@ -193,16 +240,16 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
 
 <span class="S1">; &Ouml;ffnet das "form" - Beispiel im Standardbrowser.</span>
 <span class="S1">; Nun wird ein Klick auf den Submit-Button simuliert, welcher anhand seiner Beschriftung erkannt wurde.</span>
 <span class="S1">; Diese Technik ist sinnvoll, weil sehr viele Input-Controls &uuml;ber JavaScript gesteuert werden, bei welchen eine standardm&auml;&szlig;ige "onClick" Ereignis&uuml;bergabe mit _IEFormSubmit() nicht immer dass gew&uuml;nschte Ergebnis hervorruft.</span>
 
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IE_Example.htm"><span class="S15">_IE_Example</span></a><span class="S8">(</span><span class="S7">"form"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oSubmit</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IEGetObjByName.htm"><span class="S15">_IEGetObjByName</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"submitExample"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../libfunctions/_IEAction.htm"><span class="S15">_IEAction</span></a><span class="S8">(</span><span class="S9">$oSubmit</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"click"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../libfunctions/_IELoadWait.htm"><span class="S15">_IELoadWait</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IE_Example.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IE_Example</span></a><span class="S8">(</span><span class="S7">"form"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oSubmit</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IEGetObjByName.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IEGetObjByName</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"submitExample"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_IEAction.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IEAction</span></a><span class="S8">(</span><span class="S9">$oSubmit</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"click"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_IELoadWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IELoadWait</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">)</span>
 <span class="S0"></span></span>
 </pre>
 </div>
@@ -236,22 +283,22 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <span class="S1">; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Verwende diese Technik, wenn Skripte im Browser verhindern,</span>
 <span class="S1">; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dass AutoIt das Ende der Aktion mitbekommt und das Skript fortgesetzt wird.</span>
 
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
 
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IE_Example.htm"><span class="S15">_IE_Example</span></a><span class="S8">(</span><span class="S7">"form"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oSubmit</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IEGetObjByName.htm"><span class="S15">_IEGetObjByName</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"submitExample"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hwnd</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IEPropertyGet.htm"><span class="S15">_IEPropertyGet</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"hwnd"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../libfunctions/_IEAction.htm"><span class="S15">_IEAction</span></a><span class="S8">(</span><span class="S9">$oSubmit</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"focus"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../functions/ControlSend.htm"><span class="S4">ControlSend</span></a><span class="S8">(</span><span class="S9">$hwnd</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"[CLASS:Internet Explorer_Server; INSTANCE:1]"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"</span><span class="S10">{Enter}</span><span class="S7">"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IE_Example.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IE_Example</span></a><span class="S8">(</span><span class="S7">"form"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oSubmit</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IEGetObjByName.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IEGetObjByName</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"submitExample"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hwnd</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IEPropertyGet.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IEPropertyGet</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"hwnd"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_IEAction.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IEAction</span></a><span class="S8">(</span><span class="S9">$oSubmit</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"focus"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/ControlSend.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">ControlSend</span></a><span class="S8">(</span><span class="S9">$hwnd</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"[CLASS:Internet Explorer_Server; INSTANCE:1]"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"</span><span class="S10">{Enter}</span><span class="S7">"</span><span class="S8">)</span>
 
 <span class="S1">; Wartet bis das Explorerfenster im Vordergrund ist, und klickt dann auf OK.</span>
-<a class="codeSnippetLink" href="../functions/WinWait.htm"><span class="S4">WinWait</span></a><span class="S8">(</span><span class="S7">"Windows Internet Explorer"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"ExampleFormSubmitted"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">2000</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/WinWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">WinWait</span></a><span class="S8">(</span><span class="S7">"Windows Internet Explorer"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"ExampleFormSubmitted"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/Sleep.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">2000</span><span class="S8">)</span>
 
-<a class="codeSnippetLink" href="../functions/ControlClick.htm"><span class="S4">ControlClick</span></a><span class="S8">(</span><span class="S7">"Windows Internet Explorer"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"ExampleFormSubmitted"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"[CLASS:Button; TEXT:OK; Instance:1;]"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">2000</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/ControlClick.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">ControlClick</span></a><span class="S8">(</span><span class="S7">"Windows Internet Explorer"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"ExampleFormSubmitted"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"[CLASS:Button; TEXT:OK; Instance:1;]"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/Sleep.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">2000</span><span class="S8">)</span>
 
-<a class="codeSnippetLink" href="../libfunctions/_IEQuit.htm"><span class="S15">_IEQuit</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_IEQuit.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IEQuit</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">)</span>
 <span class="S0"></span></span>
 </pre>
 </div>

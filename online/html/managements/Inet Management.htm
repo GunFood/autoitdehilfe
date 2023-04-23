@@ -3,7 +3,52 @@
 <head>
   <title>Benutzerdefinierte Funktionen</title>
   <meta charset="utf-8">
-  <link href="../css/default.css" rel="stylesheet">
+  <link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
@@ -20,27 +65,27 @@ Ein Klick auf einen Funktionsnamen liefert eine detaillierte Beschreibung.</p>
   <th style="width:75%">Beschreibung</th>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_GetIP.htm">_GetIP</a></td>
+<td><a href="..\..\html\libfunctions\_GetIP.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_GetIP</a></td>
 <td>Die &ouml;ffentliche IP-Adresse eines Netzwerk/Computers erhalten<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_INetExplorerCapable.htm">_INetExplorerCapable</a></td>
+<td><a href="..\..\html\libfunctions\_INetExplorerCapable.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_INetExplorerCapable</a></td>
 <td>Konvertiert einen String in eine IE(Internet Explorer) ausf&uuml;hrbare Zeile<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_INetGetSource.htm">_INetGetSource</a></td>
+<td><a href="..\..\html\libfunctions\_INetGetSource.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_INetGetSource</a></td>
 <td>Ermittelt den Quelltext von einer URL ohne eine tempor&auml;re Datei zu schreiben<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_INetMail.htm">_INetMail</a></td>
+<td><a href="..\..\html\libfunctions\_INetMail.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_INetMail</a></td>
 <td>&Ouml;ffnet das Standard-E-Mail Programm mit vorgegebener Adresse, &Uuml;berschrift und Inhalt<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_INetSmtpMail.htm">_INetSmtpMail</a></td>
+<td><a href="..\..\html\libfunctions\_INetSmtpMail.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_INetSmtpMail</a></td>
 <td>Sendet eine Email, ohne ein externes Emailprogramm zu benutzen<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_TCPIpToName.htm">_TCPIpToName</a></td>
+<td><a href="..\..\html\libfunctions\_TCPIpToName.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_TCPIpToName</a></td>
 <td>L&ouml;st eine IP-Adresse in den/die Hostnamen auf<br /></td>
 </tr>
 </table>

@@ -3,15 +3,62 @@
 <head>
 <title>Function SetExtended</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Function Reference</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">SetExtended</h1><br />
-<a href="../functions/SetExtended.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Show description in</div><br />
+<div class="top"><h1>SetExtended</h1><div>
+<div id="flagtext">Show description in</div>
+<div id="flaglink"> <a href="../functions/SetExtended.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_de.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Manually set the value of the @extended macro.<br /></p>
 <p class="codeheader">
 SetExtended ( code [, return value] )<br />
@@ -34,14 +81,14 @@ Returns&nbsp;the "return value".<br />
 
 
 <h2>Remarks</h2>
-<p>When entering a user-written function <a href="macros/AutoItRelated.htm#@extended">@extended</a> is set to 0. Unless <a href="SetExtended.htm">SetExtended()</a> is called, then @extended will remain 0 when the function ends. This means that in order for @extended to be set after a function returns, it must be explicitly set in the function. This also means you may need to backup the status of @extended in a variable if you are testing it in a While-WEnd loop.<br />
-The return value parameter is optional. It is provided as a way to use the <a href="../keywords/Func.htm">Return</a> <a href="SetError.htm">SetError(...)</a> syntax to define the value to be returned at the same time as setting @error (and possibly @extended). If a specific value is not set then the return value will set to 1 as <a href="SetError.htm">SetError()</a> is a successful function.<br />
+<p>When entering a user-written function <a href="macros/AutoItRelated.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@extended>@extended</a> is set to 0. Unless <a href="SetExtended.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">SetExtended()</a> is called, then @extended will remain 0 when the function ends. This means that in order for @extended to be set after a function returns, it must be explicitly set in the function. This also means you may need to backup the status of @extended in a variable if you are testing it in a While-WEnd loop.<br />
+The return value parameter is optional. It is provided as a way to use the <a href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Return</a> <a href="SetError.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">SetError(...)</a> syntax to define the value to be returned at the same time as setting @error (and possibly @extended). If a specific value is not set then the return value will set to 1 as <a href="SetError.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">SetError()</a> is a successful function.<br />
 <br />
 @extended is limited to values between -2147483648 to 2147483647.<br />
 </p>
 
 <h2>Related</h2>
-<p><a href="SetError.htm">SetError</a>, <a href="../keywords/Func.htm">Return</a></p>
+<p><a href="SetError.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">SetError</a>, <a href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Return</a></p>
 
 <h2 class="bottom">Example</h2>
 <script type="text/javascript">
@@ -75,10 +122,10 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
 
-<a class="codeSnippetLink" href="../functions/SetExtended.htm"><span class="S4">SetExtended</span></a><span class="S8">(</span><span class="S3">10</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Value of @extended is: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/SetExtended.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">SetExtended</span></a><span class="S8">(</span><span class="S3">10</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Value of @extended is: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@extended><span class="S6">@extended</span></a><span class="S8">)</span>
 <span class="S0"></span></span>
 </pre>
 </div>

@@ -3,15 +3,62 @@
 <head>
 <title>Function TCPSend</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Function Reference</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">TCPSend</h1><br />
-<a href="../functions/TCPSend.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Show description in</div><br />
+<div class="top"><h1>TCPSend</h1><div>
+<div id="flagtext">Show description in</div>
+<div id="flaglink"> <a href="../functions/TCPSend.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_de.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Sends data on a connected socket.<br /></p>
 <p class="codeheader">
 TCPSend ( mainsocket, data )<br />
@@ -21,7 +68,7 @@ TCPSend ( mainsocket, data )<br />
 <table>
 <tr>
 <td style="width:15%">mainsocket</td>
-<td style="width:85%">The connected socket identifier (SocketID) as returned by a <a href="TCPConnect.htm">TCPConnect()</a> function.</td>
+<td style="width:85%">The connected socket identifier (SocketID) as returned by a <a href="TCPConnect.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">TCPConnect()</a> function.</td>
 </tr>
 <tr>
 <td>data</td>
@@ -46,7 +93,7 @@ TCPSend ( mainsocket, data )<br />
 </table>
 
 <h2>Remarks</h2>
-<p>If Unicode strings need to be transmitted they must be encoded/decoded with <a href="StringToBinary.htm">StringToBinary()</a>/<a href="BinaryToString.htm">BinaryToString()</a>.<br />
+<p>If Unicode strings need to be transmitted they must be encoded/decoded with <a href="StringToBinary.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StringToBinary()</a>/<a href="BinaryToString.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">BinaryToString()</a>.<br />
 <br />
 &nbsp; A test of TCPSend() and TCPRecv() can be launch with the following button :<br />
 <br />
@@ -58,7 +105,7 @@ TCPSend ( mainsocket, data )<br />
 </p>
 
 <h2>Related</h2>
-<p><a href="StringToBinary.htm">StringToBinary</a>, <a href="TCPConnect.htm">TCPConnect</a>, <a href="TCPListen.htm">TCPListen</a>, <a href="TCPRecv.htm">TCPRecv</a>, <a href="TCPStartup.htm">TCPStartup</a>, <a href="AutoItSetOption.htm#TCPTimeout ">TCPTimeout (Option)</a></p>
+<p><a href="StringToBinary.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StringToBinary</a>, <a href="TCPConnect.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">TCPConnect</a>, <a href="TCPListen.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">TCPListen</a>, <a href="TCPRecv.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">TCPRecv</a>, <a href="TCPStartup.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">TCPStartup</a>, <a href="AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#TCPTimeout >TCPTimeout (Option)</a></p>
 
 </body>
 </html>

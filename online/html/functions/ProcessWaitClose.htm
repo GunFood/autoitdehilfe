@@ -3,15 +3,62 @@
 <head>
 <title>Funktion ProcessWaitClose</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Funktionreferenz</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">ProcessWaitClose</h1><br />
-<a href="../functions_en/ProcessWaitClose.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<div class="top"><h1>ProcessWaitClose</h1><div>
+<div id="flagtext">Beschreibung anzeigen in</div>
+<div id="flaglink"> <a href="../functions_en/ProcessWaitClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_en.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Pausiert das Skript, bis der genannte Prozess nicht mehr existiert.<br /></p>
 <p class="codeheader">
 ProcessWaitClose ( "process" [, timeout = 0] )<br />
@@ -45,7 +92,7 @@ ProcessWaitClose ( "process" [, timeout = 0] )<br />
 <p>Die Prozessnamen sind die ausf&uuml;hrbaren Dateien ohne den kompletten Pfad, also z.B. "notepad.exe" oder "winword.exe".<br />
 <br />
 PID ist eine eindeutige Zahl, die einen Prozess identifiziert.<br />
-Die PID kann &uuml;ber die R&uuml;ckgabewerte der Funktionen <a href="ProcessExists.htm">ProcessExists()</a>() oder <a href="Run.htm">Run()</a> ermittelt werden.<br />
+Die PID kann &uuml;ber die R&uuml;ckgabewerte der Funktionen <a href="ProcessExists.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ProcessExists()</a>() oder <a href="Run.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Run()</a> ermittelt werden.<br />
 <br />
 Der Prozess wird ungef&auml;hr alle 250 Millisekunden abgefragt.<br />
 <br />
@@ -53,7 +100,7 @@ Wenn der Prozess bereits beendet wurde, ist der R&uuml;ckgabewert 1 und @extende
 </p>
 
 <h2>Verwandte Funktionen</h2>
-<p><a href="ProcessClose.htm">ProcessClose</a>, <a href="ProcessExists.htm">ProcessExists</a>, <a href="ProcessList.htm">ProcessList</a>, <a href="ProcessWait.htm">ProcessWait</a>, <a href="RunAsWait.htm">RunAsWait</a>, <a href="RunWait.htm">RunWait</a>, <a href="WinGetProcess.htm">WinGetProcess</a>, <a href="WinWaitClose.htm">WinWaitClose</a></p>
+<p><a href="ProcessClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ProcessClose</a>, <a href="ProcessExists.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ProcessExists</a>, <a href="ProcessList.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ProcessList</a>, <a href="ProcessWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ProcessWait</a>, <a href="RunAsWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">RunAsWait</a>, <a href="RunWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">RunWait</a>, <a href="WinGetProcess.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">WinGetProcess</a>, <a href="WinWaitClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">WinWaitClose</a></p>
 
 <h2 class="bottom">Beispiel</h2>
 <script type="text/javascript">
@@ -88,11 +135,11 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
 <span><span class="S1">; Wartet bis kein Prozess mehr von notepad.exe existiert</span>
-<a class="codeSnippetLink" href="../functions/ProcessWaitClose.htm"><span class="S4">ProcessWaitClose</span></a><span class="S8">(</span><span class="S7">"notepad.exe"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/ProcessWaitClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">ProcessWaitClose</span></a><span class="S8">(</span><span class="S7">"notepad.exe"</span><span class="S8">)</span>
 
 <span class="S1">; Wartet,bis der spezielle Prozess ($iPid) von der notepad.exe durch den Benutzer geschlossen wurde.</span>
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iPID</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Run.htm"><span class="S4">Run</span></a><span class="S8">(</span><span class="S7">"notepad.exe"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../functions/ProcessWaitClose.htm"><span class="S4">ProcessWaitClose</span></a><span class="S8">(</span><span class="S9">$iPID</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iPID</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Run.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Run</span></a><span class="S8">(</span><span class="S7">"notepad.exe"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/ProcessWaitClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">ProcessWaitClose</span></a><span class="S8">(</span><span class="S9">$iPID</span><span class="S8">)</span>
 <span class="S0"></span></span>
 </pre>
 </div>

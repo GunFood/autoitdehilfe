@@ -3,7 +3,52 @@
 <head>
   <title>Benutzerdefinierte Funktionen</title>
   <meta charset="utf-8">
-  <link href="../css/default.css" rel="stylesheet">
+  <link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
@@ -20,67 +65,67 @@ Ein Klick auf einen Funktionsnamen liefert eine detaillierte Beschreibung.</p>
   <th style="width:75%">Beschreibung</th>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_ColorAdjustLuma.htm">_WinAPI_ColorAdjustLuma</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_ColorAdjustLuma.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_ColorAdjustLuma</a></td>
 <td>Changes the luminance of a RGB value<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_ColorHLSToRGB.htm">_WinAPI_ColorHLSToRGB</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_ColorHLSToRGB.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_ColorHLSToRGB</a></td>
 <td>Converts colors from hue-luminance-saturation (HLS) to RGB format<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_ColorRGBToHLS.htm">_WinAPI_ColorRGBToHLS</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_ColorRGBToHLS.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_ColorRGBToHLS</a></td>
 <td>Converts colors from RGB to hue-luminance-saturation (HLS) format<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_CreateColorAdjustment.htm">_WinAPI_CreateColorAdjustment</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_CreateColorAdjustment.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_CreateColorAdjustment</a></td>
 <td>Creates $tagCOLORADJUSTMENT structure specifies the color adjustment<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_GetBValue.htm">_WinAPI_GetBValue</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_GetBValue.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_GetBValue</a></td>
 <td>Ruft einen Intensit&auml;tswert f&uuml;r die Blaukomponente eines 32-Bit-RGB-Wertes ab<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_GetColorAdjustment.htm">_WinAPI_GetColorAdjustment</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_GetColorAdjustment.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_GetColorAdjustment</a></td>
 <td>Retrieves the color adjustment for the specified device context (DC)<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_GetDeviceGammaRamp.htm">_WinAPI_GetDeviceGammaRamp</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_GetDeviceGammaRamp.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_GetDeviceGammaRamp</a></td>
 <td>Gets the gamma ramp on direct color display boards that support downloadable gamma ramps in hardware<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_GetGValue.htm">_WinAPI_GetGValue</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_GetGValue.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_GetGValue</a></td>
 <td>Ruft einen Intensit&auml;tswert f&uuml;r die Gr&uuml;nkomponente eines 32-Bit-RGB-Wertes ab<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_GetRValue.htm">_WinAPI_GetRValue</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_GetRValue.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_GetRValue</a></td>
 <td>Ruft einen Intensit&auml;tswert f&uuml;r die Rotkomponente eines 32-Bit-RGB-Wertes ab<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_GetUDFColorMode.htm">_WinAPI_GetUDFColorMode</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_GetUDFColorMode.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_GetUDFColorMode</a></td>
 <td>Retrieves the current color mode for WinAPIEx UDF library<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_InvertColor.htm">_WinAPI_InvertColor</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_InvertColor.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_InvertColor</a></td>
 <td>Invertiert (negativiert) die festgelegte Farbe.<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_RGB.htm">_WinAPI_RGB</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_RGB.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_RGB</a></td>
 <td>Erzeugt einen RGB-Farbwert aus den Komponenten rot, gr&uuml;n und blau<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_SetColorAdjustment.htm">_WinAPI_SetColorAdjustment</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_SetColorAdjustment.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_SetColorAdjustment</a></td>
 <td>Sets the color adjustment for a device context (DC)<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_SetDeviceGammaRamp.htm">_WinAPI_SetDeviceGammaRamp</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_SetDeviceGammaRamp.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_SetDeviceGammaRamp</a></td>
 <td>Sets the gamma ramp on direct color display boards that support downloadable gamma ramps in hardware<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_SetUDFColorMode.htm">_WinAPI_SetUDFColorMode</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_SetUDFColorMode.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_SetUDFColorMode</a></td>
 <td>Sets the color mode for the WinAPIEx library<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_SwitchColor.htm">_WinAPI_SwitchColor</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_SwitchColor.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_SwitchColor</a></td>
 <td>Konvertiert eine Farbe von BGR nach RGB und umgekehrt<br /></td>
 </tr>
 </table>

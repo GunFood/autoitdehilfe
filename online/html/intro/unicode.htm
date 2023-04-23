@@ -3,7 +3,52 @@
 <head>
   <title>Unicode Support</title>
   <meta charset="utf-8">
-  <link href="../css/default.css" rel="stylesheet">
+  <link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 <body>
   <h1>Unicode Support</h1>
@@ -63,23 +108,23 @@
   <p>ANSI formats are <strong>not recommended</strong> as they can cause problems when run on machines with different locales.</p>
   <p>UTF16 BE or LE without a BOM are <strong>not recommended</strong>. They are widely unsupported. Even with a BOM they are not particularly common and they take up much more disk space than UTF8.</p>
   <p>
-  <li>File operations on text files not opened with <a href="../functions/FileOpen.htm">FileOpen()</a> and <strong>explicit unicode flags</strong> auto-detect encoding similar to most modern editors. This includes all file functions that are used with a filename, for example FileRead("filename.txt"). Specifically:</li>
+  <li>File operations on text files not opened with <a href="../functions/FileOpen.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">FileOpen()</a> and <strong>explicit unicode flags</strong> auto-detect encoding similar to most modern editors. This includes all file functions that are used with a filename, for example FileRead("filename.txt"). Specifically:</li>
   <ul>
     <li>Files containing a BOM will be opened in the relevant mode as per that BOM. UTF-8 and UTF-16 BOMs are checked.</li>
     <li>UTF-8 and UTF-16 files without a BOM will be automatically detected and opened in the relevant mode.</li>
     <li>Files containing nulls are opened in Binary ($FO_BINARY) mode by default (unless they are detected as valid UTF-16). Previously they would be opened in ANSI mode. Use the $FO_ANSI flag to override.</li>
     <li>Files containing only characters 1-127 are opened in UTF-8 with no BOM ($FO_UTF8_NOBOM) mode by default. Previously they would be opened in ANSI mode. Use the $FO_ANSI flag to override.</li>
     <li>Files containing only characters 1-255 are opened in ANSI ($FO_ANSI) mode by default.</li>
-    <li>Due to the above  <a href="../functions/FileGetEncoding.htm">FileGetEncoding()</a> now returns 512 ($FO_ANSI) or 256 ($FO_UTF8_NOBOM) instead of 0 which was undocumented but indicated ANSI.</li>
+    <li>Due to the above  <a href="../functions/FileGetEncoding.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">FileGetEncoding()</a> now returns 512 ($FO_ANSI) or 256 ($FO_UTF8_NOBOM) instead of 0 which was undocumented but indicated ANSI.</li>
   </ul>
 
   </p>
   <h2>Current Limitations</h2>
   <p>There are a few parts of AutoIt that don't yet have full Unicode support. These are:</p>
   <ul>
-    <li><a href="../functions/Send.htm">Send</a> and <a href="../functions/ControlSend.htm">ControlSend</a> - Instead, Use <a href="../functions/ControlSetText.htm">ControlSetText</a> or the <a href="../functions/ClipPut.htm">Clipboard</a>
+    <li><a href="../functions/Send.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Send</a> and <a href="../functions/ControlSend.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ControlSend</a> - Instead, Use <a href="../functions/ControlSetText.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ControlSetText</a> or the <a href="../functions/ClipPut.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Clipboard</a>
     functions.</li>
-    <li><a href="../functions/ConsoleWrite.htm">Console</a> operations are converted to ANSI.</li>
+    <li><a href="../functions/ConsoleWrite.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Console</a> operations are converted to ANSI.</li>
   </ul>
   <p>These limits will be addressed in future versions if possible.</p>
 </body>

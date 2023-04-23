@@ -3,7 +3,52 @@
 <head>
   <title>Benutzerdefinierte Funktionen</title>
   <meta charset="utf-8">
-  <link href="../css/default.css" rel="stylesheet">
+  <link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
@@ -20,55 +65,55 @@ Ein Klick auf einen Funktionsnamen liefert eine detaillierte Beschreibung.</p>
   <th style="width:75%">Beschreibung</th>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_AngleArc.htm">_WinAPI_AngleArc</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_AngleArc.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_AngleArc</a></td>
 <td>Zeichnet ein Liniensegment und einen Bogen<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_Arc.htm">_WinAPI_Arc</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_Arc.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_Arc</a></td>
 <td>Draws an elliptical arc<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_ArcTo.htm">_WinAPI_ArcTo</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_ArcTo.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_ArcTo</a></td>
 <td>Draws an elliptical arc<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_DrawLine.htm">_WinAPI_DrawLine</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_DrawLine.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_DrawLine</a></td>
 <td>Zeichnet eine Linie<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_GetArcDirection.htm">_WinAPI_GetArcDirection</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_GetArcDirection.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_GetArcDirection</a></td>
 <td>Retrieves the current arc direction for the specified device context<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_LineDDA.htm">_WinAPI_LineDDA</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_LineDDA.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_LineDDA</a></td>
 <td>Determines which pixels should be highlighted for a line<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_LineTo.htm">_WinAPI_LineTo</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_LineTo.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_LineTo</a></td>
 <td>Zeichnet eine Linie von der aktuellen Position bis zum angegebenen Punkt, aber ohne den Punkt selbst<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_MoveTo.htm">_WinAPI_MoveTo</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_MoveTo.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_MoveTo</a></td>
 <td>Ver&auml;ndert die aktuelle Position auf den angegebenen Punkt<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_MoveToEx.htm">_WinAPI_MoveToEx</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_MoveToEx.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_MoveToEx</a></td>
 <td>Updates the current position to the specified point<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_PolyBezier.htm">_WinAPI_PolyBezier</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_PolyBezier.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_PolyBezier</a></td>
 <td>Draws one or more Bezier curves<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_PolyBezierTo.htm">_WinAPI_PolyBezierTo</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_PolyBezierTo.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_PolyBezierTo</a></td>
 <td>Draws one or more Bezier curves<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_PolyDraw.htm">_WinAPI_PolyDraw</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_PolyDraw.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_PolyDraw</a></td>
 <td>Draws a set of line segments and Bezier curves<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_SetArcDirection.htm">_WinAPI_SetArcDirection</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_SetArcDirection.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_SetArcDirection</a></td>
 <td>Sets the drawing arc direction<br /></td>
 </tr>
 </table>

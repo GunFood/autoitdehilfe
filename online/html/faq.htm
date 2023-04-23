@@ -3,7 +3,52 @@
 <head>
 	<title>AutoIt FAQ</title>
 	<meta charset="utf-8">
-	<link href="css/default.css" rel="stylesheet">
+	<link href="css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', 'css/' + this.theme);
+				document.getElementById('toggleButton').src = 'images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 <body>
 	<h1><a id="FAQ" name="FAQ"></a>H&auml;ufig gestellte Fragen (FAQ)</h1>
@@ -49,7 +94,7 @@
 	</ol>
   <hr>
 	<h2><a id="1"></a>1. <a href="#1">Wie kann ich DOS-Programme aus AutoIt heraus ausf&uuml;hren?</a></h2>
-	<p>Wenn du etwas wie den DOS-Befehl "dir" ausf&uuml;hren m&ouml;chtest, dann musst du dazu den Kommandozeileninterpreter verwenden (je nach Betriebssystem ist das "command.com" oder "cmd.exe"). Das Makro <a href="macros.htm">@ComSpec</a> beinhaltet den korrekten Ort dieser Datei. Du solltest den <a href="functions/RunWait.htm">RunWait()-Befehl</a> verwenden, weil es auf die Beendigung des DOS-Programms abwartet, bevor die Ausf&uuml;hrung des eigenen Skriptes fortgesetzt wird. Hier ein Beispiel, wie man den DOS-"dir"-Befehl auf das Laufwerk C:\ anwendet (tats&auml;chlich wird folgendes ausgef&uuml;hrt: <strong>command.com /c Dir C:\</strong> ):</p>
+	<p>Wenn du etwas wie den DOS-Befehl "dir" ausf&uuml;hren m&ouml;chtest, dann musst du dazu den Kommandozeileninterpreter verwenden (je nach Betriebssystem ist das "command.com" oder "cmd.exe"). Das Makro <a href="macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">@ComSpec</a> beinhaltet den korrekten Ort dieser Datei. Du solltest den <a href="functions/RunWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">RunWait()-Befehl</a> verwenden, weil es auf die Beendigung des DOS-Programms abwartet, bevor die Ausf&uuml;hrung des eigenen Skriptes fortgesetzt wird. Hier ein Beispiel, wie man den DOS-"dir"-Befehl auf das Laufwerk C:\ anwendet (tats&auml;chlich wird folgendes ausgef&uuml;hrt: <strong>command.com /c Dir C:\</strong> ):</p>
 @@SyntaxHighlighting@@
 RunWait(@ComSpec & " /c Dir C:\")
 @@End@@
@@ -92,7 +137,7 @@ $vVar = 'Ein Wort in "diesem" Satz hat doppelte Anführungszeichen um sich!'
   <p><a href="#FAQ">Zur&uuml;ck nach oben</a></p>
   <hr>
   <h2><a id="4"></a>4. <a href="#4">Was bedeuten die Fenstertitel und -text-Parameter?</a></h2>
-	<p>Dazu gibt es <a href="intro/windowsbasic.htm">hier</a> eine detaillierte Beschreibung.</p>
+	<p>Dazu gibt es <a href="intro/windowsbasic.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">hier</a> eine detaillierte Beschreibung.</p>
 	<p>&nbsp;</p>
   <p><a href="#FAQ">Zur&uuml;ck nach oben</a></p>
   <hr>
@@ -104,7 +149,7 @@ $vVar = 'Ein Wort in "diesem" Satz hat doppelte Anführungszeichen um sich!'
 MsgBox($MB_OK, "Beispiel", "Meine Variable ist $msg")
 @@End@@
 
-	<p>Das wird einfach folgendes ausgeben: <strong>Meine Variable ist $msg</strong>. Du musst AutoIt anweisen, den Text und den Inhalt der Variablen zu verbinden. Dazu ben&ouml;tigst du den <a href="intro/lang_operators.htm">&-Operator</a>:</p>
+	<p>Das wird einfach folgendes ausgeben: <strong>Meine Variable ist $msg</strong>. Du musst AutoIt anweisen, den Text und den Inhalt der Variablen zu verbinden. Dazu ben&ouml;tigst du den <a href="intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">&-Operator</a>:</p>
 @@SyntaxHighlighting@@
 #include <MsgBoxConstants.au3>
 
@@ -112,7 +157,7 @@ MsgBox($MB_OK, "Beispiel", "Meine Variable ist " & $msg)
 @@End@@
 
   <p>&nbsp;</p>
-	<p><strong>F&uuml;r Fortgeschrittene:</strong> Wenn du viele Variablen in einen String einbinden willst, dann k&ouml;nnte die <a href="functions/StringFormat.htm">StringFormat()</a>-Funktion f&uuml;r dich interessant sein. Die Variablen $vVar1 bis $vVar5 bindest du so einfacher ein:</p>
+	<p><strong>F&uuml;r Fortgeschrittene:</strong> Wenn du viele Variablen in einen String einbinden willst, dann k&ouml;nnte die <a href="functions/StringFormat.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StringFormat()</a>-Funktion f&uuml;r dich interessant sein. Die Variablen $vVar1 bis $vVar5 bindest du so einfacher ein:</p>
 @@SyntaxHighlighting@@
 #include <MsgBoxConstants.au3>
 
@@ -124,7 +169,7 @@ MsgBox($MB_SYSTEMMODAL, "", $sMessage)
   <p><a href="#FAQ">Zur&uuml;ck nach oben</a></p>
   <hr>  
 	<h2><a id="6"></a>6. <a href="#6">Warum passieren merkw&uuml;rdige Dinge, wenn ich Variablen an den Send-Befehl &uuml;bergebe?</a></h2>
-	<p>Wenn du den Inhalt einer Variablen per <a href="functions/Send.htm">Send-Befehl</a> weitergibst, dann bedenke, dass spezielle Zeichen wie !, ^, + oder {SPACE} umgewandelt werden. Das ist aber nur selten erw&uuml;nscht. Um das zu umgehen, benutzt man den "RAW"-Modus des <a href="functions/Send.htm">Send-Befehls</a>, der diese Umwandlung nicht durchf&uuml;hrt:</p>
+	<p>Wenn du den Inhalt einer Variablen per <a href="functions/Send.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Send-Befehl</a> weitergibst, dann bedenke, dass spezielle Zeichen wie !, ^, + oder {SPACE} umgewandelt werden. Das ist aber nur selten erw&uuml;nscht. Um das zu umgehen, benutzt man den "RAW"-Modus des <a href="functions/Send.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Send-Befehls</a>, der diese Umwandlung nicht durchf&uuml;hrt:</p>
 @@SyntaxHighlighting@@
 Send($vMyVar, 1)
 @@End@@
@@ -133,12 +178,12 @@ Send($vMyVar, 1)
   <p><a href="#FAQ">Zur&uuml;ck nach oben</a></p>
   <hr>
   <h2><a id="7"></a>7. <a href="#7">Was ist der Unterschied zwischen dem "return"-Wert und @error?</a></h2>
-	<p>Normalerweise wird der "return"-Wert dazu benutzt, anzugeben, ob eine Funktion erfolgreich durchgef&uuml;hrt wurde. Gibt die Funktion (wie z.B. <a href="functions/WinGetText.htm">WinGetText()</a>) aber schon einen anderen Wert zur&uuml;ck, dann brauchen wir eine andere M&ouml;glichkeit, festzustellen, ob die Funktion erfolgreich ausgef&uuml;hrt wurde. Dazu dient dann @error.</p>
+	<p>Normalerweise wird der "return"-Wert dazu benutzt, anzugeben, ob eine Funktion erfolgreich durchgef&uuml;hrt wurde. Gibt die Funktion (wie z.B. <a href="functions/WinGetText.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">WinGetText()</a>) aber schon einen anderen Wert zur&uuml;ck, dann brauchen wir eine andere M&ouml;glichkeit, festzustellen, ob die Funktion erfolgreich ausgef&uuml;hrt wurde. Dazu dient dann @error.</p>
   <p>&nbsp;</p>
   <p><a href="#FAQ">Zur&uuml;ck nach oben</a></p>
   <hr>  
   <h2><a id="8"></a>8. <a href="#8">Wie kann ich mein Skript &uuml;ber einen HotKey beenden?</a></h2>
-	<p>Ah, etwas leichtes. Wenn du willst, dass sich dein Skript beendet, wenn du eine bestimmte Tastenkombination dr&uuml;ckst, dann benutze die <a href="functions/HotKeySet.htm">HotKeySet()</a>-Funktion, um eine selbstdefinierte Funktion auszuf&uuml;hren. Diese sollte einfach das Schl&uuml;sselwort <a href="keywords/Exit.htm">Exit</a> enthalten.</p>
+	<p>Ah, etwas leichtes. Wenn du willst, dass sich dein Skript beendet, wenn du eine bestimmte Tastenkombination dr&uuml;ckst, dann benutze die <a href="functions/HotKeySet.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">HotKeySet()</a>-Funktion, um eine selbstdefinierte Funktion auszuf&uuml;hren. Diese sollte einfach das Schl&uuml;sselwort <a href="keywords/Exit.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Exit</a> enthalten.</p>
 	<p>Hier ein St&uuml;ck Code, das das Skript beendet, wenn Strg + ALT + x gedr&uuml;ckt wird:<br></p>
 @@SyntaxHighlighting@@
 HotKeySet("^!x", "MyExit")
@@ -156,18 +201,18 @@ EndFunc   ;==>MyExit
   <p><a href="#FAQ">Zur&uuml;ck nach oben</a></p>
   <hr>   
   <h2><a id="9"></a>9. <a href="#9">Wie kann ich ein selbst gew&auml;hltes Icon benutzen, wenn ich mein Skript kompiliere?</a></h2>
-	<p>Dazu musst du den richtigen Compiler starten und nicht nur mit der rechten Maustaste auf das Skript klicken und "Compile" (=Kompilieren) ausw&auml;hlen. <a href="intro/compiler.htm">Diese Seite</a> beschreibt den Compiler en detail.</p>
+	<p>Dazu musst du den richtigen Compiler starten und nicht nur mit der rechten Maustaste auf das Skript klicken und "Compile" (=Kompilieren) ausw&auml;hlen. <a href="intro/compiler.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Diese Seite</a> beschreibt den Compiler en detail.</p>
   <p>&nbsp;</p>
   <p><a href="#FAQ">Zur&uuml;ck nach oben</a></p>
   <hr>
   <h2><a id="10"></a>10. <a href="#10">Wie kann ich sicher gehen, dass nur eine Instanz meines Skriptes l&auml;uft?</a></h2>
-	<p>Verwende die <a href="libfunctions/_Singleton.htm">_Singleton()</a> Funktion. Schau in der Dokumentation zu den benutzerdefinierten Funktion nach mehr Informationen f&uuml;r _Singleton() und wie es zu verwenden ist.</p>
+	<p>Verwende die <a href="libfunctions/_Singleton.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Singleton()</a> Funktion. Schau in der Dokumentation zu den benutzerdefinierten Funktion nach mehr Informationen f&uuml;r _Singleton() und wie es zu verwenden ist.</p>
   <p>&nbsp;</p>
   <p><a href="#FAQ">Zur&uuml;ck nach oben</a></p>
   <hr>
   <h2><a id="11"></a>11. <a href="#11">Wo liegen die derzeitigen technischen Grenzen von AutoIt v3?</a></h2>
 	<p>Hier sind die technischen Limitierungen von AutoIt v3. Bedenke, dass manche Begrenzungen theoretischer Natur sind und du sie m&ouml;glicherweise aufgrund zuvor auftretender Speicher- oder Performanceprobleme gar nicht erreichen kannst.</p>
-	<p>Bitte beachte den Abschnitt <a href="appendix/LimitsDefaults.htm">AutoIt3 Standardbegrenzungen</a> f&uuml;r die technischen Grenzen von AutoIt3.<br>
+	<p>Bitte beachte den Abschnitt <a href="appendix/LimitsDefaults.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">AutoIt3 Standardbegrenzungen</a> f&uuml;r die technischen Grenzen von AutoIt3.<br>
 	<br>
 	Zus&auml;tzliche Informationen &uuml;ber die theoretischen Grenzen von AutoIt3.</p>
 	<table>

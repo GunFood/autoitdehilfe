@@ -3,7 +3,52 @@
 <head>
   <title>Benutzerdefinierte Funktionen</title>
   <meta charset="utf-8">
-  <link href="../css/default.css" rel="stylesheet">
+  <link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
@@ -20,99 +65,99 @@ Ein Klick auf einen Funktionsnamen liefert eine detaillierte Beschreibung.</p>
   <th style="width:75%">Beschreibung</th>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_BeginUpdateResource.htm">_WinAPI_BeginUpdateResource</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_BeginUpdateResource.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_BeginUpdateResource</a></td>
 <td>Retrieves a handle that can be used to add, delete, or replace resources in a binary module<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_EndUpdateResource.htm">_WinAPI_EndUpdateResource</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_EndUpdateResource.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_EndUpdateResource</a></td>
 <td>Commits or discards a changes of the resources within module<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_EnumResourceLanguages.htm">_WinAPI_EnumResourceLanguages</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_EnumResourceLanguages.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_EnumResourceLanguages</a></td>
 <td>Enumerates a language-specific resources, of the specified type and name, associated with a binary module<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_EnumResourceNames.htm">_WinAPI_EnumResourceNames</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_EnumResourceNames.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_EnumResourceNames</a></td>
 <td>Enumerates the resources of a specified type within a binary module<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_EnumResourceTypes.htm">_WinAPI_EnumResourceTypes</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_EnumResourceTypes.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_EnumResourceTypes</a></td>
 <td>Enumerates the resource types within a binary module<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_FindResource.htm">_WinAPI_FindResource</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_FindResource.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_FindResource</a></td>
 <td>Determines the location of a resource with the specified type and name in the specified module<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_FindResourceEx.htm">_WinAPI_FindResourceEx</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_FindResourceEx.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_FindResourceEx</a></td>
 <td>Determines the location of the resource with the specified type, name, and language in the specified module<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_FreeLibrary.htm">_WinAPI_FreeLibrary</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_FreeLibrary.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_FreeLibrary</a></td>
 <td>Dekrementiert den Referenzz&auml;hler der geladenen, dynamischen Bibliothek (DLL)<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_FreeResource.htm">_WinAPI_FreeResource</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_FreeResource.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_FreeResource</a></td>
 <td>Decrements (decreases by one) the reference count of a loaded resource<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_GetFileVersionInfo.htm">_WinAPI_GetFileVersionInfo</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_GetFileVersionInfo.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_GetFileVersionInfo</a></td>
 <td>Retrieves version information for the specified file<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_LoadBitmap.htm">_WinAPI_LoadBitmap</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_LoadBitmap.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_LoadBitmap</a></td>
 <td>L&auml;dt die angegebene Bitmap-Ressource von einem Modul einer ausf&uuml;hrbaren Datei<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_LoadImage.htm">_WinAPI_LoadImage</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_LoadImage.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_LoadImage</a></td>
 <td>L&auml;dt ein Icon, Cursor oder Bitmap<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_LoadIndirectString.htm">_WinAPI_LoadIndirectString</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_LoadIndirectString.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_LoadIndirectString</a></td>
 <td>Extracts the string from the specified resource when given an indirect string<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_LoadLibrary.htm">_WinAPI_LoadLibrary</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_LoadLibrary.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_LoadLibrary</a></td>
 <td>Mapped ein bestimmtes ausf&uuml;hrbares Modul in den Adressraum des aufrufenden Prozesses<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_LoadLibraryEx.htm">_WinAPI_LoadLibraryEx</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_LoadLibraryEx.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_LoadLibraryEx</a></td>
 <td>Mapped ein bestimmtes ausf&uuml;hrbares Modul in den Adressraum des aufrufenden Prozesses<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_LoadResource.htm">_WinAPI_LoadResource</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_LoadResource.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_LoadResource</a></td>
 <td>Loads the specified resource into global memory<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_LoadString.htm">_WinAPI_LoadString</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_LoadString.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_LoadString</a></td>
 <td>L&auml;dt eine String Ressource von der ausf&uuml;hrbaren Datei die mit einem bestimmten Modul verkn&uuml;pft ist<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_LoadStringEx.htm">_WinAPI_LoadStringEx</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_LoadStringEx.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_LoadStringEx</a></td>
 <td>Loads a string resource for the specified language from the specified module<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_LockResource.htm">_WinAPI_LockResource</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_LockResource.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_LockResource</a></td>
 <td>Locks the specified resource in memory<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_SizeOfResource.htm">_WinAPI_SizeOfResource</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_SizeOfResource.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_SizeOfResource</a></td>
 <td>Returns the size, in bytes, of the specified resource<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_UpdateResource.htm">_WinAPI_UpdateResource</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_UpdateResource.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_UpdateResource</a></td>
 <td>Adds, deletes, or replaces a resource in a portable executable (PE) file<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_VerQueryRoot.htm">_WinAPI_VerQueryRoot</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_VerQueryRoot.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_VerQueryRoot</a></td>
 <td>Retrieves the fixed version information from the specified version-information resource<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_VerQueryValue.htm">_WinAPI_VerQueryValue</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_VerQueryValue.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_VerQueryValue</a></td>
 <td>Retrieves the non-fixed (strings) version information from the specified version-information resource<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_WinAPI_VerQueryValueEx.htm">_WinAPI_VerQueryValueEx</a></td>
+<td><a href="..\..\html\libfunctions\_WinAPI_VerQueryValueEx.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_VerQueryValueEx</a></td>
 <td>Retrieves the text information from the version-information resource of the specified binary module<br /></td>
 </tr>
 </table>

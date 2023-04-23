@@ -3,15 +3,62 @@
 <head>
 <title>Funktion HttpSetProxy</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Funktionreferenz</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">HttpSetProxy</h1><br />
-<a href="../functions_en/HttpSetProxy.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<div class="top"><h1>HttpSetProxy</h1><div>
+<div id="flagtext">Beschreibung anzeigen in</div>
+<div id="flaglink"> <a href="../functions_en/HttpSetProxy.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_en.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Setzt den Internet Proxy f&uuml;r den Gebrauch des http-Zugriffs.<br /></p>
 <p class="codeheader">
 HttpSetProxy ( mode = 0 [, "proxy:port" [, "username" [, "password"]]] )<br />
@@ -50,7 +97,7 @@ Keine.<br />
 <p>Nur CERN Proxy-Server werden unterst&uuml;tzt.<br />
 <br />
 Proxy-Server bestehen normalerweise aus einer Web-Adresse und einer Portnummer. Die meisten Internet Service Provider nutzen die Portnummer 8080. Lautet ein Proxy "www.proxy.com" mit der Portnummer "8080", muss man folgenden Befehl benutzen, um den Proxy zu setzen:<br />
-<a href="HttpSetProxy.htm">HttpSetProxy</a>(2, "www.proxy.com:8080")<br />
+<a href="HttpSetProxy.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">HttpSetProxy</a>(2, "www.proxy.com:8080")<br />
 <br />
 Die meisten Proxy-Server ben&ouml;tigen keinen Benutzernamen und kein Passwort.<br />
 <br />
@@ -58,7 +105,7 @@ Wenn "mode" 0 verwendet wird, so muss ein Benutzername und Passwort festgelegt w
 </p>
 
 <h2>Verwandte Funktionen</h2>
-<p><a href="FtpSetProxy.htm">FtpSetProxy</a>, <a href="InetGet.htm">InetGet</a>, <a href="InetGetSize.htm">InetGetSize</a>, <a href="InetRead.htm">InetRead</a></p>
+<p><a href="FtpSetProxy.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">FtpSetProxy</a>, <a href="InetGet.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">InetGet</a>, <a href="InetGetSize.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">InetGetSize</a>, <a href="InetRead.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">InetRead</a></p>
 
 <h2 class="bottom">Beispiel</h2>
 <script type="text/javascript">
@@ -93,13 +140,13 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
 <span><span class="S1">; Keinen Proxy verwenden</span>
-<a class="codeSnippetLink" href="../functions/HttpSetProxy.htm"><span class="S4">HttpSetProxy</span></a><span class="S8">(</span><span class="S3">1</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/HttpSetProxy.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">HttpSetProxy</span></a><span class="S8">(</span><span class="S3">1</span><span class="S8">)</span>
 
 <span class="S1">; IE Standards f&uuml;r den Proxy verwenden</span>
-<a class="codeSnippetLink" href="../functions/HttpSetProxy.htm"><span class="S4">HttpSetProxy</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/HttpSetProxy.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">HttpSetProxy</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">)</span>
 
 <span class="S1">; Den Proxy "www-cache.myisp.net" mit Port 8080 nutzen</span>
-<a class="codeSnippetLink" href="../functions/HttpSetProxy.htm"><span class="S4">HttpSetProxy</span></a><span class="S8">(</span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"www-cache.myisp.net:8080"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/HttpSetProxy.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">HttpSetProxy</span></a><span class="S8">(</span><span class="S3">2</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"www-cache.myisp.net:8080"</span><span class="S8">)</span>
 <span class="S0"></span></span>
 </pre>
 </div>

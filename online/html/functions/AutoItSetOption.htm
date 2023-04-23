@@ -3,15 +3,62 @@
 <head>
 <title>Funktion AutoItSetOption</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Funktionreferenz</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">AutoItSetOption</h1><br />
-<a href="../functions_en/AutoItSetOption.htm"><img src="../images/Flagge_en.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Beschreibung anzeigen in</div><br />
+<div class="top"><h1>AutoItSetOption</h1><div>
+<div id="flagtext">Beschreibung anzeigen in</div>
+<div id="flaglink"> <a href="../functions_en/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_en.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">&Auml;ndert den Ablauf verschiedener AutoIt-Funktionen/Parameter.<br /></p>
 <p class="codeheader">
 AutoItSetOption ( "option" [, param] )<br />
@@ -25,7 +72,7 @@ AutoItSetOption ( "option" [, param] )<br />
 </tr>
 <tr>
 <td>param</td>
-<td><strong>[optional]</strong> Wert, der der Option zugeordnet wird. Typ und Bedeutung wechseln mit der Option. Siehe Bemerkungen unten. Wird kein Parameter &uuml;bergeben, gibt die Funktion nur den der Option zur Zeit zugeordneten Wert zur&uuml;ck. Das Schl&uuml;sselwort <a href="../keywords/Default.htm">Default</a> kann f&uuml;r den Parameter verwendet werden um die Option auf den Standardwert zur&uuml;ckzusetzen.</td>
+<td><strong>[optional]</strong> Wert, der der Option zugeordnet wird. Typ und Bedeutung wechseln mit der Option. Siehe Bemerkungen unten. Wird kein Parameter &uuml;bergeben, gibt die Funktion nur den der Option zur Zeit zugeordneten Wert zur&uuml;ck. Das Schl&uuml;sselwort <a href="../keywords/Default.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Default</a> kann f&uuml;r den Parameter verwendet werden um die Option auf den Standardwert zur&uuml;ckzusetzen.</td>
 </tr>
 </table>
 
@@ -42,7 +89,7 @@ AutoItSetOption ( "option" [, param] )<br />
 </table>
 
 <h2>Bemerkungen</h2>
-<p>Als Alternative zu <a href="AutoItSetOption.htm">AutoItSetOption()</a> kann auch <a href="AutoItSetOption.htm">Opt()</a> verwendet werden.<br />
+<p>Als Alternative zu <a href="AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">AutoItSetOption()</a> kann auch <a href="AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Opt()</a> verwendet werden.<br />
 <br />
 Folgende Optionen sind vorhanden:<br />
 <table>
@@ -62,7 +109,7 @@ Folgende Optionen sind vorhanden:<br />
 <td><a id="ExpandEnvStrings"></a>&Auml;ndert die Interpretation von Strings und %-Symbolen. Als Standard werden Strings buchstabengetreu behandelt, diese Option erlaubt die Benutzung von %environment% Variablen innerhalb von Strings, z.B.: "Das temp Verzeichnis ist: %temp%".<br />
 0 = Umgebungsvariablen werden nicht erweitert (Standard).<br />
 1 = erweitert Umgebungsvariablen.<br />
-Ohne diese Option w&auml;re der &uuml;bliche Weg:"Das temp Verzeichnis ist:" & <a href="EnvGet.htm">EnvGet</a>("temp")</td>
+Ohne diese Option w&auml;re der &uuml;bliche Weg: "Das temp Verzeichnis ist:" & <a href="EnvGet.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">EnvGet</a>("temp")</td>
 </tr>
 <tr>
 <td>ExpandVarStrings</td>
@@ -78,7 +125,7 @@ Ohne diese Option w&auml;re der &uuml;bliche Weg:"Das temp Verzeichnis ist:" & <
 </tr>
 <tr>
 <td>GUICoordMode</td>
-<td><a id="GUICoordMode"></a>Bestimmt, wie die Position eines Controls durch <a href="GUICtrlSetPos.htm">GUICtrlSetPos</a> definiert wird.<br />
+<td><a id="GUICoordMode"></a>Bestimmt, wie die Position eines Controls durch <a href="GUICtrlSetPos.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlSetPos</a> definiert wird.<br />
 0 = relative Position zum Anfang des letzten Controls (obere linke Ecke).<br />
 1 = absolute Koordinaten (Standard)  relativ zur Dialog Box.<br />
 2 = Positionierung relativ zur unteren rechten Ecke des letzten Controls.<br />
@@ -87,7 +134,7 @@ Um ein Control genau 1px h&ouml;her/links als das letzte zu positionieren (-1 is
 </tr>
 <tr>
 <td>GUIDataSeparatorChar</td>
-<td><a id="GUIDataSeparatorChar"></a>Legt das Trennzeichen f&uuml;r Teildaten fest, die mit <a href="GUICtrlSetData.htm">GUICtrlSetData</a> gesetzt werden.<br />
+<td><a id="GUIDataSeparatorChar"></a>Legt das Trennzeichen f&uuml;r Teildaten fest, die mit <a href="GUICtrlSetData.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlSetData</a> gesetzt werden.<br />
 Das Standardzeichen ist '|'.</td>
 </tr>
 <tr>
@@ -100,7 +147,7 @@ Das Standardzeichen ist '|'.</td>
 <td>GUIResizeMode</td>
 <td><a id="GUIResizeMode"></a>&Auml;ndert das Standardverhalten bei Gr&ouml;&szlig;enver&auml;nderung f&uuml;r ein Control.<br />
 0 = (Standard) beh&auml;lt das Standardverhalten bei.<br />
-&lt;1024 = jede Art der Gr&ouml;&szlig;enver&auml;nderung, siehe <a href="GUICtrlSetResizing.htm">GUICtrlSetResizing</a>.</td>
+&lt;1024 = jede Art der Gr&ouml;&szlig;enver&auml;nderung, siehe <a href="GUICtrlSetResizing.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlSetResizing</a>.</td>
 </tr>
 <tr>
 <td>GUIEventOptions</td>
@@ -134,7 +181,7 @@ Zeit in Millisekunden f&uuml;r die Pause (Standard=250).</td>
 <td>MustDeclareVars</td>
 <td><a id="MustDeclareVars"></a>Wenn diese Option genutzt wird m&uuml;ssen alle Variablen deklariert werden mit Dim, Local oder Global bevor sie verwendet werden k&ouml;nnen - beseitigt die M&ouml;glichkeit von Bugs durch Schreibfehler in Variablen.<br />
 0 = Variable muss nicht deklariert werden (Standard).<br />
-1 = Variable muss deklariert werden. Siehe <a href="../Keywords/Dim.htm">Dim / Global / Local / Const</a> f&uuml;r weitere Details.</td>
+1 = Variable muss deklariert werden. Siehe <a href="../Keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Dim / Global / Local / Const</a> f&uuml;r weitere Details.</td>
 </tr>
 <tr>
 <td>PixelCoordMode</td>
@@ -145,7 +192,7 @@ Zeit in Millisekunden f&uuml;r die Pause (Standard=250).</td>
 </tr>
 <tr>
 <td>SendAttachMode</td>
-<td><a id="SendAttachMode"></a>Legt fest, wie AutoIt eingehende Signale verkn&uuml;pft wenn die <a href="Send.htm">Send()</a> Funktion verwendet wird. Bei Nichtverkn&uuml;pfung (Standard Mode=0) kann die Ermittlung des Status von Capslock/Scrolllock und Numlock unzuverl&auml;ssig sein unter NT4. Jedoch wird der attach Mode=1 gesetzt und der <a href="Send.htm">Send</a>("{... down/up}") Syntax wird nicht funktionieren und es kann Probleme geben mit dem Senden von Tasten an "h&auml;ngende" Fenster. <a href="ControlSend">ControlSend()</a> ist IMMER verkn&uuml;pft und wird nicht beeintr&auml;chtigt durch diesen Modus.<br />
+<td><a id="SendAttachMode"></a>Legt fest, wie AutoIt eingehende Signale verkn&uuml;pft wenn die <a href="Send.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Send()</a> Funktion verwendet wird. Bei Nichtverkn&uuml;pfung (Standard Mode=0) kann die Ermittlung des Status von Capslock/Scrolllock und Numlock unzuverl&auml;ssig sein unter NT4. Jedoch wird der attach Mode=1 gesetzt und der <a href="Send.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Send</a>("{... down/up}") Syntax wird nicht funktionieren und es kann Probleme geben mit dem Senden von Tasten an "h&auml;ngende" Fenster. <a href="ControlSend">ControlSend()</a> ist IMMER verkn&uuml;pft und wird nicht beeintr&auml;chtigt durch diesen Modus.<br />
 0 = nicht verkn&uuml;pfen (Standard).<br />
 1 = verkn&uuml;pfen.</td>
 </tr>
@@ -169,7 +216,7 @@ Zeit in Millisekunden zur Pause (Standard=5).</td>
 <td>SetExitCode</td>
 <td><a id="SetExitCode"></a>Gibt einen Autoit Exitcode zur&uuml;ck, wenn ein schwerwiegender Fehler auftritt.<br />
 0 = (Standard) nicht setzen<br />
-1 = Setzt @exitCode bei schwerwiegenden Fehlern, siehe <a href="../appendix/ExitCodes.htm">AutoIt3 schwerwiegende Fehler Exitcodes</a></td>
+1 = Setzt @exitCode bei schwerwiegenden Fehlern, siehe <a href="../appendix/ExitCodes.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">AutoIt3 schwerwiegende Fehler Exitcodes</a></td>
 </tr>
 <tr>
 <td>TCPTimeout</td>
@@ -235,7 +282,7 @@ Sollten Performanceprobleme bei der Suche nach vielen Fenstern auftreten kann de
 1 = Erkennt den Titel vom Anfang (Standard).<br />
 2 = Erkennt Teile des Titels.<br />
 3 = Erkennt nur den exakten Titel.<br />
-4 = Erweiterter Modus (wurde nur f&uuml;r die R&uuml;ckw&auml;rtskompatibilit&auml;t beibehalten, siehe <a href="../intro/windowsadvanced.htm">Erweiterte Fenstertiteldefinition</a>)<br />
+4 = Erweiterter Modus (wurde nur f&uuml;r die R&uuml;ckw&auml;rtskompatibilit&auml;t beibehalten, siehe <a href="../intro/windowsadvanced.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Erweiterte Fenstertiteldefinition</a>)<br />
 -1 bis -4 = erzwingt Kleinbuchstabenerkennung in &Uuml;bereinstimmung mit anderen Erkennungstypen.</td>
 </tr>
 <tr>
@@ -279,36 +326,36 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <pre>
 <span><span class="S1">; Jede Zeile zum &Auml;ndern kopieren &nbsp;&nbsp;; Der Standardwert ist als erstes angegeben</span>
 
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"CaretCoordMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 1=absolut, 0=relativ, 2=rel. zur Fensterfl&auml;che(client)</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"ExpandEnvStrings"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 0=nicht auswerten, 1=auswerten</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"ExpandVarStrings"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 0=nicht auswerten, 1=auswerten</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"GUICloseOnESC"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 1=ESC beendet, 0=ESC schlie&szlig;t nicht</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"GUICoordMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 1=absolut, 0=relativ, 2=rel. zur Fensterfl&auml;che(client)</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"GUIDataSeparatorChar"</span><span class="S8">,</span><span class="S7">"|"</span><span class="S8">)</span><span class="S0">&nbsp;</span><span class="S1">; "|" ist der Standard</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"GUIOnEventMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 0=ausgeschaltet, 1=OnEvent Modus aktiviert</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"GUIResizeMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 0=keine Gr&ouml;&szlig;en&auml;nderung, konfigurierte Gr&ouml;&szlig;en&auml;nderung (&lt;1024)</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"GUIEventOptions"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0">&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;</span><span class="S1">; 0=Windowsstandard, 1=nur benachrichtigen, 2=GUICtrlRead tab index</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"MouseClickDelay"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 10 msec</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"MouseClickDownDelay"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">)</span><span class="S0"> &nbsp;</span><span class="S1">; 10 msec</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"MouseClickDragDelay"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">250</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; 250 msec</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"MouseCoordMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 1=absolut, 0=relativ, 2=rel. zur Fensterfl&auml;che(client)</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"MustDeclareVars"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 0=nein, 1=erfordert Deklaration</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"PixelCoordMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 1=absolut, 0=relativ, 2=rel. zur Fensterfl&auml;che(client)</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"SendAttachMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 0=nicht anheften, 1=anheften</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"SendCapslockMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 1=speichern und wiederherstellen, 0=ignorieren</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"SendKeyDelay"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">5</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 5 msec</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"SendKeyDownDelay"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 1 msec</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"TCPTimeout"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">)</span><span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; 100 msec</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"TrayAutoPause"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; 0=keine Pause, 1=Pause</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"TrayIconDebug"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 0=keine Info, 1=Debug Zeileninfo</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"TrayIconHide"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 0=zeigen, 1=Icon verstecken</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"TrayMenuMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; 0=anf&uuml;gen, 1=kein Standardmen&uuml;, 2=kein autom. An-/Abhaken, 4=menuitemID nicht zur&uuml;ckgeben</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"TrayOnEventMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0">&nbsp; &nbsp;&nbsp; &nbsp; </span><span class="S1">; 0=ausschalten, 1=einschalten</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"WinDetectHiddenText"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;</span><span class="S1">; 0=nicht erkennen, 1=erkennen</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"WinSearchChildren"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 0=nein, 1=Auch Unter(child)-fenster suchen</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"WinTextMatchMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 1=vollst&auml;ndig, 2=schnell</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"WinTitleMatchMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 1=vom Anfang, 2=enth&auml;lt, 3=genau, 4=fortgeschritten, -1 bis -4=Gro&szlig;-/Klein ignorieren</span>
-<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"WinWaitDelay"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">250</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 250 msec</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"CaretCoordMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 1=absolut, 0=relativ, 2=rel. zur Fensterfl&auml;che(client)</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"ExpandEnvStrings"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 0=nicht auswerten, 1=auswerten</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"ExpandVarStrings"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 0=nicht auswerten, 1=auswerten</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"GUICloseOnESC"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 1=ESC beendet, 0=ESC schlie&szlig;t nicht</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"GUICoordMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 1=absolut, 0=relativ, 2=rel. zur Fensterfl&auml;che(client)</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"GUIDataSeparatorChar"</span><span class="S8">,</span><span class="S7">"|"</span><span class="S8">)</span><span class="S0">&nbsp;</span><span class="S1">; "|" ist der Standard</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"GUIOnEventMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 0=ausgeschaltet, 1=OnEvent Modus aktiviert</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"GUIResizeMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 0=keine Gr&ouml;&szlig;en&auml;nderung, konfigurierte Gr&ouml;&szlig;en&auml;nderung (&lt;1024)</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"GUIEventOptions"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0">&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;</span><span class="S1">; 0=Windowsstandard, 1=nur benachrichtigen, 2=GUICtrlRead tab index</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"MouseClickDelay"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 10 msec</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"MouseClickDownDelay"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">)</span><span class="S0"> &nbsp;</span><span class="S1">; 10 msec</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"MouseClickDragDelay"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">250</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; 250 msec</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"MouseCoordMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 1=absolut, 0=relativ, 2=rel. zur Fensterfl&auml;che(client)</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"MustDeclareVars"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 0=nein, 1=erfordert Deklaration</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"PixelCoordMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 1=absolut, 0=relativ, 2=rel. zur Fensterfl&auml;che(client)</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"SendAttachMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 0=nicht anheften, 1=anheften</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"SendCapslockMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 1=speichern und wiederherstellen, 0=ignorieren</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"SendKeyDelay"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">5</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 5 msec</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"SendKeyDownDelay"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 1 msec</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"TCPTimeout"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">100</span><span class="S8">)</span><span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; 100 msec</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"TrayAutoPause"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; 0=keine Pause, 1=Pause</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"TrayIconDebug"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 0=keine Info, 1=Debug Zeileninfo</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"TrayIconHide"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 0=zeigen, 1=Icon verstecken</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"TrayMenuMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; 0=anf&uuml;gen, 1=kein Standardmen&uuml;, 2=kein autom. An-/Abhaken, 4=menuitemID nicht zur&uuml;ckgeben</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"TrayOnEventMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0">&nbsp; &nbsp;&nbsp; &nbsp; </span><span class="S1">; 0=ausschalten, 1=einschalten</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"WinDetectHiddenText"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;</span><span class="S1">; 0=nicht erkennen, 1=erkennen</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"WinSearchChildren"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 0=nein, 1=Auch Unter(child)-fenster suchen</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"WinTextMatchMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 1=vollst&auml;ndig, 2=schnell</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"WinTitleMatchMode"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 1=vom Anfang, 2=enth&auml;lt, 3=genau, 4=fortgeschritten, -1 bis -4=Gro&szlig;-/Klein ignorieren</span>
+<a class="codeSnippetLink" href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Opt</span></a><span class="S8">(</span><span class="S7">"WinWaitDelay"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">250</span><span class="S8">)</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; 250 msec</span>
 <span class="S0"></span></span>
 </pre>
 </div>

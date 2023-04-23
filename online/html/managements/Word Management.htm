@@ -3,7 +3,52 @@
 <head>
   <title>Benutzerdefinierte Funktionen</title>
   <meta charset="utf-8">
-  <link href="../css/default.css" rel="stylesheet">
+  <link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
@@ -20,79 +65,79 @@ Ein Klick auf einen Funktionsnamen liefert eine detaillierte Beschreibung.</p>
   <th style="width:75%">Beschreibung</th>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Word_Create.htm">_Word_Create</a></td>
+<td><a href="..\..\html\libfunctions\_Word_Create.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Word_Create</a></td>
 <td>Verbindet sich mit einer bestehenden Word Instanz oder erstellt eine neue<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Word_DocAdd.htm">_Word_DocAdd</a></td>
+<td><a href="..\..\html\libfunctions\_Word_DocAdd.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Word_DocAdd</a></td>
 <td>F&uuml;gt ein neues oder leeres Dokument zur angegebenen Word Anwendung hinzu<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Word_DocAttach.htm">_Word_DocAttach</a></td>
+<td><a href="..\..\html\libfunctions\_Word_DocAttach.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Word_DocAttach</a></td>
 <td>Verbindet sich mit der ersten Instanz eines Word Dokumentes mit dem passenden Suchargument (abh&auml;ngig vom ausgew&auml;hlten Modus)<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Word_DocClose.htm">_Word_DocClose</a></td>
+<td><a href="..\..\html\libfunctions\_Word_DocClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Word_DocClose</a></td>
 <td>Schlie&szlig;t das angegebene Word Dokument<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Word_DocExport.htm">_Word_DocExport</a></td>
+<td><a href="..\..\html\libfunctions\_Word_DocExport.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Word_DocExport</a></td>
 <td>Exports the document or a range as PDF or XPS<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Word_DocFind.htm">_Word_DocFind</a></td>
+<td><a href="..\..\html\libfunctions\_Word_DocFind.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Word_DocFind</a></td>
 <td>F&uuml;hrt die angegebene Suchfunktion durh oder wiederholt sie<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Word_DocFindReplace.htm">_Word_DocFindReplace</a></td>
+<td><a href="..\..\html\libfunctions\_Word_DocFindReplace.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Word_DocFindReplace</a></td>
 <td>F&uuml;hrt die angegebene "suchen und ersetzen" Funktion aus<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Word_DocGet.htm">_Word_DocGet</a></td>
+<td><a href="..\..\html\libfunctions\_Word_DocGet.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Word_DocGet</a></td>
 <td>Gibt eine Zusammenstellung aller Dokumente oder das Objekt eines einzelnen Dokumentes zur&uuml;ck<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Word_DocLinkAdd.htm">_Word_DocLinkAdd</a></td>
+<td><a href="..\..\html\libfunctions\_Word_DocLinkAdd.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Word_DocLinkAdd</a></td>
 <td>F&uuml;gt einen Hyperlink in das Dokument ein<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Word_DocLinkGet.htm">_Word_DocLinkGet</a></td>
+<td><a href="..\..\html\libfunctions\_Word_DocLinkGet.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Word_DocLinkGet</a></td>
 <td>Gibt eine Sammlung (Collection) aller Links des Dokumentes oder einen einzelnen Link zur&uuml;ck<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Word_DocOpen.htm">_Word_DocOpen</a></td>
+<td><a href="..\..\html\libfunctions\_Word_DocOpen.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Word_DocOpen</a></td>
 <td>&Ouml;ffnet ein Word Dokument<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Word_DocPictureAdd.htm">_Word_DocPictureAdd</a></td>
+<td><a href="..\..\html\libfunctions\_Word_DocPictureAdd.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Word_DocPictureAdd</a></td>
 <td>F&uuml;gt ein Bild in das DOkument ein<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Word_DocPrint.htm">_Word_DocPrint</a></td>
+<td><a href="..\..\html\libfunctions\_Word_DocPrint.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Word_DocPrint</a></td>
 <td>Druckt das gesamte oder Teile des Dokumentes<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Word_DocRangeSet.htm">_Word_DocRangeSet</a></td>
+<td><a href="..\..\html\libfunctions\_Word_DocRangeSet.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Word_DocRangeSet</a></td>
 <td>Setzt oder &auml;ndert eine Bereichs-Definition (Range) im Dokument<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Word_DocSave.htm">_Word_DocSave</a></td>
+<td><a href="..\..\html\libfunctions\_Word_DocSave.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Word_DocSave</a></td>
 <td>Sichert das angegebene Dokument<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Word_DocSaveAs.htm">_Word_DocSaveAs</a></td>
+<td><a href="..\..\html\libfunctions\_Word_DocSaveAs.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Word_DocSaveAs</a></td>
 <td>Sichert das angegebene Dokument mit einem (neuen) Namen oder einem unterschiedlichen Format<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Word_DocTableRead.htm">_Word_DocTableRead</a></td>
+<td><a href="..\..\html\libfunctions\_Word_DocTableRead.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Word_DocTableRead</a></td>
 <td>Liest eine Word Tabelle und gibt sie als 2-dimensionalen Array zur&uuml;ck<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Word_DocTableWrite.htm">_Word_DocTableWrite</a></td>
+<td><a href="..\..\html\libfunctions\_Word_DocTableWrite.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Word_DocTableWrite</a></td>
 <td>Schreibt einen ein- oder zwei-dimensionalen Array in eine Word Tabelle<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_Word_Quit.htm">_Word_Quit</a></td>
+<td><a href="..\..\html\libfunctions\_Word_Quit.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_Word_Quit</a></td>
 <td>Schlie&szlig;t alle Dokumente sowie die Word Anwendung<br /></td>
 </tr>
 </table>

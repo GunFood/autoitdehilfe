@@ -3,14 +3,61 @@
 <head>
 <title>Function _WinAPI_MapVirtualKey</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Function Reference</h1>
 <hr style="height:0px">
-<h1>_WinAPI_MapVirtualKey</h1>
-<p class="funcdesc">Translates a virtual-key code into a scan code or character value, or translates a scan code into a virtual-key code<br /></p>
+<div class="top"><h1>_WinAPI_MapVirtualKey</h1><div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
+<p style="margin:2px 0 0 0;" class="funcdesc">Translates a virtual-key code into a scan code or character value, or translates a scan code into a virtual-key code<br /></p>
 <p class="codeheader">
 #include &lt;WinAPISys.au3&gt;<br />
 _WinAPI_MapVirtualKey ( $iCode, $iType [, $hLocale = 0] )<br />
@@ -51,12 +98,12 @@ $MAPVK_VSC_TO_VK_EX</td>
 </table>
 
 <h2>Remarks</h2>
-<p>An application can use <a href="_WinAPI_MapVirtualKey.htm">_WinAPI_MapVirtualKey()</a> to translate scan codes to the virtual-key code constants<br />
+<p>An application can use <a href="_WinAPI_MapVirtualKey.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_MapVirtualKey()</a> to translate scan codes to the virtual-key code constants<br />
 $VK_SHIFT, $VK_CONTROL, and $VK_MENU, and vice versa. These translations do not distinguish between the left and<br />
 right instances of the SHIFT, CTRL, or ALT keys.<br />
 <br />
 An application can get the scan code corresponding to the left or right instance of one of these keys by calling<br />
-<a href="_WinAPI_MapVirtualKey.htm">_WinAPI_MapVirtualKey()</a> with $iCode set to one of the following virtual-key code constants.<br />
+<a href="_WinAPI_MapVirtualKey.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_WinAPI_MapVirtualKey()</a> with $iCode set to one of the following virtual-key code constants.<br />
 &nbsp;&nbsp;&nbsp; $VK_LSHIFT<br />
 &nbsp;&nbsp;&nbsp; $VK_RSHIFT<br />
 &nbsp;&nbsp;&nbsp; $VK_LCONTROL<br />
@@ -101,12 +148,12 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;APISysConstants.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPISys.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIvkeysConstants.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;APISysConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPISys.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIvkeysConstants.au3&gt;</span>
 
-<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'Virtual-key code: 0x'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Hex.htm"><span class="S4">Hex</span></a><span class="S8">(</span><span class="S9">$VK_A</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
-<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'Scan code: 0x'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Hex.htm"><span class="S4">Hex</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_MapVirtualKey.htm"><span class="S15">_WinAPI_MapVirtualKey</span></a><span class="S8">(</span><span class="S9">$VK_A</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MAPVK_VK_TO_VSC</span><span class="S8">))</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'Virtual-key code: 0x'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Hex.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Hex</span></a><span class="S8">(</span><span class="S9">$VK_A</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'Scan code: 0x'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Hex.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Hex</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_MapVirtualKey.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_WinAPI_MapVirtualKey</span></a><span class="S8">(</span><span class="S9">$VK_A</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$MAPVK_VK_TO_VSC</span><span class="S8">))</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S8">)</span>
 <span class="S0"></span></span>
 </pre>
 </div>

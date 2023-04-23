@@ -3,7 +3,52 @@
 <head>
   <title>Benutzerdefinierte Funktionen</title>
   <meta charset="utf-8">
-  <link href="../css/default.css" rel="stylesheet">
+  <link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
@@ -20,39 +65,39 @@ Ein Klick auf einen Funktionsnamen liefert eine detaillierte Beschreibung.</p>
   <th style="width:75%">Beschreibung</th>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_ColorConvertHSLtoRGB.htm">_ColorConvertHSLtoRGB</a></td>
+<td><a href="..\..\html\libfunctions\_ColorConvertHSLtoRGB.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_ColorConvertHSLtoRGB</a></td>
 <td>Wandelt Farbwerte vom HSL-System ins RGB-Format um<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_ColorConvertRGBtoHSL.htm">_ColorConvertRGBtoHSL</a></td>
+<td><a href="..\..\html\libfunctions\_ColorConvertRGBtoHSL.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_ColorConvertRGBtoHSL</a></td>
 <td>Wandelt Farbwerte vom RGB-System ins HSL-Format um<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_ColorGetBlue.htm">_ColorGetBlue</a></td>
+<td><a href="..\..\html\libfunctions\_ColorGetBlue.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_ColorGetBlue</a></td>
 <td>Gibt den Blauwert der angegebenen Farbe zur&uuml;ck<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_ColorGetCOLORREF.htm">_ColorGetCOLORREF</a></td>
+<td><a href="..\..\html\libfunctions\_ColorGetCOLORREF.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_ColorGetCOLORREF</a></td>
 <td>Gibt die COLORREF Farbe zur&uuml;ck<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_ColorGetGreen.htm">_ColorGetGreen</a></td>
+<td><a href="..\..\html\libfunctions\_ColorGetGreen.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_ColorGetGreen</a></td>
 <td>Gibt den Gr&uuml;nwert der angegebenen RGB-Farbe zur&uuml;ck<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_ColorGetRed.htm">_ColorGetRed</a></td>
+<td><a href="..\..\html\libfunctions\_ColorGetRed.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_ColorGetRed</a></td>
 <td>Gibt den Rotwert des angegebenen RGB-Farbwertes zur&uuml;ck<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_ColorGetRGB.htm">_ColorGetRGB</a></td>
+<td><a href="..\..\html\libfunctions\_ColorGetRGB.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_ColorGetRGB</a></td>
 <td>Gibt ein Array zur&uuml;ck in welchem die RGB Werte in ihren entsprechenden Positionen enthalten sind<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_ColorSetCOLORREF.htm">_ColorSetCOLORREF</a></td>
+<td><a href="..\..\html\libfunctions\_ColorSetCOLORREF.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_ColorSetCOLORREF</a></td>
 <td>Gibt die COLORREF Farbe zur&uuml;ck<br /></td>
 </tr>
 <tr>
-<td><a href="..\..\html\libfunctions\_ColorSetRGB.htm">_ColorSetRGB</a></td>
+<td><a href="..\..\html\libfunctions\_ColorSetRGB.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_ColorSetRGB</a></td>
 <td>Gibt die RGB Farbe zur&uuml;ck<br /></td>
 </tr>
 </table>

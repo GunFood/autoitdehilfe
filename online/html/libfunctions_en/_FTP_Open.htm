@@ -3,15 +3,62 @@
 <head>
 <title>Function _FTP_Open</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
+	<script type="text/javascript">
+		var aThemes = new Array('default.css','dark.css');
+		var aImages = new Array('dark.png','default.png');
+			
+		class Themes {
+			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
+			static index = 0;
+			static getTheme() {
+				return this.theme;
+			}
+			static setTheme(name) {
+				this.index = (name == 'default') ? 1 : 0;
+				this.toggleTheme();
+			}
+			static storeTheme(idx) {
+				this.theme = aThemes[idx];				
+				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
+				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
+			}
+			static toggleTheme() {
+				this.index = Math.abs(this.index -1);
+				if (this.theme != aThemes[this.index]) {
+					this.storeTheme(this.index);
+				}
+				// *** NUR hier im Test zur Anzeige geladenes Theme ***
+				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
+			}
+		}		
+
+		function getURLParameter(name) {
+			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
+			return (value !== 'null') ? value : false;
+		}
+		
+		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
+		window.addEventListener('load', function(){
+			var themeCurrent = Themes.getTheme();
+			var param = getURLParameter('Theme'); 
+			if (param && themeCurrent != param) {
+				Themes.setTheme(param);
+			}
+			// *** NUR hier im Test zur Anzeige Parameter ***
+			// *** document.getElementById('info').innerText = param;
+		})	
+	</script>	
 </head>
 
 <body>
 <h1 class="small">Function Reference</h1>
 <hr style="height:0px">
-<h1 style="float:left; margin:15px 0 0 0; padding:0 0 0 0;">_FTP_Open</h1><br />
-<a href="../libfunctions/_FTP_Open.htm"><img src="../images/Flagge_de.gif" height="29" width="36" border=0 hspace=10 style="float:right"/></a><br />
-<div style="display:block; text-align:right;">Show description in</div><br />
+<div class="top"><h1>_FTP_Open</h1><div>
+<div id="flagtext">Show description in</div>
+<div id="flaglink"> <a href="../libfunctions/_FTP_Open.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_de.png" height="29" width="36" border=0 hspace=10/></a></div>
+<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Opens an FTP session<br /></p>
 <p class="codeheader">
 #include &lt;FTPEx.au3&gt;<br />
@@ -27,10 +74,10 @@ _FTP_Open ( $sAgent [, $iAccessType = $INTERNET_OPEN_TYPE_DIRECT [, $sProxyName 
 <tr>
 <td>$iAccessType</td>
 <td><strong>[optional]</strong> Set if proxy is used:<br />
-&nbsp;&nbsp;&nbsp; $INTERNET_OPEN_TYPE_DIRECT -> no proxy (Default)<br />
-&nbsp;&nbsp;&nbsp; $INTERNET_OPEN_TYPE_PRECONFIG -> Retrieves the proxy or direct configuration from the registry.<br />
-&nbsp;&nbsp;&nbsp; $INTERNET_OPEN_TYPE_PRECONFIG_WITH_NO_AUTOPROXY -> Retrieves the proxy or direct configuration from the registry and prevents the use of a startup Microsoft JScript or Internet Setup (INS) file.<br />
-&nbsp;&nbsp;&nbsp; $INTERNET_OPEN_TYPE_PROXY -> Passes requests to the proxy unless a proxy bypass list is supplied and the name to be resolved bypasses the proxy. Then no proxy is used.</td>
+&nbsp;&nbsp;&nbsp; $INTERNET_OPEN_TYPE_DIRECT (1) -> no proxy (Default)<br />
+&nbsp;&nbsp;&nbsp; $INTERNET_OPEN_TYPE_PRECONFIG (0)-> Retrieves the proxy or direct configuration from the registry.<br />
+&nbsp;&nbsp;&nbsp; $INTERNET_OPEN_TYPE_PRECONFIG_WITH_NO_AUTOPROXY (4) -> Retrieves the proxy or direct configuration from the registry and prevents the use of a startup Microsoft JScript or Internet Setup (INS) file.<br />
+&nbsp;&nbsp;&nbsp; $INTERNET_OPEN_TYPE_PROXY (3)-> Passes requests to the proxy unless a proxy bypass list is supplied and the name to be resolved bypasses the proxy. Then no proxy is used.</td>
 </tr>
 <tr>
 <td>$sProxyName</td>
@@ -43,8 +90,8 @@ _FTP_Open ( $sAgent [, $iAccessType = $INTERNET_OPEN_TYPE_DIRECT [, $sProxyName 
 <tr>
 <td>$iFlags</td>
 <td><strong>[optional]</strong><br />
-&nbsp;&nbsp;&nbsp; $INTERNET_FLAG_ASYNC -> Makes only asynchronous requests on handles descended from the handle returned from this function.<br />
-&nbsp;&nbsp;&nbsp; $INTERNET_FLAG_FROM_CACHE -> Does not make network requests. All entities are returned from the cache. If the requested item is not in the cache, a suitable error, such as ERROR_FILE_NOT_FOUND, is returned.</td>
+&nbsp;&nbsp;&nbsp; $INTERNET_FLAG_ASYNC (0x10000000) -> Makes only asynchronous requests on handles descended from the handle returned from this function.<br />
+&nbsp;&nbsp;&nbsp; $INTERNET_FLAG_FROM_CACHE (0x01000000)-> Does not make network requests. All entities are returned from the cache. If the requested item is not in the cache, a suitable error, such as ERROR_FILE_NOT_FOUND, is returned.</td>
 </tr>
 </table>
 
@@ -52,7 +99,7 @@ _FTP_Open ( $sAgent [, $iAccessType = $INTERNET_OPEN_TYPE_DIRECT [, $sProxyName 
 <table class="noborder">
 <tr>
 <td style="width:10%" class="valign-top">Success:</td>
-<td style="width:90%">a handle to internet session to be used in <a href="_FTP_Connect.htm">_FTP_Connect()</a>.</td>
+<td style="width:90%">a handle to internet session to be used in <a href="_FTP_Connect.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_Connect()</a>.</td>
 </tr>
 <tr>
 <td class="valign-top">Failure:</td>
@@ -61,7 +108,7 @@ _FTP_Open ( $sAgent [, $iAccessType = $INTERNET_OPEN_TYPE_DIRECT [, $sProxyName 
 </table>
 
 <h2>Related</h2>
-<p><a href="_FTP_Close.htm">_FTP_Close</a>, <a href="_FTP_Connect.htm">_FTP_Connect</a>, <a href="_FTP_SetStatusCallback.htm">_FTP_SetStatusCallback</a></p>
+<p><a href="_FTP_Close.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_Close</a>, <a href="_FTP_Connect.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_Connect</a>, <a href="_FTP_SetStatusCallback.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_FTP_SetStatusCallback</a></p>
 
 <h2>See Also</h2>
 <p>Search <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(InternetOpen);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">InternetOpen</a> in MSDN  Library.
@@ -99,11 +146,11 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;FTPEx.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;FTPEx.au3&gt;</span>
 
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hOpen</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_FTP_Open.htm"><span class="S15">_FTP_Open</span></a><span class="S8">(</span><span class="S7">'MyFTP Control'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hOpen</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_FTP_Open.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_FTP_Open</span></a><span class="S8">(</span><span class="S7">'MyFTP Control'</span><span class="S8">)</span>
 <span class="S1">; ...</span>
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iFtpc</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_FTP_Close.htm"><span class="S15">_FTP_Close</span></a><span class="S8">(</span><span class="S9">$hOpen</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iFtpc</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_FTP_Close.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_FTP_Close</span></a><span class="S8">(</span><span class="S9">$hOpen</span><span class="S8">)</span>
 <span class="S0"></span></span>
 </pre>
 </div>
