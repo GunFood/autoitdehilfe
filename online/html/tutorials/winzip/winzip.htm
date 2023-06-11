@@ -3,63 +3,18 @@
 <head>
 	<title>Tutorial - WinZip</title>
 	<meta charset="utf-8">
-	<link href="../../css/default.css" rel="stylesheet" type="text/css" id="theme" />
-	<script type="text/javascript">
-		var aThemes = new Array('default.css','dark.css');
-		var aImages = new Array('dark.png','default.png');
-			
-		class Themes {
-			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
-			static index = 0;
-			static getTheme() {
-				return this.theme;
-			}
-			static setTheme(name) {
-				this.index = (name == 'default') ? 1 : 0;
-				this.toggleTheme();
-			}
-			static storeTheme(idx) {
-				this.theme = aThemes[idx];				
-				document.getElementById('theme').setAttribute('href', '../../css/' + this.theme);
-				document.getElementById('toggleButton').src = '../../images/' + aImages[idx];
-			}
-			static toggleTheme() {
-				this.index = Math.abs(this.index -1);
-				if (this.theme != aThemes[this.index]) {
-					this.storeTheme(this.index);
-				}
-				// *** NUR hier im Test zur Anzeige geladenes Theme ***
-				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
-			}
-		}		
-
-		function getURLParameter(name) {
-			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
-			return (value !== 'null') ? value : false;
-		}
-		
-		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
-		window.addEventListener('load', function(){
-			var themeCurrent = Themes.getTheme();
-			var param = getURLParameter('Theme'); 
-			if (param && themeCurrent != param) {
-				Themes.setTheme(param);
-			}
-			// *** NUR hier im Test zur Anzeige Parameter ***
-			// *** document.getElementById('info').innerText = param;
-		})	
-	</script>	
+	<link href="../../css/default.css" rel="stylesheet">
 </head>
 <body>
 	<h1>Tutorial - WinZip</h1>
-	<p>Dieses Tutorial zeigt dir, wie man die Installation <a class="ext" href="http://www.winzip.com/">WinZip 9 SR-1</a> automatisieren kann. Es wird vorausgesetzt, dass du Skripte in AutoIt schreiben und ausf&uuml;hren, sowie das <a href="../../intro/au3spy.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">AutoIt v3 Window Information Tool</a> benutzen kannst, um Fenstertitel und -texte herauszufinden. All das wird in den Tutorials <a href="../helloworld/helloworld.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">HalloWelt</a> und <a href="../notepad/notepad.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Notepad</a> gezeigt.</p>
+	<p>Dieses Tutorial zeigt dir, wie man die Installation <a class="ext" href="http://www.winzip.com/">WinZip 9 SR-1</a> automatisieren kann. Es wird vorausgesetzt, dass du Skripte in AutoIt schreiben und ausf&uuml;hren, sowie das <a href="../../intro/au3spy.htm">AutoIt v3 Window Information Tool</a> benutzen kannst, um Fenstertitel und -texte herauszufinden. All das wird in den Tutorials <a href="../helloworld/helloworld.htm">HalloWelt</a> und <a href="../notepad/notepad.htm">Notepad</a> gezeigt.</p>
 	<p></p>
-	<p>Die WinZip-Installation umfasst ca. 10 Dialoge, in denen man Schaltfl&auml;chen dr&uuml;cken musste (normalerweise <strong>Weiter [engl. Next]</strong>), um mit der Installation fortzufahren. Wir werden ein Skript schreiben, das einfach auf diese Dialogfenster wartet und dann die richtigen Schaltfl&auml;chen dr&uuml;ckt. Wie bei derartigen Installationen &uuml;blich bleibt der Titel dieser Dialoge gleich (hier: WinZip Setup), sodass wir die Dialogfenster im Skript unterscheiden m&uuml;ssen. Ich habe euch Screenshots jedes einzelnen Fensters gemacht und wenn du auf das jeweilige Bild klickst, erh&auml;ltst du die zugeh&ouml;rigen <a href="../../intro/au3spy.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Window Information Tool</a> Ergebnisse f&uuml;r den Dialog.</p>
+	<p>Die WinZip-Installation umfasst ca. 10 Dialoge, in denen man Schaltfl&auml;chen dr&uuml;cken musste (normalerweise <strong>Weiter [engl. Next]</strong>), um mit der Installation fortzufahren. Wir werden ein Skript schreiben, das einfach auf diese Dialogfenster wartet und dann die richtigen Schaltfl&auml;chen dr&uuml;ckt. Wie bei derartigen Installationen &uuml;blich bleibt der Titel dieser Dialoge gleich (hier: WinZip Setup), sodass wir die Dialogfenster im Skript unterscheiden m&uuml;ssen. Ich habe euch Screenshots jedes einzelnen Fensters gemacht und wenn du auf das jeweilige Bild klickst, erh&auml;ltst du die zugeh&ouml;rigen <a href="../../intro/au3spy.htm">Window Information Tool</a> Ergebnisse f&uuml;r den Dialog.</p>
 	<p></p>
 	<p>Lege zuerst ein Verzeichnis an, das wir f&uuml;r die WinZip-Installationsroutine und unser Skript benutzen werden. Kopiere die WinZip-Installationsroutine in das Verzeichnis und lege ein leeres Skript namens <strong>winzipinstall.au3</strong> an.</p>
 	<p><img alt="" border="0" src="folder.png"></p>
 	<p></p>
-	<p>Wir f&uuml;hren nun die Installation von Hand durch und schreiben quasi "nebenher" das Skript. Die zur Automation n&ouml;tigen Skriptzeilen werden nach jedem Bild gezeigt (vergiss nicht, dass "hinter" den Bildern das Ergebnis der Anwendung des Window Information Tool schlummert!). Du kannst dir stattdessen auch das <a href="script.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">komplette Skript</a> ansehen.</p>
+	<p>Wir f&uuml;hren nun die Installation von Hand durch und schreiben quasi "nebenher" das Skript. Die zur Automation n&ouml;tigen Skriptzeilen werden nach jedem Bild gezeigt (vergiss nicht, dass "hinter" den Bildern das Ergebnis der Anwendung des Window Information Tool schlummert!). Du kannst dir stattdessen auch das <a href="script.htm">komplette Skript</a> ansehen.</p>
 	<p></p>
 	<p>Die erste Skriptzeile ist einfach: Wir wollen die Datei <strong>winzip90.exe</strong> starten:</p>
 @@SyntaxHighlighting@@
@@ -136,7 +91,7 @@ Send("!n")
 
   <p>&nbsp;</p>
   <p><a href="dialog9.txt"><img src="dialog9.png" alt="" border="0"></a></p>
-	<p>Das ist das letzte Dialogfenster der Installation. Beachte, dass der <strong>Finish</strong>-Button keinen Tastatur-Shortcut besitzt - zum Gl&uuml;ck ist er ohnehin der Standardbutton, sodass wir einfach ENTER dr&uuml;cken k&ouml;nnen. Wenn das nicht so w&auml;re, k&ouml;nnten wir mittels der ALT-Taste zwischen den Controls hin- und herspringen oder - noch besser - die <a href="../../functions/ControlClick.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ControlClick</a>-Funktion benutzen.</p>
+	<p>Das ist das letzte Dialogfenster der Installation. Beachte, dass der <strong>Finish</strong>-Button keinen Tastatur-Shortcut besitzt - zum Gl&uuml;ck ist er ohnehin der Standardbutton, sodass wir einfach ENTER dr&uuml;cken k&ouml;nnen. Wenn das nicht so w&auml;re, k&ouml;nnten wir mittels der ALT-Taste zwischen den Controls hin- und herspringen oder - noch besser - die <a href="../../functions/ControlClick.htm">ControlClick</a>-Funktion benutzen.</p>
 @@SyntaxHighlighting@@
 WinWaitActive("WinZip Setup", "Thank you for installing this evaluation version")
 Send("{ENTER}")
@@ -145,17 +100,17 @@ Send("{ENTER}")
   <p>&nbsp;</p>
 	<p>Nach der Installation starten WinZip automatisch:<br></p>
   <p><a href="dialog10.txt"><img src="dialog10.png" alt="" border="0"></a></p>
-	<p>Wir warten einfach auf das Fenster und benutzen dann die <a href="../../functions/WinClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">WinClose</a>-Funktion, um es direkt wieder zu schlie&szlig;en.<br></p>
+	<p>Wir warten einfach auf das Fenster und benutzen dann die <a href="../../functions/WinClose.htm">WinClose</a>-Funktion, um es direkt wieder zu schlie&szlig;en.<br></p>
 @@SyntaxHighlighting@@
 WinWaitActive("WinZip (Evaluation Version)")
 WinClose("WinZip (Evaluation Version)")
 @@End@@
 
   <p>&nbsp;</p>
-	<p>Hier das <a href="script.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">komplette Skript</a> - ich habe jedes Fenster kommentiert, damit sich das Skript leichter verstehen l&auml;sst.</p>
+	<p>Hier das <a href="script.htm">komplette Skript</a> - ich habe jedes Fenster kommentiert, damit sich das Skript leichter verstehen l&auml;sst.</p>
 	<p></p>
 	<p>Das war es schon! F&uuml;hre die Datei <strong>winzipinstaller.au3</strong> aus und sieh dir an, wie WinZip in wenigen Sekunden installiert wird. Die hier erlernten Techniken helfen dir, die meisten Installationen zu automatisieren.</p>
 	<p></p>
-	<p>Kleine Aufgabe: Benutze statt der Send-Funktion die <a href="../../functions/ControlClick.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ControlClick</a>-Funktion.Dazu musst du vermutlich bei <a href="../../intro/controls.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Controls</a> weiter lesen.<br></p>
+	<p>Kleine Aufgabe: Benutze statt der Send-Funktion die <a href="../../functions/ControlClick.htm">ControlClick</a>-Funktion.Dazu musst du vermutlich bei <a href="../../intro/controls.htm">Controls</a> weiter lesen.<br></p>
 </body>
 </html>

@@ -3,58 +3,13 @@
 <head>
 	<title>Controls</title>
 	<meta charset="utf-8">
-	<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
-	<script type="text/javascript">
-		var aThemes = new Array('default.css','dark.css');
-		var aImages = new Array('dark.png','default.png');
-			
-		class Themes {
-			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
-			static index = 0;
-			static getTheme() {
-				return this.theme;
-			}
-			static setTheme(name) {
-				this.index = (name == 'default') ? 1 : 0;
-				this.toggleTheme();
-			}
-			static storeTheme(idx) {
-				this.theme = aThemes[idx];				
-				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
-				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
-			}
-			static toggleTheme() {
-				this.index = Math.abs(this.index -1);
-				if (this.theme != aThemes[this.index]) {
-					this.storeTheme(this.index);
-				}
-				// *** NUR hier im Test zur Anzeige geladenes Theme ***
-				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
-			}
-		}		
-
-		function getURLParameter(name) {
-			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
-			return (value !== 'null') ? value : false;
-		}
-		
-		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
-		window.addEventListener('load', function(){
-			var themeCurrent = Themes.getTheme();
-			var param = getURLParameter('Theme'); 
-			if (param && themeCurrent != param) {
-				Themes.setTheme(param);
-			}
-			// *** NUR hier im Test zur Anzeige Parameter ***
-			// *** document.getElementById('info').innerText = param;
-		})	
-	</script>	
+	<link href="../css/default.css" rel="stylesheet">
 </head>
 <body>
 	<h1>Controls</h1>
 	<p>Eines der besten Features von AutoIt v3 ist die M&ouml;glichkeit, direkt mit verschiedenen Arten von <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/bb773169(v=vs.85).aspx">Window Controls</a> zu arbeiten. Fast alles, was man in einem Fenster sieht, ist in irgendeiner Form ein Control: Ein Button, eine Listbox, ein Eingabefeld (Edit), ein statischer Text..., all das sind Controls. Notepad ist &uuml;brigens einfach ein gro&szlig;es Eingabefeld (Edit)! Weil AutoIt direkt mit dem Control zusammen arbeitet, ist die Verwendung von Funktionen zuverl&auml;ssiger als das Senden von Tastendr&uuml;cken.</p>
 	<p><strong>Hinweis</strong>: AutoIt kann nur mit <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/bb773169(v=vs.85).aspx">standard-konformen Windows-Controls</a> zusammenarbeiten - manche Anwendungen haben ihre eigenen Spezial-Controls, die vielleicht so &auml;hnlich wie die Microsoft-Controls aussehen, aber oft nicht automatisierbar sind. Ausprobieren!</p>
-	<p>Mit dem <a href="au3spy.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">AutoIt Window Info Tool</a> kann die Maus &uuml;ber Controls gehalten werden, um alle relevanten Informationen dar&uuml;ber zu erhalten. Die Controls enthalten folgende <em>Eigenschafts-</em>Informationen:</p>
+	<p>Mit dem <a href="au3spy.htm">AutoIt Window Info Tool</a> kann die Maus &uuml;ber Controls gehalten werden, um alle relevanten Informationen dar&uuml;ber zu erhalten. Die Controls enthalten folgende <em>Eigenschafts-</em>Informationen:</p>
 	<p>Eine spezielle Beschreibung kann als der <strong>controlID</strong>-Parameter verwendet werden, der in den meisten der Funktionen Control ... () verwendet wird. Diese Beschreibung kann verwendet werden, um ein Steuerelement durch die folgenden Eigenschaften zu identifizieren: </ p>
 	<ul>
 		<li><strong>ID -</strong> Die Control-ID ist die interne Identifizierungsnummer, die das Fenster jedem Control zuweist. Es ist im Allgemeinen die beste Methode, Controls sicher zu identifizieren. Zus&auml;tzlich zum AutoIt-Window-Info-Tool k&ouml;nnen z.B. auch Screenreader f&uuml;r die blinden und von Microsoft stammenden Tools/APIs die ControlIDs auslesen.</li>
@@ -62,7 +17,7 @@
 		<li><strong>CLASS -</strong> Interner Control-Klassenname (Classname), z.B. "Edit" oder "Button"</li>
 		<li><strong>CLASSNN -</strong> Der ClassNameNN-Wert, wie er in fr&uuml;heren AutoIt-Versionen Verwendung fand, z.B. "Edit1".</li>
 		<li><strong>NAME</strong> - Der interne .NET Framework WinForms Name (falls verf&uuml;gbar)</li>
-		<li><strong>REGEXPCLASS -</strong> Der Control-Klassenname verwendet einen <a href="../functions/StringRegExp.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">regul&auml;ren Ausdruck</a></li>
+		<li><strong>REGEXPCLASS -</strong> Der Control-Klassenname verwendet einen <a href="../functions/StringRegExp.htm">regul&auml;ren Ausdruck</a></li>
 		<li><strong>X</strong> \ <strong>Y</strong> \ <strong>W</strong> \ <strong>H</strong> - Die Position und Gr&ouml;&szlig;e eines Controls.</li>
 		<li><strong>INSTANCE -</strong> Die 1-basierende Instanz, wenn alle angegebenen Eigenschaften &uuml;bereinstimmen</li>
 	</ul>
@@ -116,9 +71,9 @@ ControlClick("Mein Fenster", "", "[CLASS:Button; TEXT:Fertig; INSTANCE:2]")
   <p>&nbsp;</p>
 
 	<h2>Control-Handle (HWND)</h2>
-	<p>Mit der <a href="../functions/ControlGetHandle.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ControlGetHandle</a>-Funktion kann das <em>Handle</em> oder <em>HWND</em> eines Controls bestimmt werden. Ein Handle ist ein eindeutiger Wert, den Windows f&uuml;r Controls vergibt. Das Handle ver&auml;ndert sich <em>jedesmal, wenn das Control erstellt wird.</em> Diese Methode ist eigentlich nur f&uuml;r Nutzer gedacht, die im Umgang mit Handles ge&uuml;bt sind.</p>
+	<p>Mit der <a href="../functions/ControlGetHandle.htm">ControlGetHandle</a>-Funktion kann das <em>Handle</em> oder <em>HWND</em> eines Controls bestimmt werden. Ein Handle ist ein eindeutiger Wert, den Windows f&uuml;r Controls vergibt. Das Handle ver&auml;ndert sich <em>jedesmal, wenn das Control erstellt wird.</em> Diese Methode ist eigentlich nur f&uuml;r Nutzer gedacht, die im Umgang mit Handles ge&uuml;bt sind.</p>
 	<p></p>
 	<p></p>
-	<p>Siehe auch im Inhalt unter <strong><a href="../functions/ControlCommand.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Funktionsreferenz \ Fenstermanagement \ Controls</a></strong> eine Liste der Funktionen, die mit Controls zusammenarbeiten.</p>
+	<p>Siehe auch im Inhalt unter <strong><a href="../functions/ControlCommand.htm">Funktionsreferenz \ Fenstermanagement \ Controls</a></strong> eine Liste der Funktionen, die mit Controls zusammenarbeiten.</p>
 </body>
 </html>

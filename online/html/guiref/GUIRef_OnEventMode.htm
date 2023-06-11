@@ -3,59 +3,14 @@
 <head>
 	<title>GUI-Referenz - OnEvent Modus</title>
 	<meta charset="utf-8">
-	<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
-	<script type="text/javascript">
-		var aThemes = new Array('default.css','dark.css');
-		var aImages = new Array('dark.png','default.png');
-			
-		class Themes {
-			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
-			static index = 0;
-			static getTheme() {
-				return this.theme;
-			}
-			static setTheme(name) {
-				this.index = (name == 'default') ? 1 : 0;
-				this.toggleTheme();
-			}
-			static storeTheme(idx) {
-				this.theme = aThemes[idx];				
-				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
-				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
-			}
-			static toggleTheme() {
-				this.index = Math.abs(this.index -1);
-				if (this.theme != aThemes[this.index]) {
-					this.storeTheme(this.index);
-				}
-				// *** NUR hier im Test zur Anzeige geladenes Theme ***
-				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
-			}
-		}		
-
-		function getURLParameter(name) {
-			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
-			return (value !== 'null') ? value : false;
-		}
-		
-		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
-		window.addEventListener('load', function(){
-			var themeCurrent = Themes.getTheme();
-			var param = getURLParameter('Theme'); 
-			if (param && themeCurrent != param) {
-				Themes.setTheme(param);
-			}
-			// *** NUR hier im Test zur Anzeige Parameter ***
-			// *** document.getElementById('info').innerText = param;
-		})	
-	</script>	
+	<link href="../css/default.css" rel="stylesheet">
 </head>
 <body>
 	<h1>GUI-Referenz - OnEvent Modus</h1>
 	<p>Anstatt die GUI st&auml;ndig abzufragen, um herauszufinden ob etwas passiert ist, l&auml;sst du im OnEvent Modus die GUI zeitweise dein Skript anhalten und eine vordefinierte Funktion aufrufen, um das Ereignis zu behandeln. Wenn zum Beispiel ein Nutzer auf Button1 klickt, h&auml;lt die GUI dein Hauptskript an und ruft eine vorher von dir definierte Funktion auf, die f&uuml;r Button1 zust&auml;ndig ist. Wenn diese Funktion abgearbeitet ist, wird das Hauptskript fortgesetzt. Dieser Modus ist &auml;hnlich wie die Visual Basic Formular-Methode.</p>
 	<p>W&auml;hrend die GUI ausgef&uuml;hrt wird, kann dein Hauptskript jede normale Skriptaufgabe ausf&uuml;hren, aber um das Beispiel m&ouml;glichst einfach zu machen, lassen wir das Hauptskript einfach eine endlose While-Schleife ausf&uuml;hren.<br>
   Die While-Schleife muss auf Sleep() beschr&auml;nkt werden, um die CPU-Auslastung zu reduzieren. Keine Aktion auf der GUI innerhalb der Schleife.</p>
-	<p>Der voreingestellte Modus ist der MessageLoop Modus, deshalb m&uuml;ssen wir vor dem Benutzen des OnEvent Modus <a href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#GUIOnEventMode>Opt("GUIOnEventMode", 1)</a> verwenden.</p>
+	<p>Der voreingestellte Modus ist der MessageLoop Modus, deshalb m&uuml;ssen wir vor dem Benutzen des OnEvent Modus <a href="../functions/AutoItSetOption.htm#GUIOnEventMode">Opt("GUIOnEventMode", 1)</a> verwenden.</p>
 	<p></p>
 	<h2>Grundlegendes OnEvent Format</h2>
 	<p>Der allgemeine OnEvent Code sieht so aus:</p>
@@ -79,7 +34,7 @@ EndFunc   ;==>Event2
 		<li>Control-Ereignis</li>
 		<li>System-Ereignis</li>
 	</ul>
-	<p>Beide Ereignistypen rufen eine nutzerdefinierte Funktion auf, wenn eine für die GUI definiert wurde (<a href="../functions/GUISetOnEvent.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUISetOnEvent</a>) oder wenn sie für ein Control definiert wurde (<a href="../functions/GUICtrlSetOnEvent.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlSetOnEvent</a>). Wenn keine Funktion für ein Ereignis definiert wurde, dann wird dieses Ereignis einfach ignoriert. Innerhalb dieser aufgerufenen Funktion werden verschiedene Makros als Werte verwendet um die Ereignisbehandlung zu vereinfachen.</p>
+	<p>Beide Ereignistypen rufen eine nutzerdefinierte Funktion auf, wenn eine für die GUI definiert wurde (<a href="../functions/GUISetOnEvent.htm">GUISetOnEvent</a>) oder wenn sie für ein Control definiert wurde (<a href="../functions/GUICtrlSetOnEvent.htm">GUICtrlSetOnEvent</a>). Wenn keine Funktion für ein Ereignis definiert wurde, dann wird dieses Ereignis einfach ignoriert. Innerhalb dieser aufgerufenen Funktion werden verschiedene Makros als Werte verwendet um die Ereignisbehandlung zu vereinfachen.</p>
   <table>
     <tr>
       <th>Makro</th>
@@ -101,10 +56,10 @@ EndFunc   ;==>Event2
 	<p><strong>Beachte:</strong> Es ist völlig legal, die gleiche Funktion für mehrere Ereignisse zu verwenden; alles, was du in diesen Fällen tun musst, ist das @GUI_CTRLID Makro zu verwenden. Zum Beispiel könntest du alle System-Ereignisse der gleichen Funktion zuordnen.</p>
 	<p></p>
 	<p><strong>Control-Ereignis</strong></p>
-	<p>Wenn ein Control angeklickt wird oder sich verändert wird ein Control-Event gesendet. Das Ereignis wird an die Funktion gesendet, die mit <a href="../functions/GUICtrlSetOnEvent.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlSetOnEvent</a> definiert wurde. Innerhalb der nutzerdefinierten Funktion wird @GUI_CTRLID auf die <strong>Control-ID</strong> gesetzt, die man beim anlegen des Controls mit <a href="GUICtrlCreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreate...</a> als Rückgabewert erhalten hat.</p>
+	<p>Wenn ein Control angeklickt wird oder sich verändert wird ein Control-Event gesendet. Das Ereignis wird an die Funktion gesendet, die mit <a href="../functions/GUICtrlSetOnEvent.htm">GUICtrlSetOnEvent</a> definiert wurde. Innerhalb der nutzerdefinierten Funktion wird @GUI_CTRLID auf die <strong>Control-ID</strong> gesetzt, die man beim anlegen des Controls mit <a href="GUICtrlCreate.htm">GUICtrlCreate...</a> als Rückgabewert erhalten hat.</p>
 	<p></p>
 	<p><strong>System-Ereignis</strong></p>
-	<p>System-Ereignisse - wie das Schließen der GUI - werden auf ähnliche Weise wie Control-Ereignisse geschickt, aber der Ereignistyp wird durch @GUI_CTRLID definiert. Das Ereignis wird an die Funktion geschickt, die mit <a href="../functions/GUISetOnEvent.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUISetOnEvent</a> definiert wurde. Die möglichen System-Ereignisse sind hier aufgelistet:</p>
+	<p>System-Ereignisse - wie das Schließen der GUI - werden auf ähnliche Weise wie Control-Ereignisse geschickt, aber der Ereignistyp wird durch @GUI_CTRLID definiert. Das Ereignis wird an die Funktion geschickt, die mit <a href="../functions/GUISetOnEvent.htm">GUISetOnEvent</a> definiert wurde. Die möglichen System-Ereignisse sind hier aufgelistet:</p>
 @@SyntaxHighlighting@@
 $GUI_EVENT_CLOSE
 $GUI_EVENT_MINIMIZE
@@ -120,7 +75,7 @@ $GUI_EVENT_DROPPED
 @@End@@
 
 	<h2>Beispiel-GUI</h2>
-	<p>Auf der Hauptseite der <a href="GUIRef.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUI Referenz</a> haben wir mit einem einfachen "Hallo Welt!" Beispiel angefangen, das so aussah:</p>
+	<p>Auf der Hauptseite der <a href="GUIRef.htm">GUI Referenz</a> haben wir mit einem einfachen "Hallo Welt!" Beispiel angefangen, das so aussah:</p>
 @@SyntaxHighlighting@@
 #include <GUIConstantsEx.au3>
 
@@ -207,7 +162,7 @@ EndFunc   ;==>CLOSEButton
 
   <p>&nbsp;</p>
 
-	<p>Die erste wesentliche &Auml;nderung ist der Aufruf der <a href="../functions/GUISwitch.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUISwitch</a>Funktion - wenn ein neues Fenster angelegt wird, wird es zum "default"-Fenster f&uuml;r zuk&uuml;nftige GUI-Operationen (einschlie&szlig;lich dem Anlegen von Controls). In unserem Fall wollen wir mit dem Hauptfenster "Hallo Welt" arbeiten, nicht mit dem Testfenster, deshalb schalten wir um ("switch". ). Einige GUI-Funktionen erlauben dir, den Fenster-Handle im Funktionsaufruf selbst zu verwenden - diese Funktionen werden automatisch umschalten. In unserem Beispiel h&auml;tten wir das so machen k&ouml;nnen:</p>
+	<p>Die erste wesentliche &Auml;nderung ist der Aufruf der <a href="../functions/GUISwitch.htm">GUISwitch</a>Funktion - wenn ein neues Fenster angelegt wird, wird es zum "default"-Fenster f&uuml;r zuk&uuml;nftige GUI-Operationen (einschlie&szlig;lich dem Anlegen von Controls). In unserem Fall wollen wir mit dem Hauptfenster "Hallo Welt" arbeiten, nicht mit dem Testfenster, deshalb schalten wir um ("switch". ). Einige GUI-Funktionen erlauben dir, den Fenster-Handle im Funktionsaufruf selbst zu verwenden - diese Funktionen werden automatisch umschalten. In unserem Beispiel h&auml;tten wir das so machen k&ouml;nnen:</p>
 @@SyntaxHighlighting@@
 GUISetState(@SW_SHOW, $hMainGUI)
 @@End@@

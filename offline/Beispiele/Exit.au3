@@ -1,0 +1,3 @@
+; sehr einfaches Skript
+
+Exit

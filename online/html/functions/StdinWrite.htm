@@ -3,52 +3,7 @@
 <head>
 <title>Funktion StdinWrite</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
-	<script type="text/javascript">
-		var aThemes = new Array('default.css','dark.css');
-		var aImages = new Array('dark.png','default.png');
-			
-		class Themes {
-			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
-			static index = 0;
-			static getTheme() {
-				return this.theme;
-			}
-			static setTheme(name) {
-				this.index = (name == 'default') ? 1 : 0;
-				this.toggleTheme();
-			}
-			static storeTheme(idx) {
-				this.theme = aThemes[idx];				
-				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
-				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
-			}
-			static toggleTheme() {
-				this.index = Math.abs(this.index -1);
-				if (this.theme != aThemes[this.index]) {
-					this.storeTheme(this.index);
-				}
-				// *** NUR hier im Test zur Anzeige geladenes Theme ***
-				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
-			}
-		}		
-
-		function getURLParameter(name) {
-			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
-			return (value !== 'null') ? value : false;
-		}
-		
-		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
-		window.addEventListener('load', function(){
-			var themeCurrent = Themes.getTheme();
-			var param = getURLParameter('Theme'); 
-			if (param && themeCurrent != param) {
-				Themes.setTheme(param);
-			}
-			// *** NUR hier im Test zur Anzeige Parameter ***
-			// *** document.getElementById('info').innerText = param;
-		})	
-	</script>	
+<link href="../css/default.css" rel="stylesheet">
 </head>
 
 <body>
@@ -56,8 +11,7 @@
 <hr style="height:0px">
 <div class="top"><h1>StdinWrite</h1><div>
 <div id="flagtext">Beschreibung anzeigen in</div>
-<div id="flaglink"> <a href="../functions_en/StdinWrite.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_en.png" height="29" width="36" border=0 hspace=10/></a></div>
-<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<div id="flaglink"> <a href="../functions_en/StdinWrite.htm"><img src="../images/Flagge_en.png" height="29" width="36" border=0 hspace=10/></a></div>
 <br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Schreibt eine Anzahl von Zeichen in den STDIN-Stream eines zuvor gestarteten Child-Prozesses.<br /></p>
 <p class="codeheader">
@@ -89,19 +43,19 @@ StdinWrite ( process_id [, data] )<br />
 </table>
 
 <h2>Bemerkungen</h2>
-<p><a href="StdinWrite.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdinWrite()</a> schreibt in den Konsolen-Standard-Eingabe-Stream eines Child-Prozesses, der normalerweise von Konsolen-Applikationen genutzt wird, um Benutzereingaben zu lesen, z.B. von der Tastatur. Beim Aufrufs von <a href="Run.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Run</a> f&uuml;r den Child-Prozess, in den man schreiben m&ouml;chte, muss der STD I/O Parameter den Wert von $Stdin_Child (1) enthalten, damit diese Funktion richtig arbeitet (siehe die Funktion <a href="Run.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Run</a>).<br />
+<p><a href="StdinWrite.htm">StdinWrite()</a> schreibt in den Konsolen-Standard-Eingabe-Stream eines Child-Prozesses, der normalerweise von Konsolen-Applikationen genutzt wird, um Benutzereingaben zu lesen, z.B. von der Tastatur. Beim Aufrufs von <a href="Run.htm">Run</a> f&uuml;r den Child-Prozess, in den man schreiben m&ouml;chte, muss der STD I/O Parameter den Wert von $Stdin_Child (1) enthalten, damit diese Funktion richtig arbeitet (siehe die Funktion <a href="Run.htm">Run</a>).<br />
 <br />
-Der zweite, optionale, Parameter enth&auml;lt den String, den man mit <a href="StdinWrite.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdinWrite()</a> in den Stream schreiben m&ouml;chte. Wenn die Funktion ohne zweites Argument aufgerufen wird, dann schlie&szlig;t <a href="StdinWrite.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdinWrite()</a> den Stream und macht weiteres Schreiben in ihn ung&uuml;ltig.<br />
+Der zweite, optionale, Parameter enth&auml;lt den String, den man mit <a href="StdinWrite.htm">StdinWrite()</a> in den Stream schreiben m&ouml;chte. Wenn die Funktion ohne zweites Argument aufgerufen wird, dann schlie&szlig;t <a href="StdinWrite.htm">StdinWrite()</a> den Stream und macht weiteres Schreiben in ihn ung&uuml;ltig.<br />
 <br />
-Der Stream ist ein FIFO Puffer willk&uuml;rlicher Gr&ouml;sse. Sollte, wann immer die Funktion aufgerufen wird (es sei denn, sie wird aufgerufen, um den Stream zu schliessen) nicht gen&uuml;gend Platz sein, um Zeichen in den Stream zu schreiben, blockiert (pausiert) <a href="StdinWrite.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdinWrite()</a>, bis der Child-Prozess den Stream schlie&szlig;t oder gen&uuml;gend Zeichen aus dem Stream liest, um den Schreibvorgang zu vollenden. Das bedeutet, der AutoIt Prozess wird solange gestoppt -und es findet keine Verarbeitung von Hotkeys, GUI-Nachrichten, etc. statt- bis der Child-Prozess aus dem STDIN-Stream liest.<br />
+Der Stream ist ein FIFO Puffer willk&uuml;rlicher Gr&ouml;sse. Sollte, wann immer die Funktion aufgerufen wird (es sei denn, sie wird aufgerufen, um den Stream zu schliessen) nicht gen&uuml;gend Platz sein, um Zeichen in den Stream zu schreiben, blockiert (pausiert) <a href="StdinWrite.htm">StdinWrite()</a>, bis der Child-Prozess den Stream schlie&szlig;t oder gen&uuml;gend Zeichen aus dem Stream liest, um den Schreibvorgang zu vollenden. Das bedeutet, der AutoIt Prozess wird solange gestoppt -und es findet keine Verarbeitung von Hotkeys, GUI-Nachrichten, etc. statt- bis der Child-Prozess aus dem STDIN-Stream liest.<br />
 <br />
 Zeichen werden in ANSI umgewandelt bevor diese geschrieben werden.<br />
 <br />
-Bin&auml;rdaten werden so geschrieben wie sie sind. Sie werden nicht in einen String umgewandelt. Um die hex Darstellung von Bin&auml;rdaten auszugebenen ist die <a href="String.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">String()</a>-Funktion zu verwenden. Dadurch werden die Daten explizit in einen String umgewandelt.<br />
+Bin&auml;rdaten werden so geschrieben wie sie sind. Sie werden nicht in einen String umgewandelt. Um die hex Darstellung von Bin&auml;rdaten auszugebenen ist die <a href="String.htm">String()</a>-Funktion zu verwenden. Dadurch werden die Daten explizit in einen String umgewandelt.<br />
 </p>
 
 <h2>Verwandte Funktionen</h2>
-<p><a href="Run.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Run</a>, <a href="RunAs.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">RunAs</a>, <a href="StderrRead.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StderrRead</a>, <a href="StdioClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdioClose</a>, <a href="StdoutRead.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdoutRead</a></p>
+<p><a href="Run.htm">Run</a>, <a href="RunAs.htm">RunAs</a>, <a href="StderrRead.htm">StderrRead</a>, <a href="StdioClose.htm">StdioClose</a>, <a href="StdoutRead.htm">StdoutRead</a></p>
 
 <h2 class="bottom">Beispiel</h2>
 <script type="text/javascript">
@@ -135,31 +89,31 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;AutoItConstants.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;AutoItConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
 
 <span class="S0">Example</span><span class="S8">()</span>
 
-<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iPID</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Run.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Run</span></a><span class="S8">(</span><span class="S7">"sort.exe"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@SystemDir><span class="S6">@SystemDir</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@SW_HIDE><span class="S6">@SW_HIDE</span></a><span class="S8">,</span><span class="S0"> </span><span class="S9">$STDIN_CHILD</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">+</span></a><span class="S0"> </span><span class="S9">$STDOUT_CHILD</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iPID</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Run.htm"><span class="S4">Run</span></a><span class="S8">(</span><span class="S7">"sort.exe"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@SystemDir"><span class="S6">@SystemDir</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@SW_HIDE"><span class="S6">@SW_HIDE</span></a><span class="S8">,</span><span class="S0"> </span><span class="S9">$STDIN_CHILD</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S9">$STDOUT_CHILD</span><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Schreibt den zu sortierenden String in sort.exe's STDIN</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/StdinWrite.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">StdinWrite</span></a><span class="S8">(</span><span class="S9">$iPID</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Banana"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Elephant"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Apple"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Deer"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Car"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/StdinWrite.htm"><span class="S4">StdinWrite</span></a><span class="S8">(</span><span class="S9">$iPID</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Banana"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Elephant"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Apple"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Deer"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Car"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Der Aufruf von StdinWrite ohne den zweiten Parameter schlie&szlig;t den Stream.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/StdinWrite.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">StdinWrite</span></a><span class="S8">(</span><span class="S9">$iPID</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/StdinWrite.htm"><span class="S4">StdinWrite</span></a><span class="S8">(</span><span class="S9">$iPID</span><span class="S8">)</span>
 
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sOutput</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">""</span><span class="S0"> </span><span class="S1">; Speichert die Ausgbabe von StdoutRead in einer Variablen.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sOutput</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">""</span><span class="S0"> </span><span class="S1">; Speichert die Ausgbabe von StdoutRead in einer Variablen.</span>
 
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sOutput</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StdoutRead.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">StdoutRead</span></a><span class="S8">(</span><span class="S9">$iPID</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Liest den Stdout Stream der von Run zur&uuml;ckgegebenen PID.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@error><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Then</span></a><span class="S0"> </span><span class="S1">; Beendet die Schleife falls der Prozess beendet wurde oder StdoutRead einen Fehler zur&uuml;ckgibt.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">ExitLoop</span></a>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndIf</span></a>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">WEnd</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sOutput</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StdoutRead.htm"><span class="S4">StdoutRead</span></a><span class="S8">(</span><span class="S9">$iPID</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Liest den Stdout Stream der von Run zur&uuml;ckgegebenen PID.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><span class="S1">; Beendet die Schleife falls der Prozess beendet wurde oder StdoutRead einen Fehler zur&uuml;ckgibt.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
 
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Der sortierte String lautet: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sOutput</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Der sortierte String lautet: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sOutput</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
 <span class="S0"></span></span>
 </pre>
 </div>

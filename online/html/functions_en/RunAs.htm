@@ -3,52 +3,7 @@
 <head>
 <title>Function RunAs</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
-	<script type="text/javascript">
-		var aThemes = new Array('default.css','dark.css');
-		var aImages = new Array('dark.png','default.png');
-			
-		class Themes {
-			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
-			static index = 0;
-			static getTheme() {
-				return this.theme;
-			}
-			static setTheme(name) {
-				this.index = (name == 'default') ? 1 : 0;
-				this.toggleTheme();
-			}
-			static storeTheme(idx) {
-				this.theme = aThemes[idx];				
-				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
-				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
-			}
-			static toggleTheme() {
-				this.index = Math.abs(this.index -1);
-				if (this.theme != aThemes[this.index]) {
-					this.storeTheme(this.index);
-				}
-				// *** NUR hier im Test zur Anzeige geladenes Theme ***
-				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
-			}
-		}		
-
-		function getURLParameter(name) {
-			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
-			return (value !== 'null') ? value : false;
-		}
-		
-		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
-		window.addEventListener('load', function(){
-			var themeCurrent = Themes.getTheme();
-			var param = getURLParameter('Theme'); 
-			if (param && themeCurrent != param) {
-				Themes.setTheme(param);
-			}
-			// *** NUR hier im Test zur Anzeige Parameter ***
-			// *** document.getElementById('info').innerText = param;
-		})	
-	</script>	
+<link href="../css/default.css" rel="stylesheet">
 </head>
 
 <body>
@@ -56,8 +11,7 @@
 <hr style="height:0px">
 <div class="top"><h1>RunAs</h1><div>
 <div id="flagtext">Show description in</div>
-<div id="flaglink"> <a href="../functions/RunAs.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_de.png" height="29" width="36" border=0 hspace=10/></a></div>
-<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<div id="flaglink"> <a href="../functions/RunAs.htm"><img src="../images/Flagge_de.png" height="29" width="36" border=0 hspace=10/></a></div>
 <br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Runs an external program under the context of a different user.<br /></p>
 <p class="codeheader">
@@ -133,20 +87,20 @@ Constants are defined in AutoItConstants.au3</td>
 <br />
 It is important to specify a working directory the user you are running as has access to, otherwise the function will fail.<br />
 <br />
-It is recommended that you only load the user's profile if you are sure you need it. There is a small chance a profile can be stuck in memory under the right conditions. If a script using <a href="RunAs.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">RunAs()</a> happens to be running as the SYSTEM account (for example, if the script is running as a service) and the user's profile is loaded, then you must take care that the script remains running until the child process closes.<br />
+It is recommended that you only load the user's profile if you are sure you need it. There is a small chance a profile can be stuck in memory under the right conditions. If a script using <a href="RunAs.htm">RunAs()</a> happens to be running as the SYSTEM account (for example, if the script is running as a service) and the user's profile is loaded, then you must take care that the script remains running until the child process closes.<br />
 <br />
-When running as an administrator, the Secondary Logon (<a href="RunAs.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">RunAs()</a>) service must be enabled or this function will fail. This does not apply when running as the SYSTEM account.<br />
+When running as an administrator, the Secondary Logon (<a href="RunAs.htm">RunAs()</a>) service must be enabled or this function will fail. This does not apply when running as the SYSTEM account.<br />
 <br />
-After running the requested program the script continues. To pause execution of the script until the spawned program has finished use the <a href="RunAsWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">RunAsWait()</a> function instead.<br />
+After running the requested program the script continues. To pause execution of the script until the spawned program has finished use the <a href="RunAsWait.htm">RunAsWait()</a> function instead.<br />
 <br />
-Providing the Standard I/O parameter with the proper values permits interaction with the child process through the <a href="StderrRead.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StderrRead()</a>, <a href="StdinWrite.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdinWrite()</a> and <a href="StdoutRead.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdoutRead()</a> functions. Combine the flag values (or use $STDERR_CHILD, $STDIN_CHILD & $STDOUT_CHILD) to manage more than one stream.<br />
+Providing the Standard I/O parameter with the proper values permits interaction with the child process through the <a href="StderrRead.htm">StderrRead()</a>, <a href="StdinWrite.htm">StdinWrite()</a> and <a href="StdoutRead.htm">StdoutRead()</a> functions. Combine the flag values (or use $STDERR_CHILD, $STDIN_CHILD & $STDOUT_CHILD) to manage more than one stream.<br />
 <br />
 In order for the streams to close, the following conditions must be met:<br />
 1) The child process has closed its end of the stream (this happens when the child closes).<br />
 2) AutoIt must read any captured streams until there is no more data.<br />
-3) If STDIN is provided for the child, <a href="StdinWrite.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdinWrite()</a> must be called to close the stream. Once all streams are detected as no longer needed, all internal resources will automatically be freed.<br />
+3) If STDIN is provided for the child, <a href="StdinWrite.htm">StdinWrite()</a> must be called to close the stream. Once all streams are detected as no longer needed, all internal resources will automatically be freed.<br />
 <br />
-<a href="StdioClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdioClose()</a> can be used to force the STDIO streams closed.<br />
+<a href="StdioClose.htm">StdioClose()</a> can be used to force the STDIO streams closed.<br />
 <br />
 The "load profile" and "network credentials only" options are incompatible. Using both will produce undefined results.<br />
 <br />
@@ -154,7 +108,7 @@ There is an issue in the Windows XP generation of Windows which prevents STDIO r
 </p>
 
 <h2>Related</h2>
-<p><a href="ProcessClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ProcessClose</a>, <a href="Run.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Run</a>, <a href="RunAsWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">RunAsWait</a>, <a href="RunWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">RunWait</a>, <a href="ShellExecute.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ShellExecute</a>, <a href="ShellExecuteWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ShellExecuteWait</a>, <a href="StderrRead.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StderrRead</a>, <a href="StdinWrite.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdinWrite</a>, <a href="StdioClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdioClose</a>, <a href="StdoutRead.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdoutRead</a></p>
+<p><a href="ProcessClose.htm">ProcessClose</a>, <a href="Run.htm">Run</a>, <a href="RunAsWait.htm">RunAsWait</a>, <a href="RunWait.htm">RunWait</a>, <a href="ShellExecute.htm">ShellExecute</a>, <a href="ShellExecuteWait.htm">ShellExecuteWait</a>, <a href="StderrRead.htm">StderrRead</a>, <a href="StdinWrite.htm">StdinWrite</a>, <a href="StdioClose.htm">StdioClose</a>, <a href="StdoutRead.htm">StdoutRead</a></p>
 
 <h2 class="bottom">Example</h2>
 <script type="text/javascript">
@@ -188,27 +142,27 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;AutoItConstants.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;AutoItConstants.au3&gt;</span>
 
 <span class="S0">Example</span><span class="S8">()</span>
 
-<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Change the username and password to the appropriate values for your system.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sUserName</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Username"</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sPassword</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Password"</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sUserName</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Username"</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sPassword</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"Password"</span>
 
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Run Notepad with the window maximized. Notepad is run under the user previously specified.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iPID</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/RunAs.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">RunAs</span></a><span class="S8">(</span><span class="S9">$sUserName</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@ComputerName><span class="S6">@ComputerName</span></a><span class="S8">,</span><span class="S0"> </span><span class="S9">$sPassword</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$RUN_LOGON_NOPROFILE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"notepad.exe"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@SW_SHOWMAXIMIZED><span class="S6">@SW_SHOWMAXIMIZED</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iPID</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/RunAs.htm"><span class="S4">RunAs</span></a><span class="S8">(</span><span class="S9">$sUserName</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@ComputerName"><span class="S6">@ComputerName</span></a><span class="S8">,</span><span class="S0"> </span><span class="S9">$sPassword</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$RUN_LOGON_NOPROFILE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"notepad.exe"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOWMAXIMIZED"><span class="S6">@SW_SHOWMAXIMIZED</span></a><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Wait 10 seconds for the Notepad window to appear.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">WinWait</span></a><span class="S8">(</span><span class="S7">"[CLASS:Notepad]"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinWait.htm"><span class="S4">WinWait</span></a><span class="S8">(</span><span class="S7">"[CLASS:Notepad]"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Wait for 2 seconds.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">2000</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">2000</span><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Close the Notepad process using the PID returned by RunAs.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ProcessClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">ProcessClose</span></a><span class="S8">(</span><span class="S9">$iPID</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ProcessClose.htm"><span class="S4">ProcessClose</span></a><span class="S8">(</span><span class="S9">$iPID</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
 <span class="S0"></span></span>
 </pre>
 </div>

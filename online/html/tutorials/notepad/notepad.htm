@@ -3,60 +3,15 @@
 <head>
 	<title>Tutorial - Notepad</title>
 	<meta charset="utf-8">
-	<link href="../../css/default.css" rel="stylesheet" type="text/css" id="theme" />
-	<script type="text/javascript">
-		var aThemes = new Array('default.css','dark.css');
-		var aImages = new Array('dark.png','default.png');
-			
-		class Themes {
-			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
-			static index = 0;
-			static getTheme() {
-				return this.theme;
-			}
-			static setTheme(name) {
-				this.index = (name == 'default') ? 1 : 0;
-				this.toggleTheme();
-			}
-			static storeTheme(idx) {
-				this.theme = aThemes[idx];				
-				document.getElementById('theme').setAttribute('href', '../../css/' + this.theme);
-				document.getElementById('toggleButton').src = '../../images/' + aImages[idx];
-			}
-			static toggleTheme() {
-				this.index = Math.abs(this.index -1);
-				if (this.theme != aThemes[this.index]) {
-					this.storeTheme(this.index);
-				}
-				// *** NUR hier im Test zur Anzeige geladenes Theme ***
-				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
-			}
-		}		
-
-		function getURLParameter(name) {
-			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
-			return (value !== 'null') ? value : false;
-		}
-		
-		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
-		window.addEventListener('load', function(){
-			var themeCurrent = Themes.getTheme();
-			var param = getURLParameter('Theme'); 
-			if (param && themeCurrent != param) {
-				Themes.setTheme(param);
-			}
-			// *** NUR hier im Test zur Anzeige Parameter ***
-			// *** document.getElementById('info').innerText = param;
-		})	
-	</script>	
+	<link href="../../css/default.css" rel="stylesheet">
 </head>
 <body>
 	<h1>Tutorial - Notepad</h1>
-	<p>Dieses Tutorial erkl&auml;rt, wie man den Start von Notepad automatisieren kann, wie man automatisch Text eingeben (lassen) und Notepad dann wieder schlie&szlig;en kann. Es wird angenommen, dass du bereits die Vorgehensweise bei der Erstellung und Ausf&uuml;hrung von AutoIt-Skripten kennst, die im Tutorial <a href="../helloworld/helloworld.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">HalloWelt</a> aufgezeigt wurde.</p>
+	<p>Dieses Tutorial erkl&auml;rt, wie man den Start von Notepad automatisieren kann, wie man automatisch Text eingeben (lassen) und Notepad dann wieder schlie&szlig;en kann. Es wird angenommen, dass du bereits die Vorgehensweise bei der Erstellung und Ausf&uuml;hrung von AutoIt-Skripten kennst, die im Tutorial <a href="../helloworld/helloworld.htm">HalloWelt</a> aufgezeigt wurde.</p>
 	<p></p>
-	<p>Zuerst legst du ein leeres Sktript namens <strong>npad.au3</strong> an und bearbeitest die Datei dann mit Notepad oder <a href="../../intro/editors.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">SciTE</a> - je nachdem, wen du bevorzugst.</p>
+	<p>Zuerst legst du ein leeres Sktript namens <strong>npad.au3</strong> an und bearbeitest die Datei dann mit Notepad oder <a href="../../intro/editors.htm">SciTE</a> - je nachdem, wen du bevorzugst.</p>
 	<p></p>
-	<p>Was wir als erstes ben&ouml;tigen ist der Dateiname von Notepad. Dieser ist <strong>notepad.exe</strong> - das erf&auml;hrst du, indem du die Eigenschaften der Notepad-Verkn&uuml;pfung im Startmen&uuml; aufrufst. Um Notepad aufzurufen benutzen wir in AutoIt die <a href="../../functions/Run.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Run</a>-Funktion. Diese Funktion ruft das angegebene Programm einfach auf und f&auml;hrt dann fort.</p>
+	<p>Was wir als erstes ben&ouml;tigen ist der Dateiname von Notepad. Dieser ist <strong>notepad.exe</strong> - das erf&auml;hrst du, indem du die Eigenschaften der Notepad-Verkn&uuml;pfung im Startmen&uuml; aufrufst. Um Notepad aufzurufen benutzen wir in AutoIt die <a href="../../functions/Run.htm">Run</a>-Funktion. Diese Funktion ruft das angegebene Programm einfach auf und f&auml;hrt dann fort.</p>
 	<p>Schreibe als erste Zeile im Skript folgendes:</p>
 @@SyntaxHighlighting@@
 Run("notepad.exe")
@@ -69,14 +24,14 @@ Run("notepad.exe")
 	<p><img alt="" src="au3spy_notepad.png"></p>
 	<p></p>
 	<p>Markiere den Titel im Tool und dr&uuml;cke <strong>STRG + C</strong>, um ihn in die Zwischenablage zu kopieren - dann k&ouml;nnen wir ihn nachher einfach in unser Skript einf&uuml;gen, ohne Angst haben zu m&uuml;ssen, ihn falsch zu schreiben.</p>
-	<p>Nachdem wir eine Instanz von Notepad gestartet haben, m&uuml;ssen wir warten, bis das Programmfenster erscheint und aktiviert wird, bevor wir Tastendr&uuml;cke and das Fenster schicken k&ouml;nnen. Das k&ouml;nnen wir mit Hilfe der <a href="../../functions/WinWaitActive.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">WinWaitActive</a>-Funktion tun. Die meisten Funktionen, die mit Fenstern arbeiten ben&ouml;tigen diesen Fenster<strong>titel</strong> als Parameter.</p>
+	<p>Nachdem wir eine Instanz von Notepad gestartet haben, m&uuml;ssen wir warten, bis das Programmfenster erscheint und aktiviert wird, bevor wir Tastendr&uuml;cke and das Fenster schicken k&ouml;nnen. Das k&ouml;nnen wir mit Hilfe der <a href="../../functions/WinWaitActive.htm">WinWaitActive</a>-Funktion tun. Die meisten Funktionen, die mit Fenstern arbeiten ben&ouml;tigen diesen Fenster<strong>titel</strong> als Parameter.</p>
 	<p>Schreibe also folgendes als zweite Zeile in dein Skript (benutze <strong>STRG + V</strong> oder <strong>Bearbeiten \ Einf&uuml;gen</strong>, um den Fenstertitel aus der Zwischenablage einzuf&uuml;gen):</p>
 @@SyntaxHighlighting@@
 WinWaitActive("Unbenannt - Editor")
 @@End@@
 
   <p>&nbsp;</p>
-	<p>Da wir nun sicher sein k&ouml;nnen, dass das Notepadfenster aktiv ist, k&ouml;nnen wir ein bisschen Text an das Fenster schicken. Das bewerkstelligen wir mit der <a href="../../functions/Send.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Send</a>-Funktion.</p>
+	<p>Da wir nun sicher sein k&ouml;nnen, dass das Notepadfenster aktiv ist, k&ouml;nnen wir ein bisschen Text an das Fenster schicken. Das bewerkstelligen wir mit der <a href="../../functions/Send.htm">Send</a>-Funktion.</p>
 	<p>F&uuml;ge diese Zeile am Ende deines Skriptes hinzu.</p>
 @@SyntaxHighlighting@@
 Send("Das ist ein Beispieltext.")
@@ -95,7 +50,7 @@ Send("Das ist ein Beispieltext.")
 	<p>Du solltest sehen, dass Notepad startet und wie von Zauberhand unser Text darin erscheint.</p>
 	<p><img alt="" src="notepad1.png"></p>
 	<p><br>
-	Nat&uuml;rlich wollen wir Notepad am Ende auch schlie&szlig;en. Dazu verwenden wir die <a href="../../functions/WinClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">WinClose</a>-Funktion.</p>
+	Nat&uuml;rlich wollen wir Notepad am Ende auch schlie&szlig;en. Dazu verwenden wir die <a href="../../functions/WinClose.htm">WinClose</a>-Funktion.</p>
 @@SyntaxHighlighting@@
 WinClose("Unbenannt - Editor")
 @@End@@
@@ -110,13 +65,13 @@ WinWaitActive("Editor", "Speichern unter")
 @@End@@
 
   <p>&nbsp;</p>
-	<p>Als n&auml;chstes wollen wir automatisch <strong>ALT-N</strong> dr&uuml;cken, um die Schaltfl&auml;che <strong>Nein</strong> auszuw&auml;hlen. Unterstrichene Buchstaben bedeuten normalerweise, dass du stattdessen den Shortcut ALT + [unterstrichener Buchstabe] benutzen kannst. Um mittels der Funktion <a href="../../functions/Send.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Send</a> eine Kombination mit der ALT-Taste zu senden, verwenden wir <strong>!</strong> <strong>.</strong></p>
+	<p>Als n&auml;chstes wollen wir automatisch <strong>ALT-N</strong> dr&uuml;cken, um die Schaltfl&auml;che <strong>Nein</strong> auszuw&auml;hlen. Unterstrichene Buchstaben bedeuten normalerweise, dass du stattdessen den Shortcut ALT + [unterstrichener Buchstabe] benutzen kannst. Um mittels der Funktion <a href="../../functions/Send.htm">Send</a> eine Kombination mit der ALT-Taste zu senden, verwenden wir <strong>!</strong> <strong>.</strong></p>
 @@SyntaxHighlighting@@
 Send("!n")
 @@End@@
 
   <p>&nbsp;</p>
-	<p>Damit wir unser Skript auch beobachten k&ouml;nnen, f&uuml;gen wir nach einigen Skriptzeilen eine kurze Pause ein, dazu benutzen wir die Funktion <a href="../../functions/Sleep.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Sleep</a>. Die Zahl in Klammern ist die Zeit in Millisekunden, die wir warten wollen:</p>
+	<p>Damit wir unser Skript auch beobachten k&ouml;nnen, f&uuml;gen wir nach einigen Skriptzeilen eine kurze Pause ein, dazu benutzen wir die Funktion <a href="../../functions/Sleep.htm">Sleep</a>. Die Zahl in Klammern ist die Zeit in Millisekunden, die wir warten wollen:</p>
 @@SyntaxHighlighting@@
 Run("notepad.exe")
 WinWaitActive("Unbenannt - Editor")

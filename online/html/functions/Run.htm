@@ -3,52 +3,7 @@
 <head>
 <title>Funktion Run</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
-	<script type="text/javascript">
-		var aThemes = new Array('default.css','dark.css');
-		var aImages = new Array('dark.png','default.png');
-			
-		class Themes {
-			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
-			static index = 0;
-			static getTheme() {
-				return this.theme;
-			}
-			static setTheme(name) {
-				this.index = (name == 'default') ? 1 : 0;
-				this.toggleTheme();
-			}
-			static storeTheme(idx) {
-				this.theme = aThemes[idx];				
-				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
-				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
-			}
-			static toggleTheme() {
-				this.index = Math.abs(this.index -1);
-				if (this.theme != aThemes[this.index]) {
-					this.storeTheme(this.index);
-				}
-				// *** NUR hier im Test zur Anzeige geladenes Theme ***
-				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
-			}
-		}		
-
-		function getURLParameter(name) {
-			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
-			return (value !== 'null') ? value : false;
-		}
-		
-		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
-		window.addEventListener('load', function(){
-			var themeCurrent = Themes.getTheme();
-			var param = getURLParameter('Theme'); 
-			if (param && themeCurrent != param) {
-				Themes.setTheme(param);
-			}
-			// *** NUR hier im Test zur Anzeige Parameter ***
-			// *** document.getElementById('info').innerText = param;
-		})	
-	</script>	
+<link href="../css/default.css" rel="stylesheet">
 </head>
 
 <body>
@@ -56,8 +11,7 @@
 <hr style="height:0px">
 <div class="top"><h1>Run</h1><div>
 <div id="flagtext">Beschreibung anzeigen in</div>
-<div id="flaglink"> <a href="../functions_en/Run.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_en.png" height="29" width="36" border=0 hspace=10/></a></div>
-<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<div id="flaglink"> <a href="../functions_en/Run.htm"><img src="../images/Flagge_en.png" height="29" width="36" border=0 hspace=10/></a></div>
 <br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Startet ein externes Programm.<br /></p>
 <p class="codeheader">
@@ -111,23 +65,23 @@ Die Konstanten sind in AutoItConstants.au3 definiert.</td>
 <p>Pfade mit Leerzeichen m&uuml;ssen in Anf&uuml;hrungszeichen gesetzt werden.<br />
 <br />
 Um DOS- (Konsolen-) Kommandos auszuf&uuml;hren, sollte man folgendes ausprobieren: <br />
-<em><a href="Run.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Run</a>(@ComSpec & " /c " & 'commandName', "", @SW_HIDE)&nbsp;&nbsp;&nbsp; ;Nicht die Leerzeichen vor und nach "/c" vergessen!</em><br />
+<em><a href="Run.htm">Run</a>(@ComSpec & " /c " & 'commandName', "", @SW_HIDE)&nbsp;&nbsp;&nbsp; ;Nicht die Leerzeichen vor und nach "/c" vergessen!</em><br />
 <br />
-Nach dem Start des angeforderten Programms wird das Skript weiter ausgef&uuml;hrt. Soll die Ausf&uuml;hrung des Skripts angehalten werden, bis das gestartete Programm beendet ist, so ist statt der <a href="Run.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">Run</a> Funktion die <a href="RunWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">RunWait()</a> Funktion zu verwenden.<br />
+Nach dem Start des angeforderten Programms wird das Skript weiter ausgef&uuml;hrt. Soll die Ausf&uuml;hrung des Skripts angehalten werden, bis das gestartete Programm beendet ist, so ist statt der <a href="Run.htm">Run</a> Funktion die <a href="RunWait.htm">RunWait()</a> Funktion zu verwenden.<br />
 <br />
-Das Bereitstellen der Standard-I/O-Parameter mit den geeigneten Werten ist Voraussetzung f&uuml;r die Interaktion des Child-Prozesses mit den Funktionen <a href="StderrRead.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StderrRead()</a>, <a href="StdinWrite.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdinWrite()</a> und <a href="StdoutRead.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdoutRead()</a>.<br />
+Das Bereitstellen der Standard-I/O-Parameter mit den geeigneten Werten ist Voraussetzung f&uuml;r die Interaktion des Child-Prozesses mit den Funktionen <a href="StderrRead.htm">StderrRead()</a>, <a href="StdinWrite.htm">StdinWrite()</a> und <a href="StdoutRead.htm">StdoutRead()</a>.<br />
 Um mehrere I/O-Streams zu verwalten, kombiniert man die „Flag“-Werte (oder man benutzt $STDERR_CHILD, $STDIN_CHILD & $STDOUT_CHILD).<br />
 <br />
 Um die I/O-Streams zu schlie&szlig;en, m&uuml;ssen folgende Bedingungen erf&uuml;llt sein: <br />
 1) Der Child-Prozess hat seine Seite des Streams geschlossen (das ist der Fall, wenn der Child-Prozess geschlossen wird). <br />
 2) AutoIt muss gekaperte Streams auslesen, bis keine Daten mehr enthalten sind. <br />
-3) Wenn STDIN dem Child-Prozess zugewiesen ist, muss <a href="StdinWrite.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdinWrite()</a> aufgerufen werden, um den Stream zu schlie&szlig;en. Sobald alle Streams als nicht mehr ben&ouml;tigt erkannt werden, werden alle intern verwendeten Ressourcen automatisch freigegeben.<br />
+3) Wenn STDIN dem Child-Prozess zugewiesen ist, muss <a href="StdinWrite.htm">StdinWrite()</a> aufgerufen werden, um den Stream zu schlie&szlig;en. Sobald alle Streams als nicht mehr ben&ouml;tigt erkannt werden, werden alle intern verwendeten Ressourcen automatisch freigegeben.<br />
 <br />
-<a href="StdioClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdioClose()</a> kann verwendet werden, um das Schlie&szlig;en der STDIO-Streams zu erzwingen.<br />
+<a href="StdioClose.htm">StdioClose()</a> kann verwendet werden, um das Schlie&szlig;en der STDIO-Streams zu erzwingen.<br />
 </p>
 
 <h2>Verwandte Funktionen</h2>
-<p><a href="ConsoleRead.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ConsoleRead</a>, <a href="ProcessClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ProcessClose</a>, <a href="RunAs.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">RunAs</a>, <a href="RunAsWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">RunAsWait</a>, <a href="RunWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">RunWait</a>, <a href="ShellExecute.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ShellExecute</a>, <a href="ShellExecuteWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">ShellExecuteWait</a>, <a href="StderrRead.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StderrRead</a>, <a href="StdinWrite.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdinWrite</a>, <a href="StdioClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdioClose</a>, <a href="StdoutRead.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">StdoutRead</a></p>
+<p><a href="ConsoleRead.htm">ConsoleRead</a>, <a href="ProcessClose.htm">ProcessClose</a>, <a href="RunAs.htm">RunAs</a>, <a href="RunAsWait.htm">RunAsWait</a>, <a href="RunWait.htm">RunWait</a>, <a href="ShellExecute.htm">ShellExecute</a>, <a href="ShellExecuteWait.htm">ShellExecuteWait</a>, <a href="StderrRead.htm">StderrRead</a>, <a href="StdinWrite.htm">StdinWrite</a>, <a href="StdioClose.htm">StdioClose</a>, <a href="StdoutRead.htm">StdoutRead</a></p>
 
 <h2 class="bottom">Beispiel</h2>
 <script type="text/javascript">
@@ -163,19 +117,19 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <pre>
 <span><span class="S0">Example</span><span class="S8">()</span>
 
-<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Startet den Editor mit einem maximierten Fenster.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iPID</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Run.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Run</span></a><span class="S8">(</span><span class="S7">"notepad.exe"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@SW_SHOWMAXIMIZED><span class="S6">@SW_SHOWMAXIMIZED</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iPID</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Run.htm"><span class="S4">Run</span></a><span class="S8">(</span><span class="S7">"notepad.exe"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOWMAXIMIZED"><span class="S6">@SW_SHOWMAXIMIZED</span></a><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Wartet 10 Sekunden bis das Editorfenster erscheint.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">WinWait</span></a><span class="S8">(</span><span class="S7">"[CLASS:Notepad]"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinWait.htm"><span class="S4">WinWait</span></a><span class="S8">(</span><span class="S7">"[CLASS:Notepad]"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Wartet 2 Sekunden.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">2000</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">2000</span><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Schlie&szlig;t den Editor Prozess mit Hilfe der PID die durch Run zur&uuml;ckgegeben wurde.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ProcessClose.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">ProcessClose</span></a><span class="S8">(</span><span class="S9">$iPID</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/Func.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ProcessClose.htm"><span class="S4">ProcessClose</span></a><span class="S8">(</span><span class="S9">$iPID</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
 <span class="S0"></span></span>
 </pre>
 </div>

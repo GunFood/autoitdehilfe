@@ -3,57 +3,12 @@
 <head>
 	<title>GUI-Referenz - MessageLoop Modus</title>
 	<meta charset="utf-8">
-	<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
-	<script type="text/javascript">
-		var aThemes = new Array('default.css','dark.css');
-		var aImages = new Array('dark.png','default.png');
-			
-		class Themes {
-			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
-			static index = 0;
-			static getTheme() {
-				return this.theme;
-			}
-			static setTheme(name) {
-				this.index = (name == 'default') ? 1 : 0;
-				this.toggleTheme();
-			}
-			static storeTheme(idx) {
-				this.theme = aThemes[idx];				
-				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
-				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
-			}
-			static toggleTheme() {
-				this.index = Math.abs(this.index -1);
-				if (this.theme != aThemes[this.index]) {
-					this.storeTheme(this.index);
-				}
-				// *** NUR hier im Test zur Anzeige geladenes Theme ***
-				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
-			}
-		}		
-
-		function getURLParameter(name) {
-			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
-			return (value !== 'null') ? value : false;
-		}
-		
-		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
-		window.addEventListener('load', function(){
-			var themeCurrent = Themes.getTheme();
-			var param = getURLParameter('Theme'); 
-			if (param && themeCurrent != param) {
-				Themes.setTheme(param);
-			}
-			// *** NUR hier im Test zur Anzeige Parameter ***
-			// *** document.getElementById('info').innerText = param;
-		})	
-	</script>	
+	<link href="../css/default.css" rel="stylesheet">
 </head>
 <body>
 	<h1>GUI-Referenz - MessageLoop Modus</h1>
-	<p>Im MessageLoop Modus wird dein Skript die meiste Zeit in einer engen Schleife verbringen. Diese Schleife wird einfach permanent die GUI mit der <a href="../functions/GUIGetMsg.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUIGetMsg</a> Funktion abfragen. Wenn ein Ereignis eingetreten ist, zeigt der R&uuml;ckgabewert der GUIGetMsg Funktion die Details (ein Button wurde angeklickt, die GUI wurde geschlossen, etc.).</p>
-	<p>Der MessageLoop Modus ist der voreingestellte (Default) Nachrichtenmodus f&uuml;r AutoIt GUIs - der andere m&ouml;gliche Modus ist der <a href="GUIRef_OnEventMode.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">OnEvent</a> Modus.</p>
+	<p>Im MessageLoop Modus wird dein Skript die meiste Zeit in einer engen Schleife verbringen. Diese Schleife wird einfach permanent die GUI mit der <a href="../functions/GUIGetMsg.htm">GUIGetMsg</a> Funktion abfragen. Wenn ein Ereignis eingetreten ist, zeigt der R&uuml;ckgabewert der GUIGetMsg Funktion die Details (ein Button wurde angeklickt, die GUI wurde geschlossen, etc.).</p>
+	<p>Der MessageLoop Modus ist der voreingestellte (Default) Nachrichtenmodus f&uuml;r AutoIt GUIs - der andere m&ouml;gliche Modus ist der <a href="GUIRef_OnEventMode.htm">OnEvent</a> Modus.</p>
 	<p><strong>Im MessageLoop Modus wirst du nur von Ereignissen erfahren w&auml;hrend du aktiv die GUIGetMsg Funktion aufrufst; deshalb musst du daf&uuml;r sorgen, dass du sie mehrmals pro Sekunde aufrufst, sonst wird deine GUI nicht reagieren.</strong></p>
 	<h2>Grundlegendes MessageLoop Format</h2>
 	<p>Der allgemeine MessageLoop Code siehst folgenderma&szlig;en aus:</p>
@@ -67,9 +22,9 @@ While 1
 WEnd
 @@End@@
   <p>&nbsp;</p>
-	<p>Normalerweise w&uuml;rde so eine Schleife die CPU zu 100% auslasten - gl&uuml;cklicherweise l&auml;sst die <a href="../functions/GUIGetMsg.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUIGetMsg</a> Funktion die CPU automatisch im Leerlauf laufen solange keine Ereignisse warten. Schreibe <strong>keinen</strong> Sleep-Befehl in die Schleife aus Angst, die CPU auszulasten - das wird nur dazu f&uuml;hren, dass die GUI nicht mehr auf den Nutzer reagiert.</p>
+	<p>Normalerweise w&uuml;rde so eine Schleife die CPU zu 100% auslasten - gl&uuml;cklicherweise l&auml;sst die <a href="../functions/GUIGetMsg.htm">GUIGetMsg</a> Funktion die CPU automatisch im Leerlauf laufen solange keine Ereignisse warten. Schreibe <strong>keinen</strong> Sleep-Befehl in die Schleife aus Angst, die CPU auszulasten - das wird nur dazu f&uuml;hren, dass die GUI nicht mehr auf den Nutzer reagiert.</p>
 	<h2>GUI Events</h2>
-	<p>Es gibt 3 Typen von Ereignis-Nachrichten, die <a href="../functions/GUIGetMsg.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUIGetMsg</a> zur&uuml;ckgeben kann:</p>
+	<p>Es gibt 3 Typen von Ereignis-Nachrichten, die <a href="../functions/GUIGetMsg.htm">GUIGetMsg</a> zur&uuml;ckgeben kann:</p>
 	<ul>
 		<li>Kein Ereignis</li>
 		<li>Control-Ereignis</li>
@@ -80,7 +35,7 @@ WEnd
 	<p>Wenn keine Ereignisse darauf warten, verarbeitet zu werden, gibt GUIGetMsg den Wert <strong>0</strong> zur&uuml;ck. In einer normalen GUI ist das <em>das h&auml;ufigste Ereignis</em>.</p>
 	<p></p>
 	<p><strong>Control-Ereignis</strong></p>
-	<p>Wenn ein Control angeklickt wird oder sein Wert ver&auml;ndert wird, wird ein Control-Ereignis gesendet - dieses Ereignis ist eine <strong>positive</strong> Zahl, die mit der <strong>Control-ID</strong> &uuml;bereinstimmt, die beim Erstellen des Controls mit <a href="GUICtrlCreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreate...</a> zur&uuml;ckgegeben wurde.</p>
+	<p>Wenn ein Control angeklickt wird oder sein Wert ver&auml;ndert wird, wird ein Control-Ereignis gesendet - dieses Ereignis ist eine <strong>positive</strong> Zahl, die mit der <strong>Control-ID</strong> &uuml;bereinstimmt, die beim Erstellen des Controls mit <a href="GUICtrlCreate.htm">GUICtrlCreate...</a> zur&uuml;ckgegeben wurde.</p>
 	<p></p>
 	<p><strong>System-Ereignis</strong></p>
 	<p>System-Ereignisse - wie das Schlie&szlig;en der GUI - sind <strong>negative</strong> Zahlen. Die verschiedenen Ereignisse werden unten aufgelistet und sind in <strong>GUIConstantsEx.au3</strong> definiert:</p>
@@ -99,7 +54,7 @@ $GUI_EVENT_DROPPED
 @@End@@
 
 	<h2>Beispiel-GUI</h2>
-	<p>Auf der Hauptseite der <a href="GUIRef.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUI Referenz</a> haben wir mit einem einfachen "Hallo Welt!" Beispiel angefangen, das so aussah:</p>
+	<p>Auf der Hauptseite der <a href="GUIRef.htm">GUI Referenz</a> haben wir mit einem einfachen "Hallo Welt!" Beispiel angefangen, das so aussah:</p>
 @@SyntaxHighlighting@@
 #include <GUIConstantsEx.au3>
 
@@ -174,7 +129,7 @@ WEnd
 @@End@@
 
   <p>&nbsp;</p>
-	<p>Die erste gro&szlig;e &Auml;nderung ist der Aufruf der <a href="../functions/GUISwitch.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUISwitch</a> Funktion - wenn ein neues Fenster angelegt wird, wird es das "default"-Fenster f&uuml;r zuk&uuml;nftige GUI-Operationen (einschlie&szlig;lich des Anlegens von Controls). In unserem Fall wollen wir mit dem Hauptfenster "Hello World" arbeiten, nicht mit dem Testfenster, deshalb schalten wir um ( "Switch"). Manche GUI-Funktionen erlauben dir, den Fenster-Handle im Funktionsaufruf selbst zu benutzen - diese Funktionen werden also automatisch umschalten. In unserem Beispiel h&auml;tten wir das so machen k&ouml;nnen:</p>
+	<p>Die erste gro&szlig;e &Auml;nderung ist der Aufruf der <a href="../functions/GUISwitch.htm">GUISwitch</a> Funktion - wenn ein neues Fenster angelegt wird, wird es das "default"-Fenster f&uuml;r zuk&uuml;nftige GUI-Operationen (einschlie&szlig;lich des Anlegens von Controls). In unserem Fall wollen wir mit dem Hauptfenster "Hello World" arbeiten, nicht mit dem Testfenster, deshalb schalten wir um ( "Switch"). Manche GUI-Funktionen erlauben dir, den Fenster-Handle im Funktionsaufruf selbst zu benutzen - diese Funktionen werden also automatisch umschalten. In unserem Beispiel h&auml;tten wir das so machen k&ouml;nnen:</p>
 @@SyntaxHighlighting@@
 GUISetState(@SW_SHOW, $hMainGUI)
 @@End@@

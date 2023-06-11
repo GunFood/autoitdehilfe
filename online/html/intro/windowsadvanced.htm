@@ -3,56 +3,11 @@
 <head>
 	<title>Fenstertitel und -text (erweitert)</title>
 	<meta charset="utf-8">
-	<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
-	<script type="text/javascript">
-		var aThemes = new Array('default.css','dark.css');
-		var aImages = new Array('dark.png','default.png');
-			
-		class Themes {
-			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
-			static index = 0;
-			static getTheme() {
-				return this.theme;
-			}
-			static setTheme(name) {
-				this.index = (name == 'default') ? 1 : 0;
-				this.toggleTheme();
-			}
-			static storeTheme(idx) {
-				this.theme = aThemes[idx];				
-				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
-				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
-			}
-			static toggleTheme() {
-				this.index = Math.abs(this.index -1);
-				if (this.theme != aThemes[this.index]) {
-					this.storeTheme(this.index);
-				}
-				// *** NUR hier im Test zur Anzeige geladenes Theme ***
-				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
-			}
-		}		
-
-		function getURLParameter(name) {
-			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
-			return (value !== 'null') ? value : false;
-		}
-		
-		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
-		window.addEventListener('load', function(){
-			var themeCurrent = Themes.getTheme();
-			var param = getURLParameter('Theme'); 
-			if (param && themeCurrent != param) {
-				Themes.setTheme(param);
-			}
-			// *** NUR hier im Test zur Anzeige Parameter ***
-			// *** document.getElementById('info').innerText = param;
-		})	
-	</script>	
+	<link href="../css/default.css" rel="stylesheet">
 </head>
 <body>
 	<h1>Fenstertitel und -text (erweitert)</h1>
-	<p>AutoIt arbeitet in einem von drei "Fenster-bezogenen" Modi. Diese Modi werden mit der Funktion <a href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#WinTitleMatchMode>AutoItSetOption</a> sowie der Option <a href="../functions/AutoItSetOption.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#WinTitleMatchMode>WinTitleMatchMode</a> gesetzt.</p>
+	<p>AutoIt arbeitet in einem von drei "Fenster-bezogenen" Modi. Diese Modi werden mit der Funktion <a href="../functions/AutoItSetOption.htm#WinTitleMatchMode">AutoItSetOption</a> sowie der Option <a href="../functions/AutoItSetOption.htm#WinTitleMatchMode">WinTitleMatchMode</a> gesetzt.</p>
 	<p></p>
 	<p><strong>Modus 1 (Standard)</strong></p>
 	<p>&Uuml;bereinstimmung von Titel-Teilen (beginnend am Anfang).</p>
@@ -88,10 +43,10 @@ WinWait("Editor")
 		<li><strong>TITLE -</strong> Fenstertitel</li>
 		<li><strong>CLASS -</strong> Der interne Klassenname des Fensters</li>
 		<li>
-			<strong>REGEXPTITLE -</strong> Fenstertitel, der eine <a href="../functions/StringRegExp.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">regular expression</a> benutzt (ist der reguläre Ausdruck falsch, wird @error auf 2 gesetzt)
+			<strong>REGEXPTITLE -</strong> Fenstertitel, der eine <a href="../functions/StringRegExp.htm">regular expression</a> benutzt (ist der reguläre Ausdruck falsch, wird @error auf 2 gesetzt)
 		</li>
 		<li>
-			<strong>REGEXPCLASS -</strong> Fenster Klassenname, der eine <a href="../functions/StringRegExp.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">regular expression</a> benutzt (ist der reguläre Ausdruck falsch, wird @error auf 2 gesetzt)
+			<strong>REGEXPCLASS -</strong> Fenster Klassenname, der eine <a href="../functions/StringRegExp.htm">regular expression</a> benutzt (ist der reguläre Ausdruck falsch, wird @error auf 2 gesetzt)
 		</li>
 		<li><strong>LAST -</strong> Das zuletzt in einer AutoIt-Funktion genutzte Fenster (siehe Fenster Funktionsreferenz)</li>
 		<li><strong>ACTIVE -</strong> Das momentan aktive Fenster</li>
@@ -130,7 +85,7 @@ WinList("[REGEXPTITLE:(?i)(.*SciTE.*|.*Internet Explorer.*)]")
   
 	<h2>Fenster Handles / HWNDs</h2>
 	<p>Der Datentyp 'Variant' in AutoIt unterst&uuml;tzt von Haus aus Fenster-Handles (HWNDs). Ein Fenster-Handle ist ein spezieller Wert, den Windows jedesmal dann einem Fenster zuordnet, sobald eines erstellt wird. Kennt man ein Fenster-Handle, kann man es an Stelle des <em>Titel</em> Parameters in jedem Funktionsaufruf nutzen, der die Titel/Text Vereinbarungen erf&uuml;llt. Der Vorteil bei der Nutzung der Fenster-Handles ist der, dass wenn man mehrere Kopien einer Applikation ge&ouml;ffnet hat, -die alle den selben Titel/Text haben- man diese eindeutig &uuml;ber ihre Fenster-Handles identifizieren kann. <strong>Wenn man ein Fenster-Handle als Titel-Parameter nutzt, dann wird der <em>T</em><em>ext</em> Parameter vollst&auml;ndig ignoriert.</strong></p>
-	<p>Verschiedene Funktionen wie z.B. <a href="../functions/WinGetHandle.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">WinGetHandle</a>, <a href="../functions/WinList.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">WinList</a> und <a href="../functions/GUICreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICreate</a> geben diese Handles zur&uuml;ck. Es ist wichtig zu wissen, dass ein Fenster-Handle <strong>nicht</strong> als Zahl oder Zeichenfolge (String) klassifiziert ist. - Er ist ein eigener, spezieller Typ.</p>
+	<p>Verschiedene Funktionen wie z.B. <a href="../functions/WinGetHandle.htm">WinGetHandle</a>, <a href="../functions/WinList.htm">WinList</a> und <a href="../functions/GUICreate.htm">GUICreate</a> geben diese Handles zur&uuml;ck. Es ist wichtig zu wissen, dass ein Fenster-Handle <strong>nicht</strong> als Zahl oder Zeichenfolge (String) klassifiziert ist. - Er ist ein eigener, spezieller Typ.</p>
 	<p><strong>Es ist folgendes zu beachten: Fenster-Handles funktionieren immer, egal welcher WinTitleMatchMode gerade in Benutzung ist.</strong></p>
 	<p><strong>Beispiel</strong></p>
 @@SyntaxHighlighting@@

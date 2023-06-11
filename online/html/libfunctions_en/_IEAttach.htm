@@ -3,52 +3,7 @@
 <head>
 <title>Function _IEAttach</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
-	<script type="text/javascript">
-		var aThemes = new Array('default.css','dark.css');
-		var aImages = new Array('dark.png','default.png');
-			
-		class Themes {
-			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
-			static index = 0;
-			static getTheme() {
-				return this.theme;
-			}
-			static setTheme(name) {
-				this.index = (name == 'default') ? 1 : 0;
-				this.toggleTheme();
-			}
-			static storeTheme(idx) {
-				this.theme = aThemes[idx];				
-				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
-				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
-			}
-			static toggleTheme() {
-				this.index = Math.abs(this.index -1);
-				if (this.theme != aThemes[this.index]) {
-					this.storeTheme(this.index);
-				}
-				// *** NUR hier im Test zur Anzeige geladenes Theme ***
-				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
-			}
-		}		
-
-		function getURLParameter(name) {
-			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
-			return (value !== 'null') ? value : false;
-		}
-		
-		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
-		window.addEventListener('load', function(){
-			var themeCurrent = Themes.getTheme();
-			var param = getURLParameter('Theme'); 
-			if (param && themeCurrent != param) {
-				Themes.setTheme(param);
-			}
-			// *** NUR hier im Test zur Anzeige Parameter ***
-			// *** document.getElementById('info').innerText = param;
-		})	
-	</script>	
+<link href="../css/default.css" rel="stylesheet">
 </head>
 
 <body>
@@ -56,8 +11,7 @@
 <hr style="height:0px">
 <div class="top"><h1>_IEAttach</h1><div>
 <div id="flagtext">Show description in</div>
-<div id="flaglink"> <a href="../libfunctions/_IEAttach.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_de.png" height="29" width="36" border=0 hspace=10/></a></div>
-<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<div id="flaglink"> <a href="../libfunctions/_IEAttach.htm"><img src="../images/Flagge_de.png" height="29" width="36" border=0 hspace=10/></a></div>
 <br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Attach to the specified instance of Internet Explorer where the search string sub-string matches (based on the selected mode)<br /></p>
 <p class="codeheader">
@@ -112,7 +66,7 @@ _IEAttach ( $sString [, $sMode = "title" [, $iInstance = 1]] )<br />
 </table>
 
 <h2>Remarks</h2>
-<p><a href="_IEAttach.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IEAttach()</a> provides the "dialogbox" parameter to attach to modal and modeless dialogs created by the browser.<br />
+<p><a href="_IEAttach.htm">_IEAttach()</a> provides the "dialogbox" parameter to attach to modal and modeless dialogs created by the browser.<br />
 It is important to note that not all dialogs created through browser interaction can be attached to and controlled in this way.<br />
 Many of these dialogs are actually standard windows and can be controlled through the traditional AutoIt window functions. A reliable way to tell the difference between these types of windows is to use the "AutoIt Window Info" tool to examine it -- if the window contains a control called "Internet Explorer_Server" then you can attach to it with this function, if it does not it is a standard window and traditional AutoIt windows functions must be used to control it.<br />
 <br />
@@ -125,19 +79,19 @@ If you pass a window title in $sString using embedded mode, only the first windo
 If the WebBrowser control you desire is in another window you must pass the HWnd of that window rather than the title, or use the advanced Window Title selection syntax available to the standard Win* functions.<br />
 <br />
 Use of $iInstance with all modes other than "embedded": used to return a browser reference from a groups of all windows that match the criteria from $sString and $sMode.<br />
-Instance order for "dialogbox" mode determined by the order returned by <a href="../functions/WinList.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">WinList()</a> matching the title.<br />
+Instance order for "dialogbox" mode determined by the order returned by <a href="../functions/WinList.htm">WinList()</a> matching the title.<br />
 For all other modes the Instance order is determined by the Shell.Windows collection.<br />
 <br />
 $iInstance values > 1 are set to 1 and a warning message is displayed when used with "hwnd" mode or with "dialogbox" mode when an HWnd is passed in $sString.<br />
 <br />
 "dialogbox" and "embedded" modes can be used to attach to standard browser windows, but the object returned is that if the top level Window in the browser and not the InternetExplorer object.<br />
 Window objects do not offer access to all of the attributes of the InternetExplorer object (e.g. status text, address bar etc.).<br />
-As well, if you attempt to use a function like <a href="_IENavigate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IENavigate()</a> on such an object you may receive COM errors due to the way that IE7 has implemented Tabs.<br />
-It may be useful to find browser instances in this way, but it is recommended that you immediately use <a href="_IEAttach.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IEAttach()</a> using one of the other modes and using information that you may have obtained from the Window object in order to get a reference to the associated InternetExplorer object.<br />
+As well, if you attempt to use a function like <a href="_IENavigate.htm">_IENavigate()</a> on such an object you may receive COM errors due to the way that IE7 has implemented Tabs.<br />
+It may be useful to find browser instances in this way, but it is recommended that you immediately use <a href="_IEAttach.htm">_IEAttach()</a> using one of the other modes and using information that you may have obtained from the Window object in order to get a reference to the associated InternetExplorer object.<br />
 </p>
 
 <h2>Related</h2>
-<p><a href="_IECreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IECreate</a>, <a href="_IECreateEmbedded.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IECreateEmbedded</a>, <a href="_IEQuit.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IEQuit</a></p>
+<p><a href="_IECreate.htm">_IECreate</a>, <a href="_IECreateEmbedded.htm">_IECreateEmbedded</a>, <a href="_IEQuit.htm">_IEQuit</a></p>
 
 <h2 class="bottom">Example</h2>
 <script type="text/javascript">
@@ -174,17 +128,17 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <pre>
 <span><span class="S1">; Attach to a browser with "AutoIt" in its title, display the URL</span>
 
-<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
 
-<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IECreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IECreate</span></a><span class="S8">(</span><span class="S7">"www.autoitscript.com"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IECreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IECreate</span></a><span class="S8">(</span><span class="S7">"www.google.com"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IECreate.htm"><span class="S15">_IECreate</span></a><span class="S8">(</span><span class="S7">"www.autoitscript.com"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE1</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IECreate.htm"><span class="S15">_IECreate</span></a><span class="S8">(</span><span class="S7">"www.google.com"</span><span class="S8">)</span>
 
-<span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IEAttach.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IEAttach</span></a><span class="S8">(</span><span class="S7">"AutoIt"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"The URL"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IEPropertyGet.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IEPropertyGet</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"locationurl"</span><span class="S8">))</span>
+<span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IEAttach.htm"><span class="S15">_IEAttach</span></a><span class="S8">(</span><span class="S7">"AutoIt"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"The URL"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IEPropertyGet.htm"><span class="S15">_IEPropertyGet</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"locationurl"</span><span class="S8">))</span>
 
-<a class="codeSnippetLink" href="../libfunctions/_IEQuit.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IEQuit</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../libfunctions/_IEQuit.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IEQuit</span></a><span class="S8">(</span><span class="S9">$oIE1</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_IEQuit.htm"><span class="S15">_IEQuit</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_IEQuit.htm"><span class="S15">_IEQuit</span></a><span class="S8">(</span><span class="S9">$oIE1</span><span class="S8">)</span>
 <span class="S0"></span></span>
 </pre>
 </div>
@@ -216,12 +170,12 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <span><span class="S1">; Attach to a browser with "simple HTML page"</span>
 <span class="S1">; in the text of it's top-level document</span>
 
-<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
 
-<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE_basic</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IE_Example.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IE_Example</span></a><span class="S8">(</span><span class="S7">"basic"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE_basic</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IE_Example.htm"><span class="S15">_IE_Example</span></a><span class="S8">(</span><span class="S7">"basic"</span><span class="S8">)</span>
 
-<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IEAttach.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IEAttach</span></a><span class="S8">(</span><span class="S7">"simple HTML page"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"text"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'@@ Debug('</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@ScriptLineNumber><span class="S6">@ScriptLineNumber</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">') : $oIE = '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'&gt;Error code: '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@error><span class="S6">@error</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">' &nbsp;&nbsp;&nbsp;Extended code: 0x'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Hex.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Hex</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@extended><span class="S6">@extended</span></a><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">;### Debug Console</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IEAttach.htm"><span class="S15">_IEAttach</span></a><span class="S8">(</span><span class="S7">"simple HTML page"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"text"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'@@ Debug('</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@ScriptLineNumber"><span class="S6">@ScriptLineNumber</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">') : $oIE = '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'&gt;Error code: '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">' &nbsp;&nbsp;&nbsp;Extended code: 0x'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Hex.htm"><span class="S4">Hex</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">;### Debug Console</span>
 <span class="S0"></span></span>
 </pre>
 </div>
@@ -252,10 +206,10 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <pre>
 <span><span class="S1">; Attach to a browser control embedded in another window</span>
 
-<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
 
-<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IEAttach.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IEAttach</span></a><span class="S8">(</span><span class="S7">"A Window Title"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"embedded"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'@@ Debug('</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@ScriptLineNumber><span class="S6">@ScriptLineNumber</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">') : $oIE = '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'&gt;Error code: '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@error><span class="S6">@error</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">' &nbsp;&nbsp;&nbsp;Extended code: 0x'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Hex.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Hex</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@extended><span class="S6">@extended</span></a><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@CRLF><span class="S6">@CRLF</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">;### Debug Console</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IEAttach.htm"><span class="S15">_IEAttach</span></a><span class="S8">(</span><span class="S7">"A Window Title"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"embedded"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'@@ Debug('</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@ScriptLineNumber"><span class="S6">@ScriptLineNumber</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">') : $oIE = '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'&gt;Error code: '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">' &nbsp;&nbsp;&nbsp;Extended code: 0x'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Hex.htm"><span class="S4">Hex</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">;### Debug Console</span>
 <span class="S0"></span></span>
 </pre>
 </div>
@@ -288,9 +242,9 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <span class="S1">; Use the advanced window title syntax to use the 2nd window</span>
 <span class="S1">; with the string 'ICQ' in the title</span>
 
-<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
 
-<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IEAttach.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IEAttach</span></a><span class="S8">(</span><span class="S7">"[REGEXPTITLE:ICQ; INSTANCE:2]"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"embedded"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IEAttach.htm"><span class="S15">_IEAttach</span></a><span class="S8">(</span><span class="S7">"[REGEXPTITLE:ICQ; INSTANCE:2]"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"embedded"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span>
 <span class="S0"></span></span>
 </pre>
 </div>
@@ -322,23 +276,23 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <span><span class="S1">; Create an array of object references to all current browser instances</span>
 <span class="S1">; The first array element will contain the number of instances found</span>
 
-<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
 
-<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aIE</span><span class="S8">[</span><span class="S3">1</span><span class="S8">]</span>
-<span class="S9">$aIE</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aIE</span><span class="S8">[</span><span class="S3">1</span><span class="S8">]</span>
+<span class="S9">$aIE</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
 
-<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$oIE</span>
-<a class="codeSnippetLink" href="../keywords/While.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IEAttach.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IEAttach</span></a><span class="S8">(</span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"instance"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$i</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#@error><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$_IEStatus_NoMatch</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">ExitLoop</span></a>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ReDim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">ReDim</span></a><span class="S0"> </span><span class="S9">$aIE</span><span class="S8">[</span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">+</span></a><span class="S0"> </span><span class="S3">1</span><span class="S8">]</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aIE</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$oIE</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aIE</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$i</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">+=</span></a><span class="S0"> </span><span class="S3">1</span>
-<a class="codeSnippetLink" href="../keywords/While.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">WEnd</span></a>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$oIE</span>
+<a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IEAttach.htm"><span class="S15">_IEAttach</span></a><span class="S8">(</span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"instance"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$i</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$_IEStatus_NoMatch</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ReDim.htm"><span class="S5">ReDim</span></a><span class="S0"> </span><span class="S9">$aIE</span><span class="S8">[</span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S3">1</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aIE</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$oIE</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aIE</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$i</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+=</span></a><span class="S0"> </span><span class="S3">1</span>
+<a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
 
-<a class="codeSnippetLink" href="../functions/MsgBox.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Browsers Found"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Number of browser instances in the array: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$aIE</span><span class="S8">[</span><span class="S3">0</span><span class="S8">])</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Browsers Found"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Number of browser instances in the array: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$aIE</span><span class="S8">[</span><span class="S3">0</span><span class="S8">])</span>
 <span class="S0"></span></span>
 </pre>
 </div>

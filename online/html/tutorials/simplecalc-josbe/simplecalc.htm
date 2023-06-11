@@ -3,59 +3,14 @@
 <head>
   <title>Tutorial - Simple calculator (Part I)</title>
   <meta charset="utf-8">
-  <link href="../../css/default.css" rel="stylesheet" type="text/css" id="theme" />
-	<script type="text/javascript">
-		var aThemes = new Array('default.css','dark.css');
-		var aImages = new Array('dark.png','default.png');
-			
-		class Themes {
-			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
-			static index = 0;
-			static getTheme() {
-				return this.theme;
-			}
-			static setTheme(name) {
-				this.index = (name == 'default') ? 1 : 0;
-				this.toggleTheme();
-			}
-			static storeTheme(idx) {
-				this.theme = aThemes[idx];				
-				document.getElementById('theme').setAttribute('href', '../../css/' + this.theme);
-				document.getElementById('toggleButton').src = '../../images/' + aImages[idx];
-			}
-			static toggleTheme() {
-				this.index = Math.abs(this.index -1);
-				if (this.theme != aThemes[this.index]) {
-					this.storeTheme(this.index);
-				}
-				// *** NUR hier im Test zur Anzeige geladenes Theme ***
-				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
-			}
-		}		
-
-		function getURLParameter(name) {
-			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
-			return (value !== 'null') ? value : false;
-		}
-		
-		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
-		window.addEventListener('load', function(){
-			var themeCurrent = Themes.getTheme();
-			var param = getURLParameter('Theme'); 
-			if (param && themeCurrent != param) {
-				Themes.setTheme(param);
-			}
-			// *** NUR hier im Test zur Anzeige Parameter ***
-			// *** document.getElementById('info').innerText = param;
-		})	
-	</script>	
+  <link href="../../css/default.css" rel="stylesheet">
   <style type="text/css">
 span.c1 {text-decoration: underline}
   </style>
 </head>
 <body>
   <h1>Tutorial - Creating to GUI Calculator - (Dialog Creation)</h1>
-  <p>In this tutorial we will try to guide him to create a basic calculator, just as that of MS-Windows. Using the <a href="../../guiref/GUIRef.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUI's AutoIt</a> features.<br />
+  <p>In this tutorial we will try to guide him to create a basic calculator, just as that of MS-Windows. Using the <a href="../../guiref/GUIRef.htm">GUI's AutoIt</a> features.<br />
   It is assumed that you are already familiar with creating and running AutoIt scripts as shown in the &nbsp;<object id="hhctrl-bottom" type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11">
     <param name="Command" value="ShortCut">
     <param name="Text" value="Text:GUI MsgBox">
@@ -68,9 +23,9 @@ span.c1 {text-decoration: underline}
   That is to say, how many and that type of controls will need. In this case we will use the same design that Windows Calc.<br />
   In the <strong><em>Fig. 1</em></strong>, we can see how our calculator will be finished in this part.</p>
   <p><strong>Fig. 1</strong> <img src="dialog1.png" align="center" alt=""></p>
-  <p>To begin the creation of our dialog, we will begin including some libraries which declare constants we use in our dialog box. These constants contain numeric values of <a href="../../appendix/GUIStyles.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">styles</a> and parameters that define the
-  appearance of each <a href="../../intro/controls.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">control</a>, as well as you value for <a href="../../functions/GUIGetMsg.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">events</a> and <a href="../../functions/GUICtrlSetState.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#StateTable>states</a>. (Usually,
-  <em>"GUIConstantsEx.au3"</em> already comes included and it resides in the <a href="../../intro/installdir.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">AutoIt's folder installer</a>). Later on we will see how to apply them, for the time being we will make the inclusion of this library
+  <p>To begin the creation of our dialog, we will begin including some libraries which declare constants we use in our dialog box. These constants contain numeric values of <a href="../../appendix/GUIStyles.htm">styles</a> and parameters that define the
+  appearance of each <a href="../../intro/controls.htm">control</a>, as well as you value for <a href="../../functions/GUIGetMsg.htm">events</a> and <a href="../../functions/GUICtrlSetState.htm#StateTable">states</a>. (Usually,
+  <em>"GUIConstantsEx.au3"</em> already comes included and it resides in the <a href="../../intro/installdir.htm">AutoIt's folder installer</a>). Later on we will see how to apply them, for the time being we will make the inclusion of this library
   writing in our script the following lines:</p>
 @@SyntaxHighlighting@@
 #include <EditConstants.au3>
@@ -79,7 +34,7 @@ span.c1 {text-decoration: underline}
 #include <WindowsConstants.au3>
 @@End@@
 <br />
-  How it could it turns in the <a href="../../guiref/GUIRef_MessageLoopMode.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">basic tutorial</a>, to begin the creation of our dialog we begin defining the window, as the title, size and position with <a href="../../functions/GUICreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICreate()</a>. The
+  How it could it turns in the <a href="../../guiref/GUIRef_MessageLoopMode.htm">basic tutorial</a>, to begin the creation of our dialog we begin defining the window, as the title, size and position with <a href="../../functions/GUICreate.htm">GUICreate()</a>. The
   values of the window will be the following ones:<br />
   <strong>Title</strong> = "Calculator"<br />
   <strong>Width</strong> = 260<br />
@@ -90,7 +45,7 @@ GUICreate("Calculator", 260, 230)
 @@End@@
 <br />
   <strong>To store the identifier (ID) of each control</strong><br />
-  In the definition part, we will be ahead to the assignment of variables for each button that we make. When making this assignment, the variable stores the <a href="../../intro/controls.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">control ID</a> that it allows us to use it to be able to to
+  In the definition part, we will be ahead to the assignment of variables for each button that we make. When making this assignment, the variable stores the <a href="../../intro/controls.htm">control ID</a> that it allows us to use it to be able to to
   manipulate "their action" in run-time. See &nbsp;<object id="hhctrl-bottom" type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11">
     <param name="Command" value="ShortCut">
     <param name="Text" value="Text:MsgBox messageloop">
@@ -108,7 +63,7 @@ $idBtn1 = GUICtrlCreateButton("1", 54, 138, 36, 29)
 As I mentioned before, this makes that the code to be clearer.<br />
   <br />
   <strong>Creation of each control</strong><br />
-  As we can it looks in the <strong><em>Fig.1</em></strong>, we needs to create several buttons, which we will define with <a href="../../functions/GUICtrlCreateButton.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUICtrlCreateButton()</a>. The buttons that we will define will be: the digits of 0
+  As we can it looks in the <strong><em>Fig.1</em></strong>, we needs to create several buttons, which we will define with <a href="../../functions/GUICtrlCreateButton.htm">GUICtrlCreateButton()</a>. The buttons that we will define will be: the digits of 0
   up to 9, the operators, memory's buttons as such Memory Clear ("MC"), Memory Restore ("MR"), etc.<br />
   You can copy the code shown below and to <span class="c1"><em>add to your script</em></span>:
 @@SyntaxHighlighting@@
@@ -149,7 +104,7 @@ Local $idEdtScreen = GUICtrlCreateEdit("0.", 8, 2, 239, 23)
 Local $idLblMemory = GUICtrlCreateLabel("", 12, 39, 27, 26)
 @@End@@
 <br />
-  Already defined the creation of each control, is important to <em>add the line following</em> to show our dialog box, using <a href="../../functions/GUISetState.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUISetState()</a>.
+  Already defined the creation of each control, is important to <em>add the line following</em> to show our dialog box, using <a href="../../functions/GUISetState.htm">GUISetState()</a>.
 @@SyntaxHighlighting@@
 GUISetState()
 @@End@@
@@ -160,7 +115,7 @@ GUISetState()
     <param name="Text" value="Text:tutorial of MsgBox">
     <param name="Font" value=",10pt">
     <param name="Item1" value=",Examples\GUI\simple\msgbox_messageloop.au3,">
-  </object>&nbsp; , the function <a href="../../functions/GUIGetMsg.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">GUIGetMsg()</a> gives as output a value of an event in the dialog box, and this it is received by the variable in this case, $msg that is evaluated every time that <a href=
+  </object>&nbsp; , the function <a href="../../functions/GUIGetMsg.htm">GUIGetMsg()</a> gives as output a value of an event in the dialog box, and this it is received by the variable in this case, $msg that is evaluated every time that <a href=
   "../../keywords/Do.htm">Do.. Until</a> loop, repeats. For this part we will only add the one simpler event, which repeats in an infinite cycle until the event similar to the constant $GUI_EVENT_CLOSE (equal to -3) it's presented, and it will make that
   close the window and finish the script. So the following lines for our script will be:
 @@SyntaxHighlighting@@
@@ -179,15 +134,15 @@ Until $msg = $GUI_EVENT_CLOSE
   <p>For this part, we only need to modify two lines of our code.<br />
   <br />
   <strong>First modification:</strong> in the first addition, we will add in the line of the variable $idEdtScreen, a definition for the control (Edit) that is of reading ($ES_READONLY) and that it is justified to the right ($ES_RIGHT), for we join
-  these two variables with the function <a href="../../functions/BitOR.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">BitOR()</a> like it is presented in the line of code below. We will also add <strong>$WS_EX_STATICEDGE</strong> to the parameter of <a href=
-  "../../functions/GUICreate.htm#Extended%20Style%20Table">extended style</a> (exStyle) to give the sunken appearance to the border. For more reference of the styles table for EDIT control, <a href="../../appendix/GUIStyles.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#Edit>click here.</a> (for
+  these two variables with the function <a href="../../functions/BitOR.htm">BitOR()</a> like it is presented in the line of code below. We will also add <strong>$WS_EX_STATICEDGE</strong> to the parameter of <a href=
+  "../../functions/GUICreate.htm#Extended%20Style%20Table">extended style</a> (exStyle) to give the sunken appearance to the border. For more reference of the styles table for EDIT control, <a href="../../appendix/GUIStyles.htm#Edit">click here.</a> (for
   a detailed explanation of each style).</p>
 @@SyntaxHighlighting@@
 Local $idEdtScreen = GUICtrlCreateEdit("0.", 8, 2, 239, 23, BitOR($ES_READONLY, $ES_RIGHT), $WS_EX_STATICEDGE)
 @@End@@
 <br />
   <strong>Second modification:</strong> the second addition we will add to the line of the variable $idLblMemory, that it contains a LABEL control in which will show us the state of storage in memory that we will see in the second part. We will
-  define that this control (Label) will have a sunken ($SS_SUNKEN) like it is presented in the line of the code. For reference of styles table for LABEL control, <a href="../../appendix/GUIStyles.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"#Label>click here.</a><br />
+  define that this control (Label) will have a sunken ($SS_SUNKEN) like it is presented in the line of the code. For reference of styles table for LABEL control, <a href="../../appendix/GUIStyles.htm#Label">click here.</a><br />
 @@SyntaxHighlighting@@
 Local $idLblMemory = GUICtrlCreateLabel("", 12, 39, 27, 26, $SS_SUNKEN)
 @@End@@

@@ -3,52 +3,7 @@
 <head>
 <title>Funktion _IELoadWait</title>
 <meta charset="utf-8">
-<link href="../css/default.css" rel="stylesheet" type="text/css" id="theme" />
-	<script type="text/javascript">
-		var aThemes = new Array('default.css','dark.css');
-		var aImages = new Array('dark.png','default.png');
-			
-		class Themes {
-			static theme = document.getElementById('theme').getAttribute('href').split('/')[1];
-			static index = 0;
-			static getTheme() {
-				return this.theme;
-			}
-			static setTheme(name) {
-				this.index = (name == 'default') ? 1 : 0;
-				this.toggleTheme();
-			}
-			static storeTheme(idx) {
-				this.theme = aThemes[idx];				
-				document.getElementById('theme').setAttribute('href', '../css/' + this.theme);
-				document.getElementById('toggleButton').src = '../images/' + aImages[idx];
-			}
-			static toggleTheme() {
-				this.index = Math.abs(this.index -1);
-				if (this.theme != aThemes[this.index]) {
-					this.storeTheme(this.index);
-				}
-				// *** NUR hier im Test zur Anzeige geladenes Theme ***
-				// *** document.getElementById('nameTheme').innerText = aThemes[this.index];
-			}
-		}		
-
-		function getURLParameter(name) {
-			var value = decodeURIComponent((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, ""])[1]);
-			return (value !== 'null') ? value : false;
-		}
-		
-		// -- Wenn Seite geladen: auf Theme-Parameter prüfen. Wenn anderes Theme: Wechseln. --
-		window.addEventListener('load', function(){
-			var themeCurrent = Themes.getTheme();
-			var param = getURLParameter('Theme'); 
-			if (param && themeCurrent != param) {
-				Themes.setTheme(param);
-			}
-			// *** NUR hier im Test zur Anzeige Parameter ***
-			// *** document.getElementById('info').innerText = param;
-		})	
-	</script>	
+<link href="../css/default.css" rel="stylesheet">
 </head>
 
 <body>
@@ -56,8 +11,7 @@
 <hr style="height:0px">
 <div class="top"><h1>_IELoadWait</h1><div>
 <div id="flagtext">Beschreibung anzeigen in</div>
-<div id="flaglink"> <a href="../libfunctions_en/_IELoadWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><img src="../images/Flagge_en.png" height="29" width="36" border=0 hspace=10/></a></div>
-<div ><input id="toggleButton" type="image" onclick="Themes.toggleTheme()" src="../images/dark.png" height ="36" width="36" alt="Toggle Theme"></div><br />
+<div id="flaglink"> <a href="../libfunctions_en/_IELoadWait.htm"><img src="../images/Flagge_en.png" height="29" width="36" border=0 hspace=10/></a></div>
 <br style="clear: both;">
 <p style="margin:2px 0 0 0;" class="funcdesc">Pausiert das Skript bis eine Seite im Browser fertig geladen wurde<br /></p>
 <p class="codeheader">
@@ -107,20 +61,20 @@ _IELoadWait ( ByRef $oObject [, $iDelay = 0 [, $iTimeout = -1]] )<br />
 </table>
 
 <h2>Bemerkungen</h2>
-<p>Einige IE.au3-Funktionen rufen <a href="_IELoadWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IELoadWait()</a> automatisch auf (z.B. <a href="_IECreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IECreate()</a>, <a href="_IENavigate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IENavigate()</a> etc.).<br />
+<p>Einige IE.au3-Funktionen rufen <a href="_IELoadWait.htm">_IELoadWait()</a> automatisch auf (z.B. <a href="_IECreate.htm">_IECreate()</a>, <a href="_IENavigate.htm">_IENavigate()</a> etc.).<br />
 Bei den meisten dieser Funktionen kann man dieses Verhalten mit einem $fWait Parameter abschalten, wenn man dies nicht m&ouml;chte oder wenn man _IELoadWait() selbst aufrufen will.<br />
 <br />
-Wenn DOM-Objekte an die <a href="_IELoadWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IELoadWait()</a>-Funktion &uuml;bergeben werden, wird der Ladestatus der &uuml;bergeordneten Elemente bis zum &uuml;bergeordneten Fenster &uuml;berpr&uuml;ft.<br />
+Wenn DOM-Objekte an die <a href="_IELoadWait.htm">_IELoadWait()</a>-Funktion &uuml;bergeben werden, wird der Ladestatus der &uuml;bergeordneten Elemente bis zum &uuml;bergeordneten Fenster &uuml;berpr&uuml;ft.<br />
 <br />
-Manche Sicherheitseinstellungen des Browsers k&ouml;nnen unter Umst&auml;nden <a href="_IELoadWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IELoadWait()</a> daran hindern, dass das Skript erst fortgesetzt wird, wenn die Seite fertig geladen wurde. Dies kann Fehlermeldungen zur Folge haben.<br />
-In diesen F&auml;llen sollte man auf <a href="_IELoadWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IELoadWait()</a> verzichten und stattdessen auf alternative Methoden ausweichen, um auf das Fertigstellen des Ladevorgangs einer Webseite zu warten.<br />
-Dies kann z.B. durch Sleep(), Auslesen der Browser-Status-Bar oder anderen Methoden erreicht werden. Wenn Funktionen verwendet werden, die <a href="_IELoadWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IELoadWait()</a> intern nutzen und diese f&uuml;r andere Objekte als das InternetExplorer-Browser Objekt verwendet werden, kann es unter Umst&auml;nden sinnvoller sein, wenn man <a href="_IELoadWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IELoadWait()</a> stattdessen manuell aufruft. (z. B. <a href="_IELoadWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IELoadWait</a>($oIE)).<br />
+Manche Sicherheitseinstellungen des Browsers k&ouml;nnen unter Umst&auml;nden <a href="_IELoadWait.htm">_IELoadWait()</a> daran hindern, dass das Skript erst fortgesetzt wird, wenn die Seite fertig geladen wurde. Dies kann Fehlermeldungen zur Folge haben.<br />
+In diesen F&auml;llen sollte man auf <a href="_IELoadWait.htm">_IELoadWait()</a> verzichten und stattdessen auf alternative Methoden ausweichen, um auf das Fertigstellen des Ladevorgangs einer Webseite zu warten.<br />
+Dies kann z.B. durch Sleep(), Auslesen der Browser-Status-Bar oder anderen Methoden erreicht werden. Wenn Funktionen verwendet werden, die <a href="_IELoadWait.htm">_IELoadWait()</a> intern nutzen und diese f&uuml;r andere Objekte als das InternetExplorer-Browser Objekt verwendet werden, kann es unter Umst&auml;nden sinnvoller sein, wenn man <a href="_IELoadWait.htm">_IELoadWait()</a> stattdessen manuell aufruft. (z. B. <a href="_IELoadWait.htm">_IELoadWait</a>($oIE)).<br />
 <br />
 Die h&auml;ufigsten Fehlerquellen sind automatische Weiterleitungen und Sicherheitseinstellungen, die Cross-Site-Scripting verhindern, in Verbindung mit Frames. Automatische Seitenaktualisierungstechniken einiger Anwendungen (z.B. Googlemail) k&ouml;nnen ebenfalls Probleme verursachen.<br />
 </p>
 
 <h2>Verwandte Funktionen</h2>
-<p><a href="_IEAction.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IEAction</a>, <a href="_IEBodyWriteHTML.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IEBodyWriteHTML</a>, <a href="_IECreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IECreate</a>, <a href="_IEDocWriteHTML.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IEDocWriteHTML</a>, <a href="_IEFormImageClick.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IEFormImageClick</a>, <a href="_IEFormSubmit.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IEFormSubmit</a>, <a href="_IEImgClick.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IEImgClick</a>, <a href="_IELinkClickByIndex.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IELinkClickByIndex</a>, <a href="_IELinkClickByText.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IELinkClickByText</a>, <a href="_IELoadWaitTimeout.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IELoadWaitTimeout</a>, <a href="_IENavigate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false">_IENavigate</a></p>
+<p><a href="_IEAction.htm">_IEAction</a>, <a href="_IEBodyWriteHTML.htm">_IEBodyWriteHTML</a>, <a href="_IECreate.htm">_IECreate</a>, <a href="_IEDocWriteHTML.htm">_IEDocWriteHTML</a>, <a href="_IEFormImageClick.htm">_IEFormImageClick</a>, <a href="_IEFormSubmit.htm">_IEFormSubmit</a>, <a href="_IEImgClick.htm">_IEImgClick</a>, <a href="_IELinkClickByIndex.htm">_IELinkClickByIndex</a>, <a href="_IELinkClickByText.htm">_IELinkClickByText</a>, <a href="_IELoadWaitTimeout.htm">_IELoadWaitTimeout</a>, <a href="_IENavigate.htm">_IENavigate</a></p>
 
 <h2 class="bottom">Beispiel</h2>
 <script type="text/javascript">
@@ -154,15 +108,15 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;IE.au3&gt;</span>
 
 <span class="S1">; &Ouml;ffnet das AutoIt-Forum und springt per Tab zu "Neue Beitr&auml;ge" startet den Link durch dr&uuml;cken der Enter-Taste</span>
 <span class="S1">; Dann wird gewartet bis die Seite komplett geladen wurde, bevor das Skript weiterl&auml;uft.</span>
 
-<a class="codeSnippetLink" href="../keywords/Dim.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IECreate.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IECreate</span></a><span class="S8">(</span><span class="S7">"http://www.autoitscript.com/forum/index.php"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../functions/Send.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Send</span></a><span class="S8">(</span><span class="S7">"</span><span class="S10">{TAB 12}</span><span class="S7">"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../functions/Send.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S4">Send</span></a><span class="S8">(</span><span class="S7">"</span><span class="S10">{ENTER}</span><span class="S7">"</span><span class="S8">)</span>
-<a class="codeSnippetLink" href="../libfunctions/_IELoadWait.htm" onclick="location.href = this.href + '?Theme=' + Themes.getTheme();return false"><span class="S15">_IELoadWait</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oIE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IECreate.htm"><span class="S15">_IECreate</span></a><span class="S8">(</span><span class="S7">"http://www.autoitscript.com/forum/index.php"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/Send.htm"><span class="S4">Send</span></a><span class="S8">(</span><span class="S7">"</span><span class="S10">{TAB 12}</span><span class="S7">"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/Send.htm"><span class="S4">Send</span></a><span class="S8">(</span><span class="S7">"</span><span class="S10">{ENTER}</span><span class="S7">"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_IELoadWait.htm"><span class="S15">_IELoadWait</span></a><span class="S8">(</span><span class="S9">$oIE</span><span class="S8">)</span>
 <span class="S0"></span></span>
 </pre>
 </div>
