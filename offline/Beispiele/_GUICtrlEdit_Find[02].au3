@@ -1,4 +1,4 @@
-; using Standard UDF
+; mit Standard-UDF
 
 #include <GUIConstantsEx.au3>
 #include <GuiEdit.au3>
@@ -8,27 +8,27 @@
 Example_External()
 
 Func Example_External()
-	Local $s_Text = 'Find And Replace Example with AutoIt ' & FileGetVersion(@AutoItExe) & @CRLF & _
-			"this is a test" & @CRLF & _
-			"this is only a test" & @CRLF & _
-			"this testing should work for you as well as it does for me"
+	Local $s_Text = 'Beispiel für Suchen und Ersetzen mit AutoIt ' & FileGetVersion(@AutoItExe) & @CRLF & _
+			"dies ist ein Test" & @CRLF & _
+			"dies ist nur ein Test" & @CRLF & _
+			"dieser Test sollte für Sie genauso gut funktionieren wie für mich"
 	Local $hTitle, $hHandle
 	Local $sTitle = "[CLASS:Notepad]"
 
 	Run("notepad.exe", "", @SW_MAXIMIZE)
-	;Wait for the window "Untitled" to exist
+	;Warten, bis das Fenster "Untitled" existiert
 	WinWait($sTitle)
 
-	; Get the handle of a notepad window
+	;Das Handle eines Notepad-Fensters abrufen
 	$hTitle = WinGetHandle($sTitle)
 	If @error Then
-		MsgBox($MB_SYSTEMMODAL, "Error", "Could not find the correct window")
+		MsgBox($MB_SYSTEMMODAL, "Fehler", "Das richtige Fenster wurde nicht gefunden")
 	Else
 		$hHandle = ControlGetHandle($hTitle, "", "Edit1")
 		If @error Then
-			MsgBox($MB_SYSTEMMODAL, "Error", "Could not find the correct control")
+			MsgBox($MB_SYSTEMMODAL, "Fehler", "Konnte das richtige Steuerelement nicht finden")
 		Else
-			; Send some text directly to this window's edit control
+			; Senden Sie einen Text direkt an das Bearbeitungsfeld dieses Fensters
 			ControlSend($hTitle, "", "Edit1", $s_Text)
 			_GUICtrlEdit_Find($hHandle, True)
 		EndIf

@@ -6,7 +6,7 @@ Local $aResult, $iRows, $iColumns, $iRval
 
 _SQLite_Startup()
 If @error Then
-	MsgBox($MB_SYSTEMMODAL, "SQLite Error", "sqlite3.dll konnte nicht geladen werden!")
+	MsgBox($MB_SYSTEMMODAL, "SQLite Fehler", "sqlite3.dll konnte nicht geladen werden!")
 	Exit -1
 EndIf
 ConsoleWrite("_SQLite_LibVersion=" & _SQLite_LibVersion() & @CRLF)
@@ -24,13 +24,13 @@ EndIf
 ; Cindy       | 21
 
 If Not _SQLite_Exec(-1, "CREATE TEMP TABLE persons (Name, Age);") = $SQLITE_OK Then _
-		MsgBox($MB_SYSTEMMODAL, "SQLite Error", _SQLite_ErrMsg())
+		MsgBox($MB_SYSTEMMODAL, "SQLite Fehler", _SQLite_ErrMsg())
 If Not _SQLite_Exec(-1, "INSERT INTO persons VALUES ('Alice','43');") = $SQLITE_OK Then _
-		MsgBox($MB_SYSTEMMODAL, "SQLite Error", _SQLite_ErrMsg())
+		MsgBox($MB_SYSTEMMODAL, "SQLite Fehler", _SQLite_ErrMsg())
 If Not _SQLite_Exec(-1, "INSERT INTO persons VALUES ('Bob','28');") = $SQLITE_OK Then _
-		MsgBox($MB_SYSTEMMODAL, "SQLite Error", _SQLite_ErrMsg())
+		MsgBox($MB_SYSTEMMODAL, "SQLite Fehler", _SQLite_ErrMsg())
 If Not _SQLite_Exec(-1, "INSERT INTO persons VALUES ('Cindy','21');") = $SQLITE_OK Then _
-		MsgBox($MB_SYSTEMMODAL, "SQLite Error", _SQLite_ErrMsg())
+		MsgBox($MB_SYSTEMMODAL, "SQLite Fehler", _SQLite_ErrMsg())
 
 ; Abfrage
 $iRval = _SQLite_GetTable2d(-1, "SELECT * FROM persons;", $aResult, $iRows, $iColumns)

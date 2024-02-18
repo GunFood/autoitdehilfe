@@ -12,13 +12,13 @@ If Not $hWnd Then
 	Exit
 EndIf
 
-; Create GUI
+; GUI erstellen
 Local $iSize = WinGetPos($hWnd)
 Local $hForm = GUICreate('Test ' & StringReplace(@ScriptName, '.au3', '()'), $iSize[2] + 80, $iSize[3] + 80)
 Local $idPic = GUICtrlCreatePic('', 40, 40, $iSize[2], $iSize[3])
 Local $hPic = GUICtrlGetHandle($idPic)
 
-; Create bitmap
+; Bitmap erstellen
 Local $hDC = _WinAPI_GetDC($hPic)
 Local $hDestDC = _WinAPI_CreateCompatibleDC($hDC)
 Local $hBitmap = _WinAPI_CreateCompatibleBitmap($hDC, $iSize[2], $iSize[3])
@@ -36,7 +36,7 @@ _WinAPI_DeleteDC($hDestDC)
 _WinAPI_DeleteDC($hSrcDC)
 _WinAPI_DeleteObject($hBmp)
 
-; Set bitmap to control
+; Bitmap zur Kontrolle einstellen
 _SendMessage($hPic, $STM_SETIMAGE, 0, $hBitmap)
 Local $hObj = _SendMessage($hPic, $STM_GETIMAGE)
 If $hObj <> $hBitmap Then

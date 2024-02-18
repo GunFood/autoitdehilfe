@@ -16,6 +16,6 @@ If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Word UDF: _Word_DocLinkGet Beispiel
 		"Fehler beim Zugriff auf die Hyperlinks." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
 Local $sResult = "Anzahl der Hyperlinks im Dokument: " & @extended & @CRLF & @CRLF & _
 		"Text: " & $oLink.TextToDisplay & @CRLF & _
-		"Addresse: " & $oLink.Address & @CRLF & _
+		"Adresse: " & $oLink.Address & @CRLF & _
 		"Screentip: " & $oLink.Screentip
 MsgBox($MB_SYSTEMMODAL, "Word UDF: _Word_DocLinkGet Beispiel 2 - Eigenschaften von Hyperlink #2", $sResult)

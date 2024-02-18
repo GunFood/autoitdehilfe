@@ -11,18 +11,18 @@
 #include <WinAPISysWin.au3>
 #include <WindowsConstants.au3>
 
-; Create GUI
+; GUI erstellen
 Local $hForm = GUICreate('Test ' & StringReplace(@ScriptName, '.au3', '()'), 400, 400)
 Local $idPic = GUICtrlCreatePic('', 0, 0, 400, 400)
 Local $hPic = GUICtrlGetHandle($idPic)
 
-; Create bitmap
+; Bitmap erstellen
 Local $hDev = _WinAPI_GetDC($hPic)
 Local $hDC = _WinAPI_CreateCompatibleDC($hDev)
 Local $hSource = _WinAPI_CreateCompatibleBitmapEx($hDev, 400, 400, _WinAPI_SwitchColor(_WinAPI_GetSysColor($COLOR_3DFACE)))
 Local $hSv = _WinAPI_SelectObject($hDC, $hSource)
 
-; Draw objects
+; Objekte zeichnen
 Local $hOldBrush = _WinAPI_SelectObject($hDC, _WinAPI_GetStockObject($DC_BRUSH))
 Local $hOldPen = _WinAPI_SelectObject($hDC, _WinAPI_GetStockObject($DC_PEN))
 _WinAPI_SetDCBrushColor($hDC, 0x990404)
@@ -78,7 +78,7 @@ _WinAPI_SelectObject($hDC, $hObj)
 _WinAPI_DeleteObject($hPattern)
 _WinAPI_DeleteObject($hBrush)
 
-; Merge bitmap
+; Bitmap zusammenfügen
 Local $hBitmap = _WinAPI_CreateCompatibleBitmap($hDev, 400, 400)
 $hBrush = _WinAPI_SelectObject($hDC, $hOldBrush)
 _WinAPI_DeleteObject($hBrush)
@@ -91,7 +91,7 @@ _WinAPI_SelectObject($hDC, $hSv)
 _WinAPI_DeleteObject($hSource)
 _WinAPI_DeleteDC($hDC)
 
-; Set bitmap to control
+; Bitmap zur Kontrolle einstellen
 _SendMessage($hPic, $STM_SETIMAGE, 0, $hBitmap)
 $hObj = _SendMessage($hPic, $STM_GETIMAGE)
 If $hObj <> $hBitmap Then

@@ -5,7 +5,7 @@
 Example()
 
 Func Example()
-	GUICreate("Button Get/Set ImageList (v" & @AutoItVersion & ")", 510, 400)
+	GUICreate("Button: Setzen und ermitteln der ImageList  (v" & @AutoItVersion & ")", 510, 400)
 	GUISetState(@SW_SHOW)
 
 	Local $hImage = _GUIImageList_Create(32, 32, 5, 3, 6)
@@ -51,7 +51,7 @@ Func Example()
 	Exit
 EndFunc   ;==>Example
 
-; using image list to set 1 image and have text on button
+; Verwendet die Imagelist um ein Bild zu setzen und Text auf dem Button anzuzeigen
 Func _GetImageListHandle($sFile, $nIconID = 0, $bLarge = False)
 	Local $iSize = 16
 	If $bLarge Then $iSize = 32
