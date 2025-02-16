@@ -4,28 +4,28 @@
 Example()
 
 Func Example()
-	; Find the drive type of the home drive, generally this is the C:\ drive.
-	Local $iTypeOfDrive = _WinAPI_GetDriveType(@HomeDrive) ; For example C:
+	; Ermitteln Sie den Laufwerkstyp des Stammlaufwerks, in der Regel ist dies das Laufwerk C:\.
+	Local $iTypeOfDrive = _WinAPI_GetDriveType(@HomeDrive) ; Zum Beispiel C:
 
-	; Create a variable to hold the display message.
+	; Erstellt eine Variable für die Anzeige der Nachricht.
 	Local $sMessage = ""
 	Switch $iTypeOfDrive
 		Case $DRIVE_UNKNOWN
-			$sMessage = "The drive type cannot be determined."
+			$sMessage = "Der Laufwerkstyp kann nicht bestimmt werden."
 		Case $DRIVE_NO_ROOT_DIR
-			$sMessage = "The root path is invalid."
+			$sMessage = "Der Wurzelpfad ist ungültig."
 		Case $DRIVE_REMOVABLE
-			$sMessage = "The drive is removable media."
+			$sMessage = "Das Laufwerk ist ein Wechselmedium."
 		Case $DRIVE_FIXED
-			$sMessage = "The drive is a fixed drive."
+			$sMessage = "Das Laufwerk ist ein festes Laufwerk."
 		Case $DRIVE_REMOTE
-			$sMessage = "The drive is a remote (network) drive."
+			$sMessage = "Das Laufwerk ist ein entferntes (Netz-)Laufwerk."
 		Case $DRIVE_CDROM
-			$sMessage = "The drive is a CD-ROM drive."
+			$sMessage = "Das Laufwerk ist ein CD-ROM-Laufwerk."
 		Case $DRIVE_RAMDISK
-			$sMessage = "The drive is a RAM disk."
+			$sMessage = "Das Laufwerk ist eine RAM-Disk."
 	EndSwitch
 
-	; Display the message about the drive type.
+	; Anzeige der Meldung über den Laufwerkstyp.
 	MsgBox($MB_SYSTEMMODAL, "", $sMessage)
 EndFunc   ;==>Example

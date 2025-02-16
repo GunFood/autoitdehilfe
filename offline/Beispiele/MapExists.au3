@@ -14,7 +14,7 @@ Func Beispiel()
 	MsgBox($MB_SYSTEMMODAL, "", "Fidget: " & MapExists($mMap, "Fidget")) ; Gibt 0 zurück.
 
 	; Setzt einen Schlüssel zurück, indem er auf Null gesetzt wird. Der Schlüssel ist weiterhin in der Map vorhanden.
-	; Verwenden Sie MapRemove, um den Schlüssel vollständig zu entfernen.
+	; Es ist MapRemove zu verwenden, um den Schlüssel vollständig zu entfernen.
 	$mMap["Jasper"] = Null
 
 	MsgBox($MB_SYSTEMMODAL, "", "Jasper: " & MapExists($mMap, "Jasper")) ; Gibt 1 zurück.

@@ -8,10 +8,10 @@
 #include <WinAPIIcons.au3>
 #include <WinAPIShPath.au3>
 
-; Initialize system image list
+; Systembildliste initialisieren
 _WinAPI_FileIconInit()
 
-; Retrieve system image list and calculate bitmap size
+; Abrufen der Systembildliste und Berechnung der Bitmap-Größe
 Local $hImageList = _WinAPI_ShellGetImageList()
 If @error Then Exit
 
@@ -29,18 +29,18 @@ EndIf
 Local $W = $iCX * ($a_iSize[0] + 14)
 Local $H = $iCY * ($a_iSize[1] + 14)
 
-; Create GUI
+; GUI erstellen
 Local $hForm = GUICreate('Test ' & StringReplace(@ScriptName, '.au3', '()'), $W, $H)
 Local $idPic = GUICtrlCreatePic('', 0, 0, $W, $H)
 Local $hPic = GUICtrlGetHandle($idPic)
 
-; Create bitmap
+; Bitmap erstellen
 Local $hDC = _WinAPI_GetDC($hPic)
 Local $hMemDC = _WinAPI_CreateCompatibleDC($hDC)
 Local $hBitmap = _WinAPI_CreateCompatibleBitmap($hDC, $W, $H)
 Local $hMemSv = _WinAPI_SelectObject($hMemDC, $hBitmap)
 
-; Draw all icons from the system image list into bitmap
+; Zeichnen aller Icons aus der Systembildliste in eine Bitmap
 Local $iIndex = 0
 For $y = 1 To $iCY
 	For $x = 1 To $iCX
@@ -52,19 +52,19 @@ For $y = 1 To $iCY
 	Next
 Next
 
-; Release objects
+; Objekte freigeben
 _WinAPI_ReleaseDC($hPic, $hDC)
 _WinAPI_SelectObject($hMemDC, $hMemSv)
 _WinAPI_DeleteDC($hMemDC)
 
-; Set bitmap to control
+; Bitmap zur Kontrolle einstellen
 _SendMessage($hPic, $STM_SETIMAGE, 0, $hBitmap)
 Local $hObj = _SendMessage($hPic, $STM_GETIMAGE)
 If $hObj <> $hBitmap Then
 	_WinAPI_DeleteObject($hBitmap)
 EndIf
 
-; Show GUI
+; GUI anzeigen
 GUISetState(@SW_SHOW)
 
 Do

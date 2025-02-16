@@ -27,6 +27,6 @@ Func Example()
 
 	; Local Enum $eDog, $eMouse, $eCat, $eHamster
 
-	; Jetzt ist $eCat das 3. Element im Array. Wenn Sie nummerische Werte verwenden würden, müssten Sie alle Referenzen von $aAnimalNames[0]
+	; Jetzt ist $eCat das 3. Element im Array. Wenn man nummerische Werte verwenden würde, müsste man alle Referenzen von $aAnimalNames[0]
 	; in $aAnimalNames[2] sowie für die anderen Elemente, die jetzt verschoben wurden, manuell ändern.
 EndFunc   ;==>Example

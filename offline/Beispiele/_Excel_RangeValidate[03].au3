@@ -12,6 +12,6 @@ If @error Then
 EndIf
 
 ; Nur numerische Werte sind gültig
-_Excel_RangeValidate($oWorkbook, Default, "B:B", $xlValidateDecimal, 0, $xlGreater, Default, Default, $xlValidAlertStop, "Sie haben einen nicht numerischen Wert eingegeben!", "Nur numerische Werte sind gültig.")
+_Excel_RangeValidate($oWorkbook, Default, "B:B", $xlValidateDecimal, 0, $xlGreater, Default, Default, $xlValidAlertStop, "Es wurde ein nicht numerischer Wert eingegeben!", "Nur numerische Werte sind gültig.")
 If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_RangeValidate Example 3", "Fehler beim Setzen der Bereichsüberprüfung." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
 MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_RangeValidate Example 3", "In Spalte 'B' sind nur numerische Werte gültig.")

@@ -9,7 +9,7 @@ If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_Close Beispiel", 
 Local $oExcel2 = _Excel_Open(Default, Default, Default, Default, True)
 If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_Close Beispiel", "Fehler beim Anlegen des zweiten Excel-Anwendungsobjekts." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
 
-; Schließen Sie die Excel-Instanz, die nicht mit _Excel_Open geöffnet wurde
+; Es sollte die Excel-Instanz, die nicht mit _Excel_Open geöffnet wurde, geschlossen werden
 ; (wird immer noch laufen, weil es nicht von _Excel_Open geöffnet wurde)
 _Excel_Close($oExcel1)
 If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_Close Beispiel 1", "Fehler beim Schließen der Excel-Anwendung." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
