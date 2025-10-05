@@ -1,5 +1,6 @@
 #include <GUIConstantsEx.au3>
 #include <GuiMenu.au3>
+#include <StructureConstants.au3>
 
 Example()
 

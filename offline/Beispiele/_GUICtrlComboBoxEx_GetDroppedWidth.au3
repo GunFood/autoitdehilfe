@@ -1,8 +1,8 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiComboBoxEx.au3>
 #include <GUIConstantsEx.au3>
 #include <GuiImageList.au3>
-
-Global $g_idMemo
 
 Example()
 
@@ -10,8 +10,7 @@ Func Example()
 	; Erstellt eine GUI
 	Local $hGUI = GUICreate("ComboBoxEx: Setzt und ermittelt die minimal erlaubte Breite der ListBox (v" & @AutoItVersion & ")", 600, 300)
 	Local $hCombo = _GUICtrlComboBoxEx_Create($hGUI, "", 2, 2, 394, 100)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 32, 396, 266, 0)
 	GUISetState(@SW_SHOW)
 
 	Local $hImage = _GUIImageList_Create(16, 16, 5, 3)
@@ -31,7 +30,7 @@ Func Example()
 	Next
 
 	; Ermittelt die minimal erlaubte Breite der ListBox
-	MemoWrite("minimal erlaubte Breite......: " & _GUICtrlComboBoxEx_GetDroppedWidth($hCombo))
+	_MemoWrite("minimal erlaubte Breite......: " & _GUICtrlComboBoxEx_GetDroppedWidth($hCombo))
 
 	Sleep(500)
 
@@ -49,7 +48,7 @@ Func Example()
 	Sleep(500)
 
 	; Ermittelt die minimal erlaubte Breite der ListBox
-	MemoWrite("minimal erlaubte Breite......: " & _GUICtrlComboBoxEx_GetDroppedWidth($hCombo))
+	_MemoWrite("minimal erlaubte Breite......: " & _GUICtrlComboBoxEx_GetDroppedWidth($hCombo))
 
 	Sleep(500)
 
@@ -66,8 +65,3 @@ Func Example()
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

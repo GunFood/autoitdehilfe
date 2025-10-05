@@ -2,6 +2,7 @@
 
 #include <MsgBoxConstants.au3>
 #include <SQLite.au3>
+#include <SQLite.dll.au3>
 
 Local $sSQliteDll
 $sSQliteDll = _SQLite_Startup()

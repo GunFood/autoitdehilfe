@@ -7,24 +7,24 @@ Example()
 Func Example()
 	Local $hGui = GUICreate("Meine GUI", 170, 40)
 
-	Local $idOptionsBtn = GUICtrlCreateButton("&Optionen", 10, 10, 70, 20, $BS_FLAT)
+	Local $idBtn_Options = GUICtrlCreateButton("&Optionen", 10, 10, 70, 20, $BS_FLAT)
 
 	; Zuerst ein Dummy-Control für die Optionen und ein Kontextmenü erzeugen
-	Local $idOptionsDummy = GUICtrlCreateDummy()
-	Local $idOptionsContext = GUICtrlCreateContextMenu($idOptionsDummy)
-	GUICtrlCreateMenuItem("Allgemein", $idOptionsContext)
-	GUICtrlCreateMenuItem("Datei", $idOptionsContext)
-	GUICtrlCreateMenuItem("", $idOptionsContext)
-	Local $idOptionsExit = GUICtrlCreateMenuItem("Beenden", $idOptionsContext)
+	Local $idDmy_Options = GUICtrlCreateDummy()
+	Local $idCtx_Options = GUICtrlCreateContextMenu($idDmy_Options)
+	GUICtrlCreateMenuItem("Allgemein", $idCtx_Options)
+	GUICtrlCreateMenuItem("Datei", $idCtx_Options)
+	GUICtrlCreateMenuItem("", $idCtx_Options)
+	Local $idMni_OptionsExit = GUICtrlCreateMenuItem("Beenden", $idCtx_Options)
 
-	Local $idHelpBtn = GUICtrlCreateButton("&Hilfe", 90, 10, 70, 20, $BS_FLAT)
+	Local $idBtn_Help = GUICtrlCreateButton("&Hilfe", 90, 10, 70, 20, $BS_FLAT)
 
 	; Dann ebenso ein Dummy-Control und ein Kontextmenü für die Hilfe erzeugen
-	Local $idHelpDummy = GUICtrlCreateDummy()
-	Local $idHelpContext = GUICtrlCreateContextMenu($idHelpDummy)
-	GUICtrlCreateMenuItem("Webseite", $idHelpContext)
-	GUICtrlCreateMenuItem("", $idHelpContext)
-	Local $idHelpAbout = GUICtrlCreateMenuItem("Über...", $idHelpContext)
+	Local $idDmy_Help = GUICtrlCreateDummy()
+	Local $idCtx_Help = GUICtrlCreateContextMenu($idDmy_Help)
+	GUICtrlCreateMenuItem("Webseite", $idCtx_Help)
+	GUICtrlCreateMenuItem("", $idCtx_Help)
+	Local $idMni_HelpAbout = GUICtrlCreateMenuItem("Über...", $idCtx_Help)
 
 	GUISetState(@SW_SHOW)
 
@@ -34,16 +34,16 @@ Func Example()
 		$idMsg = GUIGetMsg()
 
 		Switch $idMsg
-			Case $idOptionsExit, $GUI_EVENT_CLOSE
+			Case $idMni_OptionsExit, $GUI_EVENT_CLOSE
 				ExitLoop
 
-			Case $idOptionsBtn
-				ShowMenu($hGui, $idMsg, $idOptionsContext)
+			Case $idBtn_Options
+				ShowMenu($hGui, $idMsg, $idCtx_Options)
 
-			Case $idHelpBtn
-				ShowMenu($hGui, $idMsg, $idHelpContext)
+			Case $idBtn_Help
+				ShowMenu($hGui, $idMsg, $idCtx_Help)
 
-			Case $idHelpAbout
+			Case $idMni_HelpAbout
 				MsgBox($MB_SYSTEMMODAL, "Über...", "GUICtrlGetHandle-Beispiel")
 		EndSwitch
 	WEnd

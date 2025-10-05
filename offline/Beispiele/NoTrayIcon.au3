@@ -1,4 +1,5 @@
 #NoTrayIcon
+
 #include <MsgBoxConstants.au3>
 
 Example()

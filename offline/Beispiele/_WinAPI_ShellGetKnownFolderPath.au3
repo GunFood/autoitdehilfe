@@ -1,7 +1,6 @@
-#include <APIShellExConstants.au3>
 #include <MsgBoxConstants.au3>
 #include <WinAPIShellEx.au3>
-#include <WinAPISYs.au3>
+#include <WinAPISys.au3>
 
 If Number(_WinAPI_GetVersion()) < 6.0 Then
 	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Fehler', 'Benötigt Windows Vista oder neuer.')

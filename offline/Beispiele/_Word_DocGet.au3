@@ -1,3 +1,5 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <MsgBoxConstants.au3>
 #include <Word.au3>
 
@@ -6,11 +8,11 @@ Local $oWord = _Word_Create()
 If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Word UDF: _Word_DocGet Beispiel", _
 		"Fehler beim Erstellen des Word-Anwendungsobjektes." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
 ; Öffnet das Dokument Test.doc im Lesemodus
-_Word_DocOpen($oWord, @ScriptDir & "\Extras\Test.doc", Default, Default, True)
+_Word_DocOpen($oWord, _Extras_PathFull("Test.doc"), Default, Default, True)
 If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Word UDF: _Word_DocGet Beispiel", "Fehler beim Öffnen von '.\Extras\Test.doc'." & @CRLF & _
 		"@error = " & @error & ", @extended = " & @extended)
 ; Öffnet das Dokument Test2.doc im Lesemodus
-_Word_DocOpen($oWord, @ScriptDir & "\Extras\Test2.doc", Default, Default, True)
+_Word_DocOpen($oWord, _Extras_PathFull("Test2.doc"), Default, Default, True)
 If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Word UDF: _Word_DocGet Beispiel", "Fehler beim Öffnen von '.\Extras\Test2.doc'." & @CRLF & _
 		"@error = " & @error & ", @extended = " & @extended)
 

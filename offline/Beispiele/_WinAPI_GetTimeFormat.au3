@@ -1,4 +1,3 @@
-#include <APILocaleConstants.au3>
 #include <WinAPILocale.au3>
 
 ConsoleWrite(_WinAPI_GetTimeFormat() & @CRLF)

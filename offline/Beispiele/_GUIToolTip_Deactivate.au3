@@ -8,8 +8,8 @@ Func Example()
 
 	Local $hGUI = GUICreate(StringTrimRight(@ScriptName, StringLen(".exe")), 350, 200)
 
-	Local $idToggleTips = GUICtrlCreateButton("Tips: On", 30, 32, 180, 28)
-	Local $hToggleTips = GUICtrlGetHandle($idToggleTips)
+	Local $idBtn_ToggleTips = GUICtrlCreateButton("Tips: On", 30, 32, 180, 28)
+	Local $hToggleTips = GUICtrlGetHandle($idBtn_ToggleTips)
 	; create a tooltip control using the balloon style
 	Local $hToolTip = _GUIToolTip_Create(0, $TTS_BALLOON)
 
@@ -21,14 +21,14 @@ Func Example()
 
 	While 1
 		Switch GUIGetMsg()
-			Case $idToggleTips
+			Case $idBtn_ToggleTips
 				$bActivate = Not $bActivate
 				If $bActivate Then
 					_GUIToolTip_Activate($hToolTip)
-					GUICtrlSetData($idToggleTips, 'Tips: On')
+					GUICtrlSetData($idBtn_ToggleTips, 'Tips: On')
 				Else
 					_GUIToolTip_Deactivate($hToolTip)
-					GUICtrlSetData($idToggleTips, 'Tips: Off')
+					GUICtrlSetData($idBtn_ToggleTips, 'Tips: Off')
 				EndIf
 			Case $GUI_EVENT_CLOSE
 				ExitLoop

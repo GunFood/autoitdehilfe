@@ -1,7 +1,9 @@
-#include <GuiConstantsEx.au3>
+#include "Extras\HelpFileInternals.au3"
+
+#include <GUIConstantsEx.au3>
 #include <GuiDateTimePicker.au3>
 
-Global $g_idMemo, $g_aDate
+Global $g_aDate
 
 Example()
 
@@ -9,8 +11,7 @@ Func Example()
 	; Erstellt eine GUI
 	GUICreate("DateTimePick: Setzt und ermittelt die Systemzeit (v" & @AutoItVersion & ")", 500, 300)
 	Local $hDTP = GUICtrlGetHandle(GUICtrlCreateDate("", 2, 6, 190))
-	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 32, 396, 266, 0)
 	GUISetState(@SW_SHOW)
 
 	; Setzt das Anzeigeformat
@@ -22,8 +23,8 @@ Func Example()
 
 	; Zeigt die Systemzeit an
 	$g_aDate = _GUICtrlDTP_GetSystemTime($hDTP)
-	MemoWrite("Aktuelles Datum: " & GetDateStr())
-	MemoWrite("Aktuelle Zeit .: " & GetTimeStr())
+	_MemoWrite("Aktuelles Datum: " & GetDateStr())
+	_MemoWrite("Aktuelle Zeit .: " & GetTimeStr())
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
@@ -40,8 +41,3 @@ EndFunc   ;==>GetDateStr
 Func GetTimeStr()
 	Return StringFormat("%02d:%02d:%02d", $g_aDate[3], $g_aDate[4], $g_aDate[5])
 EndFunc   ;==>GetTimeStr
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

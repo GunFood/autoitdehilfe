@@ -9,46 +9,46 @@ Func Example()
 
 	GUICreate("Mein GUI Menü", 300, 200)
 
-	Local $idFilemenu = GUICtrlCreateMenu("&Datei")
-	Local $idFileitem = GUICtrlCreateMenuItem("Öffnen", $idFilemenu)
+	Local $idMnu_File = GUICtrlCreateMenu("&Datei")
+	Local $idMni_File = GUICtrlCreateMenuItem("Öffnen", $idMnu_File)
 	GUICtrlSetState(-1, $GUI_DEFBUTTON)
-	Local $idHelpmenu = GUICtrlCreateMenu("?")
-	GUICtrlCreateMenuItem("Speichern", $idFilemenu)
+	Local $idMnu_Help = GUICtrlCreateMenu("?")
+	GUICtrlCreateMenuItem("Speichern", $idMnu_File)
 	GUICtrlSetState(-1, $GUI_DISABLE)
-	Local $idInfoitem = GUICtrlCreateMenuItem("Info", $idHelpmenu)
-	Local $idExititem = GUICtrlCreateMenuItem("Beenden", $idFilemenu)
-	Local $idRecentfilesmenu = GUICtrlCreateMenu("Letzte Dateien", $idFilemenu, 1)
+	Local $idMni_Info = GUICtrlCreateMenuItem("Info", $idMnu_Help)
+	Local $idMni_Exit = GUICtrlCreateMenuItem("Beenden", $idMnu_File)
+	Local $idMnu_Recentfiles = GUICtrlCreateMenu("Letzte Dateien", $idMnu_File, 1)
 
-	GUICtrlCreateMenuItem("", $idFilemenu, 2) ; Erstellt eine Trennlinie (hier: leere Zeile)
+	GUICtrlCreateMenuItem("", $idMnu_File, 2) ; Erstellt eine Trennlinie (hier: leere Zeile)
 
-	Local $idViewmenu = GUICtrlCreateMenu("Ansicht", -1, 1) ; Wird vor dem "?" Menü erstellt
-	Local $idViewstatusitem = GUICtrlCreateMenuItem("Statusbar", $idViewmenu)
+	Local $idMnu_View = GUICtrlCreateMenu("Ansicht", -1, 1) ; Wird vor dem "?" Menü erstellt
+	Local $idMni_Viewstatus = GUICtrlCreateMenuItem("Statusbar", $idMnu_View)
 	GUICtrlSetState(-1, $GUI_CHECKED)
 	GUICtrlCreateButton("OK", 50, 130, 70, 20)
 	GUICtrlSetState(-1, $GUI_FOCUS)
-	Local $idCancelbutton = GUICtrlCreateButton("Abbrechen", 180, 130, 70, 20)
+	Local $idBtn_Cancel = GUICtrlCreateButton("Abbrechen", 180, 130, 70, 20)
 
-	Local $idStatuslabel = GUICtrlCreateLabel($sDefaultstatus, 0, 165, 300, 16, BitOR($SS_SIMPLE, $SS_SUNKEN))
+	Local $idLbl_Status = GUICtrlCreateLabel($sDefaultstatus, 0, 165, 300, 16, BitOR($SS_SIMPLE, $SS_SUNKEN))
 
 	GUISetState(@SW_SHOW)
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	While 1
 		Switch GUIGetMsg()
-			Case $idFileitem
+			Case $idMni_File
 				$file = FileOpenDialog("Wählen Sie eine Datei aus...", @TempDir, "Alle (*.*)")
-				If @error <> 1 Then GUICtrlCreateMenuItem($file, $idRecentfilesmenu)
-			Case $idViewstatusitem
-				If BitAND(GUICtrlRead($idViewstatusitem), $GUI_CHECKED) = $GUI_CHECKED Then
-					GUICtrlSetState($idViewstatusitem, $GUI_UNCHECKED)
-					GUICtrlSetState($idStatuslabel, $GUI_HIDE)
+				If @error <> 1 Then GUICtrlCreateMenuItem($file, $idMnu_Recentfiles)
+			Case $idMni_Viewstatus
+				If BitAND(GUICtrlRead($idMni_Viewstatus), $GUI_CHECKED) = $GUI_CHECKED Then
+					GUICtrlSetState($idMni_Viewstatus, $GUI_UNCHECKED)
+					GUICtrlSetState($idLbl_Status, $GUI_HIDE)
 				Else
-					GUICtrlSetState($idViewstatusitem, $GUI_CHECKED)
-					GUICtrlSetState($idStatuslabel, $GUI_SHOW)
+					GUICtrlSetState($idMni_Viewstatus, $GUI_CHECKED)
+					GUICtrlSetState($idLbl_Status, $GUI_SHOW)
 				EndIf
-			Case $GUI_EVENT_CLOSE, $idCancelbutton, $idExititem
+			Case $GUI_EVENT_CLOSE, $idBtn_Cancel, $idMni_Exit
 				ExitLoop
-			Case $idInfoitem
+			Case $idMni_Info
 				MsgBox($MB_SYSTEMMODAL, "Info", "Nur ein Test...")
 		EndSwitch
 	WEnd

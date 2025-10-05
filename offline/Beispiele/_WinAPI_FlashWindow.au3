@@ -4,16 +4,16 @@
 Example()
 
 Func Example()
-	Local $hWnd, $iMsg, $idBtnFlash
+	Local $hWnd, $iMsg, $idBtn_Flash
 	$hWnd = GUICreate("_WinAPI_FlashWindow Beispiel", 200, 200)
-	$idBtnFlash = GUICtrlCreateButton("Fenster aufblinken lassen", 25, 85, 150, 30)
+	$idBtn_Flash = GUICtrlCreateButton("Fenster aufblinken lassen", 25, 85, 150, 30)
 	GUISetState(@SW_SHOW)
 	While 1
 		$iMsg = GUIGetMsg()
 		Select
 			Case $iMsg = $GUI_EVENT_CLOSE
 				Exit
-			Case $iMsg = $idBtnFlash
+			Case $iMsg = $idBtn_Flash
 				GUISetState(@SW_MINIMIZE)
 				Sleep(1000)
 				_WinAPI_FlashWindow($hWnd)

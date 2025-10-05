@@ -1,23 +1,24 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiStatusBar.au3>
 #include <ProgressConstants.au3>
 #include <Timers.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
-Global $g_idMemo, $g_hStatus, $g_idProgress, $g_iPercent = 0, $g_iDirection = 1
+Global $g_hStatus, $g_idProgress, $g_iPercent = 0, $g_iDirection = 1
 
 _Example_CallBack()
 
 Func _Example_CallBack()
-	Local $hGUI, $iTimerProgress, $idChange, $iWait = 10, $idState
+	Local $hGUI, $iTimerProgress, $idBtn_Change, $iWait = 10, $idBtn_State
 	Local $aParts[3] = [55, 290, -1]
 
 	$hGUI = GUICreate("Timer mittels von CallBack-Funktionen", 400, 320)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 226, BitOR($WS_HSCROLL, $WS_VSCROLL))
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
-	$idState = GUICtrlCreateButton("Startet Progressbar", 75, 265, 150, 25)
-	$idChange = GUICtrlCreateButton("Intervall ändern", 235, 265, 90, 25)
-	GUICtrlSetState($idChange, $GUI_DISABLE)
+	_MemoCreate(2, 32, 396, 226, BitOR($WS_HSCROLL, $WS_VSCROLL))
+	$idBtn_State = GUICtrlCreateButton("Startet Progressbar", 75, 265, 150, 25)
+	$idBtn_Change = GUICtrlCreateButton("Intervall ändern", 235, 265, 90, 25)
+	GUICtrlSetState($idBtn_Change, $GUI_DISABLE)
 	$g_hStatus = _GUICtrlStatusBar_Create($hGUI, $aParts)
 	_GUICtrlStatusBar_SetText($g_hStatus, "2 Timer:")
 	_GUICtrlStatusBar_SetText($g_hStatus, @TAB & @TAB & StringFormat("%02d:%02d:%02d", @HOUR, @MIN, @SEC), 2)
@@ -32,25 +33,25 @@ Func _Example_CallBack()
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE
 				ExitLoop
-			Case $idState
-				If GUICtrlRead($idState) = "Startet Progressbar" Then
+			Case $idBtn_State
+				If GUICtrlRead($idBtn_State) = "Startet Progressbar" Then
 					$iTimerProgress = _Timer_SetTimer($hGUI, $iWait, "_UpdateProgressBar") ; Erzeugt Timer 2 (Fortschritt)
 					If @error Or $iTimerProgress = 0 Then ContinueLoop
-					GUICtrlSetData($idState, "Stoppe Progressbar")
-					GUICtrlSetState($idChange, $GUI_ENABLE)
+					GUICtrlSetData($idBtn_State, "Stoppe Progressbar")
+					GUICtrlSetState($idBtn_Change, $GUI_ENABLE)
 				Else
-					GUICtrlSetState($idChange, $GUI_DISABLE)
+					GUICtrlSetState($idBtn_Change, $GUI_DISABLE)
 					_Timer_KillTimer($hGUI, $iTimerProgress)
-					GUICtrlSetData($idState, "Startet Progressbar")
+					GUICtrlSetData($idBtn_State, "Startet Progressbar")
 				EndIf
 
-			Case $idChange
+			Case $idBtn_Change
 				If $iWait = 10 Then
 					$iWait = 250
 				Else
 					$iWait = 10
 				EndIf
-				MemoWrite("Timer für _UpdateProgressBar auf " & $iWait & " ms gesetzt!")
+				_MemoWrite("Timer für _UpdateProgressBar auf " & $iWait & " ms gesetzt!")
 				$iTimerProgress = _Timer_SetTimer($hGUI, $iWait, "", $iTimerProgress) ; Timer mit verschiedenen Intervallen verwenden
 		EndSwitch
 	WEnd
@@ -74,8 +75,3 @@ Func _UpdateProgressBar($hWnd, $iMsg, $iIDTimer, $dwTime)
 		GUICtrlSetColor($g_idProgress, 0x0000ff)
 	EndIf
 EndFunc   ;==>_UpdateProgressBar
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

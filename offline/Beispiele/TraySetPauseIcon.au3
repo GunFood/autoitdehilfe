@@ -1,6 +1,6 @@
-#include <TrayConstants.au3> ; wird für die $TRAY_ICONSTATE_SHOW Konstante benötigt.
-
 #NoTrayIcon
+
+#include <TrayConstants.au3> ; wird für die $TRAY_ICONSTATE_SHOW Konstante benötigt.
 
 Example()
 

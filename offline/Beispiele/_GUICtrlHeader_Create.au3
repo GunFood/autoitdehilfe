@@ -1,22 +1,26 @@
-#include <Extras\WM_NOTIFY.au3>
-#include <GuiConstantsEx.au3>
-#include <GuiHeader.au3>
-#include <WindowsConstants.au3>
+#include "Extras\HelpFileInternals.au3"
+#include "Extras\WM_NOTIFY.au3"
 
-Global $g_hHeader, $g_idMemo
+#include <GUIConstantsEx.au3>
+#include <GuiHeader.au3>
+#include <StructureConstants.au3>
+#include <WindowsStylesConstants.au3>
+
+Global $g_hHeader
 
 Example()
 
 Func Example()
 	; Erstellt eine GUI
-	Local $hGUI = GUICreate("Header: Erstellen (v" & @AutoItVersion & ")", 400, 300)
+	Local $hGUI = GUICreate("Header: Erstellen (v" & @AutoItVersion & ")", 400, 300, 100, 100)
 	$g_hHeader = _GUICtrlHeader_Create($hGUI)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, $WS_VSCROLL)
-	GUISetState(@SW_SHOW)
+	_MemoCreate(2, 37, 444, 229)
 
 ;~ 	_GUICtrlHeader_SetUnicodeFormat($g_hHeader, False)
 
-	_WM_NOTIFY_Register($g_idMemo)
+	GUISetState(@SW_SHOW)
+
+	_WM_NOTIFY_Register($_g_idLst_Memo)
 
 	; Fügt die Spalten hinzu
 	_GUICtrlHeader_AddItem($g_hHeader, "Spalte 0", 100)
@@ -27,15 +31,12 @@ Func Example()
 	; Löscht alle Filter
 	_GUICtrlHeader_ClearFilterAll($g_hHeader)
 
+	_MemoMsgBoxStatus("", -1, $hGUI) ; Keine weiteren Aktionen, es wird gewartet bis die GUI geschlossen wird.
+
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example
-
-; Schreibt eine Zeile in das Memo-Control
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite
 
 Func WM_NOTIFY($hWnd, $iMsg, $wParam, $lParam)
 	#forceref $hWnd, $iMsg, $wParam

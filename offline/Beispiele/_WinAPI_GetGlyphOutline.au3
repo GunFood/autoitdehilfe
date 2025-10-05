@@ -1,4 +1,3 @@
-#include <APIGdiConstants.au3>
 #include <FontConstants.au3>
 #include <GUIConstantsEx.au3>
 #include <SendMessage.au3>
@@ -7,7 +6,6 @@
 #include <WinAPIGdiDC.au3>
 #include <WinAPIHObj.au3>
 #include <WinAPIMem.au3>
-#include <WindowsConstants.au3>
 
 ; Creates logical font ("Times") and retrieve bitmap bits for a random character
 Local $hDC = _WinAPI_CreateCompatibleDC(0)

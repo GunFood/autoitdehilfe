@@ -1,6 +1,6 @@
 #include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -10,15 +10,15 @@ Func Example()
 
 	Local $idListview = GUICtrlCreateListView("Spalte1  |Spalte2|Spalte3", 10, 10, 200, 150) ;,$LVS_SORTDESCENDING)
 	Local $idButton = GUICtrlCreateButton("Wert?", 75, 170, 70, 20)
-	Local $idItem1 = GUICtrlCreateListViewItem("Eintrag2|Spalte22|Spalte23", $idListview)
-	Local $idItem2 = GUICtrlCreateListViewItem("Eintrag1|Spalte12|Spalte13", $idListview)
-	Local $idItem3 = GUICtrlCreateListViewItem("Eintrag3|Spalte32|Spalte33", $idListview)
+	Local $idLVi_Item1 = GUICtrlCreateListViewItem("Eintrag2|Spalte22|Spalte23", $idListview)
+	Local $idLVi_Item2 = GUICtrlCreateListViewItem("Eintrag1|Spalte12|Spalte13", $idListview)
+	Local $idLVi_Item3 = GUICtrlCreateListViewItem("Eintrag3|Spalte32|Spalte33", $idListview)
 	GUICtrlCreateInput("", 20, 200, 150)
 	GUICtrlSetState(-1, $GUI_DROPACCEPTED) ; Erlaubt drag&drop
 	GUISetState(@SW_SHOW)
-	GUICtrlSetData($idItem2, "EINTRAG1")
-	GUICtrlSetData($idItem3, "||SPALTE33")
-	GUICtrlDelete($idItem1)
+	GUICtrlSetData($idLVi_Item2, "EINTRAG1")
+	GUICtrlSetData($idLVi_Item3, "||SPALTE33")
+	GUICtrlDelete($idLVi_Item1)
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	While 1

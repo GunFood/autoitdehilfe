@@ -1,7 +1,7 @@
 #include <GUIConstantsEx.au3>
 #include <GuiTreeView.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -13,19 +13,19 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
-	Local $aidItem[10]
+	Local $aidTVi_Item[10]
 	For $x = 0 To 9
-		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
+		$aidTVi_Item[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
 		For $y = 1 To Random(2, 10, 1)
-			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Child", $y), $aidItem[$x])
+			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Child", $y), $aidTVi_Item[$x])
 		Next
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)
 
 	Local $iRand = Random(0, 9, 1)
-	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Index %d markiert? %s", $iRand, _GUICtrlTreeView_GetSelected($idTreeView, $aidItem[$iRand])))
-	_GUICtrlTreeView_SetSelected($idTreeView, $aidItem[$iRand])
-	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Index %d markiert? %s", $iRand, _GUICtrlTreeView_GetSelected($idTreeView, $aidItem[$iRand])))
+	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Index %d markiert? %s", $iRand, _GUICtrlTreeView_GetSelected($idTreeView, $aidTVi_Item[$iRand])))
+	_GUICtrlTreeView_SetSelected($idTreeView, $aidTVi_Item[$iRand])
+	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Index %d markiert? %s", $iRand, _GUICtrlTreeView_GetSelected($idTreeView, $aidTVi_Item[$iRand])))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

@@ -1,10 +1,14 @@
-#include <Extras\WM_NOTIFY.au3>
+#include "Extras\WM_NOTIFY.au3"
+
+#include <ColorConstants.au3>
 #include <GUIConstantsEx.au3>
 #include <GuiImageList.au3>
 #include <GuiListView.au3>
 #include <SendMessage.au3>
+#include <StructureConstants.au3>
 #include <WinAPISys.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 #Region Globals *************************************************************************
 Global $g_ahDragImageList, $g_hListView, $g_bDragging = False, $g_iLV_Height

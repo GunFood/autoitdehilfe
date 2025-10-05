@@ -2,7 +2,6 @@
 #include <WinAPIHObj.au3>
 
 ;~ #include <WinAPISys.au3>
-
 Local $sFile = @ScriptFullPath
 Local $hFile = _WinAPI_CreateFile($sFile, 2, 0, 6)
 If @error Then Exit

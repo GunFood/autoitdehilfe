@@ -15,7 +15,7 @@ Func Example()
 		Return False
 	EndIf
 
-	#cs Kommentare:
+	#cs Comments:
 	-Die standardmäßige Ausrichtung für die Daten sind 4 Bytes. Das bedeutet, dass jedes Element mindestens 4 Bytes benötigt.
 	-Die minimale Größe erhalten werden wenn man am Anfang der Struct-Definition eine Ausrichtung (alignment) von 1 angibt: "align 1;struct; ..."
 
@@ -24,7 +24,7 @@ Func Example()
 	var2: byte - 1 byte + 3 bytes Ausrichtung = 4 bytes
 	var3: uint - 4 bytes
 	var4: char[128] - 1 * 128 bytes
-	#ce
+	#ce Comments:
 
 	MsgBox($MB_SYSTEMMODAL, "", "Größe des Structs: " & DllStructGetSize($tSTRUCT1))
 EndFunc   ;==>Example

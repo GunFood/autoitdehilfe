@@ -2,7 +2,7 @@
 #include <MsgBoxConstants.au3>
 #include <StaticConstants.au3>
 #include <TreeViewConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -10,30 +10,30 @@ Func Example()
 	GUICreate("Meine GUI mit Treeview", 350, 215)
 
 	Local $idTreeview = GUICtrlCreateTreeView(6, 6, 150, 150, BitOR($TVS_HASBUTTONS, $TVS_HASLINES, $TVS_LINESATROOT, $TVS_DISABLEDRAGDROP, $TVS_SHOWSELALWAYS), $WS_EX_CLIENTEDGE)
-	Local $idGeneralitem = GUICtrlCreateTreeViewItem("Allgemein", $idTreeview)
+	Local $idTVi_General = GUICtrlCreateTreeViewItem("Allgemein", $idTreeview)
 	GUICtrlSetColor(-1, 0x0000C0)
-	Local $idDisplayitem = GUICtrlCreateTreeViewItem("Anzeige", $idTreeview)
+	Local $idTVi_Display = GUICtrlCreateTreeViewItem("Anzeige", $idTreeview)
 	GUICtrlSetColor(-1, 0x0000C0)
-	Local $idAboutitem = GUICtrlCreateTreeViewItem("Über", $idGeneralitem)
-	Local $idCompitem = GUICtrlCreateTreeViewItem("Computer", $idGeneralitem)
-	GUICtrlCreateTreeViewItem("Benutzer", $idGeneralitem)
-	GUICtrlCreateTreeViewItem("Auflösung", $idDisplayitem)
-	GUICtrlCreateTreeViewItem("Sonstiges", $idDisplayitem)
+	Local $idTVi_About = GUICtrlCreateTreeViewItem("Über", $idTVi_General)
+	Local $idTVi_Comp = GUICtrlCreateTreeViewItem("Computer", $idTVi_General)
+	GUICtrlCreateTreeViewItem("Benutzer", $idTVi_General)
+	GUICtrlCreateTreeViewItem("Auflösung", $idTVi_Display)
+	GUICtrlCreateTreeViewItem("Sonstiges", $idTVi_Display)
 
-	Local $idStartlabel = GUICtrlCreateLabel("Treeview Demo", 160, 90, 100, 20)
-	Local $idAboutlabel = GUICtrlCreateLabel("Dieses kleine Skript demonstriert die Benutzung eines Treeview Controls.", 160, 70, 150, 60)
+	Local $idLbl_Start = GUICtrlCreateLabel("Treeview Demo", 160, 90, 100, 20)
+	Local $idLbl_About = GUICtrlCreateLabel("Dieses kleine Skript demonstriert die Benutzung eines Treeview Controls.", 160, 70, 150, 60)
 	GUICtrlSetState(-1, $GUI_HIDE) ; Versteckt den "aboutlabel"-Text während der Initialisierung
-	Local $idCompinfo = GUICtrlCreateLabel("Name:" & @TAB & @ComputerName & @CRLF & "OS:" & @TAB & @OSVersion & @CRLF & "SP:" & @TAB & @OSServicePack, 160, 30, 200, 80)
+	Local $idLbl_Compinfo = GUICtrlCreateLabel("Name:" & @TAB & @ComputerName & @CRLF & "OS:" & @TAB & @OSVersion & @CRLF & "SP:" & @TAB & @OSServicePack, 160, 30, 200, 80)
 	GUICtrlSetState(-1, $GUI_HIDE) ; Versteckt den "compinfo"-Text während der Initialisierung
 
 	GUICtrlCreateLabel("", 0, 170, 350, 2, $SS_SUNKEN)
-	Local $idTogglebutton = GUICtrlCreateButton("&Umschalten", 35, 185, 70, 20)
-	Local $idInfobutton = GUICtrlCreateButton("&Info", 105, 185, 70, 20)
-	Local $idStatebutton = GUICtrlCreateButton("Auf/Zu", 175, 185, 70, 20)
-	Local $idCancelbutton = GUICtrlCreateButton("&Abbrechen", 245, 185, 70, 20)
+	Local $idBtn_Toggle = GUICtrlCreateButton("&Umschalten", 35, 185, 70, 20)
+	Local $idBtn_Info = GUICtrlCreateButton("&Info", 105, 185, 70, 20)
+	Local $idBtn_State = GUICtrlCreateButton("Auf/Zu", 175, 185, 70, 20)
+	Local $idBtn_Cancel = GUICtrlCreateButton("&Abbrechen", 245, 185, 70, 20)
 
-	GUICtrlSetState($idGeneralitem, BitOR($GUI_EXPAND, $GUI_DEFBUTTON)) ; Expandiert den "Allgemein"-Tree und stellt ihn im Stil 'fett' dar
-	GUICtrlSetState($idDisplayitem, BitOR($GUI_EXPAND, $GUI_DEFBUTTON)) ; Expandiert den "Anzeige"-Tree und stellt ihn im Stil 'fett' dar
+	GUICtrlSetState($idTVi_General, BitOR($GUI_EXPAND, $GUI_DEFBUTTON)) ; Expandiert den "Allgemein"-Tree und stellt ihn im Stil 'fett' dar
+	GUICtrlSetState($idTVi_Display, BitOR($GUI_EXPAND, $GUI_DEFBUTTON)) ; Expandiert den "Anzeige"-Tree und stellt ihn im Stil 'fett' dar
 
 	GUISetState(@SW_SHOW)
 
@@ -41,19 +41,19 @@ Func Example()
 	While 1
 		$idMsg = GUIGetMsg()
 		Select
-			Case $idMsg = $idCancelbutton Or $idMsg = $GUI_EVENT_CLOSE
+			Case $idMsg = $idBtn_Cancel Or $idMsg = $GUI_EVENT_CLOSE
 				ExitLoop
 
-			Case $idMsg = $idTogglebutton ; Schriftstil 'Fett' ein/ausschalten
-				If BitAND(GUICtrlRead($idGeneralitem), $GUI_DEFBUTTON) Then
-					GUICtrlSetState($idGeneralitem, 0)
-					GUICtrlSetState($idDisplayitem, 0)
+			Case $idMsg = $idBtn_Toggle ; Schriftstil 'Fett' ein/ausschalten
+				If BitAND(GUICtrlRead($idTVi_General), $GUI_DEFBUTTON) Then
+					GUICtrlSetState($idTVi_General, 0)
+					GUICtrlSetState($idTVi_Display, 0)
 				Else
-					GUICtrlSetState($idGeneralitem, $GUI_DEFBUTTON)
-					GUICtrlSetState($idDisplayitem, $GUI_DEFBUTTON)
+					GUICtrlSetState($idTVi_General, $GUI_DEFBUTTON)
+					GUICtrlSetState($idTVi_Display, $GUI_DEFBUTTON)
 				EndIf
 
-			Case $idMsg = $idInfobutton
+			Case $idMsg = $idBtn_Info
 				$idItem = GUICtrlRead($idTreeview) ; Holt die Control-ID des aktuell gewählten Treeview-Items
 				If $idItem = 0 Then
 					MsgBox($MB_SYSTEMMODAL, "Treeview Demo", "Momentan ist kein Eintrag markiert")
@@ -66,7 +66,7 @@ Func Example()
 					EndIf
 				EndIf
 
-			Case $idMsg = $idStatebutton ; Expandiert oder versteckt den markierten Tree
+			Case $idMsg = $idBtn_State ; Expandiert oder versteckt den markierten Tree
 				$idItem = GUICtrlRead($idTreeview)
 				If $idItem > 0 Then
 					$hItem = GUICtrlGetHandle($idItem)
@@ -74,15 +74,15 @@ Func Example()
 				EndIf
 
 				; Die folgenden Items verstecken die anderen Labels (erster und zweiter Parameter) und zeigen anschließend die 'eigenen' Labels (dritter und vierter Parameter)
-			Case $idMsg = $idGeneralitem
-				GUIChangeItems($idAboutlabel, $idCompinfo, $idStartlabel, $idStartlabel)
+			Case $idMsg = $idTVi_General
+				GUIChangeItems($idLbl_About, $idLbl_Compinfo, $idLbl_Start, $idLbl_Start)
 
-			Case $idMsg = $idAboutitem
-				GUICtrlSetState($idCompinfo, $GUI_HIDE)
-				GUIChangeItems($idStartlabel, $idStartlabel, $idAboutlabel, $idAboutlabel)
+			Case $idMsg = $idTVi_About
+				GUICtrlSetState($idLbl_Compinfo, $GUI_HIDE)
+				GUIChangeItems($idLbl_Start, $idLbl_Start, $idLbl_About, $idLbl_About)
 
-			Case $idMsg = $idCompitem
-				GUIChangeItems($idStartlabel, $idAboutlabel, $idCompinfo, $idCompinfo)
+			Case $idMsg = $idTVi_Comp
+				GUIChangeItems($idLbl_Start, $idLbl_About, $idLbl_Compinfo, $idLbl_Compinfo)
 		EndSelect
 	WEnd
 

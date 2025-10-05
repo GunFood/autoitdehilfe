@@ -6,27 +6,27 @@ Example()
 Func Example()
 	GUICreate("Meine GUI", 300, 200)
 
-	Local $idFileMenu = GUICtrlCreateMenu("&Datei")
-	GUICtrlCreateMenuItem("&Öffnen", $idFileMenu)
-	GUICtrlCreateMenuItem("&Speichern", $idFileMenu)
-	GUICtrlCreateMenuItem("", $idFileMenu)
+	Local $idMnu_File = GUICtrlCreateMenu("&Datei")
+	GUICtrlCreateMenuItem("&Öffnen", $idMnu_File)
+	GUICtrlCreateMenuItem("&Speichern", $idMnu_File)
+	GUICtrlCreateMenuItem("", $idMnu_File)
 
-	Local $idOptionsMenu = GUICtrlCreateMenu("O&ptionen", $idFileMenu)
-	GUICtrlCreateMenuItem("Ansicht", $idOptionsMenu)
-	GUICtrlCreateMenuItem("", $idOptionsMenu)
-	GUICtrlCreateMenuItem("Tools", $idOptionsMenu)
+	Local $idMnu_Options = GUICtrlCreateMenu("O&ptionen", $idMnu_File)
+	GUICtrlCreateMenuItem("Ansicht", $idMnu_Options)
+	GUICtrlCreateMenuItem("", $idMnu_Options)
+	GUICtrlCreateMenuItem("Tools", $idMnu_Options)
 
-	GUICtrlCreateMenuItem("", $idFileMenu)
-	Local $idExitItem = GUICtrlCreateMenuItem("&Beenden", $idFileMenu)
+	GUICtrlCreateMenuItem("", $idMnu_File)
+	Local $idMni_Exit = GUICtrlCreateMenuItem("&Beenden", $idMnu_File)
 
-	Local $idHelpMenu = GUICtrlCreateMenu("&?")
-	Local $idAboutItem = GUICtrlCreateMenuItem("&Über", $idHelpMenu)
+	Local $idMnu_Help = GUICtrlCreateMenu("&?")
+	Local $idMni_About = GUICtrlCreateMenuItem("&Über", $idMnu_Help)
 
-	Local $idEndBtn = GUICtrlCreateButton("Beenden", 110, 140, 70, 20)
+	Local $idBtn_End = GUICtrlCreateButton("Beenden", 110, 140, 70, 20)
 
-	SetMenuColor($idFileMenu, 0xEEBB99) ; RGB Farbwert
-	SetMenuColor($idOptionsMenu, 0x66BB99) ; RGB Farbwert
-	SetMenuColor($idHelpMenu, 0x99BBEE) ; RGB Farbwert
+	SetMenuColor($idMnu_File, 0xEEBB99) ; RGB Farbwert
+	SetMenuColor($idMnu_Options, 0x66BB99) ; RGB Farbwert
+	SetMenuColor($idMnu_Help, 0x99BBEE) ; RGB Farbwert
 
 	GUISetState(@SW_SHOW)
 
@@ -36,10 +36,10 @@ Func Example()
 		$idMsg = GUIGetMsg()
 
 		Switch $idMsg
-			Case $idExitItem, $idEndBtn, $GUI_EVENT_CLOSE
+			Case $idMni_Exit, $idBtn_End, $GUI_EVENT_CLOSE
 				ExitLoop
 
-			Case $idAboutItem
+			Case $idMni_About
 				MsgBox($MB_SYSTEMMODAL, "Über", "Farbiges Menübeispiel")
 		EndSwitch
 	WEnd

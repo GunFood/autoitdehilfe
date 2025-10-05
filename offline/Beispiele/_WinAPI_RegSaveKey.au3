@@ -1,5 +1,5 @@
-#include <APIRegConstants.au3>
 #include <Debug.au3>
+#include <SecurityConstants.au3>
 #include <WinAPIError.au3>
 #include <WinAPIHObj.au3>
 #include <WinAPIProc.au3>
@@ -18,7 +18,7 @@ Func Example()
 	Local $hToken = _WinAPI_OpenProcessToken(BitOR($TOKEN_ADJUST_PRIVILEGES, $TOKEN_QUERY))
 	Local $aAdjust
 	_WinAPI_AdjustTokenPrivileges($hToken, $aPrivileges, $SE_PRIVILEGE_ENABLED, $aAdjust)
-	If @error Or @extended Then
+	If @error Or @extended Then ; determine whether the function success and adjusted all of the specified privileges
 		_DebugReport('Error' & @TAB & 'You do not have the required privileges.' & @CRLF)
 		Exit
 	EndIf

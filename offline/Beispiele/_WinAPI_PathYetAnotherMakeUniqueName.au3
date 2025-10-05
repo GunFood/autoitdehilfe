@@ -1,3 +1,4 @@
+#include <AutoItConstants.au3>
 #include <FileConstants.au3>
 #include <WinAPIShPath.au3>
 

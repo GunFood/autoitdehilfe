@@ -49,9 +49,9 @@ Wenn $iItem nicht als Array in $sStruct definiert wurde, ein ein ung&uuml;ltiger
 <td>$iFlags</td>
 <td><strong>[optional]</strong> Eine Menge von Bitflags die zus&auml;tzliche Anzeigeoptionen angeben.<br />
 Dieser Parameter kann entweder 0 oder irgendeine Kombinatino der folgenden Werte sein:<br />
-&nbsp;&nbsp;&nbsp; 1 - Verhindert das Anzeigen von "<struct>" und "<endstruct>" Feldern am Anfang und am Ende der Liste.<br />
-&nbsp;&nbsp;&nbsp; 2 - Verhindert das Anzeigen von "<alignment>" Feldern.<br />
-&nbsp;&nbsp;&nbsp; 4 - Verhindert das Anzeigen von "<unnamed>" in der "Member" Spalte der Liste wenn das Strukturelement keinen Namen hat.<br />
+&nbsp;&nbsp;&nbsp; 1 - Verhindert das Anzeigen von "&lt;struct&gt;" und "&lt;endstruct&gt;" Feldern am Anfang und am Ende der Liste.<br />
+&nbsp;&nbsp;&nbsp; 2 - Verhindert das Anzeigen von "&lt;alignment&gt;" Feldern.<br />
+&nbsp;&nbsp;&nbsp; 4 - Verhindert das Anzeigen von "&lt;unnamed&gt;" in der "Member" Spalte der Liste wenn das Strukturelement keinen Namen hat.<br />
 &nbsp;&nbsp;&nbsp; 8 - Verhindert das Hervorheben von Strukturelementen welche als Array definiert sind.<br />
 &nbsp;&nbsp;&nbsp; 16 - Verhindert das Wahrnehmen von Strukturelementen welche "Reserved*" genannt wurden als unbenutzte Elemente.<br />
 &nbsp;&nbsp;&nbsp; 32 - Verhindert das Kopieren mittels Doppeklick der Strukturelemente in die Zwischenablage.<br />
@@ -76,24 +76,27 @@ Dieser Parameter kann entweder 0 oder irgendeine Kombinatino der folgenden Werte
 <table class="noborder">
 <tr>
 <td style="width:10%" class="valign-top">Erfolg: </td>
-<td style="width:90%">1.</td>
+<td style="width:90%">1. @extended kann gesetzt sein, siehe Bemerkungen.</td>
 </tr>
 <tr>
 <td class="valign-top">Fehler: </td>
-<td>0 und setzt das @error Flag auf ungleich null.</td>
+<td>0 und setzt das @error Flag auf ungleich 0.</td>
 </tr>
 <tr>
 <td class="valign-top">@error:</td>
 <td>2 - Es wurde ein unbekannter Typ im String &uuml;bergeben.<br />
 3&nbsp;- Die Zuweisung des Speichers, welcher f&uuml;r die Struktur ben&ouml;tigt wird, schlug fehl oder es wurde ein ung&uuml;ltiger Zeiger &uuml;bergeben.<br />
 4&nbsp;- Die Zuweisung des Speichers, welcher f&uuml;r den &uuml;bergebenen String ben&ouml;tigt wird schlug fehl.<br />
-10&nbsp;- Der $sStruct Parameter ist kein String.<br />
+10&nbsp;- Der $sStruct Parameter ist keine g&uuml;ltige DllStruct.<br />
 15&nbsp;- Fehler beim Zugriff des Speichers um Daten zu lesen.</td>
 </tr>
 </table>
 
 <h2>Bemerkungen</h2>
 <p>Diese Funktion ist haupts&auml;chlich f&uuml;r das Debugging gedacht und sollte im finalen Script nicht verwendet werden, da er keine brauchbaren Informationen f&uuml;r die Endnutzer bereitstellt.<br />
+<br />
+Wenn ein Elementwert '|' enth&auml;lt, wird dieser in der Ausgabe durch 'Â¦' ersetzt, da '|' intern bei der Erstellung der Ausgabelistenansicht verwendet wird.<br />
+Der Wert @extended wird bei der R&uuml;ckkehr auf 1 gesetzt.<br />
 </p>
 
 <h2 class="bottom">Beispiel</h2>
@@ -130,7 +133,7 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <pre>
 <span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIDiag.au3&gt;</span>
 
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sStruct</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">'dword Length;short State;uint Flags;handle hBitmap;hwnd hDC;long Rect[4];byte[14];int Reserved[10];wchar Text[80]'</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sStruct</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">'dword Length;short State;uint Flags;handle hBitmap;hwnd hDC;long Rect[4];byte[14];int Reserved[10];wchar Text[80];wchar Text[80]'</span>
 <a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tStruct</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S9">$sStruct</span><span class="S8">)</span>
 
 <a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tStruct</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">80</span><span class="S8">)</span>
@@ -145,8 +148,10 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tStruct</span><span class="S8">,</span><span class="S0"> </span><span class="S3">7</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Binary.htm"><span class="S4">Binary</span></a><span class="S8">(</span><span class="S7">'0x656A6D633835206C6A6764206200'</span><span class="S8">))</span>
 <a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tStruct</span><span class="S8">,</span><span class="S0"> </span><span class="S3">8</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
 <a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tStruct</span><span class="S8">,</span><span class="S0"> </span><span class="S3">9</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Einfacher Text'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/DllStructSetData.htm"><span class="S4">DllStructSetData</span></a><span class="S8">(</span><span class="S9">$tStruct</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Text with | ...'</span><span class="S8">)</span>
 
 <a class="codeSnippetLink" href="../libfunctions/_WinAPI_DisplayStruct.htm"><span class="S15">_WinAPI_DisplayStruct</span></a><span class="S8">(</span><span class="S9">$tStruct</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sStruct</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">'@@ Debug('</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@ScriptLineNumber"><span class="S6">@ScriptLineNumber</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">') Extended code: '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">;### Debug Console</span>
 <span class="S0"></span></span>
 </pre>
 </div>

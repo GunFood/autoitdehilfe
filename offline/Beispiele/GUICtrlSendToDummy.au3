@@ -1,6 +1,6 @@
 #include <GUIConstantsEx.au3>
 
-Global $g_idUserDummy, $g_iState = 0
+Global $g_idDmy_User, $g_iState = 0
 
 Example()
 
@@ -11,13 +11,13 @@ Func Example()
 	GUISetBkColor(0x00E0FFFF) ; Ändert die Hintergrundfarbe der GUI.
 	GUISetOnEvent($GUI_EVENT_CLOSE, "OnExit") ; Setzt ein Event, welches die 'OnExit'-Funktion aufruft.
 
-	$g_idUserDummy = GUICtrlCreateDummy()
+	$g_idDmy_User = GUICtrlCreateDummy()
 	GUICtrlSetOnEvent(-1, "OnDummy") ; Setzt ein Event, welches die 'OnDummy'-Funktion aufruft, wenn dieses Control ausgewählt wurde.
 
 	GUICtrlCreateButton("Click", 70, 170, 85, 25)
 	GUICtrlSetOnEvent(-1, "OnClick") ; Setzt ein Event, welches die 'OnClick'-Funktion aufruft, wenn dieses Control ausgewählt wurde.
 
-	GUICtrlSendToDummy($g_idUserDummy, 1) ; Setzt den Status auf geklickt. Der Status kann mit GUICtrlRead() abgefagt werden.
+	GUICtrlSendToDummy($g_idDmy_User, 1) ; Setzt den Status auf geklickt. Der Status kann mit GUICtrlRead() abgefagt werden.
 
 	; Zeigt die GUI
 	GUISetState(@SW_SHOW)
@@ -29,12 +29,12 @@ Func Example()
 EndFunc   ;==>Example
 
 Func OnClick()
-	Return GUICtrlSendToDummy($g_idUserDummy) ; Sendet eine Nachricht zu dem Dummy-Control, wodurch OnDummy() ausgelöst wird.
+	Return GUICtrlSendToDummy($g_idDmy_User) ; Sendet eine Nachricht zu dem Dummy-Control, wodurch OnDummy() ausgelöst wird.
 EndFunc   ;==>OnClick
 
 
 Func OnDummy()
-	If GUICtrlRead($g_idUserDummy) Then
+	If GUICtrlRead($g_idDmy_User) Then
 		GUISetBkColor(0x000000FF) ; Ändert die Hintergrundfarbe
 	Else
 		Exit

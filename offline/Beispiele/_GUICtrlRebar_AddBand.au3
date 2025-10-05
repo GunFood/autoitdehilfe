@@ -1,13 +1,14 @@
+#include <AutoItConstants.au3>
 #include <GuiComboBox.au3>
 #include <GUIConstantsEx.au3>
 #include <GuiDateTimePicker.au3>
 #include <GuiReBar.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 
 Func Example()
-	Local $hGui, $idBtnExit, $hCombo, $hReBar, $hDTP, $idInput
+	Local $hGui, $idBtn_Exit, $hCombo, $hReBar, $hDTP, $idInput
 
 	$hGui = GUICreate("Rebar", 400, 396, -1, -1, BitOR($WS_MINIMIZEBOX, $WS_CAPTION, $WS_POPUP, $WS_SYSMENU, $WS_MAXIMIZEBOX))
 
@@ -37,12 +38,12 @@ Func Example()
 	; Am Anfang der Rebar hinzufügen
 	_GUICtrlRebar_AddBand($hReBar, GUICtrlGetHandle($idInput), 120, 200, "Name:", 0)
 
-	$idBtnExit = GUICtrlCreateButton("Exit", 150, 360, 100, 25)
+	$idBtn_Exit = GUICtrlCreateButton("Exit", 150, 360, 100, 25)
 	GUISetState(@SW_SHOW)
 
 	While 1
 		Switch GUIGetMsg()
-			Case $GUI_EVENT_CLOSE, $idBtnExit
+			Case $GUI_EVENT_CLOSE, $idBtn_Exit
 				Exit
 		EndSwitch
 	WEnd

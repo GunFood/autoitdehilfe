@@ -1,3 +1,5 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <Excel.au3>
 #include <MsgBoxConstants.au3>
 
@@ -13,7 +15,7 @@ If @error Then
 EndIf
 
 ; Einfügen des Bildes in einen Bereich von Zellen und Ändern seiner Größe. Seitenverhältnis beibehalten
-Local $sPicture = @ScriptDir & "\Extras\_Excel.jpg"
+Local $sPicture = _Extras_PathFull("_Excel.jpg")
 _Excel_PictureAdd($oWorkbook, Default, $sPicture, "B2:D8")
 If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Beispiel 1", "Fehler beim Einfügen des Bildes." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
 MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_PictureAdd Beispiel 1", "Bild eingefügt/größenverändert an 'B2:D8', Seitenverhältnis beibehalten.")

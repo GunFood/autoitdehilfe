@@ -1,7 +1,8 @@
-#include <Extras\WM_NOTIFY.au3>
+#include "Extras\WM_NOTIFY.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiDateTimePicker.au3>
-#include <WindowsConstants.au3>
+#include <StructureConstants.au3>
 
 Global $g_hDTP
 

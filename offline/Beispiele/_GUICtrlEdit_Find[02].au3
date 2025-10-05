@@ -1,9 +1,9 @@
 ; mit Standard-UDF
 
-#include <GUIConstantsEx.au3>
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiEdit.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
 
 Example_External()
 
@@ -17,20 +17,22 @@ Func Example_External()
 
 	Run("notepad.exe", "", @SW_MAXIMIZE)
 	;Warten, bis das Fenster "Untitled" existiert
-	WinWait($sTitle)
+	Local $hWnd = WinWait($sTitle)
 
 	;Das Handle eines Notepad-Fensters abrufen
 	$hTitle = WinGetHandle($sTitle)
 	If @error Then
 		MsgBox($MB_SYSTEMMODAL, "Fehler", "Das richtige Fenster wurde nicht gefunden")
 	Else
-		$hHandle = ControlGetHandle($hTitle, "", "Edit1")
+		$hHandle = ControlGetHandle($hTitle, "", ControlGetFocus($hWnd))
 		If @error Then
 			MsgBox($MB_SYSTEMMODAL, "Fehler", "Konnte das richtige Steuerelement nicht finden")
 		Else
 			; Senden Sie einen Text direkt an das Bearbeitungsfeld dieses Fensters
-			ControlSend($hTitle, "", "Edit1", $s_Text)
+			ControlSend($hTitle, "", ControlGetFocus($hWnd), $s_Text)
 			_GUICtrlEdit_Find($hHandle, True)
 		EndIf
 	EndIf
+
+	_NotepadForceClose($hWnd)
 EndFunc   ;==>Example_External

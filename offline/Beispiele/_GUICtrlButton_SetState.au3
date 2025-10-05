@@ -1,8 +1,8 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiButton.au3>
 #include <GUIConstantsEx.au3>
-#include <WindowsConstants.au3>
-
-Global $g_idMemo
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -10,8 +10,7 @@ Func Example()
 	Local $idRdo, $idRdo2, $idChk, $idChk2, $idChk3, $idBtn, $idBtn2
 
 	GUICreate("Buttons", 800, 400)
-	$g_idMemo = GUICtrlCreateEdit("", 119, 10, 676, 374, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(119, 10, 276, 374, $WS_VSCROLL)
 
 	$idBtn = GUICtrlCreateButton("Button 1", 10, 10, 90, 25)
 	_GUICtrlButton_SetState($idBtn)
@@ -34,19 +33,19 @@ Func Example()
 
 	GUISetState(@SW_SHOW)
 
-	MemoWrite("Button 1 Status:" & _
+	_MemoWrite("Button 1 Status:" & _
 			_ExplainState(_GUICtrlButton_GetState($idBtn), True) & "--------------------------------")
-	MemoWrite("Button 2 Status:" & _
+	_MemoWrite("Button 2 Status:" & _
 			_ExplainState(_GUICtrlButton_GetState($idBtn2), True) & "--------------------------------")
-	MemoWrite("Radio 1 Status: " & _
+	_MemoWrite("Radio 1 Status: " & _
 			_ExplainState(_GUICtrlButton_GetState($idRdo)) & "--------------------------------")
-	MemoWrite("Radio 2 Status: " & _
+	_MemoWrite("Radio 2 Status: " & _
 			_ExplainState(_GUICtrlButton_GetState($idRdo2)) & "--------------------------------")
-	MemoWrite("Check 1 Status: " & _
+	_MemoWrite("Check 1 Status: " & _
 			_ExplainState(_GUICtrlButton_GetState($idChk)) & "--------------------------------")
-	MemoWrite("Check 2 Status: " & _
+	_MemoWrite("Check 2 Status: " & _
 			_ExplainState(_GUICtrlButton_GetState($idChk2)) & "--------------------------------")
-	MemoWrite("Check 3 Status: " & _
+	_MemoWrite("Check 3 Status: " & _
 			_ExplainState(_GUICtrlButton_GetState($idChk3)) & "--------------------------------")
 
 	While 1
@@ -58,11 +57,6 @@ Func Example()
 
 	Exit
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite
 
 Func _ExplainState($iState, $bPushButton = False)
 	Local $sText = ""

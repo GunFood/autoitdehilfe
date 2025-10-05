@@ -1,8 +1,8 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiButton.au3>
 #include <GUIConstantsEx.au3>
-#include <WindowsConstants.au3>
-
-Global $g_idMemo
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -13,8 +13,7 @@ Func Example()
 	Local $sPath = RegRead("HKEY_LOCAL_MACHINE\SOFTWARE" & $sWow64 & "\AutoIt v3\AutoIt", "InstallDir") & "\Examples\GUI\Advanced\Images"
 
 	GUICreate("Buttons", 300, 300)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 60, 296, 236, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 60, 296, 236, $WS_VSCROLL)
 	GUISetState(@SW_SHOW)
 
 	$idBtn = GUICtrlCreateButton("Button 1", 10, 10, 40, 40, $BS_BITMAP)
@@ -26,9 +25,9 @@ Func Example()
 	$idRdo = GUICtrlCreateRadio("Radio 1", 120, 10, 50, 32, $BS_ICON)
 	_GUICtrlButton_SetImage($idRdo, "shell32.dll", 21, True)
 
-	MemoWrite("Button 1 Bild-Handle: " & _GUICtrlButton_GetImage($idBtn))
-	MemoWrite("Check 1 Bild-Handle : " & _GUICtrlButton_GetImage($idChk))
-	MemoWrite("Radio 1 Bild-Handle : " & _GUICtrlButton_GetImage($idRdo))
+	_MemoWrite("Button 1 Bild-Handle: " & _GUICtrlButton_GetImage($idBtn))
+	_MemoWrite("Check 1 Bild-Handle : " & _GUICtrlButton_GetImage($idChk))
+	_MemoWrite("Radio 1 Bild-Handle : " & _GUICtrlButton_GetImage($idRdo))
 
 	While 1
 		$iMsg = GUIGetMsg()
@@ -37,8 +36,3 @@ Func Example()
 
 	Exit
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

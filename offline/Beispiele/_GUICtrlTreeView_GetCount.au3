@@ -1,7 +1,7 @@
 #include <GUIConstantsEx.au3>
 #include <GuiTreeView.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -13,11 +13,11 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
-	Local $idItem
+	Local $idTVi_Item
 	For $x = 0 To 15
-		$idItem = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
+		$idTVi_Item = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
 		For $y = 0 To 2
-			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $y), $idItem)
+			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $y), $idTVi_Item)
 		Next
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)

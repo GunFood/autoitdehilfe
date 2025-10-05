@@ -1,6 +1,7 @@
 #include <GUIConstantsEx.au3>
 #include <GuiListView.au3>
 #include <MsgBoxConstants.au3>
+#include <StructureConstants.au3>
 
 Example()
 

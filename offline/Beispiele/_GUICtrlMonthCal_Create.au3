@@ -1,9 +1,11 @@
-#include <Extras\WM_NOTIFY.au3>
-#include <GuiConstantsEx.au3>
-#include <GuiMonthCal.au3>
-#include <WindowsConstants.au3>
+#include "Extras\WM_NOTIFY.au3"
 
-Global $g_hMonthCal, $g_idMemo
+#include <GUIConstantsEx.au3>
+#include <GuiMonthCal.au3>
+#include <StructureConstants.au3>
+#include <WindowsStylesConstants.au3>
+
+Global $g_hMonthCal, $_g_idLst_Memo
 
 Example()
 
@@ -13,8 +15,8 @@ Func Example()
 	$g_hMonthCal = _GUICtrlMonthCal_Create($hGUI, 4, 4, $WS_BORDER)
 
 	; Erstellt ein Memo Control
-	$g_idMemo = GUICtrlCreateEdit("", 4, 168, 392, 128, 0)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	$_g_idLst_Memo = GUICtrlCreateEdit("", 4, 168, 392, 128, 0)
+	GUICtrlSetFont($_g_idLst_Memo, 9, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
 
 	GUIRegisterMsg($WM_NOTIFY, "WM_NOTIFY")

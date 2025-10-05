@@ -4,7 +4,7 @@
 #include <WinAPIGdiDC.au3>
 #include <WinAPIMisc.au3>
 #include <WinAPISysWin.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 

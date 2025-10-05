@@ -1,19 +1,18 @@
-#include <GuiConstantsEx.au3>
-#include <GuiHeader.au3>
+#include "Extras\HelpFileInternals.au3"
 
-Global $g_idMemo
+#include <GUIConstantsEx.au3>
+#include <GuiHeader.au3>
 
 Example()
 
 Func Example()
-	Local $hGui, $hHeader
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("Header", 400, 300)
-	$hHeader = _GUICtrlHeader_Create($hGui)
-	_GUICtrlHeader_SetUnicodeFormat($hHeader, True)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 24, 396, 274, 0)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	Local $hGui = GUICreate("Header", 400, 300, 100, 100)
+	Local $hHeader = _GUICtrlHeader_Create($hGui)
+	_MemoCreate(2, 52, 444, 220)
+
+;~ 	_GUICtrlHeader_SetUnicodeFormat($hHeader, True)
+
 	GUISetState(@SW_SHOW)
 
 	; Fügt die Spalten hinzu
@@ -26,14 +25,7 @@ Func Example()
 	_GUICtrlHeader_SetItemAlign($hHeader, 0, 2)
 
 	; Zeigt die Ausrichtung von Spalte 0
-	MemoWrite("Ausrichtung von Spalte 0: " & _GUICtrlHeader_GetItemAlign($hHeader, 0))
+	_MemoWrite("Ausrichtung von Spalte 0: " & _GUICtrlHeader_GetItemAlign($hHeader, 0))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
-	Do
-	Until GUIGetMsg() = $GUI_EVENT_CLOSE
+	_MemoMsgBoxStatus("", -1, $hGui) ; Keine weiteren Aktionen, es wird gewartet bis die GUI geschlossen wird.
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

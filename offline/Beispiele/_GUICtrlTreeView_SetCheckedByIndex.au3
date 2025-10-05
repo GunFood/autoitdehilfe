@@ -1,7 +1,7 @@
 #include <GUIConstantsEx.au3>
 #include <GuiTreeView.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -16,11 +16,11 @@ Func Example()
 ;~     _GUICtrlTreeView_SetUnicodeFormat($idTreeView, False)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
-	Local $aidItem[6]
-	For $x = 0 To UBound($aidItem) - 1
-		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
+	Local $aidTVi_Item[6]
+	For $x = 0 To UBound($aidTVi_Item) - 1
+		$aidTVi_Item[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
 		For $y = 0 To 5
-			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Child Item", $y), $aidItem[$x])
+			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Child Item", $y), $aidTVi_Item[$x])
 		Next
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)
@@ -29,8 +29,8 @@ Func Example()
 	Local $iRandIndex = 4
 	MsgBox($MB_SYSTEMMODAL, "Information", _
 			StringFormat("Setzt den Child Item Index[%d] vom Itemindex[%d]: %s", $iRandIndex, $hRandomItem, _
-			_GUICtrlTreeView_SetCheckedByIndex($idTreeView, $aidItem[$hRandomItem], $iRandIndex)))
-	Local $hSet = _GUICtrlTreeView_GetItemByIndex($idTreeView, $aidItem[$hRandomItem], $iRandIndex)
+			_GUICtrlTreeView_SetCheckedByIndex($idTreeView, $aidTVi_Item[$hRandomItem], $iRandIndex)))
+	Local $hSet = _GUICtrlTreeView_GetItemByIndex($idTreeView, $aidTVi_Item[$hRandomItem], $iRandIndex)
 	_GUICtrlTreeView_EnsureVisible($idTreeView, $hSet)
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.

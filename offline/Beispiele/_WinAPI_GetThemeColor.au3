@@ -1,9 +1,8 @@
-#include <APIThemeConstants.au3>
 #include <GUIConstantsEx.au3>
 #include <WinAPIGdi.au3>
 #include <WinAPISysWin.au3>
 #include <WinAPITheme.au3>
-#include <WindowsConstants.au3>
+#include <WindowsSysColorConstants.au3>
 
 Local $hForm = GUICreate('Test ' & StringReplace(@ScriptName, '.au3', '()'), 400, 400)
 GUISetFont(8.5, 400, 0, 'MS Shell Dlg', $hForm)

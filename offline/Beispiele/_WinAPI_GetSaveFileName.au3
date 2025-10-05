@@ -1,11 +1,9 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
-#include <StructureConstants.au3>
+#include <WinAPIConstants.au3>
 #include <WinAPIDlg.au3>
-#include <WindowsConstants.au3>
-
-;#include <StructureConstants.au3>
-
-Global $g_idMemo
+#include <WindowsStylesConstants.au3>
 
 _Example_Defaults()
 _Example_ExplorerStyle()
@@ -13,27 +11,27 @@ _Example_OldStyle()
 _Example_ExplorerStyle_NoPlaceBar()
 
 Func _Example_Defaults()
-	Local $hGui, $id_Dialog, $aFile, $sError
+	Local $hGui, $idBtn_Dialog, $aFile, $sError
 
 	; Erstellt eine GUI
 	$hGui = GUICreate("GetSaveFileName mit Standardeinstellungen", 450, 296)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 446, 226, $WS_HSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
-	$id_Dialog = GUICtrlCreateButton("Speichern-Dialog", 180, 270, 90, 20)
+	$_g_idLst_Memo = GUICtrlCreateEdit("", 2, 32, 446, 226, $WS_HSCROLL)
+	GUICtrlSetFont($_g_idLst_Memo, 9, 400, 0, "Courier New")
+	$idBtn_Dialog = GUICtrlCreateButton("Speichern-Dialog", 180, 270, 90, 20)
 	GUISetState(@SW_SHOW)
 
 	While 1
 		Switch GUIGetMsg()
-			Case $id_Dialog
+			Case $idBtn_Dialog
 				$aFile = _WinAPI_GetSaveFileName() ; Standard
 				If @error Then
 					Local $iError = @error
 					Local $iExtended = @extended
 					$sError = _WinAPI_CommDlgExtendedError()
-					MemoWrite("CommDlgExtendedError (" & $iError & "/" & $iExtended & "): " & $sError)
+					_MemoWrite("CommDlgExtendedError (" & $iError & "/" & $iExtended & "): " & $sError)
 				Else
 					For $x = 1 To $aFile[0]
-						MemoWrite($aFile[$x])
+						_MemoWrite($aFile[$x])
 					Next
 				EndIf
 			Case $GUI_EVENT_CLOSE
@@ -44,18 +42,17 @@ Func _Example_Defaults()
 EndFunc   ;==>_Example_Defaults
 
 Func _Example_ExplorerStyle()
-	Local $hGui, $id_Dialog, $aFile, $sError
+	Local $hGui, $idBtn_Dialog, $aFile, $sError
 
 	; Erstellt eine GUI
 	$hGui = GUICreate("GetSaveFileName im Explorer-Stil", 450, 296)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 446, 226, $WS_HSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
-	$id_Dialog = GUICtrlCreateButton("Speichern-Dialog", 180, 270, 90, 20)
+	_MemoCreate(2, 32, 396, 226, $WS_HSCROLL)
+	$idBtn_Dialog = GUICtrlCreateButton("Speichern-Dialog", 180, 270, 90, 20)
 	GUISetState(@SW_SHOW)
 
 	While 1
 		Switch GUIGetMsg()
-			Case $id_Dialog
+			Case $idBtn_Dialog
 				$aFile = _WinAPI_GetSaveFileName("Mein Datei-Speichern-Dialog", _
 						"Textdatei (*.txt)|AutoIt-Datei (*.au3)", ".", _
 						"", "au3", 2, 0, 0, $hGui)
@@ -63,10 +60,10 @@ Func _Example_ExplorerStyle()
 					Local $iError = @error
 					Local $iExtended = @extended
 					$sError = _WinAPI_CommDlgExtendedError()
-					MemoWrite("CommDlgExtendedError (" & $iError & "/" & $iExtended & "): " & $sError)
+					_MemoWrite("CommDlgExtendedError (" & $iError & "/" & $iExtended & "): " & $sError)
 				Else
 					For $x = 1 To $aFile[0]
-						MemoWrite($aFile[$x])
+						_MemoWrite($aFile[$x])
 					Next
 				EndIf
 			Case $GUI_EVENT_CLOSE
@@ -77,18 +74,17 @@ Func _Example_ExplorerStyle()
 EndFunc   ;==>_Example_ExplorerStyle
 
 Func _Example_OldStyle()
-	Local $hGui, $id_Dialog, $aFile, $sError
+	Local $hGui, $idBtn_Dialog, $aFile, $sError
 
 	; Erstellt eine GUI
 	$hGui = GUICreate("GetSaveFileName im alten Stil", 450, 296)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 446, 226, $WS_HSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
-	$id_Dialog = GUICtrlCreateButton("Speichern-Dialog", 180, 270, 90, 20)
+	_MemoCreate(2, 32, 396, 226, $WS_HSCROLL)
+	$idBtn_Dialog = GUICtrlCreateButton("Speichern-Dialog", 180, 270, 90, 20)
 	GUISetState(@SW_SHOW)
 
 	While 1
 		Switch GUIGetMsg()
-			Case $id_Dialog
+			Case $idBtn_Dialog
 				$aFile = _WinAPI_GetSaveFileName("Mein Datei-Speichern-Dialog", _
 						"Textdatei (*.txt)|AutoIt-Datei (*.au3)", ".", "", _
 						"", 2, $OFN_ALLOWMULTISELECT, 0, $hGui)
@@ -96,10 +92,10 @@ Func _Example_OldStyle()
 					Local $iError = @error
 					Local $iExtended = @extended
 					$sError = _WinAPI_CommDlgExtendedError()
-					MemoWrite("CommDlgExtendedError (" & $iError & "/" & $iExtended & "): " & $sError)
+					_MemoWrite("CommDlgExtendedError (" & $iError & "/" & $iExtended & "): " & $sError)
 				Else
 					For $x = 1 To $aFile[0]
-						MemoWrite($aFile[$x])
+						_MemoWrite($aFile[$x])
 					Next
 				EndIf
 			Case $GUI_EVENT_CLOSE
@@ -110,18 +106,17 @@ Func _Example_OldStyle()
 EndFunc   ;==>_Example_OldStyle
 
 Func _Example_ExplorerStyle_NoPlaceBar()
-	Local $hGui, $id_Dialog, $aFile, $sError
+	Local $hGui, $idBtn_Dialog, $aFile, $sError
 
 	; Erstellt eine GUI
 	$hGui = GUICreate("GetSaveFileName im Explorer-Stil (ohne Favoriten)", 450, 296)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 446, 226, $WS_HSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
-	$id_Dialog = GUICtrlCreateButton("Speichern-Dialog", 180, 270, 90, 20)
+	_MemoCreate(2, 32, 396, 226, $WS_HSCROLL)
+	$idBtn_Dialog = GUICtrlCreateButton("Speichern-Dialog", 180, 270, 90, 20)
 	GUISetState(@SW_SHOW)
 
 	While 1
 		Switch GUIGetMsg()
-			Case $id_Dialog
+			Case $idBtn_Dialog
 				$aFile = _WinAPI_GetSaveFileName("Mein Datei-Speichern-Dialog", _
 						"Textdatei (*.txt)|AutoIt-Datei (*.au3)", ".", "", _
 						"", 2, 0, $OFN_EX_NOPLACESBAR, $hGui)
@@ -129,10 +124,10 @@ Func _Example_ExplorerStyle_NoPlaceBar()
 					Local $iError = @error
 					Local $iExtended = @extended
 					$sError = _WinAPI_CommDlgExtendedError()
-					MemoWrite("CommDlgExtendedError (" & $iError & "/" & $iExtended & "): " & $sError)
+					_MemoWrite("CommDlgExtendedError (" & $iError & "/" & $iExtended & "): " & $sError)
 				Else
 					For $x = 1 To $aFile[0]
-						MemoWrite($aFile[$x])
+						_MemoWrite($aFile[$x])
 					Next
 				EndIf
 			Case $GUI_EVENT_CLOSE
@@ -141,8 +136,3 @@ Func _Example_ExplorerStyle_NoPlaceBar()
 	WEnd
 	GUIDelete($hGui)
 EndFunc   ;==>_Example_ExplorerStyle_NoPlaceBar
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

@@ -1,6 +1,6 @@
 #include <GUIConstantsEx.au3>
 #include <WinAPISysWin.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
 
 OnAutoItExitRegister('OnAutoItExit')
 
@@ -15,10 +15,10 @@ GUICtrlSetBkColor(-1, $GUI_BKCOLOR_TRANSPARENT)
 
 ; Allow WM_DROPFILES to be received from lower privileged processes (Windows Vista or later)
 #cs
-If IsAdmin() Then
-	_WinAPI_ChangeWindowMessageFilterEx($g_hLabel, $WM_COPYGLOBALDATA, $MSGFLT_ALLOW)
-	_WinAPI_ChangeWindowMessageFilterEx($g_hLabel, $WM_DROPFILES, $MSGFLT_ALLOW)
-EndIf
+	If IsAdmin() Then
+		_WinAPI_ChangeWindowMessageFilterEx($g_hLabel, $WM_COPYGLOBALDATA, $MSGFLT_ALLOW)
+		_WinAPI_ChangeWindowMessageFilterEx($g_hLabel, $WM_DROPFILES, $MSGFLT_ALLOW)
+	EndIf
 #ce
 
 ; Register label window proc

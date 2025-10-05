@@ -1,4 +1,5 @@
-#include <APIGdiConstants.au3>
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <SendMessage.au3>
 #include <StaticConstants.au3>
@@ -7,7 +8,7 @@
 #include <WinAPIHObj.au3>
 #include <WinAPIRes.au3>
 #include <WinAPISysWin.au3>
-#include <WindowsConstants.au3>
+#include <WindowsSysColorConstants.au3>
 
 ; Create GUI
 Local $hForm = GUICreate('Test ' & StringReplace(@ScriptName, '.au3', '()'), 310, 300)
@@ -58,7 +59,8 @@ _WinAPI_DrawLine($hMemDC, 20, 230, 289, 230)
 _WinAPI_SelectObject($hMemDC, $hSv)
 _WinAPI_DeleteObject($hPen)
 
-Local $hPattern = _WinAPI_LoadImage(0, @ScriptDir & '\Extras\Pen.bmp', $IMAGE_BITMAP, 0, 0, $LR_LOADFROMFILE)
+Local $sBmp = _Extras_PathFull('Pen.bmp')
+Local $hPattern = _WinAPI_LoadImage(0, $sBmp, $IMAGE_BITMAP, 0, 0, $LR_LOADFROMFILE)
 $hPen = _WinAPI_ExtCreatePen(BitOR($PS_GEOMETRIC, $PS_SOLID, $PS_ENDCAP_ROUND), 5, $BS_PATTERN, 0, $hPattern, $aStyle)
 $hSv = _WinAPI_SelectObject($hMemDC, $hPen)
 _WinAPI_DrawLine($hMemDC, 20, 270, 289, 270)

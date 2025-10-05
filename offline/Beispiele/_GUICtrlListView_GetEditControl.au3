@@ -1,17 +1,21 @@
-#include <Extras\WM_NOTIFY.au3>
+#include "Extras\HelpFileInternals.au3"
+#include "Extras\WM_NOTIFY.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiImageList.au3>
 #include <GuiListView.au3>
-#include <WindowsConstants.au3>
+#include <StructureConstants.au3>
+#include <WindowsNotifsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
-Global $g_hListView, $g_idMemo
+Global $g_hListView
 
 Example()
 
 Func Example()
 	Local $hGui = GUICreate("ListView: Ermittelt das Handle zu dem Änderungscontrol (v" & @AutoItVersion & ")", 500, 300, Default, Default, Default, $WS_EX_CLIENTEDGE)
 	$g_hListView = _GUICtrlListView_Create($hGui, "", 2, 2, 394, 118, BitOR($LVS_EDITLABELS, $LVS_REPORT))
-	$g_idMemo = GUICtrlCreateEdit("", 2, 124, 396, 174, 0)
+	_MemoCreate(2, 124, 396, 174, 0)
 	_GUICtrlListView_SetExtendedListViewStyle($g_hListView, BitOR($LVS_EX_GRIDLINES, $LVS_EX_FULLROWSELECT, $LVS_EX_DOUBLEBUFFER))
 	GUISetState(@SW_SHOW)
 
@@ -36,10 +40,10 @@ Func Example()
 	_GUICtrlListView_AddItem($g_hListView, "Zeile 3: Spalte 1", 2)
 
 	; Ändert das Label von Item 0 mit einem Timeout
-	_WM_NOTIFY_Register($g_idMemo)
+	_WM_NOTIFY_Register($_g_idLst_Memo)
 
 	_GUICtrlListView_EditLabel($g_hListView, 0)
-	MemoWrite("Edit Handle: 0x" & Hex(_GUICtrlListView_GetEditControl($g_hListView)) & _
+	_MemoWrite("Edit Handle: 0x" & Hex(_GUICtrlListView_GetEditControl($g_hListView)) & _
 			" IsPtr = " & IsPtr(_GUICtrlListView_GetEditControl($g_hListView)) & " IsHWnd = " & IsHWnd(_GUICtrlListView_GetEditControl($g_hListView)))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
@@ -76,20 +80,20 @@ Func WM_NOTIFY($hWnd, $iMsg, $wParam, $lParam)
 					EndIf
 					; Wenn das Input-Control leer ist, wird der Rückgabewert ignoriert
 				Case $NM_CLICK ; Wird vom ListView gesendet, wenn der Benutzer ein Item mit der linken Maustaste anklickt
-					_WM_NOTIFY_DebugEvent("$NM_CLICK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,ActionX,ActionY,,lParam,KeyFlags")
+					_WM_NOTIFY_DebugEvent("$NM_CLICK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,X,Y,,lParam,KeyFlags")
 					; Kein Rückgabewert
 				Case $NM_DBLCLK ; Wird vom ListView gesendet, wenn der Benutzer ein Item mit der linken Maustaste doppelklickt
-					_WM_NOTIFY_DebugEvent("$NM_DBLCLK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,ActionX,ActionY,,lParam,KeyFlags")
+					_WM_NOTIFY_DebugEvent("$NM_DBLCLK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,X,Y,,lParam,KeyFlags")
 					; Kein Rückgabewert
 				Case $NM_KILLFOCUS ; Das Control hat den Eingabefokus verloren
 					_WM_NOTIFY_DebugEvent("$NM_KILLFOCUS", $tagNMHDR, $lParam, "hWndFrom,IDFrom")
 					; Kein Rückgabewert
 				Case $NM_RCLICK ; Wird vom ListView gesendet, wenn der Benutzer ein Item mit der rechten Maustaste anklickt
-					_WM_NOTIFY_DebugEvent("$NM_RCLICK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,ActionX,ActionY,,lParam,KeyFlags")
+					_WM_NOTIFY_DebugEvent("$NM_RCLICK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,X,Y,,lParam,KeyFlags")
 					;Return 1 ; Verhindert die weitere Standard-Nachrichtenbehandlung
 					Return 0 ; Erlaubt die weitere Standard-Nachrichtenbehandlung
 				Case $NM_RDBLCLK ; Wird vom ListView gesendet, wenn der Benutzer ein Item mit der rechten Maustaste doppelklickt
-					_WM_NOTIFY_DebugEvent("$NM_RDBLCLK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,ActionX,ActionY,,lParam,KeyFlags")
+					_WM_NOTIFY_DebugEvent("$NM_RDBLCLK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,X,Y,,lParam,KeyFlags")
 					; Kein Rückgabewert
 				Case $NM_RETURN ; Das Control hat den Eingabefokus und der Benutzer hat die ENTER-Taste gedrückt
 					_WM_NOTIFY_DebugEvent("$NM_RETURN", $tagNMHDR, $lParam, "hWndFrom,IDFrom")
@@ -101,8 +105,3 @@ Func WM_NOTIFY($hWnd, $iMsg, $wParam, $lParam)
 	EndSwitch
 	Return $GUI_RUNDEFMSG
 EndFunc   ;==>WM_NOTIFY
-
-; Schreibt eine Zeile in das Memo Control
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

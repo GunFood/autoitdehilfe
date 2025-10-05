@@ -16,32 +16,33 @@
 <p style="margin:2px 0 0 0;" class="funcdesc">Maps a character string to a wide-character (Unicode) string<br /></p>
 <p class="codeheader">
 #include &lt;WinAPIConv.au3&gt;<br />
-_WinAPI_MultiByteToWideChar ( $vText [, $iCodePage = 0 [, $iFlags = 0 [, $bRetString = False]]] )<br />
+_WinAPI_MultiByteToWideChar ( $vText [, $iCodePage = $CP_ACP [, $iFlags = 0 [, $bRetString = False]]] )<br />
 </p>
 
 <h2>Parameters</h2>
 <table>
 <tr>
 <td style="width:15%">$vText</td>
-<td style="width:85%">Text or DllStruct containing multibyte text to be converted</td>
+<td style="width:85%">Text or DllStruct containing multibyte text to be converted (see remarks for DllStruct)</td>
 </tr>
 <tr>
 <td>$iCodePage</td>
 <td><strong>[optional]</strong> Specifies the code page to be used to perform the conversion:<br />
-&nbsp;&nbsp;&nbsp; 0 - ANSI code page<br />
-&nbsp;&nbsp;&nbsp; 1 - OEM code page<br />
-&nbsp;&nbsp;&nbsp; 2 - Macintosh code page<br />
-&nbsp;&nbsp;&nbsp; 3 - The Windows ANSI code page for the current thread<br />
-&nbsp;&nbsp;&nbsp; 42 - Symbol code page<br />
-&nbsp;&nbsp;&nbsp; 65000 - UTF-7<br />
-&nbsp;&nbsp;&nbsp; 65001 - UTF-8</td>
+&nbsp;&nbsp;&nbsp; $CP_ACP (0) - The current system Windows ANSI code page<br />
+&nbsp;&nbsp;&nbsp; $CP_OEM (1) - The current system OEM code page<br />
+&nbsp;&nbsp;&nbsp; $CP_MACCP (2) - The current system Macintosh code page<br />
+&nbsp;&nbsp;&nbsp; $CP_THREAD_ACP (3) - The Windows ANSI code page for the current thread<br />
+&nbsp;&nbsp;&nbsp; $CP_SYMBOL (42) - Symbol code page<br />
+&nbsp;&nbsp;&nbsp; $CP_UTF7 (65000) - UTF-7<br />
+&nbsp;&nbsp;&nbsp; $CP_UTF8 (65001) - UTF-8</td>
 </tr>
 <tr>
 <td>$iFlags</td>
 <td><strong>[optional]</strong> Flags that indicate whether to translate to precomposed or composite wide characters:<br />
 &nbsp;&nbsp;&nbsp; $MB_PRECOMPOSED - Always use precomposed characters<br />
 &nbsp;&nbsp;&nbsp; $MB_COMPOSITE - Always use composite characters<br />
-&nbsp;&nbsp;&nbsp; $MB_USEGLYPHCHARS - Use glyph characters instead of control characters</td>
+&nbsp;&nbsp;&nbsp; $MB_USEGLYPHCHARS - Use glyph characters instead of control characters<br />
+&nbsp;&nbsp;&nbsp; $MB_ERR_INVALID_CHARS - Fail if an invalid input character is encountered</td>
 </tr>
 <tr>
 <td>$bRetString</td>
@@ -63,7 +64,7 @@ _WinAPI_MultiByteToWideChar ( $vText [, $iCodePage = 0 [, $iFlags = 0 [, $bRetSt
 
 <h2>Remarks</h2>
 <p>No conversion of $vText to String will be done, the function will fail with @error = 1.<br />
-</p>
+If $vText is a DllStruct then the conversion is limited to the DllStruct length?</p>
 
 <h2>Related</h2>
 <p><a href="_WinAPI_MultiByteToWideCharEx.htm">_WinAPI_MultiByteToWideCharEx</a>, <a href="_WinAPI_WideCharToMultiByte.htm">_WinAPI_WideCharToMultiByte</a></p>
@@ -104,12 +105,13 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIConv.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIConv.au3&gt;</span>
 
-<span class="S1">;~ Global Const $CP = 0 ; CP_ACP default copepage</span>
+<span class="S1">;~ Global Const $CP = 0 ; ACP default copepage</span>
 <span class="S1">;~ Global Const $CP = GetACP() ; current codeoage</span>
 <span class="S1">;~ Global Const $CP = 65001 ; UTF-8 certainly the best value</span>
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$CP</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">932</span><span class="S0"> </span><span class="S1">; CP_SHIFT_JIS</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$CP</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">932</span><span class="S0"> </span><span class="S1">; SHIFT_JIS</span>
 
 <a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sText</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"データのダウンロードに失敗しました。"</span>
 <span class="S1">;~ Local $sText = "abcdefg 1234567890"</span>
@@ -138,18 +140,18 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 
 <a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iMB_TYPE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
 <a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$sTest</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">==</span></a><span class="S0"> </span><span class="S9">$sText</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sOutput</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Conversion OK"</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$sOutput</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Conversion OK"</span>
 <a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sOutput</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" !!! Erreur de Conversion !!!"</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$iMB_TYPE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$MB_ICONERROR</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$sOutput</span><span class="S0"> </span><span class="S8">&amp;=</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TAB"><span class="S6">@TAB</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" !!! Erreur de Conversion !!!"</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$iMB_TYPE</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$MB_ICONERROR</span>
 <a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
 
 <a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S9">$iMB_TYPE</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Results"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sOutput</span><span class="S8">)</span>
 
 <a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> GetACP</span><span class="S8">()</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllCall.htm"><span class="S4">DllCall</span></a><span class="S8">(</span><span class="S7">"kernel32.dll"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"int"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"GetACP"</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Or</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><span class="S9">$aResult</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/SetError.htm"><span class="S4">SetError</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S9">$aResult</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aResult</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllCall.htm"><span class="S4">DllCall</span></a><span class="S8">(</span><span class="S7">"kernel32.dll"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"int"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"GetACP"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Or</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><span class="S9">$aResult</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/SetError.htm"><span class="S4">SetError</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S3">20</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S9">$aResult</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span>
 <a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;GetACP</span>
 <span class="S0"></span></span>
 </pre>

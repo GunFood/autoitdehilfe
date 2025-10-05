@@ -1,3 +1,5 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <SendMessage.au3>
 #include <StaticConstants.au3>
@@ -7,10 +9,10 @@
 #include <WinAPIIcons.au3>
 #include <WinAPIRes.au3>
 #include <WinAPIShellEx.au3>
-#include <WindowsConstants.au3>
 
 ; Extracts icon and get its AND bitmask bitmap
-Local $hIcon = _WinAPI_ShellExtractIcon(@ScriptDir & '\Extras\Arrow.ico', 0, 64, 64)
+Local $sIco = _Extras_PathFull('Arrow.ico')
+Local $hIcon = _WinAPI_ShellExtractIcon($sIco, 0, 64, 64)
 Local $aInfo = _WinAPI_GetIconInfo($hIcon)
 _WinAPI_DeleteObject($aInfo[5])
 _WinAPI_DestroyIcon($hIcon)
@@ -19,12 +21,13 @@ _WinAPI_DestroyIcon($hIcon)
 $aInfo[5] = _WinAPI_InvertANDBitmap($aInfo[4])
 
 ; Load pattern bitmap
-Local $hPattern = _WinAPI_LoadImage(0, @ScriptDir & '\Extras\Pattern.bmp', $IMAGE_BITMAP, 0, 0, $LR_LOADFROMFILE)
+Local $sBmp = _Extras_PathFull('Pattern.bmp')
+Local $hPattern = _WinAPI_LoadImage(0, $sBmp, $IMAGE_BITMAP, 0, 0, $LR_LOADFROMFILE)
 
 ; Create GUI
 Local $hForm = GUICreate('Test ' & StringReplace(@ScriptName, '.au3', '()'), 320, 64)
-GUICtrlCreateIcon(@ScriptDir & '\Extras\Arrow.ico', 0, 0, 0, 64, 64)
-GUICtrlCreatePic(@ScriptDir & '\Extras\Pattern.bmp', 192, 0, 64, 64)
+GUICtrlCreateIcon($sIco, 0, 0, 0, 64, 64)
+GUICtrlCreatePic($sBmp, 192, 0, 64, 64)
 Local $idIcon = GUICtrlCreateIcon('', 0, 256, 0, 64, 64)
 Local $aidPic[2], $ahPic[2]
 $aidPic[0] = GUICtrlCreatePic('', 64, 0, 64, 64)

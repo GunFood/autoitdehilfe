@@ -8,18 +8,18 @@ Func Example()
 	Local $hGUI = GUICreate('Beispiel', 300, 150)
 	GUISetFont(9, 400, 0, 'Segoe UI')
 
-	Local $idUsername = GUICtrlCreateInput('', 10, 10, 125, 25)
-	_GUICtrlEdit_SetCueBanner($idUsername, "Suche Ordner")
+	Local $idInp_Username = GUICtrlCreateInput('', 10, 10, 125, 25)
+	_GUICtrlEdit_SetCueBanner($idInp_Username, "Suche Ordner")
 
-	Local $idPassword = GUICtrlCreateInput('', 10, 40, 125, 25)
-	_GUICtrlEdit_SetCueBanner($idPassword, "Suche...")
+	Local $idInp_Password = GUICtrlCreateInput('', 10, 40, 125, 25)
+	_GUICtrlEdit_SetCueBanner($idInp_Password, "Suche...")
 
 	Local $idButton_Close = GUICtrlCreateButton("Schließen", 210, 120, 85, 25)
 	ControlFocus($hGUI, "", $idButton_Close)
 
 	GUISetState(@SW_SHOW, $hGUI)
 
-	MsgBox($MB_SYSTEMMODAL, "", _GUICtrlEdit_GetCueBanner($idPassword))
+	MsgBox($MB_SYSTEMMODAL, "", _GUICtrlEdit_GetCueBanner($idInp_Password))
 
 	While 1
 		Switch GUIGetMsg()

@@ -8,7 +8,7 @@
 ; Create GUI
 Local $hMainGUI = GUICreate("Show PNG", 210, 210)
 
-_GUICtrlPic_Create("..\GUI\Torus.png", 10, 10);, 100, 100)
+_GUICtrlPic_Create("..\GUI\Torus.png", 10, 10) ;, 100, 100)
 
 GUISetState(@SW_SHOW)
 
@@ -42,7 +42,7 @@ Func _GUICtrlPic_Create($sFilename, $iLeft, $iTop, $iWidth = -1, $iHeight = -1, 
 	_GDIPlus_GraphicsDrawImageRect($hBMP_Ctxt, $hBitmap, 0, 0, $iWidth, $iHeight)
 	Local $hHBitmap = _GDIPlus_BitmapCreateDIBFromBitmap($hBitmap_Resized)
 	Local $hPrevImage = GUICtrlSendMsg($idPic, $STM_SETIMAGE, 0, $hHBitmap) ; $STM_SETIMAGE = 0x0172
-	_WinAPI_DeleteObject($hPrevImage); Delete Prev image if any
+	_WinAPI_DeleteObject($hPrevImage) ; Delete Prev image if any
 	_GDIPlus_BitmapDispose($hBitmap)
 	_GDIPlus_BitmapDispose($hBitmap_Resized)
 	_GDIPlus_GraphicsDispose($hBMP_Ctxt)

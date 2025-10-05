@@ -1,3 +1,5 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiTab.au3>
 #include <MsgBoxConstants.au3>
@@ -6,8 +8,10 @@ Example()
 
 Func Example()
 	; Erstellt eine GUI
-	GUICreate("Tab-Control: Setzt und ermittelt den Itemstatus (v" & @AutoItVersion & ")", 500, 300)
-	Local $idTab = GUICtrlCreateTab(2, 2, 396, 296, $TCS_BUTTONS)
+	Local $hGUI = GUICreate("Tab-Control: Setzt und ermittelt den Itemstatus (v" & @AutoItVersion & ")", 500, 300, 100, 100)
+	Local $idTab = GUICtrlCreateTab(2, 2, 446, 266, $TCS_BUTTONS)
+	_MemoMsgBoxStatus() ; Statuserstellung
+
 	GUISetState(@SW_SHOW)
 
 	; Fügt Tabs hinzu
@@ -17,15 +21,12 @@ Func Example()
 
 	; Ermittelt/Setzt den Status von Tab 1
 	_GUICtrlTab_SetItemState($idTab, 1, $TCIS_BUTTONPRESSED)
-	MsgBox($MB_SYSTEMMODAL, "Information", "Tab 1 Status: " & _ExplainItemState(_GUICtrlTab_GetItemState($idTab, 1)))
+	_MemoMsgBox($MB_SYSTEMMODAL, "Information", "Tab 1 Status: " & _ExplainItemState(_GUICtrlTab_GetItemState($idTab, 1)))
 
 	; Ermittelt/Setzt den Status von Tab 2
-	MsgBox($MB_SYSTEMMODAL, "Information", "Tab 2 Status: " & _ExplainItemState(_GUICtrlTab_GetItemState($idTab, 2)))
+	_MemoMsgBox($MB_SYSTEMMODAL, "Information", "Tab 2 Status: " & _ExplainItemState(_GUICtrlTab_GetItemState($idTab, 2)))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
-	Do
-	Until GUIGetMsg() = $GUI_EVENT_CLOSE
-	GUIDelete()
+	_MemoMsgBoxStatus("", -1, $hGUI) ; Keine weiteren Aktionen, es wird gewartet bis die GUI geschlossen wird.
 EndFunc   ;==>Example
 
 Func _ExplainItemState($iState)

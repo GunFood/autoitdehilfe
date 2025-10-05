@@ -1,4 +1,3 @@
-#include <APIShellExConstants.au3>
 #include <WinAPIShellEx.au3>
 
 ConsoleWrite('Windows => ' & _WinAPI_ShellGetSpecialFolderPath($CSIDL_WINDOWS) & @CRLF)

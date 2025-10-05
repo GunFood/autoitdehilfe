@@ -1,15 +1,18 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiMenu.au3>
+
+Global $g_hWnd
 
 Example()
 
 Func Example()
-	Local $hWnd, $hMain, $hFile
+	Local $hMain, $hFile
 
 	; Startet den Editor
 	Run("notepad.exe")
-	WinWaitActive("[CLASS:Notepad]")
-	$hWnd = WinGetHandle("[CLASS:Notepad]")
-	$hMain = _GUICtrlMenu_GetMenu($hWnd)
+	$g_hWnd = WinWaitActive("[CLASS:Notepad]")
+	$hMain = _GUICtrlMenu_GetMenu($g_hWnd)
 	$hFile = _GUICtrlMenu_GetItemSubMenu($hMain, 0)
 
 	; Ändert den Menüitemtyp
@@ -17,9 +20,11 @@ Func Example()
 	_GUICtrlMenu_SetItemType($hFile, 1, $MFT_RADIOCHECK)
 	_GUICtrlMenu_CheckRadioItem($hFile, 0, 8, 1)
 	Writeln("Menüitemtyp: 0x" & Hex(_GUICtrlMenu_GetItemType($hFile, 1)))
+
+	_NotepadForceClose($g_hWnd)
 EndFunc   ;==>Example
 
 ; Schreibt eine Zeile mit Text in den Editor
-Func Writeln($sText)
-	ControlSend("[CLASS:Notepad]", "", "Edit1", $sText & @CRLF)
+Func Writeln($sText, $hWnd = $g_hWnd)
+	ControlSend($hWnd, "", ControlGetFocus($hWnd), $sText & @CRLF)
 EndFunc   ;==>Writeln

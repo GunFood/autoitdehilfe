@@ -1,4 +1,5 @@
-#include <APIThemeConstants.au3>
+#include "Extras\HelpFileInternals.au3"
+
 #include <FontConstants.au3>
 #include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>
@@ -8,7 +9,7 @@
 #include <WinAPIMisc.au3>
 #include <WinAPISysWin.au3>
 #include <WinAPITheme.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
 
 If Not _WinAPI_DwmIsCompositionEnabled() Then
 	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Error', 'Require Windows Vista or later with enabled Aero theme.')
@@ -19,7 +20,8 @@ OnAutoItExitRegister('OnAutoItExit')
 
 ; Create GUI
 Local $hForm = GUICreate('Test ' & StringReplace(@ScriptName, '.au3', '()'), 240, 240)
-GUICtrlCreateIcon(@ScriptDir & '\Extras\Soccer.ico', 0, 88, 68, 64, 64)
+Local $sIco = _Extras_PathFull('Soccer.ico')
+GUICtrlCreateIcon($sIco, 0, 88, 68, 64, 64)
 GUICtrlSetState(-1, $GUI_DISABLE)
 GUICtrlCreateLabel('', 70, 130, 100, 30)
 GUICtrlSetBkColor(-1, $GUI_BKCOLOR_TRANSPARENT)

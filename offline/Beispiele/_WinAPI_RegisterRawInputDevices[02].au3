@@ -1,6 +1,8 @@
-#include <GUIConstants.au3>
+#include <GUIConstantsEx.au3>
 #include <GuiEdit.au3>
 #include <WinAPISys.au3>
+#include <WindowsNotifsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Global $g_idEdit
 test()

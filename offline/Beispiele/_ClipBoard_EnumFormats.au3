@@ -1,9 +1,9 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <Clipboard.au3>
 #include <GUIConstantsEx.au3>
 #include <WinAPIError.au3>
-#include <WindowsConstants.au3>
-
-Global $g_idMemo
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -12,22 +12,21 @@ Func Example()
 
 	; Erstellt eine GUI
 	$hGui = GUICreate("Zwischenablage", 600, 400)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 596, 396, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 2, 596, 396, $WS_VSCROLL)
 	GUISetState(@SW_SHOW)
 
 	; Öffnet die Zwischenablage
 	If _ClipBoard_Open($hGui) Then
 
 		; Liest die Anzahl der verschiedenen Datenformate aus, die in der Zwischenablage verfügbar sind
-		MemoWrite("Clipboard-Formate ..: " & _ClipBoard_CountFormats())
+		_MemoWrite("Clipboard-Formate ..: " & _ClipBoard_CountFormats())
 
 		; Auflisten der Clipboard-Formate
 		Do
 			$iFormat = _ClipBoard_EnumFormats($iFormat)
 			If $iFormat <> 0 Then
 				$iCount += 1
-				MemoWrite("Clipboard-Format " & $iCount & " .: " & _ClipBoard_FormatStr($iFormat))
+				_MemoWrite("Clipboard-Format " & $iCount & " .: " & _ClipBoard_FormatStr($iFormat))
 			EndIf
 		Until $iFormat = 0
 
@@ -41,8 +40,3 @@ Func Example()
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example
-
-; Schreibt eine Nachricht in das Memo
-Func MemoWrite($sMessage = "")
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

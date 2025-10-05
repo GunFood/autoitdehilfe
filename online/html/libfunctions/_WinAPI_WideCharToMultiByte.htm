@@ -16,7 +16,7 @@
 <p style="margin:2px 0 0 0;" class="funcdesc">Konvertiert einen UTF-16 (Wide Character) -String in einen Multibyte-String<br /></p>
 <p class="codeheader">
 #include &lt;WinAPIConv.au3&gt;<br />
-_WinAPI_WideCharToMultiByte ( $vUnicode [, $iCodePage = 0 [, $bRetNoStruct = True [, $bRetBinary = False]]] )<br />
+_WinAPI_WideCharToMultiByte ( $vUnicode [, $iCodePage = $CP_ACP [, $bRetNoStruct = True [, $bRetBinary = False]]] )<br />
 </p>
 
 <h2>Parameter</h2>
@@ -28,13 +28,13 @@ _WinAPI_WideCharToMultiByte ( $vUnicode [, $iCodePage = 0 [, $bRetNoStruct = Tru
 <tr>
 <td>$iCodePage</td>
 <td><strong>[optional]</strong> Legt die Kodierungsseite f&uuml;r die Umwandlung fest:<br />
-&nbsp;&nbsp;&nbsp; 0 - Windows ANSI Kodierungsseite des aktuellen Systems<br />
-&nbsp;&nbsp;&nbsp; 1 - OEM Kodierungsseite des aktuellen Systems<br />
-&nbsp;&nbsp;&nbsp; 2 - Macintosh Kodierungsseite des aktuellen Systems<br />
-&nbsp;&nbsp;&nbsp; 3 - Die Windows ANSI Kodierungsseite f&uuml;r den aktuellen Thread<br />
-&nbsp;&nbsp;&nbsp; 42 - Symbol-Kodierungsseite<br />
-&nbsp;&nbsp;&nbsp; 65000 - UTF-7<br />
-&nbsp;&nbsp;&nbsp; 65001 - UTF-8</td>
+&nbsp;&nbsp;&nbsp; $CP_ACP (0) - Windows ANSI Kodierungsseite des aktuellen Systems<br />
+&nbsp;&nbsp;&nbsp; $CP_OEM (1) - OEM Kodierungsseite des aktuellen Systems<br />
+&nbsp;&nbsp;&nbsp; $CP_MACCP (2) - Macintosh Kodierungsseite des aktuellen Systems<br />
+&nbsp;&nbsp;&nbsp; $CP_THREAD_ACP (3) - Die Windows ANSI Kodierungsseite f&uuml;r den aktuellen Thread<br />
+&nbsp;&nbsp;&nbsp; $CP_SYMBOL (42) - Symbol-Kodierungsseite<br />
+&nbsp;&nbsp;&nbsp; $CP_UTF7 (65000) - UTF-7<br />
+&nbsp;&nbsp;&nbsp; $CP_UTF8 (65001) - UTF-8</td>
 </tr>
 <tr>
 <td>$bRetNoStruct</td>
@@ -54,7 +54,7 @@ _WinAPI_WideCharToMultiByte ( $vUnicode [, $iCodePage = 0 [, $bRetNoStruct = Tru
 </tr>
 <tr>
 <td class="valign-top">Fehler:</td>
-<td>Setzt das @error Flag auf ungleich null. Es ist  <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> aufzurufen um erweiterte Fehlerinformationen zu erhalten.</td>
+<td>Setzt das @error Flag auf ungleich 0. Es ist  <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> aufzurufen um erweiterte Fehlerinformationen zu erhalten.</td>
 </tr>
 </table>
 
@@ -104,12 +104,13 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIConv.au3&gt;</span>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIConv.au3&gt;</span>
 
-<span class="S1">;~ Global Const $CP = 0 ; CP_ACP Standard Codepage</span>
+<span class="S1">;~ Global Const $CP = 0 ; ACP Standard Codepage</span>
 <span class="S1">;~ Global Const $CP = GetACP() ; aktuelle Codepage</span>
 <span class="S1">;~ Global Const $CP = 65001 ; UTF-8 sicherlich der beste Wert</span>
-<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$CP</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">932</span><span class="S0"> </span><span class="S1">; CP_SHIFT_JIS</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$CP</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">932</span><span class="S0"> </span><span class="S1">; SHIFT_JIS</span>
 
 <a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sText</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"データのダウンロードに失敗しました。"</span>
 <span class="S1">;~ Local $sText = "abcdefg 1234567890"</span>

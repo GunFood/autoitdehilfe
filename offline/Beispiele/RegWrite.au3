@@ -6,7 +6,7 @@ Func Example()
 	; Prüft, ob der Registryschlüssel bereits existiert, damit das System es Benutzers nicht beschädigt wird.
 	RegRead("HKEY_CURRENT_USER\Software\AutoIt_Example", "Key1")
 
-	; @error wird auf ungleich 0 gesetzt, wenn ein Registryschlüssel gelesen wird der nicht existiert.
+	; setzt das @error Flag auf ungleich 0, wenn ein Registryschlüssel gelesen wird der nicht existiert.
 	If Not @error Then
 		MsgBox($MB_SYSTEMMODAL, "", "Ein Fehler ist aufgetreten, dass der temporäre Registryschlüssel ""AutoIt_Example"" bereits existiert.")
 		Return False

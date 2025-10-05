@@ -1,10 +1,14 @@
-#include <Extras\WM_NOTIFY.au3>
+#include "Extras\HelpFileInternals.au3"
+#include "Extras\WM_NOTIFY.au3"
+
 #include <GuiButton.au3>
 #include <GUIConstantsEx.au3>
 #include <GuiMenu.au3>
-#include <WindowsConstants.au3>
+#include <StructureConstants.au3>
+#include <WindowsNotifsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
-Global $g_hBtn, $g_idMemo, $g_hBtn2
+Global $g_hBtn, $g_hBtn2
 
 ; Es ist zu beachten, dass dias Handle dieses Buttons NICHT mit GuiCtrlRead gelesen werden kann!
 
@@ -12,24 +16,23 @@ Example()
 
 Func Example()
 	Local $hGUI = GUICreate('Button: Informationen für ein "Split"-Button-Control (v' & @AutoItVersion & ")", 600, 400)
-	$g_idMemo = GUICtrlCreateEdit("", 10, 100, 390, 284, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(10, 100, 590, 284, $WS_VSCROLL)
 
 	$g_hBtn = _GUICtrlButton_Create($hGUI, "Split Button", 10, 10, 120, 30, $BS_SPLITBUTTON)
 	_GUICtrlButton_SetSplitInfo($g_hBtn)
 	$g_hBtn = _GUICtrlButton_Create($hGUI, "Split Button 2", 10, 50, 120, 30, $BS_SPLITBUTTON)
 
 	GUIRegisterMsg($WM_COMMAND, "WM_COMMAND")
-	_WM_NOTIFY_Register($g_idMemo)
+	_WM_NOTIFY_Register($_g_idLst_Memo)
 
 	GUISetState(@SW_SHOW)
 
 	Local $aInfo = _GUICtrlButton_GetSplitInfo($g_hBtn)
-	MemoWrite("Split Info" & @CRLF & "----------------")
+	_MemoWrite("Split Info" & @CRLF & "----------------")
 	For $x = 0 To 3
-		MemoWrite("$ainfo[" & $x & "] = " & $aInfo[$x])
+		_MemoWrite("$ainfo[" & $x & "] = " & $aInfo[$x])
 	Next
-	MemoWrite("Split Info" & @CRLF & "----------------")
+	_MemoWrite("Split Info" & @CRLF & "----------------")
 
 	While 1
 		Switch GUIGetMsg()
@@ -40,11 +43,6 @@ Func Example()
 
 	Exit
 EndFunc   ;==>Example
-
-; Schreibt eine Zeile in das Memo Control
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite
 
 Func WM_NOTIFY($hWnd, $iMsg, $wParam, $lParam)
 	#forceref $hWnd, $iMsg, $wParam
@@ -67,7 +65,7 @@ Func WM_NOTIFY($hWnd, $iMsg, $wParam, $lParam)
 
 			EndIf
 		Case $BCN_DROPDOWN
-			MemoWrite("$BCN_DROPDOWN")
+			_WM_NOTIFY_DebugEvent("$BCN_DROPDOWN", $tagNMBHOTITEM, $lParam, "IDFrom", "")
 			_Popup_Menu($hWndFrom)
 	EndSwitch
 	Return $GUI_RUNDEFMSG
@@ -83,11 +81,11 @@ Func _Popup_Menu($hCtrl)
 	_GUICtrlMenu_InsertMenuItem($hMenu, 3, "Info", $idInfo)
 	Switch _GUICtrlMenu_TrackPopupMenu($hMenu, $hCtrl, -1, -1, 1, 1, 2)
 		Case $e_idOpen
-			MemoWrite("Öffnen    - Gewählt")
+			_MemoWrite("Öffnen    - Gewählt")
 		Case $e_idSave
-			MemoWrite("Speichern - Gewählt")
+			_MemoWrite("Speichern - Gewählt")
 		Case $idInfo
-			MemoWrite("Info      - Gewählt")
+			_MemoWrite("Info      - Gewählt")
 	EndSwitch
 	_GUICtrlMenu_DestroyMenu($hMenu)
 EndFunc   ;==>_Popup_Menu
@@ -127,7 +125,7 @@ Func WM_COMMAND($hWnd, $iMsg, $wParam, $lParam)
 					$sCode = "$BN_KILLFOCUS"
 			EndSwitch
 			$sText = "Text=" & _GUICtrlButton_GetText($hCtrl)
-			_WM_NOTIFY_DebugEvent($sCode, $tagNMHDR, $lParam, "IDFrom", $sText)
+			_WM_NOTIFY_DebugEvent($sCode, $tagNMHDR, $lParam, "Handle", $sText)
 			Return 0 ; Nur zurückgeben, wenn auf den Button geklickt
 	EndSwitch
 	; Ausführung der standardmässigen, internen AutoIt3 Nachrichtenkommandos.

@@ -1,7 +1,7 @@
 #include <GUIConstantsEx.au3>
 #include <GuiTreeView.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -13,28 +13,28 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
-	Local $aidItem[20]
+	Local $aidTVi_Item[20]
 	For $x = 0 To 3
-		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
+		$aidTVi_Item[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
 		For $y = 1 To Random(2, 10, 1)
-			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Child", $y), $aidItem[$x])
+			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Child", $y), $aidTVi_Item[$x])
 		Next
 	Next
-	$aidItem[4] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", 4), $idTreeView)
+	$aidTVi_Item[4] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", 4), $idTreeView)
 	For $x = 5 To 9
-		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
+		$aidTVi_Item[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
 		For $y = 1 To Random(2, 10, 1)
-			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Child", $y), $aidItem[$x])
+			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Child", $y), $aidTVi_Item[$x])
 		Next
 	Next
 	For $x = 10 To 19
-		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
+		$aidTVi_Item[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)
 
 	Local $hRandItem = Random(1, 19, 1)
-	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Index %d, vorheriges sichtbares Item: %s", $hRandItem, _GUICtrlTreeView_GetPrevVisible($idTreeView, $aidItem[$hRandItem])))
-	_GUICtrlTreeView_SelectItem($idTreeView, _GUICtrlTreeView_GetPrevVisible($idTreeView, $aidItem[$hRandItem]))
+	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Index %d, vorheriges sichtbares Item: %s", $hRandItem, _GUICtrlTreeView_GetPrevVisible($idTreeView, $aidTVi_Item[$hRandItem])))
+	_GUICtrlTreeView_SelectItem($idTreeView, _GUICtrlTreeView_GetPrevVisible($idTreeView, $aidTVi_Item[$hRandItem]))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

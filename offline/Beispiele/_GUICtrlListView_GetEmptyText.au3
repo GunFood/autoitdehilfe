@@ -1,7 +1,9 @@
-#include <Extras\WM_NOTIFY.au3>
+#include "Extras\WM_NOTIFY.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiListView.au3>
-#include <WindowsConstants.au3>
+#include <StructureConstants.au3>
+#include <WindowsNotifsConstants.au3>
 
 Global $g_hListView
 
@@ -45,20 +47,20 @@ Func WM_NOTIFY($hWnd, $iMsg, $wParam, $lParam)
 					_WM_NOTIFY_DebugEvent("$LVN_KEYDOWN", $tagNMLVKEYDOWN, $lParam, "IDFrom,,VKey,Flags")
 					; No return value
 				Case $NM_CLICK ; Sent by a list-view control when the user clicks an item with the left mouse button
-					_WM_NOTIFY_DebugEvent("$NM_CLICK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,ActionX,ActionY,lParam,KeyFlags")
+					_WM_NOTIFY_DebugEvent("$NM_CLICK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,X,Y,lParam,KeyFlags")
 					; No return value
 				Case $NM_DBLCLK ; Sent by a list-view control when the user double-clicks an item with the left mouse button
-					_WM_NOTIFY_DebugEvent("$NM_DBLCLK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,ActionX,ActionY,lParam,KeyFlags")
+					_WM_NOTIFY_DebugEvent("$NM_DBLCLK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,X,Y,lParam,KeyFlags")
 					; No return value
 				Case $NM_KILLFOCUS ; The control has lost the input focus
 					_WM_NOTIFY_DebugEvent("$NM_KILLFOCUS", $tagNMHDR, $lParam, "hWndFrom,IDFrom")
 					; No return value
 				Case $NM_RCLICK ; Sent by a list-view control when the user clicks an item with the right mouse button
-					_WM_NOTIFY_DebugEvent("$NM_RCLICK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,ActionX,ActionY,lParam,KeyFlags")
+					_WM_NOTIFY_DebugEvent("$NM_RCLICK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,X,Y,lParam,KeyFlags")
 					;Return 1 ; not to allow the default processing
 					Return 0 ; allow the default processing
 				Case $NM_RDBLCLK ; Sent by a list-view control when the user double-clicks an item with the right mouse button
-					_WM_NOTIFY_DebugEvent("$NM_RDBLCLK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,ActionX,ActionY,lParam,KeyFlags")
+					_WM_NOTIFY_DebugEvent("$NM_RDBLCLK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,X,Y,lParam,KeyFlags")
 					; No return value
 				Case $NM_RETURN ; The control has the input focus and that the user has pressed the ENTER key
 					_WM_NOTIFY_DebugEvent("$NM_RETURN", $tagNMHDR, $lParam, "hWndFrom,IDFrom")

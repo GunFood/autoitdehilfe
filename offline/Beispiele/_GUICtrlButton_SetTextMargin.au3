@@ -1,8 +1,8 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiButton.au3>
 #include <GUIConstantsEx.au3>
-#include <WindowsConstants.au3>
-
-Global $g_idMemo
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -10,8 +10,7 @@ Func Example()
 	Local $y = 70, $a_idBtn[6], $aMargins
 
 	GUICreate("Buttons", 510, 400)
-	$g_idMemo = GUICtrlCreateEdit("", 119, 10, 276, 374, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(119, 10, 276, 374, $WS_VSCROLL)
 	GUISetState(@SW_SHOW)
 
 	$a_idBtn[0] = GUICtrlCreateButton("Button 1", 10, 10, 90, 50)
@@ -24,7 +23,7 @@ Func Example()
 
 	For $x = 0 To 5
 		$aMargins = _GUICtrlButton_GetTextMargin($a_idBtn[$x])
-		MemoWrite("Button " & $x + 1 & " Ränder:" & @CRLF & @TAB & _
+		_MemoWrite("Button " & $x + 1 & " Ränder:" & @CRLF & @TAB & _
 				"Links.: " & $aMargins[0] & @TAB & "Oben..: " & $aMargins[1] & @CRLF & @TAB & _
 				"Rechts: " & $aMargins[2] & @TAB & "Unten.: " & $aMargins[3] & @CRLF)
 	Next
@@ -38,8 +37,3 @@ Func Example()
 
 	Exit
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

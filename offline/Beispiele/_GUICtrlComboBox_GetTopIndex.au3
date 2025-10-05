@@ -1,7 +1,7 @@
 #include <GuiComboBox.au3>
 #include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 

@@ -1,9 +1,9 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiImageList.au3>
 #include <WinAPIGdi.au3>
 #include <WinAPIGdiDC.au3>
-
-Global $g_idMemo
 
 Example()
 
@@ -11,8 +11,7 @@ Func Example()
 	Local $hImage, $hGui, $hDC
 
 	$hGui = GUICreate("ImageList: ermittelt die Iconhöhe", 400, 300)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 32, 396, 266, 0)
 	GUISetState(@SW_SHOW)
 
 	; Lädt die Bilder
@@ -30,16 +29,11 @@ Func Example()
 	_WinAPI_ReleaseDC($hGui, $hDC)
 
 	; Zeigt die Icongröße der Imagelist
-	MemoWrite("Bilderbreite : " & _GUIImageList_GetIconWidth($hImage))
-	MemoWrite("Bilderhöhe   : " & _GUIImageList_GetIconHeight($hImage))
+	_MemoWrite("Bilderbreite : " & _GUIImageList_GetIconWidth($hImage))
+	_MemoWrite("Bilderhöhe   : " & _GUIImageList_GetIconHeight($hImage))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

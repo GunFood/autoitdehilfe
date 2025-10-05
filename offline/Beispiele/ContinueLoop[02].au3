@@ -1,5 +1,3 @@
-#include <MsgBoxConstants.au3>
-
 _Beispiel()
 Func _Beispiel()
 	For $o = 1 To 3 ; "Äußere Schleife"

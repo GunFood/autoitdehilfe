@@ -1,4 +1,4 @@
-#include "FTPEx.au3"
+#include <FTPEx.au3>
 
 ;~ Local $sServer = 'ftp.cs.brown.edu' ; Brown Computer Science
 Local $sServer = 'speedtest.tele2.net' ; Tele2 Speedtest Service

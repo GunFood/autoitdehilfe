@@ -1,17 +1,20 @@
-#include <Extras\WM_NOTIFY.au3>
-#include <GuiConstantsEx.au3>
-#include <GuiHeader.au3>
-#include <WindowsConstants.au3>
+#include "Extras\HelpFileInternals.au3"
+#include "Extras\WM_NOTIFY.au3"
 
-Global $g_hHeader, $g_idMemo
+#include <GUIConstantsEx.au3>
+#include <GuiHeader.au3>
+#include <StructureConstants.au3>
+#include <WindowsStylesConstants.au3>
+
+Global $g_hHeader
 
 Example()
 
 Func Example()
 	; Erstellt eine GUI
-	Local $hGUI = GUICreate("Header: Setzt und ermittelt Filter (v" & @AutoItVersion & ")", 400, 300)
+	Local $hGUI = GUICreate("Header: Setzt und ermittelt Filter (v" & @AutoItVersion & ")", 400, 300, 100, 100)
 	$g_hHeader = _GUICtrlHeader_Create($hGUI, $HDS_FILTERBAR)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 48, 396, 250, $WS_VSCROLL)
+	_MemoCreate(2, 52, 444, 220)
 	GUISetState(@SW_SHOW)
 
 	; ANSI Format
@@ -25,33 +28,26 @@ Func Example()
 
 	; Startet das Ändern in dem festgelegten Filter
 	_GUICtrlHeader_EditFilter($g_hHeader, 0)
-	Sleep(500)
-	Send("Filter 0")
-	Sleep(1000)
-	Send("{ENTER}")
+	ControlSend("[ACTIVE]", "", "", "Filter 0{ENTER}")
+	_MemoMsgBox($MB_SYSTEMMODAL, "Information", "Filter 0 geändert")
+
+	Local $sFilter = _GUICtrlHeader_GetFilterText($g_hHeader, 0)
+	ConsoleWrite('@@ Debug(' & @ScriptLineNumber & ') : $sFilter = ' & $sFilter & @CRLF & '>Error code: ' & @error & '    Extended code: ' & @extended & ' (0x' & Hex(@extended) & ')' & @CRLF) ;### Debug Console
 
 	_GUICtrlHeader_EditFilter($g_hHeader, 1)
-	Sleep(500)
-	Send("Filter 1")
-	Sleep(1000)
-	Send("{ENTER}")
-	MemoWrite("Filtertext von Spalte 1 : " & _GUICtrlHeader_GetFilterText($g_hHeader, 1))
+	ControlSend("[ACTIVE]", "", "", "Filter 1{ENTER}")
+	_MemoMsgBox($MB_SYSTEMMODAL, "Information", "Filter 1 geändert")
+
+	_MemoWrite("Filtertext von Spalte 1 : " & _GUICtrlHeader_GetFilterText($g_hHeader, 1))
 
 	; Bereinigt den Filter
 	_GUICtrlHeader_ClearFilter($g_hHeader, 0)
 
 	;Registert WM_NOTIFY zur Behandlung von $HDN_FILTERBTNCLICK-Meldungen
-	_WM_NOTIFY_Register($g_idMemo)
+	_WM_NOTIFY_Register($_g_idLst_Memo)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
-	Do
-	Until GUIGetMsg() = $GUI_EVENT_CLOSE
+	_MemoMsgBoxStatus("", -1, $hGUI) ; Keine weiteren Aktionen, es wird gewartet bis die GUI geschlossen wird.
 EndFunc   ;==>Example
-
-; Write a line to the memo control
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite
 
 Func WM_NOTIFY($hWnd, $iMsg, $wParam, $lParam)
 	#forceref $hWnd, $iMsg, $wParam

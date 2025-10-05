@@ -1,8 +1,8 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiComboBoxEx.au3>
 #include <GUIConstantsEx.au3>
 #include <GuiImageList.au3>
-
-Global $g_idMemo
 
 Example()
 
@@ -10,8 +10,7 @@ Func Example()
 	; Erstellt eine GUI
 	Local $hGUI = GUICreate("CComboBoxEx: Setzt und ermittelt das Handle der Imagelist (v" & @AutoItVersion & ")", 600, 300)
 	Local $hCombo = _GUICtrlComboBoxEx_Create($hGUI, "", 2, 2, 394, 100)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 32, 396, 266, 0)
 	GUISetState(@SW_SHOW)
 
 	Local $hImage = _GUIImageList_Create(16, 16, 5, 3)
@@ -27,7 +26,7 @@ Func Example()
 	_GUICtrlComboBoxEx_SetImageList($hCombo, $hImage)
 	;Setzt die ImageList
 	Local $hPrevlist = _GUICtrlComboBoxEx_SetImageList($hCombo, $hImage)
-	MemoWrite("Vorheriges Handle der ImageList: " & $hPrevlist & _
+	_MemoWrite("Vorheriges Handle der ImageList: " & $hPrevlist & _
 			" IsPtr = " & IsPtr($hPrevlist) & " IsHWnd = " & IsHWnd($hPrevlist))
 
 	For $x = 0 To 8
@@ -35,15 +34,10 @@ Func Example()
 	Next
 
 	; Ermittelt das Handle der Imagelist
-	MemoWrite("Handle der Imagelist: " & _GUICtrlComboBoxEx_GetImageList($hCombo) & _
+	_MemoWrite("Handle der Imagelist: " & _GUICtrlComboBoxEx_GetImageList($hCombo) & _
 			" IsPtr = " & IsPtr(_GUICtrlComboBoxEx_GetImageList($hCombo)) & _
 			" IsHwnd = " & IsHWnd(_GUICtrlComboBoxEx_GetImageList($hCombo)))
 
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

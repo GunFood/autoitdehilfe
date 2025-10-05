@@ -7,18 +7,18 @@ Example()
 Func Example()
 	; Erstellt eine GUI
 	GUICreate("Edit: Setzt und ermittelt das Passwortzeichen (v" & @AutoItVersion & ")", 500, 300)
-	Local $idEdit = GUICtrlCreateInput("Test des eingebauten PW-Eingabe-Controls", 2, 2, 394, 25, $ES_PASSWORD)
+	Local $idInp_11111 = GUICtrlCreateInput("Test des eingebauten PW-Eingabe-Controls", 2, 2, 394, 25, $ES_PASSWORD)
 	GUISetState(@SW_SHOW)
 
-	MsgBox(8192 + 64, "Information", "Passwortzeichen: " & _GUICtrlEdit_GetPasswordChar($idEdit))
+	MsgBox(8192 + 64, "Information", "Passwortzeichen: " & _GUICtrlEdit_GetPasswordChar($idInp_11111))
 
-	_GUICtrlEdit_SetPasswordChar($idEdit, "$") ; Ändert das Passwortzeichen in $
+	_GUICtrlEdit_SetPasswordChar($idInp_11111, "$") ; Ändert das Passwortzeichen in $
 
-	MsgBox(8192 + 64, "Information", "Passwortzeichen: " & _GUICtrlEdit_GetPasswordChar($idEdit))
+	MsgBox(8192 + 64, "Information", "Passwortzeichen: " & _GUICtrlEdit_GetPasswordChar($idInp_11111))
 
-	_GUICtrlEdit_SetPasswordChar($idEdit) ; Zeigt die eingegebenen Zeichen im Klartext an
+	_GUICtrlEdit_SetPasswordChar($idInp_11111) ; Zeigt die eingegebenen Zeichen im Klartext an
 
-	MsgBox(8192 + 64, "Information", "Passwortzeichen: " & _GUICtrlEdit_GetPasswordChar($idEdit))
+	MsgBox(8192 + 64, "Information", "Passwortzeichen: " & _GUICtrlEdit_GetPasswordChar($idInp_11111))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

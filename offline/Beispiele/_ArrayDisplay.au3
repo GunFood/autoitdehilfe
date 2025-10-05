@@ -41,4 +41,4 @@ Func Example()
 	$iError = @error
 	MsgBox(0, "_ArrayDisplay() Fehler", "Return ohne interne Msgbox ohne Erzwingen von Exit $iret =" & $iRet & " @error=" & $iError)
 
-EndFunc    ;==>Example
+EndFunc   ;==>Example

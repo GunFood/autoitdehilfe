@@ -1,9 +1,11 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiMonthCal.au3>
 #include <WinAPIMisc.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
-Global $g_idMonthCal, $g_idMemo, $g_hGUI
+Global $g_idMonthCal, $g_hGUI
 
 Example()
 
@@ -13,8 +15,7 @@ Func Example()
 	$g_idMonthCal = GUICtrlCreateMonthCal("", 4, 4, -1, -1, $WS_BORDER, 0x00000000)
 
 	; Erstellt ein Memo Control
-	$g_idMemo = GUICtrlCreateEdit("", 4, 168, 392, 128, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(4, 168, 392, 128, $WS_VSCROLL)
 	GUISetState(@SW_SHOW)
 
 	; Die Schleife wiederholt sich, bis der Benutzer eine Beenden-Aktion auslöst
@@ -35,13 +36,8 @@ Func DoHitTest()
 
 	$tHit = _GUICtrlMonthCal_HitTest($g_idMonthCal, _WinAPI_GetMousePosX(True, $g_hGUI), _WinAPI_GetMousePosY(True, $g_hGUI))
 	If BitAND(DllStructGetData($tHit, "Hit"), $MCHT_CALENDARDATE) <> 0 Then
-		MemoWrite("Date: " & StringFormat("%02d/%02d/%04d", DllStructGetData($tHit, "Month"), _
+		_MemoWrite("Date: " & StringFormat("%02d/%02d/%04d", DllStructGetData($tHit, "Month"), _
 				DllStructGetData($tHit, "Day"), _
 				DllStructGetData($tHit, "Year")))
 	EndIf
 EndFunc   ;==>DoHitTest
-
-; Schreibt eine Nachricht in das Memo
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

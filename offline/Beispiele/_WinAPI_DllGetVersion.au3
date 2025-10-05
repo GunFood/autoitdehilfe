@@ -1,4 +1,3 @@
-#include <APIShellExConstants.au3>
 #include <WinAPIShellEx.au3>
 
 Local Const $sDll = @SystemDir & '\comctl32.dll'

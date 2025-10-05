@@ -2,6 +2,7 @@
 
 #include <MsgBoxConstants.au3>
 #include <SQLite.au3>
+#include <SQLite.dll.au3>
 
 Local $sLocalSQLiteDll = "lokale SQLite.dll" ; muss in eine existierende .dll geändert werden, da sonst ein Fehler auftritt
 

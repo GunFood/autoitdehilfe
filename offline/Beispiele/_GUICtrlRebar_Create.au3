@@ -1,12 +1,15 @@
-#include <Extras\WM_NOTIFY.au3>
+#include "Extras\WM_NOTIFY.au3"
+
+#include <AutoItConstants.au3>
 #include <GuiComboBox.au3>
 #include <GUIConstantsEx.au3>
 #include <GuiDateTimePicker.au3>
 #include <GuiEdit.au3>
 #include <GuiReBar.au3>
 #include <GuiToolbar.au3>
+#include <StructureConstants.au3>
 #include <WinAPIConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Global $hReBar
 
@@ -32,12 +35,12 @@ Func Example()
 	EndSwitch
 
 	; Fügt der Toolbar einige Standard-Buttons hinzu
-	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
+	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $e_idHelp
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idNew, $STD_FILENEW)
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idOpen, $STD_FILEOPEN)
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idSave, $STD_FILESAVE)
 	_GUICtrlToolbar_AddButtonSep($hToolbar)
-	_GUICtrlToolbar_AddButton($hToolbar, $idHelp, $STD_HELP)
+	_GUICtrlToolbar_AddButton($hToolbar, $e_idHelp, $STD_HELP)
 
 	; Erstellt eine Combobox
 	Local $hCombo = _GUICtrlComboBox_Create($hGui, "", 0, 0, 120)
@@ -68,12 +71,12 @@ Func Example()
 ;~ 	_GUICtrlRebar_AddBand($hReBar, GUICtrlGetHandle($idInput), 120, 200, "Name:")
 	_GUICtrlRebar_AddBand($hReBar, $hInput, 120, 200, "Name:")
 
-	Local $idBtnExit = GUICtrlCreateButton("Beenden", 150, 360, 100, 25)
+	Local $idBtn_Exit = GUICtrlCreateButton("Beenden", 150, 360, 100, 25)
 	GUISetState(@SW_SHOW)
 
 	While 1
 		Switch GUIGetMsg()
-			Case $GUI_EVENT_CLOSE, $idBtnExit
+			Case $GUI_EVENT_CLOSE, $idBtn_Exit
 				Exit
 		EndSwitch
 	WEnd

@@ -1,8 +1,8 @@
+#NoTrayIcon
+
 #include <MsgBoxConstants.au3>
 #include <StringConstants.au3>
 #include <TrayConstants.au3> ; wird für die $TRAY_ICONSTATE_SHOW, $TRAY_ITEM_EXIT und $TRAY_ITEM_PAUSE Konstanten benötigt.
-
-#NoTrayIcon
 
 Opt("TrayAutoPause", 0) ; Das Skript pauiert nicht, wenn das Trayicon ausgewählt wurde.
 Opt("TrayMenuMode", 2) ; Items werden nicht angehakt, wenn diese augewählt wurden.

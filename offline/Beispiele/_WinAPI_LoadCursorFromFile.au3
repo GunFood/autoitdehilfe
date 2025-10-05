@@ -1,8 +1,11 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <WinAPIRes.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
 
-Global $g_hCursor = _WinAPI_LoadCursorFromFile(@ScriptDir & '\Extras\Lens.cur')
+Local $sCur = _Extras_PathFull('Lens.cur')
+Global $g_hCursor = _WinAPI_LoadCursorFromFile($sCur)
 
 OnAutoItExitRegister('OnAutoItExit')
 

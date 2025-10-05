@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function _WinAPI_QueryDiskUsage</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Function Reference</h1>
+<hr style="height:0px">
+<div class="top"><h1>_WinAPI_QueryDiskUsage</h1><div>
+<br style="clear: both;">
+<p style="margin:2px 0 0 0;" class="funcdesc">Retrieves the current percentage of the Disk IO Usage<br /></p>
+<p class="codeheader">
+#include &lt;WinAPISys.au3&gt;<br />
+_WinAPI_QueryDiskUsage ( [$bToolTip = False] )<br />
+</p>
+
+<h2>Parameters</h2>
+<table>
+<tr>
+<td style="width:15%">$bToolTip</td>
+<td style="width:85%"><strong>[optional]</strong> to display a tooltip of the Disk IO usage (Default no display)</td>
+</tr>
+</table>
+
+<h2>Return Value</h2>
+<table class="noborder">
+<tr>
+<td style="width:10%" class="valign-top">Success:</td>
+<td style="width:90%">The percentage of the Disk IO Usage.</td>
+</tr>
+<tr>
+<td class="valign-top">Failure:</td>
+<td>Sets the @error flag to non-zero, call <a href="_WinAPI_GetLastError.htm">_WinAPI_GetLastError()</a> to get extended error information.</td>
+</tr>
+</table>
+
+<h2>Remarks</h2>
+<p>The Disk IO related to a process is the sum of number of Read operations, number of Write operations and number of Other operations as return By ProcessGetStats()<br />
+The "taskmgr.exe", "dwm.exe" and the "System" processes are ignored,<br />
+as those processes are always working in background.<br />
+</p>
+
+<h2>Related</h2>
+<p><a href="../functions/ProcessGetStats.htm">ProcessGetStats</a></p>
+
+<h2 class="bottom">Example</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Copied to clipboard");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Open this Script"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_QueryProcessorUsage.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">Copy to clipboard<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><span class="S12">#pragma</span><span class="S0"> compile</span><span class="S8">(</span><span class="S0">AutoItExecuteAllowed</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPISys.au3&gt;</span>
+
+<span class="S1">; create a script which use CPU</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sTestAu3</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"\TestSystemIdle.au3"</span>
+<a class="codeSnippetLink" href="../functions/FileDelete.htm"><span class="S4">FileDelete</span></a><span class="S8">(</span><span class="S9">$sTestAu3</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/FileWriteLine.htm"><span class="S4">FileWriteLine</span></a><span class="S8">(</span><span class="S9">$sTestAu3</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'For $i = 1 To 20000000'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/FileWriteLine.htm"><span class="S4">FileWriteLine</span></a><span class="S8">(</span><span class="S9">$sTestAu3</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'$i = $i'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/FileWriteLine.htm"><span class="S4">FileWriteLine</span></a><span class="S8">(</span><span class="S9">$sTestAu3</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Next'</span><span class="S8">)</span>
+
+<span class="S1">;~ Local $sTestAu3 = @TempDir &amp; "\TestIOIdle.au3"</span>
+<span class="S1">;~ FileDelete($sTestAu3)</span>
+<span class="S1">;~ FileWriteLine($sTestAu3, 'For $i = 1 To 100000')</span>
+<span class="S1">;~ FileWriteLine($sTestAu3, 'FileRead(@ScriptFullPath)')</span>
+<span class="S1">;~ FileWriteLine($sTestAu3, 'Next')</span>
+
+<a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@Compiled"><span class="S6">@Compiled</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Run.htm"><span class="S4">Run</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@AutoItExe"><span class="S6">@AutoItExe</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">' /AutoIt3ExecuteScript "'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sTestAu3</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'"'</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Run.htm"><span class="S4">Run</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@AutoItExe"><span class="S6">@AutoItExe</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sTestAu3</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$fCurSystem</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$fSystemPercent</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1.0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$nSystemSleep</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iRefresh</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">2000</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$fCurIO</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$fIOPercent</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1.0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$nIOSleep</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hTimer</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/TimerInit.htm"><span class="S4">TimerInit</span></a><span class="S8">()</span>
+
+<a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Do</span></a>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$nSystemSleep</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+=</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S9">$iRefresh</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$fCurSystem</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_QueryProcessorUsage.htm"><span class="S15">_WinAPI_QueryProcessorUsage</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Until</span></a><span class="S0"> </span><span class="S9">$fCurSystem</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;</span></a><span class="S0"> </span><span class="S9">$fSystemPercent</span>
+<a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Do</span></a>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">;in case the processor is not really idle !!!</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$nIOSleep</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+=</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S9">$iRefresh</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$fCurIO</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_QueryDiskUsage.htm"><span class="S15">_WinAPI_QueryDiskUsage</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Do.htm"><span class="S5">Until</span></a><span class="S0"> </span><span class="S9">$fCurIO</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">&lt;</span></a><span class="S0"> </span><span class="S9">$fIOPercent</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sElapse</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Round.htm"><span class="S4">Round</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/TimerDiff.htm"><span class="S4">TimerDiff</span></a><span class="S8">(</span><span class="S9">$hTimer</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">/</span></a><span class="S0"> </span><span class="S3">1000</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/FileDelete.htm"><span class="S4">FileDelete</span></a><span class="S8">(</span><span class="S9">$sTestAu3</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_TOPMOST</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'Test duration'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sElapse</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" sec ("</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$nSystemSleep</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"/"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$nIOSleep</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">')'</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

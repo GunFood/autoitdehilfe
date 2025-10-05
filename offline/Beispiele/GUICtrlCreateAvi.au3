@@ -7,9 +7,9 @@ Func Example()
 	Local $hGui = GUICreate("Beispiel", 300, 200)
 
 	; Erstellt ein Animationscontrol.
-	Local $idAnimation = GUICtrlCreateAvi(@SystemDir & "\shell32.dll", 165, 15, 0, 300)
-	Local $idStart = GUICtrlCreateButton("Start", 60, 150, 85, 25)
-	Local $idStop = GUICtrlCreateButton("Stop", 160, 150, 85, 25)
+	Local $idAvi_Animation = GUICtrlCreateAvi(@SystemDir & "\shell32.dll", 165, 15, 0, 300)
+	Local $idBtn_Start = GUICtrlCreateButton("Start", 60, 150, 85, 25)
+	Local $idBtn_Stop = GUICtrlCreateButton("Stop", 160, 150, 85, 25)
 
 	; Zeigt die GUI
 	GUISetState(@SW_SHOW, $hGui)
@@ -20,11 +20,11 @@ Func Example()
 			Case $GUI_EVENT_CLOSE
 				ExitLoop
 
-			Case $idStart ; Startet die Animation.
-				GUICtrlSetState($idAnimation, $GUI_AVISTART)
+			Case $idBtn_Start ; Startet die Animation.
+				GUICtrlSetState($idAvi_Animation, $GUI_AVISTART)
 
-			Case $idStop ; Beendet die Animation.
-				GUICtrlSetState($idAnimation, $GUI_AVISTOP)
+			Case $idBtn_Stop ; Beendet die Animation.
+				GUICtrlSetState($idAvi_Animation, $GUI_AVISTOP)
 
 		EndSwitch
 	WEnd

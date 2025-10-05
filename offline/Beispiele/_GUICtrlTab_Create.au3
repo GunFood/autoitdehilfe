@@ -1,9 +1,11 @@
 ; == Beispiel : Erstellt mit der UDF
 
-#include <Extras\WM_NOTIFY.au3>
-#include <GuiConstantsEx.au3>
+#include "Extras\HelpFileInternals.au3"
+#include "Extras\WM_NOTIFY.au3"
+
+#include <GUIConstantsEx.au3>
 #include <GuiTab.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Global $g_hTab
 
@@ -11,21 +13,21 @@ Example()
 
 Func Example()
 	; Erstellt eine GUI
-	Local $hGUI = GUICreate("Tab-Control: Erstellen (v" & @AutoItVersion & ")", 400, 300)
-	$g_hTab = _GUICtrlTab_Create($hGUI, 2, 2, 396, 296)
+	Local $hGUI = GUICreate("Tab-Control: Erstellen (v" & @AutoItVersion & ")", 450, 300, 100, 100)
+	$g_hTab = _GUICtrlTab_Create($hGUI, 2, 2, 446, 266)
+	_MemoMsgBoxStatus() ; Statuserstellung
+
 	GUISetState(@SW_SHOW)
 
 	_WM_NOTIFY_Register()
 
+	_Memo_MemoMsgBox($MB_SYSTEMMODAL, "Information", "3 Tabs erstellen")
 	; Fügt Tabs hinzu
-	_GUICtrlTab_InsertItem($g_hTab, 0, "Tab 1")
-	_GUICtrlTab_InsertItem($g_hTab, 1, "Tab 2")
-	_GUICtrlTab_InsertItem($g_hTab, 2, "Tab 3")
+	_GUICtrlTab_InsertItem($g_hTab, 0, "Tab 0")
+	_GUICtrlTab_InsertItem($g_hTab, 1, "Tab 1")
+	_GUICtrlTab_InsertItem($g_hTab, 2, "Tab 2")
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
-	Do
-	Until GUIGetMsg() = $GUI_EVENT_CLOSE
-	GUIDelete()
+	_MemoMsgBoxStatus("", -1, $hGUI) ; Keine weiteren Aktionen, es wird gewartet bis die GUI geschlossen wird.
 EndFunc   ;==>Example
 
 Func WM_NOTIFY($hWnd, $iMsg, $wParam, $lParam)

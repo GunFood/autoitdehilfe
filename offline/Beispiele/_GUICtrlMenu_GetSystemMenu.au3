@@ -1,15 +1,18 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiMenu.au3>
+
+Global $g_hWnd
 
 Example()
 
 Func Example()
-	Local $hWnd, $hMenu, $iCount, $iI
+	Local $hMenu, $iCount, $iI
 
 	; Startet den Editor
 	Run("notepad.exe")
-	WinWaitActive("[CLASS:Notepad]")
-	$hWnd = WinGetHandle("[CLASS:Notepad]")
-	$hMenu = _GUICtrlMenu_GetSystemMenu($hWnd)
+	$g_hWnd = WinWaitActive("[CLASS:Notepad]")
+	$hMenu = _GUICtrlMenu_GetSystemMenu($g_hWnd)
 
 	; Ändert das Systemmenü
 	_GUICtrlMenu_InsertMenuItem($hMenu, 5, "&AutoIt")
@@ -21,9 +24,11 @@ Func Example()
 	For $iI = 0 To $iCount - 1
 		Writeln("Item " & $iI & " Text ......: " & _GUICtrlMenu_GetItemText($hMenu, $iI))
 	Next
+
+	_NotepadForceClose($g_hWnd)
 EndFunc   ;==>Example
 
 ; Schreibt eine Zeile mit Text in den Editor
-Func Writeln($sText)
-	ControlSend("[CLASS:Notepad]", "", "Edit1", $sText & @CRLF)
+Func Writeln($sText, $hWnd = $g_hWnd)
+	ControlSend($hWnd, "", ControlGetFocus($hWnd), $sText & @CRLF)
 EndFunc   ;==>Writeln

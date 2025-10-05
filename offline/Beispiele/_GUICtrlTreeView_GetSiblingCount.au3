@@ -1,7 +1,7 @@
 #include <GUIConstantsEx.au3>
 #include <GuiTreeView.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -16,25 +16,25 @@ Func Example()
 ;~ 	_GUICtrlTreeView_SetUnicodeFormat($idTreeView, False)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
-	Local $aidItem[100], $aidChildItem[100], $iRand, $iChildRand, $iYItem
+	Local $aidTVi_Item[100], $aidTVi_Child[100], $iRand, $iChildRand, $iYItem
 	$iRand = 6
 	For $x = 0 To $iRand
-		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
+		$aidTVi_Item[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
 		$iChildRand = 3 ;Random(0, 3, 1)
 		For $y = 0 To $iChildRand
-			$aidChildItem[$iYItem] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $y), $aidItem[$x])
+			$aidTVi_Child[$iYItem] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $y), $aidTVi_Item[$x])
 			$iYItem += 1
 		Next
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)
 
 	$iRand = 5 ;Random(0, 9)
-	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Items auf der gleichen Ebene wie Item Index %d: %d", $iRand, _GUICtrlTreeView_GetSiblingCount($idTreeView, $aidItem[$iRand])))
+	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Items auf der gleichen Ebene wie Item Index %d: %d", $iRand, _GUICtrlTreeView_GetSiblingCount($idTreeView, $aidTVi_Item[$iRand])))
 
 	$iRand = 7 ;Random(0, 12)
-	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Items auf der gleichen Ebene wie Item Index %d: %d", $iRand, _GUICtrlTreeView_GetSiblingCount($idTreeView, $aidChildItem[$iRand])))
-	_GUICtrlTreeView_Expand($idTreeView, _GUICtrlTreeView_GetParentHandle($idTreeView, $aidChildItem[$iRand]))
-	_GUICtrlTreeView_SelectItem($idTreeView, $aidChildItem[$iRand])
+	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Items auf der gleichen Ebene wie Item Index %d: %d", $iRand, _GUICtrlTreeView_GetSiblingCount($idTreeView, $aidTVi_Child[$iRand])))
+	_GUICtrlTreeView_Expand($idTreeView, _GUICtrlTreeView_GetParentHandle($idTreeView, $aidTVi_Child[$iRand]))
+	_GUICtrlTreeView_SelectItem($idTreeView, $aidTVi_Child[$iRand])
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

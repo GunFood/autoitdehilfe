@@ -5,7 +5,7 @@
 #include <WinAPIGdiDC.au3>
 #include <WinAPIHObj.au3>
 #include <WinAPISysWin.au3>
-#include <WindowsConstants.au3>
+#include <WindowsSysColorConstants.au3>
 
 Global $g_iCount = 0, $g_bColor = True
 Local $hLineProc = DllCallbackRegister('_LineProc', 'none', 'int;int;lparam')

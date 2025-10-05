@@ -1,3 +1,5 @@
+#include "Extras\HelpFileInternals.au3"
+
 Example()
 
 Func Example()
@@ -8,7 +10,7 @@ Func Example()
 	Local $hWnd = WinWait("[CLASS:Notepad]", "", 10)
 
 	; Setzt den Eingabefokus auf das Edit-Control des Editors durch die Verwendung des von WinWait zurückgegebenen Handles.
-	ControlFocus($hWnd, "", "Edit1")
+	ControlFocus($hWnd, "", ControlGetFocus($hWnd))
 
 	; Wartet 2 Sekunden.
 	Sleep(2000)

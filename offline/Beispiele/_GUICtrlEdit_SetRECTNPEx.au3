@@ -1,7 +1,7 @@
 #include <GUIConstantsEx.au3>
 #include <GuiEdit.au3>
 #include <GuiStatusBar.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 

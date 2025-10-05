@@ -1,8 +1,10 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <Excel.au3>
 #include <MsgBoxConstants.au3>
 
 ; Erstellt das Anwendungsobjekt und öffnet eine Beispielarbeitsmappe
-Local $sWorkbook = @ScriptDir & "\Extras\_Excel1.xls"
+Local $sWorkbook = _Extras_PathFull("_Excel1.xls")
 Local $oExcel = _Excel_Open()
 If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_BookAttach Beispiel 1", "Fehler beim Erstellen des Excel-Anwendungsobjekts." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
 Local $oWorkbook = _Excel_BookOpen($oExcel, $sWorkbook)

@@ -1,4 +1,3 @@
-#include <APIDlgConstants.au3>
 #include <FontConstants.au3>
 #include <GUIConstantsEx.au3>
 #include <GuiRichEdit.au3>
@@ -8,7 +7,8 @@
 #include <WinAPIGdi.au3>
 #include <WinAPIMisc.au3>
 #include <WinAPISysWin.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Local Const $sTxt = 'AutoIt v3 is a freeware BASIC-like scripting language designed for automating the Windows GUI and general scripting. It uses a combination of simulated keystrokes, mouse movement and window/control manipulation in order to automate tasks in a way not possible or reliable with other languages (e.g. VBScript and SendKeys). AutoIt is also very small, self-contained and will run on all versions of Windows out-of-the-box with no annoying "runtimes" required!' & @CRLF & @CRLF & _
 		'AutoIt was initially designed for PC "roll out" situations to reliably automate and configure thousands of PCs. Over time it has become a powerful language that supports complex expressions, user functions, loops and everything else that veteran scripters would expect.'
@@ -18,10 +18,10 @@ Local $hForm = GUICreate('Test ' & StringReplace(@ScriptName, '.au3', '()'), 800
 
 ; Create main menu
 Local $idMenu = GUICtrlCreateMenu('&File')
-Local $idExitItem = GUICtrlCreateMenuItem('E&xit...', $idMenu)
+Local $idMni_Exit = GUICtrlCreateMenuItem('E&xit...', $idMenu)
 $idMenu = GUICtrlCreateMenu('&Edit')
-Local $idFindItem = GUICtrlCreateMenuItem('&Find...', $idMenu)
-Local $idReplaceItem = GUICtrlCreateMenuItem('R&eplace...', $idMenu)
+Local $idMni_Find = GUICtrlCreateMenuItem('&Find...', $idMenu)
+Local $idMni_Replace = GUICtrlCreateMenuItem('R&eplace...', $idMenu)
 
 ; Create Rich Edit control with always visible text selection, and set "Courier New" font to the control
 Local $hRichEdit = _GUICtrlRichEdit_Create($hForm, $sTxt, 0, 0, 800, 600, BitOR($ES_AUTOVSCROLL, $ES_NOHIDESEL, $ES_MULTILINE, $WS_VSCROLL), 0)
@@ -40,23 +40,23 @@ Local $iMsg, $sText
 While 1
 	$iMsg = GUIGetMsg()
 	Switch $iMsg
-		Case $GUI_EVENT_CLOSE, $idExitItem
+		Case $GUI_EVENT_CLOSE, $idMni_Exit
 			ExitLoop
-		Case $idFindItem, $idReplaceItem
+		Case $idMni_Find, $idMni_Replace
 			$sText = _GUICtrlRichEdit_GetSelText($hRichEdit)
 			If @error Then
 				$sText = ''
 			EndIf
 			; Disable "Find..." and "Replace..." menu items, otherwise, the script maay crash
-			GUICtrlSetState($idFindItem, $GUI_DISABLE)
-			GUICtrlSetState($idReplaceItem, $GUI_DISABLE)
+			GUICtrlSetState($idMni_Find, $GUI_DISABLE)
+			GUICtrlSetState($idMni_Replace, $GUI_DISABLE)
 			Switch $iMsg
-				Case $idFindItem
+				Case $idMni_Find
 					$g_hDlg = _WinAPI_FindTextDlg($hForm, $sText, $FR_DOWN, 0, $hRichEdit)
-				Case $idReplaceItem
+				Case $idMni_Replace
 					$g_hDlg = _WinAPI_ReplaceTextDlg($hForm, $sText, '', 0, 0, $hRichEdit)
 			EndSwitch
-		Case $idReplaceItem
+		Case $idMni_Replace
 	EndSwitch
 WEnd
 
@@ -139,7 +139,7 @@ Func WM_FINDMSGSTRING($hWnd, $iMsg, $wParam, $lParam)
 			; Destroy internal buffer, and free allocated memory
 			_WinAPI_FlushFRBuffer()
 			; Enable "Find..." and "Replace..." menu items
-			GUICtrlSetState($idReplaceItem, $GUI_ENABLE)
-			GUICtrlSetState($idFindItem, $GUI_ENABLE)
+			GUICtrlSetState($idMni_Replace, $GUI_ENABLE)
+			GUICtrlSetState($idMni_Find, $GUI_ENABLE)
 	EndSelect
 EndFunc   ;==>WM_FINDMSGSTRING

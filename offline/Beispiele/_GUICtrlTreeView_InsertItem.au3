@@ -1,7 +1,7 @@
 #include <GUIConstantsEx.au3>
 #include <GuiTreeView.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Global $g_hImage, $g_hStateImage
 
@@ -18,24 +18,24 @@ Func Example()
 ;~     _GUICtrlTreeView_SetUnicodeFormat($idTreeView, False)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
-	Local $aidItem[10], $aidChildItem[30], $iYItem = 0
+	Local $aidTVi_Item[10], $aidTVi_Child[30], $iYItem = 0
 	For $x = 0 To 9
-		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
+		$aidTVi_Item[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
 		For $y = 1 To 3
-			$aidChildItem[$iYItem] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Child", $iYItem), $aidItem[$x])
+			$aidTVi_Child[$iYItem] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Child", $iYItem), $aidTVi_Item[$x])
 			$iYItem += 1
 		Next
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)
 
 	Local $iRand = Random(0, 9, 1)
-	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Eingefügt nach dem Index %d: %s", $iRand, _GUICtrlTreeView_InsertItem($idTreeView, "Inserted Item", 0, $aidItem[$iRand])))
+	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Eingefügt nach dem Index %d: %s", $iRand, _GUICtrlTreeView_InsertItem($idTreeView, "Inserted Item", 0, $aidTVi_Item[$iRand])))
 
 	$iRand = Random(0, 29, 1)
-	Local $hInsert = _GUICtrlTreeView_InsertItem($idTreeView, "Eingefügtes Item", _GUICtrlTreeView_GetParentHandle($idTreeView, $aidChildItem[$iRand]), $aidChildItem[$iRand])
+	Local $hInsert = _GUICtrlTreeView_InsertItem($idTreeView, "Eingefügtes Item", _GUICtrlTreeView_GetParentHandle($idTreeView, $aidTVi_Child[$iRand]), $aidTVi_Child[$iRand])
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Eingefügt nach dem Child-Index %d: %s", $iRand, $hInsert))
 
-	$hInsert = _GUICtrlTreeView_InsertItem($idTreeView, "Eingefügtes erstes Child-Item", _GUICtrlTreeView_GetParentHandle($idTreeView, $aidChildItem[$iRand]), $TVI_FIRST)
+	$hInsert = _GUICtrlTreeView_InsertItem($idTreeView, "Eingefügtes erstes Child-Item", _GUICtrlTreeView_GetParentHandle($idTreeView, $aidTVi_Child[$iRand]), $TVI_FIRST)
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Eingefügter erster Child-Index %d : %s", $iRand, $hInsert))
 	_GUICtrlTreeView_SelectItem($idTreeView, $hInsert)
 

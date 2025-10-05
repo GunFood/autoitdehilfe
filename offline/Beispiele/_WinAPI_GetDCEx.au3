@@ -1,4 +1,3 @@
-#include <APIGdiConstants.au3>
 #include <FontConstants.au3>
 #include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>
@@ -7,7 +6,7 @@
 #include <WinAPIHObj.au3>
 #include <WinAPISys.au3>
 #include <WinAPISysWin.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
 
 Global $g_hFont = _WinAPI_CreateFont(16, 0, 0, 0, $FW_BOLD, 0, 0, 0, $DEFAULT_CHARSET, $OUT_DEFAULT_PRECIS, $CLIP_DEFAULT_PRECIS, $DEFAULT_PITCH, $ANTIALIASED_QUALITY, 'Arial')
 

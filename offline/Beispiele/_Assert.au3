@@ -10,4 +10,4 @@ Func Example()
 
 	_Assert('$sABC > ""')
 	_Assert('$sABC > ""')
-EndFunc
+EndFunc   ;==>Example

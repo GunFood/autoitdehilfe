@@ -1,7 +1,4 @@
-#include <GUIConstantsEx.au3>
-#include <GuiTreeView.au3>
-#include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
+	_MemoCreate(2, 2, 396, 296, $WS_VSCROLL)
 
 Example()
 
@@ -13,23 +10,23 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
-	Local $aidItem[10]
+	Local $aidTVi_Item[10]
 	For $x = 0 To 3
-		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
+		$aidTVi_Item[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
 		For $y = 1 To 4
-			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Child", $y), $aidItem[$x])
+			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Child", $y), $aidTVi_Item[$x])
 		Next
 	Next
-	$aidItem[4] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", 4), $idTreeView)
+	$aidTVi_Item[4] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", 4), $idTreeView)
 	For $x = 5 To 9
-		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
+		$aidTVi_Item[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
 		For $y = 1 To Random(2, 10, 1)
-			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Child", $y), $aidItem[$x])
+			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Child", $y), $aidTVi_Item[$x])
 		Next
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)
 
-	Local $hLastChild = _GUICtrlTreeView_GetLastChild($idTreeView, $aidItem[2])
+	Local $hLastChild = _GUICtrlTreeView_GetLastChild($idTreeView, $aidTVi_Item[2])
 	_GUICtrlTreeView_SelectItem($idTreeView, $hLastChild)
 	MsgBox($MB_SYSTEMMODAL, "Information", "Index 2, vorheriges Child: " & _GUICtrlTreeView_GetPrevChild($idTreeView, $hLastChild))
 	_GUICtrlTreeView_SelectItem($idTreeView, _GUICtrlTreeView_GetPrevChild($idTreeView, $hLastChild))

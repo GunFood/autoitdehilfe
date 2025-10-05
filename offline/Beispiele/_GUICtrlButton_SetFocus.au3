@@ -1,8 +1,8 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiButton.au3>
 #include <GUIConstantsEx.au3>
-#include <WindowsConstants.au3>
-
-Global $g_idMemo
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -10,8 +10,7 @@ Func Example()
 	Local $idRdo, $idRdo2, $idChk
 
 	GUICreate("Buttons", 400, 400)
-	$g_idMemo = GUICtrlCreateEdit("", 119, 10, 276, 374, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(119, 10, 276, 374, $WS_VSCROLL)
 
 	$idRdo = GUICtrlCreateRadio("Radio1", 10, 10, 90, 50)
 	_GUICtrlButton_SetFocus($idRdo)
@@ -24,9 +23,9 @@ Func Example()
 
 	GUISetState(@SW_SHOW)
 
-	MemoWrite(StringFormat("$idRdo Fokus Status.: %s", _GUICtrlButton_GetFocus($idRdo)))
-	MemoWrite(StringFormat("$idRdo2 Fokus Status: %s", _GUICtrlButton_GetFocus($idRdo2)))
-	MemoWrite(StringFormat("$idChk Fokus Status.: %s", _GUICtrlButton_GetFocus($idChk)))
+	_MemoWrite(StringFormat("$idRdo Fokus Status.: %s", _GUICtrlButton_GetFocus($idRdo)))
+	_MemoWrite(StringFormat("$idRdo2 Fokus Status: %s", _GUICtrlButton_GetFocus($idRdo2)))
+	_MemoWrite(StringFormat("$idChk Fokus Status.: %s", _GUICtrlButton_GetFocus($idChk)))
 
 	While 1
 		Switch GUIGetMsg()
@@ -37,8 +36,3 @@ Func Example()
 
 	Exit
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

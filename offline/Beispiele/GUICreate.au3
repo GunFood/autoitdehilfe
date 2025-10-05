@@ -5,7 +5,7 @@ Example()
 Func Example()
 	; Erstellt eine GUI mit verschiedenen Controls.
 	Local $hGUI = GUICreate("Beispiel", 400, 400)
-	Local $idOK = GUICtrlCreateButton("OK", 310, 370, 85, 25)
+	Local $idBtn_OK = GUICtrlCreateButton("OK", 310, 370, 85, 25)
 
 	Local $aWindow_Size = WinGetPos($hGUI)
 	ConsoleWrite('Fensterbreite  = ' & $aWindow_Size[2] & @CRLF)
@@ -20,7 +20,7 @@ Func Example()
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	While 1
 		Switch GUIGetMsg()
-			Case $GUI_EVENT_CLOSE, $idOK
+			Case $GUI_EVENT_CLOSE, $idBtn_OK
 				ExitLoop
 
 		EndSwitch

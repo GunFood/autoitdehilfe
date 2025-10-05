@@ -1,12 +1,9 @@
-#include <MsgBoxConstants.au3>
+#RequireAdmin ; Adminrechte für Änderungen im System.
 #include <ProcessConstants.au3>
 #include <Security.au3>
-#include <SecurityConstants.au3>
 #include <StructureConstants.au3>
 #include <WinAPIHObj.au3>
 #include <WinAPIProc.au3>
-
-#RequireAdmin ; Adminrechte für Änderungen im System.
 
 Example_ProcessWithTok()
 

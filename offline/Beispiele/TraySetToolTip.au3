@@ -1,6 +1,6 @@
-#include <TrayConstants.au3>
-
 #NoTrayIcon
+
+#include <TrayConstants.au3>
 
 Example()
 

@@ -3,14 +3,14 @@
 
 Opt('TrayAutoPause', 0)
 
-Global $g_iCount = 0
+Example()
 
-_Example()
-
-Func _Example()
+Func Example()
 	Local $hTimerProc = DllCallbackRegister('_TimerProc', 'none', 'hwnd;uint;uint_ptr;dword')
 
 	Local $iTimerID = _WinAPI_SetTimer(0, 0, 1000, DllCallbackGetPtr($hTimerProc))
+
+	; Skript durch Drücken von {ESC} schließen
 
 	Do
 		Sleep(100)
@@ -23,7 +23,8 @@ EndFunc   ;==>_Example
 
 Func _TimerProc($hWnd, $iMsg, $iTimerID, $iTime)
 	#forceref $hWnd, $iMsg, $iTimerID, $iTime
+	Local Static $iCount = 1
 
-	ConsoleWrite($g_iCount & @CRLF)
+	ToolTip("$iCount = " & $iCount, Default, Default, "{ESC} drücken um das Skript zu beenden")
 	$g_iCount += 1
 EndFunc   ;==>_TimerProc

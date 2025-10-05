@@ -1,6 +1,6 @@
 #include <GUIConstantsEx.au3>
 #include <WinAPISysWin.au3>
-#include <WindowsConstants.au3>
+#include <WindowsSysColorConstants.au3>
 
 Example()
 

@@ -1,5 +1,4 @@
 #include <Security.au3>
-#include <SecurityConstants.au3>
 
 Local $aArrayOfData = _Security__LookupAccountSid($SID_ALL_SERVICES)
 

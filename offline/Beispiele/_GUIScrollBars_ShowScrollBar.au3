@@ -1,6 +1,6 @@
 #include <GUIConstantsEx.au3>
 #include <GuiScrollBars.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -30,7 +30,7 @@ Func Example()
 		$hGuiMsg = GUIGetMsg()
 
 		Switch $hGuiMsg
-			Case $GUI_EVENT_CLOSE;, $nExititem
+			Case $GUI_EVENT_CLOSE ;, $nExititem
 				ExitLoop
 		EndSwitch
 	WEnd

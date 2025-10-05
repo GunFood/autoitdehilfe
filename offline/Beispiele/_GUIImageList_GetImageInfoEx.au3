@@ -1,9 +1,9 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiImageList.au3>
 #include <WinAPIGdi.au3>
 #include <WinAPIGdiDC.au3>
-
-Global $g_idMemo
 
 Example()
 
@@ -11,8 +11,7 @@ Func Example()
 	Local $hImage, $hGui, $hDC, $tInfo
 
 	$hGui = GUICreate("ImageList: Ermittelt erweiterte Icon-Informationen (InfoEx)", 400, 300)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 32, 396, 266, 0)
 	GUISetState(@SW_SHOW)
 
 	; Lädt die Bilder
@@ -31,20 +30,15 @@ Func Example()
 
 	; Zeigt die Informationen des zweiten Bildes
 	$tInfo = _GUIImageList_GetImageInfoEx($hImage, 1)
-	MemoWrite("Handle des Bildes .: 0x" & Hex(DllStructGetData($tInfo, "hBitmap")))
-	MemoWrite("Handle der Maske ..: " & DllStructGetData($tInfo, "hMask"))
-	MemoWrite("Linke Seite des Bildes ...: " & DllStructGetData($tInfo, "Left"))
-	MemoWrite("Obere Seite des Bildes  ....: " & DllStructGetData($tInfo, "Top"))
-	MemoWrite("Rechte Seite des Bildes ..: " & DllStructGetData($tInfo, "Right"))
-	MemoWrite("Untere Seite des Bildes .: " & DllStructGetData($tInfo, "Bottom"))
+	_MemoWrite("Handle des Bildes .: 0x" & Hex(DllStructGetData($tInfo, "hBitmap")))
+	_MemoWrite("Handle der Maske ..: " & DllStructGetData($tInfo, "hMask"))
+	_MemoWrite("Linke Seite des Bildes ...: " & DllStructGetData($tInfo, "Left"))
+	_MemoWrite("Obere Seite des Bildes  ....: " & DllStructGetData($tInfo, "Top"))
+	_MemoWrite("Rechte Seite des Bildes ..: " & DllStructGetData($tInfo, "Right"))
+	_MemoWrite("Untere Seite des Bildes .: " & DllStructGetData($tInfo, "Bottom"))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()
 EndFunc   ;==>Example
-
-; Schreibt eine Zeile in das Memo Control
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

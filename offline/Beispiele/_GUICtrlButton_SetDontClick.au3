@@ -1,8 +1,11 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiButton.au3>
 #include <GUIConstantsEx.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
-Global $g_hBtn, $g_idMemo, $g_hBtn2
+Global $g_hBtn, $g_hBtn2
 
 ; Es ist zu beachten, dass die Control-ID dieses Buttons NICHT mit GuiCtrlRead gelesen werden kann!
 ; Funktioniert erst ab Windows Vista!!!
@@ -13,8 +16,7 @@ Func Example()
 	Local $hGui
 
 	$hGui = GUICreate("Buttons", 400, 400)
-	$g_idMemo = GUICtrlCreateEdit("", 10, 100, 390, 284, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(10, 100, 390, 284, $WS_VSCROLL)
 
 	$g_hBtn = _GUICtrlButton_Create($hGui, "Button 1", 10, 10, 160, 40)
 	_GUICtrlButton_SetDontClick($g_hBtn, True)
@@ -35,12 +37,6 @@ Func Example()
 	Exit
 EndFunc   ;==>Example
 
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite
-
 ; Reagiert auf einen Buttonklick
 ; Bei Klick auf Button 1 muss '$BST_DONTCLICK' erscheinen!
 Func WM_COMMAND($hWnd, $iMsg, $wParam, $lParam)
@@ -59,7 +55,7 @@ Func WM_COMMAND($hWnd, $iMsg, $wParam, $lParam)
 					Else
 						$sText = "$BN_CLICKED" & @CRLF
 					EndIf
-					MemoWrite($sText & _
+					_MemoWrite($sText & _
 							"-----------------------------" & @CRLF & _
 							"WM_COMMAND - Infos:" & @CRLF & _
 							"-----------------------------" & @CRLF & _

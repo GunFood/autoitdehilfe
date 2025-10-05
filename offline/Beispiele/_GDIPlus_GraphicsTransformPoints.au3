@@ -1,7 +1,7 @@
 #include <GDIPlus.au3>
 #include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
 
 Global $g_hGUI, $g_hGraphics, $g_hBmp_Buffer, $g_hGfx_Buffer, $g_hImage
 Global $g_iMouseX, $g_iMouseY

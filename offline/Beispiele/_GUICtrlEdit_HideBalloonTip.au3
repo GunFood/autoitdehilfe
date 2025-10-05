@@ -1,5 +1,6 @@
 #include <GUIConstantsEx.au3>
 #include <GuiEdit.au3>
+#include <ToolTipConstants.au3>
 
 Example()
 

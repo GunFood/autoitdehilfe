@@ -1,16 +1,17 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiImageList.au3>
 #include <GuiTab.au3>
-#include <WindowsConstants.au3>
-
-Global $g_idMemo
 
 Example()
 
 Func Example()
 	; Erstellt eine GUI
-	GUICreate("Tab-Control: Setzt und ermittelt das Item (v" & @AutoItVersion & ")", 500, 300)
-	Local $idTab = GUICtrlCreateTab(2, 2, 396, 296)
+	Local $hGUI = GUICreate("Tab-Control: Setzt und ermittelt das Item (v" & @AutoItVersion & ")", 500, 300, 100, 100)
+	Local $idTab = GUICtrlCreateTab(2, 2, 446, 266)
+	_MemoCreate(4, 28, 442, 236)
+
 	GUISetState(@SW_SHOW)
 
 	; Erstellt die Bilder
@@ -24,15 +25,13 @@ Func Example()
 	_GUICtrlTab_SetImageList($idTab, $hImage)
 
 	; Fügt Tabs hinzu
-	Local $idTab0 = GUICtrlCreateTabItem("Tab 0")
-	$g_idMemo = GUICtrlCreateEdit("", 4, 28, 390, 265)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	Local $idTBi_Tab0 = GUICtrlCreateTabItem("Tab 0")
 	GUICtrlCreateTabItem("")
 	GUICtrlCreateTabItem("Tab 1")
 	GUICtrlCreateTabItem("")
 	GUICtrlCreateTabItem("Tab 2")
 	GUICtrlCreateTabItem("")
-	GUICtrlSetState($idTab0, $GUI_SHOW)
+	GUICtrlSetState($idTBi_Tab0, $GUI_SHOW)
 
 	; Ermittelt/Setzt Tab 0
 	_GUICtrlTab_SetItem($idTab, 0, "Neuer Text", BitOR($TCIS_BUTTONPRESSED, $TCIS_BUTTONPRESSED), 2)
@@ -42,22 +41,15 @@ Func Example()
 	GUISetState(@SW_LOCK)
 	Local $aItem
 	For $x = 0 To 2
+		_MemoWrite(@CRLF & "=====================")
+		_MemoWrite("Tab Item " & $x)
+		_MemoWrite("=====================")
 		$aItem = _GUICtrlTab_GetItem($idTab, $x)
-		MemoWrite("Tab-Item " & $x & @CRLF & "---------------------")
 		For $y = 0 To 3
-			MemoWrite("$aItem[" & $y & "]: " & $aItem[$y])
+			_MemoWrite("$aItem[" & $y & "]: " & $aItem[$y])
 		Next
-		MemoWrite(@CRLF & "---------------------")
 	Next
 	GUISetState(@SW_UNLOCK)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
-	Do
-	Until GUIGetMsg() = $GUI_EVENT_CLOSE
-	GUIDelete()
+	_MemoMsgBoxStatus("", -1, $hGUI) ; Keine weiteren Aktionen, es wird gewartet bis die GUI geschlossen wird.
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

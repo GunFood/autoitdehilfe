@@ -1,22 +1,20 @@
 ; == Beispiel 1 Verwendung des Iconhandles
 
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiStatusBar.au3>
 #include <WinAPIIcons.au3>
-#include <WindowsConstants.au3>
-
-Global $g_idMemo
 
 Example1()
 
 Func Example1()
 	; Erstellt eine GUI
-	Local $hGUI = GUICreate("StatusBar: Setzt und ermittelt das Icon (v" & @AutoItVersion & ")", 500, 300)
+	Local $hGUI = GUICreate("StatusBar: Setzt und ermittelt das Icon (v" & @AutoItVersion & ")", 500, 300, 100, 100)
 	Local $hStatus = _GUICtrlStatusBar_Create($hGUI)
 
 	; Erstellt ein Memo Control
-	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 396, 274, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 8, 444, 259)
 	GUISetState(@SW_SHOW)
 
 	; Abschnitte setzen
@@ -33,9 +31,11 @@ Func Example1()
 	_GUICtrlStatusBar_SetIcon($hStatus, 1, $ahIcons[1])
 
 	; Zeigt die Handles der Icons
-	MemoWrite("Handle vom Icon von Abschnitt 0 .: 0x" & Hex(_GUICtrlStatusBar_GetIcon($hStatus, 0)))
-	MemoWrite("IsPtr = " & IsPtr(_GUICtrlStatusBar_GetIcon($hStatus, 0)) & " IsHWnd = " & IsHWnd(_GUICtrlStatusBar_GetIcon($hStatus, 0)))
-	MemoWrite("Handle vom Icon von Abschnitt 1 .: 0x" & Hex(_GUICtrlStatusBar_GetIcon($hStatus, 1)))
+	_MemoWrite("Handle vom Icon von Abschnitt 0 .: 0x" & Hex(_GUICtrlStatusBar_GetIcon($hStatus, 0)))
+	_MemoWrite("IsPtr = " & IsPtr(_GUICtrlStatusBar_GetIcon($hStatus, 0)) & " IsHWnd = " & IsHWnd(_GUICtrlStatusBar_GetIcon($hStatus, 0)))
+	_MemoWrite("Handle vom Icon von Abschnitt 1 .: 0x" & Hex(_GUICtrlStatusBar_GetIcon($hStatus, 1)))
+
+	_MemoMsgBoxStatus("", -1, $hGUI) ; Keine weiteren Aktionen, es wird gewartet bis die GUI geschlossen wird.
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
@@ -44,10 +44,6 @@ Func Example1()
 	; Löscht ein Icon und gibt den durch das Icon belegten Speicher wieder frei
 	_WinAPI_DestroyIcon($ahIcons[0])
 	_WinAPI_DestroyIcon($ahIcons[1])
+
 	GUIDelete()
 EndFunc   ;==>Example1
-
-; Schreibt eine Nachricht in das Memo
-Func MemoWrite($sMessage = "")
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

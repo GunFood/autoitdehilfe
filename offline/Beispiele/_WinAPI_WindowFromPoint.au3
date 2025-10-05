@@ -1,3 +1,4 @@
+#include <StructureConstants.au3>
 #include <WinAPISysWin.au3>
 
 HotKeySet("{ESC}", "Close") ; Setzt ESC als Hotkey um das Skript zu beenden

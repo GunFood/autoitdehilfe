@@ -1,3 +1,4 @@
+#include <AutoItConstants.au3>
 #include <GDIPlus.au3>
 #include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>

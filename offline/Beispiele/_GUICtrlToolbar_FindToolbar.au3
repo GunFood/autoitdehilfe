@@ -1,7 +1,5 @@
-#include <GUIConstantsEx.au3>
 #include <GuiToolbar.au3>
 #include <MsgBoxConstants.au3>
-
 
 Example()
 

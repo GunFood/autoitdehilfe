@@ -1,16 +1,13 @@
-#include <APIResConstants.au3>
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
-#include <MsgBoxConstants.au3>
 #include <StaticConstants.au3>
 #include <WinAPIIcons.au3>
 #include <WinAPIRes.au3>
 
 ; Load Resources.dll to memory
-Local $hInstance = _WinAPI_LoadLibraryEx(@ScriptDir & '\Extras\Resources.dll', $LOAD_LIBRARY_AS_DATAFILE)
-If Not $hInstance Then
-	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Error', @ScriptDir & '\Extras\Resources.dll not found.')
-	Exit
-EndIf
+Local $sDll = _Extras_PathFull('Resources.dll')
+Local $hInstance = _WinAPI_LoadLibraryEx($sDll, $LOAD_LIBRARY_AS_DATAFILE)
 
 ; Load RT_GROUP_ICON resource from Resources.dll library
 Local $hResource = _WinAPI_FindResource($hInstance, $RT_GROUP_ICON, 1)

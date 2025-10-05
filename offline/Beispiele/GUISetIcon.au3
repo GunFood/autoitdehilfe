@@ -14,7 +14,7 @@ Func Example()
 
 	GUISetIcon($sFile) ; ändert das Icon
 
-	GUISetState(@SW_SHOW); zeigt eine leere Infobox an
+	GUISetState(@SW_SHOW) ; zeigt eine leere Infobox an
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	While 1

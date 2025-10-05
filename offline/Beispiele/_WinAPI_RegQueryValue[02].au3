@@ -1,8 +1,5 @@
 ; == Example 2 Running in X64 Mode (should be run under Full SciTE4AutoIt)
 
-#AutoIt3Wrapper_UseX64=Y
-
-#include <APIRegConstants.au3>
 #include <Debug.au3>
 #include <WinAPIError.au3>
 #include <WinAPIReg.au3>

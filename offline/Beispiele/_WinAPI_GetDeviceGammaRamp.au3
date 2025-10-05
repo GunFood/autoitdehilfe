@@ -1,4 +1,3 @@
-#include <APIGdiConstants.au3>
 #include <Array.au3>
 #include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>

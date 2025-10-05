@@ -1,6 +1,7 @@
 ; == GUICtrlCreateLabel() überlappende Steuerelemente
 
-#include <GUIConstants.au3>
+#include <GUIConstantsEx.au3>
+#include <WindowsStylesConstants.au3>
 
 Local $hGUI = GUICreate("Beispiel", 300, 200)
 
@@ -10,16 +11,16 @@ Local $idLabel = GUICtrlCreateLabel(" Label, das den gesamten Client-Bereich üb
 ; Es ist daher besser Steuerelemente nicht zu überlappen
 ; Local $idLabel = GUICtrlCreateLabel(" Label, das keine anderen Steuerelemente überlappt", 0, 0, 290, 170)
 
-Local $idClose = GUICtrlCreateButton("Schließen", 210, 170, 85, 25)
+Local $idBtn_Close = GUICtrlCreateButton("Schließen", 210, 170, 85, 25)
 GUICtrlSetState(-1, $GUI_ONTOP)
 
 GUISetState()
 
 While True
-  Switch GUIGetMsg()
-    Case $GUI_EVENT_CLOSE, $idClose
-      ExitLoop
-    Case $idLabel
-      ConsoleWrite("Label" & @CRLF)
-  EndSwitch
+	Switch GUIGetMsg()
+		Case $GUI_EVENT_CLOSE, $idBtn_Close
+			ExitLoop
+		Case $idLabel
+			ConsoleWrite("Label" & @CRLF)
+	EndSwitch
 WEnd

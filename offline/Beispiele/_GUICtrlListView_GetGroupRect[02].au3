@@ -1,5 +1,5 @@
-#include "WinAPISysWin.au3"
 #include <GuiListView.au3>
+#include <MsgBoxConstants.au3>
 #include <WinAPISysWin.au3>
 
 Example() ; Ein ListView-Steuerelement, das mit einem externen ListView erstellt wurde

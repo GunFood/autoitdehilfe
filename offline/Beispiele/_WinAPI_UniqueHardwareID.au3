@@ -1,4 +1,3 @@
-#include <APIDiagConstants.au3>
 #include <WinAPIDiag.au3>
 
 ConsoleWrite('Hardware1: ' & _WinAPI_UniqueHardwareID() & @CRLF)

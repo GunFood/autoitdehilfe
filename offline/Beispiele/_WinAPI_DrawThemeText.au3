@@ -8,7 +8,7 @@
 #include <WinAPIMisc.au3>
 #include <WinAPISysWin.au3>
 #include <WinAPITheme.au3>
-#include <WindowsConstants.au3>
+#include <WindowsSysColorConstants.au3>
 
 _Example()
 

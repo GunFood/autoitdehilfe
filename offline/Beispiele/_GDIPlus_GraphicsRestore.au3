@@ -20,8 +20,8 @@ Func Example()
 		_GDIPlus_PathAddEllipse($hPath, Random(0, $iW), Random(0, $iH), $fSize, $fSize)
 	Next
 
-	_GDIPlus_GraphicsSetClipPath($hGraphic, $hPath);set clipping region
-	$iGfx_Save = _GDIPlus_GraphicsSave($hGraphic);save clipping region
+	_GDIPlus_GraphicsSetClipPath($hGraphic, $hPath) ;set clipping region
+	$iGfx_Save = _GDIPlus_GraphicsSave($hGraphic) ;save clipping region
 
 	_GDIPlus_PathReset($hPath)
 	$hFormat = _GDIPlus_StringFormatCreate()
@@ -31,12 +31,12 @@ Func Example()
 	$tLayout = _GDIPlus_RectFCreate(0, 0, $iW, $iH)
 	_GDIPlus_PathAddString($hPath, "AutoIt", $tLayout, $hFamily, 1, 200, $hFormat)
 
-	_GDIPlus_GraphicsSetClipPath($hGraphic, $hPath, 3);update clipping region
+	_GDIPlus_GraphicsSetClipPath($hGraphic, $hPath, 3) ;update clipping region
 
 	$hBrush = _GDIPlus_BrushCreateSolid(0xFF7F00FF)
 	_GDIPlus_GraphicsFillPath($hGraphic, $hPath, $hBrush)
 
-	_GDIPlus_GraphicsRestore($hGraphic, $iGfx_Save);restore clipping region
+	_GDIPlus_GraphicsRestore($hGraphic, $iGfx_Save) ;restore clipping region
 
 	$hPen = _GDIPlus_PenCreate(0xFFFF007F)
 	_GDIPlus_GraphicsDrawPath($hGraphic, $hPath, $hPen)

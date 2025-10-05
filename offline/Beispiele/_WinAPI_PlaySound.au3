@@ -1,3 +1,5 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>
 #include <WinAPIMisc.au3>
@@ -5,7 +7,7 @@
 _Example()
 
 Func _Example()
-	Local Const $sWav = @ScriptDir & '\Extras\Airplane.wav'
+	Local Const $sWav = _Extras_PathFull('Airplane.wav')
 
 	; Read Airplane.wav to memory
 	Local $dWav = FileRead($sWav)

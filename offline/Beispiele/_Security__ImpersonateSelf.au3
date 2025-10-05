@@ -1,5 +1,4 @@
 #include <Security.au3>
-#include <SecurityConstants.au3>
 #include <WinAPIError.au3>
 #include <WinAPIHObj.au3>
 
@@ -10,7 +9,7 @@ Else
 	ConsoleWrite("_Security__OpenThreadToken Error: " & _WinAPI_GetLastErrorMessage() & @CRLF)
 	ConsoleWrite("Neuer Versuch..." & @CRLF)
 
-	; Mehr dazu bei den Anmerkungen zu _Security__OpenThreadToken.
+	; Mehr dazu bei den Bemerkungen zu _Security__OpenThreadToken.
 	_Security__ImpersonateSelf()
 	$hToken = _Security__OpenThreadToken($TOKEN_ADJUST_PRIVILEGES)
 	If $hToken Then

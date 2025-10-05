@@ -1,3 +1,5 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GDIPlus.au3>
 #include <GUIConstantsEx.au3>
 #include <StaticConstants.au3>
@@ -5,7 +7,7 @@
 #include <WinAPIIcons.au3>
 #include <WinAPIShPath.au3>
 
-Local Const $sPng = @ScriptDir & '\Extras\Silverlight.png'
+Local Const $sPng = _Extras_PathFull('Silverlight.png')
 
 Local $a_hBitmap[2]
 ; Create 32 bits-per-pixel bitmap from a PNG image

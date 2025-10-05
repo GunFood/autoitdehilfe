@@ -1,9 +1,13 @@
-#include <Extras\WM_NOTIFY.au3>
+#include "Extras\HelpFileInternals.au3"
+#include "Extras\WM_NOTIFY.au3"
+
 #include <GuiButton.au3>
 #include <GUIConstantsEx.au3>
-#include <WindowsConstants.au3>
+#include <StructureConstants.au3>
+#include <WindowsNotifsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
-Global $g_hBtn, $g_hRdo, $g_hChk, $g_idMemo
+Global $g_hBtn, $g_hRdo, $g_hChk
 
 ; Es ist zu beachten, dass das Handle dieser Buttons NICHT mit GUICtrlRead gelesen werden kann
 
@@ -11,8 +15,7 @@ Example()
 
 Func Example()
 	Local $hGUI = GUICreate("Button-Erstellung (v" & @AutoItVersion & ")", 400, 400)
-	$g_idMemo = GUICtrlCreateEdit("", 119, 10, 276, 374, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(119, 10, 276, 374, $WS_VSCROLL)
 
 	$g_hBtn = _GUICtrlButton_Create($hGUI, "Button1", 10, 10, 90, 50)
 
@@ -21,13 +24,13 @@ Func Example()
 	$g_hChk = _GUICtrlButton_Create($hGUI, "Check1", 10, 120, 90, 50, $BS_AUTO3STATE)
 
 	GUIRegisterMsg($WM_COMMAND, "WM_COMMAND")
-	_WM_NOTIFY_Register($g_idMemo)
+	_WM_NOTIFY_Register($_g_idLst_Memo)
 
 	GUISetState(@SW_SHOW)
 
-	MemoWrite("$g_hBtn Handle: " & $g_hBtn)
-	MemoWrite("$g_hRdo Handle: " & $g_hRdo)
-	MemoWrite("$g_hChk Handle: " & $g_hChk & @CRLF)
+	_MemoWrite("$g_hBtn Handle: " & $g_hBtn)
+	_MemoWrite("$g_hRdo Handle: " & $g_hRdo)
+	_MemoWrite("$g_hChk Handle: " & $g_hChk & @CRLF)
 
 	While 1
 		Switch GUIGetMsg()
@@ -38,12 +41,6 @@ Func Example()
 
 	Exit
 EndFunc   ;==>Example
-
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite
 
 Func WM_NOTIFY($hWnd, $iMsg, $wParam, $lParam)
 	#forceref $hWnd, $iMsg, $wParam

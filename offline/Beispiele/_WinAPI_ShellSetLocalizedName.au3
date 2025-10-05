@@ -1,3 +1,6 @@
+#include "Extras\HelpFileInternals.au3"
+
+#include <AutoItConstants.au3>
 #include <MsgBoxConstants.au3>
 #include <WinAPIShellEx.au3>
 #include <WinAPIShPath.au3>
@@ -8,7 +11,7 @@ If Number(_WinAPI_GetVersion()) < 6.0 Then
 	Exit
 EndIf
 
-Local Const $sDll = @ScriptDir & '\Extras\Resources.dll'
+Local Const $sDll = _Extras_PathFull('Resources.dll')
 Local Const $sDir = @TempDir & '\Temporary Folder'
 
 If Not FileExists($sDll) Then

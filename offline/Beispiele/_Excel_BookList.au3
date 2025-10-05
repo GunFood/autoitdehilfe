@@ -1,9 +1,11 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <Array.au3>
 #include <Excel.au3>
 #include <MsgBoxConstants.au3>
 
 ; Erstellt zwei Instanzen von Excel und öffnet in jeder Instanz eine Arbeitsmappe
-Local $sWorkbook1 = @ScriptDir & "\Extras\_Excel1.xls", $sWorkbook2 = @ScriptDir & "\Extras\_Excel2.xls"
+Local $sWorkbook1 = _Extras_PathFull("_Excel1.xls"), $sWorkbook2 = _Extras_PathFull("_Excel2.xls")
 Local $oExcel1 = _Excel_Open()
 If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_BookList Beispiel 1", "Fehler beim Erstellen des Excel-Anwendungsobjekts." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
 Local $oWorkbook1 = _Excel_BookOpen($oExcel1, $sWorkbook1)

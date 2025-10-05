@@ -1,8 +1,8 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiButton.au3>
 #include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>
-
-Global $g_idMemo
 
 Example()
 
@@ -10,8 +10,7 @@ Func Example()
 	Local $y = 70, $a_idBtn[6], $iRand
 
 	GUICreate("Buttons", 510, 400)
-	$g_idMemo = GUICtrlCreateEdit("", 119, 10, 276, 374, 0)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(119, 10, 276, 374, 0)
 	GUISetState(@SW_SHOW)
 
 	$a_idBtn[0] = GUICtrlCreateButton("Button 1", 10, 10, 90, 50)
@@ -26,7 +25,7 @@ Func Example()
 	_GUICtrlButton_SetText($a_idBtn[$iRand], "Neuer Text " & $iRand + 1)
 
 	For $x = 0 To 5
-		MemoWrite("$a_idBtn[" & $x & "] Text: " & _GUICtrlButton_GetText($a_idBtn[$x]))
+		_MemoWrite("$a_idBtn[" & $x & "] Text: " & _GUICtrlButton_GetText($a_idBtn[$x]))
 	Next
 
 	While 1
@@ -38,8 +37,3 @@ Func Example()
 
 	Exit
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

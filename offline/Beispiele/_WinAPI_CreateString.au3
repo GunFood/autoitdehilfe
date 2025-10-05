@@ -3,6 +3,7 @@
 #include <WinAPIMem.au3>
 #include <WinAPIMisc.au3>
 #include <WinAPISysWin.au3>
+#include <WindowsNotifsConstants.au3>
 
 Global Const $WM_MYMESSAGE = _WinAPI_RegisterWindowMessage('MyMessage')
 

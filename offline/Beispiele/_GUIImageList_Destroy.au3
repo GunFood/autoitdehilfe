@@ -3,7 +3,6 @@
 #include <GuiListView.au3>
 #include <MsgBoxConstants.au3>
 #include <WinAPIGdi.au3>
-#include <WindowsConstants.au3>
 
 Example()
 

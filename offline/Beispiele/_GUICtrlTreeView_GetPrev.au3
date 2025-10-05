@@ -1,7 +1,7 @@
 #include <GUIConstantsEx.au3>
 #include <GuiTreeView.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -16,27 +16,27 @@ Func Example()
 ;~     _GUICtrlListView_SetUnicodeFormat($idListview, False)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
-	Local $aidItem[10], $iYItem = 0
+	Local $aidTVi_Item[10], $iYItem = 0
 	For $x = 0 To 3
-		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
+		$aidTVi_Item[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
 		For $y = 1 To Random(2, 10, 1)
-			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Child", $iYItem), $aidItem[$x])
+			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Child", $iYItem), $aidTVi_Item[$x])
 			$iYItem += 1
 		Next
 	Next
-	$aidItem[4] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", 4), $idTreeView)
+	$aidTVi_Item[4] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", 4), $idTreeView)
 	For $x = 5 To 9
-		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
+		$aidTVi_Item[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
 		For $y = 1 To Random(2, 10, 1)
-			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Child", $iYItem), $aidItem[$x])
+			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Child", $iYItem), $aidTVi_Item[$x])
 			$iYItem += 1
 		Next
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)
 
 	Local $iRand = Random(0, 9, 1)
-	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Vorgänger von Index %d: %s", $iRand, _GUICtrlTreeView_GetPrev($idTreeView, $aidItem[$iRand])))
-	_GUICtrlTreeView_SelectItem($idTreeView, _GUICtrlTreeView_GetPrev($idTreeView, $aidItem[$iRand]))
+	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Vorgänger von Index %d: %s", $iRand, _GUICtrlTreeView_GetPrev($idTreeView, $aidTVi_Item[$iRand])))
+	_GUICtrlTreeView_SelectItem($idTreeView, _GUICtrlTreeView_GetPrev($idTreeView, $aidTVi_Item[$iRand]))
 
 	; Die Schleife wiederholt sich, bis der Benutzer eine Beenden-Aktion auslöst
 	Do

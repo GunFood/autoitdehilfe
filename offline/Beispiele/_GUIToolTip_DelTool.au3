@@ -1,34 +1,43 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GUIToolTip.au3>
 
 Example()
 
 Func Example()
-	Local $iMsg
-	Local $hGUI = GUICreate(StringTrimRight(@ScriptName, StringLen(".exe")), 350, 200)
+	Local $hGUI = GUICreate("ToolTip Del Tool v(" & @AutoItVersion & ")", 450, 300, 100, 100)
 
-	Local $idButton = GUICtrlCreateButton("This is a button", 30, 32, 130, 28)
-	Local $hButton = GUICtrlGetHandle($idButton)
 	; create a tooltip control using default settings
-	Local $hToolTip = _GUIToolTip_Create(0)
-	_GUIToolTip_SetMaxTipWidth($hToolTip, 400)
+	Local $hTooltip = _GUIToolTip_Create(0)
+	_MemoSetHandleInProcess($hTooltip)
+
+	Local $idButton = GUICtrlCreateButton("Click to Delete Tool", 30, 32, 130, 28)
+	Local $hButton = GUICtrlGetHandle($idButton)
+
+	_GUIToolTip_SetMaxTipWidth($hTooltip, 400)
+
+;~ 	$hGUI = 0 ; is OK
 	; add a tool to the tooltip control
-	_GUIToolTip_AddTool($hToolTip, 0, "Click this to delete the tooltip" & @CRLF & "for this button", $hButton)
-	_GUIToolTip_AddTool($hToolTip, 0, "ToolTip text for the GUI", $hGUI)
+	_GUIToolTip_AddTool($hTooltip, $hGUI, "Click this to delete the tooltip" & @CRLF & "for this button", $hButton)
+	_GUIToolTip_AddTool($hTooltip, $hGUI, "ToolTip text for the GUI", $hGUI)
+
 	GUISetState(@SW_SHOW)
 
 	While 1
-		$iMsg = GUIGetMsg()
-		Switch $iMsg
+		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE
 				ExitLoop
 			Case $idButton
-				; Deletes the tooltip assigned to the button, but not the tooltip control
-				; or the tool for the GUI
-				_GUIToolTip_DelTool($hToolTip, 0, $hButton)
+				; Deletes the tooltip assigned to the button,
+				; but not the tooltip control for the GUI
+				_GUIToolTip_DelTool($hTooltip, $hGUI, $hButton)
+				_MemoMsgBox($MB_SYSTEMMODAL, "Tool count", "Number of tools:" & @TAB & _GUIToolTip_GetToolCount($hToolTip))
 		EndSwitch
 	WEnd
+
 	; Destroy the tooltip control
-	_GUIToolTip_Destroy($hToolTip)
+	_MemoResetHandleInProcess($hTooltip)
+	_GUIToolTip_Destroy($hTooltip)
 	GUIDelete($hGUI)
 EndFunc   ;==>Example

@@ -1,8 +1,7 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiMenu.au3>
-
-
-Global $g_idMemo
 
 Example()
 
@@ -41,21 +40,15 @@ Func Example()
 	_GUICtrlMenu_SetMenu($hGui, $hMain)
 
 	; Erstellt ein Memo Control
-	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 396, 276, 0)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 2, 396, 276, 0)
 	GUISetState(@SW_SHOW)
 
 	; Ermittelt/Setzt den Menüpunkt 'Hilfe'
-	MemoWrite("Handle des Menüpunkts 'Hilfe': " & _GUICtrlMenu_GetItemSubMenu($hMain, 2))
+	_MemoWrite("Handle des Menüpunkts 'Hilfe': " & _GUICtrlMenu_GetItemSubMenu($hMain, 2))
 	_GUICtrlMenu_SetItemSubMenu($hMain, 2, $hHelp)
-	MemoWrite("Handle des Menüpunkts 'Hilfe': " & _GUICtrlMenu_GetItemSubMenu($hMain, 2))
+	_MemoWrite("Handle des Menüpunkts 'Hilfe': " & _GUICtrlMenu_GetItemSubMenu($hMain, 2))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example
-
-; Schreibt eine Nachricht in das Memo
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

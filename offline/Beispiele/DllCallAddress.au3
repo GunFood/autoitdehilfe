@@ -1,7 +1,7 @@
 #include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>
 #include <WinAPISysWin.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
 
 Example()
 

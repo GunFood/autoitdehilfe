@@ -1,8 +1,8 @@
+#include "Extras\HelpFileInternals.au3"
+
+#include <DirConstants.au3>
 #include <GuiComboBox.au3>
 #include <GUIConstantsEx.au3>
-#include <MsgBoxConstants.au3>
-
-Global $g_idMemo
 
 Example()
 
@@ -12,8 +12,7 @@ Func Example()
 	; Erstellt eine GUI
 	GUICreate("ComboBox: Stellt die Liste im Array dar", 400, 296)
 	$idCombo = GUICtrlCreateCombo("", 2, 2, 396, 296)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 32, 396, 266, 0)
 	GUISetState(@SW_SHOW)
 
 	; Fügt Dateien hinzu
@@ -22,7 +21,7 @@ Func Example()
 	; Ermittelt die Liste
 	$aList = _GUICtrlComboBox_GetListArray($idCombo)
 	For $x = 1 To $aList[0]
-		MemoWrite($aList[$x])
+		_MemoWrite($aList[$x])
 	Next
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
@@ -30,8 +29,3 @@ Func Example()
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

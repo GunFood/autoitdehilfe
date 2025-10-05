@@ -1,4 +1,3 @@
-#include <APISysConstants.au3>
 #include <Array.au3>
 #include <WinAPISys.au3>
 

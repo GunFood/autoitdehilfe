@@ -4,7 +4,7 @@
 #include <WinAPIMisc.au3>
 #include <WinAPIProc.au3>
 #include <WinAPISys.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
 
 Local $hEventProc = DllCallbackRegister('_EventProc', 'none', 'ptr;dword;hwnd;long;long;dword;dword')
 Global $g_tRECT, $g_iIndex, $g_hMenu = 0

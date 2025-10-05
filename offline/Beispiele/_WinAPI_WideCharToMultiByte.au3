@@ -1,9 +1,10 @@
+#include <MsgBoxConstants.au3>
 #include <WinAPIConv.au3>
 
-;~ Global Const $CP = 0 ; CP_ACP Standard Codepage
+;~ Global Const $CP = 0 ; ACP Standard Codepage
 ;~ Global Const $CP = GetACP() ; aktuelle Codepage
 ;~ Global Const $CP = 65001 ; UTF-8 sicherlich der beste Wert
-Global Const $CP = 932 ; CP_SHIFT_JIS
+Global Const $CP = 932 ; SHIFT_JIS
 
 Local $sText = "データのダウンロードに失敗しました。"
 ;~ Local $sText = "abcdefg 1234567890"

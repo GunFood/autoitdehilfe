@@ -1,7 +1,7 @@
 #include <GUIConstantsEx.au3>
 #include <GuiTreeView.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -16,19 +16,19 @@ Func Example()
 ;~     _GUICtrlTreeView_SetUnicodeFormat($idTreeView, False)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
-	Local $idItem, $idChild
+	Local $idTVi_Item, $idTVi_Child
 	For $x = 0 To 10
-		$idItem = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
-		_GUICtrlTreeView_GetItemHandle($idTreeView, $idItem)
+		$idTVi_Item = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
+		_GUICtrlTreeView_GetItemHandle($idTreeView, $idTVi_Item)
 		For $y = 0 To 2
-			$idChild = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $y), $idItem)
+			$idTVi_Child = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $y), $idTVi_Item)
 		Next
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)
 
-	_GUICtrlTreeView_SelectItem($idTreeView, $idChild)
-	MsgBox($MB_SYSTEMMODAL, "Information", "Parent-Handle: " & _GUICtrlTreeView_GetParentHandle($idTreeView, $idChild))
-	_GUICtrlTreeView_SelectItem($idTreeView, _GUICtrlTreeView_GetParentHandle($idTreeView, $idChild))
+	_GUICtrlTreeView_SelectItem($idTreeView, $idTVi_Child)
+	MsgBox($MB_SYSTEMMODAL, "Information", "Parent-Handle: " & _GUICtrlTreeView_GetParentHandle($idTreeView, $idTVi_Child))
+	_GUICtrlTreeView_SelectItem($idTreeView, _GUICtrlTreeView_GetParentHandle($idTreeView, $idTVi_Child))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

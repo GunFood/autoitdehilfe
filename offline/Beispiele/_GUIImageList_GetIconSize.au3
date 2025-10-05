@@ -1,17 +1,16 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiImageList.au3>
 #include <GuiListView.au3>
 #include <MsgBoxConstants.au3>
-
-Global $g_idMemo
 
 Example()
 
 Func Example()
 	GUICreate("ImageList: Setzt und ermittelt die Icongröße (v" & @AutoItVersion & ")", 500, 300)
 	Local $idListview = GUICtrlCreateListView("", 2, 2, 394, 199, BitOR($LVS_SHOWSELALWAYS, $LVS_NOSORTHEADER, $LVS_REPORT))
-	$g_idMemo = GUICtrlCreateEdit("", 2, 200, 396, 266, 0)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 200, 396, 266, 0)
 	GUISetState(@SW_SHOW)
 
 	Local $hImage = _GUIImageList_Create(32, 32, 5, 3)
@@ -34,8 +33,8 @@ Func Example()
 
 	; Zeigt die Icongröße in der Imagelist
 	Local $aSize = _GUIImageList_GetIconSize($hImage)
-	MemoWrite("Bilderbreite: " & $aSize[0])
-	MemoWrite("Bilderhöhe  : " & $aSize[1])
+	_MemoWrite("Bilderbreite: " & $aSize[0])
+	_MemoWrite("Bilderhöhe  : " & $aSize[1])
 
 	MsgBox($MB_SYSTEMMODAL, "Information", "Es wird die Icongröße geändert")
 
@@ -46,16 +45,11 @@ Func Example()
 	_GUICtrlListView_SetImageList($idListview, $hImage, 1)
 
 	$aSize = _GUIImageList_GetIconSize($hImage)
-	MemoWrite("Bilderbreite: " & $aSize[0])
-	MemoWrite("Bilderhöhe  : " & $aSize[1])
+	_MemoWrite("Bilderbreite: " & $aSize[0])
+	_MemoWrite("Bilderhöhe  : " & $aSize[1])
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

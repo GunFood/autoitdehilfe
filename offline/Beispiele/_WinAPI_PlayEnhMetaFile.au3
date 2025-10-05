@@ -1,3 +1,5 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <SendMessage.au3>
 #include <StaticConstants.au3>
@@ -6,13 +8,14 @@
 #include <WinAPIHObj.au3>
 #include <WinAPIMisc.au3>
 #include <WinAPISysWin.au3>
-#include <WindowsConstants.au3>
+#include <WindowsSysColorConstants.au3>
 
 _Example()
 
 Func _Example()
 	; Load enhanced metafile (.emf) and retrieve it's dimension (x6)
-	Local $hEmf = _WinAPI_GetEnhMetaFile(@ScriptDir & '\Extras\Flag.emf')
+	Local $sEmf = _Extras_PathFull('Flag.emf')
+	Local $hEmf = _WinAPI_GetEnhMetaFile($sEmf)
 	Local $tSIZE = _WinAPI_GetEnhMetaFileDimension($hEmf)
 	Local $iWidth = 6 * DllStructGetData($tSIZE, 'X')
 	Local $iHeight = 6 * DllStructGetData($tSIZE, 'Y')

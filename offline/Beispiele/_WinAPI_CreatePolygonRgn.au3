@@ -1,6 +1,6 @@
-#include <GUIConstantsEx.au3>
 #include <WinAPIGdi.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 ; Create GUI
 Local $hForm = GUICreate('Test ' & StringReplace(@ScriptName, '.au3', '()'), 500, 475, -1, -1, $WS_POPUP, $WS_EX_TOPMOST)

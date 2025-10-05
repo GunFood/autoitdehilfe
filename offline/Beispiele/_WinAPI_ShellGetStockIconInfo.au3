@@ -1,4 +1,3 @@
-#include <APIShellExConstants.au3>
 #include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>
 #include <SendMessage.au3>
@@ -6,8 +5,6 @@
 #include <WinAPIIcons.au3>
 #include <WinAPIShellEx.au3>
 #include <WinAPISys.au3>
-
-Global Const $STM_SETIMAGE = 0x0172
 
 If Number(_WinAPI_GetVersion()) < 6.0 Then
 	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Fehler', 'Benötigt Windows Vista oder neuer.')
@@ -19,8 +16,8 @@ GUICtrlCreateIcon('', 0, 36, 36, 128, 128)
 Local $Icon = GUICtrlGetHandle(-1)
 GUICtrlSetState(-1, $GUI_DISABLE)
 Local $Label = GUICtrlCreateLabel('', 70, 174, 60, 14, $SS_CENTER)
-Local $Prev = GUICtrlCreateButton('<', 32, 200, 60, 24)
-Local $Next = GUICtrlCreateButton('>', 108, 200, 60, 24)
+Local $idBtn_Prev = GUICtrlCreateButton('<', 32, 200, 60, 24)
+Local $idBtn_Next = GUICtrlCreateButton('>', 108, 200, 60, 24)
 GUISetState(@SW_SHOW)
 
 Local $tSHSTOCKICONINFO, $hIcon, $hOld, $Count = 0, $Update = True
@@ -38,13 +35,13 @@ While 1
 	Switch GUIGetMsg()
 		Case $GUI_EVENT_CLOSE
 			ExitLoop
-		Case $Prev
+		Case $idBtn_Prev
 			$Count -= 1
 			If $Count < 0 Then
 				$Count = $SIID_MAX_ICONS - 1
 			EndIf
 			$Update = 1
-		Case $Next
+		Case $idBtn_Next
 			$Count += 1
 			If $Count > $SIID_MAX_ICONS - 1 Then
 				$Count = 0

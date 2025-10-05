@@ -1,4 +1,5 @@
-#include <APIGdiConstants.au3>
+#include "Extras\HelpFileInternals.au3"
+
 #include <FontConstants.au3>
 #include <SendMessage.au3>
 #include <StaticConstants.au3>
@@ -7,9 +8,8 @@
 #include <WinAPIHObj.au3>
 #include <WinAPIMisc.au3>
 #include <WinAPIRes.au3>
-#include <WinAPISys.au3>
 #include <WinAPISysWin.au3>
-#include <WindowsConstants.au3>
+#include <WindowsSysColorConstants.au3>
 
 ; GUI erstellen
 Local $hForm = GUICreate('Test ' & StringReplace(@ScriptName, '.au3', '()'), 400, 400)
@@ -67,7 +67,8 @@ _WinAPI_SelectObject($hDC, $hObj)
 _WinAPI_SelectObject($hDC, $hObj)
 _WinAPI_DeleteObject($hBrush)
 _WinAPI_SetDCPenColor($hDC, 0xFFFFFF)
-Local $hPattern = _WinAPI_LoadImage(0, @ScriptDir & '\Extras\Pattern.bmp', $IMAGE_BITMAP, 0, 0, $LR_LOADFROMFILE)
+Local $sBmp = _Extras_PathFull('Pattern.bmp')
+Local $hPattern = _WinAPI_LoadImage(0, $sBmp, $IMAGE_BITMAP, 0, 0, $LR_LOADFROMFILE)
 ; $hPattern = _WinAPI_LoadBitmap(_WinAPI_GetModuleHandle(@SystemDir & '\shell32.dll'), 138)
 $hBrush = _WinAPI_CreateBrushIndirect($BS_PATTERN, 0, $hPattern)
 $hObj = _WinAPI_SelectObject($hDC, $hBrush)

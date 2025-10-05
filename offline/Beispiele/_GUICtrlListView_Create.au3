@@ -1,8 +1,10 @@
-#include <Extras\WM_NOTIFY.au3>
+#include "Extras\WM_NOTIFY.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiImageList.au3>
 #include <GuiListView.au3>
-#include <WindowsConstants.au3>
+#include <StructureConstants.au3>
+#include <WindowsNotifsConstants.au3>
 
 Global $g_hListView
 
@@ -100,7 +102,7 @@ Func WM_NOTIFY($hWnd, $iMsg, $wParam, $lParam)
 ;~ 					_WM_NOTIFY_DebugEvent("$LVN_INSERTITEM", $tagNMLISTVIEW, $lParam, "IDFrom,,Item,SubItem,NewState,OldState,Changed,ActionX,ActionY,Param")
 ;~ 					; Kein Rückgabewert
 ;~ 				Case $LVN_ITEMACTIVATE ; Wird von einem ListView gesendet, wenn der Benutzer ein Item aktiviert
-;~ 					_WM_NOTIFY_DebugEvent("$LVN_ITEMACTIVATE", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,ActionX,ActionY,lParam,KeyFlags")
+;~ 					_WM_NOTIFY_DebugEvent("$LVN_ITEMACTIVATE", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,X,Y,lParam,KeyFlags")
 ;~ 					Return 0
 ;~ 				Case $LVN_ITEMCHANGED ; Ein Item hat sich geändert
 ;~ 					_WM_NOTIFY_DebugEvent("$LVN_ITEMCHANGED", $tagNMLISTVIEW, $lParam, "IDFrom,,Item,SubItem,NewState,OldState,Changed,ActionX,ActionY,Param")
@@ -120,10 +122,10 @@ Func WM_NOTIFY($hWnd, $iMsg, $wParam, $lParam)
 ;~					_WM_NOTIFY_DebugEvent("$LVN_SETDISPINFO", $tagNMLVDISPINFO, $lParam, "IDFrom,,Mask,Item,SubItem,State,StateMask,Image,Param,Indent,,GroupID,Columns,pColumns,,TextMax,*Text")
 ;~ 					; Kein Rückgabewert
 				Case $NM_CLICK ; Wird vom ListView gesendet, wenn der Benutzer ein Item mit der linken Maustaste anklickt
-					_WM_NOTIFY_DebugEvent("$NM_CLICK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,ActionX,ActionY,lParam,KeyFlags")
+					_WM_NOTIFY_DebugEvent("$NM_CLICK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,X,Y,lParam,KeyFlags")
 					; Kein Rückgabewert
 				Case $NM_DBLCLK ; Wird vom ListView gesendet, wenn der Benutzer ein Item mit der linken Maustaste doppelklickt
-					_WM_NOTIFY_DebugEvent("$NM_DBLCLK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,ActionX,ActionY,lParam,KeyFlags")
+					_WM_NOTIFY_DebugEvent("$NM_DBLCLK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,X,Y,lParam,KeyFlags")
 					; Kein Rückgabewert
 ;~ 				Case $NM_HOVER ; Wird vom ListView gesendet, wenn die Maus über einem Item schwebt
 ;~ 					_WM_NOTIFY_DebugEvent("$NM_HOVER", $tagNMHDR, $lParam, "hWndFrom,IDFrom")
@@ -139,7 +141,7 @@ Func WM_NOTIFY($hWnd, $iMsg, $wParam, $lParam)
 					Return 0 ; Erlaubt die weitere Standard-Nachrichtenbehandlung
 				Case $NM_RDBLCLK ; Wird vom ListView gesendet, wenn der Benutzer ein Item mit der rechten Maustaste doppelklickt
 					$tInfo = DllStructCreate($tagNMITEMACTIVATE, $lParam)
-					_WM_NOTIFY_DebugEvent("$NM_RDBLCLK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,ActionX,ActionY,lParam,KeyFlags")
+					_WM_NOTIFY_DebugEvent("$NM_RDBLCLK", $tagNMITEMACTIVATE, $lParam, "IDFrom,,Index,SubItem,NewState,OldState,Changed,X,Y,lParam,KeyFlags")
 					; Kein Rückgabewert
 				Case $NM_RETURN ; Das Control hat den Eingabefokus und der Benutzer hat die ENTER-Taste gedrückt
 					_WM_NOTIFY_DebugEvent("$NM_RETURN", $tagNMHDR, $lParam, "hWndFrom,IDFrom")

@@ -2,11 +2,11 @@
 #include <ButtonConstants.au3>
 #include <EditConstants.au3>
 #include <FileConstants.au3>
-#include <GuiConstantsEx.au3>
+#include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>
 #include <StaticConstants.au3>
 #include <StringConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 ; =======================================================================
 ; Originalidee von w0uter, modifiziert von steve8tch, jpm
@@ -24,7 +24,6 @@
 ;			eine solche Datei, deren erste Zeile ein Muster ist, z. B.: /pattern/
 ;	behoben: Gleiches Muster nur einmal hinzufügen/entfernen
 ; =======================================================================
-
 
 Global Const $g_sSep = Chr(11) ; --> 0x0B = VT - Neuer Seperator, da der Standard "|" oft in Pattern verwendet wird!
 Opt("GUIDataSeparatorChar", $g_sSep)
@@ -55,36 +54,36 @@ GUICtrlSetState($g_idRadio_1, $GUI_CHECKED)
 
 Local $idTab = GUICtrlCreateTab(10, 10, 530, 190)
 Global $idTabitem1 = GUICtrlCreateTabItem("C'n'P des zu prüfenden Textes - $str")
-Local $idInputEditBox = GUICtrlCreateEdit("", 20, 40, 510, 150, BitOR($ES_WANTRETURN, $WS_VSCROLL, $WS_HSCROLL, $ES_AUTOVSCROLL, $ES_AUTOHSCROLL))
+Local $idEdt_InputEditBox = GUICtrlCreateEdit("", 20, 40, 510, 150, BitOR($ES_WANTRETURN, $WS_VSCROLL, $WS_HSCROLL, $ES_AUTOVSCROLL, $ES_AUTOHSCROLL))
 GUICtrlSetState(-1, $GUI_DROPACCEPTED)
-GUICtrlSetBkColor($idInputEditBox, $SOFTYELLOW)
+GUICtrlSetBkColor($idEdt_InputEditBox, $SOFTYELLOW)
 Global $idTabitem2 = GUICtrlCreateTabItem("Text aus Datei laden")
-Local $idBrowse = GUICtrlCreateButton("Durchsuchen...", 20, 40, 100, 20)
-Global $g_idPathToInputFile = GUICtrlCreateEdit("", 130, 40, 400, 20, BitOR($ES_WANTRETURN, $WS_HSCROLL, $ES_AUTOHSCROLL))
+Local $idBtn_Browse = GUICtrlCreateButton("Durchsuchen...", 20, 40, 100, 20)
+Global $g_idEdt_PathToInputFile = GUICtrlCreateEdit("", 130, 40, 400, 20, BitOR($ES_WANTRETURN, $WS_HSCROLL, $ES_AUTOHSCROLL))
 GUICtrlSetState(-1, $GUI_DROPACCEPTED)
-Global $g_idInputFromFile = GUICtrlCreateEdit("", 20, 70, 510, 120, BitOR($ES_WANTRETURN, $WS_VSCROLL, $WS_HSCROLL, $ES_AUTOVSCROLL, $ES_AUTOHSCROLL))
+Global $g_idEdt_InputFromFile = GUICtrlCreateEdit("", 20, 70, 510, 120, BitOR($ES_WANTRETURN, $WS_VSCROLL, $WS_HSCROLL, $ES_AUTOVSCROLL, $ES_AUTOHSCROLL))
 GUICtrlSetState(-1, $GUI_DROPACCEPTED)
-GUICtrlSetBkColor($g_idInputFromFile, $SOFTYELLOW)
+GUICtrlSetBkColor($g_idEdt_InputFromFile, $SOFTYELLOW)
 GUICtrlCreateTabItem("") ;
-Global $g_idOut = GUICtrlCreateEdit("", 150, 296, 380, 262, BitOR($ES_WANTRETURN, $WS_VSCROLL, $WS_HSCROLL, $ES_AUTOVSCROLL, $ES_AUTOHSCROLL))
-GUICtrlSetBkColor($g_idOut, $SOFTYELLOW)
-Global $g_idPattern = GUICtrlCreateCombo("", 70, 230, 430, 30)
-GUICtrlSetFont($g_idPattern, 14, -1, -1, "Arial")
-GUICtrlSetColor($g_idPattern, $BLUE)
-GUICtrlSetBkColor($g_idPattern, $YELLOW)
+Global $g_idEdt_Out = GUICtrlCreateEdit("", 150, 296, 380, 262, BitOR($ES_WANTRETURN, $WS_VSCROLL, $WS_HSCROLL, $ES_AUTOVSCROLL, $ES_AUTOHSCROLL))
+GUICtrlSetBkColor($g_idEdt_Out, $SOFTYELLOW)
+Global $g_idCbo_Pattern = GUICtrlCreateCombo("", 70, 230, 430, 30)
+GUICtrlSetFont($g_idCbo_Pattern, 14, -1, -1, "Arial")
+GUICtrlSetColor($g_idCbo_Pattern, $BLUE)
+GUICtrlSetBkColor($g_idCbo_Pattern, $YELLOW)
 Global $g_sPatterns = readDatFile()
-GUICtrlSetData($g_idPattern, $g_sPatterns, "(.*)")
-Global $idDoPtnAdd = GUICtrlCreateButton("+", 504, 225, 30, 18)
-Global $idDoPtnDel = GUICtrlCreateButton("-", 504, 245, 30, 18)
-Global $idTest = GUICtrlCreateButton("Test", 20, 235, 40, 20, $BS_DEFPUSHBUTTON)
-Global $g_idOffset = GUICtrlCreateInput("1", 40, 430, 60, 20)
-Global $g_idErr = GUICtrlCreateInput("", 20, 490, 40, 20, $ES_READONLY)
-Global $g_idExt = GUICtrlCreateInput("", 70, 490, 50, 20, $ES_READONLY)
-Global $id_Help = GUICtrlCreateButton("StringRegExp HILFE", 10, 530, 120, 30)
+GUICtrlSetData($g_idCbo_Pattern, $g_sPatterns, "(.*)")
+Global $idBtn_DoPtnAdd = GUICtrlCreateButton("+", 504, 225, 30, 18)
+Global $idBtn_DoPtnDel = GUICtrlCreateButton("-", 504, 245, 30, 18)
+Global $idBtn_Test = GUICtrlCreateButton("Test", 20, 235, 40, 20, $BS_DEFPUSHBUTTON)
+Global $g_idInp_Offset = GUICtrlCreateInput("1", 40, 430, 60, 20)
+Global $g_idInp_Err = GUICtrlCreateInput("", 20, 490, 40, 20, $ES_READONLY)
+Global $g_idInp_Ext = GUICtrlCreateInput("", 70, 490, 50, 20, $ES_READONLY)
+Global $idBtn_Help = GUICtrlCreateButton("StringRegExp HILFE", 10, 530, 120, 30)
 ; Global $hGui_Exit = GUICtrlCreateButton("EXIT", 10, 530, 55, 30)
-Global $g_idTimerDisplay = GUICtrlCreateLabel("Zeit (ms)", 3, 573, 142, 20, $SS_SUNKEN)
-Global $g_idStatusBar = GUICtrlCreateLabel("Status..", 150, 573, 395, 20, $SS_SUNKEN)
-$g_idStringToTest = $idInputEditBox ; default - Lesen des Strings aus der Editbox
+Global $g_idLbl_TimerDisplay = GUICtrlCreateLabel("Zeit (ms)", 3, 573, 142, 20, $SS_SUNKEN)
+Global $g_idLbl_StatusBar = GUICtrlCreateLabel("Status..", 150, 573, 395, 20, $SS_SUNKEN)
+$g_idStringToTest = $idEdt_InputEditBox ; default - Lesen des Strings aus der Editbox
 
 Global $g_sTestFile = chkTestFile()
 If $g_sTestFile Then doBrowseForFile($g_sTestFile)
@@ -97,14 +96,14 @@ If Number(StringLeft(RegRead("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Internet Exp
 	GUICtrlSetTip($g_idRadio_2, "Gibt den vollen Treffer UND einen Array mit Treffern zurück (Perl/PHP Stil).", "Return Flag = 2", $TIP_INFOICON, $TIP_BALLOON)
 	GUICtrlSetTip($g_idRadio_3, "Gibt einen Array mit globalen Treffern zurück.", "Return Flag = 3", $TIP_INFOICON, $TIP_BALLOON)
 	GUICtrlSetTip($g_idRadio_4, "Gibt einen Array mit vollen UND globalen Treffern zurück. (Perl / PHP Stil).", "Return Flag = 4", $TIP_INFOICON, $TIP_BALLOON)
-	GUICtrlSetTip($g_idOffset, "[Optional] Die Anfangsposition (Default = 1).", "Startposition", $TIP_INFOICON, $TIP_BALLOON)
+	GUICtrlSetTip($g_idInp_Offset, "[Optional] Die Anfangsposition (Default = 1).", "Startposition", $TIP_INFOICON, $TIP_BALLOON)
 Else
 	GUICtrlSetTip($g_idRadio_0, "Gibt 1 = Treffer oder 0 = kein Treffer zurück.")
 	GUICtrlSetTip($g_idRadio_1, "Gibt einen Array der Treffer zurück.")
 	GUICtrlSetTip($g_idRadio_2, "Gibt den vollen Treffer UND einen Array mit Treffern zurück (Perl/PHP Stil).")
 	GUICtrlSetTip($g_idRadio_3, "Gibt einen Array mit globalen Treffern zurück.")
 	GUICtrlSetTip($g_idRadio_4, "Gibt einen Array mit vollen UND globalen Treffern zurück. (Perl / PHP Stil).")
-	GUICtrlSetTip($g_idOffset, "[Optional] Die Anfangsposition (Default = 1).", "Startposition")
+	GUICtrlSetTip($g_idInp_Offset, "[Optional] Die Anfangsposition (Default = 1).", "Startposition")
 EndIf
 
 GUISetState(@SW_SHOW)
@@ -113,25 +112,25 @@ While 1
 		Case $GUI_EVENT_CLOSE
 			Exit
 		Case $GUI_EVENT_DROPPED
-			If (@GUI_DropId = $g_idPathToInputFile) Or (@GUI_DropId = $g_idInputFromFile) Or (@GUI_DropId = $idInputEditBox) Then
+			If (@GUI_DropId = $g_idEdt_PathToInputFile) Or (@GUI_DropId = $g_idEdt_InputFromFile) Or (@GUI_DropId = $idEdt_InputEditBox) Then
 				doBrowseForFile(@GUI_DragFile)
 				FileCopy(@GUI_DragFile, @AppDataDir & "\StringRegExpGUITest.dat", 1)
 			EndIf
-		Case $idBrowse
+		Case $idBtn_Browse
 			doBrowseForFile("")
-		Case $idTest
+		Case $idBtn_Test
 			doStringRegExpTest()
 		Case $idTab
 			If GUICtrlRead($idTab) = 0 Then
-				$g_idStringToTest = $idInputEditBox
+				$g_idStringToTest = $idEdt_InputEditBox
 			Else
-				$g_idStringToTest = $g_idInputFromFile
+				$g_idStringToTest = $g_idEdt_InputFromFile
 			EndIf
-		Case $idDoPtnAdd
-			doPtnAdd(GUICtrlRead($g_idPattern))
-		Case $idDoPtnDel
-			doPtnDel(GUICtrlRead($g_idPattern))
-		Case $id_Help
+		Case $idBtn_DoPtnAdd
+			doPtnAdd(GUICtrlRead($g_idCbo_Pattern))
+		Case $idBtn_DoPtnDel
+			doPtnDel(GUICtrlRead($g_idCbo_Pattern))
+		Case $idBtn_Help
 			doDisplayHelp()
 		Case Else
 			;;
@@ -147,27 +146,27 @@ Func doStringRegExpTest()
 	Local $sResult = "" ; Ergebnis
 	Local $iStrLgth ; Stringlänge der Nummer der Ergebnisse.
 	Local $x, $y
-	GUICtrlSetData($g_idOut, "")
-	GUICtrlSetData($g_idStatusBar, "Bitte warten...")
-	GUICtrlSetBkColor($g_idStatusBar, $GREEN)
+	GUICtrlSetData($g_idEdt_Out, "")
+	GUICtrlSetData($g_idLbl_StatusBar, "Bitte warten...")
+	GUICtrlSetBkColor($g_idLbl_StatusBar, $GREEN)
 	$hTimer = TimerInit()
-	$aA = StringRegExp(GUICtrlRead($g_idStringToTest), GUICtrlRead($g_idPattern), getReturnFlag(), getOffset())
+	$aA = StringRegExp(GUICtrlRead($g_idStringToTest), GUICtrlRead($g_idCbo_Pattern), getReturnFlag(), getOffset())
 	$iErr = @error
 	$iExt = @extended
 	$t = TimerDiff($hTimer)
-	GUICtrlSetData($g_idTimerDisplay, $t & "  ms")
-	GUICtrlSetData($g_idErr, $iErr)
-	GUICtrlSetData($g_idExt, $iExt)
+	GUICtrlSetData($g_idLbl_TimerDisplay, $t & "  ms")
+	GUICtrlSetData($g_idInp_Err, $iErr)
+	GUICtrlSetData($g_idInp_Ext, $iExt)
 	Select
 		Case $iErr = 0
-			GUICtrlSetData($g_idStatusBar, "Gültiges Pattern. Aktualisieren...")
-			GUICtrlSetBkColor($g_idStatusBar, $GREEN)
+			GUICtrlSetData($g_idLbl_StatusBar, "Gültiges Pattern. Aktualisieren...")
+			GUICtrlSetBkColor($g_idLbl_StatusBar, $GREEN)
 		Case $iErr = 1
-			GUICtrlSetData($g_idStatusBar, "Array ist ungültig, keine Treffer!")
-			GUICtrlSetBkColor($g_idStatusBar, $RED)
+			GUICtrlSetData($g_idLbl_StatusBar, "Array ist ungültig, keine Treffer!")
+			GUICtrlSetBkColor($g_idLbl_StatusBar, $RED)
 		Case $iErr = 2
-			GUICtrlSetData($g_idStatusBar, "Schechtes Pattern! Array ungültig! Platznummer des Errors in @extended!")
-			GUICtrlSetBkColor($g_idStatusBar, $RED)
+			GUICtrlSetData($g_idLbl_StatusBar, "Schechtes Pattern! Array ungültig! Platznummer des Errors in @extended!")
+			GUICtrlSetBkColor($g_idLbl_StatusBar, $RED)
 	EndSelect
 	If $iErr = 0 Then
 		$x = UBound($aA)
@@ -187,8 +186,8 @@ Func doStringRegExpTest()
 					Next
 					$sResult &= @CRLF
 				Next
-				GUICtrlSetData($g_idOut, $sResult)
-				GUICtrlSetData($g_idStatusBar, "Fertig!")
+				GUICtrlSetData($g_idEdt_Out, $sResult)
+				GUICtrlSetData($g_idLbl_StatusBar, "Fertig!")
 			EndIf
 		ElseIf $g_bResultTrueFalseExpected Then ; Ergebnis -> String
 			If $aA = 1 Then
@@ -196,15 +195,15 @@ Func doStringRegExpTest()
 			Else
 				$sResult &= "0   <-- FEHLSCHLAG, keine Treffer gefunden!" & @CRLF
 			EndIf
-			GUICtrlSetData($g_idOut, $sResult)
-			GUICtrlSetData($g_idStatusBar, "Fertig!")
+			GUICtrlSetData($g_idEdt_Out, $sResult)
+			GUICtrlSetData($g_idLbl_StatusBar, "Fertig!")
 		Else ; Einzel-Array
 			If UBound($aA) Then
 				For $i = 0 To UBound($aA) - 1
 					$sResult &= StringFormat("%0" & $iStrLgth & "i", $i) & ' => ' & $aA[$i] & @CRLF
 				Next
-				GUICtrlSetData($g_idOut, $sResult)
-				GUICtrlSetData($g_idStatusBar, "Fertig!")
+				GUICtrlSetData($g_idEdt_Out, $sResult)
+				GUICtrlSetData($g_idLbl_StatusBar, "Fertig!")
 			EndIf
 		EndIf
 	EndIf
@@ -231,7 +230,7 @@ EndFunc   ;==>getReturnFlag
 
 Func getOffset()
 	Local $x
-	$x = Int(GUICtrlRead($g_idOffset))
+	$x = Int(GUICtrlRead($g_idInp_Offset))
 	If @error Then
 		Return 1
 	Else
@@ -244,11 +243,11 @@ Func doBrowseForFile($sFilePath)
 	If $sFilePath = "" Then
 		$sFilePath = FileOpenDialog("Öffnen...", $g_sInitialDir, "Text (*.*)", $FD_FILEMUSTEXIST)
 		$g_sInitialDir = StringTrimRight($sFilePath, StringInStr($sFilePath, "\", "-1"))
-		GUICtrlSetData($g_idPathToInputFile, $sFilePath)
+		GUICtrlSetData($g_idEdt_PathToInputFile, $sFilePath)
 	EndIf
 	Local $sFileTxt = FileRead($sFilePath)
-	GUICtrlSetData($g_idStatusBar, "Lade..")
-	GUICtrlSetBkColor($g_idStatusBar, $GREEN)
+	GUICtrlSetData($g_idLbl_StatusBar, "Lade..")
+	GUICtrlSetBkColor($g_idLbl_StatusBar, $GREEN)
 	If Not $bOpendialog Then
 		Local $sFileFirstLine = FileReadLine($sFilePath)
 		If (StringLeft($sFileFirstLine, 1) = "/") And (StringRight($sFileFirstLine, 1) = "/") Then
@@ -260,11 +259,11 @@ Func doBrowseForFile($sFilePath)
 		EndIf
 	EndIf
 
-	GUICtrlSetData($g_idStatusBar, "Aktualisiere...")
+	GUICtrlSetData($g_idLbl_StatusBar, "Aktualisiere...")
 
 	GUICtrlSetData($g_idStringToTest, $sFileTxt)
-	GUICtrlSetData($g_idStatusBar, "")
-	GUICtrlSetBkColor($g_idStatusBar, $GREY)
+	GUICtrlSetData($g_idLbl_StatusBar, "")
+	GUICtrlSetBkColor($g_idLbl_StatusBar, $GREY)
 EndFunc   ;==>doBrowseForFile
 
 Func readDatFile()
@@ -318,7 +317,7 @@ Func doPtnDel($x)
 	EndIf
 	;Jetzt neue dat-Datei einlesen
 	$g_sPatterns = readDatFile()
-	GUICtrlSetData($g_idPattern, $g_sSep & $g_sPatterns, "(.*)")
+	GUICtrlSetData($g_idCbo_Pattern, $g_sSep & $g_sPatterns, "(.*)")
 	GUICtrlSetData($g_idStringToTest, "")
 	; Unterdrückung der vorherigen Testdatei, falls vorhanden
 	FileDelete($g_sTestFile)
@@ -344,7 +343,7 @@ Func doPtnAdd($x)
 	EndIf
 	; Neue Datei einlesen.
 	$g_sPatterns = readDatFile()
-	GUICtrlSetData($g_idPattern, $g_sSep & $g_sPatterns, $x)
+	GUICtrlSetData($g_idCbo_Pattern, $g_sSep & $g_sPatterns, $x)
 EndFunc   ;==>doPtnAdd
 
 Func doDisplayHelp()

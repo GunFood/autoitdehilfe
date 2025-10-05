@@ -1,4 +1,3 @@
-#include <APIShellExConstants.au3>
 #include <WinAPIFiles.au3>
 #include <WinAPIShellEx.au3>
 

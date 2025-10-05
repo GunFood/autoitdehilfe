@@ -205,7 +205,7 @@ Diese Einstellung kann ver&auml;ndert werden indem man einer der folgenden Zeich
 </tr>
 <tr>
 <td><strong>(*ANY)</strong></td>
-<td>Jegliche Unicode-Zeilenumbruchsfolge: @CRLF, @LF, VT, FF, @CR oder \x85.</td>
+<td>Jegliche Unicode-Zeilenumbruchsfolge: @CRLF, @LF, VT, FF, @CR oder \x85 (N&auml;chste Zeile).</td>
 </tr>
 </table><br />
 <strong>Was \R findet</strong><table>
@@ -215,7 +215,7 @@ Diese Einstellung kann ver&auml;ndert werden indem man einer der folgenden Zeich
 </tr>
 <tr>
 <td><strong>(*BSR_UNICODE)</strong></td>
-<td>Bewirkt, dass <strong>\R</strong> eins der Unicode-Zeilenumbruchsfolgen findet: @CRLF; @LF, VT, FF, @CR oder \x85.</td>
+<td>Bewirkt, dass <strong>\R</strong> eins der Unicode-Zeilenumbruchsfolgen findet: @CRLF; @LF, VT, FF, @CR oder \x85 (N&auml;chste Zeile).</td>
 </tr>
 </table><br />
 <h3><u>Optionen</u></h3><br />
@@ -309,6 +309,7 @@ Wird verwendet um Metazeichen als Literal zu interpretieren: "\.\[" wird als Pun
 "\Q(.)\E" findet "(.)". Es ist &auml;quivalent zum Escapen des Charakters (vorhin erw&auml;hnt) und ist einfacher zu lesen als "\(\.\)".</td>
 </tr>
 </table><br />
+<strong>Metazeichen</strong><br />
 PCRE kennt folgende Metazeichen <strong>\ . ^ $ | [ ( { * + ? #</strong> und jedes einzelne davon kann eine oder mehrere Bedeutungen haben welche vom aktuellen Kontext abh&auml;ngt.<br />
 Um ein Metazeichen als Literal einzuf&uuml;gen, so muss man das Zeichen Escapen, dies geschieht mit einem einfachen Backslash: "\$" wird zu "$".<br />
 Metazeichen werden in sp&auml;ter in einer Untersektion noch weiter besprochen so wie ihre Bedeutungen.<br />
@@ -383,25 +384,53 @@ Standardm&auml;&szlig;ig findet <strong>\R</strong> "(?>\r\n|\n|\r)" wobei "(?>.
 &nbsp;&nbsp;&nbsp; Als Konsequenz findet <strong>\X</strong> mehr als ein Zeichen im Eingabestring gegenteilig zu all den anderen Sequenzen in dieser Tabelle.</td>
 </tr>
 </table><br />
-<h3><u>Mengen von Whitespace-Zeichen (Leerzeichen)</u></h3><br />
-<strong>Horizontale Whitespace-Zeichen welche von \h gefunden werden</strong><br />
+<strong>"Whitespace-Zeichen" und *UCP Abh&auml;ngigkeiten</strong><br />
 <br />
-<strong>\h</strong> ist standardm&auml;&szlig;ig &auml;quivalent zu "[\x09 \xA0]" (oder "[\x09 \xA0\x{1680}\x{180E}\x{2000}-\x{200A}\x{202F}\x{205F}\x{3000}]" when UCP aktiviert wurde.)<br />
-Diese Menge besteht aus: Horizontaler Tab (HT), Leerzeichen (Space), nicht-brechendes Leerzeichen<br />
-(unter anderem: Ogham Leerzeichen Markierung, Monoglischer Vokalseparator, En quad, Em quad, Em space, Three-per-em space, Four-per-em space, Six-per-em space, Figure space,<br />
-Punctuation space, Thin space, Hair space, Narrow no-break space, Medium mathematical space, Ideographic space wenn UCP aktiviert wurde.)<br />
-<br />
-<strong>Vertikale Whitespace-Zeichen welche von \v gefunden werden</strong><br />
-<strong>\v</strong> ist standardm&auml;&szlig;ig &auml;quivalent zu "[\x0A-\x0D]" (oder "[\x0A-\x0D\x{0085}\x{2028}\x{2029}]" wenn UCP aktiviert wurde.)<br />
-Diese Menge besteht aus: Zeilenvorschub (LF), Vertikaler Tab (VT), Form feed (FF), Wagenr&uuml;cklauf (CR) (unter anderem: N&auml;chste Zeile (Next Line (NEL)), Zeilenseparator (Line Separator), Paragraph Separator wenn UCP aktiviert wurde.)<br />
-<br />
-<strong>Whitespace-Zeichen welche von \s gefunden werden</strong><br />
-<strong>\s</strong> ist &auml;quivalent zu "[\h\x0A\x0C\x0D]" (ohne \xA0 von \h wenn UCP aktiviert ist)<br />
-Diese Menge besteht aus: Allen Zeichen in <strong>\h</strong> und Zeilenvorschub (LF), Form feed (FF), Wagenr&uuml;cklauf (CR).<br />
-<br />
-<strong>Whitespace-Zeichen welche von [[:space:]] gefunden werden</strong><br />
-<strong>[[:space:]]</strong> ist &auml;quivalent zu "\s".<br />
-Diese Menge besteht aus: Allen Zeichen in <strong>\s</strong> und dem vertikalen Tab (VT).<br />
+<table>
+    <pre><p class="code-box" style="border-style: solid; border-color:silver; border-width: 1px; width:999px";>
+&nbsp;&nbsp;&nbsp; Unicode@DOUBLE_WSZeichen-Name&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; @DOUBLE_WS\h@DOUBLE_WS\v@DOUBLE_WS\s@DOUBLE_WS[[:space:]]@DOUBLE_WS[[:blank:]]
+&nbsp;&nbsp;&nbsp; -------------------------------------------------------------------------
+&nbsp;&nbsp;&nbsp; 0x0009@DOUBLE_WSHorizontaler Tab (HT)&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  xX&nbsp;&nbsp;&nbsp; @DOUBLE_WSxX&nbsp;&nbsp;&nbsp; @DOUBLE_WSxX&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; @DOUBLE_WSxX
+&nbsp;&nbsp;&nbsp; 0x000A@DOUBLE_WSZeilenvorschub (LF)&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; @DOUBLE_WSxX@DOUBLE_WSxX&nbsp;&nbsp;&nbsp; @DOUBLE_WSxX
+&nbsp;&nbsp;&nbsp; 0x000B@DOUBLE_WSVertikaler Tab (VT)&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; @DOUBLE_WSxX@DOUBLE_WSxX&nbsp;&nbsp;&nbsp; @DOUBLE_WSxX
+&nbsp;&nbsp;&nbsp; 0x000C@DOUBLE_WSForm feed (FF)&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; @DOUBLE_WSxX@DOUBLE_WSxX&nbsp;&nbsp;&nbsp; @DOUBLE_WSxX
+&nbsp;&nbsp;&nbsp; 0x000D@DOUBLE_WSWagenr&uuml;cklauf (CR)&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; xX@DOUBLE_WSxX&nbsp;&nbsp;&nbsp; @DOUBLE_WSxX
+&nbsp;&nbsp;&nbsp; 0x0020@DOUBLE_WSLeerzeichen&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; @DOUBLE_WSxX&nbsp;&nbsp;&nbsp; @DOUBLE_WSxX&nbsp;&nbsp;&nbsp; @DOUBLE_WSxX&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; @DOUBLE_WSxX
+&nbsp;
+&nbsp;&nbsp;&nbsp; 0x0085@DOUBLE_WSNext line (NEL)&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  xX@DOUBLE_WSX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX
+&nbsp;&nbsp;&nbsp; 0x00A0@DOUBLE_WSNo-break space&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; @DOUBLE_WSxX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; X
+&nbsp;
+&nbsp;&nbsp;&nbsp; 0x1680@DOUBLE_WSOgham space mark&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; xX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; X
+&nbsp;&nbsp;&nbsp; 0x180E@DOUBLE_WSMonoglischer Vokalseparator@DOUBLE_WSxX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; X
+&nbsp;&nbsp;&nbsp; 0x2000@DOUBLE_WSEn quad&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  xX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; X
+&nbsp;&nbsp;&nbsp; 0x2001@DOUBLE_WSEm quad&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  xX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; X
+&nbsp;&nbsp;&nbsp; 0x2002@DOUBLE_WSEn space&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; xX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; X
+&nbsp;&nbsp;&nbsp; 0x2003@DOUBLE_WSEm space&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; xX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; X
+&nbsp;&nbsp;&nbsp; 0x2004@DOUBLE_WSThree-per-em space&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; @DOUBLE_WSxX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; X
+&nbsp;&nbsp;&nbsp; 0x2005@DOUBLE_WSFour-per-em space&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; @DOUBLE_WSxX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; X
+&nbsp;&nbsp;&nbsp; 0x2006@DOUBLE_WSSix-per-em space&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; xX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; X
+&nbsp;&nbsp;&nbsp; 0x2007@DOUBLE_WSFigure space&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; xX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; X
+&nbsp;&nbsp;&nbsp; 0x2008@DOUBLE_WSPunctuation space&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; @DOUBLE_WSxX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; X
+&nbsp;&nbsp;&nbsp; 0x2009@DOUBLE_WSThin space&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; @DOUBLE_WSxX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; X
+&nbsp;&nbsp;&nbsp; 0x200A@DOUBLE_WSHair space&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; @DOUBLE_WSxX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; X
+&nbsp;&nbsp;&nbsp; 0x2028@DOUBLE_WSLine separator&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; @DOUBLE_WSxX@DOUBLE_WSX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX
+&nbsp;&nbsp;&nbsp; 0x2029@DOUBLE_WSParagraph separator&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  xX@DOUBLE_WSX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX
+&nbsp;&nbsp;&nbsp; 0x202F@DOUBLE_WSNarrow no-break space&nbsp;&nbsp;&nbsp; @DOUBLE_WSxX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; X
+&nbsp;&nbsp;&nbsp; 0x205F@DOUBLE_WSMedium mathematical space@DOUBLE_WSxX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; X
+&nbsp;&nbsp;&nbsp; 0x3000@DOUBLE_WSIdeographic space&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; @DOUBLE_WSxX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; @DOUBLE_WSX&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; X
+&nbsp;&nbsp;&nbsp; -------------------------------------------------------------------------
+&nbsp;
+@DOUBLE_WSx&nbsp;&nbsp;&nbsp; only without *UCP
+@DOUBLE_WSX&nbsp;&nbsp;&nbsp; only with *UCP
+@DOUBLE_WSxX&nbsp;&nbsp;&nbsp; with or without *UCP
+&nbsp;
+@DOUBLE_WSConclusion
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; \s equal [[:space:]] and are *UCP sensitive
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; \h \v independant of *UCP
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [[:blank:]] *UCP sensitive as opposed to \h
+&nbsp;
+    </p></pre>
+</table>
 <br />
 <br />
 <h3><u>Zeichenklassen und POSIX Klassen</u></h3><br />
@@ -431,7 +460,7 @@ Diese benannten Mengen werden innerhalb einer Charakterklasse verwendet: "[z[:di
 Um eine POSIX Klasse zu negieren muss ein Caret (^) nach dem ersten Doppelpunkt stehen: "[[:^digit:]]".<br />
 Wenn UCP aktiviert wurde, werden einige POSIX Klassen zu einigen Unicode Charakteruntermengen erweitert werden.<br />
 Anderenfalls sind sie standardm&auml;&szlig;ig zu 7-bit ASCII limitiert.<br />
-F&uuml;r mehr Details siehe https://www.pcre.org/original/doc/html/pcrepattern.html#SEC10.<br />
+F&uuml;r mehr Details siehe <strong><a href="https://www.pcre.org/original/doc/html/pcrepattern.html#SEC10">POSIX CHARACTER CLASSES</a></strong>.<br />
 <table>
 <tr>
 <td style="width:15%"><strong>[:alnum:]</strong></td>
@@ -449,7 +478,7 @@ Wenn UCP aktiviert wurde: Unicode-Zeichen (die selben wie [^\W_] oder \p{L}).</t
 </tr>
 <tr>
 <td><strong>[:blank:]</strong></td>
-<td>Leerzeichen oder Tab (@TAB) (die selben wie \h oder [\x09\x20]).<br />
+<td>Leerzeichen oder Tab (@TAB) (die selben wie \h oder [\x20\x09]).<br />
 Wenn UCP aktiviert wurde: horizontale Unicode-Whitespaces (die selben wie \h).</td>
 </tr>
 <tr>
@@ -480,7 +509,7 @@ Wenn UCP aktiviert wurde: Unicode-Kleinbuchstaben-Zeichen (die selben wie \p{L1}
 </tr>
 <tr>
 <td><strong>[:space:]</strong></td>
-<td>ASCII-Whitespace-Zeichen (die selben wie [\h\x0A-\x0D]). <strong>[:space:]</strong> ist nicht genau das gleiche wie <strong>\s</strong>: es beinhaltet VT, Chr(11).</td>
+<td>ASCII-Whitespace-Zeichen (die selben wie [\h\x0A-\x0D]). <strong>[:space:]</strong> ist nicht genau das gleiche wie <strong>\s</strong>.</td>
 </tr>
 <tr>
 <td><strong>[:upper:]</strong></td>
@@ -540,7 +569,7 @@ Optionszeichen (bereits erw&auml;hnt) k&ouml;nnen einfach zwischen "?" und dem "
 Quantifizierer (oder Wiederholungsspezifizierer) geben an wie viele vorangehende Zeichen, Klassen, Referencen oder Gruppen gefunden werden sollen.<br />
 Optionale Gierigkeit gibt an wie aggressiv sich die Wiederholung verhalten soll. Beispielsweise findet "\d{3,5}" mindestens drei aber nicht mehr als f&uuml;nf Dezimalziffern.<br />
 Standardm&auml;&szlig;ig sind die Muster "<u>gierig</u>", was bedeutet, dass Quantifizierer wie <strong>* + ? {</strong>...<strong>}</strong> den l&auml;ngsten String finden welcher noch den Rest des Musters erf&uuml;llt.<br />
-Gierigkeit kann f&uuml;r das gesamte Muster invertiert werden indem man die Option (?U) am Anfang ds Musters angibt oder lokal indem man ein Fragezeichen "?" nach einem Quantifizierer setzt.<br />
+Gierigkeit kann f&uuml;r das gesamte Muster invertiert werden, indem man die Option (?U) am Anfang des Musters angibt oder lokal, indem man ein Fragezeichen "?" nach einem Quantifizierer setzt.<br />
 nicht-gieriger (<u>faul</u>) Wiederholungen werden den kleinsten m&ouml;glichen String finden welcher noch den Rest des Musters erf&uuml;llt.<br />
 Bei einem Eingabestring von "aaab" wird das Muster "(a*)([ab]+)" "aaa" finden und dann "b" aber "(?U)(a*)([ab]+)" findet "" dann "a":<br />
 Ein leerer String ist genug um das faule "(a*)" zu erf&uuml;llen und das gefangene "a" wird vom "([ab]+)" Untermuster gefunden.<br />
@@ -1102,6 +1131,7 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext5">
 <pre>
 <a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;StringConstants.au3&gt;</span>
 
 <span class="S0">_Example</span><span class="S8">()</span>
 

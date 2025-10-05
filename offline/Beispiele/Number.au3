@@ -1,4 +1,3 @@
-#include <AutoItConstants.au3>
 #include <MsgBoxConstants.au3>
 
 Local $dNumber1 = Number(1 + 2 + 10) ; Gibt 13 zurück

@@ -1,4 +1,5 @@
 #include <MsgBoxConstants.au3>
+#include <SecurityConstants.au3>
 #include <WinAPIError.au3>
 #include <WinAPIFiles.au3>
 #include <WinAPIHObj.au3>

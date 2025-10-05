@@ -1,9 +1,11 @@
-#include <APIGdiConstants.au3>
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <StaticConstants.au3>
 #include <WinAPIGdi.au3>
 
-_WinAPI_AddFontResourceEx(@ScriptDir & '\Extras\SF Square Head Bold.ttf', $FR_PRIVATE)
+Local $sPathFull = _Extras_PathFull('SF Square Head Bold.ttf')
+_WinAPI_AddFontResourceEx($sPathFull, $FR_PRIVATE)
 
 GUICreate('Test ' & StringReplace(@ScriptName, '.au3', '()'), 400, 100)
 GUICtrlCreateLabel('Einfacher Text', 10, 25, 380, 50, $SS_CENTER)

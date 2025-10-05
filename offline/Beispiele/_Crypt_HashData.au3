@@ -4,16 +4,16 @@
 #include <GUIConstantsEx.au3>
 #include <StringConstants.au3>
 #include <WinAPIConv.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
 
-Global $g_iAlgorithm = $CALG_SHA1, $g_idInputEdit = -1, $g_idOutputEdit = -1
+Global $g_iAlgorithm = $CALG_SHA1, $g_idEdt_Input = -1, $g_idEdt_Output = -1
 
 Example()
 
 Func Example()
 	Local $hGui = GUICreate("Echtzeit Hashing", 400, 320)
-	$g_idInputEdit = GUICtrlCreateEdit("", 0, 0, 400, 150, $ES_WANTRETURN)
-	$g_idOutputEdit = GUICtrlCreateEdit("", 0, 150, 400, 150, $ES_READONLY)
+	$g_idEdt_Input = GUICtrlCreateEdit("", 0, 0, 400, 150, $ES_WANTRETURN)
+	$g_idEdt_Output = GUICtrlCreateEdit("", 0, 150, 400, 150, $ES_READONLY)
 	Local $idCombo = GUICtrlCreateCombo("", 0, 300, 100, 20, $CBS_DROPDOWNLIST)
 	GUICtrlSetData($idCombo, "MD2 (128bit)|MD4 (128bit)|MD5 (128bit)|SHA1 (160bit)|SHA_256|SHA_384|SHA_512", "SHA1 (160bit)")
 	GUIRegisterMsg($WM_COMMAND, "WM_COMMAND")
@@ -52,10 +52,10 @@ Func Example()
 						$g_iAlgorithm = $CALG_SHA_512
 				EndSwitch
 
-				$sRead = GUICtrlRead($g_idInputEdit)
+				$sRead = GUICtrlRead($g_idEdt_Input)
 				If StringStripWS($sRead, $STR_STRIPALL) <> "" Then ; Prüfen ob Text für den Hash vorhanden ist.
 					$dHash = _Crypt_HashData($sRead, $g_iAlgorithm) ; Hash aus dem gegebenen Text erzeugen.
-					GUICtrlSetData($g_idOutputEdit, $dHash) ; Hash im Output-Edit ausgeben.
+					GUICtrlSetData($g_idEdt_Output, $dHash) ; Hash im Output-Edit ausgeben.
 				EndIf
 		EndSwitch
 	WEnd
@@ -68,11 +68,11 @@ Func WM_COMMAND($hWnd, $iMsg, $wParam, $lParam)
 	#forceref $hWnd, $iMsg, $lParam
 
 	Switch _WinAPI_LoWord($wParam)
-		Case $g_idInputEdit
+		Case $g_idEdt_Input
 			Switch _WinAPI_HiWord($wParam)
 				Case $EN_CHANGE
-					Local $dHash = _Crypt_HashData(GUICtrlRead($g_idInputEdit), $g_iAlgorithm) ; Hash aus dem gegebenen Text erzeugen.
-					GUICtrlSetData($g_idOutputEdit, $dHash) ; Hash im Output-Edit ausgeben.
+					Local $dHash = _Crypt_HashData(GUICtrlRead($g_idEdt_Input), $g_iAlgorithm) ; Hash aus dem gegebenen Text erzeugen.
+					GUICtrlSetData($g_idEdt_Output, $dHash) ; Hash im Output-Edit ausgeben.
 			EndSwitch
 	EndSwitch
 EndFunc   ;==>WM_COMMAND

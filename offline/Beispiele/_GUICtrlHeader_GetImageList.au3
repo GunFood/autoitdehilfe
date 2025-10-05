@@ -1,19 +1,18 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiHeader.au3>
 #include <GuiImageList.au3>
 #include <WinAPIGdi.au3>
 
-Global $g_idMemo
-
 Example()
 
 Func Example()
 	; Erstellt eine GUI
-	Local $hGUI = GUICreate("Header: Setzt und ermittelt die  ImageList (v" & @AutoItVersion & ")", 500, 300)
+	Local $hGUI = GUICreate("Header: Setzt und ermittelt die  ImageList (v" & @AutoItVersion & ")", 500, 300, 100, 100)
 	Local $hHeader = _GUICtrlHeader_Create($hGUI)
 	_GUICtrlHeader_SetUnicodeFormat($hHeader, True)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 24, 396, 274, 0)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 52, 444, 220)
 	GUISetState(@SW_SHOW)
 
 	; Erstellt eine Imagelist mit Bildern
@@ -23,8 +22,8 @@ Func Example()
 	_GUIImageList_Add($hImage, _WinAPI_CreateSolidBitmap($hGUI, 0x0000FF, 11, 11))
 	Local $hPrevImageList = _GUICtrlHeader_SetImageList($hHeader, $hImage)
 
-	MemoWrite("Vorheriges Handle der Imagelist ....: " & "0x" & Hex($hPrevImageList))
-	MemoWrite("IsPtr = " & IsPtr($hPrevImageList) & " IsHWnd = " & IsHWnd($hPrevImageList))
+	_MemoWrite("Vorheriges Handle der Imagelist ....: " & "0x" & Hex($hPrevImageList))
+	_MemoWrite("IsPtr = " & IsPtr($hPrevImageList) & " IsHWnd = " & IsHWnd($hPrevImageList))
 
 	; Fügt die Spalten hinzu
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 0", 100, 0, 0)
@@ -33,15 +32,8 @@ Func Example()
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 3", 100)
 
 	; Zeigt Informationen über das Header-Control
-	MemoWrite("Handle der Imagelist ....: " & "0x" & Hex(_GUICtrlHeader_GetImageList($hHeader)))
-	MemoWrite("IsPtr = " & IsPtr(_GUICtrlHeader_GetImageList($hHeader)) & " IsHwnd = " & IsHWnd(_GUICtrlHeader_GetImageList($hHeader)))
+	_MemoWrite("Handle der Imagelist ....: " & "0x" & Hex(_GUICtrlHeader_GetImageList($hHeader)))
+	_MemoWrite("IsPtr = " & IsPtr(_GUICtrlHeader_GetImageList($hHeader)) & " IsHwnd = " & IsHWnd(_GUICtrlHeader_GetImageList($hHeader)))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
-	Do
-	Until GUIGetMsg() = $GUI_EVENT_CLOSE
+	_MemoMsgBoxStatus("", -1, $hGUI) ; Keine weiteren Aktionen, es wird gewartet bis die GUI geschlossen wird.
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

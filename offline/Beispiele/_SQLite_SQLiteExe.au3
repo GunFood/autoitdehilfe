@@ -27,6 +27,10 @@ If @error = 0 Then
 	; Zeigt Tabelle (mittels SQLite3.dll)
 	Local $iRows, $iColumns, $aRes
 	_SQLite_Startup()
+	If @error Then
+		MsgBox($MB_SYSTEMMODAL, "SQLite Fehler", "SQLite3.dll kann nicht geladen werden!")
+		Exit -1
+	EndIf
 	ConsoleWrite("_SQLite_LibVersion=" & _SQLite_LibVersion() & @CRLF)
 	_SQLite_Open($sDbFile)
 	_SQLite_GetTable2D(-1, "SELECT ROWID,* FROM TblImport;", $aRes, $iRows, $iColumns)

@@ -1,19 +1,17 @@
-#include <GuiConstantsEx.au3>
-#include <GuiStatusBar.au3>
-#include <WindowsConstants.au3>
+#include "Extras\HelpFileInternals.au3"
 
-Global $g_idMemo
+#include <GUIConstantsEx.au3>
+#include <GuiStatusBar.au3>
 
 Example()
 
 Func Example()
 	; Erstellt eine GUI
-	Local $hGUI = GUICreate("StatusBar: Ermittelt Textflags (v" & @AutoItVersion & ")", 400, 300)
+	Local $hGUI = GUICreate("StatusBar: Ermittelt Textflags (v" & @AutoItVersion & ")", 450, 320, 100, 100)
 	Local $hStatus = _GUICtrlStatusBar_Create($hGUI)
 
 	; Erstellt ein Memo Control
-	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 396, 274, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 8, 444, 259)
 	GUISetState(@SW_SHOW)
 
 	; Setzt die Abschnitte
@@ -25,19 +23,16 @@ Func Example()
 
 	; Ermittelt Textinformationen
 	For $iI = 0 To _GUICtrlStatusBar_GetCount($hStatus) - 1
-		MemoWrite("Abschnitt " & $iI & " Textflags : 0x" & Hex(_GUICtrlStatusBar_GetTextFlags($hStatus, $iI)))
-		MemoWrite("Abschnitt " & $iI & " Textlänge : " & _GUICtrlStatusBar_GetTextLength($hStatus, $iI))
-		MemoWrite("Abschnitt " & $iI & " Textlänge : 0x" & Hex(_GUICtrlStatusBar_GetTextLengthEx($hStatus, $iI)))
-		MemoWrite()
+		_MemoWrite("Abschnitt " & $iI & " Textflags : 0x" & Hex(_GUICtrlStatusBar_GetTextFlags($hStatus, $iI)))
+		_MemoWrite("Abschnitt " & $iI & " Textlänge : " & _GUICtrlStatusBar_GetTextLength($hStatus, $iI))
+		_MemoWrite("Abschnitt " & $iI & " Textlänge : 0x" & Hex(_GUICtrlStatusBar_GetTextLengthEx($hStatus, $iI)))
+		_MemoWrite()
 	Next
+
+	_MemoMsgBoxStatus("", -1, $hGUI) ; Keine weiteren Aktionen, es wird gewartet bis die GUI geschlossen wird.
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()
 EndFunc   ;==>Example
-
-; Schreibt eine Nachricht in das Memo
-Func MemoWrite($sMessage = "")
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

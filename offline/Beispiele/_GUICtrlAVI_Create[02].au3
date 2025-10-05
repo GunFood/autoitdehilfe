@@ -1,9 +1,10 @@
 ; == Beispiel 2 : Erstellt mit einer UDF
 
-#include <Extras\WM_NOTIFY.au3>
+#include "Extras\WM_NOTIFY.au3"
+
 #include <GuiAVI.au3>
 #include <GUIConstantsEx.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
 
 Global $g_hAVI
 

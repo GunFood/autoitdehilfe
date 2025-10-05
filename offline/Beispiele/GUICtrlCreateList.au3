@@ -10,7 +10,7 @@ Func Example()
 
 	Local $idButton_Add = GUICtrlCreateButton("Hinzufügen", 64, 32, 75, 25)
 	Local $idButton_Clear = GUICtrlCreateButton("Leeren", 64, 72, 75, 25)
-	Local $idMylist = GUICtrlCreateList("Buttons, die gedrückt wurden", 176, 32, 221, 97)
+	Local $idLst_Mylist = GUICtrlCreateList("Buttons, die gedrückt wurden", 176, 32, 221, 97)
 	GUICtrlSetLimit(-1, 200) ; Horizontales Scrollen begrenzen
 	GUICtrlSetData(-1, $sMESSAGE)
 	Local $idButton_Close = GUICtrlCreateButton("Mein Beenden-Button", 64, 160, 175, 25)
@@ -23,9 +23,9 @@ Func Example()
 			Case $GUI_EVENT_CLOSE
 				ExitLoop
 			Case $idButton_Add
-				GUICtrlSetData($idMylist, "Du hast Button Nr. 1 gedrückt|")
+				GUICtrlSetData($idLst_Mylist, "Du hast Button Nr. 1 gedrückt|")
 			Case $idButton_Clear
-				GUICtrlSetData($idMylist, "")
+				GUICtrlSetData($idLst_Mylist, "")
 			Case $idButton_Close
 				MsgBox($MB_SYSTEMMODAL, "", "Der Beenden-Button wurde gedrückt", 2)
 				Exit

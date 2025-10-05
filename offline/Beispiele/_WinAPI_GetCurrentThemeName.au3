@@ -1,4 +1,3 @@
-#include <APIThemeConstants.au3>
 #include <WinAPITheme.au3>
 
 Local $aData = _WinAPI_GetCurrentThemeName()

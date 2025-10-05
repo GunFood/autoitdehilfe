@@ -1,8 +1,8 @@
+#NoTrayIcon
+
 #include <MsgBoxConstants.au3>
 #include <StringConstants.au3>
 #include <TrayConstants.au3> ; wird für die $TRAY_EVENT_PRIMARYDOUBLE, $TRAY_EVENT_SECONDARYUP und $TRAY_ICONSTATE_SHOW Konstanten benötigt.
-
-#NoTrayIcon
 
 Opt("TrayMenuMode", 3) ; Die Standard Traymenüeinträge (Skript pausieren/beenden) werden nicht angezeigt und die Items werden nicht angehakt wenn diese ausgewählt werden. Verwendet wurden die Optionen 1 und 2 für TrayMenuMode.
 Opt("TrayOnEventMode", 1) ; Aktiviert TrayOnEventMode.

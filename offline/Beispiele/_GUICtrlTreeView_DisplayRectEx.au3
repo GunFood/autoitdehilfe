@@ -2,7 +2,7 @@
 #include <GuiImageList.au3>
 #include <GuiTreeView.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -25,14 +25,14 @@ Func Example()
 	_GUIImageList_AddIcon($hImage, "shell32.dll", 146)
 	_GUICtrlTreeView_SetNormalImageList($idTreeView, $hImage)
 
-	Local $aidItem[6]
+	Local $aidTVi_Item[6]
 	For $x = 0 To _GUIImageList_GetImageCount($hImage) - 1
-		$aidItem[$x] = _GUICtrlTreeView_Add($idTreeView, 0, StringFormat("[%02d] Neues Item", $x), $x, $x)
+		$aidTVi_Item[$x] = _GUICtrlTreeView_Add($idTreeView, 0, StringFormat("[%02d] Neues Item", $x), $x, $x)
 	Next
-	Local $tRECT = _GUICtrlTreeView_DisplayRectEx($idTreeView, $aidItem[2])
+	Local $tRECT = _GUICtrlTreeView_DisplayRectEx($idTreeView, $aidTVi_Item[2])
 	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Item 2 Rechteck : [%d, %d, %d, %d]", DllStructGetData($tRECT, "Left"), _
 			DllStructGetData($tRECT, "Top"), DllStructGetData($tRECT, "Right"), DllStructGetData($tRECT, "Bottom")))
-	_GUICtrlTreeView_SelectItem($idTreeView, $aidItem[2])
+	_GUICtrlTreeView_SelectItem($idTreeView, $aidTVi_Item[2])
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

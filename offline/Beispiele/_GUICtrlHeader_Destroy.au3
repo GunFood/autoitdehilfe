@@ -1,8 +1,11 @@
-#include <Extras\WM_NOTIFY.au3>
+#include "Extras\HelpFileInternals.au3"
+
+#include "Extras\WM_NOTIFY.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiHeader.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
+#include <StructureConstants.au3>
 
 Global $hHeader
 
@@ -10,9 +13,11 @@ Example()
 
 Func Example()
 	; Erstellt eine GUI
-	Local $hGUI = GUICreate("Header: Zerstören (v" & @AutoItVersion & ")", 400, 300)
+	Local $hGUI = GUICreate("Header: Zerstören (v" & @AutoItVersion & ")", 400, 300, 100, 100)
 	$hHeader = _GUICtrlHeader_Create($hGUI)
-	_GUICtrlHeader_SetUnicodeFormat($hHeader, True)
+	_MemoCreate(2, 52, 444, 220)
+
+;~ 	_GUICtrlHeader_SetUnicodeFormat($g_hHeader, True)
 	GUISetState(@SW_SHOW)
 
 	_WM_NOTIFY_Register()
@@ -26,9 +31,11 @@ Func Example()
 	; Löscht alle Filter
 	_GUICtrlHeader_ClearFilterAll($hHeader)
 
-	MsgBox($MB_SYSTEMMODAL, "Information", "Das Header-Control wird gleich zerstört!")
+	_MemoMsgBox($MB_SYSTEMMODAL, "Information", "Das Header-Control wird gleich zerstört!")
 
 	_GUICtrlHeader_Destroy($hHeader)
+
+	_MemoMsgBoxStatus("", Default, $hGUI) ; Keine weiteren Aktionen, es wird gewartet bis die GUI geschlossen wird.
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

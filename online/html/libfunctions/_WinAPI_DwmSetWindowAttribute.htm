@@ -28,21 +28,36 @@ _WinAPI_DwmSetWindowAttribute ( $hWnd, $iAttribute, $iData )<br />
 <tr>
 <td>$iAttribute</td>
 <td>Die Attribute welche auf das Fenster angewendet werden sollen. Dieser Parameter kann einen der folgenden Werte annehmen:<br />
-&nbsp;&nbsp;&nbsp; $DWMWA_NCRENDERING_POLICY<br />
+<strong>Windows Vista oder h&ouml;her</strong><br />
+&nbsp;&nbsp;&nbsp; $DWMWA_NCRENDERING_POLICY, $iData kann DWMNCRP_USEWINDOWSTYLE, DWMNCRP_DISABLED, DWMNCRP_ENABLED sein<br />
 &nbsp;&nbsp;&nbsp; $DWMWA_TRANSITIONS_FORCEDISABLED<br />
 &nbsp;&nbsp;&nbsp; $DWMWA_ALLOW_NCPAINT<br />
 &nbsp;&nbsp;&nbsp; $DWMWA_NONCLIENT_RTL_LAYOUT<br />
 &nbsp;&nbsp;&nbsp; $DWMWA_FORCE_ICONIC_REPRESENTATION<br />
-&nbsp;&nbsp;&nbsp; $DWMWA_FLIP3D_POLICY<br />
+&nbsp;&nbsp;&nbsp; $DWMWA_FLIP3D_POLICY, $iData kann DWMFLIP3D_DEFAULT, DWMFLIP3D_EXCLUDEBELOW, DWMFLIP3D_EXCLUDEABOVE sein<br />
 <br />
 <strong>Windows 7 oder h&ouml;her</strong><br />
 &nbsp;&nbsp;&nbsp; $DWMWA_HAS_ICONIC_BITMAP<br />
 &nbsp;&nbsp;&nbsp; $DWMWA_DISALLOW_PEEK<br />
-&nbsp;&nbsp;&nbsp; $DWMWA_EXCLUDED_FROM_PEEK</td>
+&nbsp;&nbsp;&nbsp; $DWMWA_EXCLUDED_FROM_PEEK<br />
+<br />
+<strong>Windows 8 oder h&ouml;her</strong><br />
+&nbsp;&nbsp;&nbsp; $DWMWA_CLOAK<br />
+&nbsp;&nbsp;&nbsp; $DWMWA_FREEZE_REPRESENTATION<br />
+&nbsp;&nbsp;&nbsp; $DWMWA_PASSIVE_UPDATE_MODE<br />
+<br />
+<strong>Windows 11 (@OSBuild = 22000) oder h&ouml;her</strong><br />
+&nbsp;&nbsp;&nbsp; $DWMWA_USE_HOSTBACKDROPBRUSH<br />
+&nbsp;&nbsp;&nbsp; $DWMWA_USE_IMMERSIVE_DARK_MODE (Spezialfall f&uuml;r @OSBuild &lt;= 18985)<br />
+&nbsp;&nbsp;&nbsp; $DWMWA_WINDOW_CORNER_PREFERENCE, $iData kann DWMWCP_DEFAULT, DWMWCP_DONOTROUND, DWMWCP_ROUND, DWMWCP_ROUNDSMALL sein<br />
+&nbsp;&nbsp;&nbsp; $DWMWA_BORDER_COLOR $iData = Colorref<br />
+&nbsp;&nbsp;&nbsp; $DWMWA_CAPTION_COLOR $iData = Colorref<br />
+&nbsp;&nbsp;&nbsp; $DWMWA_TEXT_COLOR $iData = Colorref<br />
+&nbsp;&nbsp;&nbsp; $DWMWA_VISIBLE_FRAME_BORDER_THICKNESS $iData = UINT</td>
 </tr>
 <tr>
 <td>$iData</td>
-<td>Der Wert des Attributs.</td>
+<td>Der Wert des Attributs. Siehe $iAttribute f&uuml;r bestimmte Werte, andernfalls Wahr/Falsch.</td>
 </tr>
 </table>
 
@@ -54,17 +69,139 @@ _WinAPI_DwmSetWindowAttribute ( $hWnd, $iAttribute, $iData )<br />
 </tr>
 <tr>
 <td class="valign-top">Fehler:</td>
-<td>0 und setzt das @error Flag auf ungleich null, das @extended Flag kann den HRESULT-Fehlercode enthalten.</td>
+<td>0 und setzt das @error Flag auf ungleich 0, das @extended Flag kann den HRESULT-Fehlercode enthalten.</td>
 </tr>
 </table>
 
-<h2>Bemerkungen</h2>
-<p>Diese Funktion ben&ouml;tigt <strong>Windows Vista oder h&ouml;her</strong>.<br />
-</p>
+<h2>Verwandte Funktionen</h2>
+<p><a href="_WinAPI_DwmGetWindowAttribute.htm">_WinAPI_DwmGetWindowAttribute</a></p>
 
 <h2>Siehe auch</h2>
 <p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(DwmSetWindowAttribute);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">DwmSetWindowAttribute</a> in der MSDN Bibliothek.
 </p>
 
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_WinAPI_DwmSetWindowAttribute.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;APIGdiConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;EditConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;GUIConstantsEx.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIGdi.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPISysWin.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPITheme.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WindowsSysColorConstants.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Global</span></a><span class="S0"> </span><span class="S9">$g_hGUI</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_idEdt_Note</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_sNote</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_iSet</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_idChk_DarkMode</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_idChk_CustomColors</span>
+
+<span class="S0">Example</span><span class="S8">()</span><span class="S0"> </span><span class="S1">; Win 10 onwards</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Create a GUI with various controls.</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_hGUI</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">'Test '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/StringReplace.htm"><span class="S4">StringReplace</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@ScriptName"><span class="S6">@ScriptName</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">'.au3'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'()'</span><span class="S8">),</span><span class="S0"> </span><span class="S3">300</span><span class="S8">,</span><span class="S0"> </span><span class="S3">165</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SetThemeAppProperties.htm"><span class="S15">_WinAPI_SetThemeAppProperties</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; needed to have GUICtrlSetColor() on CheckBox OK</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Create a checkbox control.</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_idChk_DarkMode</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateCheckbox.htm"><span class="S4">GUICtrlCreateCheckbox</span></a><span class="S8">(</span><span class="S7">"Use Dark mode frame"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">125</span><span class="S8">,</span><span class="S0"> </span><span class="S3">25</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_idChk_CustomColors</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateCheckbox.htm"><span class="S4">GUICtrlCreateCheckbox</span></a><span class="S8">(</span><span class="S7">"custom colors on change"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">145</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">185</span><span class="S8">,</span><span class="S0"> </span><span class="S3">25</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetState.htm"><span class="S4">GUICtrlSetState</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GUI_CHECKED</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_sNote</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"Clicking the checkbox allows the window frame "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" for this window to be drawn in dark mode colors"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" when the dark mode system setting is enabled."</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$g_idEdt_Note</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICtrlCreateEdit.htm"><span class="S4">GUICtrlCreateEdit</span></a><span class="S8">(</span><span class="S9">$g_sNote</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S3">44</span><span class="S8">,</span><span class="S0"> </span><span class="S3">280</span><span class="S8">,</span><span class="S0"> </span><span class="S3">110</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitOR.htm"><span class="S4">BitOR</span></a><span class="S8">(</span><span class="S9">$ES_CENTER</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$ES_AUTOVSCROLL</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$ES_AUTOHSCROLL</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$ES_READONLY</span><span class="S8">))</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Display the GUI.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetState.htm"><span class="S4">GUISetState</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@SW_SHOW"><span class="S6">@SW_SHOW</span></a><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hGUI</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Loop until the user exits.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUIGetMsg.htm"><span class="S4">GUIGetMsg</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$GUI_EVENT_CLOSE</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S9">$g_idChk_DarkMode</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> _IsChecked</span><span class="S8">(</span><span class="S9">$g_idChk_DarkMode</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> &nbsp;&nbsp;&nbsp;</span><span class="S1">; &nbsp;enable window frame dark mode</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$g_iSet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_DwmSetWindowAttribute.htm"><span class="S15">_WinAPI_DwmSetWindowAttribute</span></a><span class="S8">(</span><span class="S9">$g_hGUI</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$DWMWA_USE_IMMERSIVE_DARK_MODE</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; LetsSeeTheDifference</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S1">; &nbsp;disable window frame dark mode</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$g_iSet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_DwmSetWindowAttribute.htm"><span class="S15">_WinAPI_DwmSetWindowAttribute</span></a><span class="S8">(</span><span class="S9">$g_hGUI</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$DWMWA_USE_IMMERSIVE_DARK_MODE</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; LetsSeeTheDifference</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Delete the previous GUI and all controls.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUIDelete.htm"><span class="S4">GUIDelete</span></a><span class="S8">(</span><span class="S9">$g_hGUI</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _IsChecked</span><span class="S8">(</span><span class="S9">$idControlID</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/BitAND.htm"><span class="S4">BitAND</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../functions/GUICtrlRead.htm"><span class="S4">GUICtrlRead</span></a><span class="S8">(</span><span class="S9">$idControlID</span><span class="S8">),</span><span class="S0"> </span><span class="S9">$GUI_CHECKED</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$GUI_CHECKED</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_IsChecked</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> LetsSeeTheDifference</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetData.htm"><span class="S4">GUICtrlSetData</span></a><span class="S8">(</span><span class="S9">$g_idEdt_Note</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_sNote</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"DwmSetWindowAttribute: "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S8">(</span><span class="S9">$g_iSet</span><span class="S0"> </span><span class="S8">?</span><span class="S0"> </span><span class="S7">'OK'</span><span class="S0"> </span><span class="S8">:</span><span class="S0"> </span><span class="S7">'Failed, see MSDN notes'</span><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'(OSBuild: '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@OSBuild"><span class="S6">@OSBuild</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">')'</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><span class="S9">$g_iSet</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> _IsChecked</span><span class="S8">(</span><span class="S9">$g_idChk_CustomColors</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> _IsChecked</span><span class="S8">(</span><span class="S9">$g_idChk_DarkMode</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetBkColor.htm"><span class="S4">GUISetBkColor</span></a><span class="S8">(</span><span class="S3">0x1B1B1B</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$g_hGUI</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetBkColor.htm"><span class="S4">GUICtrlSetBkColor</span></a><span class="S8">(</span><span class="S9">$g_idEdt_Note</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0x2B2B2B</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetColor.htm"><span class="S4">GUICtrlSetColor</span></a><span class="S8">(</span><span class="S9">$g_idEdt_Note</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xFBFBFB</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetColor.htm"><span class="S4">GUICtrlSetColor</span></a><span class="S8">(</span><span class="S9">$g_idChk_DarkMode</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xFBFBFB</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetColor.htm"><span class="S4">GUICtrlSetColor</span></a><span class="S8">(</span><span class="S9">$g_idChk_CustomColors</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0xFBFBFB</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_RedrawWindow.htm"><span class="S15">_WinAPI_RedrawWindow</span></a><span class="S8">(</span><span class="S9">$g_hGUI</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$RDW_UPDATENOW</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUISetBkColor.htm"><span class="S4">GUISetBkColor</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SwitchColor.htm"><span class="S15">_WinAPI_SwitchColor</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetSysColor.htm"><span class="S15">_WinAPI_GetSysColor</span></a><span class="S8">(</span><span class="S9">$COLOR_3DFACE</span><span class="S8">)),</span><span class="S0"> </span><span class="S9">$g_hGUI</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetBkColor.htm"><span class="S4">GUICtrlSetBkColor</span></a><span class="S8">(</span><span class="S9">$g_idEdt_Note</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SwitchColor.htm"><span class="S15">_WinAPI_SwitchColor</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetSysColor.htm"><span class="S15">_WinAPI_GetSysColor</span></a><span class="S8">(</span><span class="S9">$COLOR_BTNFACE</span><span class="S8">)))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetColor.htm"><span class="S4">GUICtrlSetColor</span></a><span class="S8">(</span><span class="S9">$g_idEdt_Note</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SwitchColor.htm"><span class="S15">_WinAPI_SwitchColor</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetSysColor.htm"><span class="S15">_WinAPI_GetSysColor</span></a><span class="S8">(</span><span class="S9">$COLOR_WINDOWTEXT</span><span class="S8">)))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetColor.htm"><span class="S4">GUICtrlSetColor</span></a><span class="S8">(</span><span class="S9">$g_idChk_DarkMode</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SwitchColor.htm"><span class="S15">_WinAPI_SwitchColor</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetSysColor.htm"><span class="S15">_WinAPI_GetSysColor</span></a><span class="S8">(</span><span class="S9">$COLOR_WINDOWTEXT</span><span class="S8">)))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/GUICtrlSetColor.htm"><span class="S4">GUICtrlSetColor</span></a><span class="S8">(</span><span class="S9">$g_idChk_CustomColors</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_SwitchColor.htm"><span class="S15">_WinAPI_SwitchColor</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetSysColor.htm"><span class="S15">_WinAPI_GetSysColor</span></a><span class="S8">(</span><span class="S9">$COLOR_WINDOWTEXT</span><span class="S8">)))</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_RedrawWindow.htm"><span class="S15">_WinAPI_RedrawWindow</span></a><span class="S8">(</span><span class="S9">$g_hGUI</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$RDW_UPDATENOW</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinActivate.htm"><span class="S4">WinActivate</span></a><span class="S8">(</span><span class="S7">"[CLASS:Progman;]"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; To refresh the frame.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinActivate.htm"><span class="S4">WinActivate</span></a><span class="S8">(</span><span class="S9">$g_hGUI</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Only needed for the constant back and forth in this demo.</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;LetsSeeTheDifference</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> _WinAPI_DwmSetWindowAttribute_</span><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iAttribute</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iData</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aCall</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllCall.htm"><span class="S4">DllCall</span></a><span class="S8">(</span><span class="S7">'dwmapi.dll'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'long'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'DwmSetWindowAttribute'</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'hwnd'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'dword'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iAttribute</span><span class="S8">,</span><span class="S0"> </span><span class="S8">_</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S7">'dword*'</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$iData</span><span class="S8">,</span><span class="S0"> </span><span class="S7">'dword'</span><span class="S8">,</span><span class="S0"> </span><span class="S3">4</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/SetError.htm"><span class="S4">SetError</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$aCall</span><span class="S8">[</span><span class="S3">0</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/SetError.htm"><span class="S4">SetError</span></a><span class="S8">(</span><span class="S3">10</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aCall</span><span class="S8">[</span><span class="S3">0</span><span class="S8">],</span><span class="S0"> </span><span class="S3">0</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Return</span></a><span class="S0"> </span><span class="S3">1</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;_WinAPI_DwmSetWindowAttribute_</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
 </body>
 </html>

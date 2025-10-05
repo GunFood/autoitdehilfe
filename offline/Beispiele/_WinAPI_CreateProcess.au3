@@ -1,7 +1,6 @@
-#include <MsgBoxConstants.au3>
-#include <WinAPIMem.au3>
+#include <StructureConstants.au3>
+#include <WinAPIError.au3>
 #include <WinAPIProc.au3>
-#include <WinAPISys.au3>
 
 Local $tProcess = DllStructCreate($tagPROCESS_INFORMATION)
 Local $tStartup = DllStructCreate($tagSTARTUPINFO)

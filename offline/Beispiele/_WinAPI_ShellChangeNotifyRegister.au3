@@ -1,4 +1,3 @@
-#include <APIShellExConstants.au3>
 #include <MsgBoxConstants.au3>
 #include <WinAPIShellEx.au3>
 #include <WinAPISysWin.au3>

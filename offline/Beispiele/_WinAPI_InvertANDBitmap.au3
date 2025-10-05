@@ -1,3 +1,5 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <SendMessage.au3>
 #include <StaticConstants.au3>
@@ -7,7 +9,8 @@
 #include <WinAPIShellEx.au3>
 
 ; Extracts icon and create AND bitmask bitmap
-Local $hIcon = _WinAPI_ShellExtractIcon(@ScriptDir & '\Extras\Script.ico', 0, 128, 128)
+Local $sIco = _Extras_PathFull('Script.ico')
+Local $hIcon = _WinAPI_ShellExtractIcon($sIco, 0, 128, 128)
 Local $aInfo = _WinAPI_GetIconInfo($hIcon)
 _WinAPI_DeleteObject($aInfo[5])
 _WinAPI_DestroyIcon($hIcon)

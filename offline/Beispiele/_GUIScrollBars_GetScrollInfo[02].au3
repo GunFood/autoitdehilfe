@@ -1,7 +1,8 @@
 #include <GUIConstantsEx.au3>
 #include <GuiScrollBars.au3>
 #include <StructureConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -9,8 +10,8 @@ Func Example()
 	Local $hGUI = GUICreate("ScrollBars Get/Set ScrollInfo (v" & @AutoItVersion & ")", 400, 400, -1, -1, BitOR($WS_MINIMIZEBOX, $WS_CAPTION, $WS_POPUP, $WS_SYSMENU, $WS_SIZEBOX))
 	GUISetBkColor(0x88AABB)
 
-	Local $idFileMenu = GUICtrlCreateMenu("File")
-	Local $idExititem = GUICtrlCreateMenuItem("Exit", $idFileMenu)
+	Local $idMnu_File = GUICtrlCreateMenu("File")
+	Local $idMni_Exit = GUICtrlCreateMenuItem("Exit", $idMnu_File)
 	Local $idListview = GUICtrlCreateListView("col1  |col2|col3  ", 10, 10, 200, 150) ; ,$LVS_SORTDESCENDING)
 	Local $idButton = GUICtrlCreateButton("Value?", 75, 170, 70, 20)
 	GUICtrlSetResizing($idButton, $GUI_DOCKALL)
@@ -46,7 +47,7 @@ Func Example()
 
 	While 1
 		Switch GUIGetMsg()
-			Case $GUI_EVENT_CLOSE, $idExititem
+			Case $GUI_EVENT_CLOSE, $idMni_Exit
 				ExitLoop
 		EndSwitch
 	WEnd

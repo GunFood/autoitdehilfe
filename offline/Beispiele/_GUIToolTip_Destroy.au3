@@ -1,3 +1,5 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiToolTip.au3>
 
@@ -5,16 +7,20 @@
 Example()
 
 Func Example()
-	Local $hGUI = GUICreate(StringTrimRight(@ScriptName, StringLen(".exe")), 350, 200)
+	Local $hGUI = GUICreate("ToolTip Destroy - v(" & @AutoItVersion & ")", 450, 300, 100, 100)
 
-	Local $idButton = GUICtrlCreateButton("This is a button", 30, 32, 130, 28)
-	Local $hButton = GUICtrlGetHandle($idButton)
 	; create a tooltip control using default settings
 	Local $hToolTip = _GUIToolTip_Create(0)
+	_MemoSetHandleInProcess($hToolTip)
 
+	Local $idButton = GUICtrlCreateButton("Click to Destroy", 30, 32, 130, 28)
+	Local $hButton = GUICtrlGetHandle($idButton)
+
+;~ 	$hGUI = 0 ; is OK
 	; add a tool to the tooltip control
-	_GUIToolTip_AddTool($hToolTip, 0, "This is a ToolTip", $hButton)
-	_GUIToolTip_AddTool($hToolTip, 0, "ToolTip text for the GUI", $hGUI)
+	_GUIToolTip_AddTool($hToolTip, $hGUI, "This is a ToolTip", $hButton)
+	_GUIToolTip_AddTool($hToolTip, $hGUI, "ToolTip text for the GUI", $hGUI)
+
 	GUISetState(@SW_SHOW)
 
 	While 1
@@ -24,8 +30,10 @@ Func Example()
 			Case $idButton
 				; Destroys the tooltip control
 				_GUIToolTip_Destroy($hToolTip)
+				_MemoMsgBox($MB_SYSTEMMODAL, "Tool count", "Number of tools:" & @TAB & _GUIToolTip_GetToolCount($hToolTip))
 		EndSwitch
 	WEnd
+
 	; Destroy the tooltip control (in case the button hasn't been actioned yet)
 	_GUIToolTip_Destroy($hToolTip)
 	GUIDelete($hGUI)

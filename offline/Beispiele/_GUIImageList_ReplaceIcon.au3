@@ -2,7 +2,6 @@
 #include <GuiImageList.au3>
 #include <GuiListView.au3>
 #include <WinAPIIcons.au3>
-#include <WindowsConstants.au3>
 
 Example()
 

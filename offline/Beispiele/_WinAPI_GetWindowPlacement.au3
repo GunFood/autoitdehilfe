@@ -1,19 +1,17 @@
 #include <MsgBoxConstants.au3>
 #include <WinAPISysWin.au3>
 
-Local $hWnd, $iRET, $sMsg, $tRET
-
 ; Eine Notepad-Instanz erzeugen
 Run("notepad.exe")
-$hWnd = WinWait("[CLASS:Notepad]")
+Local $hWnd = WinWait("[CLASS:Notepad]")
 WinMove($hWnd, "", 256, 256, 400, 400)
 Sleep(1000)
 
 ; Minimiert das Fenster, danach Ausgabe der Positionswerte, die mit _WinAPI_GetWindowPlacement() ermittelt werden
 WinSetState($hWnd, "", @SW_MINIMIZE)
-$tRET = _WinAPI_GetWindowPlacement($hWnd)
+Local $tRET = _WinAPI_GetWindowPlacement($hWnd)
 If @error = 0 Then
-	$sMsg = "$stWindowPlacement:" & @CRLF
+	Local $sMsg = "$stWindowPlacement:" & @CRLF & @CRLF
 	$sMsg &= @TAB & "Länge der Struktur = " & DllStructGetData($tRET, "length") & " Byte" & @CRLF
 	$sMsg &= @TAB & "Flags = " & DllStructGetData($tRET, "flags") & @CRLF
 	$sMsg &= @TAB & "showCmd = " & DllStructGetData($tRET, "showCmd") & @CRLF & @CRLF
@@ -35,10 +33,10 @@ If @error = 0 Then
 	DllStructSetData($tRET, "rcNormalPosition", 128, 2) ; Oben
 	DllStructSetData($tRET, "rcNormalPosition", @DesktopWidth - 128, 3) ; Rechts
 	DllStructSetData($tRET, "rcNormalPosition", @DesktopHeight - 128, 4) ; Unten
-	$iRET = _WinAPI_SetWindowPlacement($hWnd, $tRET)
+	Local $iRET = _WinAPI_SetWindowPlacement($hWnd, $tRET)
 	If @error = 0 Then
 		WinSetState($hWnd, "", @SW_RESTORE)
-		ControlSetText($hWnd, "", "Edit1", "_WinAPI_SetWindowPlacement() war erfolgreich!")
+		ControlSetText($hWnd, "", ControlGetFocus($hWnd), "_WinAPI_SetWindowPlacement() war erfolgreich!")
 	Else
 		MsgBox($MB_SYSTEMMODAL, "Fehler", "_WinAPI_SetWindowPlacement() schlug fehl!" & @CRLF & _
 				"$iRET = " & $iRET & @CRLF & _

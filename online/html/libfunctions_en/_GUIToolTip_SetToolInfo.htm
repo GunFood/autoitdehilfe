@@ -16,22 +16,39 @@
 <p style="margin:2px 0 0 0;" class="funcdesc">Sets the information for a tool<br /></p>
 <p class="codeheader">
 #include &lt;GuiToolTip.au3&gt;<br />
-_GUIToolTip_SetToolInfo ( $hWnd, $sText [, $iID = 0 [, $iLeft = 0 [, $iTop = 0 [, $iRight = 0 [, $iBottom = 0 [, $iFlags = Default [, $iParam = 0]]]]]]] )<br />
+_GUIToolTip_SetToolInfo ( $hTool, $hWnd, $iID [, $sText = "" [, $iFlags = Default [, $iLeft = 0 [, $iTop = 0 [, $iRight = 0 [, $iBottom = 0 [, $hInst = 0 [, $iParam = 0]]]]]]]] )<br />
 </p>
 
 <h2>Parameters</h2>
 <table>
 <tr>
-<td style="width:15%">$hWnd</td>
+<td style="width:15%">$hTool</td>
 <td style="width:85%">Handle of the window that contains the tool, or 0</td>
 </tr>
 <tr>
-<td>$sText</td>
-<td>Text for the ToolTip control</td>
+<td>$hWnd</td>
+<td>Handle to the window that contains the tool</td>
 </tr>
 <tr>
 <td>$iID</td>
-<td><strong>[optional]</strong> 	Identifier of the tool, or Window handle of the control the tool is assigned to</td>
+<td>Identifier of the tool, or Window handle of the control the tool is assigned to</td>
+</tr>
+<tr>
+<td>$sText</td>
+<td><strong>[optional]</strong> Text for the ToolTip control</td>
+</tr>
+<tr>
+<td>$iFlags</td>
+<td><strong>[optional]</strong> Flags that control the ToolTip display:<br />
+&nbsp;&nbsp;&nbsp; $TTF_IDISHWND	- Indicates that $iID is a window or control handle, instead of the ID of the tool [default]<br />
+&nbsp;&nbsp;&nbsp; $TTF_CENTERTIP	- Centers the tooltip below the control specified by $iID<br />
+&nbsp;&nbsp;&nbsp; $TTF_RTLREADING	- Indicates that text will be displayed in the opposite direction (right to left)<br />
+&nbsp;&nbsp;&nbsp; $TTF_SUBCLASS	- Indicates that the control should subclass the tool's window [default]<br />
+&nbsp;&nbsp;&nbsp; $TTF_TRACK	- Positions the tooltip window next to the tool to which it corresponds<br />
+&nbsp;&nbsp;&nbsp; $TTF_ABSOLUTE	- Positions the window at the same coordinates provided by TTM_TRACKPOSITION. (see Remarks)<br />
+&nbsp;&nbsp;&nbsp; $TTF_TRANSPARENT- Causes the control to forward mouse messages to the parent window<br />
+&nbsp;&nbsp;&nbsp; $TTF_PARSELINKS	- Indicates that links in the control text should be displayed as links<br />
+Default = BitOr($TTF_SUBCLASS, $TTF_IDISHWND)</td>
 </tr>
 <tr>
 <td>$iLeft</td>
@@ -50,16 +67,8 @@ _GUIToolTip_SetToolInfo ( $hWnd, $sText [, $iID = 0 [, $iLeft = 0 [, $iTop = 0 [
 <td><strong>[optional]</strong> Y coordinate of the lower right corner of the rectangle</td>
 </tr>
 <tr>
-<td>$iFlags</td>
-<td><strong>[optional]</strong> Flags that control the ToolTip display:<br />
-&nbsp;&nbsp;&nbsp; $TTF_IDISHWND	- Indicates that $iID is a window or control handle, instead of the ID of the tool [default]<br />
-&nbsp;&nbsp;&nbsp; $TTF_CENTERTIP	- Centers the tooltip below the control specified by $iID<br />
-&nbsp;&nbsp;&nbsp; $TTF_RTLREADING	- Indicates that text will be displayed in the opposite direction (right to left)<br />
-&nbsp;&nbsp;&nbsp; $TTF_SUBCLASS	- Indicates that the control should subclass the tool's window [default]<br />
-&nbsp;&nbsp;&nbsp; $TTF_TRACK&nbsp;&nbsp;&nbsp; - Positions the tooltip window next to the tool to which it corresponds<br />
-&nbsp;&nbsp;&nbsp; $TTF_ABSOLUTE	- Positions the window at the same coordinates provided by TTM_TRACKPOSITION. (see Remarks)<br />
-&nbsp;&nbsp;&nbsp; $TTF_TRANSPARENT- Causes the control to forward mouse messages to the parent window<br />
-&nbsp;&nbsp;&nbsp; $TTF_PARSELINKS	- Indicates that links in the control text should be displayed as links</td>
+<td>$hInst</td>
+<td><strong>[optional]</strong> Handle to the instance that is associated with the tool</td>
 </tr>
 <tr>
 <td>$iParam</td>
@@ -68,11 +77,13 @@ _GUIToolTip_SetToolInfo ( $hWnd, $sText [, $iID = 0 [, $iLeft = 0 [, $iTop = 0 [
 </table>
 
 <h2>Return Value</h2>
-None.<br />
+See&nbsp;remark.<br />
 
 
 <h2>Remarks</h2>
-<p>Some internal properties of a tool are established when the tool is created, and are not recomputed when a $TTM_SETTOOLINFO message is sent.<br />
+<p>If $hWnd referenced control is not in the same process and both processes run in different AutoIt mode (@AutoItVersion), the @error is set to 6.<br />
+<br />
+Some internal properties of a tool are established when the tool is created, and are not recomputed when a $TTM_SETTOOLINFO message is sent.<br />
 If you simply assign values to a TOOLINFO structure and pass it to the ToolTip control with a $TTM_SETTOOLINFO message, these properties may be lost.<br />
 Instead your application should first request the tool's current TOOLINFO structure by sending a $TTM_GETTOOLINFO message.<br />
 Then, modify the members of this structure as needed and pass it back to the ToolTip control with $TTM_SETTOOLINFO.<br />

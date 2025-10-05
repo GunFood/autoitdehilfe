@@ -1,8 +1,10 @@
-#include <GuiConstantsEx.au3>
-#include <GuiMonthCal.au3>
-#include <WindowsConstants.au3>
+#include "Extras\HelpFileInternals.au3"
 
-Global $g_idMemo
+#include <GUIConstantsEx.au3>
+#include <GuiMonthCal.au3>
+#include <WindowsStylesConstants.au3>
+
+Global $_g_idLst_Memo
 
 Example()
 
@@ -12,16 +14,15 @@ Func Example()
 	Local $idMonthCal = GUICtrlCreateMonthCal("", 4, 4, -1, -1, BitOR($WS_BORDER, $MCS_MULTISELECT), 0x00000000)
 
 	; Erstellt ein Memo Control
-	$g_idMemo = GUICtrlCreateEdit("", 4, 168, 412, 128, 0)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(4, 168, 412, 128, 0)
 	GUISetState(@SW_SHOW)
 
 	; Ermittelt Datumsinformationen, welche das höchste und niedrigste Anzeigelimit aufzeigen
 	Local $tRange = _GUICtrlMonthCal_GetMonthRange($idMonthCal)
-	MemoWrite("niedrigste Anzeigelimit: " & StringFormat("%02d/%02d/%04d", DllStructGetData($tRange, "MinMonth"), _
+	_MemoWrite("niedrigste Anzeigelimit: " & StringFormat("%02d/%02d/%04d", DllStructGetData($tRange, "MinMonth"), _
 			DllStructGetData($tRange, "MinDay"), _
 			DllStructGetData($tRange, "MinYear")))
-	MemoWrite("höchstes Anzeigelimit: " & StringFormat("%02d/%02d/%04d", DllStructGetData($tRange, "MaxMonth"), _
+	_MemoWrite("höchstes Anzeigelimit: " & StringFormat("%02d/%02d/%04d", DllStructGetData($tRange, "MaxMonth"), _
 			DllStructGetData($tRange, "MaxDay"), _
 			DllStructGetData($tRange, "MaxYear")))
 
@@ -30,8 +31,3 @@ Func Example()
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()
 EndFunc   ;==>Example
-
-; Schreibt eine Nachricht in das Memo
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

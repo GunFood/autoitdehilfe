@@ -5,16 +5,16 @@
 Example()
 
 Func Example()
-	Local $iMsg, $idBtnFocus, $hWin, $sText
+	Local $iMsg, $idBtn_Focus, $hWin, $sText
 	GUICreate("__WinAPI_GetFocus Beispiel", 300, 200)
-	$idBtnFocus = GUICtrlCreateButton("Fokus ermitteln", 50, 85, 100, 30)
+	$idBtn_Focus = GUICtrlCreateButton("Fokus ermitteln", 50, 85, 100, 30)
 	GUISetState(@SW_SHOW)
 	While 1
 		$iMsg = GUIGetMsg()
 		Select
 			Case $iMsg = $GUI_EVENT_CLOSE
 				Exit
-			Case $iMsg = $idBtnFocus
+			Case $iMsg = $idBtn_Focus
 				$hWin = _WinAPI_GetFocus()
 				$sText = "Kompletter Titel: " & WinGetTitle($hWin) & @CRLF
 				$sText &= "Kompletter Text: " & WinGetText($hWin) & @CRLF

@@ -1,20 +1,22 @@
-#include <Extras\WM_NOTIFY.au3>
-#include <GuiConstantsEx.au3>
-#include <GuiIPAddress.au3>
-#include <WindowsConstants.au3>
+#include "Extras\WM_NOTIFY.au3"
 
-Global $g_hIPAddress, $g_idMemo
+#include <GUIConstantsEx.au3>
+#include <GuiIPAddress.au3>
+#include <StructureConstants.au3>
+#include <WindowsStylesConstants.au3>
+
+Global $g_hIPAddress, $_g_idLst_Memo
 
 Example()
 
 Func Example()
 	Local $hGui = GUICreate("IpAddress: Erstellen (v" & @AutoItVersion & ")", 400, 300)
 	$g_hIPAddress = _GUICtrlIpAddress_Create($hGui, 10, 10)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 35, 396, 264, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	$_g_idLst_Memo = GUICtrlCreateEdit("", 2, 35, 396, 264, $WS_VSCROLL)
+	GUICtrlSetFont($_g_idLst_Memo, 9, 400, 0, "Courier New")
 	GUISetState(@SW_SHOW)
 
-	_WM_NOTIFY_Register($g_idMemo)
+	_WM_NOTIFY_Register($_g_idLst_Memo)
 
 	_GUICtrlIpAddress_Set($g_hIPAddress, "24.168.2.128")
 

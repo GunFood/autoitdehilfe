@@ -1,8 +1,8 @@
+#include <MsgBoxConstants.au3>
 #include <WinAPIGdi.au3>
 #include <WinAPIGdiDC.au3>
 #include <WinAPIHObj.au3>
 #include <WinAPISysWin.au3>
-#include <WindowsConstants.au3>
 
 If Not @Compiled Then Exit MsgBox($MB_ICONWARNING, "_WinAPI_CreatePen Beispielskript", _
 		"Wenn das Skript von SciTE aus ausgeführt wird, funktioniert es nicht richtig, weil SciTE den Bildschirm aktualisiert. Daher wird das Kreuz nicht vollständig gezeichnet und verschwindet in einem Sekundenbruchteil!" & _

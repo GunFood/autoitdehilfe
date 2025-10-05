@@ -1,6 +1,6 @@
+#include <Array.au3> ; Notwendig für _ArrayDisplay.
 #include <AutoItConstants.au3>
 #include <MsgBoxConstants.au3>
-#include <Array.au3> ; Required for _ArrayDisplay.
 
 Example()
 

@@ -21,9 +21,9 @@ Func Example()
 	Local $sTitle = "TCP Start"
 	Local $hGUI = GUICreate($sTitle, 250, 70)
 
-	Local $idBtnServer = GUICtrlCreateButton("1. Server", 10, 10, 130, 22)
+	Local $idBtn_Server = GUICtrlCreateButton("1. Server", 65, 10, 130, 22)
 
-	Local $idBtnClient = GUICtrlCreateButton("2. Client", 10, 40, 130, 22)
+	Local $idBtn_Client = GUICtrlCreateButton("2. Client", 65, 40, 130, 22)
 
 	GUISetState(@SW_SHOW, $hGUI)
 
@@ -31,15 +31,15 @@ Func Example()
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE
 				ExitLoop
-			Case $idBtnServer
+			Case $idBtn_Server
 				WinSetTitle($sTitle, "", "TCP Server gestartet")
-				GUICtrlSetState($idBtnClient, $GUI_HIDE)
-				GUICtrlSetState($idBtnServer, $GUI_DISABLE)
+				GUICtrlSetState($idBtn_Client, $GUI_HIDE)
+				GUICtrlSetState($idBtn_Server, $GUI_DISABLE)
 				If Not MyTCP_Server($sIPAddress, $iPort) Then ExitLoop
-			Case $idBtnClient
+			Case $idBtn_Client
 				WinSetTitle($sTitle, "", "TCP Client gestartet")
-				GUICtrlSetState($idBtnServer, $GUI_HIDE)
-				GUICtrlSetState($idBtnClient, $GUI_DISABLE)
+				GUICtrlSetState($idBtn_Server, $GUI_HIDE)
+				GUICtrlSetState($idBtn_Client, $GUI_DISABLE)
 				If Not MyTCP_Client($sIPAddress, $iPort) Then ExitLoop
 		EndSwitch
 

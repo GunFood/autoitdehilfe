@@ -2,14 +2,12 @@
 #include <GuiToolbar.au3>
 #include <MsgBoxConstants.au3>
 #include <WinAPIConstants.au3>
-#include <WindowsConstants.au3>
-
 
 Example()
 
 Func Example()
 	Local $hGui, $hToolbar, $bStyle
-	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
+	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $e_idHelp
 
 	; Erstellt eine GUI
 	$hGui = GUICreate("Toolbar", 400, 300)
@@ -29,7 +27,7 @@ Func Example()
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idOpen, $STD_FILEOPEN)
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idSave, $STD_FILESAVE)
 	_GUICtrlToolbar_AddButtonSep($hToolbar)
-	_GUICtrlToolbar_AddButton($hToolbar, $idHelp, $STD_HELP)
+	_GUICtrlToolbar_AddButton($hToolbar, $e_idHelp, $STD_HELP)
 
 	; Ändert den Stil des Controls
 	$bStyle = _GUICtrlToolbar_GetStyleToolTips($hToolbar)

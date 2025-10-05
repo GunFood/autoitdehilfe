@@ -1,7 +1,5 @@
-#include <APIGdiConstants.au3>
-#include <APIResConstants.au3>
-#include <ComboConstants.au3>
 #include <EditConstants.au3>
+#include <FileConstants.au3>
 #include <GDIPlus.au3>
 #include <GuiComboBox.au3>
 #include <GUIConstantsEx.au3>
@@ -12,7 +10,8 @@
 #include <WinAPIGdi.au3>
 #include <WinAPIHObj.au3>
 #include <WinAPIShPath.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Opt('GUICloseOnESC', 0)
 Opt('TrayAutoPause', 0)
@@ -40,7 +39,7 @@ While 1
 	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Fehler', 'Es konnte kein Bild geladen werden.')
 WEnd
 
-Local $hForm = GUICreate(_WinAPI_PathStripPath($sData), $W, $H)
+Local $hForm = GUICreate(_WinAPI_PathStripPath($sData), $W, $H, (@DesktopWidth - 303) / 2 - $W)
 GUICtrlCreatePic('', 0, 0, $W, $H)
 GUICtrlSetState(-1, $GUI_DISABLE)
 Local $hPic = GUICtrlGetHandle(-1)
@@ -52,12 +51,14 @@ GUICtrlCreateGraphic(0, 436, 303, 1)
 GUICtrlSetState(-1, $GUI_DISABLE)
 GUICtrlSetBkColor(-1, 0xDFDFDF)
 Global $g_aidSlider[9][6] = [[0, 0, 'Rot', 25, 650, 100], [0, 0, 'Grün', 25, 650, 100], [0, 0, 'Blau', 25, 650, 100], [0, 0, 'Schwarz', 0, 400, 10], [0, 0, 'Weiß', 600, 1000, 10], [0, 0, 'Kontrast', -100, 100, 1], [0, 0, 'Helligkeit', -100, 100, 1], [0, 0, 'Sättigung', -100, 100, 1], [0, 0, 'Farbton', -100, 100, 1]]
+Local $idInput
 For $i = 0 To 8
 	GUICtrlCreateLabel($g_aidSlider[$i][2] & ':', 10, 21 + $i * 31, 60, 14, $SS_RIGHT)
 	GUICtrlSetBkColor(-1, 0xFFFFFF)
-	$g_aidSlider[$i][2] = GUICtrlCreateInput('', 243, 18 + $i * 31, 49, 19, BitOR($ES_CENTER, $ES_READONLY))
+	$idInput = GUICtrlCreateInput('', 243, 18 + $i * 31, 49, 19, BitOR($ES_CENTER, $ES_READONLY))
 	GUICtrlSetFont(-1, 9.3, 400, 0, 'Arial')
 	GUICtrlSetBkColor(-1, 0xFFFFFF)
+	$g_aidSlider[$i][2] = $idInput
 	$g_aidSlider[$i][0] = GUICtrlCreateSlider(71, 19 + $i * 31, 170, 20, BitOR($TBS_BOTH, $TBS_NOTICKS))
 	GUICtrlSetLimit(-1, $g_aidSlider[$i][4], $g_aidSlider[$i][3])
 	$g_aidSlider[$i][1] = GUICtrlGetHandle(-1)

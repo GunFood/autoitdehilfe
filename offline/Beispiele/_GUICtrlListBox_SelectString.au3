@@ -25,7 +25,7 @@ Func Example()
 	_GUICtrlListBox_EndUpdate($idListBox)
 
 	; String auswählen
-	MsgBox($MB_SYSTEMMODAL, "Information", "Index des Zielstrings: " & _GUICtrlListBox_SelectString($idListBox, "020 : Z"));
+	MsgBox($MB_SYSTEMMODAL, "Information", "Index des Zielstrings: " & _GUICtrlListBox_SelectString($idListBox, "020 : Z")) ;
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

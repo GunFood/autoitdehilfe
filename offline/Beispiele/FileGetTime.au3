@@ -13,7 +13,7 @@ Func Example()
 
 	; Zeigt den modifizierten Zeitstempel der Datei und gibt diesen im Format YYYYMMDDHHMMSS zurück.
 	If $iFileSetTime Then
-		MsgBox($MB_SYSTEMMODAL, "", "Zeitstempel:" & @CRLF & FileGetTime($sFilePath, $FT_MODIFIED, 1))
+		MsgBox($MB_SYSTEMMODAL, "", "Zeitstempel:" & @CRLF & FileGetTime($sFilePath, $FT_MODIFIED, $FT_STRING))
 	Else
 		MsgBox($MB_SYSTEMMODAL, "", "Es ist während dem setzen des Zeitstempels der Datei ein Fehler aufgetreten.")
 	EndIf

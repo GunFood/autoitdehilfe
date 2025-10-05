@@ -1,3 +1,5 @@
+#include "Extras\HelpFileInternals.au3"
+
 Example()
 
 Func Example()
@@ -8,7 +10,7 @@ Func Example()
 	Local $hWnd = WinWait("[CLASS:Notepad]", "", 10)
 
 	; Sendet einen Mausklick an das Edit-Control des Editor. Dabei wird das von WinWait zurückgegebenen Handle verwendet.
-	ControlClick($hWnd, "", "Edit1")
+	ControlClick($hWnd, "", ControlGetFocus($hWnd))
 
 	; Wartet 2 Sekunden.
 	Sleep(2000)

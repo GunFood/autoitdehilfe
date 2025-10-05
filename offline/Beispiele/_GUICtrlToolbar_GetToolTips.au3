@@ -3,7 +3,7 @@
 #include <GuiToolTip.au3>
 #include <MsgBoxConstants.au3>
 #include <WinAPIConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
 
 Global Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $e_idHelp
 
@@ -35,7 +35,7 @@ Func Example()
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idOpen, $STD_FILEOPEN)
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idSave, $STD_FILESAVE)
 	_GUICtrlToolbar_AddButtonSep($hToolbar)
-	_GUICtrlToolbar_AddButton($hToolbar, $idHelp, $STD_HELP)
+	_GUICtrlToolbar_AddButton($hToolbar, $e_idHelp, $STD_HELP)
 
 	; Zeigt das Handle des ToolTips
 	MsgBox($MB_SYSTEMMODAL, "Information", "Handle des ToolTip .: 0x" & Hex(_GUICtrlToolbar_GetToolTips($hToolbar)))
@@ -63,7 +63,7 @@ Func WM_NOTIFY($hWnd, $iMsg, $wParam, $lParam)
 				DllStructSetData($tInfo, "aText", "Öffnen")
 			Case $e_idSave
 				DllStructSetData($tInfo, "aText", "Speichern")
-			Case $idHelp
+			Case $e_idHelp
 				DllStructSetData($tInfo, "aText", "Hilfe")
 		EndSwitch
 	EndIf

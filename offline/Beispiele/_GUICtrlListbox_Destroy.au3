@@ -1,3 +1,4 @@
+#include <DirConstants.au3>
 #include <GUIConstantsEx.au3>
 #include <GuiListBox.au3>
 #include <MsgBoxConstants.au3>

@@ -1,6 +1,6 @@
 #include <EditConstants.au3>
 #include <GUIConstantsEx.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -13,9 +13,9 @@ Func Example()
 	GUICtrlCreateLabel("Eingabeaufforderung", 8, 7) ; Fügt Info hinzu
 	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKTOP)
 
-	Local $idButton_Edit = GUICtrlCreateInput("Standard", -1, 3, 175, 20, $ES_PASSWORD) ; Fügt das Input-Control hinzu
-	GUICtrlSetState($idButton_Edit, $GUI_FOCUS)
-	GUICtrlSetResizing($idButton_Edit, $GUI_DOCKBOTTOM + $GUI_DOCKHEIGHT)
+	Local $idInp_Button = GUICtrlCreateInput("Standard", -1, 3, 175, 20, $ES_PASSWORD) ; Fügt das Input-Control hinzu
+	GUICtrlSetState($idInp_Button, $GUI_FOCUS)
+	GUICtrlSetResizing($idInp_Button, $GUI_DOCKBOTTOM + $GUI_DOCKHEIGHT)
 
 	Local $idButton_OK = GUICtrlCreateButton("OK", -1, 3, 75, 24) ; Fügt den Button hinzu, der die GUI schliesst
 	GUICtrlSetResizing($idButton_OK, $GUI_DOCKBOTTOM + $GUI_DOCKSIZE + $GUI_DOCKHCENTER)

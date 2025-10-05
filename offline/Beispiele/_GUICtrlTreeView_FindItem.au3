@@ -1,7 +1,7 @@
 #include <GUIConstantsEx.au3>
 #include <GuiTreeView.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -16,18 +16,18 @@ Func Example()
 ;~     _GUICtrlTreeView_SetUnicodeFormat($idTreeview, False)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeview)
-	Local $aidItem[10]
+	Local $aidTVi_Item[10]
 	For $x = 0 To 3
-		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeview)
+		$aidTVi_Item[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeview)
 		For $y = 0 To 2
-			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $y), $aidItem[$x])
+			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $y), $aidTVi_Item[$x])
 		Next
 	Next
-	$aidItem[4] = GUICtrlCreateTreeViewItem(StringFormat("Suchst du nach mir?", $x), $idTreeview)
+	$aidTVi_Item[4] = GUICtrlCreateTreeViewItem(StringFormat("Suchst du nach mir?", $x), $idTreeview)
 	For $x = 5 To 9
-		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeview)
+		$aidTVi_Item[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeview)
 		For $y = 0 To 2
-			GUICtrlCreateTreeViewItem(StringFormat("[%02d] NeuesItem", $y), $aidItem[$x])
+			GUICtrlCreateTreeViewItem(StringFormat("[%02d] NeuesItem", $y), $aidTVi_Item[$x])
 		Next
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeview)

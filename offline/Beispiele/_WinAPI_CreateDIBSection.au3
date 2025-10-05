@@ -1,4 +1,3 @@
-#include <APIGdiConstants.au3>
 #include <GUIConstantsEx.au3>
 #include <SendMessage.au3>
 #include <StaticConstants.au3>

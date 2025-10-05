@@ -1,3 +1,5 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <SendMessage.au3>
 #include <SliderConstants.au3>
@@ -8,12 +10,13 @@
 #include <WinAPIMisc.au3>
 #include <WinAPIRes.au3>
 #include <WinAPISysWin.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
 
 Opt('TrayAutoPause', 0)
 
 ; Load image
-Global $g_hBitmap = _WinAPI_LoadImage(0, @ScriptDir & '\Extras\Compass.bmp', $IMAGE_BITMAP, 0, 0, $LR_LOADFROMFILE)
+Local $sBmp = _Extras_PathFull('Compass.bmp')
+Global $g_hBitmap = _WinAPI_LoadImage(0, $sBmp, $IMAGE_BITMAP, 0, 0, $LR_LOADFROMFILE)
 Local $tSIZE = _WinAPI_GetBitmapDimension($g_hBitmap)
 Local $W = DllStructGetData($tSIZE, 'X')
 Local $H = DllStructGetData($tSIZE, 'Y')

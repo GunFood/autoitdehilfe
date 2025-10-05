@@ -29,7 +29,7 @@ Func Example()
 	Local $sIPAddress = "127.0.0.1" ; This IP Address only works for testing on your own computer.
 	Local $iPort = 65432 ; Port used for the connection.
 
-	; Assign a Local variable the socket and bind to the IP Address and Port specified with a maximum of 100 pending connexions.
+	; Assign a Local variable the socket and bind to the IP Address and Port specified with a maximum of 100 pending connections.
 	Local $iListenSocket = TCPListen($sIPAddress, $iPort, 100)
 
 	; If an error occurred display the error code and return False.
@@ -43,7 +43,7 @@ Func Example()
 	Local $iSocket = 0
 
 	Do ; Wait for someone to connect (Unlimited).
-		; Accept incomming connexions if present (Socket to close when finished; one socket per client).
+		; Accept incomming connections if present (Socket to close when finished; one socket per client).
 		$iSocket = TCPAccept($iListenSocket)
 
 		; If an error occurred display the error code and return False.

@@ -34,7 +34,7 @@ Func Example()
 		Return False
 	EndIf
 
-	; Anmerkungen: - Die Strukturen zeigen auf dieselbe Struktur (sie haben denselben Zeiger).
+	; Bemerkungen: - Die Strukturen zeigen auf dieselbe Struktur (sie haben denselben Zeiger).
 	; Das erste Element kam mit:
 	; *tSTRUCT1 Struktur wird ein int sein.
 	; *tSTRUCT2 Struktur wird ein unsigned int sein (das Element wurde gecasted von int zu uint).

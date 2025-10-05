@@ -1,3 +1,5 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>
 #include <SendMessage.au3>
@@ -15,7 +17,8 @@ GUICtrlCreateIcon('', 0, 64, 64, 196, 196)
 Local $h_Icon = GUICtrlGetHandle(-1)
 GUISetState(@SW_SHOW)
 
-Local $hIcon = _WinAPI_LoadIconWithScaleDown(0, @ScriptDir & '\Extras\Soccer.ico', 196, 196)
+Local $sIco = _Extras_PathFull('Soccer.ico')
+Local $hIcon = _WinAPI_LoadIconWithScaleDown(0, $sIco, 196, 196)
 Local $hPrev = _SendMessage($h_Icon, $STM_SETIMAGE, 1, $hIcon)
 If $hPrev Then
 	_WinAPI_DestroyIcon($hPrev)

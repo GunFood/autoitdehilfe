@@ -1,11 +1,10 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GDIPlus.au3>
 #include <GUIConstantsEx.au3>
 #include <ScreenCapture.au3>
 #include <WinAPIHObj.au3>
-#include <WindowsConstants.au3>
-
-
-Global $g_idMemo
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -14,8 +13,7 @@ Func Example()
 
 	; Erstellt eine GUI
 	GUICreate("GDI+", 600, 400)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 596, 396, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 2, 596, 396, $WS_VSCROLL)
 	GUISetState(@SW_SHOW)
 
 	; Initialisiert (startet) Microsoft Windows GDI+
@@ -26,7 +24,7 @@ Func Example()
 	$hImage = _GDIPlus_BitmapCreateFromHBITMAP($hBitmap)
 
 	; Zeigt die vertikale Auslösung des Bildes in DPI (dots per inch)
-	MemoWrite("VerticalResolution DPI : " & _GDIPlus_ImageGetVerticalResolution($hImage));
+	_MemoWrite("VerticalResolution DPI : " & _GDIPlus_ImageGetVerticalResolution($hImage));
 
 	; Ressourcen freigeben
 	_GDIPlus_ImageDispose($hImage)
@@ -39,8 +37,3 @@ Func Example()
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage = '')
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

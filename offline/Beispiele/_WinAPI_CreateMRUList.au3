@@ -1,4 +1,3 @@
-#include <APIRegConstants.au3>
 #include <ComboConstants.au3>
 #include <GUIConstantsEx.au3>
 #include <WinAPIReg.au3>

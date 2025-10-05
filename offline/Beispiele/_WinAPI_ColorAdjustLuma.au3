@@ -2,7 +2,7 @@
 #include <SliderConstants.au3>
 #include <StaticConstants.au3>
 #include <WinAPIGdi.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
 
 Opt('TrayAutoPause', 0)
 

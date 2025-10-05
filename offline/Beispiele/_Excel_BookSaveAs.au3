@@ -1,12 +1,14 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <Excel.au3>
 #include <MsgBoxConstants.au3>
 
 ; Erstellen des Anwendungsobjektes und Öffnen eines Beispiel Workbooks
 Local $oExcel = _Excel_Open()
 If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_BookSaveAs Beispiel", "Fehler beim Erstellen des Excel Objektes." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
-Local $oWorkbook = _Excel_BookOpen($oExcel, @ScriptDir & "\Extras\_Excel1.xls")
+Local $oWorkbook = _Excel_BookOpen($oExcel, _Extras_PathFull("_Excel1.xls"))
 If @error Then
-	MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_BookSaveAs Beispiel", "Fehler beim Öffnen des Workbooks '" & @ScriptDir & "\Extras\_Excel1.xls'." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
+	MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_BookSaveAs Beispiel", "Fehler beim Öffnen des Workbooks '" & _Extras_PathFull("_Excel1.xls") & "'." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
 	_Excel_Close($oExcel)
 	Exit
 EndIf

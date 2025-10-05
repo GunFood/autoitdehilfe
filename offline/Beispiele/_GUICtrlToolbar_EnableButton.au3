@@ -1,14 +1,12 @@
 #include <GUIConstantsEx.au3>
 #include <GuiToolbar.au3>
 #include <WinAPIConstants.au3>
-#include <WindowsConstants.au3>
-
 
 Example()
 
 Func Example()
 	Local $hGui, $hToolbar
-	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
+	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $e_idHelp
 
 	; Erstellt eine GUI
 	$hGui = GUICreate("Toolbar", 400, 300)
@@ -23,10 +21,10 @@ Func Example()
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idOpen, $STD_FILEOPEN)
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idSave, $STD_FILESAVE)
 	_GUICtrlToolbar_AddButtonSep($hToolbar)
-	_GUICtrlToolbar_AddButton($hToolbar, $idHelp, $STD_HELP)
+	_GUICtrlToolbar_AddButton($hToolbar, $e_idHelp, $STD_HELP)
 
 	; Deaktiviert den Hilfe Button
-	_GUICtrlToolbar_EnableButton($hToolbar, $idHelp, False)
+	_GUICtrlToolbar_EnableButton($hToolbar, $e_idHelp, False)
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

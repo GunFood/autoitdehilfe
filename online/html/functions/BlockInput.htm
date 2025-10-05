@@ -51,18 +51,18 @@ Die folgende Tabelle zeigt, wie das Verhalten von BlockInput von der Windowsvers
 </tr>
 <tr>
 <td>Windows XP</td>
-<td>Benutzereingaben blockiert und AutoIt kann Maus- und Tastatureingaben simulieren.</td>
+<td>Benutzereingaben blockiert. AutoIt kann Maus- und Tastatureingaben simulieren.</td>
 </tr>
 <tr>
 <td>Windows Vista und neuer</td>
-<td>Benutzereingaben blockiert und AutoIt kann Maus- und Tastatureingaben simulieren falls #requireAdmin verwendet wird.</td>
+<td>Die Benutzereingabe wird blockiert, wenn <strong>#RequireAdmin</strong> verwendet wird. AutoIt kann Maus- und Tastatureingaben simulieren.</td>
 </tr>
 </table><br />
-<a href="BlockInput.htm">BlockInput()</a> verhindert nur Benutzereingaben. Eingaben von den Funktionen wie <a href="Send.htm">Send()</a> oder <a href="MouseMove.htm">MouseMove()</a> funktionieren weiterhin.<br />
+<a href="BlockInput.htm">BlockInput()</a> verhindert nur Benutzereingaben. Eingaben von den Funktionen wie <a href="Send.htm">Send()</a>, <a href="ControlSend.htm">ControlSend()</a> oder <a href="MouseMove.htm">MouseMove()</a> funktionieren weiterhin.<br />
 </p>
 
 <h2>Verwandte Funktionen</h2>
-<p><a href="Send.htm">Send</a></p>
+<p><a href="Send.htm">Send</a>, <a href="ControlSend.htm">ControlSend</a>, <a href="MouseMove.htm">MouseMove</a></p>
 
 <h2 class="bottom">Beispiel</h2>
 <script type="text/javascript">
@@ -98,6 +98,8 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <pre>
 <span><a class="codeSnippetLink" href="../keywords/RequireAdmin.htm"><span class="S11">#RequireAdmin</span></a>
 
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">"Extras\HelpFileInternals.au3"</span>
+
 <a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;AutoItConstants.au3&gt;</span>
 
 <span class="S0">Example</span><span class="S8">()</span>
@@ -109,30 +111,31 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Wartet maximal 10 Sekunden bis das Editorfenster erscheint.</span>
 <span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hWnd</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/WinWait.htm"><span class="S4">WinWait</span></a><span class="S8">(</span><span class="S7">"[CLASS:Notepad]"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">10</span><span class="S8">)</span>
 
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Ruft das Steuerelement ab, das den Tastaturfokus in Notepad hat.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sEditControl</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/ControlGetFocus.htm"><span class="S4">ControlGetFocus</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">)</span>
+
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Deaktiviert die Benutzereingaben durch die Maus und Tastatur.</span>
 <span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/BlockInput.htm"><span class="S4">BlockInput</span></a><span class="S8">(</span><span class="S9">$BI_DISABLE</span><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Tippen hat keine Auswirkung</span>
 
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Wartet 2 Sekunden</span>
 <span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">2000</span><span class="S8">)</span>
 
-<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Sendet die 'F5'-Taste an das Edit-Control des Editors um das Datum und die Uhrzeit anzuzeigen. Das Handle welches durch WinWait zur&uuml;ckgegeben wurde, wird f&uuml;r den "title" Parameter von ControlSend verwendet.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ControlSend.htm"><span class="S4">ControlSend</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Edit1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"</span><span class="S10">{F5}</span><span class="S7">"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Sendet die 'F5'-Taste an das Edit-Control des Editors um das Datum und die Uhrzeit anzuzeigen.</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Das Handle welches durch WinWait zur&uuml;ckgegeben wurde, wird f&uuml;r den "title" Parameter von ControlSend verwendet.</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Der Befehl „controlSend“ wird auch dann ausgef&uuml;hrt, wenn „BlockInput()“ deaktiviert ist.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ControlSend.htm"><span class="S4">ControlSend</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$sEditControl</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"</span><span class="S10">{F5}</span><span class="S7">"</span><span class="S8">)</span>
 
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Aktiviert die Benutzereingaben durch die Maus und Tastatur.</span>
 <span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/BlockInput.htm"><span class="S4">BlockInput</span></a><span class="S8">(</span><span class="S9">$BI_ENABLE</span><span class="S8">)</span>
 
-<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Wartet 2 Sekunden</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">2000</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Tippen hat keine Auswirkung</span>
 
-<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Schlie&szlig;t das Editorfenster durch die Verwendung des von WinWait zur&uuml;ckgegebenen Handles.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinClose.htm"><span class="S4">WinClose</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Wartet 4 Sekunden, um zu pr&uuml;fen, ob die Eingabe aktiviert ist</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">4000</span><span class="S8">)</span>
 
-<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Nun erscheint eine Meldung mit der Frage, ob die &Auml;nderungen gespeichert werden sollen.</span>
-<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Der Klassenname (classname) des Fenster lautet "#32770".</span>
-<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Anschlie&szlig;end wird die "TAB"-Taste gedr&uuml;ckt um zum zweiten Button zu wechseln. Dieser wird automatisch durch dr&uuml;cken der "ENTER"-Taste bet&auml;tigt, so dass die Datei nicht gespeichert wird.</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinWaitActive.htm"><span class="S4">WinWaitActive</span></a><span class="S8">(</span><span class="S7">"[CLASS:#32770]"</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">500</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Send.htm"><span class="S4">Send</span></a><span class="S8">(</span><span class="S7">"</span><span class="S10">{TAB}{ENTER}</span><span class="S7">"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; _NotepadForceClose</span><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">)</span>
 <a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
 <span class="S0"></span></span>
 </pre>

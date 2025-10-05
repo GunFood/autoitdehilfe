@@ -1,4 +1,6 @@
-#include <GuiConstantsEx.au3>
+#include "Extras\HelpFileInternals.au3"
+
+#include <GUIConstantsEx.au3>
 #include <GuiStatusBar.au3>
 #include <ProgressConstants.au3>
 #include <SendMessage.au3>
@@ -7,11 +9,14 @@ Example()
 
 Func Example()
 	; Erstellt eine GUI
-	Local $hGUI = GUICreate("StatusBar: Control einbinden (v" & @AutoItVersion & ")", 500, 300)
+	Local $hGUI = GUICreate("StatusBar: Control einbinden (v" & @AutoItVersion & ")", 500, 300, 100, 100)
 
 	; Standard ist 1 Abschnitt und kein Text
 	Local $hStatus = _GUICtrlStatusBar_Create($hGUI)
 	_GUICtrlStatusBar_SetMinHeight($hStatus, 20)
+
+	; Erstellt ein Memo Control
+	_MemoCreate(2, 8, 444, 259)
 
 	GUISetState(@SW_SHOW)
 
@@ -37,6 +42,8 @@ Func Example()
 	Local $idInput = GUICtrlCreateInput("Dies wurde eingebunden", 0, 0)
 	Local $hInput = GUICtrlGetHandle($idInput)
 	_GUICtrlStatusBar_EmbedControl($hStatus, 3, $hInput, 3)
+
+	_MemoMsgBoxStatus("", -1, $hGUI) ; Keine weiteren Aktionen, es wird gewartet bis die GUI geschlossen wird.
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

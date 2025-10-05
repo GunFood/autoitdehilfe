@@ -1,22 +1,22 @@
 #include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>
 #include <WinAPISysWin.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Local $hGui = GUICreate("Trans", 300, 400, -1, -1, -1, $WS_EX_LAYERED)
 GUICtrlCreateLabel("Dies ist ein Text auf einem transparenten mehrlagigen GUI", 10, 10, 200, 40, -1, $Gui_WS_EX_PARENTDRAG)
 GUICtrlSetTip(-1, "Klicke Label um mehrlagiges Fenster zu ziehen")
-Local $idLayButt = GUICtrlCreateButton("Button", 10, 40, 40)
+Local $idBtn_LayButt = GUICtrlCreateButton("Button", 10, 40, 40)
 GUISetBkColor(0xABCDEF)
 _WinAPI_SetLayeredWindowAttributes($hGui, 0x010101)
 GUISetState(@SW_SHOW)
 
 Local $hGuicontrol = GUICreate("ControlGUI", 300, 400, 100, 100)
-Local $idCheckTrans = GUICtrlCreateCheckbox("Transparente Farbe 0xABCDEF (markiert) oder 0x010101", 10, 10)
-Local $idCheckBorder = GUICtrlCreateCheckbox("POPUP-Stil", 10, 30)
+Local $idChk_CheckTrans = GUICtrlCreateCheckbox("Transparente Farbe 0xABCDEF (markiert) oder 0x010101", 10, 10)
+Local $idChk_CheckBorder = GUICtrlCreateCheckbox("POPUP-Stil", 10, 30)
 GUICtrlCreateLabel("Transparenz für mehrlagiges GUI", 10, 50)
-Local $idSlTrans = GUICtrlCreateSlider(10, 70, 200, 30)
-GUICtrlSetLimit($idSlTrans, 255, 0)
+Local $idSB_SlTrans = GUICtrlCreateSlider(10, 70, 200, 30)
+GUICtrlSetLimit($idSB_SlTrans, 255, 0)
 GUICtrlSetData(-1, 255)
 GUISetState(@SW_SHOW)
 
@@ -28,18 +28,18 @@ While 1
 			Select
 				Case $iMsg = $Gui_EVENT_CLOSE
 					Exit
-				Case $iMsg = $idCheckTrans Or $iMsg = $idSlTrans
+				Case $iMsg = $idChk_CheckTrans Or $iMsg = $idSB_SlTrans
 
 					; Ändert Attribute der transparenten Farbe und Fenstertransparenz
 
-					If BitAND(GUICtrlRead($idCheckTrans), $Gui_CHECKED) = $Gui_CHECKED Then
-						_WinAPI_SetLayeredWindowAttributes($hGui, 0xABCDEF, GUICtrlRead($idSlTrans))
+					If BitAND(GUICtrlRead($idChk_CheckTrans), $Gui_CHECKED) = $Gui_CHECKED Then
+						_WinAPI_SetLayeredWindowAttributes($hGui, 0xABCDEF, GUICtrlRead($idSB_SlTrans))
 					Else
-						_WinAPI_SetLayeredWindowAttributes($hGui, 0x010101, GUICtrlRead($idSlTrans))
+						_WinAPI_SetLayeredWindowAttributes($hGui, 0x010101, GUICtrlRead($idSB_SlTrans))
 					EndIf
 
-				Case $iMsg = $idCheckBorder
-					If BitAND(GUICtrlRead($idCheckBorder), $Gui_CHECKED) = $Gui_CHECKED Then
+				Case $iMsg = $idChk_CheckBorder
+					If BitAND(GUICtrlRead($idChk_CheckBorder), $Gui_CHECKED) = $Gui_CHECKED Then
 						GUISetStyle($WS_POPUP, -1, $hGui)
 					Else
 						GUISetStyle($Gui_SS_DEFAULT_GUI, -1, $hGui)
@@ -47,7 +47,7 @@ While 1
 			EndSelect
 		Case $hGui
 			Select
-				Case $iMsg = $idLayButt
+				Case $iMsg = $idBtn_LayButt
 					Local $transcolor, $alpha
 					Local $info = _WinAPI_GetLayeredWindowAttributes($hGui, $transcolor, $alpha)
 					MsgBox($MB_SYSTEMMODAL, 'Mehrlagiges GUI', "Button auf mehrlagigem Fenster geklickt" & @CRLF & _

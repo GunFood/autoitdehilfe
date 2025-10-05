@@ -1,6 +1,7 @@
 #NoTrayIcon
 
 #include <MsgBoxConstants.au3>
+#include <StringConstants.au3>
 #include <WinAPIFiles.au3>
 #include <WinAPIHObj.au3>
 

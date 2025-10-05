@@ -1,5 +1,6 @@
 #include <MsgBoxConstants.au3>
 #include <SendMessage.au3>
+#include <WindowsNotifsConstants.au3>
 
 Example()
 

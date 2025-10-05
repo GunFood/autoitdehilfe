@@ -1,4 +1,5 @@
-#include <APISysConstants.au3>
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <SendMessage.au3>
 #include <StaticConstants.au3>
@@ -9,14 +10,16 @@
 #include <WinAPIRes.au3>
 #include <WinAPISys.au3>
 #include <WinAPISysWin.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Opt('TrayAutoPause', 0)
 
-Global $g_ahPart[9]
+Global $g_ahPart[9], $g_sBMP
 ; Load bitmaps (Mice*.bmp) that are required to display picture
 For $i = 0 To 6
-	$g_ahPart[$i] = _WinAPI_LoadImage(0, @ScriptDir & '\Extras\Mice' & $i & '.bmp', $IMAGE_BITMAP, 0, 0, $LR_LOADFROMFILE)
+	$g_sBMP = _Extras_PathFull('Mice' & $i & '.bmp')
+	$g_ahPart[$i] = _WinAPI_LoadImage(0, $g_sBMP, $IMAGE_BITMAP, 0, 0, $LR_LOADFROMFILE)
 Next
 
 ; Copy some bitmaps for proper "Mice" drawing

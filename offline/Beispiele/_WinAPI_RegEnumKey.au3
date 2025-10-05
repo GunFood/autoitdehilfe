@@ -1,4 +1,3 @@
-#include <APIRegConstants.au3>
 #include <Date.au3>
 #include <Debug.au3>
 #include <WinAPIError.au3>

@@ -4,7 +4,7 @@
 
 #include <GUIConstantsEx.au3>
 #include <IE.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Local $oIE = _IECreateEmbedded()
 GUICreate("EmbeddedWebControl-Test", 640, 580, _
@@ -16,7 +16,7 @@ Global $idButton_Forward = GUICtrlCreateButton("Vorwärts", 120, 420, 100, 30)
 Global $idButton_Home = GUICtrlCreateButton("Startseite", 230, 420, 100, 30)
 Global $idButton_Stop = GUICtrlCreateButton("Anhalten", 340, 420, 100, 30)
 
-Global $g_idError_Message = GUICtrlCreateLabel("", 100, 500, 500, 30)
+Global $g_idLbl_Error_Message = GUICtrlCreateLabel("", 100, 500, 500, 30)
 GUICtrlSetColor(-1, 0xff0000)
 
 GUISetState(@SW_SHOW) ; Macht die GUI sichtbar
@@ -57,5 +57,5 @@ Func CheckError($sMsg, $iError, $iExtended)
 	Else
 		$sMsg = ""
 	EndIf
-	GUICtrlSetData($g_idError_Message, $sMsg)
+	GUICtrlSetData($g_idLbl_Error_Message, $sMsg)
 EndFunc   ;==>CheckError

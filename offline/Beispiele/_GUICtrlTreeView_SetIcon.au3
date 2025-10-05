@@ -1,6 +1,6 @@
 #include <GuiConstantsEx.au3>
 #include <GuiTreeView.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -12,17 +12,17 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
-	Local $aidItem[10]
+	Local $aidTVi_Item[10]
 	For $x = 0 To 9
-		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
-		_GUICtrlTreeView_SetIcon($idTreeView, $aidItem[$x], "shell32.dll", 137)
+		$aidTVi_Item[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
+		_GUICtrlTreeView_SetIcon($idTreeView, $aidTVi_Item[$x], "shell32.dll", 137)
 		For $y = 1 To 3
-			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Child", $y), $aidItem[$x])
+			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Child", $y), $aidTVi_Item[$x])
 		Next
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)
 
-	_GUICtrlTreeView_SetIcon($idTreeView, $aidItem[0], "shell32.dll", 131)
+	_GUICtrlTreeView_SetIcon($idTreeView, $aidTVi_Item[0], "shell32.dll", 131)
 
 	; Die Schleife wiederholt sich, bis der Benutzer eine Beenden-Aktion auslöst
 	Do

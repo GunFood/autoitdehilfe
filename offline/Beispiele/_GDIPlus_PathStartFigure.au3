@@ -22,7 +22,7 @@ Func Example()
 	_GDIPlus_PathAddLine($hPath, 40, 100, 140, 200)
 	_GDIPlus_PathAddLine($hPath, 240, 100, 340, 200)
 
-	_GDIPlus_PathStartFigure($hPath);next line will not be connected to last point
+	_GDIPlus_PathStartFigure($hPath) ;next line will not be connected to last point
 
 	_GDIPlus_PathAddLine($hPath, 440, 100, 540, 200)
 	_GDIPlus_PathAddLine($hPath, 640, 100, 740, 200)

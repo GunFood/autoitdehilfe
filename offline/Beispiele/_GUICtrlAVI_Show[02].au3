@@ -4,14 +4,14 @@
 _Beispiel_External()
 
 Func _Beispiel_External()
-	Local $hGui, $hAVI, $id_Start, $id_Stop, $id_Show
+	Local $hGui, $hAVI, $idBtn_Start, $idBtn_Stop, $idBtn_Show
 
 	; Erstellt eine GUI
 	$hGui = GUICreate("AVI: Abspielen (Extern)", 350, 200)
 	$hAVI = _GUICtrlAVI_Create($hGui, @SystemDir & "\Shell32.dll", 160, 10, 10)
-	$id_Start = GUICtrlCreateButton("Start", 25, 150, 70, 22)
-	$id_stop = GUICtrlCreateButton("Stopp", 125, 150, 70, 22)
-	$id_Show = GUICtrlCreateButton("Verstecken", 225, 150, 70, 22)
+	$idBtn_Start = GUICtrlCreateButton("Start", 25, 150, 70, 22)
+	$idBtn_stop = GUICtrlCreateButton("Stopp", 125, 150, 70, 22)
+	$idBtn_Show = GUICtrlCreateButton("Verstecken", 225, 150, 70, 22)
 	GUISetState(@SW_SHOW)
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
@@ -19,19 +19,19 @@ Func _Beispiel_External()
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE
 				ExitLoop
-			Case $id_Start
+			Case $idBtn_Start
 				; Spielt einen Teil des AVI Clips
 				_GUICtrlAVI_Play($hAVI)
-			Case $id_stop
+			Case $idBtn_stop
 				; Stoppt den AVI Clip
 				_GUICtrlAVI_Stop($hAVI)
-			Case $id_Show
-				If GUICtrlRead($id_Show) = "Verstecken" Then
+			Case $idBtn_Show
+				If GUICtrlRead($idBtn_Show) = "Verstecken" Then
 					_GUICtrlAVI_Show($hAVI, @SW_HIDE)
-					GUICtrlSetData($id_Show, "Zeigen")
+					GUICtrlSetData($idBtn_Show, "Zeigen")
 				Else
 					_GUICtrlAVI_Show($hAVI, @SW_SHOW)
-					GUICtrlSetData($id_Show, "Verstecken")
+					GUICtrlSetData($idBtn_Show, "Verstecken")
 				EndIf
 		EndSwitch
 	WEnd

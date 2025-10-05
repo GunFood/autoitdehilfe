@@ -1,5 +1,4 @@
 #include <GDIPlus.au3>
-#include <GUIConstantsEx.au3>
 #include <GuiMenu.au3>
 #include <WinAPIGdi.au3>
 

@@ -8,7 +8,7 @@ If Not _WinAPI_DwmIsCompositionEnabled() Then
 EndIf
 
 Run(@SystemDir & '\calc.exe')
-Local $hWnd = WinWaitActive("[CLASS:ApplicationFrameWindow]", '');, 3)
+Local $hWnd = WinWaitActive("[CLASS:ApplicationFrameWindow]", '') ;, 3)
 If Not $hWnd Then
 	Exit
 EndIf

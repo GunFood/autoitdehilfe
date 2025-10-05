@@ -1,3 +1,5 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GUIToolTip.au3>
 #include <StaticConstants.au3>
@@ -6,7 +8,7 @@
 Example()
 
 Func Example()
-	Local $hGUI = GUICreate(StringTrimRight(@ScriptName, StringLen(".exe")), 350, 200)
+	Local $hGUI = GUICreate("ToolTip AddTool - v(" & @AutoItVersion & ")", 350, 200, 100, 100)
 	; create frames to indicate where the tooltip will display when the mouse is in the
 	; correct location on the GUI, these frames do not have a tooltip assigned to it
 	; these frames are ONLY for visual representation as to where the tooltip will display,
@@ -39,7 +41,7 @@ Func Example()
 	_GUIToolTip_AddTool($hToolTip, $hGUI, "Lower Left corner", 0, 10, 85, 168, 160, $TTF_SUBCLASS)
 	_GUIToolTip_AddTool($hToolTip, $hGUI, "Lower Right corner", 0, 168, 85, 328, 160, $TTF_SUBCLASS)
 	; add a tool to the tooltip control that is assigned to the button control
-	_GUIToolTip_AddTool($hToolTip, 0, "This tooltip belongs to the button", $hButton)
+	_GUIToolTip_AddTool($hToolTip, $hGUI, "This tooltip belongs to the button", $hButton)
 	GUISetState(@SW_SHOW)
 
 	While 1

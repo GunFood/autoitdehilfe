@@ -1,13 +1,15 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiTab.au3>
 #include <MsgBoxConstants.au3>
 
-Example()
-
 Func Example()
 	; Erstellt eine GUI
-	GUICreate("Tab-Control: Setzt und ermittelt den Itemtext (v" & @AutoItVersion & ")", 500, 300)
-	Local $idTab = GUICtrlCreateTab(2, 2, 396, 296)
+	Local $hGUI = GUICreate("Tab-Control: Setzt und ermittelt den Itemtext (v" & @AutoItVersion & ")", 500, 300, 100, 100)
+	Local $idTab = GUICtrlCreateTab(2, 2, 446, 266)
+	_MemoMsgBoxStatus() ; Statuserstellung
+
 	GUISetState(@SW_SHOW)
 
 	; Fügt Tabs hinzu
@@ -17,10 +19,7 @@ Func Example()
 
 	; Ermittelt/Setzt den Text des Tab 0
 	_GUICtrlTab_SetItemText($idTab, 0, "Neuer Text")
-	MsgBox($MB_SYSTEMMODAL, "Information", "Tab 0 Text: " & _GUICtrlTab_GetItemText($idTab, 0))
+	_MemoMsgBox($MB_SYSTEMMODAL, "Information", "Tab 0 Text: " & _GUICtrlTab_GetItemText($idTab, 0))
 
-	; Die Schleife wiederholt sich, bis der Benutzer eine Beenden-Aktion auslöst
-	Do
-	Until GUIGetMsg() = $GUI_EVENT_CLOSE
-	GUIDelete()
+	_MemoMsgBoxStatus("", -1, $hGUI) ; Keine weiteren Aktionen, es wird gewartet bis die GUI geschlossen wird.
 EndFunc   ;==>Example

@@ -1,25 +1,24 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiHeader.au3>
 #include <GuiImageList.au3>
 #include <WinAPIGdi.au3>
 
-Global $g_idMemo
-
 Example()
 
 Func Example()
-	Local $hGui, $hHeader, $hImage
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("Header", 400, 300)
-	$hHeader = _GUICtrlHeader_Create($hGui)
-	_GUICtrlHeader_SetUnicodeFormat($hHeader, True)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 24, 396, 274, 0)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	Local $hGui = GUICreate("Header", 400, 300)
+	Local $hHeader = _GUICtrlHeader_Create($hGui)
+	_MemoCreate(2, 52, 444, 220)
+
+;~ 	_GUICtrlHeader_SetUnicodeFormat($hHeader, True)
+
 	GUISetState(@SW_SHOW)
 
 	; Erstellt eine Imagelist mit Bildern
-	$hImage = _GUIImageList_Create(11, 11)
+	Local $hImage = _GUIImageList_Create(11, 11)
 	_GUIImageList_Add($hImage, _WinAPI_CreateSolidBitmap($hGui, 0xFF0000, 11, 11))
 	_GUIImageList_Add($hImage, _WinAPI_CreateSolidBitmap($hGui, 0x00FF00, 11, 11))
 	_GUIImageList_Add($hImage, _WinAPI_CreateSolidBitmap($hGui, 0x0000FF, 11, 11))
@@ -35,17 +34,10 @@ Func Example()
 	_GUICtrlHeader_SetItemBitmap($hHeader, 0, _WinAPI_CreateSolidBitmap($hGui, 0xFF00FF, 11, 11))
 
 	; Setzt die Itemanzeige von Spalte 0
-	_GUICtrlHeader_SetItemDisplay($hHeader, 0, 1 + 2 + 8)
+	_GUICtrlHeader_SetItemDisplay($hHeader, 0, 1 + 2 + 8 + 16) ; String (8), Bitmap (1) und Bild (16) werden rechts angezeigt (2)
 
 	; Gibt die Anzeigeinformationen für das Item zurück
-	MemoWrite("Anzeigeinformationen für Spalte 0: " & _GUICtrlHeader_GetItemDisplay($hHeader, 0))
+	_MemoWrite("Anzeigeinformationen für Spalte 0: " & _GUICtrlHeader_GetItemDisplay($hHeader, 0))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
-	Do
-	Until GUIGetMsg() = $GUI_EVENT_CLOSE
+	_MemoMsgBoxStatus("", -1, $hGui) ; Keine weiteren Aktionen, es wird gewartet bis die GUI geschlossen wird.
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

@@ -1,3 +1,5 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiTab.au3>
 #include <MsgBoxConstants.au3>
@@ -6,14 +8,16 @@ Example()
 
 Func Example()
 	; Erstellt eine GUI
-	GUICreate("Tab-Control: Ermittelt das Item RectEx (v" & @AutoItVersion & ")", 500, 300)
-	Local $idTab = GUICtrlCreateTab(2, 2, 396, 296)
+	Local $hGUI = GUICreate("Tab-Control: Ermittelt das Item RectEx (v" & @AutoItVersion & ")", 500, 300, 100, 100)
+	Local $idTab = GUICtrlCreateTab(2, 2, 446, 266)
+	_MemoMsgBoxStatus() ; Statuserstellung
+
 	GUISetState(@SW_SHOW)
 
 	; Fügt Tabs hinzu
-	_GUICtrlTab_InsertItem($idTab, 0, "Tab 1")
-	_GUICtrlTab_InsertItem($idTab, 1, "Tab 2")
-	_GUICtrlTab_InsertItem($idTab, 2, "Tab 3")
+	_GUICtrlTab_InsertItem($idTab, 0, "Tab 0")
+	_GUICtrlTab_InsertItem($idTab, 1, "Tab 1")
+	_GUICtrlTab_InsertItem($idTab, 2, "Tab 2")
 
 	; Ermittelt das Rechteck von Item 0
 	Local $tRECT = _GUICtrlTab_GetItemRectEx($idTab, 0)
@@ -21,10 +25,7 @@ Func Example()
 			DllStructGetData($tRECT, "Top"), _
 			DllStructGetData($tRECT, "Right"), _
 			DllStructGetData($tRECT, "Bottom"))
-	MsgBox($MB_SYSTEMMODAL, "Information", "angezeigtes Rechteck: " & $sRect)
+	_MemoMsgBox($MB_SYSTEMMODAL, "Information", "Zeigt Rechteck #0 an: " & $sRect)
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
-	Do
-	Until GUIGetMsg() = $GUI_EVENT_CLOSE
-	GUIDelete()
+	_MemoMsgBoxStatus("", -1, $hGUI) ; Keine weiteren Aktionen, es wird gewartet bis die GUI geschlossen wird.
 EndFunc   ;==>Example

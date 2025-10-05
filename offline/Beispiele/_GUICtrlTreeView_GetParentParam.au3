@@ -1,8 +1,7 @@
-#AutoIt3Wrapper_UseX64=n
 #include <GUIConstantsEx.au3>
 #include <GuiTreeView.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 ; Warnung: Verwenden Sie _GUICtrlTreeView_SetItemParam() nicht für Elemente, die mit GUICtrlCreateTreeViewItem erstellt wurden.
 ; Param ist die ControlID für Elemente, die mit der eingebauten Funktion
@@ -20,20 +19,20 @@ Func Example_Internal()
 ;~     _GUICtrlTreeView_SetUnicodeFormat($idTreeView, False)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
-	Local $idItem, $idChild, $iYItem = 0, $idFirstItem = 0
+	Local $idTVi_Item, $idTVi_Child, $iYItem = 0, $idFirstItem = 0
 	For $x = 0 To 10
-		$idItem = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
-		If $idFirstItem = 0 Then $idFirstItem = $idItem
+		$idTVi_Item = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
+		If $idFirstItem = 0 Then $idFirstItem = $idTVi_Item
 		$iYItem += 1
 		For $y = 0 To 2
-			$idChild = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $iYItem), $idItem)
+			$idTVi_Child = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $iYItem), $idTVi_Item)
 			$iYItem += 1
 		Next
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)
 
-	_GUICtrlTreeView_SelectItem($idTreeView, $idChild)
-	MsgBox($MB_SYSTEMMODAL, "Information", "Parent Parameter/ID: " & _GUICtrlTreeView_GetParentParam($idTreeView, $idChild) - $idFirstItem) ; Dies entspricht der Control-ID
+	_GUICtrlTreeView_SelectItem($idTreeView, $idTVi_Child)
+	MsgBox($MB_SYSTEMMODAL, "Information", "Parent Parameter/ID: " & _GUICtrlTreeView_GetParentParam($idTreeView, $idTVi_Child) - $idFirstItem) ; Dies entspricht der Control-ID
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

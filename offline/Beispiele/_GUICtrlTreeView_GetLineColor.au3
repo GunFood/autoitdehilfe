@@ -1,8 +1,10 @@
+#include <ColorConstants.au3>
 #include <GUIConstantsEx.au3>
 #include <GuiImageList.au3>
 #include <GuiTreeView.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
+#include <WindowsSysColorConstants.au3>
 
 Example()
 

@@ -1,7 +1,7 @@
 #include <GDIPlus.au3>
 #include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
 
 Opt("GUIOnEventMode", 1)
 

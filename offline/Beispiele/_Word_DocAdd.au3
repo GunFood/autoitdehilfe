@@ -4,7 +4,7 @@
 ; Erzeugt ein neues oder stellt eine Verbindung zu einem bestehenden Word-Objekt her
 Local $oWord = _Word_Create()
 If @error <> 0 Then Exit MsgBox($MB_SYSTEMMODAL, "Word UDF: _Word_DocAdd Beispiel", _
-		"Fehler beim Erstellen eines neuen Word-Anwendungsobjektes." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
+		"Fehler beim Erstellen des neuen Word-Anwendungsobjektes." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
 
 ; Ein neues leeres Dokument hinzufügen
 _Word_DocAdd($oWord)

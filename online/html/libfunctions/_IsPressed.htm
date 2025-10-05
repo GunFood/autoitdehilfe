@@ -16,36 +16,58 @@
 <p style="margin:2px 0 0 0;" class="funcdesc">Pr&uuml;ft, ob eine Taste gedr&uuml;ckt wurde<br /></p>
 <p class="codeheader">
 #include &lt;Misc.au3&gt;<br />
-_IsPressed ( $sHexKey [, $vDLL = "user32.dll"] )<br />
+_IsPressed ( [$vKey = Default [, $vDLL = Default [, $bCheckModifierKey = False]]] )<br />
 </p>
 
 <h2>Parameter</h2>
 <table>
 <tr>
-<td style="width:15%">$sHexKey</td>
-<td style="width:85%">zu pr&uuml;fende Taste</td>
+<td style="width:15%">$vKey</td>
+<td style="width:85%"><strong>[optional]</strong> Zu &uuml;berpr&uuml;fende Taste (Zeichenfolge), $VK_* wie in „WinAPIvkeysConstants.au3” definiert oder ein Array der zu dr&uuml;ckenden Tasten.<br />
+Wenn „Default” verwendet wird, wird der interne Handle zur DLL geschlossen. Wenn dieses nicht mehr ben&ouml;tigt wird, sollte man ihn mit _IsPressed() schlie&szlig;en.</td>
 </tr>
 <tr>
 <td>$vDLL</td>
 <td><strong>[optional]</strong> Handle zu der DLL (standardm&auml;&szlig;ig user32.dll)</td>
+</tr>
+<tr>
+<td>$bCheckModifierKey</td>
+<td><strong>[optional]</strong> Die Modifikatortasten SHIFT, STRG, ALT oder WIN werden &uuml;berpr&uuml;ft, um zu vermeiden, dass „Modifikatortaste“ + $vKey nur f&uuml;r $vKey zur&uuml;ckgegeben wird (siehe Bemerkungen) (Standard)</td>
 </tr>
 </table>
 
 <h2>R&uuml;ckgabewert</h2>
 <table class="noborder">
 <tr>
-<td style="width:10%" class="valign-top">True:</td>
-<td style="width:90%">wenn die Taste gedr&uuml;ckt wurde</td>
+<td style="width:10%" class="valign-top">>0:</td>
+<td style="width:90%">wenn die Taste gedr&uuml;ckt wird oder die auf 1 basierende Taste der ausgew&auml;hlten Taste im Array (siehe Bemerkungen).</td>
 </tr>
 <tr>
-<td class="valign-top">False:</td>
-<td>wenn die Taste nicht gedr&uuml;ckt wurde</td>
+<td class="valign-top">0:</td>
+<td>wenn die Taste nicht gedr&uuml;ckt wird oder kein _IsPressed(...) auf _IsPressed() folgt.</td>
 </tr>
 </table>
 
 <h2>Bemerkungen</h2>
 <p>Falls diese Funktion wiederholt aufgerufen wird, sollte die Datei 'user32.dll' ge&ouml;ffnet werden und durch ein Handle &uuml;bergeben werden.<br />
-Es ist noch zu beachten, dass das Handle am Ende des Skripts mithilfe der Funktion DllClose geschlossen wird.<br />
+Es ist noch zu beachten, dass das Handle am Ende des Skripts mithilfe der Funktion DllClose() geschlossen wird.<br />
+Wenn Sie $vDLL = Default verwenden und das AutoIt-Skript nicht beenden und die Verwendung von _IsPressed(...) einstellen,<br />
+rufen Sie dann _IsPressed() auf, um den intern verwendeten Handle zu schlie&szlig;en.<br />
+<br />
+Wenn $vKey eine Zeichenfolge oder ein $VK_* ist, wie in „WinAPIvkeysConstants.au3” definiert, dann<br />
+    gibt <a href="_IsPressed.htm">_IsPressed()</a> 1 zur&uuml;ck, bis die Taste gedr&uuml;ckt wird.<br />
+&nbsp;&nbsp;&nbsp; Selbst kurze Tastendr&uuml;cke k&ouml;nnen zu mehreren R&uuml;ckgaben innerhalb einer Schleife f&uuml;hren.<br />
+    Wenn der aufgerufene Code keine blockierende Funktion (wie MsgBox) enth&auml;lt und der Benutzer keine Mehrfachr&uuml;ckgaben ben&ouml;tigt,<br />
+    sollte das Skript warten, bis <a href="_IsPressed.htm">_IsPressed()</a> 0 zur&uuml;ckgibt, bevor es fortf&auml;hrt (siehe Beispiel 1)<br />
+<br />
+Wenn $vKey ein Array ist, kehrt die Funktion zur&uuml;ck, wenn die Taste gedr&uuml;ckt wird.<br />
+Der R&uuml;ckgabewert ist 1, wenn $vKey[0] gedr&uuml;ckt wird, 2, wenn $vKey[1] gedr&uuml;ckt wird, ... (siehe Beispiel 2).<br />
+<br />
+Wenn $bCheckModifierKey nicht wahr ist, gibt die Kombination aus einer „Modifikatortaste” + Taste 0 zur&uuml;ck,<br />
+und @extended wird gesetzt, wenn die Modifikatortaste gedr&uuml;ckt wird: 1 = SHIFT, 2 = CTRL, 3 = ALT, 4 = WIN, 5 = rechte WIN (siehe Beispiel 2).<br />
+<br />
+Wenn $bCheckModifierKey = True ist, erfolgt die R&uuml;ckgabe, wenn die „Modifikatortaste” losgelassen wird.<br />
+Wenn $bCheckModifierKey = -1 ist, erfolgt die R&uuml;ckgabe, wenn die „Modifikatortaste” gedr&uuml;ckt wird.<br />
 <br />
 <a href="_IsPressed.htm">_IsPressed()</a> gibt 1 zur&uuml;ck wenn die Taste losgelassen wurde.<br />
 Selbst kurze Tastendr&uuml;cke k&ouml;nnen mehrfach innerhalb einer Schleife zur&uuml;ckgegeben werden.<br />
@@ -53,652 +75,405 @@ Wenn der verwendete Code keine blockierende Funktion wie z. B. MsgBox enth&auml;
 <br />
 <table>
 <tr>
-<th><strong>Befehl</strong></th>
-<th><strong>englischer Name</strong></th>
-<th><strong>deutscher Name</strong></th>
+<th><strong>VirtualKey</strong></th>
+<th><strong>String</strong></th>
+<th><strong>Key</strong></th>
 </tr>
 
 <tr>
+<td>$VK_LBUTTON</td>
 <td>01</td>
-<td>Left mouse button</td>
 <td>Linke Maustaste</td>
 </tr>
 
 <tr>
+<td>$VK_RBUTTON</td>
 <td>02</td>
-<td>Right mouse button</td>
 <td>Rechte Maustaste</td>
 </tr>
 
 <tr>
+<td>$VK_CANCEL</td>
 <td>03</td>
 <td>Control-break processing</td>
 </tr>
 
 <tr>
+<td>$VK_MBUTTON</td>
 <td>04</td>
-<td>Middle mouse button (three-button mouse)</td>
-<td>Mittlere Maustaste</td>
+<td>Mittlere Maustaste (three-button mouse)</td>
 </tr>
 
 <tr>
+<td>$VK_XBUTTON1</td>
 <td>05</td>
-<td>Windows 2000/XP: X1 mouse button</td>
 <td>X1 Maus-Taste</td>
 </tr>
 
 <tr>
+<td>$VK_XBUTTON2</td>
 <td>06</td>
-<td>Windows 2000/XP: X2 mouse button</td>
 <td>X2 Maus-Taste</td>
 </tr>
 
 <tr>
+<td>$VK_BACK</td>
 <td>08</td>
-<td>BACKSPACE key</td>
 <td>L&ouml;schtaste r&uuml;ckw&auml;rts</td>
 </tr>
 
 <tr>
+<td>$VK_TAB</td>
 <td>09</td>
-<td>TAB key</td>
 <td>Tabulator-Taste</td>
 </tr>
 
 <tr>
+<td>$VK_CLEAR</td>
 <td>0C</td>
-<td>CLEAR key</td>
 <td>Entf-Taste</td>
 </tr>
 
 <tr>
+<td>$VK_RETURN</td>
 <td>0D</td>
-<td>ENTER key</td>
 <td>Enter/Return-Taste</td>
 </tr>
 
 <tr>
+<td>$VK_SHIFT</td>
 <td>10</td>
-<td>SHIFT key</td>
 <td>Shift/Umschalt/"Gro&szlig;schreib"-Taste</td>
 </tr>
 
 <tr>
+<td>$VK_CONTROL</td>
 <td>11</td>
-<td>CTRL key</td>
 <td>Ctrl/Strg-Taste</td>
 </tr>
 
 <tr>
+<td>$VK_MENU</td>
 <td>12</td>
-<td>ALT key</td>
 <td>Alt-Taste</td>
 </tr>
 
 <tr>
+<td>$VK_PAUSE</td>
 <td>13</td>
-<td>PAUSE key</td>
 <td>Pause-Taste</td>
 </tr>
 
 <tr>
+<td>$VK_CAPITAL</td>
 <td>14</td>
-<td>CAPS LOCK key</td>
 <td>Feststelltaste</td>
 </tr>
 
 <tr>
+<td>$VK_ESCAPE</td>
 <td>1B</td>
-<td>ESC key</td>
 <td>Esc-Taste</td>
 </tr>
 
 <tr>
+<td>$VK_SPACE</td>
 <td>20</td>
-<td>SPACEBAR</td>
 <td>Leertaste</td>
 </tr>
 
 <tr>
+<td>$VK_PRIOR</td>
 <td>21</td>
-<td>PAGE UP key</td>
 <td>Bild-auf Taste</td>
 </tr>
 
 <tr>
+<td>$VK_NEXT</td>
 <td>22</td>
-<td>PAGE DOWN key</td>
 <td>Bild-ab Taste</td>
 </tr>
 
 <tr>
+<td>$VK_END</td>
 <td>23</td>
-<td>END key</td>
 <td>Ende-Taste</td>
 </tr>
 
 <tr>
+<td>$VK_HOME</td>
 <td>24</td>
-<td>HOME key</td>
 <td>Pos 1-Taste</td>
 </tr>
 
 <tr>
+<td>$VK_LEFT</td>
 <td>25</td>
-<td>LEFT ARROW key</td>
 <td>Pfeiltaste nach links</td>
 </tr>
 
 <tr>
+<td>$VK_UP</td>
 <td>26</td>
-<td>UP ARROW key</td>
 <td>Pfeiltaste nach oben</td>
 </tr>
 
 <tr>
+<td>$VK_RIGHT</td>
 <td>27</td>
-<td>RIGHT ARROW key</td>
 <td>Pfeiltaste nach rechts</td>
 </tr>
 
 <tr>
+<td>$VK_DOWN</td>
 <td>28</td>
-<td>DOWN ARROW key</td>
 <td>Pfeiltaste nach unten</td>
 </tr>
 
 <tr>
+<td>$VK_SELECT</td>
 <td>29</td>
-<td>SELECT key</td>
 <td>Auswahltaste</td>
 </tr>
 
 <tr>
+<td>$VK_PRINT</td>
 <td>2A</td>
-<td>PRINT key</td>
-<td>Druck</td>
+<td>Druck-Taste</td>
 </tr>
 
 <tr>
+<td>$VK_EXECUTE</td>
 <td>2B</td>
-<td>EXECUTE key</td>
 <td>Ausf&uuml;hrentaste</td>
 </tr>
 
 <tr>
+<td>$VK_SNAPSHOT</td>
 <td>2C</td>
-<td>PRINT SCREEN key</td>
 <td>Drucktaste</td>
 </tr>
 
 <tr>
+<td>$VK_INSERT</td>
 <td>2D</td>
-<td>INS key</td>
 <td>Einfg-Taste</td>
 </tr>
 
 <tr>
+<td>$VK_DELETE</td>
 <td>2E</td>
-<td>DEL key</td>
 <td>Entf-Taste</td>
 </tr>
 
 <tr>
-<td>30</td>
-<td>0 key</td>
-<td>0</td>
+<td>$VK_HELP</td>
+<td>2F</td>
+<td>Hilfe-Taste</td>
 </tr>
 
 <tr>
-<td>31</td>
-<td>1 key</td>
-<td>1</td>
+<td>$VK_0 - 9</td>
+<td>30-39</td>
+<td>0-9 Tasten</td>
 </tr>
 
 <tr>
-<td>32</td>
-<td>2 key</td>
-<td>2</td>
+<td>$VK_A - Z</td>
+<td>41-5A</td>
+<td>A-Z Tasten</td>
 </tr>
 
 <tr>
-<td>33</td>
-<td>3 key</td>
-<td>3</td>
-</tr>
-
-<tr>
-<td>34</td>
-<td>4 key</td>
-<td>4</td>
-</tr>
-
-<tr>
-<td>35</td>
-<td>5 key</td>
-<td>5</td>
-</tr>
-
-<tr>
-<td>36</td>
-<td>6 key</td>
-<td>6</td>
-</tr>
-
-<tr>
-<td>37</td>
-<td>7 key</td>
-<td>7</td>
-</tr>
-
-<tr>
-<td>38</td>
-<td>8 key</td>
-<td>8</td>
-</tr>
-
-<tr>
-<td>39</td>
-<td>9 key</td>
-<td>9</td>
-</tr>
-
-<tr>
-<td>41</td>
-<td>A key</td>
-<td>A</td>
-</tr>
-
-<tr>
-<td>42</td>
-<td>B key</td>
-<td>B</td>
-</tr>
-
-<tr>
-<td>43</td>
-<td>C key</td>
-<td>C</td>
-</tr>
-
-<tr>
-<td>44</td>
-<td>D key</td>
-<td>D</td>
-</tr>
-
-<tr>
-<td>45</td>
-<td>E key</td>
-<td>E</td>
-</tr>
-
-<tr>
-<td>46</td>
-<td>F key</td>
-<td>F</td>
-</tr>
-
-<tr>
-<td>47</td>
-<td>G key</td>
-<td>G</td>
-</tr>
-
-<tr>
-<td>48</td>
-<td>H key</td>
-<td>H</td>
-</tr>
-
-<tr>
-<td>49</td>
-<td>I key</td>
-<td>I</td>
-</tr>
-
-<tr>
-<td>4A</td>
-<td>J key</td>
-<td>J</td>
-</tr>
-
-<tr>
-<td>4B</td>
-<td>K key</td>
-<td>K</td>
-</tr>
-
-<tr>
-<td>4C</td>
-<td>L key</td>
-<td>L</td>
-</tr>
-
-<tr>
-<td>4D</td>
-<td>M key</td>
-<td>M</td>
-</tr>
-
-<tr>
-<td>4E</td>
-<td>N key</td>
-<td>N</td>
-</tr>
-
-<tr>
-<td>4F</td>
-<td>O key</td>
-<td>O</td>
-</tr>
-
-<tr>
-<td>50</td>
-<td>P key</td>
-<td>P</td>
-</tr>
-
-<tr>
-<td>51</td>
-<td>Q key</td>
-<td>Q</td>
-</tr>
-
-<tr>
-<td>52</td>
-<td>R key</td>
-<td>R</td>
-</tr>
-
-<tr>
-<td>53</td>
-<td>S key</td>
-<td>S</td>
-</tr>
-
-<tr>
-<td>54</td>
-<td>T key</td>
-<td>T</td>
-</tr>
-
-<tr>
-<td>55</td>
-<td>U key</td>
-<td>U</td>
-</tr>
-
-<tr>
-<td>56</td>
-<td>V key</td>
-<td>V</td>
-</tr>
-
-<tr>
-<td>57</td>
-<td>W key</td>
-<td>W</td>
-</tr>
-
-<tr>
-<td>58</td>
-<td>X key</td>
-<td>X</td>
-</tr>
-
-<tr>
-<td>59</td>
-<td>Y key</td>
-<td>Y</td>
-</tr>
-
-<tr>
-<td>5A</td>
-<td>Z key</td>
-<td>Z</td>
-</tr>
-
-<tr>
+<td>$VK_LWIN</td>
 <td>5B</td>
-<td>Left Windows key</td>
 <td>Linke Windows-Taste</td>
 </tr>
 
 <tr>
+<td>$VK_RWIN</td>
 <td>5C</td>
-<td>Right Windows key</td>
 <td>Rechte Windows-Taste</td>
 </tr>
 
 <tr>
-<td>60</td>
-<td>Numeric keypad 0 key</td>
-<td>rechter Nummerblock Taste 0</td>
+<td>$VK_APPS</td>
+<td>5D</td>
+<td>PopUp Menu Key - Anwendungstaste auf einer Microsoft Natural Tastatur</td>
 </tr>
 
 <tr>
-<td>61</td>
-<td>Numeric keypad 1 key</td>
-<td>rechter Nummerblock Taste 1</td>
+<td>$VK_NUMPAD0 - 9</td>
+<td>60-69</td>
+<td>rechter Nummerblock Taste 0 - 9</td>
 </tr>
 
 <tr>
-<td>62</td>
-<td>Numeric keypad 2 key</td>
-<td>rechter Nummerblock Taste 2</td>
-</tr>
-
-<tr>
-<td>63</td>
-<td>Numeric keypad 3 key</td>
-<td>rechter Nummerblock Taste 3</td>
-</tr>
-
-<tr>
-<td>64</td>
-<td>Numeric keypad 4 key</td>
-<td>rechter Nummerblock Taste 4</td>
-</tr>
-
-<tr>
-<td>65</td>
-<td>Numeric keypad 5 key</td>
-<td>rechter Nummerblock Taste 5</td>
-</tr>
-
-<tr>
-<td>66</td>
-<td>Numeric keypad 6 key</td>
-<td>rechter Nummerblock Taste 6</td>
-</tr>
-
-<tr>
-<td>67</td>
-<td>Numeric keypad 7 key</td>
-<td>rechter Nummerblock Taste 7</td>
-</tr>
-
-<tr>
-<td>68</td>
-<td>Numeric keypad 8 key</td>
-<td>rechter Nummerblock Taste 8</td>
-</tr>
-
-<tr>
-<td>69</td>
-<td>Numeric keypad 9 key</td>
-<td>rechter Nummerblock Taste 9</td>
-</tr>
-
-<tr>
+<td>$VK_MULTIPLY</td>
 <td>6A</td>
-<td>Multiply key</td>
 <td>rechter Nummerblock Malzeichen</td>
 </tr>
 
 <tr>
+<td>$VK_ADD</td>
 <td>6B</td>
-<td>Add key</td>
 <td>rechter Nummerblock Pluszeichen</td>
 </tr>
 
 <tr>
+<td>$VK_SEPARATOR</td>
 <td>6C</td>
-<td>Separator key</td>
 <td>Eingabetaste</td>
 </tr>
 
 <tr>
+<td>$VK_SUBTRACT</td>
 <td>6D</td>
-<td>Subtract key</td>
 <td>rechter Nummerblock Minuszeichen</td>
 </tr>
 
 <tr>
+<td>$VK_DECIMAL</td>
 <td>6E</td>
-<td>Decimal key</td>
 <td>rechter Nummerblock Kommazeichen</td>
 </tr>
 
 <tr>
+<td>$VK_DIVIDE</td>
 <td>6F</td>
-<td>Divide key</td>
 <td>rechter Nummerblock Geteiltzeichen</td>
 </tr>
 
 <tr>
+<td>$VK_F1 - 12</td>
 <td>70</td>
-<td>F1 key</td>
-<td>F1</td>
+<td>F1-F12 Tasten</td>
 </tr>
 
 <tr>
-<td>71</td>
-<td>F2 key</td>
-<td>F2</td>
-</tr>
-
-<tr>
-<td>72</td>
-<td>F3 key</td>
-<td>F3</td>
-</tr>
-
-<tr>
-<td>73</td>
-<td>F4 key</td>
-<td>F4</td>
-</tr>
-
-<tr>
-<td>74</td>
-<td>F5 key</td>
-<td>F5</td>
-</tr>
-
-<tr>
-<td>75</td>
-<td>F6 key</td>
-<td>F6</td>
-</tr>
-
-<tr>
-<td>76</td>
-<td>F7 key</td>
-<td>F7</td>
-</tr>
-
-<tr>
-<td>77</td>
-<td>F8 key</td>
-<td>F8</td>
-</tr>
-
-<tr>
-<td>78</td>
-<td>F9 key</td>
-<td>F9</td>
-</tr>
-
-<tr>
-<td>79</td>
-<td>F10 key</td>
-<td>F10</td>
-</tr>
-
-<tr>
-<td>7A</td>
-<td>F11 key</td>
-<td>F11</td>
-</tr>
-
-<tr>
-<td>7B</td>
-<td>F12 key</td>
-<td>F12</td>
-</tr>
-
-<tr>
+<td>$VK_F13 - 16</td>
 <td>7C-7F</td>
-<td>F13 key - F16 key</td>
-<td>F13 - F16</td>
+<td>F13 Taste - F16 Taste</td>
 </tr>
 
 <tr>
+<td>$VK_F17 - 24</td>
 <td>80H-87H</td>
-<td>F17 key - F24 key</td>
-<td>F17 - F24</td>
+<td>F17 Taste - F24 Taste</td>
 </tr>
 
 <tr>
+<td>$VK_NUMLOCK</td>
 <td>90</td>
-<td>NUM LOCK key</td>
 <td>Num-Taste</td>
 </tr>
 
 <tr>
+<td>$VK_SCROLL</td>
 <td>91</td>
-<td>SCROLL LOCK key</td>
 <td>Rollen-Taste</td>
 </tr>
 
 <tr>
+<td>$VK_LSHIFT</td>
 <td>A0</td>
-<td>Left SHIFT key</td>
 <td>linke Shift/Umschalt/Feststelltaste</td>
 </tr>
 
 <tr>
+<td>$VK_RSHIFT</td>
 <td>A1</td>
-<td>Right SHIFT key</td>
 <td>rechte Shift/Umschalt/Feststelltaste</td>
 </tr>
 
 <tr>
+<td>$VK_LCONTROL</td>
 <td>A2</td>
-<td>Left CONTROL key</td>
 <td>linke Ctrl/Strg-Taste</td>
 </tr>
 
 <tr>
+<td>$VK_RCONTROL</td>
 <td>A3</td>
-<td>Right CONTROL key</td>
 <td>rechte Ctrl/Strg-Taste</td>
 </tr>
 
 <tr>
+<td>$VK_LMENU</td>
 <td>A4</td>
-<td>Left MENU key</td>
 <td>(linke) Alt-Taste</td>
 </tr>
 
 <tr>
+<td>$VK_RMENU</td>
 <td>A5</td>
-<td>Right MENU key</td>
 <td>(rechte) Alt Gr-Taste</td>
 </tr>
+
+<tr>
+<td>$VK_OEM_1</td>
+<td>BA</td>
+<td>;</td>
+</tr>
+
+<tr>
+<td>$VK_OEM_PLUS</td>
+<td>BB</td>
+<td>=</td>
+</tr>
+
+<tr>
+<td>$VK_OEM_COMMA</td>
+<td>BC</td>
+<td>,</td>
+</tr>
+
+<tr>
+<td>$VK_OEM_MINUS</td>
+<td>BD</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>$VK_OEM_PERIOD</td>
+<td>BE</td>
+<td>.</td>
+</tr>
+
+<tr>
+<td>$VK_OEM_2</td>
+<td>BF</td>
+<td>/</td>
+</tr>
+
+<tr>
+<td>$VK_OEM_3</td>
+<td>C0</td>
+<td>`</td>
+</tr>
+
+<tr>
+<td>$VK_OEM_4</td>
+<td>DB</td>
+<td>[</td>
+</tr>
+
+<tr>
+<td>$VK_OEM_5</td>
+<td>DC</td>
+<td>\</td>
+</tr>
+
+<tr>
+<td>$VK_OEM_6</td>
+<td>DD</td>
+<td>]</td>
+</tr>
 </table></p>
+
+<h2>Siehe auch</h2>
+<p>Suche nach <a href="http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k(GetAsyncKeyState);k(DevLang-C);k(TargetOS-WINDOWS)&rd=true">GetAsyncKeyState</a> in der MSDN Bibliothek.
+</p>
 
 <h2 class="bottom">Beispiel</h2>
 <script type="text/javascript">
@@ -710,7 +485,7 @@ alert("Das Beispiel wurde in die Zwischenablage kopiert");
 }
 }
 </script>
-<div class="codeSnippetContainer">
+<h3>Beispiel 1: _Wird mit $vkey als Zeichenfolge ausgedr&uuml;ckt</h3><div class="codeSnippetContainer">
 	<div class="codeSnippetContainerTabs">
 <script type="text/javascript">
 if (document.URL.match(/^mk:@MSITStore:/i)) {
@@ -732,27 +507,143 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 </div>
 <div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
 <pre>
-<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Misc.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Misc.au3&gt;</span>
 <a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIvkeysConstants.au3&gt;</span>
 
 <a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hDLL</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllOpen.htm"><span class="S4">DllOpen</span></a><span class="S8">(</span><span class="S7">"user32.dll"</span><span class="S8">)</span>
 
 <a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
 <span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IsPressed.htm"><span class="S15">_IsPressed</span></a><span class="S8">(</span><span class="S7">"10"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hDLL</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"_IsPressed - Shift-Taste wurde gedr&uuml;ckt."</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"_IsPressed - Shift-Taste wurde gedr&uuml;ckt. @extended = "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Wartet bis die Taste wieder losgelassen wurde.</span>
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IsPressed.htm"><span class="S15">_IsPressed</span></a><span class="S8">(</span><span class="S7">"10"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hDLL</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">250</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">100</span><span class="S8">)</span>
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"_IsPressed - Shift-Taste wurde losgelassen."</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"_IsPressed - Shift-Taste wurde losgelassen. @extended = "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
 <span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">ElseIf</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IsPressed.htm"><span class="S15">_IsPressed</span></a><span class="S8">(</span><span class="S7">"1B"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hDLL</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"_IsPressed"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Da Esc-Taste gedr&uuml;ckt wurde wird die Anwendung beendet."</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"_IsPressed - Esc-Taste wurde gedr&uuml;ckt. @extended = "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"_IsPressed"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Da Esc-Taste gedr&uuml;ckt wurde wird die Anwendung beendet."</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span>
 <span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
 <span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
-<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">250</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">100</span><span class="S8">)</span>
 <a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
 
 <a class="codeSnippetLink" href="../functions/DllClose.htm"><span class="S4">DllClose</span></a><span class="S8">(</span><span class="S9">$hDLL</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Example 2 : _IsPressed using $vkey as array with modifier key checking</h3><div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_IsPressed[02].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Misc.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIvkeysConstants.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$asModifierKeys</span><span class="S8">[</span><span class="S3">6</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[</span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"VK_SHIFT"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"VK_CONTROL"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"VK_MENU"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"VK_LWIN"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"VK_RWIN"</span><span class="S8">]</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aKeys</span><span class="S8">[</span><span class="S3">3</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[</span><span class="S9">$VK_ESCAPE</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$VK_LBUTTON</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$VK_TAB</span><span class="S8">]</span>
+<a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iRet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IsPressed.htm"><span class="S15">_IsPressed</span></a><span class="S8">(</span><span class="S9">$aKeys</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">; Check modifier</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><span class="S9">$iRet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">And</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"The modifier key "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$asModifierKeys</span><span class="S8">[</span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S8">]</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" has been pressed. @extended = "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sKey</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Switch</span></a><span class="S0"> </span><span class="S9">$iRet</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><span class="S1">; Keyboard ESC</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"</span><span class="S10">{ESCAPE}</span><span class="S7">"</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S3">2</span><span class="S0"> </span><span class="S1">; MouseClick Left</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"{LBUTTON}"</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">Case</span></a><span class="S0"> </span><span class="S3">3</span><span class="S0"> </span><span class="S1">; Keyboard Tab</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$sKey</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"</span><span class="S10">{TAB}</span><span class="S7">"</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Switch.htm"><span class="S5">EndSwitch</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">100</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+
+<a class="codeSnippetLink" href="../libfunctions/_IsPressed.htm"><span class="S15">_IsPressed</span></a><span class="S8">()</span><span class="S0"> </span><span class="S1">; to DLLClose the default Dll created by the previous _IsPressed_(...)</span>
+
+<a class="codeSnippetLink" href="../functions/Send.htm"><span class="S4">Send</span></a><span class="S8">(</span><span class="S7">"^z"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; to avoid change in the Scite Window</span>
+
+<a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"The key "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sKey</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" has been pressed."</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Result"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"The key "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$sKey</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">" has been pressed."</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Example 3 : _Ispressed using $vkey as integer with modifier key checking</h3><div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_IsPressed[03].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext3\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext3">
+<pre>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Misc.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIvkeysConstants.au3&gt;</span>
+
+<span class="S0">Example</span><span class="S8">()</span>
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IsPressed.htm"><span class="S15">_IsPressed</span></a><span class="S8">(</span><span class="S9">$VK_F2</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"_IsPressed - F2 (without any modifier keys pressed) was pressed."</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Wait until key is released.</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">While</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IsPressed.htm"><span class="S15">_IsPressed</span></a><span class="S8">(</span><span class="S9">$VK_F2</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">100</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/ConsoleWrite.htm"><span class="S4">ConsoleWrite</span></a><span class="S8">(</span><span class="S7">"_IsPressed - F2 (without any modifier keys pressed) was released."</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">ElseIf</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_IsPressed.htm"><span class="S15">_IsPressed</span></a><span class="S8">(</span><span class="S9">$VK_ESCAPE</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"_IsPressed"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"The Esc Key was pressed, therefore we will close the application."</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/ExitLoop.htm"><span class="S5">ExitLoop</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Sleep.htm"><span class="S4">Sleep</span></a><span class="S8">(</span><span class="S3">100</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/While.htm"><span class="S5">WEnd</span></a>
+
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_IsPressed.htm"><span class="S15">_IsPressed</span></a><span class="S8">()</span><span class="S0"> </span><span class="S1">; to release the internal handle created by previous call to _IsPressed(...)</span>
+
+<a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
 <span class="S0"></span></span>
 </pre>
 </div>

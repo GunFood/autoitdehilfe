@@ -10,15 +10,15 @@ ConsoleWrite("_SQLite_LibVersion=" & _SQLite_LibVersion() & @CRLF)
 _SQLite_Open()
 _SQLite_Exec(-1, "CREATE TABLE IF NOT EXISTS Test (Daten blob);")
 
-$vData = Binary("Hallo" & Chr(0) & "Welt"); = 48616C6C6F0057656C74
+$vData = Binary("Hallo" & Chr(0) & "Welt") ; = 48616C6C6F0057656C74
 $sData = _SQLite_FastEncode($vData)
 _SQLite_Exec(-1, "INSERT INTO Test VALUES (" & $sData & ");")
 
-$vData = Binary(Chr(0) & @CRLF); = 000D0A
+$vData = Binary(Chr(0) & @CRLF) ; = 000D0A
 $sData = _SQLite_FastEncode($vData)
 _SQLite_Exec(-1, "INSERT INTO Test VALUES (" & $sData & ");")
 
-$vData = Binary(Chr(0)); = 00
+$vData = Binary(Chr(0)) ; = 00
 $sData = _SQLite_FastEncode($vData)
 
 _SQLite_Exec(-1, "INSERT INTO Test VALUES ( " & $sData & " );")

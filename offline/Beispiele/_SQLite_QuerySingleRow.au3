@@ -4,6 +4,10 @@
 
 Local $aRow
 _SQLite_Startup()
+If @error Then
+	MsgBox($MB_SYSTEMMODAL, "SQLite Fehler", "SQLite3.dll kann nicht geladen werden!")
+	Exit -1
+EndIf
 ConsoleWrite("_SQLite_LibVersion=" & _SQLite_LibVersion() & @CRLF)
 _SQLite_Open() ; Öffnet eine DB im Speicher (:memory: database)
 _SQLite_Exec(-1, "CREATE TEMP TABLE Einstellungen (Schlüssel,Wert);")

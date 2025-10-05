@@ -6,8 +6,10 @@ Example()
 
 Func Example()
 	; Erstellt eine GUI
-	GUICreate("Tab-Control: Setzt und ermittelt das Unicode Format (v" & @AutoItVersion & ")", 420, 300)
-	Local $idTab = GUICtrlCreateTab(2, 2, 416, 296)
+	Local $hGUI = GUICreate("Tab-Control: Setzt und ermittelt das Unicode Format (v" & @AutoItVersion & ")", 420, 300)
+	Local $idTab = GUICtrlCreateTab(2, 2, 446, 266)
+	_MemoMsgBoxStatus() ; Statuserstellung
+
 	GUISetState(@SW_SHOW)
 
 	; Fügt Tabs hinzu
@@ -17,12 +19,9 @@ Func Example()
 
 	; Ermittelt/Setzt das Unicode Format
 	Local $bFormat = _GUICtrlTab_GetUnicodeFormat($idTab)
-	MsgBox($MB_SYSTEMMODAL, "Information", "Unicode Format: " & $bFormat)
+	_MemoMsgBox($MB_SYSTEMMODAL, "Information", "Unicode Format: " & $bFormat)
 	_GUICtrlTab_SetUnicodeFormat($idTab, Not $bFormat)
-	MsgBox($MB_SYSTEMMODAL, "Information", "Unicode Format: " & _GUICtrlTab_GetUnicodeFormat($idTab))
+	_MemoMsgBox($MB_SYSTEMMODAL, "Information", "Unicode Format: " & _GUICtrlTab_GetUnicodeFormat($idTab))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
-	Do
-	Until GUIGetMsg() = $GUI_EVENT_CLOSE
-	GUIDelete()
+	_MemoMsgBoxStatus("", -1, $hGUI) ; Keine weiteren Aktionen, es wird gewartet bis die GUI geschlossen wird.
 EndFunc   ;==>Example

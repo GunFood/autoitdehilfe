@@ -1,9 +1,9 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiButton.au3>
 #include <GUIConstantsEx.au3>
 #include <GuiImageList.au3>
-#include <WindowsConstants.au3>
-
-Global $g_idMemo
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -11,8 +11,7 @@ Func Example()
 	Local $hImage, $idBtn, $aIdealSize
 
 	GUICreate("Buttons", 400, 400)
-	$g_idMemo = GUICtrlCreateEdit("", 119, 10, 276, 374, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(119, 10, 276, 374, $WS_VSCROLL)
 
 	$hImage = _GUIImageList_Create(32, 32, 5, 3, 6)
 	For $x = 6 To 11
@@ -25,11 +24,11 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	$aIdealSize = _GUICtrlButton_GetIdealSize($idBtn)
-	MemoWrite("Button 1 ideale Breite: " & $aIdealSize[0] & " Höhe: " & $aIdealSize[1])
+	_MemoWrite("Button 1 ideale Breite: " & $aIdealSize[0] & " Höhe: " & $aIdealSize[1])
 
 	Sleep(3000)
 
-	MemoWrite(StringFormat("Setzt die Größe: %s", _GUICtrlButton_SetSize($idBtn, $aIdealSize[0], $aIdealSize[1])))
+	_MemoWrite(StringFormat("Setzt die Größe: %s", _GUICtrlButton_SetSize($idBtn, $aIdealSize[0], $aIdealSize[1])))
 
 	While 1
 		Switch GUIGetMsg()
@@ -40,8 +39,3 @@ Func Example()
 
 	Exit
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

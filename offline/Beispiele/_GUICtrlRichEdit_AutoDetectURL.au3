@@ -1,7 +1,9 @@
 #include <GUIConstantsEx.au3>
 #include <GuiRichEdit.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
+#include <StructureConstants.au3>
+#include <WindowsNotifsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Global $g_hRichEdit
 

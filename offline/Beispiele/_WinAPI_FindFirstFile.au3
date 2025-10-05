@@ -1,5 +1,7 @@
 #include <Array.au3>
+#include <FileConstants.au3>
 #include <MsgBoxConstants.au3>
+#include <StructureConstants.au3>
 #include <WinAPIConv.au3>
 #include <WinAPIError.au3>
 #include <WinAPIFiles.au3>

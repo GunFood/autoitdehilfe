@@ -27,7 +27,7 @@ Func Example()
 
 	Local $hIter = _GDIPlus_PathIterCreate($hPath)
 	Local $iIterCnt = _GDIPlus_PathIterGetSubpathCount($hIter)
-	Local $hSubPath = _GDIPlus_PathCreate();Path to get the subpath figure
+	Local $hSubPath = _GDIPlus_PathCreate() ;Path to get the subpath figure
 	Local $hMatrix = _GDIPlus_MatrixCreate()
 
 	Local $hTimer = TimerInit(), $aBounds = 0
@@ -36,11 +36,11 @@ Func Example()
 		If TimerDiff($hTimer) > 40 Then
 			_GDIPlus_GraphicsClear($hGfx_Buffer, 0xFF000000)
 			For $i = 1 To $iIterCnt
-				_GDIPlus_PathReset($hSubPath);reset path transformation
+				_GDIPlus_PathReset($hSubPath) ;reset path transformation
 				_GDIPlus_PathIterNextSubpathPath($hIter, $hSubPath)
 
 				$aBounds = _GDIPlus_PathGetWorldBounds($hSubPath)
-				_GDIPlus_MatrixSetElements($hMatrix, 1, 0, 0, 1, 0, 0);reset matrix
+				_GDIPlus_MatrixSetElements($hMatrix, 1, 0, 0, 1, 0, 0) ;reset matrix
 				_GDIPlus_MatrixTranslate($hMatrix, -($aBounds[0] + $aBounds[2] / 2), -($aBounds[1] + $aBounds[3] / 2))
 				_GDIPlus_MatrixRotate($hMatrix, Random(-24, 24), True)
 				_GDIPlus_MatrixTranslate($hMatrix, $aBounds[0] + $aBounds[2] / 2, $aBounds[1] + $aBounds[3] / 2, True)

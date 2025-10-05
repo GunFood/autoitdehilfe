@@ -1,9 +1,8 @@
 #include <GUIConstantsEx.au3>
 #include <GuiListView.au3>
-#include <MsgBoxConstants.au3>
 #include <SendMessage.au3>
 #include <WinAPITheme.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
 
 Example()
 

@@ -1,3 +1,5 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiStatusBar.au3>
 #include <MsgBoxConstants.au3>
@@ -6,10 +8,14 @@ Example()
 
 Func Example()
 	; Erstellt eine GUI
-	Local $hGUI = GUICreate("StatusBar: Löschen (v" & @AutoItVersion & ")", 400, 300)
+	Local $hGUI = GUICreate("StatusBar: Löschen (v" & @AutoItVersion & ")", 400, 300, 100, 100)
 
 	; Standard ist 1 Abschnitt und kein Text
 	Local $hStatus = _GUICtrlStatusBar_Create($hGUI)
+
+	; Erstellt ein Memo Control
+	_MemoCreate(2, 8, 444, 259)
+
 
 	Local $aParts[3] = [75, 150, -1]
 	_GUICtrlStatusBar_SetParts($hStatus, $aParts)
@@ -20,10 +26,12 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	Local $hHandleBefore = $hStatus
-	MsgBox($MB_SYSTEMMODAL, "Information", "Das Control des folgenden Handles wird gelöscht: " & $hStatus)
-	MsgBox($MB_SYSTEMMODAL, "Information", "Control gelöscht: " & _GUICtrlStatusBar_Destroy($hStatus) & @CRLF & _
+	_MemoMsgBox($MB_SYSTEMMODAL, "Information", "Das Control des folgenden Handles wird gelöscht: " & $hStatus)
+	_MemoMsgBox($MB_SYSTEMMODAL, "Information", "Control gelöscht: " & _GUICtrlStatusBar_Destroy($hStatus) & @CRLF & _
 			"Handle vor dem löschen: " & $hHandleBefore & @CRLF & _
 			"Handle nach dem löschen: " & $hStatus)
+
+	_MemoMsgBoxStatus("", -1, $hGUI) ; Keine weiteren Aktionen, es wird gewartet bis die GUI geschlossen wird.
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

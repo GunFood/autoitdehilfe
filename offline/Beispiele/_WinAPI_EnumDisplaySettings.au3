@@ -1,4 +1,3 @@
-#include <APIGdiConstants.au3>
 #include <WinAPIGdi.au3>
 
 Global $i = 0, $aData

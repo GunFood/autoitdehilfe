@@ -1,7 +1,7 @@
-#include <GUIComboBox.au3>
-#include <GuiConstantsEx.au3>
+#include "Extras\HelpFileInternals.au3"
 
-Global $g_idMemo
+#include <GuiComboBox.au3>
+#include <GUIConstantsEx.au3>
 
 Example()
 
@@ -9,8 +9,7 @@ Func Example()
 	; Erstellt eine GUI
 	GUICreate("ComboBox: Setzt und ermittelt den String (v" & @AutoItVersion & ")", 500, 296)
 	Local $idCombo = GUICtrlCreateCombo("", 2, 2, 396, 296)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 32, 396, 266, 0)
 	GUISetState(@SW_SHOW)
 
 	; Fügt Dateien hinzu
@@ -26,15 +25,10 @@ Func Example()
 
 	; Ermittelt Zeichen im Input-Control einer ComboBox
 	Local $aSel = _GUICtrlComboBox_GetEditSel($idCombo)
-	MemoWrite(StringFormat("Ermittelt Zeichen im Input-Control einer ComboBox: %d - %d", $aSel[0], $aSel[1]))
+	_MemoWrite(StringFormat("Ermittelt Zeichen im Input-Control einer ComboBox: %d - %d", $aSel[0], $aSel[1]))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

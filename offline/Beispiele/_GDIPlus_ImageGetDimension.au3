@@ -1,3 +1,4 @@
+#include <FileConstants.au3>
 #include <GDIPlus.au3>
 #include <MsgBoxConstants.au3>
 

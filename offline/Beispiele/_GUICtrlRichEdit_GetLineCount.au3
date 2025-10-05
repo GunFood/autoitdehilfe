@@ -1,8 +1,8 @@
 #include <GUIConstantsEx.au3>
 #include <GuiRichEdit.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
-Global $g_idLblMsg
+Global $g_idLbl_Msg
 
 Example()
 
@@ -11,7 +11,7 @@ Func Example()
 	$hGui = GUICreate("Beispiel (" & StringTrimRight(@ScriptName, 4) & ")", 320, 350, -1, -1)
 	$hRichEdit = _GUICtrlRichEdit_Create($hGui, "Dies ist ein Test.", 10, 10, 300, 220, _
 			BitOR($ES_MULTILINE, $WS_VSCROLL, $ES_AUTOVSCROLL))
-	$g_idLblMsg = GUICtrlCreateLabel("", 10, 235, 300, 60)
+	$g_idLbl_Msg = GUICtrlCreateLabel("", 10, 235, 300, 60)
 	GUISetState(@SW_SHOW)
 
 	For $i = 2 To 10
@@ -32,5 +32,5 @@ Func Example()
 EndFunc   ;==>Example
 
 Func Report($sMsg)
-	GUICtrlSetData($g_idLblMsg, $sMsg)
+	GUICtrlSetData($g_idLbl_Msg, $sMsg)
 EndFunc   ;==>Report

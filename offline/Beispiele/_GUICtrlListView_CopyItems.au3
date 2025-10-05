@@ -1,37 +1,37 @@
 #include <GUIConstantsEx.au3>
 #include <GuiImageList.au3>
 #include <GuiListView.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Opt("GUIOnEventMode", 1)
 
 Global $g_hListView, $g_hListView2, $g_hGUI1, $g_hGUI2, $g_iRun = 1
 Global $g_iDock = 1, $g_iDock_Location = 1, $g_iX1, $g_iX2, $g_iY1, $g_iY2
-Global $idOptionsItem2, $idOptionsItem3, $idOptionsItem4
-Global $g_idOptions2Item2, $g_idOptions2Item3, $g_idOptions2Item4
+Global $g_idMni_OptionsItem2, $g_idMni_OptionsItem3, $g_idMni_OptionsItem4
+Global $g_idMni_Options2Item2, $g_idMni_Options2Item3, $g_idMni_Options2Item4
 
 Example()
 
 Func Example()
 	$g_iRun = 1
-	Local $idOptionsMenu, $idOptionsItem1, $idOptions2Menu, $idOptions2Item1, $iWidth = 450
-	Local $id_MoveLeft, $id_MoveRight, $id_Exit1, $id_Exit2
-	Local $id_CopyRight, $id_CopyLeft, $hImage
+	Local $idMnu_Options, $g_idMni_OptionsItem1, $idMnu_Options2, $idMnu_Options2Item1, $iWidth = 450
+	Local $idBtn_MoveLeft, $idBtn_MoveRight, $idBtn_Exit1, $idBtn_Exit2
+	Local $idBtn_CopyRight, $idBtn_CopyLeft, $hImage
 	Local $iStylesEx = BitOR($LVS_EX_GRIDLINES, $LVS_EX_FULLROWSELECT, $LVS_EX_CHECKBOXES, $LVS_EX_SUBITEMIMAGES)
 
 	$g_hGUI1 = GUICreate("(extern) ListView: Items kopieren (v" & @AutoItVersion & ")", $iWidth, 400, 10, 10)
-	$idOptionsMenu = GUICtrlCreateMenu("Optionen")
-	$idOptionsItem1 = GUICtrlCreateMenu("Andocken", $idOptionsMenu)
+	$idMnu_Options = GUICtrlCreateMenu("Optionen")
+	$g_idMni_OptionsItem1 = GUICtrlCreateMenu("Andocken", $idMnu_Options)
 
-	$idOptionsItem2 = GUICtrlCreateMenuItem("Angedockt", $idOptionsItem1)
-	GUICtrlCreateMenuItem("", $idOptionsItem1)
-	$idOptionsItem3 = GUICtrlCreateMenuItem("Nebeneinander", $idOptionsItem1)
-	$idOptionsItem4 = GUICtrlCreateMenuItem("Untereinander", $idOptionsItem1)
-	GUICtrlSetState($idOptionsItem2, $GUI_CHECKED)
-	GUICtrlSetState($idOptionsItem3, $GUI_CHECKED)
-	GUICtrlSetOnEvent($idOptionsItem2, "_SetDocking")
-	GUICtrlSetOnEvent($idOptionsItem3, "_SetDockSideBySide")
-	GUICtrlSetOnEvent($idOptionsItem4, "_SetDockTopAndBottom")
+	$g_idMni_OptionsItem2 = GUICtrlCreateMenuItem("Angedockt", $g_idMni_OptionsItem1)
+	GUICtrlCreateMenuItem("", $g_idMni_OptionsItem1)
+	$g_idMni_OptionsItem3 = GUICtrlCreateMenuItem("Nebeneinander", $g_idMni_OptionsItem1)
+	$g_idMni_OptionsItem4 = GUICtrlCreateMenuItem("Untereinander", $g_idMni_OptionsItem1)
+	GUICtrlSetState($g_idMni_OptionsItem2, $GUI_CHECKED)
+	GUICtrlSetState($g_idMni_OptionsItem3, $GUI_CHECKED)
+	GUICtrlSetOnEvent($g_idMni_OptionsItem2, "_SetDocking")
+	GUICtrlSetOnEvent($g_idMni_OptionsItem3, "_SetDockSideBySide")
+	GUICtrlSetOnEvent($g_idMni_OptionsItem4, "_SetDockTopAndBottom")
 
 	GUISetOnEvent($GUI_EVENT_CLOSE, "SpecialEvents")
 	GUISetOnEvent($GUI_EVENT_MINIMIZE, "SpecialEvents")
@@ -41,28 +41,28 @@ Func Example()
 	$g_hListView = GUICtrlGetHandle(GUICtrlCreateListView("", 2, 2, $iWidth - 100, 268, BitOR($LVS_REPORT, $LVS_SHOWSELALWAYS), $WS_EX_CLIENTEDGE))
 	_GUICtrlListView_SetExtendedListViewStyle($g_hListView, $iStylesEx)
 
-	$id_MoveRight = GUICtrlCreateButton("Verschieben", $iWidth - 95, 35, 90, 20)
-	GUICtrlSetOnEvent($id_MoveRight, "_MoveRight")
+	$idBtn_MoveRight = GUICtrlCreateButton("Verschieben", $iWidth - 95, 35, 90, 20)
+	GUICtrlSetOnEvent($idBtn_MoveRight, "_MoveRight")
 
-	$id_CopyRight = GUICtrlCreateButton("Kopieren", $iWidth - 95, 60, 90, 20)
-	GUICtrlSetOnEvent($id_CopyRight, "_CopyRight")
+	$idBtn_CopyRight = GUICtrlCreateButton("Kopieren", $iWidth - 95, 60, 90, 20)
+	GUICtrlSetOnEvent($idBtn_CopyRight, "_CopyRight")
 
-	$id_Exit1 = GUICtrlCreateButton("Beenden", $iWidth - 95, 140, 90, 25)
-	GUICtrlSetOnEvent($id_Exit1, "_Exit")
+	$idBtn_Exit1 = GUICtrlCreateButton("Beenden", $iWidth - 95, 140, 90, 25)
+	GUICtrlSetOnEvent($idBtn_Exit1, "_Exit")
 
 	$g_hGUI2 = GUICreate("Rechtes/unteres Fenster", $iWidth, 300, $iWidth + 15, 10)
 
-	$idOptions2Menu = GUICtrlCreateMenu("Optionen")
-	$idOptions2Item1 = GUICtrlCreateMenu("Andocken", $idOptions2Menu)
-	$g_idOptions2Item2 = GUICtrlCreateMenuItem("Angedockt", $idOptions2Item1)
-	GUICtrlCreateMenuItem("", $idOptions2Item1)
-	$g_idOptions2Item3 = GUICtrlCreateMenuItem("Nebeneinander", $idOptions2Item1)
-	$g_idOptions2Item4 = GUICtrlCreateMenuItem("Untereinander", $idOptions2Item1)
-	GUICtrlSetState($g_idOptions2Item2, $GUI_CHECKED)
-	GUICtrlSetState($g_idOptions2Item3, $GUI_CHECKED)
-	GUICtrlSetOnEvent($g_idOptions2Item2, "_SetDocking2")
-	GUICtrlSetOnEvent($g_idOptions2Item3, "_SetDockSideBySide2")
-	GUICtrlSetOnEvent($g_idOptions2Item4, "_SetDockTopAndBottom2")
+	$idMnu_Options2 = GUICtrlCreateMenu("Optionen")
+	$idMnu_Options2Item1 = GUICtrlCreateMenu("Andocken", $idMnu_Options2)
+	$g_idMni_Options2Item2 = GUICtrlCreateMenuItem("Angedockt", $idMnu_Options2Item1)
+	GUICtrlCreateMenuItem("", $idMnu_Options2Item1)
+	$g_idMni_Options2Item3 = GUICtrlCreateMenuItem("Nebeneinander", $idMnu_Options2Item1)
+	$g_idMni_Options2Item4 = GUICtrlCreateMenuItem("Untereinander", $idMnu_Options2Item1)
+	GUICtrlSetState($g_idMni_Options2Item2, $GUI_CHECKED)
+	GUICtrlSetState($g_idMni_Options2Item3, $GUI_CHECKED)
+	GUICtrlSetOnEvent($g_idMni_Options2Item2, "_SetDocking2")
+	GUICtrlSetOnEvent($g_idMni_Options2Item3, "_SetDockSideBySide2")
+	GUICtrlSetOnEvent($g_idMni_Options2Item4, "_SetDockTopAndBottom2")
 
 	GUISetOnEvent($GUI_EVENT_CLOSE, "SpecialEvents")
 	GUISetOnEvent($GUI_EVENT_MINIMIZE, "SpecialEvents")
@@ -71,14 +71,14 @@ Func Example()
 	$g_hListView2 = GUICtrlGetHandle(GUICtrlCreateListView("", 2, 2, $iWidth - 100, 268, BitOR($LVS_REPORT, $LVS_SHOWSELALWAYS), $WS_EX_CLIENTEDGE))
 	_GUICtrlListView_SetExtendedListViewStyle($g_hListView2, $iStylesEx)
 
-	$id_MoveLeft = GUICtrlCreateButton("Verschieben", $iWidth - 95, 35, 90, 20)
-	GUICtrlSetOnEvent($id_MoveLeft, "_MoveLeft")
+	$idBtn_MoveLeft = GUICtrlCreateButton("Verschieben", $iWidth - 95, 35, 90, 20)
+	GUICtrlSetOnEvent($idBtn_MoveLeft, "_MoveLeft")
 
-	$id_CopyLeft = GUICtrlCreateButton("Kopieren", $iWidth - 95, 60, 90, 20)
-	GUICtrlSetOnEvent($id_CopyLeft, "_CopyLeft")
+	$idBtn_CopyLeft = GUICtrlCreateButton("Kopieren", $iWidth - 95, 60, 90, 20)
+	GUICtrlSetOnEvent($idBtn_CopyLeft, "_CopyLeft")
 
-	$id_Exit2 = GUICtrlCreateButton("Beenden", $iWidth - 95, 140, 90, 25)
-	GUICtrlSetOnEvent($id_Exit2, "_Exit")
+	$idBtn_Exit2 = GUICtrlCreateButton("Beenden", $iWidth - 95, 140, 90, 25)
+	GUICtrlSetOnEvent($idBtn_Exit2, "_Exit")
 
 	GUISetState(@SW_SHOW, $g_hGUI2)
 	GUISetState(@SW_SHOW, $g_hGUI1)
@@ -128,43 +128,43 @@ Func Example()
 EndFunc   ;==>Example
 
 Func _SetDocking()
-	If BitAND(GUICtrlRead($idOptionsItem2), $GUI_CHECKED) = $GUI_CHECKED Then
-		GUICtrlSetState($idOptionsItem2, $GUI_UNCHECKED)
-		GUICtrlSetState($g_idOptions2Item2, $GUI_UNCHECKED)
+	If BitAND(GUICtrlRead($g_idMni_OptionsItem2), $GUI_CHECKED) = $GUI_CHECKED Then
+		GUICtrlSetState($g_idMni_OptionsItem2, $GUI_UNCHECKED)
+		GUICtrlSetState($g_idMni_Options2Item2, $GUI_UNCHECKED)
 		$g_iDock = 0
 	Else
-		GUICtrlSetState($idOptionsItem2, $GUI_CHECKED)
-		GUICtrlSetState($g_idOptions2Item2, $GUI_CHECKED)
+		GUICtrlSetState($g_idMni_OptionsItem2, $GUI_CHECKED)
+		GUICtrlSetState($g_idMni_Options2Item2, $GUI_CHECKED)
 		$g_iDock = 2
 	EndIf
 	If $g_iDock Then _KeepWindowsDocked()
 EndFunc   ;==>_SetDocking
 
 Func _SetDocking2()
-	If BitAND(GUICtrlRead($g_idOptions2Item2), $GUI_CHECKED) = $GUI_CHECKED Then
-		GUICtrlSetState($idOptionsItem2, $GUI_UNCHECKED)
-		GUICtrlSetState($g_idOptions2Item2, $GUI_UNCHECKED)
+	If BitAND(GUICtrlRead($g_idMni_Options2Item2), $GUI_CHECKED) = $GUI_CHECKED Then
+		GUICtrlSetState($g_idMni_OptionsItem2, $GUI_UNCHECKED)
+		GUICtrlSetState($g_idMni_Options2Item2, $GUI_UNCHECKED)
 		$g_iDock = 0
 	Else
-		GUICtrlSetState($idOptionsItem2, $GUI_CHECKED)
-		GUICtrlSetState($g_idOptions2Item2, $GUI_CHECKED)
+		GUICtrlSetState($g_idMni_OptionsItem2, $GUI_CHECKED)
+		GUICtrlSetState($g_idMni_Options2Item2, $GUI_CHECKED)
 		$g_iDock = 2
 	EndIf
 	If $g_iDock Then _KeepWindowsDocked()
 EndFunc   ;==>_SetDocking2
 
 Func _SetDockSideBySide()
-	If BitAND(GUICtrlRead($idOptionsItem3), $GUI_CHECKED) = $GUI_CHECKED Then
-		GUICtrlSetState($idOptionsItem3, $GUI_UNCHECKED)
-		GUICtrlSetState($idOptionsItem4, $GUI_CHECKED)
-		GUICtrlSetState($g_idOptions2Item3, $GUI_UNCHECKED)
-		GUICtrlSetState($g_idOptions2Item4, $GUI_CHECKED)
+	If BitAND(GUICtrlRead($g_idMni_OptionsItem3), $GUI_CHECKED) = $GUI_CHECKED Then
+		GUICtrlSetState($g_idMni_OptionsItem3, $GUI_UNCHECKED)
+		GUICtrlSetState($g_idMni_OptionsItem4, $GUI_CHECKED)
+		GUICtrlSetState($g_idMni_Options2Item3, $GUI_UNCHECKED)
+		GUICtrlSetState($g_idMni_Options2Item4, $GUI_CHECKED)
 		$g_iDock_Location = 2
 	Else
-		GUICtrlSetState($idOptionsItem3, $GUI_CHECKED)
-		GUICtrlSetState($idOptionsItem4, $GUI_UNCHECKED)
-		GUICtrlSetState($g_idOptions2Item3, $GUI_CHECKED)
-		GUICtrlSetState($g_idOptions2Item4, $GUI_UNCHECKED)
+		GUICtrlSetState($g_idMni_OptionsItem3, $GUI_CHECKED)
+		GUICtrlSetState($g_idMni_OptionsItem4, $GUI_UNCHECKED)
+		GUICtrlSetState($g_idMni_Options2Item3, $GUI_CHECKED)
+		GUICtrlSetState($g_idMni_Options2Item4, $GUI_UNCHECKED)
 		$g_iDock_Location = 1
 		If $g_iDock Then $g_iDock = 2
 	EndIf
@@ -172,17 +172,17 @@ Func _SetDockSideBySide()
 EndFunc   ;==>_SetDockSideBySide
 
 Func _SetDockSideBySide2()
-	If BitAND(GUICtrlRead($g_idOptions2Item3), $GUI_CHECKED) = $GUI_CHECKED Then
-		GUICtrlSetState($idOptionsItem3, $GUI_UNCHECKED)
-		GUICtrlSetState($idOptionsItem4, $GUI_CHECKED)
-		GUICtrlSetState($g_idOptions2Item3, $GUI_UNCHECKED)
-		GUICtrlSetState($g_idOptions2Item4, $GUI_CHECKED)
+	If BitAND(GUICtrlRead($g_idMni_Options2Item3), $GUI_CHECKED) = $GUI_CHECKED Then
+		GUICtrlSetState($g_idMni_OptionsItem3, $GUI_UNCHECKED)
+		GUICtrlSetState($g_idMni_OptionsItem4, $GUI_CHECKED)
+		GUICtrlSetState($g_idMni_Options2Item3, $GUI_UNCHECKED)
+		GUICtrlSetState($g_idMni_Options2Item4, $GUI_CHECKED)
 		$g_iDock_Location = 2
 	Else
-		GUICtrlSetState($idOptionsItem3, $GUI_CHECKED)
-		GUICtrlSetState($idOptionsItem4, $GUI_UNCHECKED)
-		GUICtrlSetState($g_idOptions2Item3, $GUI_CHECKED)
-		GUICtrlSetState($g_idOptions2Item4, $GUI_UNCHECKED)
+		GUICtrlSetState($g_idMni_OptionsItem3, $GUI_CHECKED)
+		GUICtrlSetState($g_idMni_OptionsItem4, $GUI_UNCHECKED)
+		GUICtrlSetState($g_idMni_Options2Item3, $GUI_CHECKED)
+		GUICtrlSetState($g_idMni_Options2Item4, $GUI_UNCHECKED)
 		$g_iDock_Location = 1
 		If $g_iDock Then $g_iDock = 2
 	EndIf
@@ -190,17 +190,17 @@ Func _SetDockSideBySide2()
 EndFunc   ;==>_SetDockSideBySide2
 
 Func _SetDockTopAndBottom()
-	If BitAND(GUICtrlRead($idOptionsItem4), $GUI_CHECKED) = $GUI_CHECKED Then
-		GUICtrlSetState($idOptionsItem4, $GUI_UNCHECKED)
-		GUICtrlSetState($idOptionsItem3, $GUI_CHECKED)
-		GUICtrlSetState($g_idOptions2Item4, $GUI_UNCHECKED)
-		GUICtrlSetState($g_idOptions2Item3, $GUI_CHECKED)
+	If BitAND(GUICtrlRead($g_idMni_OptionsItem4), $GUI_CHECKED) = $GUI_CHECKED Then
+		GUICtrlSetState($g_idMni_OptionsItem4, $GUI_UNCHECKED)
+		GUICtrlSetState($g_idMni_OptionsItem3, $GUI_CHECKED)
+		GUICtrlSetState($g_idMni_Options2Item4, $GUI_UNCHECKED)
+		GUICtrlSetState($g_idMni_Options2Item3, $GUI_CHECKED)
 		$g_iDock_Location = 1
 	Else
-		GUICtrlSetState($idOptionsItem4, $GUI_CHECKED)
-		GUICtrlSetState($idOptionsItem3, $GUI_UNCHECKED)
-		GUICtrlSetState($g_idOptions2Item4, $GUI_CHECKED)
-		GUICtrlSetState($g_idOptions2Item3, $GUI_UNCHECKED)
+		GUICtrlSetState($g_idMni_OptionsItem4, $GUI_CHECKED)
+		GUICtrlSetState($g_idMni_OptionsItem3, $GUI_UNCHECKED)
+		GUICtrlSetState($g_idMni_Options2Item4, $GUI_CHECKED)
+		GUICtrlSetState($g_idMni_Options2Item3, $GUI_UNCHECKED)
 		$g_iDock_Location = 2
 		If $g_iDock Then $g_iDock = 2
 	EndIf
@@ -208,17 +208,17 @@ Func _SetDockTopAndBottom()
 EndFunc   ;==>_SetDockTopAndBottom
 
 Func _SetDockTopAndBottom2()
-	If BitAND(GUICtrlRead($g_idOptions2Item4), $GUI_CHECKED) = $GUI_CHECKED Then
-		GUICtrlSetState($idOptionsItem4, $GUI_UNCHECKED)
-		GUICtrlSetState($idOptionsItem3, $GUI_CHECKED)
-		GUICtrlSetState($g_idOptions2Item4, $GUI_UNCHECKED)
-		GUICtrlSetState($g_idOptions2Item3, $GUI_CHECKED)
+	If BitAND(GUICtrlRead($g_idMni_Options2Item4), $GUI_CHECKED) = $GUI_CHECKED Then
+		GUICtrlSetState($g_idMni_OptionsItem4, $GUI_UNCHECKED)
+		GUICtrlSetState($g_idMni_OptionsItem3, $GUI_CHECKED)
+		GUICtrlSetState($g_idMni_Options2Item4, $GUI_UNCHECKED)
+		GUICtrlSetState($g_idMni_Options2Item3, $GUI_CHECKED)
 		$g_iDock_Location = 1
 	Else
-		GUICtrlSetState($idOptionsItem4, $GUI_CHECKED)
-		GUICtrlSetState($idOptionsItem3, $GUI_UNCHECKED)
-		GUICtrlSetState($g_idOptions2Item4, $GUI_CHECKED)
-		GUICtrlSetState($g_idOptions2Item3, $GUI_UNCHECKED)
+		GUICtrlSetState($g_idMni_OptionsItem4, $GUI_CHECKED)
+		GUICtrlSetState($g_idMni_OptionsItem3, $GUI_UNCHECKED)
+		GUICtrlSetState($g_idMni_Options2Item4, $GUI_CHECKED)
+		GUICtrlSetState($g_idMni_Options2Item3, $GUI_UNCHECKED)
 		$g_iDock_Location = 2
 		If $g_iDock Then $g_iDock = 2
 	EndIf

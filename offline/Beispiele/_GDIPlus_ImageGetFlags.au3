@@ -1,11 +1,11 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GDIPlus.au3>
 #include <GUIConstantsEx.au3>
 #include <ScreenCapture.au3>
 #include <WinAPIHObj.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
-
-Global $g_idMemo
 
 Example()
 
@@ -14,8 +14,7 @@ Func Example()
 
 	; Erstellt das GUI
 	GUICreate("GDI+", 600, 400)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 596, 396, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 2, 596, 396, $WS_VSCROLL)
 	GUISetState(@SW_SHOW)
 
 	; Initialisiert (startet) Microsoft Windows GDI+
@@ -28,10 +27,10 @@ Func Example()
 	; Zeigt die Pixeldaten-Eigenschaften des Screenshots
 	$aRet = _GDIPlus_ImageGetFlags($hImage)
 	$aRet[1] = @CRLF & StringReplace($aRet[1], "|", @CRLF)
-	MemoWrite("Pixeldaten-Eigenschaften des Screenshots: " & $aRet[1]);
-	MemoWrite();
-	MemoWrite("Integer-Flag-Satz mit Pixeldaten-Attributen: " & $aRet[0]);
-	MemoWrite();
+	_MemoWrite("Pixeldaten-Eigenschaften des Screenshots: " & $aRet[1]);
+	_MemoWrite();
+	_MemoWrite("Integer-Flag-Satz mit Pixeldaten-Attributen: " & $aRet[0]);
+	_MemoWrite();
 
 	; Speichert den Screenshot (Bitmap) in einer Datei
 	_GDIPlus_ImageSaveToFile($hImage, @MyDocumentsDir & "\GDIPlus_Image.jpg")
@@ -46,9 +45,9 @@ Func Example()
 	; Zeigt die Pixeldaten-Eigenschaften des abgespeicherten Screenshots (Bitmap)
 	$aRet = _GDIPlus_ImageGetFlags($hImage)
 	$aRet[1] = @CRLF & StringReplace($aRet[1], "|", @CRLF)
-	MemoWrite("Pixeldaten-Eigenschaften der gespeicherten Datei: " & $aRet[1]);
-	MemoWrite();
-	MemoWrite("Integer-Flag-Satz mit Pixeldaten-Attributen: " & $aRet[0]);
+	_MemoWrite("Pixeldaten-Eigenschaften der gespeicherten Datei: " & $aRet[1]);
+	_MemoWrite();
+	_MemoWrite("Integer-Flag-Satz mit Pixeldaten-Attributen: " & $aRet[0]);
 
 	; Ressourcen freigeben
 	_GDIPlus_ImageDispose($hImage)
@@ -60,8 +59,3 @@ Func Example()
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo Fenster aus
-Func MemoWrite($sMessage = '')
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

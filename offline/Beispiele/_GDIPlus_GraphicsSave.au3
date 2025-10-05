@@ -36,7 +36,7 @@ Func Example()
 	$hBrush = _GDIPlus_BrushCreateSolid(0xFF7F00FF)
 	_GDIPlus_GraphicsFillPath($hGraphic, $hPath, $hBrush)
 
-	_GDIPlus_GraphicsRestore($hGraphic, $iGfx_Save);restore clipping region
+	_GDIPlus_GraphicsRestore($hGraphic, $iGfx_Save) ;restore clipping region
 
 	$hPen = _GDIPlus_PenCreate(0xFFFF007F)
 	_GDIPlus_GraphicsDrawPath($hGraphic, $hPath, $hPen)

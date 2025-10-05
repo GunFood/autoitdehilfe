@@ -1,3 +1,5 @@
+#include "Extras\HelpFileInternals.au3"
+
 Example()
 
 Func Example()
@@ -8,13 +10,13 @@ Func Example()
 	Local $hWnd = WinWait("[CLASS:Notepad]", "", 10)
 
 	; Versteckt das Edit-Control im Editor durch die Verwendung des von WinWait zurückgegebenen Handles.
-	ControlHide($hWnd, "", "Edit1")
+	ControlHide($hWnd, "", ControlGetFocus($hWnd))
 
 	; Wartet 2 Sekunden.
 	Sleep(2000)
 
 	; Zeigt das Edit-Control im Editor durch die Verwendung des von WinWait zurückgegebenen Handles.
-	ControlShow($hWnd, "", "Edit1")
+	ControlShow($hWnd, "", ControlGetFocus($hWnd))
 
 	; Wartet 2 Sekunden.
 	Sleep(2000)

@@ -1,6 +1,4 @@
-#include <APIRegConstants.au3>
 #include <Debug.au3>
-#include <MsgBoxConstants.au3>
 #include <WinAPIError.au3>
 #include <WinAPIHObj.au3>
 #include <WinAPIProc.au3>
@@ -15,7 +13,7 @@ Func Example()
 	Local $hKey = _WinAPI_RegOpenKey($HKEY_CURRENT_USER, $sKey, $KEY_NOTIFY)
 	If @error Then
 		_DebugSetup(Default, True)
-		_DebugReport("! RegOpenKey @error =" & @error & @CRLF & @TAB &_WinAPI_GetErrorMessage(@extended))
+		_DebugReport("! RegOpenKey @error =" & @error & @CRLF & @TAB & _WinAPI_GetErrorMessage(@extended))
 		Exit
 	EndIf
 	Local $hEvent = _WinAPI_CreateEvent()

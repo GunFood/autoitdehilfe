@@ -2,7 +2,8 @@
 #include <MsgBoxConstants.au3>
 #include <WinAPIFiles.au3>
 
-; InetGet wartet, bis der Download abgeschlossen ist.
+; Datei im Hintergrund herunterladen.
+; Warten, bis der Download abgeschlossen ist.
 
 Beispiel()
 
@@ -20,6 +21,6 @@ Func Beispiel()
 	MsgBox($MB_SYSTEMMODAL, "", "Die Gesamtgröße des Downloads: " & $iBytesSize & @CRLF & _
 			"Die gesamte Dateigröße: " & $iFileSize)
 
-	; Löscht die temporäre lokale Datei.
+	; Löscht die heruntergeladene Datei.
 	FileDelete($sFilePath)
 EndFunc   ;==>Beispiel

@@ -1,9 +1,11 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <FileConstants.au3>
 #include <MsgBoxConstants.au3>
 #include <Word.au3>
 
 ; Kopiert \Extras\Test.doc nach @TempDir
-If FileCopy(@ScriptDir & "\Extras\Test.doc", @TempDir & "\_Word_Test.doc", $FC_OVERWRITE) = 0 Then Exit MsgBox($MB_SYSTEMMODAL, _
+If FileCopy(_Extras_PathFull("Test.doc"), @TempDir & "\_Word_Test.doc", $FC_OVERWRITE) = 0 Then Exit MsgBox($MB_SYSTEMMODAL, _
 		"Word UDF: _Word_DocSave Beispiel", "Fehler beim Kopieren von '.\Extras\Test.doc' als '_Word_Test.doc' in das @TempDir Verzeichnis.")
 ; Erzeugt ein neues oder stellt eine Verbindung zu einem bestehenden Word-Objekt her
 Local $oWord = _Word_Create()

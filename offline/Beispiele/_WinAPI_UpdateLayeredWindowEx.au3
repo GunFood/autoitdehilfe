@@ -1,11 +1,14 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GDIPlus.au3>
 #include <Misc.au3>
 #include <WinAPIHObj.au3>
 #include <WinAPISysWin.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 _GDIPlus_Startup()
-Local $hImage = _GDIPlus_ImageLoadFromFile(@ScriptDir & '\Extras\Exclamation.png')
+Local $sPng = _Extras_PathFull('Exclamation.png')
+Local $hImage = _GDIPlus_ImageLoadFromFile($sPng)
 Local $hForm = GUICreate('Test ' & StringReplace(@ScriptName, '.au3', '()'), _GDIPlus_ImageGetWidth($hImage), _GDIPlus_ImageGetHeight($hImage), -1, -1, $WS_POPUPWINDOW, BitOR($WS_EX_LAYERED, $WS_EX_TOPMOST))
 Local $hBitmap = _GDIPlus_BitmapCreateHBITMAPFromBitmap($hImage)
 _GDIPlus_ImageDispose($hImage)

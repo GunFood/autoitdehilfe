@@ -2,18 +2,17 @@
 #include <WinAPIGdi.au3>
 #include <WinAPIHObj.au3>
 #include <WinAPISys.au3>
-#include <WindowsConstants.au3>
 
 ; Ermittelt die Höhe des Fenstertitels und die Breite des Fensterrahmens - kann je nach XP-Thema variieren.
 Global $g_iHtit = _WinAPI_GetSystemMetrics($SM_CYCAPTION)
 Global $g_iFrame = _WinAPI_GetSystemMetrics($SM_CXDLGFRAME)
 
 Global $g_hGui = GUICreate("Teste Fensterregionen", 350, 210)
-Local $id_default = GUICtrlCreateButton("Standard-Region", 100, 30, 150)
-Local $id_round = GUICtrlCreateButton("Abgerundete Region", 100, 60, 150)
-Local $id_buble = GUICtrlCreateButton("Blasen-Region ", 100, 90, 150)
-Local $id_transparent = GUICtrlCreateButton("Transparente Region", 100, 120, 150)
-Local $id_exit = GUICtrlCreateButton("Beenden", 100, 150, 150)
+Local $idBtn_Default = GUICtrlCreateButton("Standard-Region", 100, 30, 150)
+Local $idBtn_Round = GUICtrlCreateButton("Abgerundete Region", 100, 60, 150)
+Local $idBtn_Buble = GUICtrlCreateButton("Blasen-Region ", 100, 90, 150)
+Local $idBtn_Transparent = GUICtrlCreateButton("Transparente Region", 100, 120, 150)
+Local $idBtn_Exit = GUICtrlCreateButton("Beenden", 100, 150, 150)
 GUISetState(@SW_SHOW)
 
 Local $aPos = WinGetPos($g_hGui) ; Ermittelt die Größe des gesamten Fensters (weil keine Client-Größe bei GUICreate angegeben wurde)
@@ -24,18 +23,18 @@ Local $iMsg, $hRgn
 While 1
 	$iMsg = GUIGetMsg()
 	Select
-		Case $iMsg = $Gui_EVENT_CLOSE Or $iMsg = $id_exit
+		Case $iMsg = $Gui_EVENT_CLOSE Or $iMsg = $idBtn_Exit
 			ExitLoop
 
-		Case $iMsg = $id_default ; Standard
+		Case $iMsg = $idBtn_Default ; Standard
 			$hRgn = _WinAPI_CreateRectRgn(0, 0, $g_iWidth, $g_iHeight)
 			_WinAPI_SetWindowRgn($g_hGui, $hRgn)
 
-		Case $iMsg = $id_round ; Abgerundet
+		Case $iMsg = $idBtn_Round ; Abgerundet
 			$hRgn = _WinAPI_CreateRoundRectRgn(0, 0, $g_iWidth, $g_iHeight, $g_iWidth / 3, $g_iHeight / 3)
 			_WinAPI_SetWindowRgn($g_hGui, $hRgn)
 
-		Case $iMsg = $id_buble ; Blasen
+		Case $iMsg = $idBtn_Buble ; Blasen
 			Local $hRgn1 = _WinAPI_CreateRoundRectRgn(0, 0, $g_iWidth / 2, $g_iHeight / 2, $g_iWidth / 2, $g_iHeight / 2) ; Links oben
 			Local $hRgn2 = _WinAPI_CreateRoundRectRgn($g_iWidth / 2, 0, $g_iWidth, $g_iHeight / 2, $g_iWidth / 2, $g_iHeight / 2) ; Rechts oben
 			_WinAPI_CombineRgn($hRgn1, $hRgn1, $hRgn2, $RGN_OR)
@@ -51,7 +50,7 @@ While 1
 			_WinAPI_DeleteObject($hRgn2)
 			_WinAPI_SetWindowRgn($g_hGui, $hRgn1)
 
-		Case $iMsg = $id_transparent ; Transparent
+		Case $iMsg = $idBtn_Transparent ; Transparent
 			_GuiHole($g_hGui, 40, 40, 260, 170)
 
 	EndSelect
@@ -67,11 +66,11 @@ Func _GuiHole($h_win, $i_x, $i_y, $i_sizew, $i_sizeh)
 	_WinAPI_CombineRgn($hCombined_rgn, $hOuter_rgn, $hInner_rgn, $RGN_DIFF)
 	_WinAPI_DeleteObject($hOuter_rgn)
 	_WinAPI_DeleteObject($hInner_rgn)
-	_AddCtrlRegion($hCombined_rgn, $id_default)
-	_AddCtrlRegion($hCombined_rgn, $id_round)
-	_AddCtrlRegion($hCombined_rgn, $id_buble)
-	_AddCtrlRegion($hCombined_rgn, $id_transparent)
-	_AddCtrlRegion($hCombined_rgn, $id_exit)
+	_AddCtrlRegion($hCombined_rgn, $idBtn_Default)
+	_AddCtrlRegion($hCombined_rgn, $idBtn_Round)
+	_AddCtrlRegion($hCombined_rgn, $idBtn_Buble)
+	_AddCtrlRegion($hCombined_rgn, $idBtn_Transparent)
+	_AddCtrlRegion($hCombined_rgn, $idBtn_Exit)
 	_WinAPI_SetWindowRgn($h_win, $hCombined_rgn)
 EndFunc   ;==>_GuiHole
 

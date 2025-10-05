@@ -1,7 +1,7 @@
 #include <GUIConstantsEx.au3>
 #include <GuiTreeView.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -13,23 +13,23 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
-	Local $aidItem[5]
+	Local $aidTVi_Item[5]
 	For $x = 0 To 4
-		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
+		$aidTVi_Item[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
 		For $y = 0 To 2
-			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $y), $aidItem[$x])
+			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $y), $aidTVi_Item[$x])
 		Next
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)
 
 	MsgBox($MB_SYSTEMMODAL, "Information", "Item 0 aufklappen")
-	_GUICtrlTreeView_Expand($idTreeView, $aidItem[0])
+	_GUICtrlTreeView_Expand($idTreeView, $aidTVi_Item[0])
 
 	MsgBox($MB_SYSTEMMODAL, "Information", "Item 0 zuklappen")
-	_GUICtrlTreeView_Expand($idTreeView, $aidItem[0], False)
+	_GUICtrlTreeView_Expand($idTreeView, $aidTVi_Item[0], False)
 
-	MsgBox($MB_SYSTEMMODAL, "Information", "Wurde Item 0 mindestens einmal aufgeklappt? " & _GUICtrlTreeView_ExpandedOnce($idTreeView, $aidItem[0]))
-	MsgBox($MB_SYSTEMMODAL, "Information", "Wurde Item 1 mindestens einmal aufgeklappt? " & _GUICtrlTreeView_ExpandedOnce($idTreeView, $aidItem[1]))
+	MsgBox($MB_SYSTEMMODAL, "Information", "Wurde Item 0 mindestens einmal aufgeklappt? " & _GUICtrlTreeView_ExpandedOnce($idTreeView, $aidTVi_Item[0]))
+	MsgBox($MB_SYSTEMMODAL, "Information", "Wurde Item 1 mindestens einmal aufgeklappt? " & _GUICtrlTreeView_ExpandedOnce($idTreeView, $aidTVi_Item[1]))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

@@ -5,17 +5,17 @@
 #include <MsgBoxConstants.au3>
 #include <StringConstants.au3>
 #include <WinAPIConv.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
 
-Global $g_hKey = -1, $g_idInputEdit = -1, $g_idOutputEdit = -1, $g_idOutputDeCrypted = -1
+Global $g_hKey = -1, $g_idEdt_Input = -1, $g_idEdt_Output = -1, $g_idEdt_OutputDeCrypted = -1
 
 Example()
 
 Func Example()
 	Local $hGui = GUICreate("Echtzeit Ent- und Verschlüsselung", 400, 470)
-	$g_idInputEdit = GUICtrlCreateEdit("", 0, 0, 400, 150, $ES_WANTRETURN)
-	$g_idOutputEdit = GUICtrlCreateEdit("", 0, 150, 400, 150, $ES_READONLY)
-	$g_idOutputDeCrypted = GUICtrlCreateEdit("", 0, 300, 400, 150, $ES_READONLY)
+	$g_idEdt_Input = GUICtrlCreateEdit("", 0, 0, 400, 150, $ES_WANTRETURN)
+	$g_idEdt_Output = GUICtrlCreateEdit("", 0, 150, 400, 150, $ES_READONLY)
+	$g_idEdt_OutputDeCrypted = GUICtrlCreateEdit("", 0, 300, 400, 150, $ES_READONLY)
 	Local $idCombo = GUICtrlCreateCombo("", 0, 450, 100, 20, $CBS_DROPDOWNLIST)
 	GUICtrlSetData($idCombo, "3DES (168bit)|AES (128bit)|AES (192bit)|AES (256bit)|DES (56bit)|RC2 (128bit)|RC4 (128bit)", "RC4 (128bit)")
 	GUIRegisterMsg($WM_COMMAND, "WM_COMMAND")
@@ -59,12 +59,12 @@ Func Example()
 				_Crypt_DestroyKey($g_hKey) ; Zerstört den kryptographischen Schlüssel.
 				$g_hKey = _Crypt_DeriveKey(StringToBinary("CryptPassword"), $iAlgorithm) ; Deklariert wieder eine Passwort-Zeichenkette und einen Algorithmus um einen neuen kryptographischen Schlüssel zu erzeugen.
 
-				Local $sRead = GUICtrlRead($g_idInputEdit)
+				Local $sRead = GUICtrlRead($g_idEdt_Input)
 				If StringStripWS($sRead, $STR_STRIPALL) <> "" Then ; Prüft, ob ein Text zum Verschlüssen vorhanden ist.
 					Local $dEncrypted = _Crypt_EncryptData($sRead, $g_hKey, $CALG_USERKEY) ; Verschlüsselt den Text mit dem neuen kryptographischen Schlüssel.
-					GUICtrlSetData($g_idOutputEdit, $dEncrypted) ; Gibt den verschlüsselten Text in dem Ausgabe-Editfeld aus.
+					GUICtrlSetData($g_idEdt_Output, $dEncrypted) ; Gibt den verschlüsselten Text in dem Ausgabe-Editfeld aus.
 					Local $dDecrypted = _Crypt_DecryptData($dEncrypted, $g_hKey, $CALG_USERKEY) ; Entschlüsselt den Text mit dem neuen kryptographischen Schlüssel.
-					GUICtrlSetData($g_idOutputDeCrypted, BinaryToString($dDecrypted)) ; Gibt den entschlüsselten Text in dem Ausgabe-Editfeld aus.
+					GUICtrlSetData($g_idEdt_OutputDeCrypted, BinaryToString($dDecrypted)) ; Gibt den entschlüsselten Text in dem Ausgabe-Editfeld aus.
 
 				EndIf
 		EndSwitch
@@ -79,13 +79,13 @@ Func WM_COMMAND($hWnd, $iMsg, $wParam, $lParam)
 	#forceref $hWnd, $iMsg, $lParam
 
 	Switch _WinAPI_LoWord($wParam)
-		Case $g_idInputEdit
+		Case $g_idEdt_Input
 			Switch _WinAPI_HiWord($wParam)
 				Case $EN_CHANGE
-					Local $dEncrypted = _Crypt_EncryptData(GUICtrlRead($g_idInputEdit), $g_hKey, $CALG_USERKEY) ; Verschlüsselt den Text mit dem kryptographischem Schlüssel.
-					GUICtrlSetData($g_idOutputEdit, $dEncrypted) ; Gibt den verschlüsselten Text in dem Ausgabe-Editfeld aus.
+					Local $dEncrypted = _Crypt_EncryptData(GUICtrlRead($g_idEdt_Input), $g_hKey, $CALG_USERKEY) ; Verschlüsselt den Text mit dem kryptographischem Schlüssel.
+					GUICtrlSetData($g_idEdt_Output, $dEncrypted) ; Gibt den verschlüsselten Text in dem Ausgabe-Editfeld aus.
 					Local $dDecrypted = _Crypt_DecryptData($dEncrypted, $g_hKey, $CALG_USERKEY) ; Entschlüsselt den Text mit dem kryptographischem Schlüssel.
-					GUICtrlSetData($g_idOutputDeCrypted, BinaryToString($dDecrypted)) ; Gibt den entschlüsselten Text in dem Ausgabe-Editfeld aus.
+					GUICtrlSetData($g_idEdt_OutputDeCrypted, BinaryToString($dDecrypted)) ; Gibt den entschlüsselten Text in dem Ausgabe-Editfeld aus.
 
 			EndSwitch
 	EndSwitch

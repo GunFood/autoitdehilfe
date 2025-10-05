@@ -16,7 +16,7 @@
 <p style="margin:2px 0 0 0;" class="funcdesc">Startet eine Debug-Sitzung durch Verwendung einer festgelegten Reportart<br /></p>
 <p class="codeheader">
 #include &lt;Debug.au3&gt;<br />
-_DebugSetup ( [$sTitle = Default [, $bBugReportInfos = False [, $vReportType = 1 [, $sLogFile = "" [, $bTimeStamp = False]]]]] )<br />
+_DebugSetup ( [$sTitle = Default [, $bBugReportInfos = False [, $vReportType = 1 [, $vLogFile = "" [, $bTimeStamp = False]]]]] )<br />
 </p>
 
 <h2>Parameter</h2>
@@ -34,13 +34,15 @@ _DebugSetup ( [$sTitle = Default [, $bBugReportInfos = False [, $vReportType = 1
 <td><strong>[optional]</strong> 1 - Report-Logfenster (Standard).<br />
 2 - ConsoleWrite.<br />
 3 - MsgBox.<br />
-4 - FileWrite (in $sLogFile wird der Dateiname definiert).<br />
-5 - Report-Notepadfenster.<br />
+4 - FileWrite (in $vLogFile wird der Dateiname definiert).<br />
+5 - Report-Notepadfenster (siehe Bemerkungen f&uuml;r Windows 11)<br />
+6 - Protokollfenster mit Zeit&uuml;berschreitung  (see remark for Windows 11).<br />
 string - Name der zu verwendenden Reportfunktion.</td>
 </tr>
 <tr>
-<td>$sLogFile</td>
-<td><strong>[optional]</strong> Name der Datei falls $vReportType = 4</td>
+<td>$vLogFile</td>
+<td><strong>[optional]</strong> Name der Datei falls $vReportType = 4<br />
+&nbsp;&nbsp;&nbsp; Timeout in Sekunden, falls $vReportType = 6 (Standard = 10)</td>
 </tr>
 <tr>
 <td>$bTimeStamp</td>
@@ -57,7 +59,7 @@ string - Name der zu verwendenden Reportfunktion.</td>
 </tr>
 <tr>
 <td class="valign-top">Fehler:</td>
-<td>Setzt das @error Flag auf ungleich null</td>
+<td>Setzt das @error Flag auf ungleich 0</td>
 </tr>
 <tr>
 <td class="valign-top">@error:</td>
@@ -76,6 +78,10 @@ Man kann mehrere Skripte in der selben Debug-Sitzung verwenden, man muss dann nu
 Wenn der Aufruf zu <a href="_DebugSetup.htm">_DebugSetup()</a> auskommentiert wird, werden die Aufrufe der Funktion _Debug...() ignoriert. Es wird aber empfohlen, im endg&uuml;ltigen Skript alle Aufrufe von _Debug-Funktionen zu entfernen.<br />
 <br />
 Wenn der "Report Log Window" Typ verwendet wird, dann wird das erst Script beim Schlie&szlig;en des Berichtsfensters beendet.<br />
+<br />
+Wenn der Typ „Report Notepad Window” verwendet wird, kann das Notepad-Fenster unter Windows 11 nicht geschlossen werden, ohne dass eine Registrierung angefordert wird.<br />
+Daher wird der Inhalt des Fensters in die Zwischenablage kopiert und vor dem Schlie&szlig;en des Skripts in einem MsgBox-Fenster angezeigt.<br />
+Wenn das Skript im Admin-Modus ausgef&uuml;hrt wird, wird wie unter Windows 10 das alte Notepad verwendet (siehe Beispiel 2).<br />
 </p>
 
 <h2>Verwandte Funktionen</h2>
@@ -91,6 +97,7 @@ alert("Das Beispiel wurde in die Zwischenablage kopiert");
 }
 }
 </script>
+<h3>Beispiel 1</h3>
 <div class="codeSnippetContainer">
 	<div class="codeSnippetContainerTabs">
 <script type="text/javascript">
@@ -130,6 +137,45 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <span class="S0">&nbsp; &nbsp; </span><span class="S1">; Mit Excel arbeiten</span>
 <span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Send.htm"><span class="S4">Send</span></a><span class="S8">(</span><span class="S7">"</span><span class="S10">{Down}</span><span class="S7">"</span><span class="S8">)</span>
 <span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugOut.htm"><span class="S15">_DebugOut</span></a><span class="S8">(</span><span class="S7">"Maus wurde nach unten bewegt."</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Schreibt die Ausgabe in ein Editor-Fenster</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+<h3>Beispiel 2 Skript unter Verwendung des Report Notepad-Fensters (5)</h3><div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_DebugSetup[02].au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext2\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext2">
+<pre>
+<span class="S1">; erm&ouml;glicht die Ausf&uuml;hrung mit dem alten Notepad-Verhalten in Windows 11</span>
+<a class="codeSnippetLink" href="../keywords/RequireAdmin.htm"><span class="S11">#RequireAdmin</span></a>
+
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Debug.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_DebugSetup.htm"><span class="S15">_DebugSetup</span></a><span class="S8">(</span><span class="S7">"Check Excel"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">,</span><span class="S0"> </span><span class="S3">5</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; Bericht Notepad-Fenster</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S3">4</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/WinActivate.htm"><span class="S4">WinActivate</span></a><span class="S8">(</span><span class="S7">"Microsoft Excel"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; ; mit Excel interagieren</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/Send.htm"><span class="S4">Send</span></a><span class="S8">(</span><span class="S7">"</span><span class="S10">{Down}</span><span class="S7">"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../libfunctions/_DebugOut.htm"><span class="S15">_DebugOut</span></a><span class="S8">(</span><span class="S7">"Moved Mouse Down"</span><span class="S8">)</span><span class="S0"> </span><span class="S1">; zwingt das Debug-Notepadfenster, die Kontrolle zu &uuml;bernehmen</span>
 <a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
 <span class="S0"></span></span>
 </pre>

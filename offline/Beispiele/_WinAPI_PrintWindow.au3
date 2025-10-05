@@ -4,7 +4,6 @@
 #include <WinAPIGdi.au3>
 #include <WinAPIGdiDC.au3>
 #include <WinAPIHObj.au3>
-#include <WindowsConstants.au3>
 
 Run(@SystemDir & '\calc.exe')
 Local $hWnd = WinWaitActive("[CLASS:ApplicationFrameWindow]", '', 3)

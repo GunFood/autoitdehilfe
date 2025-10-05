@@ -1,9 +1,9 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiToolbar.au3>
 #include <WinAPIConstants.au3>
-#include <WindowsConstants.au3>
-
-Global $g_idMemo
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -11,8 +11,7 @@ Func Example()
 	; Erstellt eine GUI
 	Local $hGUI = GUICreate("Toolbar: Setzt und ermittelt die Eigenschaften (v" & @AutoItVersion & ")", 500, 300)
 	Local $hToolbar = _GUICtrlToolbar_Create($hGUI)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 36, 496, 262, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 10, 400, 0, "Courier New")
+	_MemoCreate(2, 36, 396, 262, $WS_VSCROLL)
 	GUISetState(@SW_SHOW)
 
 	; Setzt das ANSI Format
@@ -27,83 +26,78 @@ Func Example()
 	EndSwitch
 
 	; Fügt die Buttons hinzu
-	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
+	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $e_idHelp
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idNew, $STD_FILENEW)
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idOpen, $STD_FILEOPEN)
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idSave, $STD_FILESAVE)
 	_GUICtrlToolbar_AddButtonSep($hToolbar)
-	_GUICtrlToolbar_AddButton($hToolbar, $idHelp, $STD_HELP)
+	_GUICtrlToolbar_AddButton($hToolbar, $e_idHelp, $STD_HELP)
 
-	MemoWrite("Before _GUICtrlToolbar_SetMetrics")
+	_MemoWrite("Before _GUICtrlToolbar_SetMetrics")
 
 	Sleep(2000)
 	GUISetState(@SW_LOCK)
 
 	; Setzt die Eigenschaften eines Toolbar Controls
-	MemoWrite("Schritt 1:")
-	MemoWrite("$iXPad = 10")
+	_MemoWrite("Schritt 1:")
+	_MemoWrite("$iXPad = 10")
 	_GUICtrlToolbar_SetMetrics($hToolbar, 10, 0, 0, 0)
 	GUISetState(@SW_UNLOCK)
-	MemoWrite("==> Keine Auswirkung")
+	_MemoWrite("==> Keine Auswirkung")
 
 	Sleep(2000)
 	GUISetState(@SW_LOCK)
 
 	; Setzt die Eigenschaften eines Toolbar Controls
-	MemoWrite("Schritt 2:")
-	MemoWrite("$iYPad = 10")
+	_MemoWrite("Schritt 2:")
+	_MemoWrite("$iYPad = 10")
 	_GUICtrlToolbar_SetMetrics($hToolbar, 0, 10, 0, 0)
 	GUISetState(@SW_UNLOCK)
-	MemoWrite("==> Keine Auswirkung")
+	_MemoWrite("==> Keine Auswirkung")
 
 	Sleep(2000)
 	GUISetState(@SW_LOCK)
 
 	; Setzt die Eigenschaften eines Toolbar Controls
-	MemoWrite("Schritt 3:")
-	MemoWrite("$iXSpacing = 10")
+	_MemoWrite("Schritt 3:")
+	_MemoWrite("$iXSpacing = 10")
 	_GUICtrlToolbar_SetMetrics($hToolbar, 0, 0, 10, 0)
 	GUISetState(@SW_UNLOCK)
-	MemoWrite("==> Buttons haben Abstand")
+	_MemoWrite("==> Buttons haben Abstand")
 
 	Sleep(2000)
 	GUISetState(@SW_LOCK)
 
 	; Setzt die Eigenschaften eines Toolbar Controls
-	MemoWrite("Schritt 4:")
-	MemoWrite("$iYSpacing = 10")
+	_MemoWrite("Schritt 4:")
+	_MemoWrite("$iYSpacing = 10")
 	_GUICtrlToolbar_SetMetrics($hToolbar, 0, 0, 0, 10)
 	GUISetState(@SW_UNLOCK)
-	MemoWrite("==> Kein Auswirkung, da nur eine Zeile mit Buttons")
+	_MemoWrite("==> Kein Auswirkung, da nur eine Zeile mit Buttons")
 
 	Sleep(2000)
 	GUISetState(@SW_LOCK)
 
 	; Setzt die Eigenschaften eines Toolbar Controls
-	MemoWrite("")
-	MemoWrite("Schritt 5:")
-	MemoWrite("$iXPad = 10")
-	MemoWrite("$iYPad = 10")
-	MemoWrite("$iXSpacing = 10")
-	MemoWrite("$iYSpacing = 10")
+	_MemoWrite("")
+	_MemoWrite("Schritt 5:")
+	_MemoWrite("$iXPad = 10")
+	_MemoWrite("$iYPad = 10")
+	_MemoWrite("$iXSpacing = 10")
+	_MemoWrite("$iYSpacing = 10")
 	_GUICtrlToolbar_SetMetrics($hToolbar, 10, 10, 10, 10)
 	GUISetState(@SW_UNLOCK)
-	MemoWrite("==> Abstand, da nur $iXpacing nicht 0 ist")
+	_MemoWrite("==> Abstand, da nur $iXpacing nicht 0 ist")
 
 	; Zeigt die Eigenschaften eines Toolbar Controls
 	Local $aMetrics = _GUICtrlToolbar_GetMetrics($hToolbar)
-	MemoWrite("")
-	MemoWrite("Breite der 'Polsterung' innerhalb der Toolbar Buttons .: " & $aMetrics[0])
-	MemoWrite("Höhe der 'Polsterung' innerhalb der Toolbar Buttons ...: " & $aMetrics[1])
-	MemoWrite("Breite des Raumes zwischen den Toolbar Buttons ........: " & $aMetrics[2])
-	MemoWrite("Höhe des Raumes zwischen den Toolbar Buttons ..........: " & $aMetrics[3])
+	_MemoWrite("")
+	_MemoWrite("Breite der 'Polsterung' innerhalb der Toolbar Buttons .: " & $aMetrics[0])
+	_MemoWrite("Höhe der 'Polsterung' innerhalb der Toolbar Buttons ...: " & $aMetrics[1])
+	_MemoWrite("Breite des Raumes zwischen den Toolbar Buttons ........: " & $aMetrics[2])
+	_MemoWrite("Höhe des Raumes zwischen den Toolbar Buttons ..........: " & $aMetrics[3])
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example
-
-; Schreibt eine Nachricht in das Memo
-Func MemoWrite($sMessage = "")
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

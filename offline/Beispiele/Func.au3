@@ -1,4 +1,3 @@
-#include <Date.au3>
 #include <Math.au3>
 #include <MsgBoxConstants.au3>
 

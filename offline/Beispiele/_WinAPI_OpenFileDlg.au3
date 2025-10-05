@@ -1,3 +1,4 @@
+#include <WinAPIConstants.au3>
 #include <WinAPIDlg.au3>
 
 ; Single file selection (returns the fully qualified path)

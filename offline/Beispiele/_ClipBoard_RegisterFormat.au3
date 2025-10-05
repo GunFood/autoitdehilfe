@@ -1,9 +1,9 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <Clipboard.au3>
 #include <GUIConstantsEx.au3>
 #include <WinAPIError.au3>
-#include <WindowsConstants.au3>
-
-Global $g_idMemo
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -12,8 +12,7 @@ Func Example()
 
 	; Erstellt eine GUI
 	GUICreate("Zwischenablage", 600, 400)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 596, 396, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 2, 596, 396, $WS_VSCROLL)
 	GUISetState(@SW_SHOW)
 
 	; Registriere ein neues Clipboard-Format
@@ -21,7 +20,7 @@ Func Example()
 	If $iFormat <> 0 Then
 
 		; Zeigt das neue Format an
-		MemoWrite(_ClipBoard_GetFormatName($iFormat))
+		_MemoWrite(_ClipBoard_GetFormatName($iFormat))
 	Else
 		_WinAPI_ShowError("_ClipBoard_RegisterFormat fehlgeschlagen!")
 	EndIf
@@ -30,8 +29,3 @@ Func Example()
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example
-
-; Schreibt eine Nachricht in das Memo
-Func MemoWrite($sMessage = "")
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

@@ -1,11 +1,11 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <Date.au3>
 #include <GUIConstantsEx.au3>
 #include <WinAPIError.au3>
 #include <WinAPIFiles.au3>
 #include <WinAPIHObj.au3>
-#include <WindowsConstants.au3>
-
-Global $g_idMemo
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -15,8 +15,7 @@ Func Example()
 
 	; Erstellen der GUI
 	GUICreate("Zeit", 400, 300)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 396, 296, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 2, 396, 296, $WS_VSCROLL)
 	GUISetState(@SW_SHOW)
 
 	; Erzeugen einer Test Datei und setzen der Dateizeit
@@ -33,9 +32,9 @@ Func Example()
 	$aTime = _Date_Time_GetFileTime($hFile)
 	_WinAPI_CloseHandle($hFile)
 
-	MemoWrite("Erstellt ..: " & _Date_Time_FileTimeToStr($aTime[0]))
-	MemoWrite("Letzter Zugriff .: " & _Date_Time_FileTimeToStr($aTime[1]))
-	MemoWrite("Letzte Änderung .: " & _Date_Time_FileTimeToStr($aTime[2]))
+	_MemoWrite("Erstellt ..: " & _Date_Time_FileTimeToStr($aTime[0]))
+	_MemoWrite("Letzter Zugriff .: " & _Date_Time_FileTimeToStr($aTime[1]))
+	_MemoWrite("Letzte Änderung .: " & _Date_Time_FileTimeToStr($aTime[2]))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
@@ -43,8 +42,3 @@ Func Example()
 
 	FileDelete($sTempFile)
 EndFunc   ;==>Example
-
-; Schreibt eine Zeile in das Memo Control
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

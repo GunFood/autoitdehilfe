@@ -8,7 +8,7 @@ Local $aResult, $iRows, $aNames, $iRval
 
 _SQLite_Startup()
 If @error Then
-	MsgBox($MB_SYSTEMMODAL, "SQLite Fehler", "SQLite.dll kann nicht geladen werden!")
+	MsgBox($MB_SYSTEMMODAL, "SQLite Fehler", "SQLite3.dll kann nicht geladen werden!")
 	Exit -1
 EndIf
 ConsoleWrite("_SQLite_LibVersion=" & _SQLite_LibVersion() & @CRLF)

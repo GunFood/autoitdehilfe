@@ -1,9 +1,9 @@
 #include <GUIConstantsEx.au3>
-#include <GuiEdit.au3>
 #include <GuiMenu.au3>
 #include <WinAPIDlg.au3>
 #include <WinAPISysWin.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Global $g_idContextMenu, $g_idCommonMenuItem, $g_idFileMenuItem, $g_idExitMenuItem
 Global $g_hGui, $idInput, $g_hProcOld

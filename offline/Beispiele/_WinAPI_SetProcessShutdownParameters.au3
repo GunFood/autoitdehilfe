@@ -2,7 +2,7 @@
 #include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>
 #include <WinAPISys.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
 
 If Number(_WinAPI_GetVersion()) < 6.0 Then
 	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Error', 'Require Windows Vista or later.')

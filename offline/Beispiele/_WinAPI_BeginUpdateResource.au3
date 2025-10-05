@@ -1,4 +1,6 @@
-#include <APIResConstants.au3>
+#include "Extras\HelpFileInternals.au3"
+
+#include <FileConstants.au3>
 #include <MsgBoxConstants.au3>
 #include <WinAPIFiles.au3>
 #include <WinAPIHObj.au3>
@@ -16,11 +18,12 @@ If Not $sIcon Then
 EndIf
 
 ; Create simple executable file (MyProg.exe) in which will be added icon
-If Not FileCopy(@ScriptDir & '\Extras\MyProg.exe', $g_sExe, $FC_OVERWRITE) Then
+Local $sExe = _Extras_PathFull('MyProg.exe')
+If Not FileCopy($sExe, $g_sExe, $FC_OVERWRITE) Then
 	If MsgBox(($MB_OKCANCEL + $MB_ICONERROR + $MB_SYSTEMMODAL), 'Error', 'Unable to copy MyProg.exe or file already exist in the current directory.') <> 1 Then
 		Exit
 	EndIf
-	FileCopy(@ScriptDir & '\Extras\MyProg.exe', $g_sExe, $FC_OVERWRITE)
+	FileCopy($sExe, $g_sExe, $FC_OVERWRITE)
 EndIf
 
 Local $iError = 1

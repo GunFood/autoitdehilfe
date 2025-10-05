@@ -1,21 +1,24 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiMenu.au3>
+
+Global $g_hWnd
 
 Example()
 
 Func Example()
-	Local $hWnd, $hMain
-
 	Run("notepad.exe")
-	WinWaitActive("[CLASS:Notepad]")
-	$hWnd = WinGetHandle("[CLASS:Notepad]")
-	$hMain = _GUICtrlMenu_GetMenu($hWnd)
+	$g_hWnd = WinWaitActive("[CLASS:Notepad]")
+	Local $hMain = _GUICtrlMenu_GetMenu($g_hWnd)
 
 	; Zeigt, dass das Menü-Handle zu Notepad gehört
-	Writeln("Notepad Handle: 0x" & Hex($hWnd))
+	Writeln("Notepad Handle: 0x" & Hex($g_hWnd))
 	Writeln("Menü-Parent ..: 0x" & Hex(_GUICtrlMenu_FindParent($hMain)))
+
+	_NotepadForceClose($g_hWnd)
 EndFunc   ;==>Example
 
 ; Schreibt eine Zeile mit Text in den Editor
-Func Writeln($sText)
-	ControlSend("[CLASS:Notepad]", "", "Edit1", $sText & @CRLF)
+Func Writeln($sText, $hWnd = $g_hWnd)
+	ControlSend($hWnd, "", ControlGetFocus($hWnd), $sText & @CRLF)
 EndFunc   ;==>Writeln

@@ -1,11 +1,10 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GDIPlus.au3>
 #include <GUIConstantsEx.au3>
 #include <ScreenCapture.au3>
 #include <WinAPIHObj.au3>
-#include <WindowsConstants.au3>
-
-
-Global $g_idMemo
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -14,8 +13,7 @@ Func Example()
 
 	; Erstellt eine GUI
 	GUICreate("GDI+", 600, 400)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 606, 196, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 2, 596, 396, $WS_VSCROLL)
 	GUISetState(@SW_SHOW)
 
 	; Initialisiert (startet) Microsoft Windows GDI+
@@ -27,9 +25,9 @@ Func Example()
 
 	; Gibt das Bildformat des Screenshots zurück
 	$aRet = _GDIPlus_ImageGetRawFormat($hImage)
-	MemoWrite("String mit dem Namen des Bildformats: " & $aRet[1]);
-	MemoWrite("String mit der GUID des Dateiformats: " & $aRet[0]);
-	MemoWrite();
+	_MemoWrite("String mit dem Namen des Bildformats: " & $aRet[1]);
+	_MemoWrite("String mit der GUID des Dateiformats: " & $aRet[0]);
+	_MemoWrite();
 
 	; Speichert die Screenshot-Bitmap in eine Datei
 	_GDIPlus_ImageSaveToFile($hImage, @MyDocumentsDir & "\GDIPlus_Image.jpg")
@@ -43,8 +41,8 @@ Func Example()
 
 	; Gibt das Bildformat der gespeicherten Datei zurück
 	$aRet = _GDIPlus_ImageGetRawFormat($hImage)
-	MemoWrite("String mit dem Namen des Bildformats: " & $aRet[1]);
-	MemoWrite("String mit der GUID des Dateiformats: " & $aRet[0]);
+	_MemoWrite("String mit dem Namen des Bildformats: " & $aRet[1]);
+	_MemoWrite("String mit der GUID des Dateiformats: " & $aRet[0]);
 
 	; Ressourcen freigeben
 	_GDIPlus_ImageDispose($hImage)
@@ -56,8 +54,3 @@ Func Example()
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage = '')
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

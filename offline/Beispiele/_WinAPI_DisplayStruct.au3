@@ -1,6 +1,6 @@
 #include <WinAPIDiag.au3>
 
-Local $sStruct = 'dword Length;short State;uint Flags;handle hBitmap;hwnd hDC;long Rect[4];byte[14];int Reserved[10];wchar Text[80]'
+Local $sStruct = 'dword Length;short State;uint Flags;handle hBitmap;hwnd hDC;long Rect[4];byte[14];int Reserved[10];wchar Text[80];wchar Text[80]'
 Local $tStruct = DllStructCreate($sStruct)
 
 DllStructSetData($tStruct, 1, 80)
@@ -15,5 +15,7 @@ DllStructSetData($tStruct, 6, 80, 4)
 DllStructSetData($tStruct, 7, Binary('0x656A6D633835206C6A6764206200'))
 DllStructSetData($tStruct, 8, 0)
 DllStructSetData($tStruct, 9, 'Einfacher Text')
+DllStructSetData($tStruct, 10, 'Text with | ...')
 
 _WinAPI_DisplayStruct($tStruct, $sStruct)
+ConsoleWrite('@@ Debug(' & @ScriptLineNumber & ') Extended code: ' & @extended & @CRLF) ;### Debug Console

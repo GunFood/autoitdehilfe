@@ -1,6 +1,7 @@
 ; == Option 4, global return, php/preg_match_all() style
 
 #include <Array.au3>
+#include <StringConstants.au3>
 
 _Example()
 

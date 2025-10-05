@@ -28,6 +28,6 @@ Func _WinGetCaretPos()
 		$aReturn[1] = $aGetCaretPos[1] + $aGetPos[1] + $aControlPos[1] + $iYAdjust
 		Return $aReturn ; Gibt das Array zurück.
 	Else
-		Return SetError(1, 0, $aReturn) ; Gibt das Array zurück. und setzt @error auf 1.
+		Return SetError(1, 0, $aReturn) ; Gibt das Array zurück. und setzt das @error Flag auf 1.
 	EndIf
 EndFunc   ;==>_WinGetCaretPos

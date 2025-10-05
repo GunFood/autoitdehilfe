@@ -1,7 +1,7 @@
 #include <EditConstants.au3>
 #include <GUIConstantsEx.au3>
 #include <WinAPIConv.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
 
 Global $hForm = GUICreate('Test ' & StringReplace(@ScriptName, '.au3', '()'), 400, 96)
 Global $Input1 = GUICtrlCreateInput('', 20, 20, 360, 20)

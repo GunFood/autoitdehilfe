@@ -1,16 +1,15 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiButton.au3>
 #include <GUIConstantsEx.au3>
 #include <GuiImageList.au3>
-#include <WindowsConstants.au3>
-
-Global $g_idMemo
+#include <WindowsStylesConstants.au3>
 
 Example()
 
 Func Example()
 	GUICreate("Button: Setzen und ermitteln der ImageList (v" & @AutoItVersion & ")", 510, 400)
-	$g_idMemo = GUICtrlCreateEdit("", 119, 10, 376, 374, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(119, 10, 376, 374, $WS_VSCROLL)
 	GUISetState(@SW_SHOW)
 
 	Local $hImage = _GUIImageList_Create(32, 32, 5, 3, 6)
@@ -32,14 +31,14 @@ Func Example()
 	Local $aImageListInfo
 	For $x = 0 To 5
 		$aImageListInfo = _GUICtrlButton_GetImageList($a_idBtn[$x])
-		MemoWrite("Button " & $x + 1 & " Infos zur Imagelist" & @CRLF & "--------------------------------")
-		MemoWrite("Handle der Imagelist ..: " & $aImageListInfo[0])
-		MemoWrite("Linker Rand des Icons ...: " & $aImageListInfo[1])
-		MemoWrite("Oberer Rand des Icons ...: " & $aImageListInfo[2])
-		MemoWrite("Rechter Rand des Icons ..: " & $aImageListInfo[3])
-		MemoWrite("Unterer Rand des Icons ..: " & $aImageListInfo[4])
-		MemoWrite("Ausrichtung: " & _ExplainAlignment($aImageListInfo[5]))
-		MemoWrite("--------------------------------" & @CRLF)
+		_MemoWrite("Button " & $x + 1 & " Infos zur Imagelist" & @CRLF & "--------------------------------")
+		_MemoWrite("Handle der Imagelist ..: " & $aImageListInfo[0])
+		_MemoWrite("Linker Rand des Icons ...: " & $aImageListInfo[1])
+		_MemoWrite("Oberer Rand des Icons ...: " & $aImageListInfo[2])
+		_MemoWrite("Rechter Rand des Icons ..: " & $aImageListInfo[3])
+		_MemoWrite("Unterer Rand des Icons ..: " & $aImageListInfo[4])
+		_MemoWrite("Ausrichtung: " & _ExplainAlignment($aImageListInfo[5]))
+		_MemoWrite("--------------------------------" & @CRLF)
 	Next
 
 	While 1
@@ -51,11 +50,6 @@ Func Example()
 
 	Exit
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite
 
 ; Verwendet die Imagelist um ein Bild zu setzen und Text auf dem Button anzuzeigen
 Func _GetImageListHandle($sFile, $nIconID = 0, $bLarge = False)

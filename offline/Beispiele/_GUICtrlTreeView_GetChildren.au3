@@ -1,8 +1,7 @@
 #include <GUIConstantsEx.au3>
-#include <GuiListView.au3>
 #include <GuiTreeView.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -17,28 +16,28 @@ Func Example()
 ;~     _GUICtrlListView_SetUnicodeFormat($idListview, False)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
-	Local $aidItem[5], $iY = -1
+	Local $aidTVi_Item[5], $iY = -1
 	For $x = 0 To 3
-		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
+		$aidTVi_Item[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
 		For $y = 0 To 2
 			$iY += 1
-			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $iY), $aidItem[$x])
+			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $iY), $aidTVi_Item[$x])
 		Next
 	Next
-	$aidItem[4] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", 4), $idTreeView)
+	$aidTVi_Item[4] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", 4), $idTreeView)
 	_GUICtrlTreeView_EndUpdate($idTreeView)
 
-	MsgBox($MB_SYSTEMMODAL, "Information", "Item 0 hat Children? " & _GUICtrlTreeView_GetChildren($idTreeView, $aidItem[0]))
-	MsgBox($MB_SYSTEMMODAL, "Information", "Item 4 hat Children? " & _GUICtrlTreeView_GetChildren($idTreeView, $aidItem[4]))
+	MsgBox($MB_SYSTEMMODAL, "Information", "Item 0 hat Children? " & _GUICtrlTreeView_GetChildren($idTreeView, $aidTVi_Item[0]))
+	MsgBox($MB_SYSTEMMODAL, "Information", "Item 4 hat Children? " & _GUICtrlTreeView_GetChildren($idTreeView, $aidTVi_Item[4]))
 
-	MsgBox($MB_SYSTEMMODAL, "Set Children", "Item 0 ? " & _GUICtrlTreeView_SetChildren($idTreeView, $aidItem[0]))
-	MsgBox($MB_SYSTEMMODAL, "Set Children", "Item 4 ? " & _GUICtrlTreeView_SetChildren($idTreeView, $aidItem[4]))
+	MsgBox($MB_SYSTEMMODAL, "Set Children", "Item 0 ? " & _GUICtrlTreeView_SetChildren($idTreeView, $aidTVi_Item[0]))
+	MsgBox($MB_SYSTEMMODAL, "Set Children", "Item 4 ? " & _GUICtrlTreeView_SetChildren($idTreeView, $aidTVi_Item[4]))
 
-	MsgBox($MB_SYSTEMMODAL, "Reset Children", "Item 0 ? " & _GUICtrlTreeView_SetChildren($idTreeView, $aidItem[0], False) & @TAB)
-	MsgBox($MB_SYSTEMMODAL, "Reset Children", "Item 4 ? " & _GUICtrlTreeView_SetChildren($idTreeView, $aidItem[4], False) & @TAB)
+	MsgBox($MB_SYSTEMMODAL, "Reset Children", "Item 0 ? " & _GUICtrlTreeView_SetChildren($idTreeView, $aidTVi_Item[0], False) & @TAB)
+	MsgBox($MB_SYSTEMMODAL, "Reset Children", "Item 4 ? " & _GUICtrlTreeView_SetChildren($idTreeView, $aidTVi_Item[4], False) & @TAB)
 
-	MsgBox($MB_SYSTEMMODAL, "Information", "Item 0 hat Children? " & _GUICtrlTreeView_GetChildren($idTreeView, $aidItem[0]))
-	MsgBox($MB_SYSTEMMODAL, "Information", "Item 4 hat Children? " & _GUICtrlTreeView_GetChildren($idTreeView, $aidItem[4]))
+	MsgBox($MB_SYSTEMMODAL, "Information", "Item 0 hat Children? " & _GUICtrlTreeView_GetChildren($idTreeView, $aidTVi_Item[0]))
+	MsgBox($MB_SYSTEMMODAL, "Information", "Item 4 hat Children? " & _GUICtrlTreeView_GetChildren($idTreeView, $aidTVi_Item[4]))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

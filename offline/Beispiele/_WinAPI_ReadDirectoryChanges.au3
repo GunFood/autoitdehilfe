@@ -1,5 +1,6 @@
-#include <APIFilesConstants.au3>
 #include <Array.au3>
+#include <AutoItConstants.au3>
+#include <FileConstants.au3>
 #include <MsgBoxConstants.au3>
 #include <WinAPIError.au3>
 #include <WinAPIFiles.au3>

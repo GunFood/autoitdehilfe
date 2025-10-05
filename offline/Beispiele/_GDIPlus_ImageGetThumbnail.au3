@@ -1,5 +1,6 @@
+#include <FileConstants.au3>
 #include <GDIPlus.au3>
-#include <GuiConstantsEx.au3>
+#include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>
 
 Example()

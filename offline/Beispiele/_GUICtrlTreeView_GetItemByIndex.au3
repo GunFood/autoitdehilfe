@@ -2,7 +2,7 @@
 #include <GuiImageList.au3>
 #include <GuiTreeView.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -23,16 +23,21 @@ Func Example()
 	_GUICtrlTreeView_SetNormalImageList($idTreeView, $hImage)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
-	Local $ahItem[6]
-	For $x = 0 To 5
-		$ahItem[$x] = _GUICtrlTreeView_Add($idTreeView, 0, StringFormat("[%02d] Neues Item", $x + 1), $x, $x)
-		For $y = 1 To 3
-			_GUICtrlTreeView_AddChild($idTreeView, $ahItem[$x], StringFormat("[%02d] Neues Child", $y), $x, $x)
+	Local $ahItem[4]
+	For $x = 0 To 3
+		$ahItem[$x] = _GUICtrlTreeView_Add($idTreeView, 0, StringFormat("[%02d] Item", $x))
+		For $y = 0 To 2
+			_GUICtrlTreeView_AddChild($idTreeView, $ahItem[$x], StringFormat("[%02d] Child Item", $y))
 		Next
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)
 
-	MsgBox($MB_SYSTEMMODAL, "Information", "Item 3, Handle des Child Index 1: " & _GUICtrlTreeView_GetItemByIndex($idTreeView, $ahItem[3], 1))
+	; $hItem = -1 Erlaubt das Abrufen des Handles für ein Hauptelement.
+	MsgBox($MB_SYSTEMMODAL, "Information", "Item 1 Handle: " & _GUICtrlTreeView_GetItemByIndex($idTreeView, -1, 1))
+
+	Local $hChildItem = _GUICtrlTreeView_GetItemByIndex($idTreeView, $ahItem[3], 1)
+	MsgBox($MB_SYSTEMMODAL, "Information", "Item 3, Child Index 1 Handle: " & $hChildItem)
+	_GUICtrlTreeView_SelectItem($idTreeView, $hChildItem)
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

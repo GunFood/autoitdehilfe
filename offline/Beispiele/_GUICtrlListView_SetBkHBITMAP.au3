@@ -22,25 +22,25 @@ Func Example_1()
 	_GUICtrlListView_SetImageList($hListView, $hImage, 1)
 
 	; Add columns
-    _GUICtrlListView_InsertColumn($hListView, 0, 'Column 1', 100)
-    _GUICtrlListView_InsertColumn($hListView, 1, 'Column 2', 100)
-    _GUICtrlListView_InsertColumn($hListView, 2, 'Column 3', 100)
+	_GUICtrlListView_InsertColumn($hListView, 0, 'Column 1', 100)
+	_GUICtrlListView_InsertColumn($hListView, 1, 'Column 2', 100)
+	_GUICtrlListView_InsertColumn($hListView, 2, 'Column 3', 100)
 
-    ; Add items
-    _GUICtrlListView_AddItem($hListView, 'Row 1: Col 1', 0)
-    _GUICtrlListView_AddSubItem($hListView, 0, 'Row 1: Col 2', 1)
-    _GUICtrlListView_AddSubItem($hListView, 0, 'Row 1: Col 3', 2)
-    _GUICtrlListView_AddItem($hListView, 'Row 2: Col 1', 1)
-    _GUICtrlListView_AddSubItem($hListView, 1, 'Row 2: Col 2', 1)
-    _GUICtrlListView_AddItem($hListView, 'Row 3: Col 1', 2)
+	; Add items
+	_GUICtrlListView_AddItem($hListView, 'Row 1: Col 1', 0)
+	_GUICtrlListView_AddSubItem($hListView, 0, 'Row 1: Col 2', 1)
+	_GUICtrlListView_AddSubItem($hListView, 0, 'Row 1: Col 3', 2)
+	_GUICtrlListView_AddItem($hListView, 'Row 2: Col 1', 1)
+	_GUICtrlListView_AddSubItem($hListView, 1, 'Row 2: Col 2', 1)
+	_GUICtrlListView_AddItem($hListView, 'Row 3: Col 1', 2)
 
-    ; Build groups
-    _GUICtrlListView_EnableGroupView($hListView)
-    _GUICtrlListView_InsertGroup($hListView, -1, 1, 'Group 1')
-    _GUICtrlListView_InsertGroup($hListView, -1, 2, 'Group 2')
-    _GUICtrlListView_SetItemGroupID($hListView, 0, 1)
-    _GUICtrlListView_SetItemGroupID($hListView, 1, 2)
-    _GUICtrlListView_SetItemGroupID($hListView, 2, 2)
+	; Build groups
+	_GUICtrlListView_EnableGroupView($hListView)
+	_GUICtrlListView_InsertGroup($hListView, -1, 1, 'Group 1')
+	_GUICtrlListView_InsertGroup($hListView, -1, 2, 'Group 2')
+	_GUICtrlListView_SetItemGroupID($hListView, 0, 1)
+	_GUICtrlListView_SetItemGroupID($hListView, 1, 2)
+	_GUICtrlListView_SetItemGroupID($hListView, 2, 2)
 
 	; Creates $g_hGDIBmp - Linear gradient
 	Local $hGDIBmp = _CreateHBITMAP($iLVWidth, $iLVHeight)
@@ -53,7 +53,7 @@ Func Example_1()
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()
-EndFunc   ;==>Example_UDF_Created
+EndFunc   ;==>Example_1
 
 Func _CreateHBITMAP($iWidth, $iHeight)
 	_GDIPlus_Startup()

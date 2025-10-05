@@ -1,17 +1,20 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiMenu.au3>
+
+Global $g_hWnd
 
 Example()
 
 Func Example()
-	Local $hWnd, $aInfo
+	Local $aInfo
 
 	; Startet den Editor
 	Run("notepad.exe")
-	WinWaitActive("[CLASS:Notepad]")
-	$hWnd = WinGetHandle("[CLASS:Notepad]")
+	$g_hWnd = WinWaitActive("[CLASS:Notepad]")
 
 	; Ermittelt die Menü Leisten Informationen
-	$aInfo = _GUICtrlMenu_GetMenuBarInfo($hWnd)
+	$aInfo = _GUICtrlMenu_GetMenuBarInfo($g_hWnd)
 	Writeln("Links ............: " & $aInfo[0])
 	Writeln("Oben .............: " & $aInfo[1])
 	Writeln("Rechts ...........: " & $aInfo[2])
@@ -20,9 +23,11 @@ Func Example()
 	Writeln("Submenü Handle ..: 0x" & Hex($aInfo[5]))
 	Writeln("Menü Leiste fokusiert : " & $aInfo[6])
 	Writeln("Menu Item fokusiert: " & $aInfo[7])
+
+	_NotepadForceClose($g_hWnd)
 EndFunc   ;==>Example
 
 ; Schreibt eine Zeile mit Text in den Editor
-Func Writeln($sText)
-	ControlSend("[CLASS:Notepad]", "", "Edit1", $sText & @CRLF)
+Func Writeln($sText, $hWnd = $g_hWnd)
+	ControlSend($hWnd, "", ControlGetFocus($hWnd), $sText & @CRLF)
 EndFunc   ;==>Writeln

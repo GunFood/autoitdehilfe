@@ -3,7 +3,7 @@
 #include <GuiListView.au3>
 #include <WinAPIIcons.au3>
 #include <WinAPIShellEx.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Local $hIcon, $Key, $Count = 1, $First = False
 Local $tSHFILEINFO = DllStructCreate($tagSHFILEINFO)

@@ -1,6 +1,6 @@
 #include <GUIConstantsEx.au3>
 #include <WinAPISysWin.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Local $hForm = GUICreate('', 240, 268, 10, 10, BitOR($WS_CAPTION, $WS_POPUP), $WS_EX_TOPMOST)
 GUICtrlCreateLabel('Thread state:', 20, 18, 90, 14)
@@ -14,9 +14,9 @@ GUICtrlCreateLabel('Left:', 20, 172, 90, 14)
 GUICtrlCreateLabel('Top:', 20, 194, 90, 14)
 GUICtrlCreateLabel('Width:', 20, 216, 90, 14)
 GUICtrlCreateLabel('Height:', 20, 238, 90, 14)
-Local $a_idInput[11]
+Local $a_idLbl[11]
 For $i = 0 To 10
-	$a_idInput[$i] = GUICtrlCreateLabel('', 114, 18 + 22 * $i, 116, 14)
+	$a_idLbl[$i] = GUICtrlCreateLabel('', 114, 18 + 22 * $i, 116, 14)
 Next
 GUISetState(@SW_SHOWNOACTIVATE)
 
@@ -36,8 +36,8 @@ Do
 		$hWnd = 0
 	EndIf
 	For $i = 0 To 10
-		If StringCompare(GUICtrlRead($a_idInput[$i]), $aInfo[$i]) Then
-			GUICtrlSetData($a_idInput[$i], $aInfo[$i])
+		If StringCompare(GUICtrlRead($a_idLbl[$i]), $aInfo[$i]) Then
+			GUICtrlSetData($a_idLbl[$i], $aInfo[$i])
 		EndIf
 	Next
 Until GUIGetMsg() = $GUI_EVENT_CLOSE

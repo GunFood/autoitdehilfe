@@ -1,10 +1,11 @@
 ; == Beispiel 2 : _GUICtrlEdit_SetText()
 
-#include <Extras\WM_NOTIFY.au3>
+#include "Extras\WM_NOTIFY.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiEdit.au3>
 #include <WinAPIConv.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
 
 Global $g_hEdit
 

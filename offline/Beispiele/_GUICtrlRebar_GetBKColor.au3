@@ -1,24 +1,24 @@
+#include "Extras\HelpFileInternals.au3"
+
+#include <AutoItConstants.au3>
 #include <GUIConstantsEx.au3>
 #include <GuiReBar.au3>
 #include <GuiToolbar.au3>
 #include <WinAPIConstants.au3>
-#include <WindowsConstants.au3>
-
-Global $g_idMemo
+#include <WindowsStylesConstants.au3>
 
 Example()
 
 Func Example()
 	Local $hGui, $hReBar, $hToolbar, $iExit, $iInput
-	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
+	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $e_idHelp
 
 	$hGui = GUICreate("Rebar", 400, 396, -1, -1, BitOR($WS_MINIMIZEBOX, $WS_CAPTION, $WS_POPUP, $WS_SYSMENU, $WS_MAXIMIZEBOX))
 
 	; Erstellt ein Rebar-Control
 	$hReBar = _GUICtrlRebar_Create($hGui, BitOR($CCS_TOP, $WS_BORDER, $RBS_VARHEIGHT, $RBS_AUTOSIZE, $RBS_BANDBORDERS))
 
-	$g_idMemo = GUICtrlCreateEdit("", 2, 100, 396, 250, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 10, 400, 0, "Courier New")
+	_MemoCreate(2, 100, 396, 250, $WS_VSCROLL)
 
 	; Erstellt eine Toolbar in der Rebar
 	$hToolbar = _GUICtrlToolbar_Create($hGui, BitOR($TBSTYLE_FLAT, $CCS_NORESIZE, $CCS_NOPARENTALIGN))
@@ -36,7 +36,7 @@ Func Example()
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idOpen, $STD_FILEOPEN)
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idSave, $STD_FILESAVE)
 	_GUICtrlToolbar_AddButtonSep($hToolbar)
-	_GUICtrlToolbar_AddButton($hToolbar, $idHelp, $STD_HELP)
+	_GUICtrlToolbar_AddButton($hToolbar, $e_idHelp, $STD_HELP)
 
 	; Erstellt eine Inputbox in der Rebar
 	$idInput = GUICtrlCreateInput("Input-Control", 0, 0, 120, 20)
@@ -54,11 +54,11 @@ Func Example()
 
 	_GUICtrlRebar_SetBandStyleBreak($hReBar, 1)
 
-	MemoWrite("========== Farbe der Leiste ==========")
-	MemoWrite("Vorherige BK Farbe..: " & _GUICtrlRebar_SetBKColor($hReBar, Int(0x00008B)))
-	MemoWrite("BK Farbe...........: " & _GUICtrlRebar_GetBKColor($hReBar))
-	MemoWrite("Vorherige Textfarbe: " & _GUICtrlRebar_SetTextColor($hReBar, Int(0xFFFFFF)))
-	MemoWrite("Textfarbe.........: " & _GUICtrlRebar_GetTextColor($hReBar))
+	_MemoWrite("========== Farbe der Leiste ==========")
+	_MemoWrite("Vorherige BK Farbe..: " & _GUICtrlRebar_SetBKColor($hReBar, Int(0x00008B)))
+	_MemoWrite("BK Farbe...........: " & _GUICtrlRebar_GetBKColor($hReBar))
+	_MemoWrite("Vorherige Textfarbe: " & _GUICtrlRebar_SetTextColor($hReBar, Int(0xFFFFFF)))
+	_MemoWrite("Textfarbe.........: " & _GUICtrlRebar_GetTextColor($hReBar))
 
 	While 1
 		Switch GUIGetMsg()
@@ -67,8 +67,3 @@ Func Example()
 		EndSwitch
 	WEnd
 EndFunc   ;==>Example
-
-; Schreibt eine Nachricht in das Memo
-Func MemoWrite($sMessage = "")
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

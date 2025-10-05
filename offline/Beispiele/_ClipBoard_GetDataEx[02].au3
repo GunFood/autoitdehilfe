@@ -1,22 +1,21 @@
 ; == Example 2 use _ClipBoard_GetData()
 
+#include "Extras\HelpFileInternals.au3"
+
 #include <Clipboard.au3>
 #include <GUIConstantsEx.au3>
 #include <Memory.au3>
 #include <WinAPIError.au3>
-#include <WindowsConstants.au3>
-
-Global $g_idMemo
+#include <WindowsStylesConstants.au3>
 
 Example()
 
 Func Example()
 	; Create GUI
 	GUICreate("Clipboard Get/Set DataEx (v" & @AutoItVersion & ")", 600, 450)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 596, 396, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
-	Local $id_SetData = GUICtrlCreateButton("Set ClipBoard Data", 150, 410, 120, 30)
-	Local $id_GetData = GUICtrlCreateButton("Get ClipBoard Data", 300, 410, 120, 30)
+	_MemoCreate(2, 2, 596, 396, $WS_VSCROLL)
+	Local $idBtn_SetData = GUICtrlCreateButton("Set ClipBoard Data", 150, 410, 120, 30)
+	Local $idBtn_GetData = GUICtrlCreateButton("Get ClipBoard Data", 300, 410, 120, 30)
 	GUISetState(@SW_SHOW)
 
 	; Loop until the user exits.
@@ -25,7 +24,7 @@ Func Example()
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE
 				ExitLoop
-			Case $id_SetData
+			Case $idBtn_SetData
 				; Open clipboard
 				If _ClipBoard_Open(0) Then
 
@@ -60,13 +59,8 @@ Func Example()
 					_WinAPI_ShowError("_ClipBoard_Open failed")
 				EndIf
 
-			Case $id_GetData
-				MemoWrite(_ClipBoard_GetData())
+			Case $idBtn_GetData
+				_MemoWrite(_ClipBoard_GetData())
 		EndSwitch
 	WEnd
 EndFunc   ;==>Example
-
-; Write message to memo
-Func MemoWrite($sMessage = "")
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

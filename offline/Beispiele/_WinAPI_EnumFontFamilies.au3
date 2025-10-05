@@ -1,4 +1,3 @@
-#include <APIGdiConstants.au3>
 #include <Array.au3>
 #include <FontConstants.au3>
 #include <WinAPIGdi.au3>

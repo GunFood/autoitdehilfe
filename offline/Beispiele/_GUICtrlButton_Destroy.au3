@@ -1,9 +1,9 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiButton.au3>
 #include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
-
-Global $g_idMemo
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -11,8 +11,7 @@ Func Example()
 	Local $hGUI, $hBtn, $hRdo, $hChk
 
 	$hGUI = GUICreate("Buttons", 400, 400)
-	$g_idMemo = GUICtrlCreateEdit("", 119, 10, 276, 374, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(119, 10, 276, 374, $WS_VSCROLL)
 
 	$hBtn = _GUICtrlButton_Create($hGUI, "Button 1", 10, 10, 90, 50)
 
@@ -22,21 +21,21 @@ Func Example()
 
 	GUISetState(@SW_SHOW)
 
-	MemoWrite("$idBtn Handle: " & $hBtn)
-	MemoWrite("$idRdo Handle: " & $hRdo)
-	MemoWrite("$idChk Handle: " & $hChk & @CRLF)
+	_MemoWrite("$idBtn Handle: " & $hBtn)
+	_MemoWrite("$idRdo Handle: " & $hRdo)
+	_MemoWrite("$idChk Handle: " & $hChk & @CRLF)
 
 	MsgBox($MB_SYSTEMMODAL, "Information", "Darüber, wie Buttons zerstört werden")
 
 	Send("^{END}")
 
-	MemoWrite("Zerstört $idBtn: " & _GUICtrlButton_Destroy($hBtn))
-	MemoWrite("Zerstört $idRdo: " & _GUICtrlButton_Destroy($hRdo))
-	MemoWrite("Zerstört $idChk: " & _GUICtrlButton_Destroy($hChk) & @CRLF)
+	_MemoWrite("Zerstört $idBtn: " & _GUICtrlButton_Destroy($hBtn))
+	_MemoWrite("Zerstört $idRdo: " & _GUICtrlButton_Destroy($hRdo))
+	_MemoWrite("Zerstört $idChk: " & _GUICtrlButton_Destroy($hChk) & @CRLF)
 
-	MemoWrite("$idBtn Handle: " & $hBtn)
-	MemoWrite("$idRdo Handle: " & $hRdo)
-	MemoWrite("$idChk Handle: " & $hChk & @CRLF)
+	_MemoWrite("$idBtn Handle: " & $hBtn)
+	_MemoWrite("$idRdo Handle: " & $hRdo)
+	_MemoWrite("$idChk Handle: " & $hChk & @CRLF)
 
 	While 1
 		Switch GUIGetMsg()
@@ -47,8 +46,3 @@ Func Example()
 
 	Exit
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Funktion _DebugReportData</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Funktionreferenz</h1>
+<hr style="height:0px">
+<div class="top"><h1>_DebugReportData</h1><div>
+<br style="clear: both;">
+<p style="margin:2px 0 0 0;" class="funcdesc">Writes to debugging session the content of a data<br /></p>
+<p class="codeheader">
+#include &lt;Debug.au3&gt;<br />
+_DebugReportData ( Const ByRef $vVar [, $sTitle = ""DebugReportData"." [, $sArrayRange = "" [, $iFlags = 0 [, $vUser_Separator = Default [, $sHeader = Default]]]]] )<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">$vVar</td>
+<td style="width:85%">an Variable to be reported.</td>
+</tr>
+<tr>
+<td>$sTitle</td>
+<td><strong>[optional]</strong> Title for Report. Default = "DebugReportData".</td>
+</tr>
+<tr>
+<td>$sArrayRange</td>
+<td><strong>[optional]</strong> Range of rows/columns to display. Default ("") = entire array. (See below for details)</td>
+</tr>
+<tr>
+<td>$iFlags</td>
+<td><strong>[optional]</strong> Determine UDF options. Add required values together<br />
+&nbsp;&nbsp;&nbsp; $ARRAYDISPLAY_COLALIGNLEFT (0) = (default) Column text alignment - left<br />
+&nbsp;&nbsp;&nbsp; $ARRAYDISPLAY_TRANSPOSE (1) = Transposes the array (2D only)<br />
+&nbsp;&nbsp;&nbsp; $ARRAYDISPLAY_COLALIGNRIGHT (2) = Column text alignment - right<br />
+&nbsp;&nbsp;&nbsp; $ARRAYDISPLAY_NOROW (64) = No 'Row' column displayed</td>
+</tr>
+<tr>
+<td>$vUser_Separator</td>
+<td><strong>[optional]</strong> Sets column display option when copying data to clipboard.<br />
+&nbsp;&nbsp;&nbsp; Character = Delimiter between columns.<br />
+&nbsp;&nbsp;&nbsp; Number	= Fixed column width - longer items will be truncated.<br />
+&nbsp;&nbsp;&nbsp; Default = Current separator character (usually "|").</td>
+</tr>
+<tr>
+<td>$sHeader</td>
+<td><strong>[optional]</strong> Column names in header (string of names separated by current separator character - usually "|"). Default see Remarks.</td>
+</tr>
+</table>
+
+<h2>R&uuml;ckgabewert</h2>
+None,&nbsp;@error and @extended of the caller are preserved.<br />
+
+
+<h2>Bemerkungen</h2>
+<p>If no <a href="_DebugSetup.htm">_DebugSetup()</a> have been issued the function always returns.<br />
+<br />
+If the function is passed a non-array variable works as@DOUBLE_WS<a href="_DebugReportVar.htm">_DebugReportVar()</a>.<br />
+If a string is passed with $sTitle = Default, it wiil be reported as is.<br />
+This is usefull to replace SciTE <a href="../functions/ConsoleWrite.htm">ConsoleWrite()</a> debug line to be reported.<br />
+<br />
+If an array is passed, the reported output will be formatted by column, better report than <a href="_DebugReportVar.htm">_DebugReportVar()</a>.<br />
+All optional parameters starting $sArrayRange are used as <a href="_DebugArrayDisplay.htm">_DebugArrayDisplay()</a>.<br />
+$ARRAYDISPLAY_COLALIGNCENTER is not implemented.<br />
+<br />
+The $sArrayRange parameter syntax is as follows:<table>
+<tr>
+<td>"7"</td>
+<td>Show rows 0-7 with all columns</td>
+</tr>
+
+<tr>
+<td>"7:"</td>
+<td>Show rows 7-end with all columns</td>
+</tr>
+
+<tr>
+<td>"|7"</td>
+<td>Show all rows with columns 0-7</td>
+</tr>
+
+<tr>
+<td>"|7:"</td>
+<td>Show all rows with columns 7-end</td>
+</tr>
+
+<tr>
+<td>"7|7"</td>
+<td>Show rows 0-7 with columns 0-7</td>
+</tr>
+
+<tr>
+<td>"5:7"</td>
+<td>Show rows 5-7 with all columns</td>
+</tr>
+
+<tr>
+<td>"|5:7"</td>
+<td>Show all rows with columns 5-7</td>
+</tr>
+
+<tr>
+<td>"7|5:7"</td>
+<td>Show rows 0-7 with columns 5-7</td>
+</tr>
+
+<tr>
+<td>"5:7|7"</td>
+<td>Show rows 5-7 with columns 0-7</td>
+</tr>
+
+<tr>
+<td>"5:7|5:7"</td>
+<td>Show rows 5-7 with columns 5-7</td>
+</tr>
+</table><br />
+Any column values are ignored for 1D arrays.<br />
+<br />
+$sHeader names (separated by the current separator character) will be used for as many columns as there are names. If no, or not enough, custom names are specified then the default header of "Row|Col0" for 1D arrays or "Row|Col0|Col1|...|Col n" for 2D is substituted. If the array is displayed transposed, the header is ignored.<br />
+The variable $ARRAYDISPLAY_ROWPREFIX can be set to change the prefix of the row numbering (default: #).<br />
+<br />
+An array element containing another array or a Map is displayed as {Array} or {Map}.<br />
+<br />
+When using $ARRAYDISPLAY_TRANSPOSE or $sArrayRange, a copy of the $aArray is created, so additional memory is used.<br />
+</p>
+
+<h2>Verwandte Funktionen</h2>
+<p><a href="_DebugReportVar.htm">_DebugReportVar</a>, <a href="_DebugArrayDisplay.htm">_DebugArrayDisplay</a></p>
+
+<h2 class="bottom">Beispiel</h2>
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+function copyToClipboard(section) {
+if (window.clipboardData && clipboardData.setData) {
+clipboardData.setData("text", section + "\r\n");
+alert("Das Beispiel wurde in die Zwischenablage kopiert");
+}
+}
+</script>
+<div class="codeSnippetContainer">
+	<div class="codeSnippetContainerTabs">
+<script type="text/javascript">
+if (document.URL.match(/^mk:@MSITStore:/i)) {
+document.write('<div class="codeSnippetContainerTab codeSnippetContainerTabSingle" dir="ltr">');
+document.write('<object id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"><param name="Command" value="ShortCut"><param name="Font" value="Verdana,10pt"><param name="Text" value="Text:Dieses Skript &ouml;ffnen"><param name="Item1" value=",Examples\\HelpFile\\_DebugReportData.au3,"></object>');
+document.write('<\/div>');
+}
+</script>
+</div>
+
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText">
+<script type="text/javascript">
+if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) // IE (4+) only
+document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getElementById(\'copytext1\').innerText)">In die Zwischenablage kopieren<\/a>');
+</script>
+</div>
+</div>
+<div class="codeSnippetContainerCode" dir="ltr" id="copytext1">
+<pre>
+<span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Debug.au3&gt;</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_DebugSetup.htm"><span class="S15">_DebugSetup</span></a><span class="S8">(</span><span class="S7">"_DebugReportData examples"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray2D</span><span class="S8">[</span><span class="S3">5</span><span class="S8">][</span><span class="S3">5</span><span class="S8">]</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$r</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aArray2D</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$c</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aArray2D</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aArray2D</span><span class="S8">[</span><span class="S9">$r</span><span class="S8">][</span><span class="S9">$c</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$r</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">","</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$c</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$aArray2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Array2D"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$aArray2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Array2D NO ROW no header"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$ARRAYDISPLAY_NOROW</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$aArray2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Array2D no header Transposed"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$ARRAYDISPLAY_TRANSPOSE</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$aArray2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Array2D header col0"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">"zero"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$aArray2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Array2D header col0 Transposed"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$ARRAYDISPLAY_TRANSPOSE</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">"zero"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$aArray2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Array2D header col0 col1"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">"zero|one"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$aArray2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Array2D header col0 col1 (|1)"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"|1"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">"zero|one"</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$aArray2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Array2D header col0 col1 (|1:2)"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"|1:2"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">"zero|one"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$aArray2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Array2D header col0 col1 (|1:2)"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"|1:2 Transposed"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$ARRAYDISPLAY_TRANSPOSE</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">"zero|one"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$aArray2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Array2D NO ROW header col0 col1 (|1:2)"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"|1:2"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$ARRAYDISPLAY_NOROW</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">"zero|one"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$aArray2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Array2D NO ROW header col0 col1 (|1:2) Transposed"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"|1:2"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$ARRAYDISPLAY_NOROW</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">+</span></a><span class="S0"> </span><span class="S9">$ARRAYDISPLAY_TRANSPOSE</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">"zero|one"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$aArray2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Array2D header col0 col1 (2:3|1:2)"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2:3|1:2"</span><span class="S8">,</span><span class="S0"> </span><span class="S3">0</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">"zero|one"</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$aArray2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Array2D header col0 col1 (2:3|1:2) Transposed"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2:3|1:2"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$ARRAYDISPLAY_TRANSPOSE</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">"zero|one"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$aArray2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Array2D NO ROW header col0 col1 (2:3|1:2)"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"2:3|1:2"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$ARRAYDISPLAY_NOROW</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">,</span><span class="S0"> </span><span class="S7">"zero|one"</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray</span><span class="S8">[</span><span class="S3">7</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S8">[</span><span class="S3">1</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1.1</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"string"</span><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Binary.htm"><span class="S4">Binary</span></a><span class="S8">(</span><span class="S3">0x010203</span><span class="S8">),</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Ptr.htm"><span class="S4">Ptr</span></a><span class="S8">(-</span><span class="S3">1</span><span class="S8">),</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">False</span></a><span class="S8">,</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a><span class="S8">]</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$aArray</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Array"</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray3D</span><span class="S8">[</span><span class="S3">5</span><span class="S8">][</span><span class="S3">2</span><span class="S8">][</span><span class="S3">3</span><span class="S8">]</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$r</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aArray3D</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$c</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aArray3D</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$k</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aArray3D</span><span class="S8">,</span><span class="S0"> </span><span class="S3">3</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aArray3D</span><span class="S8">[</span><span class="S9">$r</span><span class="S8">][</span><span class="S9">$c</span><span class="S8">][</span><span class="S9">$k</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$r</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">","</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$c</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">","</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$k</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$aArray3D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$Array3D"</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$aArray4D</span><span class="S8">[</span><span class="S3">5</span><span class="S8">][</span><span class="S3">2</span><span class="S8">][</span><span class="S3">2</span><span class="S8">][</span><span class="S3">10</span><span class="S8">]</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$aArray4D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$Array4D"</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iInt</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S3">1</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$iInt</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$iInt"</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iInt64</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">2</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">^</span></a><span class="S0"> </span><span class="S3">63</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$iInt64</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$iInt64"</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$bBool</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Booleans.htm"><span class="S5">True</span></a>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$bBool</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$bBool"</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$fFloat</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1.1</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$fFloat</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$fFloat"</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$vKeyword</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Default.htm"><span class="S5">Default</span></a>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$vKeyword</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$vKeyword"</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$sString</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S7">"stringstring"</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$sString</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$sString"</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$dBinary</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Binary.htm"><span class="S4">Binary</span></a><span class="S8">(</span><span class="S7">"0x0102030405060708"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$dBinary</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$dbinary"</span><span class="S8">)</span>
+
+<span class="S9">$dBinary</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Binary.htm"><span class="S4">Binary</span></a><span class="S8">(</span><span class="S7">"abcdefghij"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$dBinary</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$dbinary"</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$pPtr</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Ptr.htm"><span class="S4">Ptr</span></a><span class="S8">(</span><span class="S3">0</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$pPtr</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$pPtr"</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hWnd</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/WinActive.htm"><span class="S4">WinActive</span></a><span class="S8">(</span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$hWnd"</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$tDllstruct</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/DllStructCreate.htm"><span class="S4">DllStructCreate</span></a><span class="S8">(</span><span class="S7">"int; ptr"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$tDllstruct</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$tDllstruct"</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$oObj</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/ObjCreate.htm"><span class="S4">ObjCreate</span></a><span class="S8">(</span><span class="S7">"shell.application"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$oObj</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$oObj"</span><span class="S8">)</span>
+
+<a class="codeSnippetLink" href="../libfunctions/_DebugReport.htm"><span class="S15">_DebugReport</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">"=== ConsoleWrite() can be replaced by _DebugReportData() when using Debug lines ==="</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span>
+<span class="S1">; _DebugReportData() can be used in Debug Line instead of ConsoleWrite(), _DebugSetup() must be added before</span>
+<a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iRet</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S1">;~ ConsoleWrite('@@ Debug(' &amp; @ScriptLineNumber &amp; ') : $iRet = ' &amp; $iRet &amp; @CRLF &amp; '&gt;Error code: ' &amp; @error &amp; ' &nbsp;&nbsp;&nbsp;Extended code: ' &amp; @extended &amp; ' (0x' &amp; Hex(@extended) &amp; ')' &amp; @CRLF) ;### Debug Console</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S7">'@@ Debug('</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@ScriptLineNumber"><span class="S6">@ScriptLineNumber</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">') : $iRet = '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$iRet</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">'&gt;Error code: '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">' &nbsp;&nbsp;&nbsp;Extended code: '</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">' (0x'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/Hex.htm"><span class="S4">Hex</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S8">)</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">')'</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S8">)</span><span class="S0"> </span><span class="S1">;### Debug Console</span>
+
+<span class="S1">; for Array 1D or 2D, it is better to use directly _DebugReportData() which will produce an output formattend by column(s)</span>
+<a class="codeSnippetLink" href="../keywords/ReDim.htm"><span class="S5">ReDim</span></a><span class="S0"> </span><span class="S9">$aArray2D</span><span class="S8">[</span><span class="S3">5</span><span class="S8">][</span><span class="S3">2</span><span class="S8">]</span>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$r</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aArray2D</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$c</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">0</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/UBound.htm"><span class="S4">UBound</span></a><span class="S8">(</span><span class="S9">$aArray2D</span><span class="S8">,</span><span class="S0"> </span><span class="S3">2</span><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">-</span></a><span class="S0"> </span><span class="S3">1</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aArray2D</span><span class="S8">[</span><span class="S9">$r</span><span class="S8">][</span><span class="S9">$c</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S9">$r</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">","</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$c</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportData.htm"><span class="S15">_DebugReportData</span></a><span class="S8">(</span><span class="S9">$aArray2D</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"$Array2D display by columns"</span><span class="S8">)</span>
+<a class="codeSnippetLink" href="../libfunctions/_DebugReportVar.htm"><span class="S15">_DebugReportVar</span></a><span class="S8">(</span><span class="S7">"$Array2D by _DebugReportVar()"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$aArray2D</span><span class="S8">)</span>
+<span class="S0"></span></span>
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -58,18 +58,17 @@ Constants are defined in FileConstants.au3</td>
 </table>
 
 <h2>Remarks</h2>
-<p>The array is a single dimension array containing six elements:<br />
+<p>The array is a single dimension array containing six or seven elements:<br />
 &nbsp;&nbsp;&nbsp; $aArray[0] = year (four digits)<br />
 &nbsp;&nbsp;&nbsp; $aArray[1] = month (range 01 - 12)<br />
 &nbsp;&nbsp;&nbsp; $aArray[2] = day (range 01 - 31)<br />
 &nbsp;&nbsp;&nbsp; $aArray[3] = hour (range 00 - 23)<br />
 &nbsp;&nbsp;&nbsp; $aArray[4] = min (range 00 - 59)<br />
 &nbsp;&nbsp;&nbsp; $aArray[5] = sec (range 00 - 59)<br />
+If "format" includes $FT_MSEC and $FT_ARRAY you get<br />
+&nbsp;&nbsp;&nbsp; $aArray[6] = msec (range 00 - 999)<br />
 <br />
-&nbsp;&nbsp;&nbsp; If "format include $FT_MSEC (can be sumup with other "formt")<br />
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; $aArray[6] = sec (range 00 - 999)<br />
-&nbsp;&nbsp;&nbsp; or if $FT_STRING<br />
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; string = "YYYYMMDDHHMMSSnnn"<br />
+If "format" includes $FT_MSEC and $FT_STRING FileGetTime returns a string YYYYMMDDHHMMSSnnn<br />
 <br />
 Notice that return values are zero-padded.<br />
 </p>
@@ -116,21 +115,21 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <span class="S0">Example</span><span class="S8">()</span>
 
 <a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Create a constant variable in Local scope of the filepath that will be read/written to.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$sFilePath</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetTempFileName.htm"><span class="S15">_WinAPI_GetTempFileName</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Create a constant variable in Local scope of the filepath that will be read/written to.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Const</span></a><span class="S0"> </span><span class="S9">$sFilePath</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetTempFileName.htm"><span class="S15">_WinAPI_GetTempFileName</span></a><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@TempDir"><span class="S6">@TempDir</span></a><span class="S8">)</span>
 
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Set the modified timestamp of the file to 1st Nov 2003 and use the current time.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iFileSetTime</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileSetTime.htm"><span class="S4">FileSetTime</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"20031101"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$FT_MODIFIED</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Set the modified timestamp of the file to 1st Nov 2003 and use the current time.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$iFileSetTime</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileSetTime.htm"><span class="S4">FileSetTime</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"20031101"</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$FT_MODIFIED</span><span class="S8">)</span>
 
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Display the modified timestamp of the file and return as a string in the format YYYYMMDDHHMMSS.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$iFileSetTime</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Timestamp:"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileGetTime.htm"><span class="S4">FileGetTime</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$FT_MODIFIED</span><span class="S8">,</span><span class="S0"> </span><span class="S3">1</span><span class="S8">))</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"An error occurred whilst setting the timestamp of the file."</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Display the modified timestamp of the file and return as a string in the format YYYYMMDDHHMMSS.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><span class="S9">$iFileSetTime</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Timestamp:"</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@CRLF"><span class="S6">@CRLF</span></a><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../functions/FileGetTime.htm"><span class="S4">FileGetTime</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$FT_MODIFIED</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$FT_STRING</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Else</span></a>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">""</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"An error occurred whilst setting the timestamp of the file."</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
 
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S1">; Delete the temporary file.</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/FileDelete.htm"><span class="S4">FileDelete</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S1">; Delete the temporary file.</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/FileDelete.htm"><span class="S4">FileDelete</span></a><span class="S8">(</span><span class="S9">$sFilePath</span><span class="S8">)</span>
 <a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
 <span class="S0"></span></span>
 </pre>

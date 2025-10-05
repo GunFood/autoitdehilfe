@@ -16,7 +16,7 @@
 <p style="margin:2px 0 0 0;" class="funcdesc">Retrieves the handle to the ancestor of the specified window<br /></p>
 <p class="codeheader">
 #include &lt;WinAPISysWin.au3&gt;<br />
-_WinAPI_GetAncestor ( $hWnd [, $iFlags = 1] )<br />
+_WinAPI_GetAncestor ( $hWnd [, $iFlags = $GA_PARENT] )<br />
 </p>
 
 <h2>Parameters</h2>
@@ -29,7 +29,7 @@ If this is the desktop window, the function returns 0.</td>
 <tr>
 <td>$iFlags</td>
 <td><strong>[optional]</strong> Specifies the ancestor to be retrieved. This parameter can be one of the following values:<br />
-&nbsp;&nbsp;&nbsp; $GA_PARENT - Retrieves the parent window<br />
+&nbsp;&nbsp;&nbsp; $GA_PARENT - Retrieves the parent window (Default)<br />
 &nbsp;&nbsp;&nbsp; $GA_ROOT - Retrieves the root window by walking the chain of parent windows<br />
 &nbsp;&nbsp;&nbsp; $GA_ROOTOWNER - Retrieves the owned root window by walking the chain of parent and owner windows returned by GetParent.</td>
 </tr>
@@ -40,7 +40,7 @@ Returns&nbsp;the handle of the ancestor window<br />
 
 
 <h2>Remarks</h2>
-<p>Above constants require #include &lt;WindowsConstants.au3&gt;<br />
+<p>Above constants require #include &lt;APISysConstants.au3&gt;<br />
 </p>
 
 <h2>Related</h2>
@@ -84,17 +84,16 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <pre>
 <span><a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;MsgBoxConstants.au3&gt;</span>
 <a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPISysWin.au3&gt;</span>
-<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WindowsConstants.au3&gt;</span>
 
 <span class="S0">Example</span><span class="S8">()</span>
 
 <a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">Func</span></a><span class="S0"> Example</span><span class="S8">()</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hParent</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$hWnd</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"test"</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$hParent</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetAncestor.htm"><span class="S15">_WinAPI_GetAncestor</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GA_PARENT</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Parent"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Get Ancestor of "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$hWnd</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">": "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$hParent</span><span class="S8">)</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Root"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Get Ancestor of "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$hParent</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">": "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetAncestor.htm"><span class="S15">_WinAPI_GetAncestor</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GA_ROOT</span><span class="S8">))</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Root Owner"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Get Ancestor of "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$hParent</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">": "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetAncestor.htm"><span class="S15">_WinAPI_GetAncestor</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GA_ROOTOWNER</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/Dim.htm"><span class="S5">Local</span></a><span class="S0"> </span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$hParent</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hWnd</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/GUICreate.htm"><span class="S4">GUICreate</span></a><span class="S8">(</span><span class="S7">"test"</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$hParent</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetAncestor.htm"><span class="S15">_WinAPI_GetAncestor</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GA_PARENT</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Parent"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Get Ancestor of "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$hWnd</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">": "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$hParent</span><span class="S8">)</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Root"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Get Ancestor of "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$hParent</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">": "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetAncestor.htm"><span class="S15">_WinAPI_GetAncestor</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GA_ROOT</span><span class="S8">))</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../functions/MsgBox.htm"><span class="S4">MsgBox</span></a><span class="S8">(</span><span class="S9">$MB_SYSTEMMODAL</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Root Owner"</span><span class="S8">,</span><span class="S0"> </span><span class="S7">"Get Ancestor of "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S9">$hParent</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><span class="S7">": "</span><span class="S0"> </span><span class="S8">&amp;</span><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetAncestor.htm"><span class="S15">_WinAPI_GetAncestor</span></a><span class="S8">(</span><span class="S9">$hWnd</span><span class="S8">,</span><span class="S0"> </span><span class="S9">$GA_ROOTOWNER</span><span class="S8">))</span>
 <a class="codeSnippetLink" href="../keywords/Func.htm"><span class="S5">EndFunc</span></a><span class="S0"> &nbsp;&nbsp;</span><span class="S1">;==&gt;Example</span>
 <span class="S0"></span></span>
 </pre>

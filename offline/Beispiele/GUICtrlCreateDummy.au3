@@ -7,7 +7,7 @@ Func Example()
 	$gui = GUICreate("GUICtrlCreateDummy", 250, 200, 100, 200)
 	GUISetBkColor(0x00E0FFFF) ; Ändert die Hintergrundfarbe
 
-	$idUser = GUICtrlCreateDummy()
+	$idDmy_User = GUICtrlCreateDummy()
 	$idButton_Event = GUICtrlCreateButton("OK", 75, 170, 70, 20)
 	$idButton_Cancel = GUICtrlCreateButton("Abbrechen", 150, 170, 70, 20)
 	GUISetState(@SW_SHOW)
@@ -19,10 +19,10 @@ Func Example()
 
 		Select
 			Case $idMsg = $idButton_Event
-				GUICtrlSendToDummy($idUser)
+				GUICtrlSendToDummy($idDmy_User)
 			Case $idMsg = $idButton_Cancel
-				GUICtrlSendToDummy($idUser)
-			Case $idMsg = $idUser
+				GUICtrlSendToDummy($idDmy_User)
+			Case $idMsg = $idDmy_User
 				; Besondere Anweisungen vor Skriptende
 				; ...
 				Exit

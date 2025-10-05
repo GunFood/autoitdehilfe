@@ -3,7 +3,7 @@
 #include <GDIPlus.au3>
 #include <GUIConstantsEx.au3>
 #include <WinAPIGdi.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
 
 ; Create GUI
 Global $g_hGUI = GUICreate("Show PNG", 250, 250)

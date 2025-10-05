@@ -1,13 +1,11 @@
-#include <APISysConstants.au3>
+#NoTrayIcon
+
 #include <GUIConstantsEx.au3>
 #include <MenuConstants.au3>
 #include <TrayConstants.au3>
 #include <WinAPIGdi.au3>
 #include <WinAPISysWin.au3>
-#include <WindowsConstants.au3>
-
-#NoTrayIcon
-
+#include <WindowsNotifsConstants.au3>
 
 Opt('TrayMenuMode', 1)
 

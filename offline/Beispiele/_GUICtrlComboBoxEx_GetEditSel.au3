@@ -1,9 +1,9 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiComboBoxEx.au3>
 #include <GUIConstantsEx.au3>
 #include <GuiImageList.au3>
-#include <WindowsConstants.au3>
-
-Global $g_idMemo
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -11,8 +11,7 @@ Func Example()
 	; Erstellt eine GUI
 	Local $hGUI = GUICreate("ComboBoxEx: Setzt und ermittelt die Position des Startzeichens und des Endzeichens der aktuellen Markierung (v" & @AutoItVersion & ")", 800, 300)
 	Local $hCombo = _GUICtrlComboBoxEx_Create($hGUI, "", 2, 2, 394, 70, BitOR($CBS_SIMPLE, $WS_VSCROLL, $WS_BORDER))
-	$g_idMemo = GUICtrlCreateEdit("", 2, 72, 396, 226, 0)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 72, 396, 226, 0)
 	GUISetState(@SW_SHOW)
 
 	Local $hImage = _GUIImageList_Create(16, 16, 5, 3)
@@ -40,13 +39,8 @@ Func Example()
 
 	; Ermittelt die Position des Startzeichens und des Endzeichens der aktuellen Markierung in einem Edit-Control einer ComboBox
 	Local $aSel = _GUICtrlComboBoxEx_GetEditSel($hCombo)
-	MemoWrite(StringFormat("Ausgewähltes Item: [%d][%d]", $aSel[0], $aSel[1]))
+	_MemoWrite(StringFormat("Ausgewähltes Item: [%d][%d]", $aSel[0], $aSel[1]))
 
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

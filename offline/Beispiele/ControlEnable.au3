@@ -1,3 +1,5 @@
+#include "Extras\HelpFileInternals.au3"
+
 Example()
 
 Func Example()
@@ -8,13 +10,13 @@ Func Example()
 	Local $hWnd = WinWait("[CLASS:Notepad]", "", 10)
 
 	; Deaktiviert das Edit-Control des Editors durch die Verwendung des von WinWait zurückgegebenen Handles.
-	ControlDisable($hWnd, "", "Edit1")
+	ControlDisable($hWnd, "", ControlGetFocus($hWnd))
 
 	; Wartet 2 Sekunden.
 	Sleep(2000)
 
 	; Aktiviert das Edit-Control des Editors durch die Verwendung des von WinWait zurückgegebenen Handles.
-	ControlEnable($hWnd, "", "Edit1")
+	ControlEnable($hWnd, "", ControlGetFocus($hWnd))
 
 	; Wartet 2 Sekunden.
 	Sleep(2000)

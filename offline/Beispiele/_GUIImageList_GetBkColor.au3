@@ -2,12 +2,11 @@
 #include <GuiImageList.au3>
 #include <GuiListView.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
 
 Example()
 
 Func Example()
-	GUICreate("ImageList: Setzt und ermittel die aktuelle Hintergrundfarbe (v" & @AutoItVersion & ")", 600, 300)
+	GUICreate("ImageList: Setzt und ermittelt die aktuelle Hintergrundfarbe (v" & @AutoItVersion & ")", 600, 300)
 	Local $idListview = GUICtrlCreateListView("", 2, 2, 394, 268, BitOR($LVS_SHOWSELALWAYS, $LVS_NOSORTHEADER, $LVS_REPORT))
 
 	Local $iStylesEx = BitOR($LVS_EX_GRIDLINES, $LVS_EX_FULLROWSELECT, $LVS_EX_SUBITEMIMAGES)

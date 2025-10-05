@@ -1,4 +1,5 @@
-#include <APIThemeConstants.au3>
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>
 #include <SendMessage.au3>
@@ -12,7 +13,7 @@
 #include <WinAPIShellEx.au3>
 #include <WinAPISys.au3>
 #include <WinAPITheme.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 If Number(_WinAPI_GetVersion()) < 6.0 Then
 	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Error', 'Require Windows Vista or later.')
@@ -20,8 +21,10 @@ If Number(_WinAPI_GetVersion()) < 6.0 Then
 EndIf
 
 ; Load bitmap and icon
-Local $hTech = _WinAPI_LoadImage(0, @ScriptDir & '\Extras\Tech.bmp', $IMAGE_BITMAP, 0, 0, $LR_LOADFROMFILE)
-Local $hIcon = _WinAPI_ShellExtractIcon(@ScriptDir & '\Extras\NVIDIA.ico', 0, 256, 256)
+Local $sBmp = _Extras_PathFull('Tech.bmp')
+Local $hTech = _WinAPI_LoadImage(0, $sBmp, $IMAGE_BITMAP, 0, 0, $LR_LOADFROMFILE)
+Local $sIco = _Extras_PathFull('NVIDIA.ico')
+Local $hIcon = _WinAPI_ShellExtractIcon($sIco, 0, 256, 256)
 
 ; Create GUI
 GUICreate('Test ' & StringReplace(@ScriptName, '.au3', '()'), 302, 302, -1, -1, $WS_POPUP, $WS_EX_TOPMOST)

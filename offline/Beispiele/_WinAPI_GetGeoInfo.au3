@@ -1,4 +1,3 @@
-#include <APILocaleConstants.au3>
 #include <WinAPILocale.au3>
 
 Local $iID = _WinAPI_GetUserGeoID()

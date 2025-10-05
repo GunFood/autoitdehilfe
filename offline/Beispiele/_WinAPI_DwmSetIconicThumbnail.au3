@@ -1,4 +1,5 @@
-#include <APIGdiConstants.au3>
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>
 #include <WinAPIConv.au3>
@@ -7,7 +8,7 @@
 #include <WinAPIHObj.au3>
 #include <WinAPIRes.au3>
 #include <WinAPISys.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
 
 If (Number(_WinAPI_GetVersion()) < 6.1) Or (Not _WinAPI_DwmIsCompositionEnabled()) Then
 	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Error', 'Require Windows 7 or later with enabled Aero theme.')
@@ -15,7 +16,8 @@ If (Number(_WinAPI_GetVersion()) < 6.1) Or (Not _WinAPI_DwmIsCompositionEnabled(
 EndIf
 
 ; Load bitmap to create a thumbnail
-Global $g_hAutoIt = _WinAPI_LoadImage(0, @ScriptDir & '\Extras\AutoIt.bmp', $IMAGE_BITMAP, 0, 0, BitOR($LR_LOADFROMFILE, $LR_CREATEDIBSECTION))
+Local $sBmp = _Extras_PathFull('AutoIt.bmp')
+Global $g_hAutoIt = _WinAPI_LoadImage(0, $sBmp, $IMAGE_BITMAP, 0, 0, BitOR($LR_LOADFROMFILE, $LR_CREATEDIBSECTION))
 
 ; Create GUI
 Global $g_hForm = GUICreate('Test ' & StringReplace(@ScriptName, '.au3', '()'), 400, 400)

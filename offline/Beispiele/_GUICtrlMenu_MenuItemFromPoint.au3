@@ -1,15 +1,19 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiMenu.au3>
+#include <StructureConstants.au3>
+
+Global $g_hWnd
 
 Example()
 
 Func Example()
-	Local $hWnd, $hMain, $hFile, $tRECT, $tPoint, $iX, $iY, $iIndex
+	Local $hMain, $hFile, $tRECT, $tPoint, $iX, $iY, $iIndex
 
 	; Startet den Editor
 	Run("notepad.exe")
-	WinWaitActive("[CLASS:Notepad]")
-	$hWnd = WinGetHandle("[CLASS:Notepad]")
-	$hMain = _GUICtrlMenu_GetMenu($hWnd)
+	$g_hWnd = WinWaitActive("[CLASS:Notepad]")
+	$hMain = _GUICtrlMenu_GetMenu($g_hWnd)
 	$hFile = _GUICtrlMenu_GetItemSubMenu($hMain, 0)
 
 	; Menüpunkt 'Öffnen'
@@ -17,21 +21,23 @@ Func Example()
 	Sleep(1000)
 
 	; Bewegt die Maus über den Menüpunkt 'Öffnen'
-	$tRECT = _GUICtrlMenu_GetItemRectEx($hWnd, $hFile, 1)
+	$tRECT = _GUICtrlMenu_GetItemRectEx($g_hWnd, $hFile, 1)
 	$tPoint = _Lib_PointFromRect($tRECT, True)
 	_Lib_GetXYFromPoint($tPoint, $iX, $iY)
 	MouseMove($iX, $iY, 1)
 	Sleep(1000)
 
 	; Ermittelt den Menüpunkt über der sich die Maus gerade befindet
-	$iIndex = _GUICtrlMenu_MenuItemFromPoint($hWnd, $hFile)
+	$iIndex = _GUICtrlMenu_MenuItemFromPoint($g_hWnd, $hFile)
 	Send("{ESC 2}")
 	Writeln("Der Menüpunkt über der sich die Maus gerade befindet lautet: " & $iIndex)
+
+	_NotepadForceClose($g_hWnd)
 EndFunc   ;==>Example
 
 ; Schreibt eine Zeile mit Text in den Editor
-Func Writeln($sText)
-	ControlSend("[CLASS:Notepad]", "", "Edit1", $sText & @CRLF)
+Func Writeln($sText, $hWnd = $g_hWnd)
+	ControlSend($hWnd, "", ControlGetFocus($hWnd), $sText & @CRLF)
 EndFunc   ;==>Writeln
 
 Func _Lib_PointFromRect(ByRef $tRECT, $fCenter = True)

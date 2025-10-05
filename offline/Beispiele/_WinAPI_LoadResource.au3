@@ -1,8 +1,7 @@
-#include <APIMiscConstants.au3>
-#include <APIResConstants.au3>
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <Memory.au3>
-#include <MsgBoxConstants.au3>
 #include <StaticConstants.au3>
 #include <WinAPIGdi.au3>
 #include <WinAPIMisc.au3>
@@ -11,11 +10,8 @@
 Local Const $sJpg = @TempDir & '\~Tech.jpg'
 
 ; Resources.dll in den Speicher laden
-Local $hInstance = _WinAPI_LoadLibraryEx(@ScriptDir & '\Extras\Resources.dll', $LOAD_LIBRARY_AS_DATAFILE)
-If Not $hInstance Then
-	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Fehler', @ScriptDir & '\Extras\Resources.dll nicht gefunden.')
-	Exit
-EndIf
+Local $sDll = _Extras_PathFull('Resources.dll')
+Local $hInstance = _WinAPI_LoadLibraryEx($sDll, $LOAD_LIBRARY_AS_DATAFILE)
 
 ; JPEG-Ressource aus Resources.dll-Bibliothek laden
 Local $hResource = _WinAPI_FindResource($hInstance, 'JPEG', 1)

@@ -1,4 +1,3 @@
-#include <APIREgConstants.au3>
 #include <WinAPIReg.au3>
 #include <WinAPIShPath.au3>
 

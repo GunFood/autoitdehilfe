@@ -1,4 +1,3 @@
-#include <APILocaleConstants.au3>
 #include <Array.au3>
 #include <MsgBoxConstants.au3>
 #include <WinAPILocale.au3>

@@ -1,7 +1,7 @@
 #include <GUIConstantsEx.au3>
 #include <GuiTreeView.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -16,11 +16,11 @@ Func Example()
 ;~     _GUICtrlTreeView_SetUnicodeFormat($idTreeView, False)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
-	Local $aidItem[5]
+	Local $aidTVi_Item[5]
 	For $x = 0 To 4
-		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
+		$aidTVi_Item[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
 		For $y = 0 To 2
-			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $y), $aidItem[$x])
+			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $y), $aidTVi_Item[$x])
 		Next
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)
@@ -32,10 +32,10 @@ Func Example()
 	_GUICtrlTreeView_Expand($idTreeView, 0, False)
 
 	MsgBox($MB_SYSTEMMODAL, "Information", "Item 1 erweitern")
-	_GUICtrlTreeView_Expand($idTreeView, $aidItem[1])
+	_GUICtrlTreeView_Expand($idTreeView, $aidTVi_Item[1])
 
 	MsgBox($MB_SYSTEMMODAL, "Information", "Item 1 zuklappen")
-	_GUICtrlTreeView_Expand($idTreeView, $aidItem[1], False)
+	_GUICtrlTreeView_Expand($idTreeView, $aidTVi_Item[1], False)
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

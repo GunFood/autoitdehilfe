@@ -1,8 +1,8 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiButton.au3>
 #include <GUIConstantsEx.au3>
-#include <WindowsConstants.au3>
-
-Global $g_idMemo
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -10,8 +10,7 @@ Func Example()
 	Local $idRdo, $idRdo2, $idChk
 
 	GUICreate("Buttons", 400, 400)
-	$g_idMemo = GUICtrlCreateEdit("", 119, 10, 276, 374, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(119, 10, 276, 374, $WS_VSCROLL)
 
 	$idRdo = GUICtrlCreateRadio("Radio1", 10, 10, 90, 50)
 
@@ -23,27 +22,22 @@ Func Example()
 
 	GUISetState(@SW_SHOW)
 
-	MemoWrite("Deaktiviert Button: " & _GUICtrlButton_Enable($idRdo2, False))
+	_MemoWrite("Deaktiviert Button: " & _GUICtrlButton_Enable($idRdo2, False))
 	Sleep(1000)
-	MemoWrite("Deaktiviert Button: " & _GUICtrlButton_Enable($idRdo2))
+	_MemoWrite("Deaktiviert Button: " & _GUICtrlButton_Enable($idRdo2))
 
 	While 1
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE
 				ExitLoop
 			Case $idRdo
-				MemoWrite("$idRdo angeklickt")
+				_MemoWrite("$idRdo angeklickt")
 			Case $idRdo2
-				MemoWrite("$idRdo2 angeklickt")
+				_MemoWrite("$idRdo2 angeklickt")
 			Case $idChk
-				MemoWrite("$idChk angeklickt")
+				_MemoWrite("$idChk angeklickt")
 		EndSwitch
 	WEnd
 
 	Exit
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

@@ -17,11 +17,11 @@ EndFunc   ;==>Example
 
 Func AttributeToString($sAttribute)
 	; Erstellt ein 1D Array, das die Buchstaben der Dateiattribute enthält. Dabei wird der String beim Komma getrennt.
-	Local $aInput = StringSplit("R,A,S,H,N,D,O,C,T", ",")
+	Local $aInput = StringSplit("R,A,S,H,N,D,O,C,T,J", ",")
 
 	; Erstellt ein 1D Array, das die Dateiattributsbezeichnungen enthält. Dabei wird der String beim Komma getrennt.
 	Local $aOutput = StringSplit("Read-only /, Archive /, System /, Hidden /" & _
-			", Normal /, Directory /, Offline /, Compressed /, Temporary /", ",")
+			", Normal /, Directory /, Offline /, Compressed /, Temporary /, JoinFolder /", ",")
 
 	; Ersetzt innerhalb der Schleife die Buchstaben der Dateiattribute durch die Dateiattributsbezeichnungen, z.B. A wird durch Archive oder S durch System ersetzt.
 	For $i = 1 To $aInput[0]

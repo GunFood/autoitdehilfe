@@ -1,8 +1,7 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiComboBox.au3>
 #include <GUIConstantsEx.au3>
-#include <MsgBoxConstants.au3>
-
-Global $g_idMemo
 
 Example()
 
@@ -12,8 +11,7 @@ Func Example()
 	; Erstellt eine GUI
 	GUICreate("ComboBox: Zeigt die ListBox", 400, 296)
 	$idCombo = GUICtrlCreateCombo("", 2, 2, 396, 296)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 32, 396, 266, 0)
 	GUISetState(@SW_SHOW)
 
 	; Fügt Dateien hinzu
@@ -22,7 +20,7 @@ Func Example()
 	_GUICtrlComboBox_EndUpdate($idCombo)
 
 	; Ermittelt, ob die ListBox der ComboBox aufgeklappt ist
-	MemoWrite("Status des Dropdowns......: " & _GUICtrlComboBox_GetDroppedState($idCombo))
+	_MemoWrite("Status des Dropdowns......: " & _GUICtrlComboBox_GetDroppedState($idCombo))
 
 	Sleep(500)
 
@@ -32,7 +30,7 @@ Func Example()
 	Sleep(500)
 
 	; Ermittelt, ob die ListBox der ComboBox aufgeklappt ist
-	MemoWrite("Status des Dropdowns......: " & _GUICtrlComboBox_GetDroppedState($idCombo))
+	_MemoWrite("Status des Dropdowns......: " & _GUICtrlComboBox_GetDroppedState($idCombo))
 
 	Sleep(500)
 
@@ -44,8 +42,3 @@ Func Example()
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 	GUIDelete()
 EndFunc   ;==>Example
-
-; Schreibt eine Zeile in das Memo Control
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

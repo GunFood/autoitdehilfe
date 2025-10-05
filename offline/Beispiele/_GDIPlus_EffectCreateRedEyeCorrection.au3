@@ -5,7 +5,7 @@
 _Example()
 
 Func _Example()
-    If Not _GDIPlus_Startup() Or @extended < 6 Then
+	If Not _GDIPlus_Startup() Or @extended < 6 Then
 		MsgBox($MB_SYSTEMMODAL, "ERROR", "GDIPlus.dll v1.1 ist nicht verfügbar")
 		Return
 	EndIf

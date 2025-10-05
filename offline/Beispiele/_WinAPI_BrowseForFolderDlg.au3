@@ -1,4 +1,3 @@
-#include <APIDlgConstants.au3>
 #include <MsgBoxConstants.au3>
 #include <SendMessage.au3>
 #include <WinAPIDlg.au3>

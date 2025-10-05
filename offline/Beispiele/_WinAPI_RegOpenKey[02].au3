@@ -1,9 +1,7 @@
 ; == Example First parameter being the full Key string
 
-#include <APIRegConstants.au3>
 #include <Date.au3>
 #include <Debug.au3>
-#include <MsgBoxConstants.au3>
 #include <WinAPIError.au3>
 #include <WinAPILocale.au3>
 #include <WinAPIReg.au3>
@@ -15,7 +13,7 @@ Example()
 Func Example()
 	Local $hKey = _WinAPI_RegOpenKey('HKEY_LOCAL_MACHINE\SOFTWARE\AutoIt v3\AutoIt', '', $KEY_QUERY_VALUE)
 	If @error Then
-		_DebugReport("! RegOpenKey @error =" & @error  & @TAB & _WinAPI_GetErrorMessage(@extended) & @CRLF)
+		_DebugReport("! RegOpenKey @error =" & @error & @TAB & _WinAPI_GetErrorMessage(@extended) & @CRLF)
 		Exit
 	EndIf
 

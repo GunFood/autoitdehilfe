@@ -1,7 +1,9 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiButton.au3>
 #include <GUIConstantsEx.au3>
 
-Global $g_idBtn[6], $g_idMemo, $g_iRand
+Global $g_aidBtn[6], $g_iRand
 
 HotKeySet("!b", "Clickit")
 
@@ -11,10 +13,9 @@ Func Example()
 	Local $y = 70
 
 	GUICreate("Buttons", 610, 400)
-	$g_idMemo = GUICtrlCreateEdit("", 119, 10, 476, 374, 0)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(119, 10, 376, 374, 0)
 
-	MemoWrite("Drücke Alt+b, um einen zufällig ausgewählten Button zu drücken.")
+	_MemoWrite("Drücke Alt+b, um einen zufällig ausgewählten Button zu drücken.")
 
 	$g_idBtn[0] = GUICtrlCreateButton("Button1", 10, 10, 100, 50)
 
@@ -33,7 +34,7 @@ Func Example()
 			Case $GUI_EVENT_CLOSE
 				ExitLoop
 			Case $g_idBtn[$g_iRand]
-				MemoWrite(_GUICtrlButton_GetText($g_idBtn[$g_iRand]) & " angeklickt")
+				_MemoWrite(_GUICtrlButton_GetText($g_idBtn[$g_iRand]) & " angeklickt")
 		EndSwitch
 	WEnd
 
@@ -44,8 +45,3 @@ Func Clickit()
 	$g_iRand = Random(0, 5, 1)
 	_GUICtrlButton_Click($g_idBtn[$g_iRand])
 EndFunc   ;==>Clickit
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

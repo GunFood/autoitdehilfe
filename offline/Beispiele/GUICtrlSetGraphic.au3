@@ -1,9 +1,8 @@
 #include <GUIConstantsEx.au3>
-#include <StaticConstants.au3>
 
 Global Const $g_MAXGr = 6
 Global $g_aidGraphics[$g_MAXGr + 1] ; 0 und $g_MAXGr-Einträge werden nicht für GUICtrlDelete benutzt
-Global $g_idDel, $g_hChild
+Global $g_idBtn_Del, $g_hChild
 
 Example()
 
@@ -11,7 +10,7 @@ Func Example()
 	Local $idMsg, $iInc, $i
 
 	GUICreate("Mein Hauptfenster", -1, -1, 100, 100)
-	Local $idDel1 = GUICtrlCreateButton("Löschen", 50, 200, 50)
+	Local $idBtn_Del1 = GUICtrlCreateButton("Löschen", 50, 200, 50)
 	GUISetState(@SW_SHOW)
 	CreateChild()
 
@@ -22,9 +21,9 @@ Func Example()
 
 	Do
 		$idMsg = GUIGetMsg()
-		If $idMsg = $idDel1 Then $i = Create($iInc)
+		If $idMsg = $idBtn_Del1 Then $i = Create($iInc)
 
-		If $idMsg = $g_idDel Then
+		If $idMsg = $g_idBtn_Del Then
 			GUICtrlDelete($g_aidGraphics[$i])
 			$i = $i + $iInc
 			If $i < 0 Or $i > $g_MAXGr Then Exit
@@ -41,7 +40,7 @@ EndFunc   ;==>Create
 
 Func CreateChild()
 	$g_hChild = GUICreate("Meine Zeichnung")
-	$g_idDel = GUICtrlCreateButton("Löschen", 50, 165, 50)
+	$g_idBtn_Del = GUICtrlCreateButton("Löschen", 50, 165, 50)
 
 	$g_aidGraphics[1] = GUICtrlCreateGraphic(20, 50, 100, 100)
 	GUICtrlSetBkColor(-1, 0xffffff)
@@ -102,7 +101,7 @@ Func CreateChild()
 	GUICtrlSetGraphic(-1, $GUI_GR_DOT, 30, 40)
 
 	$g_aidGraphics[6] = GUICtrlCreateGraphic(110, 260, 230, 130)
-	GUICtrlSetColor(-1, 0) ; Um eine schwarze Umrandungarnd anzuzeigen
+	GUICtrlSetColor(-1, 0) ; Um eine schwarze Umrandung anzuzeigen
 	GUICtrlSetBkColor(-1, 0xc0c0ff)
 	GUICtrlSetGraphic(-1, $GUI_GR_HINT, 3) ; Um Punkte am Control und Endpunkte der Linien/Bezierkurven anzuzeigen
 

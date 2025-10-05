@@ -1,4 +1,3 @@
-#include <APIRegConstants.au3>
 #include <WinAPIReg.au3>
 
 Local $sExt = '.au3'

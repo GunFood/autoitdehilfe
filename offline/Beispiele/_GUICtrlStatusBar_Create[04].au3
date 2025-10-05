@@ -1,42 +1,39 @@
 ; == Beispiel 4 : mit Abschnittsnummer und Textarray
 
-#include <ComboConstants.au3>
-#include <EditConstants.au3>
-#include <Extras\WM_NOTIFY.au3>
+#include "Extras\HelpFileInternals.au3"
+#include "Extras\WM_NOTIFY.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiStatusBar.au3>
-#include <WindowsConstants.au3>
 
-Global $g_idMemo, $g_hMainGUI, $g_hStatus
+Global $g_hMainGUI, $g_hStatus
 
 Example()
 
 Func Example()
 	; Erstellt eine GUI
-	Local $hGUI = GUICreate("StatusBar: Erzeugen (v" & @AutoItVersion & ")", 400, 300)
+	Local $hGUI = GUICreate("StatusBar: Erzeugen (v" & @AutoItVersion & ")", 400, 300, 100, 100)
 
 	; Erzeugt Abschnitte, deren Breite auf der übergebenen Endposition des ersten Abschnitts basiert
 	Local $aText[3] = ["Linksbündig", @TAB & "Zentriert", @TAB & @TAB & "Rechtsbündig"]
 	$g_hStatus = _GUICtrlStatusBar_Create($hGUI, 150, $aText)
 
 	; Erstellt ein Memo Control
-	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 396, 274, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
-	GUICtrlSendMsg($g_idMemo, $EM_SETREADONLY, True, 0)
-	GUICtrlSetBkColor($g_idMemo, 0xFFFFFF)
+	_MemoCreate(2, 8, 444, 259)
 	GUISetState(@SW_SHOW)
 
-	MemoWrite("StatusBar erzeugt mit:" & @CRLF & _
+	_MemoWrite("StatusBar erzeugt mit:" & @CRLF & _
 			@TAB & "Handle zum Anwendungsfenster," & @CRLF & _
 			@TAB & "Abschnittsbreite als einzelnen Wert," & @CRLF & _
 			@TAB & "Abschnittstexte als Array mit 3 Items," & @CRLF)
 
-	_WM_NOTIFY_Register($g_idMemo)
+	_WM_NOTIFY_Register($_g_idLst_Memo)
 
 	; Rändergröße ermitteln
-	MemoWrite("Horizontale Randbreite ....: " & _GUICtrlStatusBar_GetBordersHorz($g_hStatus))
-	MemoWrite("Vertikale Randbreite ......: " & _GUICtrlStatusBar_GetBordersVert($g_hStatus))
-	MemoWrite("Breite des Rechteckrandes .: " & _GUICtrlStatusBar_GetBordersRect($g_hStatus))
+	_MemoWrite("Horizontale Randbreite ....: " & _GUICtrlStatusBar_GetBordersHorz($g_hStatus))
+	_MemoWrite("Vertikale Randbreite ......: " & _GUICtrlStatusBar_GetBordersVert($g_hStatus))
+	_MemoWrite("Breite des Rechteckrandes .: " & _GUICtrlStatusBar_GetBordersRect($g_hStatus))
+	_MemoWrite("")
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
@@ -44,11 +41,6 @@ Func Example()
 	GUISetState(@SW_ENABLE, $g_hMainGUI)
 	GUIDelete($hGUI)
 EndFunc   ;==>Example
-
-; Schreibt eine Nachricht in das Memo
-Func MemoWrite($sMessage = "")
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite
 
 Func WM_NOTIFY($hWnd, $iMsg, $wParam, $lParam)
 	#forceref $hWnd, $iMsg, $wParam

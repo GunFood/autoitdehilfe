@@ -1,8 +1,10 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiComboBoxEx.au3>
 #include <GUIConstantsEx.au3>
 #include <GuiImageList.au3>
-
-Global $g_idMemo
+#include <MsgBoxConstants.au3>
+#include <StructureConstants.au3>
 
 Example()
 
@@ -10,8 +12,7 @@ Func Example()
 	; Erstellt eine GUI
 	Local $hGUI = GUICreate("ComboBoxEx: Ermittelt Item-Attribute (v" & @AutoItVersion & ")", 500, 300)
 	Local $hCombo = _GUICtrlComboBoxEx_Create($hGUI, "", 2, 2, 394, 100)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 32, 396, 266, 0)
 	GUISetState(@SW_SHOW)
 
 	Local $hImage = _GUIImageList_Create(16, 16, 5, 3)
@@ -43,13 +44,13 @@ Func Example()
 	_GUICtrlComboBoxEx_GetItemEx($hCombo, $tItem)
 	Local $sText
 	Local $iLen = _GUICtrlComboBoxEx_GetItemText($hCombo, 1, $sText)
-	MemoWrite("Item Text: " & $sText)
-	MemoWrite("Länge des Item-Textes ......................: " & $iLen)
-	MemoWrite("Anzahl der Bildbreiten bis zur Einrückung ..: " & DllStructGetData($tItem, "Indent"))
-	MemoWrite("0-basierender Itembilderindex ..............: " & DllStructGetData($tItem, "Image"))
-	MemoWrite("0-basierender Itemstatusbilderindex ........: " & DllStructGetData($tItem, "SelectedImage"))
-	MemoWrite("0-basierender Itembilder-Overlay-Index: ....: " & DllStructGetData($tItem, "OverlayImage"))
-	MemoWrite("Anwendungsspezifischer Wert ................: " & DllStructGetData($tItem, "Param"))
+	_MemoWrite("Item Text: " & $sText)
+	_MemoWrite("Länge des Item-Textes ......................: " & $iLen)
+	_MemoWrite("Anzahl der Bildbreiten bis zur Einrückung ..: " & DllStructGetData($tItem, "Indent"))
+	_MemoWrite("0-basierender Itembilderindex ..............: " & DllStructGetData($tItem, "Image"))
+	_MemoWrite("0-basierender Itemstatusbilderindex ........: " & DllStructGetData($tItem, "SelectedImage"))
+	_MemoWrite("0-basierender Itembilder-Overlay-Index: ....: " & DllStructGetData($tItem, "OverlayImage"))
+	_MemoWrite("Anwendungsspezifischer Wert ................: " & DllStructGetData($tItem, "Param"))
 
 	; Ändert Item 1
 	MsgBox($MB_SYSTEMMODAL, "Information", "Ändert Item 1")
@@ -66,8 +67,3 @@ Func Example()
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

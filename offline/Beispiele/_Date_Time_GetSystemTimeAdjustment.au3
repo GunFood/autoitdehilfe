@@ -1,6 +1,7 @@
 #include <Date.au3>
 #include <MsgBoxConstants.au3>
 #include <WinAPIError.au3>
+#include <WindowsStylesConstants.au3>
 
 ; Unter Vista muß die Windows API "SetSystemTimeAdjustment" möglicherweise von der Systemsicherheit ausgenommen werden
 

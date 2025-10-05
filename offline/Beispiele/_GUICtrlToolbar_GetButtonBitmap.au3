@@ -2,7 +2,6 @@
 #include <GuiToolbar.au3>
 #include <MsgBoxConstants.au3>
 #include <WinAPIConstants.au3>
-#include <WindowsConstants.au3>
 
 Example()
 
@@ -21,12 +20,12 @@ Func Example()
 	EndSwitch
 
 	; Fügt die Buttons hinzu
-	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
+	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $e_idHelp
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idNew, $STD_FILENEW)
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idOpen, $STD_FILEOPEN)
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idSave, $STD_FILESAVE)
 	_GUICtrlToolbar_AddButtonSep($hToolbar)
-	_GUICtrlToolbar_AddButton($hToolbar, $idHelp, $STD_HELP)
+	_GUICtrlToolbar_AddButton($hToolbar, $e_idHelp, $STD_HELP)
 
 	; Zeigt den Index des Speichern-Bitmaps
 	MsgBox($MB_SYSTEMMODAL, "Information", "Ändert das Speichern-Bitmap in das Drucken-Bitmap")

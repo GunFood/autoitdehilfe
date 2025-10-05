@@ -1,8 +1,8 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiComboBoxEx.au3>
 #include <GUIConstantsEx.au3>
 #include <GuiImageList.au3>
-
-Global $g_idMemo
 
 Example()
 
@@ -10,8 +10,7 @@ Func Example()
 	; Erstellt eine GUI
 	Local $hGUI = GUICreate("ComboBoxEx: Setzt und ermittelt, ob die Standardbenutzeroberfläche oder die erweiterte Benutzeroberfläche verwendet wird (v" & @AutoItVersion & ")", 900, 300)
 	Local $hCombo = _GUICtrlComboBoxEx_Create($hGUI, "", 2, 2, 394, 100)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 32, 396, 266, 0)
 	GUISetState(@SW_SHOW)
 
 	Local $hImage = _GUIImageList_Create(16, 16, 5, 3)
@@ -31,19 +30,14 @@ Func Example()
 	Next
 
 	; Ermittelt, ob die Standardbenutzeroberfläche oder die erweiterte Benutzeroberfläche verwendet wird
-	MemoWrite("Erweiterte Benutzeroberfläche: " & _GUICtrlComboBoxEx_GetExtendedUI($hCombo))
+	_MemoWrite("Erweiterte Benutzeroberfläche: " & _GUICtrlComboBoxEx_GetExtendedUI($hCombo))
 
 	; Setzt die erweiterte Oberfläche
 	_GUICtrlComboBoxEx_SetExtendedUI($hCombo, True)
 
 	; Ermittelt, ob die Standardbenutzeroberfläche oder die erweiterte Benutzeroberfläche verwendet wird
-	MemoWrite("Erweiterte Benutzeroberfläche: " & _GUICtrlComboBoxEx_GetExtendedUI($hCombo))
+	_MemoWrite("Erweiterte Benutzeroberfläche: " & _GUICtrlComboBoxEx_GetExtendedUI($hCombo))
 
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

@@ -1,9 +1,11 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiMenu.au3>
 #include <WinAPIConv.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
 
-Global $g_idMemo, $g_hStyle, $g_iStyle, $g_idTimeLabel
+Global $g_hStyle, $g_iStyle, $g_idLbl_Time
 Global Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $e_idExit, $e_idMNS_CHECKORBMP, $e_idMNS_AUTODISMISS, $e_idMNS_MODELESS, $e_idMNS_NOCHECK, $e_idAbout
 
 Global $g_hGUI, $g_hFile, $g_hHelp, $g_hMain
@@ -19,17 +21,16 @@ Func Example()
 
 	GUICtrlCreateLabel("Nach der Einstellung des Stils auf MNS_MODELESS" & @CRLF & _
 			"wird die Uhrzeit kontinuierlich angezeigt, wenn man auf Menü klickt", 20, 2, 390, 60)
-	$g_idTimeLabel = GUICtrlCreateLabel("", 400, 2, 160, 40)
+	$g_idLbl_Time = GUICtrlCreateLabel("", 400, 2, 160, 40)
 
 	; Erstellt ein Memo Control
-	$g_idMemo = GUICtrlCreateEdit("", 2, 30 + 2, 496, 276 - 30)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 30 + 2, 396, 276 - 30, -1)
 
 	SetStyles()     ; zum Einstellen von Elementen im Stil des Kontrollmenüs
 
 	GUISetState(@SW_SHOW)
 
-	MemoWrite("beginnend mit Stilen: " & @CRLF & @TAB & ConvStyles())
+	_MemoWrite("beginnend mit Stilen: " & @CRLF & @TAB & ConvStyles())
 
 	; Registriert die Windows Message ID
 	GUIRegisterMsg($WM_COMMAND, "WM_COMMAND")
@@ -88,11 +89,11 @@ Func WM_COMMAND($hWnd, $iMsg, $wParam, $lParam)
 	#forceref $hWnd, $iMsg, $lParam
 	Switch _WinAPI_LoWord($wParam)
 		Case $e_idNew
-			MemoWrite("Neu")
+			_MemoWrite("Neu")
 		Case $e_idOpen
-			MemoWrite("Öffnen")
+			_MemoWrite("Öffnen")
 		Case $e_idSave
-			MemoWrite("Speichern")
+			_MemoWrite("Speichern")
 		Case $e_idExit
 			GUIDelete()
 			Exit
@@ -105,7 +106,7 @@ Func WM_COMMAND($hWnd, $iMsg, $wParam, $lParam)
 		Case $e_idMNS_NOCHECK
 			UpdateStyles($MNS_NOCHECK)
 		Case $e_idAbout
-			MemoWrite("Über")
+			_MemoWrite("Über")
 	EndSwitch
 
 	Return $GUI_RUNDEFMSG
@@ -122,7 +123,7 @@ Func UpdateStyles($nStyle)
 
 	; das Menü mit neuen Stilen neu erstellen, da die Modifikationen von $MNS_MODELESS nicht dynamisch sein können
 	CreateMenus()
-	MemoWrite("Neustart mit Stils: " & @CRLF & @TAB & ConvStyles())
+	_MemoWrite("Neustart mit Stils: " & @CRLF & @TAB & ConvStyles())
 	SetStyles()
 EndFunc   ;==>UpdateStyles
 
@@ -155,10 +156,5 @@ EndFunc   ;==>SetStyles
 
 ; Anzeige der neuen Zeit im Label.
 Func DisplayTime()
-	GUICtrlSetData($g_idTimeLabel, "Zeit =   " & @HOUR & ":" & @MIN & ":" & @SEC)
+	GUICtrlSetData($g_idLbl_Time, "Zeit =   " & @HOUR & ":" & @MIN & ":" & @SEC)
 EndFunc   ;==>DisplayTime
-
-; Schreibt eine Nachricht in das Memo
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

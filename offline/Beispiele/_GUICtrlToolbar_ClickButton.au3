@@ -1,9 +1,13 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiToolbar.au3>
+#include <StructureConstants.au3>
 #include <WinAPIConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
-Global $g_hToolbar, $g_idMemo
+Global $g_hToolbar
 Global $g_iItem ; ID des Buttons der mit der Nachricht verknüpft ist
 Global Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $e_idHelp
 
@@ -17,8 +21,7 @@ Func Example()
 	$g_hToolbar = _GUICtrlToolbar_Create($hGUI)
 	$aSize = _GUICtrlToolbar_GetMaxSize($g_hToolbar)
 
-	$g_idMemo = GUICtrlCreateEdit("", 2, $aSize[1] + 30, 596, 396 - ($aSize[1] + 30), $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, $aSize[1] + 30, 596, 396 - ($aSize[1] + 30), $WS_VSCROLL)
 	GUISetState(@SW_SHOW)
 	GUIRegisterMsg($WM_NOTIFY, "_WM_NOTIFY")
 
@@ -46,11 +49,6 @@ Func Example()
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example
 
-; Schreibt eine Nachricht in das Memo
-Func MemoWrite($sMessage = "")
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite
-
 ; WM_NOTIFY-Eventhandler
 Func _WM_NOTIFY($hWndGUI, $iMsgID, $wParam, $lParam)
 	#forceref $hWndGUI, $iMsgID, $wParam
@@ -64,7 +62,7 @@ Func _WM_NOTIFY($hWndGUI, $iMsgID, $wParam, $lParam)
 			Switch $code
 				Case $NM_LDOWN
 					;----------------------------------------------------------------------------------------------
-					MemoWrite("$NM_LDOWN: Angeklicktes Item: " & $g_iItem & " bei Index: " & _GUICtrlToolbar_CommandToIndex($g_hToolbar, $g_iItem))
+					_MemoWrite("$NM_LDOWN: Angeklicktes Item: " & $g_iItem & " bei Index: " & _GUICtrlToolbar_CommandToIndex($g_hToolbar, $g_iItem))
 					;----------------------------------------------------------------------------------------------
 				Case $TBN_HOTITEMCHANGE
 					$tNMTBHOTITEM = DllStructCreate($tagNMTBHOTITEM, $lParam)
@@ -73,24 +71,24 @@ Func _WM_NOTIFY($hWndGUI, $iMsgID, $wParam, $lParam)
 					$g_iItem = $i_idNew
 					$iFlags = DllStructGetData($tNMTBHOTITEM, "dwFlags")
 					If BitAND($iFlags, $HICF_LEAVING) = $HICF_LEAVING Then
-						MemoWrite("$HICF_LEAVING: " & $i_idOld)
+						_MemoWrite("$HICF_LEAVING: " & $i_idOld)
 					Else
 						Switch $i_idNew
 							Case $e_idNew
 								;----------------------------------------------------------------------------------------------
-								MemoWrite("$TBN_HOTITEMCHANGE: $e_idNew")
+								_MemoWrite("$TBN_HOTITEMCHANGE: $e_idNew")
 								;----------------------------------------------------------------------------------------------
 							Case $e_idOpen
 								;----------------------------------------------------------------------------------------------
-								MemoWrite("$TBN_HOTITEMCHANGE: $e_idOpen")
+								_MemoWrite("$TBN_HOTITEMCHANGE: $e_idOpen")
 								;----------------------------------------------------------------------------------------------
 							Case $e_idSave
 								;----------------------------------------------------------------------------------------------
-								MemoWrite("$TBN_HOTITEMCHANGE: $e_idSave")
+								_MemoWrite("$TBN_HOTITEMCHANGE: $e_idSave")
 								;----------------------------------------------------------------------------------------------
 							Case $e_idHelp
 								;----------------------------------------------------------------------------------------------
-								MemoWrite("$TBN_HOTITEMCHANGE: $e_idHelp")
+								_MemoWrite("$TBN_HOTITEMCHANGE: $e_idHelp")
 								;----------------------------------------------------------------------------------------------
 						EndSwitch
 					EndIf

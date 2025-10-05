@@ -1,21 +1,20 @@
 ;~ #RequireAdmin
 ; Die Windows API "SetTimeZoneInformation" benötigt "SeTimeZonePrivilege", so dass #RequireAdmin verwendet werden muss
 
+#include "Extras\HelpFileInternals.au3"
+
 #include <Date.au3>
 #include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>
 #include <WinAPIError.au3>
-#include <WindowsConstants.au3>
-
-Global $g_idMemo
+#include <WindowsStylesConstants.au3>
 
 Example()
 
 Func Example()
 	; Erstellt eine GUI
 	GUICreate("Datum Zeit: Setzt und ermittelt die Zoneninformationen (v" & @AutoItVersion & ")", 460, 460)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 456, 456, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 2, 456, 456, $WS_VSCROLL)
 	GUISetState(@SW_SHOW)
 
 	; Zeigt Infos über die aktuelle Zeitzone
@@ -44,20 +43,24 @@ Func Example()
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example
 
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite
-
 ; Zeigt Details der Zeitzone an
 Func ShowTimeZoneInformation(ByRef $aInfo, $sComment)
-	MemoWrite("******************* " & $sComment & " *******************")
-	MemoWrite("Ergebnis ...................: " & $aInfo[0])
-	MemoWrite("Aktuelle Verschiebung ......: " & $aInfo[1])
-	MemoWrite("Standardname ...............: " & $aInfo[2])
-	MemoWrite("Standard Datum/Zeit ........: " & _Date_Time_SystemTimeToDateTimeStr($aInfo[3]))
-	MemoWrite("Standard Verschiebung ......: " & $aInfo[4])
-	MemoWrite("Sommerzeit Name ............: " & $aInfo[5])
-	MemoWrite("Sommerzeit Datum/Zeit ......: " & _Date_Time_SystemTimeToDateTimeStr($aInfo[6]))
-	MemoWrite("Sommerzeitverschiebung .....: " & $aInfo[7])
+	_MemoWrite("******************* " & $sComment & " *******************")
+	Local $sResult = "TIME_ZONE_ID_INVALID"
+	Switch $aInfo[0]
+		Case 0
+			$sResult = "TIME_ZONE_ID_UNKNOWN"
+		Case 1
+			$sResult = "TIME_ZONE_ID_STANDARD"
+		Case 2
+			$sResult = "TIME_ZONE_ID_DAYLIGHT"
+	EndSwitch
+	_MemoWrite("Ergebnis ...................: " & $aInfo[0])
+	_MemoWrite("Aktuelle Verschiebung ......: " & $aInfo[1])
+	_MemoWrite("Standardname ...............: " & $aInfo[2])
+	_MemoWrite("Standard Datum/Zeit ........: " & _Date_Time_SystemTimeToDateTimeStr($aInfo[3]))
+	_MemoWrite("Standard Verschiebung ......: " & $aInfo[4])
+	_MemoWrite("Sommerzeit Name ............: " & $aInfo[5])
+	_MemoWrite("Sommerzeit Datum/Zeit ......: " & _Date_Time_SystemTimeToDateTimeStr($aInfo[6]))
+	_MemoWrite("Sommerzeitverschiebung .....: " & $aInfo[7])
 EndFunc   ;==>ShowTimeZoneInformation

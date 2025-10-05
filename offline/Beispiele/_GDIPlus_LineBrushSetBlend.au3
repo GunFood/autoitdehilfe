@@ -26,7 +26,7 @@ Func Example()
 	$aBlends[4][0] = 1 ; The percentage of the blending is 100% (red to green is gradually completed from 70% to 100% from the left)
 	$aBlends[4][1] = 1 ; The distance percentage from the left boundary of the brush is 100%
 
-	_GDIPlus_LineBrushSetBlend($hBrush, $aBlends); set the linear gradient brush color positions and factors
+	_GDIPlus_LineBrushSetBlend($hBrush, $aBlends) ; set the linear gradient brush color positions and factors
 
 	_GDIPlus_GraphicsFillEllipse($hGraphics, 100, 50, 380, 500, $hBrush) ;draw the egg
 

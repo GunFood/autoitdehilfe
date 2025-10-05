@@ -3,7 +3,9 @@
 #include <WinAPIRes.au3>
 #include <WinAPISys.au3>
 #include <WinAPISysWin.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
+#include <WindowsStylesConstants.au3>
+#include <WindowsSysColorConstants.au3>
 
 Global $g_bExit = False
 

@@ -5,7 +5,7 @@ Example()
 Func Example()
 	; Platziert die Eingabebox oben links in der Ecke und zeigt die Zeichen an so wie sie eingegeben werden
 	Local $sAnswer = InputBox("Frage", "Wo wurdest du geboren?", "Planet Erde", "", _
-			 - 1, -1, 0, 0)
+			 -1, -1, 0, 0)
 
 	; Zeigt das Ergebnis.
 	MsgBox($MB_SYSTEMMODAL, "", $sAnswer)

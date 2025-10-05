@@ -1,3 +1,5 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <MsgBoxConstants.au3>
 #include <Word.au3>
 
@@ -7,14 +9,14 @@ If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Word UDF: _Word_DocPictureAdd Beisp
 		"Fehler beim Erstellen des Word-Anwendungsobjektes." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
 
 ; Öffnet das Testdokument
-Local $oDoc = _Word_DocOpen($oWord, @ScriptDir & "\Extras\Test.doc", Default, Default, True)
+Local $oDoc = _Word_DocOpen($oWord, _Extras_PathFull("Test.doc"), Default, Default, True)
 If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Word UDF: _Word_DocPictureAdd Beispiel 1", _
 		"Fehler beim Öffnen von '.\Extras\Test.doc'." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
 
 ; Fügt nach dem vierten Wort im Dokument eine Bilddatei ein.
 ; Setzt das Range Objekt als Einfügemarke nach dem vierten Wort.
 Local $oRange = _Word_DocRangeSet($oDoc, -1, Default, 4, Default, 4)
-_Word_DocPictureAdd($oDoc, @ScriptDir & "\Extras\Screenshot.png", Default, Default, $oRange)
+_Word_DocPictureAdd($oDoc, _Extras_PathFull("Screenshot.png"), Default, Default, $oRange)
 If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Word UDF: _Word_DocPictureAdd Beispiel 1", _
 		"Fehler beim Einfügen der Bilddatei" & @CRLF & " @error = " & @error & ", @extended = " & @extended)
 MsgBox($MB_SYSTEMMODAL, "Word UDF: _Word_DocPictureAdd Beispiel 1", _

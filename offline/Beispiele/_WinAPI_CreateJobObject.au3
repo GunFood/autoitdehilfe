@@ -1,3 +1,4 @@
+#include <StructureConstants.au3>
 #include <WinAPIConv.au3>
 #include <WinAPIHObj.au3>
 #include <WinAPIProc.au3>

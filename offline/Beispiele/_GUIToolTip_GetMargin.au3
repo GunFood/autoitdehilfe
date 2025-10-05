@@ -1,3 +1,5 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GUIToolTip.au3>
 #include <MsgBoxConstants.au3>
@@ -6,7 +8,7 @@
 Example()
 
 Func Example()
-	Local $hGUI = GUICreate("ToolTip Get/Set Margin (v" & @AutoItVersion & ")", 350, 200)
+	Local $hGUI = GUICreate("ToolTip Get/Set Margin (v" & @AutoItVersion & ")", 450, 300, 100, 100)
 
 	Local $idButton = GUICtrlCreateButton("Button ToolTip", 30, 32, 130, 28)
 	Local $hButton = GUICtrlGetHandle($idButton)
@@ -29,22 +31,31 @@ Func Example()
 	Local $aMargins = _GUIToolTip_GetMargin($hToolTip1)
 	Local $aMargins1 = _GUIToolTip_GetMargin($hToolTip2)
 
+;~ 	$hGUI = 0 ; is OK
 	; Add a tool to the first tooltip control
-	_GUIToolTip_AddTool($hToolTip1, 0, 'Left : ' & $aMargins[0] & @LF & _
+	_GUIToolTip_AddTool($hToolTip1, $hGUI, 'Left : ' & $aMargins[0] & @LF & _
 			'Top : ' & $aMargins[1] & @LF & _
 			'Right : ' & $aMargins[2] & @LF & _
 			'Bottom : ' & $aMargins[3], $hButton)
 	_GUIToolTip_SetTitle($hToolTip1, "This is the ToolTip with manually set margins")
 	; Add a tool to the second tooltip control
-	_GUIToolTip_AddTool($hToolTip2, 0, 'Left : ' & $aMargins1[0] & @LF & _
+	_GUIToolTip_AddTool($hToolTip2, $hGUI, 'Left : ' & $aMargins1[0] & @LF & _
 			'Top : ' & $aMargins1[1] & @LF & _
 			'Right : ' & $aMargins1[2] & @LF & _
 			'Bottom : ' & $aMargins1[3], $hGUI)
 	_GUIToolTip_SetTitle($hToolTip2, "This is the ToolTip with default margins")
+
 	GUISetState(@SW_SHOW)
+
+	; Show the tooltip associated with the button
+	Opt("MouseCoordMode", 2)
+	MouseMove(50, 42, 0)
+	Sleep(250)
+
 	While 1
 		If GUIGetMsg() = $GUI_EVENT_CLOSE Then ExitLoop
 	WEnd
+
 	; Destroy the tooltip control
 	_GUIToolTip_Destroy($hToolTip1)
 	GUIDelete($hGUI)

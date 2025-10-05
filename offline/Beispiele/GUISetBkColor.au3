@@ -1,5 +1,6 @@
-#include <ColorConstantS.au3>
+#include <ColorConstants.au3>
 #include <GUIConstantsEx.au3>
+#include <WindowsSysColorConstants.au3>
 
 Example()
 

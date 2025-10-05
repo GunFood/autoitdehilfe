@@ -4,7 +4,7 @@
 #include <WinAPIGdi.au3>
 #include <WinAPIHObj.au3>
 #include <WinAPIRes.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
 
 Global $g_vDuration = Default, $g_hBitmap = _WinAPI_CreateSolidBitmap(0, 0x00AEFF, 10, 14)
 

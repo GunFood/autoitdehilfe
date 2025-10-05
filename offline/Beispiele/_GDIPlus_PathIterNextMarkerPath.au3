@@ -27,7 +27,7 @@ Func Example()
 	_GDIPlus_FontFamilyDispose($hFamily)
 
 	Local $hIter = _GDIPlus_PathIterCreate($hPath)
-	Local $hSubPath = _GDIPlus_PathCreate();Path to get the subpath figure
+	Local $hSubPath = _GDIPlus_PathCreate() ;Path to get the subpath figure
 
 	Local $iPointCount
 	While 1

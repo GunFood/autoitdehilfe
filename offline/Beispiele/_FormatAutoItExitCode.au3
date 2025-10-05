@@ -15,5 +15,5 @@ Func _UngracefulExit()
 EndFunc   ;==>_UngracefulExit
 
 Func _My_Exit()
-	MsgBox(0, '_my_Exit()', '@exitCode: "' & _FormatAutoItExitCode() & '"' & @CRLF  & @CRLF & '@exitMethod: ' & _FormatAutoItExitMethod())
+	MsgBox(0, '_my_Exit()', '@exitCode: "' & _FormatAutoItExitCode() & '"' & @CRLF & @CRLF & '@exitMethod: ' & _FormatAutoItExitMethod())
 EndFunc   ;==>_My_Exit

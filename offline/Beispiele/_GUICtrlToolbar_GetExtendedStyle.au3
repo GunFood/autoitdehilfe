@@ -1,23 +1,26 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiMenu.au3>
 #include <GuiToolbar.au3>
+#include <StructureConstants.au3>
 #include <WinAPIConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
-Global $hGui, $g_idMemo
+Global $g_hGUI
 
 Example()
 
 Func Example()
 	Local $hToolbar
-	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
+	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $e_idHelp
 
 	; Erstellt eine GUI
 	$hGui = GUICreate("Toolbar", 400, 300)
 	$hToolbar = _GUICtrlToolbar_Create($hGui)
 	_GUICtrlToolbar_SetExtendedStyle($hToolbar, $TBSTYLE_EX_DRAWDDARROWS)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 36, 396, 262, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 10, 400, 0, "Courier New")
+	_MemoCreate(2, 36, 396, 262, $WS_VSCROLL)
 	GUISetState(@SW_SHOW)
 
 	; Fügt die Standard Systembitmaps hinzu
@@ -33,10 +36,10 @@ Func Example()
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idOpen, $STD_FILEOPEN)
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idSave, $STD_FILESAVE)
 	_GUICtrlToolbar_AddButtonSep($hToolbar)
-	_GUICtrlToolbar_AddButton($hToolbar, $idHelp, $STD_HELP)
+	_GUICtrlToolbar_AddButton($hToolbar, $e_idHelp, $STD_HELP)
 
 	; Zeigt die verwendeten erweiterten Stile
-	MemoWrite("Erweiterte Stile: " & _GUICtrlToolbar_GetExtendedStyle($hToolbar))
+	_MemoWrite("Erweiterte Stile: " & _GUICtrlToolbar_GetExtendedStyle($hToolbar))
 
 	GUIRegisterMsg($WM_NOTIFY, "WM_NOTIFY")
 
@@ -44,11 +47,6 @@ Func Example()
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example
-
-; Schreibt eine Nachricht in das Memo
-Func MemoWrite($sMessage = "")
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite
 
 ; Verarbeitet die TBN_DROPDOWN Nachricht
 Func WM_NOTIFY($hWnd, $iMsg, $wParam, $lParam)

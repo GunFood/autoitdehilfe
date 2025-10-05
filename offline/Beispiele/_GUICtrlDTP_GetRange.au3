@@ -1,7 +1,9 @@
-#include <GuiConstantsEx.au3>
+#include "Extras\HelpFileInternals.au3"
+
+#include <GUIConstantsEx.au3>
 #include <GuiDateTimePicker.au3>
 
-Global $g_idMemo, $g_aRange[14] = [True, @YEAR, 1, 1, 21, 45, 32, True, @YEAR, 12, 31, 23, 59, 59]
+Global $g_aRange[14] = [True, @YEAR, 1, 1, 21, 45, 32, True, @YEAR, 12, 31, 23, 59, 59]
 
 Example()
 
@@ -9,8 +11,7 @@ Func Example()
 	; Erstellt eine GUI
 	GUICreate("DateTimePick: Setzt und ermittelt den Bereich (v" & @AutoItVersion & ")", 500, 300)
 	Local $hDTP = GUICtrlGetHandle(GUICtrlCreateDate("", 2, 6, 190))
-	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 32, 396, 266, 0)
 	GUISetState(@SW_SHOW)
 
 	; Setzt das Anzeigeformat
@@ -21,10 +22,10 @@ Func Example()
 
 	; Zeigt den Datumsbereich an
 	$g_aRange = _GUICtrlDTP_GetRange($hDTP)
-	MemoWrite("Minimales Datum: " & GetDateStr(0))
-	MemoWrite("Maximales Datum: " & GetDateStr(7))
-	MemoWrite("Minimale Zeit .: " & GetTimeStr(4))
-	MemoWrite("Maximale Zeit .: " & GetTimeStr(11))
+	_MemoWrite("Minimales Datum: " & GetDateStr(0))
+	_MemoWrite("Maximales Datum: " & GetDateStr(7))
+	_MemoWrite("Minimale Zeit .: " & GetTimeStr(4))
+	_MemoWrite("Maximale Zeit .: " & GetTimeStr(11))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
@@ -41,8 +42,3 @@ EndFunc   ;==>GetDateStr
 Func GetTimeStr($iOff = 0)
 	Return StringFormat("%02d:%02d:%02d", $g_aRange[$iOff], $g_aRange[$iOff + 1], $g_aRange[$iOff + 2])
 EndFunc   ;==>GetTimeStr
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

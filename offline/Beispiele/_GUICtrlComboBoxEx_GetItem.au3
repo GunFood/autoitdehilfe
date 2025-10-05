@@ -1,8 +1,9 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiComboBoxEx.au3>
 #include <GUIConstantsEx.au3>
 #include <GuiImageList.au3>
-
-Global $g_idMemo
+#include <MsgBoxConstants.au3>
 
 Example()
 
@@ -12,8 +13,7 @@ Func Example()
 	; Erstellt eine GUI
 	$hGui = GUICreate("ComboBoxEx: Setzt und ermittelt Attribute eines Items (v" & @AutoItVersion & ")", 600, 300)
 	$hCombo = _GUICtrlComboBoxEx_Create($hGui, "", 2, 2, 394, 100)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 32, 396, 266, 0)
 	GUISetState(@SW_SHOW)
 
 	$hImage = _GUIImageList_Create(16, 16, 5, 3)
@@ -36,14 +36,13 @@ Func Example()
 	_GUICtrlComboBoxEx_SetItemIndent($hCombo, 1, 1)
 
 	$aItem = _GUICtrlComboBoxEx_GetItem($hCombo, 3)
-	MemoWrite("Item Text: " & $aItem[0])
-	MemoWrite("Länge des Item-Textes ......................: " & $aItem[1])
-	MemoWrite("Anzahl der Bilderbreiten bis zur Einrückung : " & $aItem[2])
-	MemoWrite("0-basierender Itembilderindex ..............: " & $aItem[3])
-	MemoWrite("0-basierender Itemstatusbilderindex ........: " & $aItem[4])
-	MemoWrite("0-basierender Itembilder-Overlay-Index: ....: " & $aItem[5])
-	MemoWrite("Anwendungsspezifischer Wert ................: " & $aItem[6])
-
+	_MemoWrite("Item Text: " & $aItem[0])
+	_MemoWrite("Länge des Item-Textes ......................: " & $aItem[1])
+	_MemoWrite("Anzahl der Bilderbreiten bis zur Einrückung : " & $aItem[2])
+	_MemoWrite("0-basierender Itembilderindex ..............: " & $aItem[3])
+	_MemoWrite("0-basierender Itemstatusbilderindex ........: " & $aItem[4])
+	_MemoWrite("0-basierender Itembilder-Overlay-Index: ....: " & $aItem[5])
+	_MemoWrite("Anwendungsspezifischer Wert ................: " & $aItem[6])
 
 	; Ändert Item 1
 	MsgBox($MB_SYSTEMMODAL, "Information", "Ändert Item 1")
@@ -55,8 +54,3 @@ Func Example()
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

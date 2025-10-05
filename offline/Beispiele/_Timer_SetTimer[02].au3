@@ -25,7 +25,7 @@ Func _Example_TimeOut()
 EndFunc   ;==>_Example_TimeOut
 
 Func Check_mounted($hWnd, $iMsg, $iIDtimer, $iTime)
-	#forceref $hWnd, $iMsg, $iIDTimer,$iTime
+	#forceref $hWnd, $iMsg, $iIDtimer, $iTime
 	$g_sResult = ''
 	If FileExists($g_sCDdrv & '\') Then
 		$g_sResult = DriveGetLabel($g_sCDdrv) & ' eingefügt' & @CRLF

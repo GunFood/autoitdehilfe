@@ -1,13 +1,15 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <Excel.au3>
 #include <MsgBoxConstants.au3>
 
-; Erstellt das Anwendungsobjekt und öffnet eine Beispiel-Arbeitsmappe
+; Erstellt das Anwendungsobjekt
 Local $oExcel = _Excel_Open()
 If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_SheetCopyMove Beispiel 1", "Fehler beim Erstellen des Excel-Anwendungsobjektes." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
-; Öffne eine Arbeitsmappe
-Local $oWorkbook1 = _Excel_BookOpen($oExcel, @ScriptDir & "\Extras\_Excel1.xls")
+; Arbeitsmappe öffnen
+Local $oWorkbook1 = _Excel_BookOpen($oExcel, _Extras_PathFull("_Excel1.xls"))
 If @error Then
-	MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_SheetCopyMove Beispiel 1", "Fehler beim Öffnen der Arbeitsmappe '" & @ScriptDir & "\Extras\_Excel1.xls'." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
+	MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_SheetCopyMove Beispiel 1", "Fehler beim Öffnen der Arbeitsmappe '" & _Extras_PathFull("_Excel1.xls") & "'." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
 	_Excel_Close($oExcel)
 	Exit
 EndIf

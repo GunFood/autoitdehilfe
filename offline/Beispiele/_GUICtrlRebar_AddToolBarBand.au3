@@ -1,14 +1,15 @@
+#include <AutoItConstants.au3>
 #include <GUIConstantsEx.au3>
 #include <GuiReBar.au3>
 #include <GuiToolbar.au3>
 #include <WinAPIConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 
 Func Example()
-	Local $hGui, $idBtnExit, $hToolbar, $hReBar, $idInput
-	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $idHelp
+	Local $hGui, $idBtn_Exit, $hToolbar, $hReBar, $idInput
+	Local Enum $e_idNew = 1000, $e_idOpen, $e_idSave, $e_idHelp
 
 	$hGui = GUICreate("Rebar", 400, 396, -1, -1, BitOR($WS_MINIMIZEBOX, $WS_CAPTION, $WS_POPUP, $WS_SYSMENU, $WS_MAXIMIZEBOX))
 
@@ -31,7 +32,7 @@ Func Example()
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idOpen, $STD_FILEOPEN)
 	_GUICtrlToolbar_AddButton($hToolbar, $e_idSave, $STD_FILESAVE)
 	_GUICtrlToolbar_AddButtonSep($hToolbar)
-	_GUICtrlToolbar_AddButton($hToolbar, $idHelp, $STD_HELP)
+	_GUICtrlToolbar_AddButton($hToolbar, $e_idHelp, $STD_HELP)
 
 	; Erstellt eine Inputbox in der Rebar
 	$idInput = GUICtrlCreateInput("Eingabebox", 0, 0, 120, 20)
@@ -42,12 +43,12 @@ Func Example()
 	; Fügt am Anfang der Rebar eine Gruppe mit einem Control ein
 	_GUICtrlRebar_AddToolBarBand($hReBar, $hToolbar, "", 0)
 
-	$idBtnExit = GUICtrlCreateButton("Beenden", 150, 360, 100, 25)
+	$idBtn_Exit = GUICtrlCreateButton("Beenden", 150, 360, 100, 25)
 	GUISetState(@SW_SHOW)
 
 	While 1
 		Switch GUIGetMsg()
-			Case $GUI_EVENT_CLOSE, $idBtnExit
+			Case $GUI_EVENT_CLOSE, $idBtn_Exit
 				Exit
 		EndSwitch
 	WEnd

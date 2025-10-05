@@ -1,4 +1,5 @@
-#include <Extras\WMDebug.au3>
+#include "Extras\WMDebug.au3"
+
 #include <GUIConstantsEx.au3>
 #include <WinAPIShellEx.au3>
 

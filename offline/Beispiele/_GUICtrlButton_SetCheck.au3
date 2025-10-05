@@ -1,8 +1,8 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GuiButton.au3>
 #include <GUIConstantsEx.au3>
-#include <WindowsConstants.au3>
-
-Global $g_idMemo
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -10,8 +10,7 @@ Func Example()
 	Local $idRdo1, $idRdo2, $idChk
 
 	GUICreate("Buttons", 600, 300)
-	$g_idMemo = GUICtrlCreateEdit("", 99, 10, 496, 274, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(119, 10, 276, 374, $WS_VSCROLL)
 
 	$idRdo1 = GUICtrlCreateRadio("Radiobutton 1", 5, 13, 90, 50)
 
@@ -24,10 +23,10 @@ Func Example()
 
 	GUISetState(@SW_SHOW)
 
-	MemoWrite(@CRLF) ; Zeilenumbruch einfügen
-	MemoWrite("Variable $idRdo1 wurde geprüft." & @CRLF & " Zustand: " & _ExplainCheckState(_GUICtrlButton_GetCheck($idRdo1)) & @CRLF)
-	MemoWrite("Variable $idRdo2 wurde geprüft." & @CRLF & " Zustand: " & _ExplainCheckState(_GUICtrlButton_GetCheck($idRdo2)) & @CRLF)
-	MemoWrite("Variable $idChk1 wurde geprüft." & @CRLF & " Zustand: " & _ExplainCheckState(_GUICtrlButton_GetCheck($idChk)) & @CRLF)
+	_MemoWrite(@CRLF) ; Zeilenumbruch einfügen
+	_MemoWrite("Variable $idRdo1 wurde geprüft." & @CRLF & " Zustand: " & _ExplainCheckState(_GUICtrlButton_GetCheck($idRdo1)) & @CRLF)
+	_MemoWrite("Variable $idRdo2 wurde geprüft." & @CRLF & " Zustand: " & _ExplainCheckState(_GUICtrlButton_GetCheck($idRdo2)) & @CRLF)
+	_MemoWrite("Variable $idChk1 wurde geprüft." & @CRLF & " Zustand: " & _ExplainCheckState(_GUICtrlButton_GetCheck($idChk)) & @CRLF)
 
 	While 1
 		Switch GUIGetMsg()
@@ -38,11 +37,6 @@ Func Example()
 
 	Exit
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite
 
 Func _ExplainCheckState($iState)
 	Switch $iState

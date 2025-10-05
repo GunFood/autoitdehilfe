@@ -26,7 +26,7 @@ Func Example()
 	GUISetState(@SW_SHOW)
 
 	Local $idMsg
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslös
+	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst
 	While 1
 		$idMsg = GUIGetMsg()
 		Switch $idMsg

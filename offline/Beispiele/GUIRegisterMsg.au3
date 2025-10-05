@@ -1,12 +1,19 @@
 #include <ButtonConstants.au3>
 #include <FrameConstants.au3>
-#include <GDIPlus.au3>
 #include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>
-#include <WinAPI.au3>
-#include <WindowsConstants.au3>
+#include <StructureConstants.au3>
+#include <WinAPIConv.au3>
+#include <WinAPIDlg.au3>
+#include <WinAPIGdi.au3>
+#include <WinAPIGdiDC.au3>
+#include <WinAPIHObj.au3>
+#include <WinAPISysWin.au3>
+#include <WindowsNotifsConstants.au3>
+#include <WindowsStylesConstants.au3>
+#include <WindowsSysColorConstants.au3>
 
-;Erzeugt einen selbstgezeichneten eigenen  Button
+;Erzeugt einen selbstgezeichneten eigenen Button
 
 
 Example()

@@ -1,3 +1,5 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <Excel.au3>
 #include <MsgBoxConstants.au3>
 
@@ -7,7 +9,7 @@ If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_BookOpenText Beis
 
 ; Öffnen einer Textdatei als abgegrenzt, Trennzeichen = |, Feldinfo übergeben und
 ; Dezimaltrennzeichen und Tausenderseparator setzen.
-Local $sTextFile = @ScriptDir & "\Extras\_Excel1.txt"
+Local $sTextFile = _Extras_PathFull("_Excel1.txt")
 Local $aField1[2] = [1, $xlTextFormat]
 Local $aField2[2] = [2, $xlTextFormat]
 Local $aField3[2] = [3, $xlGeneralFormat]

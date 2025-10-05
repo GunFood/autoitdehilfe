@@ -1,22 +1,24 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiHeader.au3>
 #include <GuiImageList.au3>
+#include <StructureConstants.au3>
 #include <WinAPIGdi.au3>
 #include <WinAPIGdiDC.au3>
 #include <WinAPIMisc.au3>
 #include <WinAPISysWin.au3>
 
-Global $g_idMemo
 Example()
 
 Func Example()
-	Local $hGui, $hHeader, $hImage, $iMsg, $aSize, $tPos, $tRECT, $hDC
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("Header", 400, 300)
-	$hHeader = _GUICtrlHeader_Create($hGui)
-	_GUICtrlHeader_SetUnicodeFormat($hHeader, True)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 32, 396, 266, 0)
+	Local $hGUI = GUICreate("Header DragImage erstellen (v" & @AutoItVersion & ")", 450, 300, 100, 100)
+	Local $hHeader = _GUICtrlHeader_Create($hGUI)
+	_MemoCreate(2, 32, 444, 240)
+
+;~ 	_GUICtrlHeader_SetUnicodeFormat($hHeader, True)
+
 	GUISetState(@SW_SHOW)
 
 	; Fügt die Spalten hinzu
@@ -26,13 +28,16 @@ Func Example()
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 3", 100)
 
 	; Erstellt eine halbtransparente Version eines Itembildes zur Verwendung als ziehendes Bild
-	$hImage = _GUICtrlHeader_CreateDragImage($hHeader, 1)
-	$aSize = _GUIImageList_GetIconSize($hImage)
-	$hDC = _WinAPI_GetDC($hGui)
+	Local $hImage = _GUICtrlHeader_CreateDragImage($hHeader, 1)
+	Local $aSize = _GUIImageList_GetIconSize($hImage)
+	Local $hDC = _WinAPI_GetDC($hGui)
 
-	MemoWrite("Bild drag Handle: " & "0x" & Hex($hImage))
-	MemoWrite("IsPtr  = " & IsPtr($hImage) & " IsHWnd  = " & IsHWnd($hImage))
+	_MemoWrite("Bild drag Handle: " & "0x" & Hex($hImage))
+	_MemoWrite("IsPtr  = " & IsPtr($hImage) & " IsHWnd  = " & IsHWnd($hImage))
 
+	_MemoMsgBoxStatus("", -1, $hGUI) ; Keine weiteren Aktionen, es wird gewartet bis die GUI geschlossen wird.
+
+	Local $iMsg, $tPos, $tRECT
 	; Erstellt eine halbtransparente Version eines Itembildes zur Verwendung als ziehendes Bild an der aktueller Cursorposition bis die GUI geschlossen wird
 	Do
 		$iMsg = GUIGetMsg()
@@ -53,8 +58,3 @@ Func Example()
 		EndIf
 	Until $iMsg = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example
-
-; Gibt eine Zeile im Memo-Fenster aus
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

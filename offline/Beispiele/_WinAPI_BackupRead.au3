@@ -1,4 +1,6 @@
+#include <FileConstants.au3>
 #include <MsgBoxConstants.au3>
+#include <SecurityConstants.au3>
 #include <WinAPIFiles.au3>
 #include <WinAPIHObj.au3>
 #include <WinAPIMem.au3>

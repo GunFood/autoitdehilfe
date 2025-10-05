@@ -6,9 +6,9 @@ Example()
 
 Func Example()
 	GUICreate("Meine GUI Progressbar", 220, 100, 100, 200)
-	Local $idProgressbar1 = GUICtrlCreateProgress(10, 10, 200, 20)
+	Local $idProgress_bar1 = GUICtrlCreateProgress(10, 10, 200, 20)
 	GUICtrlSetColor(-1, 32250) ; Funktioniert nicht mit Windows XP Style
-	Local $idProgressbar2 = GUICtrlCreateProgress(10, 40, 200, 20, $PBS_SMOOTH)
+	Local $idProgress_bar2 = GUICtrlCreateProgress(10, 40, 200, 20, $PBS_SMOOTH)
 	Local $idButton = GUICtrlCreateButton("Start", 75, 70, 70, 20)
 	GUISetState(@SW_SHOW)
 
@@ -22,7 +22,7 @@ Func Example()
 		If $idMsg = $idButton Then
 			GUICtrlSetData($idButton, "Stop")
 			For $i = $iSavPos To 100
-				If GUICtrlRead($idProgressbar1) = 50 Then MsgBox($MB_SYSTEMMODAL, "Info", "Die Hälfte ist fertig ...", 1)
+				If GUICtrlRead($idProgress_bar1) = 50 Then MsgBox($MB_SYSTEMMODAL, "Info", "Die Hälfte ist fertig ...", 1)
 
 				$idM = GUIGetMsg()
 				If $idM = $GUI_EVENT_CLOSE Then ExitLoop
@@ -33,8 +33,8 @@ Func Example()
 					ExitLoop
 				Else
 					$iSavPos = 0
-					GUICtrlSetData($idProgressbar1, $i)
-					GUICtrlSetData($idProgressbar2, (100 - $i))
+					GUICtrlSetData($idProgress_bar1, $i)
+					GUICtrlSetData($idProgress_bar2, (100 - $i))
 					Sleep($iWait)
 				EndIf
 			Next

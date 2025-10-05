@@ -1,4 +1,3 @@
-#include <APIDlgConstants.au3>
 #include <Memory.au3>
 #include <WinAPIDlg.au3>
 

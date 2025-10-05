@@ -1,8 +1,8 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiImageList.au3>
 #include <GuiListView.au3>
-
-Global $g_idMemo
 
 Example()
 
@@ -10,7 +10,7 @@ Func Example()
 	Local $hGUI = GUICreate("(UDF) ListView: Erstellt eine Imagelist für das bestimmte Item (v" & @AutoItVersion & ")", 600, 300)
 
 	Local $hListView = _GUICtrlListView_Create($hGUI, "", 2, 2, 494, 118)
-	$g_idMemo = GUICtrlCreateEdit("", 2, 124, 496, 174, 0)
+	_MemoCreate(2, 124, 496, 174, 0)
 	GUISetState(@SW_SHOW)
 
 	; Setzt das ANSI Format
@@ -37,7 +37,7 @@ Func Example()
 	Local $aDrag = _GUICtrlListView_CreateDragImage($hListView, 0)
 	_GUICtrlListView_DrawDragImage($hListView, $aDrag)
 
-	MemoWrite("Drag Image Handle = 0x" & Hex($aDrag[0]) & " IsPtr = " & IsPtr($aDrag[0]) & " IsHWnd = " & IsHWnd($aDrag[0]))
+	_MemoWrite("Drag Image Handle = 0x" & Hex($aDrag[0]) & " IsPtr = " & IsPtr($aDrag[0]) & " IsHWnd = " & IsHWnd($aDrag[0]))
 
 	While 1
 		Switch GUIGetMsg()
@@ -53,8 +53,3 @@ Func Example()
 
 	GUIDelete()
 EndFunc   ;==>Example
-
-; Schreibt eine Zeile in das Memo Control
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

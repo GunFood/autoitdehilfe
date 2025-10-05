@@ -1,8 +1,7 @@
 #include <GUIConstantsEx.au3>
-#include <GuiListView.au3>
 #include <GuiTreeView.au3>
 #include <MsgBoxConstants.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 Example()
 
@@ -17,18 +16,18 @@ Func Example()
 ;~     _GUICtrlListView_SetUnicodeFormat($idListview, False)
 
 	_GUICtrlTreeView_BeginUpdate($idTreeView)
-	Local $aidItem[10]
+	Local $aidTVi_Item[10]
 	For $x = 0 To 6
-		$aidItem[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
+		$aidTVi_Item[$x] = GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $x), $idTreeView)
 		For $y = 0 To 3
-			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $y), $aidItem[$x])
+			GUICtrlCreateTreeViewItem(StringFormat("[%02d] Neues Item", $y), $aidTVi_Item[$x])
 		Next
 	Next
 	_GUICtrlTreeView_EndUpdate($idTreeView)
 
 	Local $iRand = 3
-	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Anzahl der Childs für den Itemindex %d: %d", $iRand, _GUICtrlTreeView_GetChildCount($idTreeView, $aidItem[$iRand])))
-	_GUICtrlTreeView_Expand($idTreeView, $aidItem[$iRand])
+	MsgBox($MB_SYSTEMMODAL, "Information", StringFormat("Anzahl der Childs für den Itemindex %d: %d", $iRand, _GUICtrlTreeView_GetChildCount($idTreeView, $aidTVi_Item[$iRand])))
+	_GUICtrlTreeView_Expand($idTreeView, $aidTVi_Item[$iRand])
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

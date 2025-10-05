@@ -1,5 +1,6 @@
-#include <APIFilesConstants.au3>
 #include <Debug.au3>
+#include <FileConstants.au3>
+#include <SecurityConstants.au3>
 #include <WinAPIFiles.au3>
 #include <WinAPIHObj.au3>
 #include <WinAPIProc.au3>
@@ -48,4 +49,4 @@ Func Example()
 	_WinAPI_AdjustTokenPrivileges($hToken, $aAdjust, 0, $aAdjust)
 	_WinAPI_CloseHandle($hToken)
 
-EndFunc
+EndFunc   ;==>Example

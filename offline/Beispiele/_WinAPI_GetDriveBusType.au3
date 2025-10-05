@@ -1,4 +1,3 @@
-#include <APIFilesConstants.au3>
 #include <WinAPIFiles.au3>
 
 Local $iBus, $sText, $aDrive = DriveGetDrive('ALL')

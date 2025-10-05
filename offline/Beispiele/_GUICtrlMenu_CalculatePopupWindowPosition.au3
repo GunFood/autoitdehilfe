@@ -1,6 +1,7 @@
 #include <GUIConstantsEx.au3>
 #include <GuiMenu.au3>
 #include <MsgBoxConstants.au3>
+#include <StructureConstants.au3>
 #include <WinAPIConv.au3>
 #include <WinAPISysWin.au3>
 

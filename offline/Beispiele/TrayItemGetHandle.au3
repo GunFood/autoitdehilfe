@@ -1,8 +1,8 @@
+#NoTrayIcon
+
 #include <MsgBoxConstants.au3>
 #include <StringConstants.au3>
 #include <TrayConstants.au3> ; wird für die $TRAY_ICONSTATE_SHOW Konstante benötigt.
-
-#NoTrayIcon
 
 Opt("TrayMenuMode", 3) ; Die Standard Traymenüeinträge (Skript pausieren/beenden) werden nicht angezeigt und die Items werden nicht angehakt wenn diese ausgewählt werden. Verwendet wurden die Optionen 1 und 2 für TrayMenuMode.
 
@@ -24,7 +24,7 @@ Func Example()
 	TraySetState($TRAY_ICONSTATE_SHOW) ; Zeigt das Traymenü.
 
 	SetMenuColor(0, 0xEEBB99) ; BGR Farbwert, '0' bezieht sich auf das Traymenü selbst.
-	SetMenuColor($idSettings, 0x66BB99); BGR Farbwert für das 'Einstellungen' Menü.
+	SetMenuColor($idSettings, 0x66BB99) ; BGR Farbwert für das 'Einstellungen' Menü.
 
 	While 1
 		Switch TrayGetMsg()

@@ -1,8 +1,8 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiMenu.au3>
 #include <WinAPIGdi.au3>
-
-Global $g_idMemo
 
 Example()
 
@@ -41,8 +41,7 @@ Func Example()
 	_GUICtrlMenu_SetMenu($hGui, $hMain)
 
 	; Erstellt ein Memo Control
-	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 396, 276, 0)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 2, 396, 276, 0)
 	GUISetState(@SW_SHOW)
 
 	; Setzt das Bitmap je nachdem, ob das Item ausgewählt ist
@@ -59,17 +58,12 @@ Func Example()
 	_GUICtrlMenu_CheckMenuItem($hFile, 1)
 
 	; Zeigt das die Handles der Bitmaps passen
-	MemoWrite("Handle vom angehakten Item................: 0x" & Hex($hBmp1))
-	MemoWrite("Handle vom abgehakten Item ...............: 0x" & Hex($hBmp2))
-	MemoWrite("Handle vom angehakten Itempunkt 'Öffnen' .: 0x" & Hex(_GUICtrlMenu_GetItemBmpChecked($hFile, 0)))
-	MemoWrite("Handle vom abgehakten Itempunkt 'Öffnen' .: 0x" & Hex(_GUICtrlMenu_GetItemBmpUnchecked($hFile, 0)))
+	_MemoWrite("Handle vom angehakten Item................: 0x" & Hex($hBmp1))
+	_MemoWrite("Handle vom abgehakten Item ...............: 0x" & Hex($hBmp2))
+	_MemoWrite("Handle vom angehakten Itempunkt 'Öffnen' .: 0x" & Hex(_GUICtrlMenu_GetItemBmpChecked($hFile, 0)))
+	_MemoWrite("Handle vom abgehakten Itempunkt 'Öffnen' .: 0x" & Hex(_GUICtrlMenu_GetItemBmpUnchecked($hFile, 0)))
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
 	Until GUIGetMsg() = $GUI_EVENT_CLOSE
 EndFunc   ;==>Example
-
-; Schreibt eine Nachricht in das Memo
-Func MemoWrite($sMessage)
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite

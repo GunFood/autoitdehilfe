@@ -1,3 +1,5 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiImageList.au3>
 #include <GuiTab.au3>
@@ -8,8 +10,10 @@ Example()
 
 Func Example()
 	; Erstellt eine GUI
-	Local $hGUI = GUICreate("TTab-Control: Setzt und ermittelt das Itembild (v" & @AutoItVersion & ")", 500, 300)
-	Local $idTab = GUICtrlCreateTab(2, 2, 396, 296)
+	Local $hGUI = GUICreate("TTab-Control: Setzt und ermittelt das Itembild (v" & @AutoItVersion & ")", 500, 300, 100, 100)
+	Local $idTab = GUICtrlCreateTab(2, 2, 446, 266)
+	_MemoMsgBoxStatus() ; Statuserstellung
+
 	GUISetState(@SW_SHOW)
 
 	; Erstellt die Bilder
@@ -26,10 +30,7 @@ Func Example()
 
 	; Ermittelt/Setzt das Bild von Tab 1
 	_GUICtrlTab_SetItemImage($idTab, 1, 1)
-	MsgBox($MB_SYSTEMMODAL, "Information", "Tab 1 Bildindex: " & _GUICtrlTab_GetItemImage($idTab, 1))
+	_MemoMsgBox($MB_SYSTEMMODAL, "Information", "Tab 1 Bildindex: " & _GUICtrlTab_GetItemImage($idTab, 1))
 
-	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
-	Do
-	Until GUIGetMsg() = $GUI_EVENT_CLOSE
-	GUIDelete()
+	_MemoMsgBoxStatus("", -1, $hGUI) ; Keine weiteren Aktionen, es wird gewartet bis die GUI geschlossen wird.
 EndFunc   ;==>Example

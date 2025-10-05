@@ -1,12 +1,16 @@
-#include <Extras\WM_NOTIFY.au3>
+#include "Extras\HelpFileInternals.au3"
+#include "Extras\WM_NOTIFY.au3"
+
 #include <GUIConstantsEx.au3>
 #include <GuiImageList.au3>
 #include <GuiStatusBar.au3>
 #include <MsgBoxConstants.au3>
+#include <StructureConstants.au3>
 #include <WinAPIGdi.au3>
-#include <WindowsConstants.au3>
+#include <WindowsNotifsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
-Global $g_hStatus, $g_idMemo
+Global $g_hStatus
 
 Example()
 
@@ -16,11 +20,10 @@ Func Example()
 	$g_hStatus = _GUICtrlStatusBar_Create($hGUI)
 
 	; Erstellt ein Memo Control
-	$g_idMemo = GUICtrlCreateEdit("", 2, 2, 396, 274, $WS_VSCROLL)
-	GUICtrlSetFont($g_idMemo, 9, 400, 0, "Courier New")
+	_MemoCreate(2, 2, 396, 274, $WS_VSCROLL)
 	GUISetState(@SW_SHOW)
 
-	_WM_NOTIFY_Register($g_idMemo)
+	_WM_NOTIFY_Register($_g_idLst_Memo)
 
 	; Setzt die Abschnitte
 	Local $aParts[4] = [75, 150, 300, 400]
@@ -40,11 +43,11 @@ Func Example()
 	$ahIcons[1] = _GUIImageList_GetIcon($hImage, 2)
 	_GUICtrlStatusBar_SetIcon($g_hStatus, 0, $ahIcons[0])
 	_GUICtrlStatusBar_SetIcon($g_hStatus, 1, $ahIcons[1])
-	MemoWrite("")
 
 	; Zeigt die Handles der Icons
-	MemoWrite("Icon-Handle vom Abschnitt 1 .: 0x" & Hex($ahIcons[0]))
-	MemoWrite("Icon-Handle vom Abschnitt 2 .: 0x" & Hex($ahIcons[1]))
+	_MemoWrite("Icon-Handle vom Abschnitt 1 .: 0x" & Hex($ahIcons[0]))
+	_MemoWrite("Icon-Handle vom Abschnitt 2 .: 0x" & Hex($ahIcons[1]))
+	_MemoWrite("")
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do
@@ -55,11 +58,6 @@ Func Example()
 	MsgBox($MB_SYSTEMMODAL, "Information", "Icon 2 zerstört? " & _GUIImageList_DestroyIcon($ahIcons[1]))
 	GUIDelete()
 EndFunc   ;==>Example
-
-; Schreibt eine Nachricht in das Memo
-Func MemoWrite($sMessage = "")
-	GUICtrlSetData($g_idMemo, $sMessage & @CRLF, 1)
-EndFunc   ;==>MemoWrite
 
 Func WM_NOTIFY($hWnd, $iMsg, $wParam, $lParam)
 	#forceref $hWnd, $iMsg, $wParam

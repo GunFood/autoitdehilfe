@@ -2,7 +2,6 @@
 
 #include <MsgBoxConstants.au3>
 #include <Security.au3>
-#include <SecurityConstants.au3>
 #include <WinAPIHObj.au3>
 
 Local $hToken = _Security__OpenProcessToken(_WinAPI_GetCurrentProcess(), $TOKEN_ALL_ACCESS)

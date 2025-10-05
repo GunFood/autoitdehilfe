@@ -1,15 +1,11 @@
-#include <APILocaleConstants.au3>
-#include <APIResConstants.au3>
-#include <MsgBoxConstants.au3>
+#include "Extras\HelpFileInternals.au3"
+
 #include <WinAPILocale.au3>
 #include <WinAPIRes.au3>
 #include <WinAPISys.au3>
 
-Local $hInstance = _WinAPI_LoadLibraryEx(@ScriptDir & '\Extras\Resources.dll', $LOAD_LIBRARY_AS_DATAFILE)
-If Not $hInstance Then
-	MsgBox(($MB_ICONERROR + $MB_SYSTEMMODAL), 'Error', @ScriptDir & '\Extras\Resources.dll not found.')
-	Exit
-EndIf
+Local $sDll = _Extras_PathFull('Resources.dll')
+Local $hInstance = _WinAPI_LoadLibraryEx($sDll, $LOAD_LIBRARY_AS_DATAFILE)
 
 ; Get the language (locale) identifier for the current process
 Local $iPrev

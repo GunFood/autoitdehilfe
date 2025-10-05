@@ -1,3 +1,5 @@
+#include "Extras\HelpFileInternals.au3"
+
 #include <GUIConstantsEx.au3>
 #include <SendMessage.au3>
 #include <StaticConstants.au3>
@@ -5,10 +7,11 @@
 #include <WinAPIGdiDC.au3>
 #include <WinAPIHObj.au3>
 #include <WinAPIRes.au3>
-#include <WindowsConstants.au3>
+#include <WindowsStylesConstants.au3>
 
 ; Load image
-Local $hSource = _WinAPI_LoadImage(0, @ScriptDir & '\Extras\Hatch.bmp', $IMAGE_BITMAP, 0, 0, $LR_LOADFROMFILE)
+Local $sBmp = _Extras_PathFull('Hatch.bmp')
+Local $hSource = _WinAPI_LoadImage(0, $sBmp, $IMAGE_BITMAP, 0, 0, $LR_LOADFROMFILE)
 Local $tSIZE = _WinAPI_GetBitmapDimension($hSource)
 Local $W = DllStructGetData($tSIZE, 'X')
 Local $H = DllStructGetData($tSIZE, 'Y')

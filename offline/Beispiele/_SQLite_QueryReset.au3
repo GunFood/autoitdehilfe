@@ -4,6 +4,10 @@
 
 Local $hQuery, $aRow, $iSwitch
 _SQLite_Startup()
+If @error Then
+	MsgBox($MB_SYSTEMMODAL, "SQLite Fehler", "SQLite3.dll kann nicht geladen werden!")
+	Exit -1
+EndIf
 _SQLite_Open()
 _SQLite_Exec(-1, "CREATE TABLE tblTest (a,b,c);")
 _SQLite_Exec(-1, "INSERT INTO tblTest VALUES ('1','1','1');" & _ ; Zeile 1

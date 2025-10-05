@@ -40,8 +40,8 @@ _WinAPI_GetProcessWorkingDirectory ( [$iPID = 0] )<br />
 <h2>Remarks</h2>
 <p>This function uses undocumented API functions and may stop working properly in future versions of Windows.<br />
 <br />
-Using this function for some processes may require full access rights. Use <a href="_WinAPI_AdjustTokenPrivileges.htm">_WinAPI_AdjustTokenPrivileges()</a><br />
-function to enable $SE_DEBUG_NAME privilege before calling this function.<br />
+Using this function for some processes may require full access rights.<br />
+Use <a href="_WinAPI_AdjustTokenPrivileges.htm">_WinAPI_AdjustTokenPrivileges()</a> function to enable $SE_DEBUG_NAME privilege before calling this function.<br />
 </p>
 
 <h2>Related</h2>
@@ -82,6 +82,7 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 <span><a class="codeSnippetLink" href="../keywords/RequireAdmin.htm"><span class="S11">#RequireAdmin</span></a>
 
 <a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;Array.au3&gt;</span>
+<a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;SecurityConstants.au3&gt;</span>
 <a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIHObj.au3&gt;</span>
 <a class="codeSnippetLink" href="../keywords/include.htm"><span class="S11">#include</span></a><span class="S0"> </span><span class="S7">&lt;WinAPIProc.au3&gt;</span>
 
@@ -93,10 +94,10 @@ document.write('<a href="#" id="copy" onclick="copyToClipboard(document.getEleme
 
 <span class="S1">; Retrieve working directories for all processes the system</span>
 <a class="codeSnippetLink" href="../keywords/If.htm"><span class="S5">If</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Not</span></a><span class="S0"> </span><span class="S8">(</span><a class="codeSnippetLink" href="../macros.htm#@error"><span class="S6">@error</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S5">Or</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../macros.htm#@extended"><span class="S6">@extended</span></a><span class="S8">)</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">Then</span></a>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aList</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/ProcessList.htm"><span class="S4">ProcessList</span></a><span class="S8">()</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S9">$aList</span><span class="S8">[</span><span class="S3">0</span><span class="S8">][</span><span class="S3">0</span><span class="S8">]</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aList</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">][</span><span class="S3">1</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetProcessWorkingDirectory.htm"><span class="S15">_WinAPI_GetProcessWorkingDirectory</span></a><span class="S8">(</span><span class="S9">$aList</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">][</span><span class="S3">1</span><span class="S8">])</span>
-<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
+<span class="S0">&nbsp; &nbsp; </span><span class="S9">$aList</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../functions/ProcessList.htm"><span class="S4">ProcessList</span></a><span class="S8">()</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">For</span></a><span class="S0"> </span><span class="S9">$i</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><span class="S3">1</span><span class="S0"> </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">To</span></a><span class="S0"> </span><span class="S9">$aList</span><span class="S8">[</span><span class="S3">0</span><span class="S8">][</span><span class="S3">0</span><span class="S8">]</span>
+<span class="S0">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="S9">$aList</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">][</span><span class="S3">1</span><span class="S8">]</span><span class="S0"> </span><a class="codeSnippetLink" href="../intro/lang_operators.htm"><span class="S8">=</span></a><span class="S0"> </span><a class="codeSnippetLink" href="../libfunctions/_WinAPI_GetProcessWorkingDirectory.htm"><span class="S15">_WinAPI_GetProcessWorkingDirectory</span></a><span class="S8">(</span><span class="S9">$aList</span><span class="S8">[</span><span class="S9">$i</span><span class="S8">][</span><span class="S3">1</span><span class="S8">])</span>
+<span class="S0">&nbsp; &nbsp; </span><a class="codeSnippetLink" href="../keywords/For.htm"><span class="S5">Next</span></a>
 <a class="codeSnippetLink" href="../keywords/IfElseEndIf.htm"><span class="S5">EndIf</span></a>
 
 <span class="S1">; Restore "SeDebugPrivilege" privilege by default</span>

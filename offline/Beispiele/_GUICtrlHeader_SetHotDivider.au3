@@ -1,15 +1,18 @@
-#include <GuiConstantsEx.au3>
+#include "Extras\HelpFileInternals.au3"
+
+#include <GUIConstantsEx.au3>
 #include <GuiHeader.au3>
 
 Example()
 
 Func Example()
-	Local $hGui, $hHeader, $iTicks, $iIndex, $hBegin
-
 	; Erstellt eine GUI
-	$hGui = GUICreate("Header", 400, 300)
-	$hHeader = _GUICtrlHeader_Create($hGui)
-	_GUICtrlHeader_SetUnicodeFormat($hHeader, True)
+	Local $hGui = GUICreate("Header", 400, 300)
+	Local $hHeader = _GUICtrlHeader_Create($hGui)
+	_MemoCreate(2, 52, 444, 220)
+
+;~ 	_GUICtrlHeader_SetUnicodeFormat($hHeader, True)
+
 	GUISetState(@SW_SHOW)
 
 	; Fügt die Spalten hinzu
@@ -17,6 +20,8 @@ Func Example()
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 1", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 2", 100)
 	_GUICtrlHeader_AddItem($hHeader, "Spalte 3", 100)
+
+	Local $iIndex, $hBegin
 
 	; Die Schleife wiederholt sich, bis der Benutzer die Beenden-Aktion der GUI auslöst.
 	Do

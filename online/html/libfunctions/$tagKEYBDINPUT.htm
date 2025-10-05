@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Schl&uuml;sselwort $tagKEYBDINPUT</title>
+<meta charset="utf-8">
+<link href="../css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 class="small">Schl&uuml;sselwortreferenz</h1>
+<hr style="height:0px">
+<div class="top"><h1>$tagKEYBDINPUT</h1><div>
+<br style="clear: both;">
+<p style="margin:2px 0 0 0;" class="funcdesc">Contains information about a low-level keyboard input event<br /></p>
+<p class="codeheader">
+Global Const $tagKEYBDINPUT = "dword type;struct;word wVk;word wScan;dword dwFlags;dword time;ulong_ptr dwExtraInfo;byte filler[8];endstruct"<br />
+</p>
+
+<h2>Parameter</h2>
+<table>
+<tr>
+<td style="width:15%">type</td>
+<td style="width:85%">$INPUT_KEYBOARD - the event is a keyboard event.</td>
+</tr>
+<tr>
+<td>wVk</td>
+<td>A virtual-key code. The code must be a value in the range 1 to 254. If the dwFlags member specifies $KEYEVENTF_UNICODE, wVk must be 0.</td>
+</tr>
+<tr>
+<td>wScan</td>
+<td>A hardware scan code for the key. If dwFlags specifies $KEYEVENTF_UNICODE, wScan specifies a Unicode character which is to be sent to the foreground application.</td>
+</tr>
+<tr>
+<td>dwFlags</td>
+<td>Specifies various aspects of a keystroke. This member can be certain combinations of the following values.<br />
+&nbsp;&nbsp;&nbsp; $KEYEVENTF_EXTENDEDKEY (1) - If specified, the wScan scan code consists of a sequence of two bytes, where the first byte has a value of 0xE0.<br />
+&nbsp;&nbsp;&nbsp; $KEYEVENTF_KEYUP (2)	- If specified, the key is being released. If not specified, the key is being pressed.<br />
+&nbsp;&nbsp;&nbsp; $KEYEVENTF_UNICODE (4)	- If specified, the system synthesizes a $VK_PACKET keystroke. The wVk parameter must be zero. This flag can only be combined with the $KEYEVENTF_KEYUP flag.<br />
+&nbsp;&nbsp;&nbsp; $KEYEVENTF_SCANCODE (8)	- If specified, wScan identifies the key and wVk is ignored.</td>
+</tr>
+<tr>
+<td>time</td>
+<td>The time stamp for the event, in milliseconds. If this parameter is zero, the system will provide its own time stamp.</td>
+</tr>
+<tr>
+<td>dwExtraInfo</td>
+<td>An additional value associated with the keystroke. Use the GetMessageExtraInfo function to obtain this information.</td>
+</tr>
+<tr>
+<td>filler</td>
+<td>not documented in MSDN.</td>
+</tr>
+</table>
+
+<h2>Bemerkungen</h2>
+<p>$INPUT_KEYBOARD supports nonkeyboard-input methods—such as handwriting recognition or voice recognition—as if it were text input by using the $KEYEVENTF_UNICODE flag.<br />
+If $KEYEVENTF_UNICODE is specified, SendInput sends a WM_KEYDOWN or WM_KEYUP message to the foreground thread's message queue with wParam equal to VK_PACKET.<br />
+Once GetMessage or PeekMessage obtains this message, passing the message to TranslateMessage posts a WM_CHAR message with the Unicode character originally specified by wScan.<br />
+This Unicode character will automatically be converted to the appropriate ANSI value if it is posted to an ANSI window.<br />
+<br />
+Set the $KEYEVENTF_SCANCODE flag to define keyboard input in terms of the scan code.<br />
+This is useful for simulating a physical keystroke regardless of which keyboard is currently being used.<br />
+<br />
+You can also pass the $KEYEVENTF_EXTENDEDKEY flag if the scan code is an extended key.<br />
+The virtual key value of a key can change depending on the current keyboard layout or what other keys were pressed, but the scan code will always be the same.<br />
+</p>
+
+</body>
+</html>

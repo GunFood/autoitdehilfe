@@ -1,5 +1,5 @@
+#include <Array.au3> ; wird nur für _ArrayDisplay() benötigt.
 #include <MsgBoxConstants.au3>
-#include <Array.au3> ; Required for _ArrayDisplay() only.
 
 Example()
 

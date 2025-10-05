@@ -4,7 +4,7 @@ Example()
 
 Func Example()
 	; Zeigt ein Fortschrittsfenster (Haupttext mit 2 Zeilen)
-	ProgressOn("Fortschritt", "Erhöhung in jeder Sekunde" & @CRLF & "..." , "0%", -1, -1, BitOR($DLG_NOTONTOP, $DLG_MOVEABLE))
+	ProgressOn("Fortschritt", "Erhöhung in jeder Sekunde" & @CRLF & "...", "0%", -1, -1, BitOR($DLG_NOTONTOP, $DLG_MOVEABLE))
 
 	; Veränderte den Fortschrittswert der Progressbar jede Sekunde.
 	For $i = 10 To 100 Step 10

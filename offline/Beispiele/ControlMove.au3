@@ -1,3 +1,5 @@
+#include "Extras\HelpFileInternals.au3"
+
 Example()
 
 Func Example()
@@ -11,7 +13,7 @@ Func Example()
 	Sleep(2000)
 
 	; Verschiebt das Edit-Control des Editors durch die Verwendung des von WinWait zurückgegebenen Handles.
-	ControlMove($hWnd, "", "Edit1", 0, 0, 150, 150)
+	ControlMove($hWnd, "", ControlGetFocus($hWnd), 0, 0, 150, 150)
 
 	; Wartet 2 Sekunden.
 	Sleep(2000)

@@ -1,6 +1,6 @@
+#include <Array.au3> ; wird für nur für _ArrayDisplay benötigt.
 #include <AutoItConstants.au3>
 #include <MsgBoxConstants.au3>
-#include <Array.au3> ; wird für nur für _ArrayDisplay benötigt.
 
 ; Zeigt rekursiv die Dateien innerhalb eines Verzeichnisses an.
 Example()
